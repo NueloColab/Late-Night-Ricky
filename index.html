@@ -70,20 +70,20 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 @media(max-width:767px){.video-desktop{display:none}.video-mobile{display:block}}
 
 /* Content */
-.section-cream{position:relative;z-index:10;background:linear-gradient(135deg,var(--cr),var(--gm))}
+.section-cream{position:relative;z-index:10;background:var(--gd)}
 .shows-section{position:relative;z-index:10;background:var(--wh);padding-bottom:0}
 .section-dark{position:relative;z-index:10;background:linear-gradient(0deg,var(--bk),#1a1b20);padding:120px 0 80px;margin-top:-5px}
 .container{max-width:1200px;margin:0 auto;padding:0 30px}
 
 /* Geographic reach */
 .reach{padding:120px 0 60px}
-.reach h1{font-family:var(--fs);font-size:clamp(32px,4.5vw,48px);font-weight:400;line-height:1.25;max-width:960px;color:var(--gd)}
-.reach p{font-size:20px;margin-top:32px;line-height:1.7;max-width:640px;color:var(--gd);font-weight:300}
+.reach h1{font-family:var(--fn);font-size:clamp(36px,5.5vw,64px);font-weight:900;line-height:.95;max-width:960px;color:var(--wh);letter-spacing:-2px;text-transform:uppercase}
+.reach p{font-size:14px;margin-top:24px;line-height:1.6;max-width:560px;color:var(--gs);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 .divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--gl),transparent);margin:80px 0}
 
 /* Shows */
-.shows-title{font-family:var(--fs);font-size:clamp(36px,5vw,56px);font-weight:400;text-align:center;margin-bottom:20px;color:var(--gd)}
-.shows-sub{text-align:center;font-size:17px;color:#5B7A8E;margin-bottom:60px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
+.shows-title{font-family:var(--fn);font-size:clamp(36px,5.5vw,64px);font-weight:900;text-align:center;margin-bottom:20px;color:var(--bk);letter-spacing:-2px;text-transform:uppercase;line-height:.95}
+.shows-sub{text-align:center;font-size:14px;color:#5B7A8E;margin-bottom:60px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 .shows-mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:8px;margin-bottom:80px;border-radius:16px;overflow:hidden}
 .shows-mosaic .m-item{position:relative;overflow:hidden;cursor:pointer}
 .shows-mosaic .m-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1)}
