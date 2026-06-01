@@ -131,11 +131,18 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .download-link{display:inline-block;color:var(--gl);font-size:14px;letter-spacing:.5px;text-decoration:none;transition:color .3s;margin-top:20px}
 .download-link:hover{color:var(--wh)}
 
-/* Radio / Spotify section */
-.radio-section{padding:100px 0;background:var(--wh);text-align:center}
-.radio-section h2{font-family:var(--fs);font-size:clamp(28px,3.5vw,40px);font-weight:400;color:var(--gd);margin-bottom:16px}
-.radio-section p{font-size:17px;color:#5B7A8E;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto}
-.radio-section img{max-width:380px;width:90%;border-radius:12px;box-shadow:0 10px 40px rgba(27,58,76,.1)}
+/* Radio / Music */
+.radio-section{padding:120px 0;background:var(--wh)}
+.radio-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto;padding:0 30px}
+.radio-image{position:relative;overflow:hidden;border-radius:16px}
+.radio-image img{width:100%;height:auto;object-fit:cover;display:block}
+.radio-content h2{font-family:var(--fs);font-size:clamp(36px,5vw,56px);font-weight:400;color:var(--gd);margin-bottom:16px;line-height:1.1}
+.radio-content .radio-tag{font-size:13px;color:var(--gm);letter-spacing:2px;text-transform:uppercase;margin-bottom:30px;font-weight:500}
+.radio-content p{font-size:17px;color:#5B7A8E;line-height:1.7;margin-bottom:40px;max-width:480px}
+.radio-platforms{display:flex;gap:16px;flex-wrap:wrap}
+.radio-platforms a{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border:2px solid var(--bk);border-radius:100px;color:var(--bk);font-family:var(--fn);font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:all .3s;background:transparent}
+.radio-platforms a:hover{background:var(--bk);color:var(--wh)}
+.radio-platforms a svg{width:18px;height:18px;fill:currentColor}
 
 /* CTA */
 .cta-row{display:flex;align-items:center;gap:80px}
@@ -285,6 +292,9 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   .partnerships-section .quote{font-size:26px}
   .logo-grid{grid-template-columns:repeat(2,1fr);gap:30px}
   .radio-section img{max-width:320px}
+  .radio-layout{grid-template-columns:1fr;gap:40px}
+  .radio-content{text-align:center}
+  .radio-content p{margin:0 auto 30px}
 }
 @media(max-width:479px){
   .reach h1{font-size:26px}
@@ -475,10 +485,25 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 
 <!-- RADIO / SPOTIFY -->
 <section class="radio-section" id="radio">
-<div class="container">
-<h2 class="reveal">As Heard On</h2>
-<p class="reveal reveal-d1">Featured mixes, radio shows, and curated playlists.</p>
-<img src="assets/ricky-spotify.jpg" alt="DJ Fricktion Radio" class="reveal reveal-d2" loading="lazy">
+<div class="radio-layout reveal">
+  <div class="radio-image">
+    <img src="assets/ricky-spotify.jpg" alt="Late Night Ricky" loading="lazy">
+  </div>
+  <div class="radio-content">
+    <p class="radio-tag">Music &amp; Radio</p>
+    <h2>As Heard On</h2>
+    <p>Featured mixes, radio shows, and curated playlists spanning hip-hop, R&amp;B, afrobeats, and dancehall. From underground sets to primetime radio.</p>
+    <div class="radio-platforms">
+      <a href="https://open.spotify.com" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12"/><path d="M17.9 10.9C14.7 9 9.35 8.8 6.3 9.75c-.5.15-1-.15-1.15-.6-.15-.5.15-1 .6-1.15 3.65-1.1 9.6-.9 13.25 1.3.45.25.6.85.35 1.3-.25.45-.85.6-1.25.35zM17.6 13.3c-2.8-1.7-7.1-2.2-10.3-1.2-.4.1-.85-.1-.95-.5-.1-.4.1-.85.5-.95 3.7-1.15 8.5-.65 11.7 1.3.35.2.45.7.25 1.05-.2.35-.65.45-1.05.25zm-.25 2.35c-2.35-1.4-5.95-1.8-8.85-.95-.3.1-.65-.05-.75-.35-.1-.3.05-.65.35-.75 3.3-1 7.3-.6 10.05.95.25.15.35.5.2.75-.15.3-.5.4-.75.25z" fill="#fff"/></svg>
+        Spotify
+      </a>
+      <a href="https://music.apple.com" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12"/><path d="M15.6 8.35c-.1 0-.2.02-.3.06-.7.23-1.4.35-2.1.35-.7 0-1.4-.12-2.1-.35-.1-.04-.2-.06-.3-.06-.35 0-.65.28-.65.63v4.04c0 .35.3.63.65.63.1 0 .2-.02.3-.06.7-.23 1.4-.35 2.1-.35.7 0 1.4.12 2.1.35.1.04.2.06.3.06.35 0 .65-.28.65-.63V8.98c0-.35-.3-.63-.65-.63zM12 13.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" fill="#fff"/></svg>
+        Apple Music
+      </a>
+    </div>
+  </div>
 </div>
 </section>
 
