@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Share Your Music — Late Night Ricky</title>
+<meta name="description" content="Send your tracks to Late Night Ricky.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gd:#1B3A4C;--gs:#8FA8BE;--gm:#6B8FAB;--gl:#A3B5C4;--cr:#E3E8ED;--wh:#fff;--bk:#111;--fs:'Playfair Display',serif;--fn:'Inter',sans-serif}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--fn);color:var(--bk);background:var(--wh);overflow-x:hidden}
+
+/* Page Nav */
+.page-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:16px 30px;display:flex;justify-content:space-between;align-items:center;background:var(--gd)}
+.page-nav .nav-logo img{height:28px;width:auto;filter:brightness(0) invert(1)}
+.page-nav .nav-links{display:none;gap:28px;align-items:center}
+.page-nav .nav-links a{color:var(--wh);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;transition:opacity .3s}
+.page-nav .nav-links a:hover{opacity:.7}
+.page-nav .nav-links a.active{opacity:.6}
+.hamburger-btn{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;transition:all .3s}
+.hamburger-btn:hover{border-color:var(--wh);background:rgba(255,255,255,.1)}
+.hamburger-btn span{display:block;width:18px;height:2px;background:var(--wh);border-radius:1px;margin:3px 0}
+@media(min-width:992px){.page-nav .nav-links{display:flex}.hamburger-btn{display:none}}
+
+/* Mobile menu */
+.mobile-menu{position:fixed;inset:0;background:var(--gd);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateX(100%);transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.mobile-menu.open{transform:translateX(0)}
+.mobile-menu .close-btn{position:absolute;top:16px;right:30px;width:44px;height:44px;border-radius:50%;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--wh);font-size:24px}
+.mobile-menu a{display:block;color:var(--wh);text-decoration:none;font-family:var(--fs);font-size:28px;font-weight:500;padding:14px 0;letter-spacing:2px;text-transform:uppercase;transition:opacity .3s}
+.mobile-menu a:hover{opacity:.6}
+
+/* Page Title */
+.page-title-bar{padding:100px 30px 20px;border-bottom:2px solid var(--bk)}
+.page-title{font-family:var(--fn);font-size:clamp(48px,10vw,120px);font-weight:900;letter-spacing:-3px;text-transform:uppercase;line-height:.9;color:var(--bk);max-width:1200px;margin:0 auto}
+
+/* Share Music Layout */
+.share-layout{max-width:800px;margin:0 auto;padding:80px 30px}
+.share-layout .big-statement{font-family:var(--fn);font-size:clamp(28px,4vw,48px);font-weight:900;text-transform:uppercase;line-height:1.1;letter-spacing:-1px;margin-bottom:50px;color:var(--bk);max-width:600px}
+.share-layout .upload-area{border:3px dashed var(--bk);padding:60px 40px;text-align:center;transition:border-color .3s,background .3s;margin-bottom:30px;cursor:pointer}
+.share-layout .upload-area:hover{border-color:var(--gd);background:rgba(27,58,76,.02)}
+.share-layout .upload-area.dragover{border-color:var(--gd);background:rgba(27,58,76,.04)}
+.share-layout .upload-area input[type="file"]{display:none}
+.upload-btn{display:inline-block;padding:16px 40px;background:var(--bk);color:var(--wh);font-family:var(--fn);font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s}
+.upload-btn:hover{background:var(--gd)}
+.share-layout .note{font-size:14px;color:#5B7A8E;margin-top:20px}
+.share-layout .file-name{display:none;margin-top:15px;color:var(--gd);font-weight:500;font-size:14px}
+.share-layout .file-name.visible{display:block}
+
+/* Footer */
+.page-footer{background:var(--bk);padding:40px 30px;text-align:center}
+.page-footer p{color:#777;font-size:13px;letter-spacing:.5px}
+
+/* Responsive */
+@media(max-width:767px){
+  .share-layout{padding:50px 20px}
+  .share-layout .big-statement{font-size:28px}
+  .share-layout .upload-area{padding:40px 20px}
+}
+@media(max-width:479px){
+  .page-title{font-size:40px;letter-spacing:-2px}
+}
+.upload-btn.w-100{width:100%}
+</style>
+</head>
+<body>
+
+<nav class="page-nav">
+  <a href="index.html" class="nav-logo"><img src="assets/ricky-logo.png" alt="Late Night Ricky"></a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="index.html#shows">Shows</a>
+    <a href="index.html#partnerships">Partners</a>
+    <a href="index.html#video">Showreel</a>
+    <a href="supporting-act.html">Supporting</a>
+    <a href="share-music.html" class="active">Share Music</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <button type="button" class="hamburger-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button type="button" class="close-btn" id="menuClose" aria-label="Close">&times;</button>
+  <a href="about.html">About</a>
+  <a href="index.html#shows">Shows</a>
+  <a href="index.html#partnerships">Partners</a>
+  <a href="index.html#video">Showreel</a>
+  <a href="supporting-act.html">Supporting</a>
+  <a href="share-music.html">Share Music</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<div class="page-title-bar">
+  <h1 class="page-title">Share Your Music</h1>
+</div>
+
+<div class="share-layout">
+  <p class="big-statement">I'm always on the lookout for new music to play, so send me your tracks</p>
+
+  <form id="uploadForm" action="mailto:bookings@latenightricky.com" method="post" enctype="text/plain">
+    <div class="upload-area" id="dropZone">
+      <input type="file" id="trackFile" name="track" accept="audio/mp3,audio/mpeg">
+      <button type="button" class="upload-btn" id="uploadBtn">Upload your track</button>
+      <p class="note">Click the button and upload your file in mp3 320 kbps</p>
+      <p class="file-name" id="fileName"></p>
+    </div>
+    <button type="submit" class="upload-btn w-100">Submit Track</button>
+  </form>
+</div>
+
+<footer class="page-footer">
+  <p>Late Night Ricky &copy; 2026. All rights reserved.</p>
+</footer>
+
+<script>
+(function(){
+  var menuBtn=document.getElementById('menuBtn');
+  var menuClose=document.getElementById('menuClose');
+  var mobileMenu=document.getElementById('mobileMenu');
+  function openMenu(){mobileMenu.classList.add('open');document.body.style.overflow='hidden'}
+  function closeMenu(){mobileMenu.classList.remove('open');document.body.style.overflow=''}
+  menuBtn.addEventListener('click',openMenu);
+  menuClose.addEventListener('click',closeMenu);
+  document.querySelectorAll('.mobile-menu a').forEach(function(a){a.addEventListener('click',closeMenu)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+})();
+
+(function(){
+  var uploadBtn=document.getElementById('uploadBtn');
+  var trackFile=document.getElementById('trackFile');
+  var fileName=document.getElementById('fileName');
+  var dropZone=document.getElementById('dropZone');
+
+  uploadBtn.addEventListener('click',function(){trackFile.click()});
+
+  trackFile.addEventListener('change',function(){
+    if(this.files && this.files[0]){
+      fileName.textContent='Selected: '+this.files[0].name;
+      fileName.classList.add('visible');
+    }
+  });
+
+  dropZone.addEventListener('dragover',function(e){e.preventDefault();this.classList.add('dragover')});
+  dropZone.addEventListener('dragleave',function(e){e.preventDefault();this.classList.remove('dragover')});
+  dropZone.addEventListener('drop',function(e){
+    e.preventDefault();
+    this.classList.remove('dragover');
+    if(e.dataTransfer.files && e.dataTransfer.files[0]){
+      trackFile.files=e.dataTransfer.files;
+      fileName.textContent='Selected: '+e.dataTransfer.files[0].name;
+      fileName.classList.add('visible');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
