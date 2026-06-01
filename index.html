@@ -70,6 +70,8 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 
 /* Content */
 .section-cream{position:relative;z-index:10;background:linear-gradient(135deg,var(--cr),var(--gm))}
+.shows-section{position:relative;z-index:10;background:linear-gradient(180deg,var(--cr) 0%,var(--gm) 60%,var(--bk) 100%);padding-bottom:0}
+.shows-section::after{content:'';display:block;height:120px;background:linear-gradient(180deg,transparent 0%,var(--bk) 100%);position:absolute;bottom:0;left:0;width:100%;pointer-events:none}
 .section-dark{position:relative;z-index:10;background:linear-gradient(0deg,var(--bk),#1a1b20);padding:120px 0 80px;margin-top:-5px}
 .container{max-width:1200px;margin:0 auto;padding:0 30px}
 
@@ -234,6 +236,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .text-center{text-align:center}
 .mt-30{margin-top:30px}
 .btn-wrap{margin-bottom:80px}
+.shows-section .btn-wrap{padding-bottom:120px}
 
 /* Responsive */
 @media(max-width:991px){
@@ -375,7 +378,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 </section>
 
 <!-- SHOWS & STORIES -->
-<section class="section-cream" id="shows">
+<section class="shows-section" id="shows">
 <div class="container">
 <h2 class="shows-title reveal">Recent Shows &amp; Stories</h2>
 <p class="shows-sub reveal">A career built on unforgettable nights, iconic venues, and sold-out crowds.</p>
