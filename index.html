@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Late Night Ricky</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gd:#1B3A4C;--gs:#8FA8BE;--gm:#6B8FAB;--gl:#A3B5C4;--cr:#E3E8ED;--wh:#fff;--bk:#111;--fs:'Playfair Display',Georgia,serif;--fn:'Inter','Helvetica Neue',Arial,sans-serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr)}
+
+/* Hero */
+.hero{position:relative;z-index:0;text-align:center;background-image:url('assets/ricky-portrait.jpg');background-position:50% 40%;background-size:cover;background-repeat:no-repeat;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:80px}
+.hero::after{content:'';position:absolute;inset:0;background:rgba(27,58,76,0.6);z-index:1}
+.hero .wordmark{position:relative;z-index:2;font-family:var(--fs);font-size:clamp(48px,10vw,120px);font-weight:400;color:var(--cr);letter-spacing:4px;text-transform:lowercase;line-height:1.1;margin:0 20px}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:20px 30px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,backdrop-filter .4s}
+.nav.solid{background:rgba(227,232,237,.95);backdrop-filter:blur(10px)}
+.nav-btn{width:50px;height:50px;border-radius:50%;background:rgba(227,232,237,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s;text-decoration:none;border:none}
+.nav-btn:hover{transform:translateY(-3px)}
+.nav-btn img{width:28px;height:28px;object-fit:contain}
+.nav-center-sm{width:50px;height:50px;border-radius:50%;border:2px solid var(--gd);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;background:transparent}
+.nav-center-sm:hover{background:var(--gd);border-color:var(--gd)}
+.nav-center-sm svg{width:15px}
+.hamburger{display:flex;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:20px;height:2px;background:var(--gd);border-radius:1px}
+.dnav{display:none;gap:30px;align-items:center;background:rgba(227,232,237,.7);border-radius:1000px;padding:8px 24px;backdrop-filter:blur(10px)}
+@media(min-width:992px){.dnav{display:flex}.mob{display:none}.nav-center-sm{display:none}}
+.dnav a{color:#5B7A8E;text-decoration:none;font-size:13px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:4px 0;transition:color .3s}
+.dnav a:hover{color:var(--gd)}
+
+/* Mobile */
+.mm{position:fixed;inset:0;background:var(--cr);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateX(100%);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.mm.open{transform:translateX(0)}
+.mx{position:absolute;top:20px;right:30px;width:50px;height:50px;border-radius:50%;background:0 0;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gd)}
+.mm a{display:block;color:var(--gd);text-decoration:none;font-family:var(--fs);font-size:32px;font-weight:500;padding:14px 0;letter-spacing:2px;text-transform:uppercase;transition:opacity .3s}
+.mm a:hover{opacity:.6}
+
+/* Video */
+.video-section{position:relative;width:100%;height:100vh;overflow:hidden;z-index:1;background:var(--bk);margin-top:0;display:flex;align-items:center;justify-content:center}
+.video-section .placeholder{color:var(--gs);text-align:center;font-family:var(--fs);font-size:24px;letter-spacing:2px;text-transform:uppercase}
+.watch-btn{position:absolute;bottom:22%;left:50%;transform:translateX(-50%);color:var(--wh);text-decoration:none;font-size:14px;font-weight:500;letter-spacing:2px;text-transform:uppercase;border:2px solid var(--wh);border-radius:1000px;padding:14px 36px;z-index:5;white-space:nowrap;transition:all .3s}
+.watch-btn:hover{background:var(--wh);color:var(--gd)}
+
+/* Content */
+.section-cream{position:relative;z-index:10;background:linear-gradient(135deg,var(--cr),var(--gm))}
+.section-dark{position:relative;z-index:10;background:linear-gradient(0deg,var(--bk),#1c1d21);padding:120px 0 80px;margin-top:-5px}
+.container{max-width:1400px;margin:0 auto;padding:0 30px}
+.from-london{padding:120px 0 80px}
+.from-london h1{font-family:var(--fs);font-size:42px;font-weight:400;line-height:1.3;max-width:900px;color:var(--gd)}
+.from-london p{font-size:18px;margin-top:24px;line-height:1.6;max-width:600px;color:var(--gd)}
+.divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--gl),transparent);margin:60px 0}
+.shows-title{font-family:var(--fs);font-size:50px;font-weight:400;text-align:center;margin-bottom:60px;color:var(--gd)}
+.shows-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:60px}
+.show-card .card-img{width:100%;min-height:320px;border-radius:8px;overflow:hidden;margin-bottom:16px;background-size:cover;background-position:center;display:block;text-decoration:none;transition:transform .3s;background-color:var(--gs)}
+.show-card .card-img:hover{transform:scale(1.02)}
+.show-card .season{font-size:14px;color:var(--gm);margin-bottom:8px;letter-spacing:.5px}
+.show-card h3{font-family:var(--fs);font-size:32px;font-weight:500;line-height:1.2;margin-bottom:20px;color:var(--gd)}
+.arrow-btn{display:inline-flex;width:48px;height:48px;border-radius:50%;border:2px solid var(--gd);align-items:center;justify-content:center;text-decoration:none;transition:all .3s;color:var(--gd)}
+.arrow-btn:hover{background:var(--gd);color:var(--cr)}
+.arrow-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+.pill{display:inline-block;font-size:14px;font-weight:500;letter-spacing:1px;text-transform:uppercase;border:2px solid;border-radius:1000px;padding:14px 36px;text-align:center;text-decoration:none;transition:all .3s;margin-bottom:20px}
+.pill-blue{color:var(--gd);border-color:var(--gd)}.pill-blue:hover{background:var(--gd);color:var(--cr)}
+.pill-white{color:var(--wh);border-color:var(--wh)}.pill-white:hover{background:var(--wh);color:var(--gd)}
+
+/* CTA */
+.cta-row{display:flex;align-items:center;gap:60px}
+.cta-text{flex:1}.cta-img{flex:1;text-align:right}
+.cta-text h2{font-family:var(--fs);font-size:50px;font-weight:400;color:var(--wh);margin-bottom:60px;line-height:1.2}
+.cta-img img{max-width:460px;width:100%;border-radius:8px}
+.footer{text-align:center;border-top:2px solid rgba(163,181,196,.2);padding:30px;color:#777;font-size:14px;background:var(--bk)}
+
+@media(max-width:991px){.logo-grid{grid-template-columns:repeat(3,1fr);gap:30px}.cta-row{flex-direction:column;text-align:center}.cta-text h2{text-align:center}.cta-img{text-align:center}.cta-img img{max-width:354px}.from-london h1{font-size:36px}}
+@media(max-width:767px){.hero{background-position:50% 30%;min-height:80vh;padding:100px 20px 40px}.hero .wordmark{font-size:clamp(36px,8vw,80px)}.shows-grid{grid-template-columns:1fr;gap:50px}.from-london h1{font-size:30px}.from-london{padding-top:80px}.shows-title{font-size:36px}.show-card h3{font-size:26px}.cta-text h2{font-size:36px;text-align:center}.nav-center-sm{display:flex}.watch-btn{bottom:18%;padding:12px 28px;font-size:12px}.cta-img img{max-width:280px}}
+@media(max-width:479px){.from-london h1{font-size:26px}.shows-title{font-size:30px}}
+
+</style>
+</head>
+<body>
+
+<!-- HERO LANDING -->
+<section class="hero">
+<h1 class="wordmark">Late Night Ricky</h1>
+</section>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+<a href="#" class="nav-btn"><img src="assets/icon.png" alt="Logo"></a>
+<a href="#about" class="nav-center-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+<button class="nav-btn hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+<div class="dnav">
+<a href="#about">About</a>
+<a href="#shows">Shows</a>
+<a href="#contact">Contact</a>
+</div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mm" id="mobileMenu">
+<button class="mx" id="menuClose" aria-label="Close menu">&#10005;</button>
+<a href="#about">About</a>
+<a href="#shows">Shows</a>
+<a href="#contact">Contact</a>
+</div>
+
+<!-- ABOUT -->
+<section class="section-cream" id="about">
+<div class="container">
+<div class="from-london">
+<h1>Bringing the energy, every single night.</h1>
+<p>DJ, host, and entertainer. Late night vibes, unforgettable moments. From intimate venues to packed arenas, the party doesn't start until Ricky walks in.</p>
+</div>
+<div class="divider"></div>
+</div>
+</section>
+
+<!-- SHOWS -->
+<section class="section-cream">
+<div class="container">
+<h2 class="shows-title">Recent Shows</h2>
+<div class="shows-grid">
+<div class="show-card">
+<a href="#" class="card-img" style="background-image:url('assets/show-sidemen.png')"></a>
+<p class="season">2025</p>
+<h3>Coming Soon</h3>
+</div>
+<div class="show-card">
+<a href="#" class="card-img" style="background-image:url('assets/show-gin-juice.png')"></a>
+<p class="season">2025</p>
+<h3>Coming Soon</h3>
+</div>
+<div class="show-card">
+<a href="#" class="card-img" style="background-image:url('assets/show-abu-dhabi.png')"></a>
+<p class="season">2025</p>
+<h3>Coming Soon</h3>
+</div>
+<div class="show-card">
+<a href="#" class="card-img" style="background-image:url('assets/show-royal-wedding.png')"></a>
+<p class="season">2025</p>
+<h3>Coming Soon</h3>
+</div>
+</div>
+<div style="text-align:center"><a href="#contact" class="pill pill-blue">BOOK RICKY</a></div>
+</div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="video-section">
+<div class="placeholder">Showreel Coming Soon</div>
+</section>
+
+<!-- CTA -->
+<section class="section-dark">
+<div class="container">
+<div class="cta-row">
+<div class="cta-text">
+<h2>Book Ricky for your next event</h2>
+<a href="#contact" class="pill pill-white">GET IN TOUCH</a>
+</div>
+<div class="cta-img">
+<img src="assets/ricky-portrait.jpg" alt="Late Night Ricky">
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+Late Night Ricky &copy; 2026
+</footer>
+
+<!-- SCRIPT -->
+<script>
+// Nav scroll effect
+window.addEventListener('scroll',function(){
+  var nav=document.getElementById('nav');
+  if(window.scrollY>80){nav.classList.add('solid')}else{nav.classList.remove('solid')}
+});
+
+// Mobile menu
+document.getElementById('menuBtn').addEventListener('click',function(){
+  document.getElementById('mobileMenu').classList.add('open');
+});
+document.getElementById('menuClose').addEventListener('click',function(){
+  document.getElementById('mobileMenu').classList.remove('open');
+});
+document.querySelectorAll('.mm a').forEach(function(a){
+  a.addEventListener('click',function(){
+    document.getElementById('mobileMenu').classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
