@@ -146,12 +146,26 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .contact-card a:hover{opacity:.6}
 
 /* Supporting Act */
-.supporting-section{padding:120px 0;background:var(--wh);text-align:center}
-.supporting-section h2{font-family:var(--fn);font-size:clamp(36px,6vw,72px);font-weight:900;letter-spacing:-2px;text-transform:uppercase;margin-bottom:40px;color:var(--bk)}
-.supporting-intro{font-size:14px;color:#5B7A8E;margin-bottom:50px;letter-spacing:2px;text-transform:uppercase}
-.artist-name{font-family:var(--fn);font-size:clamp(32px,5vw,56px);font-weight:900;text-transform:uppercase;letter-spacing:-1px;line-height:1;color:var(--bk);transition:color .3s;cursor:default;padding:4px 0}
+.supporting-section{padding:120px 0;background:var(--wh)}
+.supporting-section h2{font-family:var(--fn);font-size:clamp(36px,6vw,72px);font-weight:900;letter-spacing:-2px;text-transform:uppercase;margin-bottom:40px;color:var(--bk);text-align:center}
+.supporting-intro{font-size:14px;color:#5B7A8E;margin-bottom:40px;letter-spacing:2px;text-transform:uppercase;text-align:center}
+.supporting-layout{display:grid;grid-template-columns:200px 1fr 200px;gap:40px;align-items:start;max-width:1200px;margin:0 auto;padding:0 30px}
+.side-gallery{display:flex;flex-direction:column;gap:16px}
+.side-gallery img{width:100%;height:180px;object-fit:cover;border-radius:8px;transition:transform .3s}
+.side-gallery img:hover{transform:scale(1.03)}
+.artist-list{text-align:center}
+.artist-name{font-family:var(--fn);font-size:clamp(28px,4vw,48px);font-weight:900;text-transform:uppercase;letter-spacing:-1px;line-height:1.15;color:var(--bk);transition:color .3s;cursor:default;padding:6px 0}
 .artist-name:hover{color:var(--gd)}
 .artist-divider{width:60px;height:2px;background:var(--bk);margin:30px auto;opacity:.15}
+
+/* Carousel */
+.carousel-section{padding:60px 0;background:var(--wh);overflow:hidden}
+.carousel-track{display:flex;gap:20px;animation:carousel-scroll 25s linear infinite;width:max-content;padding:0 10px}
+.carousel-track:hover{animation-play-state:paused}
+.carousel-item{flex-shrink:0;width:280px;height:360px;border-radius:12px;overflow:hidden}
+.carousel-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.carousel-item:hover img{transform:scale(1.05)}
+@keyframes carousel-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* Share Your Music */
 .share-section{padding:120px 0;background:var(--cr);text-align:center}
@@ -169,12 +183,15 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .contact-form-section{padding:120px 0;background:var(--wh)}
 .contact-form-section h2{font-family:var(--fn);font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-2px;text-transform:uppercase;margin-bottom:16px;color:var(--bk);text-align:center}
 .contact-form-section .subheading{text-align:center;font-size:17px;color:#5B7A8E;margin-bottom:60px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6}
-.form-tabs{display:flex;gap:0;margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto}
+.contact-split{display:grid;grid-template-columns:1fr 1fr;gap:80px;max-width:1200px;margin:0 auto;padding:0 30px;align-items:start}
+.contact-split .contact-portrait img{width:100%;height:100%;min-height:500px;object-fit:cover;object-position:center top;border-radius:12px}
+.contact-form-right{max-width:600px}
+.form-tabs{display:flex;gap:0;margin-bottom:40px}
 .form-tab-btn{padding:14px 28px;border:2px solid var(--bk);background:var(--wh);font-family:var(--fn);font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;flex:1}
 .form-tab-btn.active{background:var(--bk);color:var(--wh)}
 .form-tab-btn:not(.active):hover{background:var(--cr)}
 .form-tab-content{display:none}
-.form-tab-content.active{display:block;max-width:600px;margin:0 auto}
+.form-tab-content.active{display:block}
 .form-group{margin-bottom:28px}
 .form-group label{display:block;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
 .form-group input, .form-group textarea, .form-group select{width:100%;border:none;border-bottom:2px solid var(--bk);padding:12px 0;font-size:15px;font-family:var(--fn);background:transparent;outline:none;transition:border-color .3s}
@@ -228,6 +245,11 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   .contact-grid{grid-template-columns:1fr}
   .section-dark{padding:80px 0 60px}
   .partnerships-section{padding:80px 0}
+  .contact-split{grid-template-columns:1fr;gap:50px}
+  .contact-split .contact-portrait img{min-height:300px}
+  .supporting-layout{grid-template-columns:1fr;gap:30px}
+  .side-gallery{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:10px}
+  .side-gallery img{flex-shrink:0;width:150px;height:150px}
   .partnerships-section .quote{font-size:26px}
   .logo-grid{grid-template-columns:repeat(2,1fr);gap:30px}
   .radio-section img{max-width:320px}
@@ -242,6 +264,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   .share-section h2{font-size:32px}
   .contact-form-section h2{font-size:32px}
   .upload-area{padding:40px 20px}
+  .carousel-item{width:200px;height:260px}
   .footer{padding:40px 20px 20px}
   .hero .wordmark{width:90%}
 }
@@ -412,22 +435,49 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 </section>
 
 <!-- SUPPORTING ACT -->
+<section class="carousel-section">
+<div class="carousel-track">
+  <div class="carousel-item"><img src="assets/ricky-hero.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/ricky-portrait.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/hero-main.png" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/press-bg2.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/ricky-spotify.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/ricky-hero.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/ricky-portrait.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/hero-main.png" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/press-bg2.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/ricky-spotify.jpg" alt="Late Night Ricky"></div>
+</div>
+</section>
+
 <section class="supporting-section" id="supporting">
-<div class="container">
 <p class="supporting-intro reveal">Late Night Ricky has shared the stage with</p>
 <h2 class="reveal">Supporting Act</h2>
-<div class="reveal"><div class="artist-name">Stormzy</div></div>
-<div class="reveal reveal-d1"><div class="artist-name">Dave</div></div>
-<div class="reveal reveal-d2"><div class="artist-name">Burna Boy</div></div>
-<div class="reveal"><div class="artist-name">Central Cee</div></div>
-<div class="reveal reveal-d1"><div class="artist-name">Tion Wayne</div></div>
-<div class="reveal reveal-d2"><div class="artist-name">AJ Tracey</div></div>
-<div class="reveal"><div class="artist-name">D-Block Europe</div></div>
-<div class="reveal reveal-d1"><div class="artist-name">J Hus</div></div>
-<div class="reveal reveal-d2"><div class="artist-name">Skepta</div></div>
-<div class="reveal"><div class="artist-name">Headie One</div></div>
-<div class="artist-divider"></div>
-<p class="supporting-intro reveal">And many more</p>
+<div class="supporting-layout reveal reveal-d1">
+  <div class="side-gallery">
+    <img src="assets/ricky-hero.jpg" alt="Photo" loading="lazy">
+    <img src="assets/ricky-portrait.jpg" alt="Photo" loading="lazy">
+    <img src="assets/hero-main.png" alt="Photo" loading="lazy">
+  </div>
+  <div class="artist-list">
+    <div class="artist-name">Stormzy</div>
+    <div class="artist-name">Dave</div>
+    <div class="artist-name">Burna Boy</div>
+    <div class="artist-name">Central Cee</div>
+    <div class="artist-name">Tion Wayne</div>
+    <div class="artist-name">AJ Tracey</div>
+    <div class="artist-name">D-Block Europe</div>
+    <div class="artist-name">J Hus</div>
+    <div class="artist-name">Skepta</div>
+    <div class="artist-name">Headie One</div>
+    <div class="artist-divider"></div>
+    <p class="supporting-intro">And many more</p>
+  </div>
+  <div class="side-gallery">
+    <img src="assets/press-bg2.jpg" alt="Photo" loading="lazy">
+    <img src="assets/hero-overlay.png" alt="Photo" loading="lazy">
+    <img src="assets/profile.png" alt="Photo" loading="lazy">
+  </div>
 </div>
 </section>
 
@@ -450,32 +500,37 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 
 <!-- CONTACT FORM -->
 <section class="contact-form-section" id="contact-form">
-<div class="container">
 <h2 class="reveal">Contact</h2>
 <p class="subheading reveal reveal-d1">For bookings, press enquiries, and collaborations</p>
-<div class="form-tabs reveal reveal-d2">
-  <button type="button" class="form-tab-btn active" data-tab="booking">Booking</button>
-  <button type="button" class="form-tab-btn" data-tab="private">Private Message</button>
-</div>
-<div class="form-tab-content active" id="booking">
-  <form action="mailto:bookings@latenightricky.com" method="post" enctype="text/plain">
-    <div class="form-group"><label for="b-name">Name*</label><input type="text" id="b-name" name="name" required></div>
-    <div class="form-group"><label for="b-email">Email*</label><input type="email" id="b-email" name="email" required></div>
-    <div class="form-group"><label for="b-club">Club Name*</label><input type="text" id="b-club" name="club" required></div>
-    <div class="form-group"><label for="b-city">City*</label><input type="text" id="b-city" name="city" required></div>
-    <div class="form-group"><label for="b-fee">Fee*</label><input type="text" id="b-fee" name="fee" required></div>
-    <div class="form-group"><label for="b-date">Date*</label><input type="date" id="b-date" name="date" required></div>
-    <button type="submit" class="submit-btn">Submit</button>
-  </form>
-</div>
-<div class="form-tab-content" id="private">
-  <form action="mailto:bookings@latenightricky.com" method="post" enctype="text/plain">
-    <div class="form-group"><label for="p-name">Name*</label><input type="text" id="p-name" name="name" required></div>
-    <div class="form-group"><label for="p-email">Email*</label><input type="email" id="p-email" name="email" required></div>
-    <div class="form-group"><label for="p-message">Message*</label><textarea id="p-message" name="message" required></textarea></div>
-    <button type="submit" class="submit-btn">Submit</button>
-  </form>
-</div>
+<div class="contact-split reveal reveal-d2">
+  <div class="contact-portrait">
+    <img src="assets/ricky-hero.jpg" alt="Late Night Ricky" loading="lazy">
+  </div>
+  <div class="contact-form-right">
+    <div class="form-tabs">
+      <button type="button" class="form-tab-btn active" data-tab="booking">Booking</button>
+      <button type="button" class="form-tab-btn" data-tab="private">Private Message</button>
+    </div>
+    <div class="form-tab-content active" id="booking">
+      <form action="mailto:bookings@latenightricky.com" method="post" enctype="text/plain">
+        <div class="form-group"><label for="b-name">Name*</label><input type="text" id="b-name" name="name" required></div>
+        <div class="form-group"><label for="b-email">Email*</label><input type="email" id="b-email" name="email" required></div>
+        <div class="form-group"><label for="b-club">Club Name*</label><input type="text" id="b-club" name="club" required></div>
+        <div class="form-group"><label for="b-city">City*</label><input type="text" id="b-city" name="city" required></div>
+        <div class="form-group"><label for="b-fee">Fee*</label><input type="text" id="b-fee" name="fee" required></div>
+        <div class="form-group"><label for="b-date">Date*</label><input type="date" id="b-date" name="date" required></div>
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+    </div>
+    <div class="form-tab-content" id="private">
+      <form action="mailto:bookings@latenightricky.com" method="post" enctype="text/plain">
+        <div class="form-group"><label for="p-name">Name*</label><input type="text" id="p-name" name="name" required></div>
+        <div class="form-group"><label for="p-email">Email*</label><input type="email" id="p-email" name="email" required></div>
+        <div class="form-group"><label for="p-message">Message*</label><textarea id="p-message" name="message" required></textarea></div>
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+    </div>
+  </div>
 </div>
 </section>
 
