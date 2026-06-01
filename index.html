@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Late Night Ricky</title>
+<meta name="description" content="Late Night Ricky - DJ, host, and entertainer bringing the energy to every event.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -13,71 +14,191 @@
 html{scroll-behavior:smooth}
 body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr)}
 
+/* Scroll animations */
+.fade-in{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1)}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.fade-in-delay-1{transition-delay:.12s}
+.fade-in-delay-2{transition-delay:.24s}
+.fade-in-delay-3{transition-delay:.36s}
+.fade-in-delay-4{transition-delay:.48s}
+
 /* Hero */
-.hero{position:relative;z-index:0;text-align:left;background-image:url('assets/ricky-portrait.jpg');background-position:50% 40%;background-size:cover;background-repeat:no-repeat;min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:80px 60px 60px}
-.hero::after{content:'';position:absolute;inset:0;background:rgba(27,58,76,0.55);z-index:1}
-.hero .wordmark{position:relative;z-index:2;width:50%;max-width:680px;min-width:260px;display:block;margin-left:5%;margin-bottom:80px}
+.hero{position:relative;z-index:0;text-align:left;background-image:url('assets/ricky-portrait.jpg');background-position:40% 35%;background-size:cover;background-repeat:no-repeat;min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:80px 60px 60px}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(17,17,17,.25) 0%,rgba(27,58,76,.35) 50%,rgba(27,58,76,.55) 100%);z-index:1}
+.hero .wordmark{position:relative;z-index:2;width:55%;max-width:720px;min-width:280px;display:block;margin-left:3%;margin-bottom:60px;filter:drop-shadow(0 6px 30px rgba(0,0,0,.25))}
+.hero .scroll-indicator{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--wh);opacity:.7;animation:bounce 2.2s infinite cubic-bezier(.22,1,.36,1)}
+.hero .scroll-indicator span{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:500}
+.hero .scroll-indicator svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
 
 /* Nav */
 .nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:20px 30px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,backdrop-filter .4s}
-.nav.solid{background:rgba(227,232,237,.95);backdrop-filter:blur(10px)}
-.nav-btn{width:50px;height:50px;border-radius:50%;background:rgba(227,232,237,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s;text-decoration:none;border:none}
+.nav.solid{background:rgba(227,232,237,.95);backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(27,58,76,.06)}
+.nav-btn{width:50px;height:50px;border-radius:50%;background:rgba(227,232,237,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s,border-color .3s;border:none}
 .nav-btn:hover{transform:translateY(-3px)}
 .nav-btn img{width:28px;height:28px;object-fit:contain}
+.nav-logo-img{width:auto;height:24px;border-radius:0;filter:brightness(0) saturate(100%) invert(18%) sepia(34%) saturate(834%) hue-rotate(164deg) brightness(94%) contrast(89%)}
 .nav-center-sm{width:50px;height:50px;border-radius:50%;border:2px solid var(--gd);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;background:transparent}
-.nav-center-sm:hover{background:var(--gd);border-color:var(--gd)}
+.nav-center-sm:hover{background:var(--gd);border-color:var(--gd);color:var(--wh)}
 .nav-center-sm svg{width:15px}
 .hamburger{display:flex;flex-direction:column;gap:5px}
-.hamburger span{display:block;width:20px;height:2px;background:var(--gd);border-radius:1px}
+.hamburger span{display:block;width:20px;height:2px;background:var(--gd);border-radius:1px;transition:all .3s}
 .dnav{display:none;gap:30px;align-items:center;background:rgba(227,232,237,.7);border-radius:1000px;padding:8px 24px;backdrop-filter:blur(10px)}
 @media(min-width:992px){.dnav{display:flex}.mob{display:none}.nav-center-sm{display:none}}
-.dnav a{color:#5B7A8E;text-decoration:none;font-size:13px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:4px 0;transition:color .3s}
+.dnav a{color:#5B7A8E;text-decoration:none;font-size:13px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:4px 0;transition:color .3s;position:relative}
+.dnav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gd);transition:width .4s cubic-bezier(.22,1,.36,1)}
 .dnav a:hover{color:var(--gd)}
+.dnav a:hover::after{width:100%}
 
 /* Mobile */
-.mm{position:fixed;inset:0;background:var(--cr);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateX(100%);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.mm{position:fixed;inset:0;background:var(--cr);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateX(100%);transition:transform .5s cubic-bezier(.22,1,.36,1)}
 .mm.open{transform:translateX(0)}
-.mx{position:absolute;top:20px;right:30px;width:50px;height:50px;border-radius:50%;background:0 0;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gd)}
-.mm a{display:block;color:var(--gd);text-decoration:none;font-family:var(--fs);font-size:32px;font-weight:500;padding:14px 0;letter-spacing:2px;text-transform:uppercase;transition:opacity .3s}
-.mm a:hover{opacity:.6}
+.mx{position:absolute;top:20px;right:30px;width:50px;height:50px;border-radius:50%;background:0 0;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gd);transition:transform .3s}
+.mx:hover{transform:rotate(90deg)}
+.mm a{display:block;color:var(--gd);text-decoration:none;font-family:var(--fs);font-size:32px;font-weight:500;padding:14px 0;letter-spacing:2px;text-transform:uppercase;transition:opacity .3s,transform .3s}
+.mm a:hover{opacity:.6;transform:translateX(8px)}
 
 /* Video */
-.video-section{position:relative;width:100%;height:100vh;overflow:hidden;z-index:1;background:var(--bk);margin-top:0;display:flex;align-items:center;justify-content:center}
-.video-section .placeholder{color:var(--gs);text-align:center;font-family:var(--fs);font-size:24px;letter-spacing:2px;text-transform:uppercase}
-.watch-btn{position:absolute;bottom:22%;left:50%;transform:translateX(-50%);color:var(--wh);text-decoration:none;font-size:14px;font-weight:500;letter-spacing:2px;text-transform:uppercase;border:2px solid var(--wh);border-radius:1000px;padding:14px 36px;z-index:5;white-space:nowrap;transition:all .3s}
-.watch-btn:hover{background:var(--wh);color:var(--gd)}
+.video-section{position:relative;width:100%;min-height:100vh;overflow:hidden;z-index:1;background:var(--bk);margin-top:0;display:flex;align-items:center;justify-content:center}
+.video-section video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
+.video-section video.loaded{opacity:1}
+.video-section .video-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(17,17,17,.35) 0%,transparent 40%,rgba(17,17,17,.35) 100%);z-index:2;pointer-events:none}
+.video-section .video-content{position:relative;z-index:3;text-align:center;display:flex;flex-direction:column;align-items:center;gap:30px}
+.video-section .video-content h2{font-family:var(--fs);font-size:clamp(32px,5vw,56px);font-weight:400;color:var(--wh);letter-spacing:2px;text-transform:uppercase;text-shadow:0 4px 20px rgba(0,0,0,.3)}
+.video-desktop{display:block}
+.video-mobile{display:none}
+@media(max-width:767px){.video-desktop{display:none}.video-mobile{display:block}}
 
 /* Content */
 .section-cream{position:relative;z-index:10;background:linear-gradient(135deg,var(--cr),var(--gm))}
-.section-dark{position:relative;z-index:10;background:linear-gradient(0deg,var(--bk),#1c1d21);padding:120px 0 80px;margin-top:-5px}
-.container{max-width:1400px;margin:0 auto;padding:0 30px}
-.from-london{padding:120px 0 80px}
-.from-london h1{font-family:var(--fs);font-size:42px;font-weight:400;line-height:1.3;max-width:900px;color:var(--gd)}
-.from-london p{font-size:18px;margin-top:24px;line-height:1.6;max-width:600px;color:var(--gd)}
-.divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--gl),transparent);margin:60px 0}
-.shows-title{font-family:var(--fs);font-size:50px;font-weight:400;text-align:center;margin-bottom:60px;color:var(--gd)}
-.shows-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:60px}
-.show-card .card-img{width:100%;min-height:320px;border-radius:8px;overflow:hidden;margin-bottom:16px;background-size:cover;background-position:center;display:block;text-decoration:none;transition:transform .3s;background-color:var(--gs)}
-.show-card .card-img:hover{transform:scale(1.02)}
-.show-card .season{font-size:14px;color:var(--gm);margin-bottom:8px;letter-spacing:.5px}
-.show-card h3{font-family:var(--fs);font-size:32px;font-weight:500;line-height:1.2;margin-bottom:20px;color:var(--gd)}
-.arrow-btn{display:inline-flex;width:48px;height:48px;border-radius:50%;border:2px solid var(--gd);align-items:center;justify-content:center;text-decoration:none;transition:all .3s;color:var(--gd)}
-.arrow-btn:hover{background:var(--gd);color:var(--cr)}
-.arrow-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
-.pill{display:inline-block;font-size:14px;font-weight:500;letter-spacing:1px;text-transform:uppercase;border:2px solid;border-radius:1000px;padding:14px 36px;text-align:center;text-decoration:none;transition:all .3s;margin-bottom:20px}
+.section-dark{position:relative;z-index:10;background:linear-gradient(0deg,var(--bk),#1a1b20);padding:120px 0 80px;margin-top:-5px}
+.container{max-width:1200px;margin:0 auto;padding:0 30px}
+
+/* About / geographic */
+.from-london{padding:120px 0 60px}
+.from-london h1{font-family:var(--fs);font-size:clamp(32px,4.5vw,48px);font-weight:400;line-height:1.25;max-width:960px;color:var(--gd)}
+.from-london .lead{font-size:20px;margin-top:32px;line-height:1.7;max-width:640px;color:var(--gd);font-weight:300}
+.from-london p{font-size:17px;margin-top:24px;line-height:1.7;max-width:640px;color:#4a6575}
+.divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--gl),transparent);margin:80px 0}
+
+/* Shows */
+.shows-title{font-family:var(--fs);font-size:clamp(36px,5vw,56px);font-weight:400;text-align:center;margin-bottom:80px;color:var(--gd)}
+.shows-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:50px}
+.show-card{transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.show-card:hover{transform:translateY(-6px)}
+.show-card .card-img{width:100%;min-height:380px;border-radius:12px;overflow:hidden;margin-bottom:20px;display:flex;align-items:center;justify-content:center;position:relative}
+.show-card .card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(27,58,76,.45) 0%,transparent 55%);pointer-events:none}
+.show-card .card-inner{position:relative;z-index:2;text-align:center;padding:40px 30px}
+.show-card .card-inner h4{font-family:var(--fs);font-size:34px;font-weight:500;color:var(--wh);text-shadow:0 2px 14px rgba(0,0,0,.25);margin-bottom:10px;line-height:1.1}
+.show-card .card-inner span{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.show-card .season{font-size:13px;color:var(--gm);margin-bottom:8px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500}
+.show-card h3{font-family:var(--fs);font-size:26px;font-weight:500;line-height:1.2;margin-bottom:12px;color:var(--gd)}
+.show-card .show-meta{font-size:15px;color:#5B7A8E;line-height:1.5;margin-bottom:16px}
+.show-card .card-arrow{display:inline-flex;align-items:center;gap:8px;color:var(--gd);text-decoration:none;font-size:14px;font-weight:500;letter-spacing:.5px;transition:gap .3s}
+.show-card .card-arrow svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+.show-card .card-arrow:hover{gap:14px}
+
+/* Show card gradients */
+.sg-1{background:linear-gradient(135deg,#1B3A4C 0%,#3d5a6b 50%,#6B8FAB 100%)}
+.sg-2{background:linear-gradient(225deg,#1B3A4C 0%,#2a4a5c 50%,#5a7f99 100%)}
+.sg-3{background:linear-gradient(45deg,#1B3A4C 0%,#4a6575 50%,#8FA8BE 100%)}
+.sg-4{background:linear-gradient(315deg,#1B3A4C 0%,#2d4a5c 50%,#6B8FAB 100%)}
+
+/* Pill buttons */
+.pill{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;border:2px solid;border-radius:1000px;padding:14px 40px;text-decoration:none;transition:all .3s}
+.pill svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
 .pill-blue{color:var(--gd);border-color:var(--gd)}.pill-blue:hover{background:var(--gd);color:var(--cr)}
 .pill-white{color:var(--wh);border-color:var(--wh)}.pill-white:hover{background:var(--wh);color:var(--gd)}
+.pill-glow{box-shadow:0 0 0 0 rgba(107,143,171,.4);animation:pulse-glow 2.2s infinite}
+@keyframes pulse-glow{0%{box-shadow:0 0 0 0 rgba(107,143,171,.4)}70%{box-shadow:0 0 0 14px rgba(107,143,171,0)}100%{box-shadow:0 0 0 0 rgba(107,143,171,0)}}
+
+/* Partnerships */
+.partnerships-section{padding:120px 0;background:linear-gradient(180deg,var(--bk) 0%,#1a1b20 100%);text-align:center}
+.partnerships-section .quote{font-family:var(--fs);font-size:clamp(28px,4vw,44px);font-weight:400;color:var(--wh);max-width:900px;margin:0 auto 24px;line-height:1.3}
+.partnerships-section .quote-sub{font-size:17px;color:var(--gs);max-width:640px;margin:0 auto 60px;line-height:1.6}
+.logo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:50px;max-width:1000px;margin:0 auto 60px;align-items:center}
+.logo-grid img{width:100%;max-width:180px;height:auto;filter:grayscale(100%) brightness(200%) opacity(.6);transition:all .4s;margin:0 auto}
+.logo-grid img:hover{filter:grayscale(0%) brightness(100%) opacity(1)}
+.download-link{display:inline-block;color:var(--gl);font-size:14px;letter-spacing:.5px;text-decoration:none;transition:color .3s}
+.download-link:hover{color:var(--wh)}
 
 /* CTA */
-.cta-row{display:flex;align-items:center;gap:60px}
+.cta-row{display:flex;align-items:center;gap:80px}
 .cta-text{flex:1}.cta-img{flex:1;text-align:right}
-.cta-text h2{font-family:var(--fs);font-size:50px;font-weight:400;color:var(--wh);margin-bottom:60px;line-height:1.2}
-.cta-img img{max-width:460px;width:100%;border-radius:8px}
-.footer{text-align:center;border-top:2px solid rgba(163,181,196,.2);padding:30px;color:#777;font-size:14px;background:var(--bk)}
+.cta-text h2{font-family:var(--fs);font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--wh);margin-bottom:32px;line-height:1.2}
+.cta-text p{font-size:17px;color:var(--gs);line-height:1.7;margin-bottom:40px;max-width:480px}
+.cta-img img{max-width:460px;width:100%;border-radius:12px;box-shadow:0 25px 70px rgba(0,0,0,.35)}
 
-@media(max-width:991px){.logo-grid{grid-template-columns:repeat(3,1fr);gap:30px}.cta-row{flex-direction:column;text-align:center}.cta-text h2{text-align:center}.cta-img{text-align:center}.cta-img img{max-width:354px}.from-london h1{font-size:36px}}
-@media(max-width:767px){.hero{background-position:50% 30%;min-height:80vh;padding:100px 20px 40px;align-items:center;text-align:center}.hero .wordmark{width:75%;margin:0 auto 60px}.shows-grid{grid-template-columns:1fr;gap:50px}.from-london h1{font-size:30px}.from-london{padding-top:80px}.shows-title{font-size:36px}.show-card h3{font-size:26px}.cta-text h2{font-size:36px;text-align:center}.nav-center-sm{display:flex}.watch-btn{bottom:18%;padding:12px 28px;font-size:12px}.cta-img img{max-width:280px}}
-@media(max-width:479px){.from-london h1{font-size:26px}.shows-title{font-size:30px}}
+/* Contact */
+.contact-section{padding:100px 0;background:linear-gradient(180deg,var(--cr) 0%,#d8dfe5 100%)}
+.contact-section h2{font-family:var(--fs);font-size:clamp(32px,4vw,48px);font-weight:400;text-align:center;margin-bottom:16px;color:var(--gd)}
+.contact-section .subheading{text-align:center;font-size:17px;color:#5B7A8E;margin-bottom:60px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px;max-width:850px;margin:0 auto 50px}
+.contact-card{background:var(--wh);border-radius:16px;padding:40px 30px;text-align:center;transition:transform .3s,box-shadow .3s;box-shadow:0 4px 20px rgba(27,58,76,.06)}
+.contact-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(27,58,76,.1)}
+.contact-card .icon{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gd),var(--gm));display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--wh)}
+.contact-card .icon svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2}
+.contact-card h4{font-family:var(--fs);font-size:20px;font-weight:500;margin-bottom:8px;color:var(--gd)}
+.contact-card p{font-size:14px;color:#5B7A8E;line-height:1.5;margin-bottom:16px}
+.contact-card a{color:var(--gd);font-weight:500;font-size:14px;text-decoration:none;letter-spacing:.5px;transition:opacity .3s}
+.contact-card a:hover{opacity:.6}
+
+/* Footer */
+.footer{background:var(--bk);padding:60px 30px 30px;text-align:center}
+.footer .social-links{display:flex;justify-content:center;gap:24px;margin-bottom:40px}
+.footer .social-links a{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(163,181,196,.25);display:flex;align-items:center;justify-content:center;color:var(--gl);transition:all .3s;text-decoration:none}
+.footer .social-links a:hover{border-color:var(--gs);color:var(--wh);transform:translateY(-3px)}
+.footer .social-links a svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.5}
+.footer .footer-links{display:flex;justify-content:center;gap:30px;margin-bottom:30px;flex-wrap:wrap}
+.footer .footer-links a{color:#777;text-decoration:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;transition:color .3s}
+.footer .footer-links a:hover{color:var(--gl)}
+.footer .copyright{color:#4a5568;font-size:13px;letter-spacing:.5px}
+
+/* Utility */
+.text-center{text-align:center}
+.mt-30{margin-top:30px}
+.btn-wrap{margin-bottom:80px}
+
+/* Responsive */
+@media(max-width:991px){
+  .logo-grid{grid-template-columns:repeat(3,1fr);gap:40px}
+  .cta-row{flex-direction:column;text-align:center;gap:50px}
+  .cta-text h2{text-align:center}
+  .cta-img{text-align:center}
+  .cta-img img{max-width:400px}
+  .cta-text p{margin-left:auto;margin-right:auto}
+  .from-london h1{font-size:32px}
+  .shows-grid{gap:30px}
+}
+@media(max-width:767px){
+  .hero{background-position:45% 30%;min-height:90vh;padding:100px 20px 40px;align-items:center;text-align:center}
+  .hero .wordmark{width:80%;margin:0 auto 60px}
+  .hero .scroll-indicator{display:none}
+  .shows-grid{grid-template-columns:1fr;gap:40px}
+  .from-london{padding:80px 0 50px}
+  .from-london h1{font-size:28px}
+  .shows-title{font-size:32px;margin-bottom:50px}
+  .show-card .card-img{min-height:300px}
+  .show-card .card-inner h4{font-size:28px}
+  .show-card h3{font-size:24px}
+  .cta-text h2{font-size:30px}
+  .nav-center-sm{display:flex}
+  .cta-img img{max-width:300px}
+  .contact-grid{grid-template-columns:1fr}
+  .section-dark{padding:80px 0 60px}
+  .contact-section{padding:70px 0}
+  .partnerships-section{padding:80px 0}
+  .partnerships-section .quote{font-size:26px}
+  .logo-grid{grid-template-columns:repeat(2,1fr);gap:30px}
+}
+@media(max-width:479px){
+  .from-london h1{font-size:26px}
+  .shows-title{font-size:28px}
+  .show-card .card-inner h4{font-size:24px}
+  .contact-card{padding:30px 20px}
+  .footer{padding:40px 20px 20px}
+  .hero .wordmark{width:90%}
+}
 
 </style>
 </head>
@@ -86,72 +207,145 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 <!-- HERO LANDING -->
 <section class="hero">
 <img class="wordmark" src="assets/ricky-logo.png" alt="Late Night Ricky">
+<div class="scroll-indicator">
+  <span>Scroll</span>
+  <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+</div>
 </section>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
-<a href="#" class="nav-btn"><img src="assets/ricky-logo.png" alt="Late Night Ricky" style="width:auto;height:24px;border-radius:0"></a>
-<a href="#about" class="nav-center-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
-<button class="nav-btn hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+<a href="#" class="nav-btn"><img src="assets/ricky-logo.png" alt="Late Night Ricky" class="nav-logo-img"></a>
+<a href="#about" class="nav-center-sm" aria-label="Scroll to About"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+<button type="button" class="nav-btn hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
 <div class="dnav">
 <a href="#about">About</a>
 <a href="#shows">Shows</a>
+<a href="#partnerships">Partners</a>
+<a href="#video">Showreel</a>
 <a href="#contact">Contact</a>
 </div>
 </nav>
 
 <!-- MOBILE MENU -->
 <div class="mm" id="mobileMenu">
-<button class="mx" id="menuClose" aria-label="Close menu">&#10005;</button>
+<button type="button" class="mx" id="menuClose" aria-label="Close menu">&#10005;</button>
 <a href="#about">About</a>
 <a href="#shows">Shows</a>
+<a href="#partnerships">Partners</a>
+<a href="#video">Showreel</a>
 <a href="#contact">Contact</a>
 </div>
 
-<!-- ABOUT -->
+<!-- ABOUT / GEOGRAPHIC REACH -->
 <section class="section-cream" id="about">
 <div class="container">
 <div class="from-london">
-<h1>Bringing the energy, every single night.</h1>
-<p>DJ, host, and entertainer. Late night vibes, unforgettable moments. From intimate venues to packed arenas, the party doesn't start until Ricky walks in.</p>
+<h1 class="fade-in">From London to New York / LA to Las Vegas / Miami to Ibiza / Sydney to Hong Kong and many more.</h1>
+<p class="lead fade-in fade-in-delay-1">More than 150 shows across the world and counting. Ricky's busiest year yet.</p>
 </div>
 <div class="divider"></div>
 </div>
 </section>
 
-<!-- SHOWS -->
-<section class="section-cream">
+<!-- SHOWS & STORIES -->
+<section class="section-cream" id="shows">
 <div class="container">
-<h2 class="shows-title">Recent Shows</h2>
+<h2 class="shows-title fade-in">Recent Shows &amp; Stories</h2>
 <div class="shows-grid">
-<div class="show-card">
-<a href="#" class="card-img" style="background-image:url('assets/show-sidemen.png')"></a>
-<p class="season">2025</p>
-<h3>Coming Soon</h3>
+<div class="show-card fade-in">
+<div class="card-img sg-1">
+  <div class="card-inner">
+    <h4>Ministry of Sound</h4>
+    <span>London</span>
+  </div>
 </div>
-<div class="show-card">
-<a href="#" class="card-img" style="background-image:url('assets/show-gin-juice.png')"></a>
-<p class="season">2025</p>
-<h3>Coming Soon</h3>
+<p class="season">Spring / Summer 2025</p>
+<h3>Sidemen vs YouTube All Stars</h3>
+<p class="show-meta">One of London's most iconic venues, packed to capacity. Details coming soon.</p>
+<span class="card-arrow">Read story <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
 </div>
-<div class="show-card">
-<a href="#" class="card-img" style="background-image:url('assets/show-abu-dhabi.png')"></a>
-<p class="season">2025</p>
-<h3>Coming Soon</h3>
+<div class="show-card fade-in fade-in-delay-1">
+<div class="card-img sg-2">
+  <div class="card-inner">
+    <h4>Ibiza Rocks</h4>
+    <span>Ibiza</span>
+  </div>
 </div>
-<div class="show-card">
-<a href="#" class="card-img" style="background-image:url('assets/show-royal-wedding.png')"></a>
-<p class="season">2025</p>
-<h3>Coming Soon</h3>
+<p class="season">Spring / Summer 2024</p>
+<h3>Gin &amp; Juice Launch</h3>
+<p class="show-meta">Sunset sets and poolside energy in the White Isle. Details coming soon.</p>
+<span class="card-arrow">Read story <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+</div>
+<div class="show-card fade-in fade-in-delay-2">
+<div class="card-img sg-3">
+  <div class="card-inner">
+    <h4>Skyline Festival</h4>
+    <span>International</span>
+  </div>
+</div>
+<p class="season">Autumn / Winter 2024</p>
+<h3>Abu Dhabi Grand Prix</h3>
+<p class="show-meta">Major festival appearance under the desert stars. Details coming soon.</p>
+<span class="card-arrow">Read story <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+</div>
+<div class="show-card fade-in fade-in-delay-3">
+<div class="card-img sg-4">
+  <div class="card-inner">
+    <h4>Private Events</h4>
+    <span>Worldwide</span>
+  </div>
+</div>
+<p class="season">Spring / Summer 2023</p>
+<h3>Royal Wedding of the Year</h3>
+<p class="show-meta">Exclusive corporate events and private celebrations. Details coming soon.</p>
+<span class="card-arrow">Read story <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
 </div>
 </div>
-<div style="text-align:center"><a href="#contact" class="pill pill-blue">BOOK RICKY</a></div>
+<div class="fade-in text-center btn-wrap">
+  <a href="#shows" class="pill pill-blue">ALL SHOWS &amp; STORIES</a>
+</div>
+</div>
+</section>
+
+<!-- PARTNERSHIPS -->
+<section class="partnerships-section" id="partnerships">
+<div class="container">
+<blockquote class="quote fade-in">&ldquo;One of the most exciting DJs on the circuit right now.&rdquo;</blockquote>
+<p class="quote-sub fade-in fade-in-delay-1">Just ask the A-list artists, global brands, and sold-out crowds who keep coming back for more.</p>
+<div class="logo-grid fade-in fade-in-delay-2">
+  <img src="assets/logo-bafta.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-f1.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-chanel.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-patron.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-lacoste.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-montblanc.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-lvmh.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-carrera.png" alt="Partner" loading="lazy">
+</div>
+<a href="mailto:press@latenightricky.com" class="pill pill-white fade-in fade-in-delay-3">ALL PARTNERSHIPS</a>
+<p class="mt-30"><a href="#" class="download-link fade-in fade-in-delay-3">Download Press Pack</a></p>
 </div>
 </section>
 
 <!-- VIDEO SECTION -->
-<section class="video-section">
-<div class="placeholder">Showreel Coming Soon</div>
+<section class="video-section" id="video">
+<video class="video-desktop" id="videoDesktop" muted loop playsinline preload="metadata" poster="assets/video-poster-desktop.jpg">
+  <source src="assets/video-desktop.webm" type="video/webm">
+  <source src="assets/video-desktop.mp4" type="video/mp4">
+</video>
+<video class="video-mobile" id="videoMobile" muted loop playsinline preload="metadata" poster="assets/video-poster-mobile.jpg">
+  <source src="assets/video-mobile.webm" type="video/webm">
+  <source src="assets/video-mobile.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+<div class="video-content">
+  <h2 class="fade-in">Showreel</h2>
+  <a href="#" class="pill pill-white fade-in fade-in-delay-1">
+    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-linejoin="round"/></svg>
+    WATCH SHOWREEL
+  </a>
+</div>
 </section>
 
 <!-- CTA -->
@@ -159,41 +353,143 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 <div class="container">
 <div class="cta-row">
 <div class="cta-text">
-<h2>Book Ricky for your next event</h2>
-<a href="#contact" class="pill pill-white">GET IN TOUCH</a>
+<h2 class="fade-in">Reach out, let\u0026rsquo;s collaborate</h2>
+<p class="fade-in fade-in-delay-1">From club nights to corporate events, festivals to private parties. Get in touch to check availability.</p>
+<div class="fade-in fade-in-delay-2">
+<a href="mailto:bookings@latenightricky.com" class="pill pill-white">GET IN TOUCH</a>
 </div>
-<div class="cta-img">
-<img src="assets/ricky-portrait.jpg" alt="Late Night Ricky">
 </div>
+<div class="cta-img fade-in fade-in-delay-2">
+<img src="assets/ricky-portrait.jpg" alt="Late Night Ricky" loading="lazy">
+</div>
+</div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+<div class="container">
+<h2 class="fade-in">Get in Touch</h2>
+<p class="subheading fade-in fade-in-delay-1">For bookings, press enquiries, and collaborations</p>
+<div class="contact-grid">
+<div class="contact-card fade-in">
+  <div class="icon">
+    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+  </div>
+  <h4>Bookings</h4>
+  <p>For events, festivals, club nights and private parties</p>
+  <a href="mailto:bookings@latenightricky.com">bookings@latenightricky.com</a>
+</div>
+<div class="contact-card fade-in fade-in-delay-1">
+  <div class="icon">
+    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  </div>
+  <h4>Press</h4>
+  <p>Press kits, interviews and media enquiries</p>
+  <a href="mailto:press@latenightricky.com">press@latenightricky.com</a>
+</div>
+<div class="contact-card fade-in fade-in-delay-2">
+  <div class="icon">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+  </div>
+  <h4>Management</h4>
+  <p>Representation and business enquiries</p>
+  <a href="mailto:management@latenightricky.com">management@latenightricky.com</a>
+</div>
+</div>
+<div class="fade-in text-center">
+  <a href="mailto:bookings@latenightricky.com" class="pill pill-blue">SEND AN EMAIL</a>
 </div>
 </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
-Late Night Ricky &copy; 2026
+<div class="social-links">
+  <a href="#" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+  <a href="#" aria-label="TikTok" title="TikTok"><svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+  <a href="#" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></a>
+  <a href="mailto:bookings@latenightricky.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+</div>
+<div class="footer-links">
+  <a href="#about">About</a>
+  <a href="#shows">Shows</a>
+  <a href="#partnerships">Partners</a>
+  <a href="#video">Showreel</a>
+  <a href="#contact">Contact</a>
+</div>
+<p class="copyright">Late Night Ricky &copy; 2026. All rights reserved.</p>
 </footer>
 
 <!-- SCRIPT -->
 <script>
-// Nav scroll effect
-window.addEventListener('scroll',function(){
+(function(){
   var nav=document.getElementById('nav');
-  if(window.scrollY>80){nav.classList.add('solid')}else{nav.classList.remove('solid')}
-});
+  function updateNav(){if(window.scrollY>80){nav.classList.add('solid')}else{nav.classList.remove('solid')}}
+  window.addEventListener('scroll',updateNav,{passive:true});
+  updateNav();
+})();
 
-// Mobile menu
-document.getElementById('menuBtn').addEventListener('click',function(){
-  document.getElementById('mobileMenu').classList.add('open');
-});
-document.getElementById('menuClose').addEventListener('click',function(){
-  document.getElementById('mobileMenu').classList.remove('open');
-});
-document.querySelectorAll('.mm a').forEach(function(a){
-  a.addEventListener('click',function(){
-    document.getElementById('mobileMenu').classList.remove('open');
+(function(){
+  var menuBtn=document.getElementById('menuBtn');
+  var menuClose=document.getElementById('menuClose');
+  var mobileMenu=document.getElementById('mobileMenu');
+  var menuLinks=document.querySelectorAll('.mm a');
+  function openMenu(){mobileMenu.classList.add('open');document.body.style.overflow='hidden'}
+  function closeMenu(){mobileMenu.classList.remove('open');document.body.style.overflow=''}
+  menuBtn.addEventListener('click',openMenu);
+  menuClose.addEventListener('click',closeMenu);
+  menuLinks.forEach(function(a){a.addEventListener('click',closeMenu)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+})();
+
+(function(){
+  var fadeEls=document.querySelectorAll('.fade-in');
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
+  fadeEls.forEach(function(el){observer.observe(el)});
+})();
+
+(function(){
+  var videoDesktop=document.getElementById('videoDesktop');
+  var videoMobile=document.getElementById('videoMobile');
+  var videos=[videoDesktop,videoMobile].filter(function(v){return !!v});
+  if(!videos.length)return;
+  var videoObserver=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var video=entry.target;
+      if(entry.isIntersecting){
+        video.play().then(function(){video.classList.add('loaded')}).catch(function(){});
+      }else{
+        video.pause();
+      }
+    });
+  },{threshold:0.15});
+  videos.forEach(function(v){videoObserver.observe(v)});
+})();
+
+(function(){
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
+    anchor.addEventListener('click',function(e){
+      var targetId=this.getAttribute('href');
+      if(targetId==='#'||targetId==='')return;
+      var target=document.querySelector(targetId);
+      if(target){
+        e.preventDefault();
+        var navHeight=document.getElementById('nav').offsetHeight;
+        var targetPosition=target.getBoundingClientRect().top+window.pageYOffset-navHeight-20;
+        window.scrollTo({top:targetPosition,behavior:'smooth'});
+      }
+    });
   });
-});
+})();
 </script>
+
 </body>
 </html>
