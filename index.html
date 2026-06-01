@@ -22,8 +22,9 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .reveal-d3{transition-delay:.45s}
 
 /* Hero */
-.hero{position:relative;z-index:0;text-align:left;background-image:url('assets/ricky-hero.jpg');background-position:55% 30%;background-size:cover;background-repeat:no-repeat;min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:80px 60px 60px}
-.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,rgba(27,58,76,.75) 0%,rgba(27,58,76,.45) 35%,rgba(27,58,76,.15) 60%,transparent 100%);z-index:1}
+.hero{position:relative;z-index:0;text-align:left;background:var(--bk);min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:80px 60px 60px;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:url('assets/ricky-hero.jpg');background-position:55% 30%;background-size:cover;background-repeat:no-repeat;filter:grayscale(100%) brightness(1.05);z-index:0}
+.hero::after{content:'';position:absolute;inset:0;background:rgba(27,58,76,.35);z-index:1}
 .hero .wordmark{position:relative;z-index:2;width:52%;max-width:700px;min-width:280px;display:block;margin-left:4%;margin-bottom:60px;filter:drop-shadow(0 6px 30px rgba(0,0,0,.3))}
 .hero .scroll-indicator{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--wh);opacity:.7;animation:bounce 2.2s infinite cubic-bezier(.22,1,.36,1)}
 .hero .scroll-indicator span{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:500}
@@ -254,7 +255,8 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   .shows-mosaic .m-big{grid-column:span 2;grid-row:span 2}
 }
 @media(max-width:767px){
-  .hero{background-position:60% 30%;min-height:90vh;padding:100px 20px 40px;align-items:center;text-align:center}
+  .hero{min-height:90vh;padding:100px 20px 40px;align-items:center;text-align:center}
+  .hero::before{background-position:60% 30%}
   .hero .wordmark{width:80%;margin:0 auto 60px}
   .hero .scroll-indicator{display:none}
   .shows-grid{grid-template-columns:1fr;gap:40px}
