@@ -143,6 +143,22 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .radio-platforms a{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border:2px solid var(--bk);border-radius:100px;color:var(--bk);font-family:var(--fn);font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:all .3s;background:transparent}
 .radio-platforms a:hover{background:var(--bk);color:var(--wh)}
 .radio-platforms a svg{width:18px;height:18px;fill:currentColor}
+.radio-image{position:relative}
+.radio-big-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;cursor:pointer}
+.radio-big-play .rb-circle{width:80px;height:80px;border-radius:50%;background:rgba(27,58,76,.85);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;color:var(--wh);transition:all .3s;border:2px solid rgba(255,255,255,.3)}
+.radio-big-play:hover .rb-circle{background:var(--wh);color:var(--bk);border-color:var(--wh);transform:scale(1.08)}
+.radio-big-play svg{width:28px;height:28px;fill:currentColor;margin-left:3px}
+.tracklist{margin-top:50px;border-top:1px solid #e3e8ed;padding-top:30px}
+.track{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid #e3e8ed;cursor:pointer;transition:background .2s}
+.track:hover{background:rgba(227,232,237,.4);margin:0 -12px;padding:14px 12px;border-radius:8px}
+.track-play{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--bk);background:transparent;display:flex;align-items:center;justify-content:center;color:var(--bk);cursor:pointer;transition:all .2s;flex-shrink:0}
+.track-play:hover{background:var(--bk);color:var(--wh)}
+.track-play svg{width:14px;height:14px}
+.track-info{flex:1;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.track-title{font-family:var(--fs);font-size:16px;font-weight:500;color:var(--gd)}
+.track-time{font-size:13px;color:var(--gm);font-variant-numeric:tabular-nums}
+.track.active .track-play{background:var(--bk);color:var(--wh)}
+.track.active .track-title{color:var(--bk)}
 
 /* CTA */
 .cta-row{display:flex;align-items:center;gap:80px}
@@ -488,6 +504,9 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 <div class="radio-layout reveal">
   <div class="radio-image">
     <img src="assets/ricky-spotify.jpg" alt="Late Night Ricky" loading="lazy">
+    <div class="radio-big-play" id="radioBigPlay">
+      <div class="rb-circle"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></div>
+    </div>
   </div>
   <div class="radio-content">
     <p class="radio-tag">Music &amp; Radio</p>
@@ -502,6 +521,29 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12"/><path d="M15.6 8.35c-.1 0-.2.02-.3.06-.7.23-1.4.35-2.1.35-.7 0-1.4-.12-2.1-.35-.1-.04-.2-.06-.3-.06-.35 0-.65.28-.65.63v4.04c0 .35.3.63.65.63.1 0 .2-.02.3-.06.7-.23 1.4-.35 2.1-.35.7 0 1.4.12 2.1.35.1.04.2.06.3.06.35 0 .65-.28.65-.63V8.98c0-.35-.3-.63-.65-.63zM12 13.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" fill="#fff"/></svg>
         Apple Music
       </a>
+    </div>
+    <div class="tracklist">
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">Late Night Mix — Vol. 1</span>
+          <span class="track-time">0:45</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">Summer Vibes Radio Edit</span>
+          <span class="track-time">0:38</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">Afrobeats Session — Live</span>
+          <span class="track-time">0:52</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -740,6 +782,53 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
       }
     });
   }
+})();
+
+(function(){
+  var tracks=document.querySelectorAll('.track');
+  var currentAudio=null,currentTrack=null;
+  var playIcon='<svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg>';
+  var pauseIcon='<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" fill="currentColor"/><rect x="14" y="4" width="4" height="16" fill="currentColor"/></svg>';
+  var bigPlay=document.getElementById('radioBigPlay');
+  if(bigPlay){
+    bigPlay.addEventListener('click',function(){
+      var first=tracks[0];
+      if(first)first.querySelector('.track-play').click();
+    });
+  }
+  tracks.forEach(function(track){
+    var btn=track.querySelector('.track-play');
+    var src=track.getAttribute('data-src');
+    var audio=src?new Audio(src):null;
+    if(audio)audio.preload='none';
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      if(!src){alert('Audio preview coming soon');return;}
+      if(currentAudio && currentAudio!==audio){
+        currentAudio.pause();
+        if(currentTrack)currentTrack.classList.remove('active');
+        currentTrack.querySelector('.track-play').innerHTML=playIcon;
+      }
+      if(audio.paused){
+        audio.play();
+        track.classList.add('active');
+        btn.innerHTML=pauseIcon;
+        currentAudio=audio;currentTrack=track;
+      }else{
+        audio.pause();
+        track.classList.remove('active');
+        btn.innerHTML=playIcon;
+        currentAudio=null;currentTrack=null;
+      }
+    });
+    if(audio){
+      audio.addEventListener('ended',function(){
+        track.classList.remove('active');
+        btn.innerHTML=playIcon;
+        currentAudio=null;currentTrack=null;
+      });
+    }
+  });
 })();
 </script>
 
