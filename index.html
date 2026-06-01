@@ -15,17 +15,16 @@ html{scroll-behavior:smooth}
 body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr)}
 
 /* Scroll animations */
-.fade-in{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1)}
-.fade-in.visible{opacity:1;transform:translateY(0)}
-.fade-in-delay-1{transition-delay:.12s}
-.fade-in-delay-2{transition-delay:.24s}
-.fade-in-delay-3{transition-delay:.36s}
-.fade-in-delay-4{transition-delay:.48s}
+.reveal{opacity:0;transform:translateY(50px);transition:opacity 1.1s cubic-bezier(.22,1,.36,1),transform 1.1s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.15s}
+.reveal-d2{transition-delay:.3s}
+.reveal-d3{transition-delay:.45s}
 
 /* Hero */
-.hero{position:relative;z-index:0;text-align:left;background-image:url('assets/ricky-portrait.jpg');background-position:40% 35%;background-size:cover;background-repeat:no-repeat;min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:80px 60px 60px}
-.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(17,17,17,.25) 0%,rgba(27,58,76,.35) 50%,rgba(27,58,76,.55) 100%);z-index:1}
-.hero .wordmark{position:relative;z-index:2;width:55%;max-width:720px;min-width:280px;display:block;margin-left:3%;margin-bottom:60px;filter:drop-shadow(0 6px 30px rgba(0,0,0,.25))}
+.hero{position:relative;z-index:0;text-align:left;background-image:url('assets/ricky-hero.jpg');background-position:55% 30%;background-size:cover;background-repeat:no-repeat;min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:80px 60px 60px}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,rgba(27,58,76,.75) 0%,rgba(27,58,76,.45) 35%,rgba(27,58,76,.15) 60%,transparent 100%);z-index:1}
+.hero .wordmark{position:relative;z-index:2;width:52%;max-width:700px;min-width:280px;display:block;margin-left:4%;margin-bottom:60px;filter:drop-shadow(0 6px 30px rgba(0,0,0,.3))}
 .hero .scroll-indicator{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--wh);opacity:.7;animation:bounce 2.2s infinite cubic-bezier(.22,1,.36,1)}
 .hero .scroll-indicator span{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:500}
 .hero .scroll-indicator svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none}
@@ -59,10 +58,10 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .mm a:hover{opacity:.6;transform:translateX(8px)}
 
 /* Video */
-.video-section{position:relative;width:100%;min-height:100vh;overflow:hidden;z-index:1;background:var(--bk);margin-top:0;display:flex;align-items:center;justify-content:center}
+.video-section{position:relative;width:100%;min-height:100vh;overflow:hidden;z-index:1;background:var(--bk);display:flex;align-items:center;justify-content:center}
 .video-section video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
 .video-section video.loaded{opacity:1}
-.video-section .video-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(17,17,17,.35) 0%,transparent 40%,rgba(17,17,17,.35) 100%);z-index:2;pointer-events:none}
+.video-section .video-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(17,17,17,.3) 0%,transparent 40%,rgba(17,17,17,.3) 100%);z-index:2;pointer-events:none}
 .video-section .video-content{position:relative;z-index:3;text-align:center;display:flex;flex-direction:column;align-items:center;gap:30px}
 .video-section .video-content h2{font-family:var(--fs);font-size:clamp(32px,5vw,56px);font-weight:400;color:var(--wh);letter-spacing:2px;text-transform:uppercase;text-shadow:0 4px 20px rgba(0,0,0,.3)}
 .video-desktop{display:block}
@@ -74,11 +73,10 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .section-dark{position:relative;z-index:10;background:linear-gradient(0deg,var(--bk),#1a1b20);padding:120px 0 80px;margin-top:-5px}
 .container{max-width:1200px;margin:0 auto;padding:0 30px}
 
-/* About / geographic */
-.from-london{padding:120px 0 60px}
-.from-london h1{font-family:var(--fs);font-size:clamp(32px,4.5vw,48px);font-weight:400;line-height:1.25;max-width:960px;color:var(--gd)}
-.from-london .lead{font-size:20px;margin-top:32px;line-height:1.7;max-width:640px;color:var(--gd);font-weight:300}
-.from-london p{font-size:17px;margin-top:24px;line-height:1.7;max-width:640px;color:#4a6575}
+/* Geographic reach */
+.reach{padding:120px 0 60px}
+.reach h1{font-family:var(--fs);font-size:clamp(32px,4.5vw,48px);font-weight:400;line-height:1.25;max-width:960px;color:var(--gd)}
+.reach p{font-size:20px;margin-top:32px;line-height:1.7;max-width:640px;color:var(--gd);font-weight:300}
 .divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--gl),transparent);margin:80px 0}
 
 /* Shows */
@@ -86,13 +84,13 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .shows-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:50px}
 .show-card{transition:transform .4s cubic-bezier(.22,1,.36,1)}
 .show-card:hover{transform:translateY(-6px)}
-.show-card .card-img{width:100%;min-height:380px;border-radius:12px;overflow:hidden;margin-bottom:20px;display:flex;align-items:center;justify-content:center;position:relative}
-.show-card .card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(27,58,76,.45) 0%,transparent 55%);pointer-events:none}
-.show-card .card-inner{position:relative;z-index:2;text-align:center;padding:40px 30px}
-.show-card .card-inner h4{font-family:var(--fs);font-size:34px;font-weight:500;color:var(--wh);text-shadow:0 2px 14px rgba(0,0,0,.25);margin-bottom:10px;line-height:1.1}
-.show-card .card-inner span{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.85)}
-.show-card .season{font-size:13px;color:var(--gm);margin-bottom:8px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500}
-.show-card h3{font-family:var(--fs);font-size:26px;font-weight:500;line-height:1.2;margin-bottom:12px;color:var(--gd)}
+.show-card .card-img{width:100%;min-height:420px;border-radius:12px;overflow:hidden;margin-bottom:20px;position:relative;display:flex;align-items:flex-end;justify-content:flex-start}
+.show-card .card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(27,58,76,.55) 0%,transparent 50%);pointer-events:none}
+.show-card .card-inner{position:relative;z-index:2;padding:30px}
+.show-card .card-inner h4{font-family:var(--fs);font-size:36px;font-weight:500;color:var(--wh);text-shadow:0 2px 14px rgba(0,0,0,.25);margin-bottom:6px;line-height:1.1}
+.show-card .card-inner span{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.show-card .season{font-size:13px;color:var(--gm);margin-bottom:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500}
+.show-card h3{font-family:var(--fs);font-size:24px;font-weight:500;line-height:1.2;margin-bottom:10px;color:var(--gd)}
 .show-card .show-meta{font-size:15px;color:#5B7A8E;line-height:1.5;margin-bottom:16px}
 .show-card .card-arrow{display:inline-flex;align-items:center;gap:8px;color:var(--gd);text-decoration:none;font-size:14px;font-weight:500;letter-spacing:.5px;transition:gap .3s}
 .show-card .card-arrow svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
@@ -109,8 +107,6 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .pill svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
 .pill-blue{color:var(--gd);border-color:var(--gd)}.pill-blue:hover{background:var(--gd);color:var(--cr)}
 .pill-white{color:var(--wh);border-color:var(--wh)}.pill-white:hover{background:var(--wh);color:var(--gd)}
-.pill-glow{box-shadow:0 0 0 0 rgba(107,143,171,.4);animation:pulse-glow 2.2s infinite}
-@keyframes pulse-glow{0%{box-shadow:0 0 0 0 rgba(107,143,171,.4)}70%{box-shadow:0 0 0 14px rgba(107,143,171,0)}100%{box-shadow:0 0 0 0 rgba(107,143,171,0)}}
 
 /* Partnerships */
 .partnerships-section{padding:120px 0;background:linear-gradient(180deg,var(--bk) 0%,#1a1b20 100%);text-align:center}
@@ -119,8 +115,14 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .logo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:50px;max-width:1000px;margin:0 auto 60px;align-items:center}
 .logo-grid img{width:100%;max-width:180px;height:auto;filter:grayscale(100%) brightness(200%) opacity(.6);transition:all .4s;margin:0 auto}
 .logo-grid img:hover{filter:grayscale(0%) brightness(100%) opacity(1)}
-.download-link{display:inline-block;color:var(--gl);font-size:14px;letter-spacing:.5px;text-decoration:none;transition:color .3s}
+.download-link{display:inline-block;color:var(--gl);font-size:14px;letter-spacing:.5px;text-decoration:none;transition:color .3s;margin-top:20px}
 .download-link:hover{color:var(--wh)}
+
+/* Radio / Spotify section */
+.radio-section{padding:100px 0;background:var(--wh);text-align:center}
+.radio-section h2{font-family:var(--fs);font-size:clamp(28px,3.5vw,40px);font-weight:400;color:var(--gd);margin-bottom:16px}
+.radio-section p{font-size:17px;color:#5B7A8E;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto}
+.radio-section img{max-width:380px;width:90%;border-radius:12px;box-shadow:0 10px 40px rgba(27,58,76,.1)}
 
 /* CTA */
 .cta-row{display:flex;align-items:center;gap:80px}
@@ -167,20 +169,21 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   .cta-img{text-align:center}
   .cta-img img{max-width:400px}
   .cta-text p{margin-left:auto;margin-right:auto}
-  .from-london h1{font-size:32px}
+  .reach h1{font-size:32px}
   .shows-grid{gap:30px}
+  .show-card .card-img{min-height:340px}
 }
 @media(max-width:767px){
-  .hero{background-position:45% 30%;min-height:90vh;padding:100px 20px 40px;align-items:center;text-align:center}
+  .hero{background-position:60% 30%;min-height:90vh;padding:100px 20px 40px;align-items:center;text-align:center}
   .hero .wordmark{width:80%;margin:0 auto 60px}
   .hero .scroll-indicator{display:none}
   .shows-grid{grid-template-columns:1fr;gap:40px}
-  .from-london{padding:80px 0 50px}
-  .from-london h1{font-size:28px}
+  .reach{padding:80px 0 50px}
+  .reach h1{font-size:28px}
   .shows-title{font-size:32px;margin-bottom:50px}
   .show-card .card-img{min-height:300px}
   .show-card .card-inner h4{font-size:28px}
-  .show-card h3{font-size:24px}
+  .show-card h3{font-size:22px}
   .cta-text h2{font-size:30px}
   .nav-center-sm{display:flex}
   .cta-img img{max-width:300px}
@@ -190,9 +193,10 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   .partnerships-section{padding:80px 0}
   .partnerships-section .quote{font-size:26px}
   .logo-grid{grid-template-columns:repeat(2,1fr);gap:30px}
+  .radio-section img{max-width:320px}
 }
 @media(max-width:479px){
-  .from-london h1{font-size:26px}
+  .reach h1{font-size:26px}
   .shows-title{font-size:28px}
   .show-card .card-inner h4{font-size:24px}
   .contact-card{padding:30px 20px}
@@ -204,7 +208,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 </head>
 <body>
 
-<!-- HERO LANDING -->
+<!-- HERO -->
 <section class="hero">
 <img class="wordmark" src="assets/ricky-logo.png" alt="Late Night Ricky">
 <div class="scroll-indicator">
@@ -216,10 +220,10 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 <!-- NAV -->
 <nav class="nav" id="nav">
 <a href="#" class="nav-btn"><img src="assets/ricky-logo.png" alt="Late Night Ricky" class="nav-logo-img"></a>
-<a href="#about" class="nav-center-sm" aria-label="Scroll to About"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+<a href="#video" class="nav-center-sm" aria-label="Scroll to Video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
 <button type="button" class="nav-btn hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
 <div class="dnav">
-<a href="#about">About</a>
+<a href="#reach">About</a>
 <a href="#shows">Shows</a>
 <a href="#partnerships">Partners</a>
 <a href="#video">Showreel</a>
@@ -230,105 +234,14 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 <!-- MOBILE MENU -->
 <div class="mm" id="mobileMenu">
 <button type="button" class="mx" id="menuClose" aria-label="Close menu">&#10005;</button>
-<a href="#about">About</a>
+<a href="#reach">About</a>
 <a href="#shows">Shows</a>
 <a href="#partnerships">Partners</a>
 <a href="#video">Showreel</a>
 <a href="#contact">Contact</a>
 </div>
 
-<!-- ABOUT / GEOGRAPHIC REACH -->
-<section class="section-cream" id="about">
-<div class="container">
-<div class="from-london">
-<h1 class="fade-in">From London to New York / LA to Las Vegas / Miami to Ibiza / Sydney to Hong Kong and many more.</h1>
-<p class="lead fade-in fade-in-delay-1">More than 150 shows across the world and counting. Ricky's busiest year yet.</p>
-</div>
-<div class="divider"></div>
-</div>
-</section>
-
-<!-- SHOWS & STORIES -->
-<section class="section-cream" id="shows">
-<div class="container">
-<h2 class="shows-title fade-in">Recent Shows &amp; Stories</h2>
-<div class="shows-grid">
-<div class="show-card fade-in">
-<div class="card-img sg-1">
-  <div class="card-inner">
-    <h4>Ministry of Sound</h4>
-    <span>London</span>
-  </div>
-</div>
-<p class="season">Spring / Summer 2025</p>
-<h3>Sidemen vs YouTube All Stars</h3>
-<p class="show-meta">One of London's most iconic venues, packed to capacity. Details coming soon.</p>
-<span class="card-arrow">Read story <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-</div>
-<div class="show-card fade-in fade-in-delay-1">
-<div class="card-img sg-2">
-  <div class="card-inner">
-    <h4>Ibiza Rocks</h4>
-    <span>Ibiza</span>
-  </div>
-</div>
-<p class="season">Spring / Summer 2024</p>
-<h3>Gin &amp; Juice Launch</h3>
-<p class="show-meta">Sunset sets and poolside energy in the White Isle. Details coming soon.</p>
-<span class="card-arrow">Read story <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-</div>
-<div class="show-card fade-in fade-in-delay-2">
-<div class="card-img sg-3">
-  <div class="card-inner">
-    <h4>Skyline Festival</h4>
-    <span>International</span>
-  </div>
-</div>
-<p class="season">Autumn / Winter 2024</p>
-<h3>Abu Dhabi Grand Prix</h3>
-<p class="show-meta">Major festival appearance under the desert stars. Details coming soon.</p>
-<span class="card-arrow">Read story <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-</div>
-<div class="show-card fade-in fade-in-delay-3">
-<div class="card-img sg-4">
-  <div class="card-inner">
-    <h4>Private Events</h4>
-    <span>Worldwide</span>
-  </div>
-</div>
-<p class="season">Spring / Summer 2023</p>
-<h3>Royal Wedding of the Year</h3>
-<p class="show-meta">Exclusive corporate events and private celebrations. Details coming soon.</p>
-<span class="card-arrow">Read story <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-</div>
-</div>
-<div class="fade-in text-center btn-wrap">
-  <a href="#shows" class="pill pill-blue">ALL SHOWS &amp; STORIES</a>
-</div>
-</div>
-</section>
-
-<!-- PARTNERSHIPS -->
-<section class="partnerships-section" id="partnerships">
-<div class="container">
-<blockquote class="quote fade-in">&ldquo;One of the most exciting DJs on the circuit right now.&rdquo;</blockquote>
-<p class="quote-sub fade-in fade-in-delay-1">Just ask the A-list artists, global brands, and sold-out crowds who keep coming back for more.</p>
-<div class="logo-grid fade-in fade-in-delay-2">
-  <img src="assets/logo-bafta.png" alt="Partner" loading="lazy">
-  <img src="assets/logo-f1.png" alt="Partner" loading="lazy">
-  <img src="assets/logo-chanel.png" alt="Partner" loading="lazy">
-  <img src="assets/logo-patron.png" alt="Partner" loading="lazy">
-  <img src="assets/logo-lacoste.png" alt="Partner" loading="lazy">
-  <img src="assets/logo-montblanc.png" alt="Partner" loading="lazy">
-  <img src="assets/logo-lvmh.png" alt="Partner" loading="lazy">
-  <img src="assets/logo-carrera.png" alt="Partner" loading="lazy">
-</div>
-<a href="mailto:press@latenightricky.com" class="pill pill-white fade-in fade-in-delay-3">ALL PARTNERSHIPS</a>
-<p class="mt-30"><a href="#" class="download-link fade-in fade-in-delay-3">Download Press Pack</a></p>
-</div>
-</section>
-
-<!-- VIDEO SECTION -->
+<!-- VIDEO / SHOWREEL -->
 <section class="video-section" id="video">
 <video class="video-desktop" id="videoDesktop" muted loop playsinline preload="metadata" poster="assets/video-poster-desktop.jpg">
   <source src="assets/video-desktop.webm" type="video/webm">
@@ -340,11 +253,113 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 </video>
 <div class="video-overlay"></div>
 <div class="video-content">
-  <h2 class="fade-in">Showreel</h2>
-  <a href="#" class="pill pill-white fade-in fade-in-delay-1">
+  <h2 class="reveal">Showreel</h2>
+  <a href="#" class="pill pill-white reveal reveal-d1">
     <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-linejoin="round"/></svg>
     WATCH SHOWREEL
   </a>
+</div>
+</section>
+
+<!-- GEOGRAPHIC REACH -->
+<section class="section-cream" id="reach">
+<div class="container">
+<div class="reach">
+<h1 class="reveal">From London to New York / LA to Las Vegas / Miami to Ibiza / Sydney to Hong Kong and many more.</h1>
+<p class="reveal reveal-d1">More than 150 shows across the world and counting. Ricky's busiest year yet.</p>
+</div>
+<div class="divider"></div>
+</div>
+</section>
+
+<!-- SHOWS & STORIES -->
+<section class="section-cream" id="shows">
+<div class="container">
+<h2 class="shows-title reveal">Recent Shows &amp; Stories</h2>
+<div class="shows-grid">
+<div class="show-card reveal">
+<div class="card-img sg-1">
+  <div class="card-inner">
+    <h4>Ministry of Sound</h4>
+    <span>London</span>
+  </div>
+</div>
+<p class="season">Spring / Summer 2025</p>
+<h3>Sidemen vs YouTube All Stars</h3>
+<p class="show-meta">One of London's most iconic venues, packed to capacity.</p>
+<span class="card-arrow">Read story <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+</div>
+<div class="show-card reveal reveal-d1">
+<div class="card-img sg-2">
+  <div class="card-inner">
+    <h4>Ibiza Rocks</h4>
+    <span>Ibiza</span>
+  </div>
+</div>
+<p class="season">Spring / Summer 2024</p>
+<h3>Gin &amp; Juice Launch</h3>
+<p class="show-meta">Sunset sets and poolside energy in the White Isle.</p>
+<span class="card-arrow">Read story <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+</div>
+<div class="show-card reveal reveal-d2">
+<div class="card-img sg-3">
+  <div class="card-inner">
+    <h4>Skyline Festival</h4>
+    <span>International</span>
+  </div>
+</div>
+<p class="season">Autumn / Winter 2024</p>
+<h3>Abu Dhabi Grand Prix</h3>
+<p class="show-meta">Major festival appearance under the desert stars.</p>
+<span class="card-arrow">Read story <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+</div>
+<div class="show-card reveal reveal-d3">
+<div class="card-img sg-4">
+  <div class="card-inner">
+    <h4>Private Events</h4>
+    <span>Worldwide</span>
+  </div>
+</div>
+<p class="season">Spring / Summer 2023</p>
+<h3>Royal Wedding of the Year</h3>
+<p class="show-meta">Exclusive corporate events and private celebrations.</p>
+<span class="card-arrow">Read story <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+</div>
+</div>
+<div class="reveal text-center btn-wrap">
+  <a href="#shows" class="pill pill-blue">ALL SHOWS &amp; STORIES</a>
+</div>
+</div>
+</section>
+
+<!-- PARTNERSHIPS -->
+<section class="partnerships-section" id="partnerships">
+<div class="container">
+<blockquote class="quote reveal">&ldquo;One of the most exciting DJs on the circuit right now.&rdquo;</blockquote>
+<p class="quote-sub reveal reveal-d1">Just ask the A-list artists, global brands, and sold-out crowds who keep coming back for more.</p>
+<div class="logo-grid reveal reveal-d2">
+  <img src="assets/logo-bafta.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-f1.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-chanel.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-patron.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-lacoste.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-montblanc.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-lvmh.png" alt="Partner" loading="lazy">
+  <img src="assets/logo-carrera.png" alt="Partner" loading="lazy">
+</div>
+<a href="mailto:press@latenightricky.com" class="pill pill-white reveal reveal-d3">ALL PARTNERSHIPS</a>
+<div class="mt-30 reveal reveal-d3">
+  <a href="#" class="download-link">Download Press Pack</a>
+</div>
+</div>
+</section>
+
+<!-- RADIO / SPOTIFY -->
+<section class="radio-section" id="radio">
+<div class="container">
+<h2 class="reveal">As Heard On</h2>
+<p class="reveal reveal-d1">Featured mixes, radio shows, and curated playlists.</p>
+<img src="assets/ricky-spotify.jpg" alt="DJ Fricktion Radio" class="reveal reveal-d2" loading="lazy">
 </div>
 </section>
 
@@ -353,14 +368,14 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 <div class="container">
 <div class="cta-row">
 <div class="cta-text">
-<h2 class="fade-in">Reach out, let\u0026rsquo;s collaborate</h2>
-<p class="fade-in fade-in-delay-1">From club nights to corporate events, festivals to private parties. Get in touch to check availability.</p>
-<div class="fade-in fade-in-delay-2">
+<h2 class="reveal">Reach out, let\u0026rsquo;s collaborate</h2>
+<p class="reveal reveal-d1">From club nights to corporate events, festivals to private parties. Get in touch to check availability.</p>
+<div class="reveal reveal-d2">
 <a href="mailto:bookings@latenightricky.com" class="pill pill-white">GET IN TOUCH</a>
 </div>
 </div>
-<div class="cta-img fade-in fade-in-delay-2">
-<img src="assets/ricky-portrait.jpg" alt="Late Night Ricky" loading="lazy">
+<div class="cta-img reveal reveal-d2">
+<img src="assets/ricky-hero.jpg" alt="Late Night Ricky" loading="lazy">
 </div>
 </div>
 </div>
@@ -369,10 +384,10 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 <!-- CONTACT -->
 <section class="contact-section" id="contact">
 <div class="container">
-<h2 class="fade-in">Get in Touch</h2>
-<p class="subheading fade-in fade-in-delay-1">For bookings, press enquiries, and collaborations</p>
+<h2 class="reveal">Get in Touch</h2>
+<p class="subheading reveal reveal-d1">For bookings, press enquiries, and collaborations</p>
 <div class="contact-grid">
-<div class="contact-card fade-in">
+<div class="contact-card reveal">
   <div class="icon">
     <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
   </div>
@@ -380,7 +395,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   <p>For events, festivals, club nights and private parties</p>
   <a href="mailto:bookings@latenightricky.com">bookings@latenightricky.com</a>
 </div>
-<div class="contact-card fade-in fade-in-delay-1">
+<div class="contact-card reveal reveal-d1">
   <div class="icon">
     <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
   </div>
@@ -388,7 +403,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   <p>Press kits, interviews and media enquiries</p>
   <a href="mailto:press@latenightricky.com">press@latenightricky.com</a>
 </div>
-<div class="contact-card fade-in fade-in-delay-2">
+<div class="contact-card reveal reveal-d2">
   <div class="icon">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
   </div>
@@ -397,7 +412,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   <a href="mailto:management@latenightricky.com">management@latenightricky.com</a>
 </div>
 </div>
-<div class="fade-in text-center">
+<div class="reveal text-center">
   <a href="mailto:bookings@latenightricky.com" class="pill pill-blue">SEND AN EMAIL</a>
 </div>
 </div>
@@ -412,7 +427,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   <a href="mailto:bookings@latenightricky.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
 </div>
 <div class="footer-links">
-  <a href="#about">About</a>
+  <a href="#reach">About</a>
   <a href="#shows">Shows</a>
   <a href="#partnerships">Partners</a>
   <a href="#video">Showreel</a>
@@ -444,7 +459,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 })();
 
 (function(){
-  var fadeEls=document.querySelectorAll('.fade-in');
+  var els=document.querySelectorAll('.reveal');
   var observer=new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       if(entry.isIntersecting){
@@ -453,7 +468,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
       }
     });
   },{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
-  fadeEls.forEach(function(el){observer.observe(el)});
+  els.forEach(function(el){observer.observe(el)});
 })();
 
 (function(){
@@ -461,7 +476,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   var videoMobile=document.getElementById('videoMobile');
   var videos=[videoDesktop,videoMobile].filter(function(v){return !!v});
   if(!videos.length)return;
-  var videoObserver=new IntersectionObserver(function(entries){
+  var observer=new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       var video=entry.target;
       if(entry.isIntersecting){
@@ -471,7 +486,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
       }
     });
   },{threshold:0.15});
-  videos.forEach(function(v){videoObserver.observe(v)});
+  videos.forEach(function(v){observer.observe(v)});
 })();
 
 (function(){
