@@ -11,7 +11,7 @@
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--gd:#1B3A4C;--gs:#8FA8BE;--gm:#6B8FAB;--gl:#A3B5C4;--cr:#E3E8ED;--wh:#fff;--bk:#111;--fs:'Playfair Display',Georgia,serif;--fn:'Inter','Helvetica Neue',Arial,sans-serif}
-html{scroll-behavior:smooth;scroll-padding-top:120px}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
 body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr)}
 
 /* Scroll animations */
@@ -32,7 +32,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 
 /* Nav */
 .nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:20px 30px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,backdrop-filter .4s}
-.nav.solid{background:rgba(227,232,237,.95);backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(27,58,76,.06)}
+.nav.solid{background:transparent}
 .nav-btn{width:100px;height:100px;border-radius:50%;background:rgba(227,232,237,.9);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s,border-color .3s;border:none}
 .nav-btn:hover{transform:translateY(-3px)}
 .nav-btn img{width:28px;height:28px;object-fit:contain}
@@ -42,7 +42,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .nav-center-sm svg{width:30px}
 .hamburger{display:flex;flex-direction:column;gap:6px}
 .hamburger span{display:block;width:24px;height:2px;background:var(--gd);border-radius:1px;transition:all .3s}
-.dnav{display:none;gap:30px;align-items:center;background:rgba(227,232,237,.7);border-radius:1000px;padding:8px 24px;backdrop-filter:blur(10px)}
+.dnav{display:none;gap:30px;align-items:center}
 @media(min-width:992px){.dnav{display:flex}.mob{display:none}.nav-center-sm{display:none}.hamburger{display:none}}
 .dnav a{color:#5B7A8E;text-decoration:none;font-size:13px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:4px 0;transition:color .3s;position:relative}
 .dnav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gd);transition:width .4s cubic-bezier(.22,1,.36,1)}
@@ -558,13 +558,6 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 
 <!-- SCRIPT -->
 <script>
-(function(){
-  var nav=document.getElementById('nav');
-  function updateNav(){if(window.scrollY>80){nav.classList.add('solid')}else{nav.classList.remove('solid')}}
-  window.addEventListener('scroll',updateNav,{passive:true});
-  updateNav();
-})();
-
 (function(){
   var menuBtn=document.getElementById('menuBtn');
   var menuClose=document.getElementById('menuClose');
