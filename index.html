@@ -179,6 +179,15 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .file-name{margin-top:15px;color:var(--gd);font-weight:500;font-size:14px;display:none}
 .file-name.visible{display:block}
 
+/* Reach Out */
+.reach-out-section{padding:120px 0;background:var(--bk);color:var(--wh)}
+.reach-out-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1200px;margin:0 auto;padding:0 30px}
+.reach-out-text h2{font-family:var(--fs);font-size:clamp(42px,6vw,72px);font-weight:400;line-height:1.1;margin-bottom:40px;color:var(--wh);max-width:500px}
+.reach-out-text .cta-btn{display:inline-block;padding:14px 36px;border:2px solid var(--wh);border-radius:100px;color:var(--wh);font-family:var(--fn);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s;background:transparent;cursor:pointer}
+.reach-out-text .cta-btn:hover{background:var(--wh);color:var(--bk)}
+.reach-out-img{position:relative;overflow:hidden;border-radius:12px}
+.reach-out-img img{width:100%;height:auto;object-fit:cover;display:block}
+
 /* Contact Form */
 .contact-form-section{padding:0;background:var(--wh)}
 .contact-form-section h2{font-family:var(--fn);font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-2px;text-transform:uppercase;margin-bottom:16px;color:var(--bk);text-align:center;padding-top:40px}
@@ -267,6 +276,9 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   .contact-form-section h2{font-size:32px}
   .upload-area{padding:40px 20px}
   .carousel-item{width:200px;height:260px}
+  .reach-out-layout{grid-template-columns:1fr;gap:40px;text-align:center}
+  .reach-out-text h2{margin:0 auto 30px}
+  .reach-out-img{max-width:320px;margin:0 auto}
   .footer{padding:40px 20px 20px}
   .hero .wordmark{width:90%}
 }
@@ -497,6 +509,19 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
   </div>
   <div class="reveal reveal-d3"><button type="submit" class="upload-btn w-100">Submit Track</button></div>
 </form>
+</div>
+</section>
+
+<!-- REACH OUT -->
+<section class="reach-out-section" id="reach-out">
+<div class="reach-out-layout reveal">
+  <div class="reach-out-text">
+    <h2>Reach out, let's collaborate</h2>
+    <a href="#contact-form" class="cta-btn">Get in touch</a>
+  </div>
+  <div class="reach-out-img">
+    <img src="assets/ricky-hero.jpg" alt="Late Night Ricky" loading="lazy">
+  </div>
 </div>
 </section>
 
