@@ -385,7 +385,14 @@ section:not(.hero),footer{position:relative;z-index:2}
   <div class="video-content" style="width:100%;max-width:1100px">
     <h2 class="reveal">Showreel</h2>
     <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)">
-      <iframe src="https://www.youtube.com/embed/Ga-oUBV2k0E?rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      <video class="video-desktop loaded" poster="assets/video-poster-desktop.jpg" playsinline muted loop controls preload="none" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border:0;border-radius:12px">
+        <source src="assets/video-desktop.mp4" type="video/mp4">
+        <source src="assets/video-desktop.webm" type="video/webm">
+      </video>
+      <video class="video-mobile loaded" poster="assets/video-poster-mobile.jpg" playsinline muted loop controls preload="none" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border:0;border-radius:12px">
+        <source src="assets/video-mobile.mp4" type="video/mp4">
+        <source src="assets/video-mobile.webm" type="video/webm">
+      </video>
     </div>
   </div>
 </section>
