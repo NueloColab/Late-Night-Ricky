@@ -96,13 +96,18 @@ section:not(.hero),footer{position:relative;z-index:2}
 /* Shows */
 .shows-title{font-family:var(--fn);font-size:clamp(36px,5.5vw,64px);font-weight:900;text-align:center;margin-bottom:20px;color:var(--bk);letter-spacing:-2px;text-transform:uppercase;line-height:.95}
 .shows-sub{text-align:center;font-size:14px;color:#5B7A8E;margin-bottom:60px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.shows-mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:8px;margin-bottom:80px;border-radius:16px;overflow:hidden}
+.shows-mosaic{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:280px;gap:4px;margin-bottom:80px;grid-auto-flow:dense}
 .shows-mosaic .m-item{position:relative;overflow:hidden;cursor:pointer}
-.shows-mosaic .m-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1)}
-.shows-mosaic .m-item:hover img{transform:scale(1.08)}
-.shows-mosaic .m-wide{grid-column:span 2}
+.shows-mosaic .m-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1);display:block}
+.shows-mosaic .m-item:hover img{transform:scale(1.05)}
 .shows-mosaic .m-tall{grid-row:span 2}
+.shows-mosaic .m-wide{grid-column:span 2}
 .shows-mosaic .m-big{grid-column:span 2;grid-row:span 2}
+.shows-mosaic .m-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2}
+.shows-mosaic .m-overlay .spot-icon{width:48px;height:48px;border-radius:50%;border:2px solid var(--wh);display:flex;align-items:center;justify-content:center;margin-bottom:12px;background:rgba(0,0,0,.3)}
+.shows-mosaic .m-overlay .spot-icon svg{width:20px;height:20px;stroke:var(--wh);fill:none;stroke-width:2}
+.shows-mosaic .m-overlay h4{font-family:var(--fn);font-size:16px;font-weight:600;color:var(--wh);text-transform:uppercase;letter-spacing:2px;text-align:center;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.shows-mosaic .m-overlay h4 strong{display:block;font-size:22px;font-weight:900;letter-spacing:1px;margin-top:4px}
 .shows-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin-bottom:50px}
 .show-card{display:block;transition:transform .4s cubic-bezier(.22,1,.36,1);cursor:pointer}
 .show-card:hover{transform:translateY(-6px)}
@@ -284,9 +289,9 @@ section:not(.hero),footer{position:relative;z-index:2}
   .reach h1{font-size:32px}
   .shows-grid{gap:30px}
   .show-card .card-img{min-height:400px}
-  .shows-mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}
+  .shows-mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:200px;grid-auto-flow:dense}
+  .shows-mosaic .m-tall{grid-row:span 2}
   .shows-mosaic .m-wide{grid-column:span 2}
-  .shows-mosaic .m-tall{grid-row:span 1}
   .shows-mosaic .m-big{grid-column:span 2;grid-row:span 2}
 }
 @media(max-width:767px){
@@ -298,7 +303,8 @@ section:not(.hero),footer{position:relative;z-index:2}
   .reach{padding:80px 0 50px}
   .reach h1{font-size:28px}
   .shows-title{font-size:32px;margin-bottom:20px}
-  .shows-mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:120px;margin-bottom:50px}
+  .shows-mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px;margin-bottom:50px}
+  .shows-mosaic .m-tall{grid-row:span 2}
   .show-card .card-img{min-height:300px}
   .show-card .card-inner{padding:24px}
   .show-card .card-inner h4{font-size:28px}
@@ -419,14 +425,20 @@ section:not(.hero),footer{position:relative;z-index:2}
 <p class="shows-sub reveal">A career built on unforgettable nights, iconic venues, and sold-out crowds.</p>
 
 <div class="shows-mosaic reveal">
-  <div class="m-item m-big"><img src="assets/ricky-hero-new.jpg" alt="Late Night Ricky" loading="lazy"></div>
-  <div class="m-item m-tall"><img src="assets/press-bg2.jpg" alt="Event" loading="lazy"></div>
-  <div class="m-item"><img src="assets/ricky-spotify-new.jpg" alt="Radio" loading="lazy"></div>
-  <div class="m-item m-wide"><img src="assets/ricky-fricktion.jpg" alt="Show" loading="lazy"></div>
-  <div class="m-item"><img src="assets/ricky-portrait-new.jpg" alt="Portrait" loading="lazy"></div>
-  <div class="m-item m-tall"><img src="assets/ricky-spotify-new.jpg" alt="Event" loading="lazy"></div>
-  <div class="m-item"><img src="assets/ricky-portrait-new.jpg" alt="Show" loading="lazy"></div>
+  <div class="m-item m-tall"><img src="assets/ricky-portrait-new.jpg" alt="Late Night Ricky" loading="lazy"></div>
+  <div class="m-item"><img src="assets/press-bg2.jpg" alt="Event" loading="lazy"></div>
+  <div class="m-item">
+    <img src="assets/ricky-fricktion.jpg" alt="DJ Fricktion" loading="lazy">
+    <div class="m-overlay">
+      <div class="spot-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
+      <h4>Student Spotlight<br><strong>DJ Fricktion</strong></h4>
+    </div>
+  </div>
+  <div class="m-item"><img src="assets/ricky-spotify-new.jpg" alt="Show" loading="lazy"></div>
   <div class="m-item"><img src="assets/ricky-hero-new.jpg" alt="Late Night Ricky" loading="lazy"></div>
+  <div class="m-item"><img src="assets/ricky-hero-v2.jpg" alt="Late Night Ricky" loading="lazy"></div>
+  <div class="m-item"><img src="assets/ricky-hero-new.jpg" alt="Late Night Ricky" loading="lazy"></div>
+  <div class="m-item"><img src="assets/ricky-portrait-new.jpg" alt="Portrait" loading="lazy"></div>
 </div>
 
 <div class="shows-grid">
