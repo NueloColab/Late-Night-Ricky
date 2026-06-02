@@ -52,13 +52,18 @@ body{font-family:var(--fn);color:var(--bk);background:var(--wh);overflow-x:hidde
 @media(max-width:1024px){.photo-grid{grid-template-columns:repeat(3,1fr)}.photo-grid img{height:240px}}
 @media(max-width:600px){.photo-grid{grid-template-columns:repeat(2,1fr);gap:8px}.photo-grid img{height:180px}}
 
-/* Event Info */
-.event-info{padding:80px 30px;background:var(--wh)}
-.event-info-inner{max-width:800px;margin:0 auto}
-.event-info h2{font-family:var(--fn);font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gs);margin-bottom:24px}
-.event-info p{font-family:var(--fs);font-size:clamp(18px,2.5vw,24px);font-weight:400;line-height:1.6;color:var(--gd);margin-bottom:24px}
-.event-info .event-tags{display:flex;gap:12px;flex-wrap:wrap;margin-top:40px}
-.event-info .tag{font-family:var(--fn);font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:10px 24px;border:2px solid var(--gl);border-radius:100px;color:var(--gd);background:transparent}
+/* Event Info - split layout like About page */
+.event-info{padding:0;background:var(--wh)}
+.event-split{display:grid;grid-template-columns:1fr 1fr;min-height:600px}
+.event-split-img{position:relative;overflow:hidden}
+.event-split-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.event-split-text{padding:80px 60px;display:flex;flex-direction:column;justify-content:center;max-width:640px}
+.event-split-text h2{font-family:var(--fn);font-size:13px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gs);margin-bottom:32px}
+.event-split-text .big-headline{font-family:var(--fn);font-size:clamp(28px,4vw,48px);font-weight:900;line-height:1.05;text-transform:uppercase;color:var(--bk);margin-bottom:32px;letter-spacing:-1px}
+.event-split-text p{font-family:var(--fs);font-size:16px;font-weight:400;line-height:1.7;color:var(--gd);margin-bottom:20px}
+.event-split-text .event-tags{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.event-split-text .tag{font-family:var(--fn);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:10px 24px;border:2px solid var(--gl);border-radius:100px;color:var(--gd);background:transparent}
+@media(max-width:900px){.event-split{grid-template-columns:1fr}.event-split-img{min-height:400px}.event-split-text{padding:50px 30px}}
 
 /* Back Link */
 .back-link{padding:40px 30px;background:var(--wh);border-top:1px solid var(--cr)}
@@ -155,14 +160,20 @@ body{font-family:var(--fn);color:var(--bk);background:var(--wh);overflow-x:hidde
     </div>
   </div>
 </section>
+<!-- Event Info - split layout like About page -->
 <section class="event-info">
-  <div class="event-info-inner">
-    <h2>About the Event</h2>
-    <p>{EVENT_DESCRIPTION}</p>
-    <div class="event-tags">
-      <span class="tag">{DJ_SET}</span>
-      <span class="tag">{CAPACITY}</span>
-      <span class="tag">{GENRE}</span>
+  <div class="event-split">
+    <div class="event-split-img">
+      <img src="{PHOTO1}" alt="{EVENT_TITLE}" loading="lazy">
+    </div>
+    <div class="event-split-text">
+      <h2>About the Event</h2>
+      <p class="big-headline">{EVENT_DESCRIPTION}</p>
+      <div class="event-tags">
+        <span class="tag">{DJ_SET}</span>
+        <span class="tag">{CAPACITY}</span>
+        <span class="tag">{GENRE}</span>
+      </div>
     </div>
   </div>
 </section>
