@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Showreels — Late Night Ricky</title>
+<meta name="description" content="Showreels from Late Night Ricky's performances around the world.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gd:#1B3A4C;--gs:#8FA8BE;--gm:#6B8FAB;--gl:#A3B5C4;--cr:#E3E8ED;--wh:#fff;--bk:#111;--fs:'Playfair Display',Georgia,serif;--fn:'Inter','Helvetica Neue',Arial,sans-serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr)}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:20px 30px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,backdrop-filter .4s}
+.nav.solid{background:rgba(255,255,255,.95);backdrop-filter:blur(10px)}
+.nav-btn{width:75px;height:75px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s;border:none;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.nav-btn:hover{transform:translateY(-3px)}
+.nav-btn img{width:auto;height:42px;object-fit:contain}
+.dnav{display:flex;gap:24px;align-items:center;background:rgba(255,255,255,.92);border-radius:100px;padding:14px 36px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.dnav a{color:#5B7A8E;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 4px;transition:color .3s;position:relative}
+.dnav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gd);transition:width .4s cubic-bezier(.22,1,.36,1)}
+.dnav a:hover{color:var(--gd)}
+.dnav a:hover::after{width:100%}
+.dnav a.active{color:var(--gd)}
+.dnav a.active::after{width:100%}
+.hamburger{display:none;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--gd);border-radius:1px}
+@media(max-width:992px){.dnav{display:none}.hamburger{display:flex}}
+
+/* Mobile menu */
+.mm{position:fixed;inset:0;background:var(--cr);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateX(100%);transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.mm.open{transform:translateX(0)}
+.mx{position:absolute;top:20px;right:30px;width:50px;height:50px;border-radius:50%;background:0 0;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gd);font-size:24px}
+.mm a{display:block;color:var(--gd);text-decoration:none;font-family:var(--fs);font-size:32px;font-weight:500;padding:14px 0;letter-spacing:2px;text-transform:uppercase}
+
+/* Hero */
+.showreels-hero{padding:160px 30px 80px;background:var(--bk);text-align:center}
+.showreels-hero h1{font-family:var(--fs);font-size:clamp(36px,6vw,72px);font-weight:400;color:var(--wh);margin-bottom:16px}
+.showreels-hero p{font-size:16px;color:var(--gs);max-width:600px;margin:0 auto;line-height:1.6}
+
+/* Grid */
+.showreels-grid{max-width:1200px;margin:0 auto;padding:60px 30px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.showreel-card{background:var(--wh);border-radius:16px;overflow:hidden;transition:transform .4s}
+.showreel-card:hover{transform:translateY(-6px)}
+.showreel-card .card-video{position:relative;padding-bottom:56.25%;background:var(--bk)}
+.showreel-card .card-video video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
+.showreel-card .card-info{padding:24px}
+.showreel-card .card-info h3{font-family:var(--fs);font-size:24px;font-weight:400;margin-bottom:8px;color:var(--gd)}
+.showreel-card .card-info p{font-size:14px;color:#5B7A8E;line-height:1.5}
+.showreel-card .card-info .date{font-size:12px;color:var(--gm);text-transform:uppercase;letter-spacing:1.5px;margin-top:12px}
+
+@media(max-width:767px){.showreels-grid{grid-template-columns:1fr;padding:40px 20px}}
+
+/* Footer */
+.footer{padding:60px 30px;background:var(--bk);text-align:center}
+.footer-links{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-bottom:24px}
+.footer-links a{color:var(--gs);text-decoration:none;font-size:14px;letter-spacing:1px;text-transform:uppercase;transition:color .3s}
+.footer-links a:hover{color:var(--wh)}
+.copyright{font-size:12px;color:var(--gm);letter-spacing:1px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav solid" id="nav">
+<a href="index.html" class="nav-btn" aria-label="Late Night Ricky home"><img src="assets/lnr-logo.png" alt="Late Night Ricky"></a>
+<div class="dnav">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="index.html#shows">Shows</a>
+  <a href="index.html#partnerships">Partners</a>
+  <a href="showreel.html" class="active">Showreels</a>
+  <a href="index.html#supporting">Supporting</a>
+  <a href="index.html#share-music">Share Music</a>
+  <a href="index.html#contact-form">Contact</a>
+</div>
+<button class="hamburger" id="menuBtn" aria-label="Open menu">
+  <span></span><span></span><span></span>
+</button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mm" id="mobileMenu">
+<button class="mx" id="menuClose" aria-label="Close menu">&#10005;</button>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="index.html#shows">Shows</a>
+<a href="index.html#partnerships">Partners</a>
+<a href="showreel.html">Showreels</a>
+<a href="index.html#supporting">Supporting</a>
+<a href="index.html#share-music">Share Music</a>
+<a href="index.html#contact-form">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="showreels-hero">
+  <h1>Showreels</h1>
+  <p>Live performances, event highlights, and behind-the-scenes moments from shows around the world.</p>
+</section>
+
+<!-- GRID -->
+<section class="showreels-grid">
+  <div class="showreel-card">
+    <div class="card-video">
+      <video poster="assets/video-poster-desktop.jpg" playsinline controls preload="metadata">
+        <source src="assets/video-desktop.mp4" type="video/mp4">
+        <source src="assets/video-desktop.webm" type="video/webm">
+      </video>
+    </div>
+    <div class="card-info">
+      <h3>2025 Showreel</h3>
+      <p>Highlights from Ricky's biggest year yet — over 150 shows across five continents.</p>
+      <div class="date">Dec 2025</div>
+    </div>
+  </div>
+
+  <!-- Placeholder for future showreels -->
+  <div class="showreel-card" style="opacity:.5">
+    <div class="card-video" style="display:flex;align-items:center;justify-content:center;background:var(--gd)">
+      <span style="color:var(--wh);font-family:var(--fs);font-size:18px">More showreels coming soon</span>
+    </div>
+    <div class="card-info">
+      <h3>Future Showreels</h3>
+      <p>Upload new showreels here as they become available.</p>
+      <div class="date">Coming soon</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="footer-links">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="index.html#shows">Shows</a>
+  <a href="index.html#partnerships">Partners</a>
+  <a href="showreel.html">Showreels</a>
+  <a href="index.html#contact-form">Contact</a>
+</div>
+<p class="copyright">Late Night Ricky &copy; 2026. All rights reserved.</p>
+</footer>
+
+<script>
+(function(){
+  var menuBtn=document.getElementById('menuBtn');
+  var menuClose=document.getElementById('menuClose');
+  var mobileMenu=document.getElementById('mobileMenu');
+  function openMenu(){mobileMenu.classList.add('open');document.body.style.overflow='hidden'}
+  function closeMenu(){mobileMenu.classList.remove('open');document.body.style.overflow=''}
+  menuBtn.addEventListener('click',openMenu);
+  menuClose.addEventListener('click',closeMenu);
+  document.querySelectorAll('.mm a').forEach(function(a){a.addEventListener('click',closeMenu)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+})();
+</script>
+
+</body>
+</html>

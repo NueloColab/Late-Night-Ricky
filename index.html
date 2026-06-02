@@ -62,16 +62,13 @@ section:not(.hero),footer{position:relative;z-index:2}
 
 /* Showreel Hero */
 .showreel-hero{position:relative;width:100%;height:100vh;overflow:hidden;z-index:1;background:var(--bk);display:flex;align-items:center;justify-content:center}
-.showreel-overlay{position:absolute;inset:0;background:rgba(17,17,17,.45);z-index:2;pointer-events:none;transition:opacity .8s ease}
-.showreel-overlay.hidden{opacity:0}
+.showreel-overlay{position:absolute;inset:0;background:rgba(17,17,17,.45);z-index:2;pointer-events:none}
 .showreel-content{position:relative;z-index:3;text-align:center}
-.showreel-btn{padding:16px 48px;border:2px solid var(--wh);border-radius:100px;background:transparent;color:var(--wh);font-family:var(--fn);font-size:13px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.showreel-btn{display:inline-block;padding:16px 48px;border:2px solid var(--wh);border-radius:100px;background:transparent;color:var(--wh);font-family:var(--fn);font-size:13px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none}
 .showreel-btn:hover{background:var(--wh);color:var(--bk)}
 .showreel-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1}
 .showreel-video::-webkit-media-controls-panel{display:none!important}
 .showreel-video::-webkit-media-controls{display:none!important}
-.showreel-video.playing::-webkit-media-controls-panel{display:flex!important}
-.showreel-video.playing::-webkit-media-controls{display:flex!important}
 
 /* Video */
 .video-section{position:relative;width:100%;min-height:100vh;overflow:hidden;z-index:1;background:var(--bk);display:flex;align-items:center;justify-content:center}
@@ -374,7 +371,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 <a href="about.html">About</a>
 <a href="#shows">Shows</a>
 <a href="#partnerships">Partners</a>
-<a href="#video">Showreel</a>
+<a href="showreel.html">Showreels</a>
 <a href="#supporting">Supporting</a>
 <a href="#share-music">Share Music</a>
 <a href="#contact-form">Contact</a>
@@ -387,7 +384,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 <a href="about.html">About</a>
 <a href="#shows">Shows</a>
 <a href="#partnerships">Partners</a>
-<a href="#video">Showreel</a>
+<a href="showreel.html">Showreels</a>
 <a href="#supporting">Supporting</a>
 <a href="#share-music">Share Music</a>
 <a href="#contact-form">Contact</a>
@@ -395,11 +392,11 @@ section:not(.hero),footer{position:relative;z-index:2}
 
 <!-- VIDEO / SHOWREEL -->
 <section class="showreel-hero" id="video">
-  <div class="showreel-overlay" id="showreelOverlay"></div>
+  <div class="showreel-overlay"></div>
   <div class="showreel-content">
-    <button class="showreel-btn" id="showreelBtn" onclick="playShowreel()">WATCH SHOWREEL</button>
+    <a href="showreel.html" class="showreel-btn">WATCH SHOWREEL</a>
   </div>
-  <video class="showreel-video" id="showreelVideo" poster="assets/video-poster-desktop.jpg" playsinline loop preload="metadata">
+  <video class="showreel-video" id="showreelVideo" poster="assets/video-poster-desktop.jpg" playsinline autoplay muted loop preload="metadata">
     <source src="assets/video-desktop.mp4" type="video/mp4">
     <source src="assets/video-desktop.webm" type="video/webm">
   </video>
@@ -684,7 +681,7 @@ section:not(.hero),footer{position:relative;z-index:2}
   <a href="about.html">About</a>
   <a href="#shows">Shows</a>
   <a href="#partnerships">Partners</a>
-  <a href="#video">Showreel</a>
+  <a href="showreel.html">Showreels</a>
   <a href="#supporting">Supporting</a>
   <a href="#share-music">Share Music</a>
   <a href="#contact-form">Contact</a>
@@ -843,17 +840,22 @@ section:not(.hero),footer{position:relative;z-index:2}
   });
 })();
 
-function playShowreel(){
-  var overlay=document.getElementById('showreelOverlay');
-  var btn=document.getElementById('showreelBtn');
+// Showreel autoplay on scroll into view
+(function(){
   var video=document.getElementById('showreelVideo');
-  if(overlay)overlay.classList.add('hidden');
-  if(btn)btn.style.display='none';
-  if(video){
-    video.classList.add('playing');
-    video.play().catch(function(e){console.log('Play error:',e);});
-  }
-}
+  if(!video)return;
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        video.play().catch(function(){});
+      }else{
+        video.pause();
+      }
+    });
+  },{threshold:0.15});
+  observer.observe(video);
+})();
+
 </script>
 
 </body>
