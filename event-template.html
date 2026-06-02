@@ -35,7 +35,9 @@ body{font-family:var(--fn);color:var(--bk);background:var(--wh);overflow-x:hidde
 
 /* Event Hero */
 .event-hero{min-height:70vh;display:flex;flex-direction:column;justify-content:flex-end;padding:140px 30px 60px;background:var(--gd);color:var(--wh);position:relative;overflow:hidden}
-.event-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:grayscale(60%) brightness(0.4);z-index:0}
+.event-hero-bg{position:absolute;inset:0;z-index:0}
+.event-hero-bg.video-hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(60%) brightness(0.4)}
+.event-hero-bg.image-hero{background-size:cover;background-position:center;filter:grayscale(60%) brightness(0.4)}
 .event-hero-content{position:relative;z-index:1;max-width:1200px;margin:0 auto;width:100%}
 .event-venue{font-family:var(--fn);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gs);margin-bottom:16px}
 .event-title{font-family:var(--fs);font-size:clamp(42px,7vw,80px);font-weight:400;line-height:1.05;margin-bottom:20px;color:var(--wh)}
@@ -108,9 +110,9 @@ body{font-family:var(--fn);color:var(--bk);background:var(--wh);overflow-x:hidde
   <a href="contact.html">Contact</a>
 </div>
 
-<!-- Event Hero -->
+<!-- Event Hero - IMAGE VERSION (default) -->
 <section class="event-hero">
-  <div class="event-hero-bg" style="background-image:url('{HERO_IMAGE}')"></div>
+  <div class="event-hero-bg image-hero" style="background-image:url('{HERO_IMAGE}')"></div>
   <div class="event-hero-content">
     <p class="event-venue">{VENUE_NAME}</p>
     <h1 class="event-title">{EVENT_TITLE}</h1>
@@ -121,6 +123,17 @@ body{font-family:var(--fn);color:var(--bk);background:var(--wh);overflow-x:hidde
     </div>
   </div>
 </section>
+<!-- 
+  VIDEO HERO VERSION - replace the section above with this:
+  <section class="event-hero">
+    <div class="event-hero-bg video-hero">
+      <video autoplay muted loop playsinline preload="metadata" poster="{HERO_IMAGE}">
+        <source src="assets/video-desktop.mp4" type="video/mp4">
+      </video>
+    </div>
+    ...same content...
+  </section>
+-->
 
 <!-- Photo Grid -->
 <section class="photo-strip">
@@ -133,7 +146,15 @@ body{font-family:var(--fn);color:var(--bk);background:var(--wh);overflow-x:hidde
   </div>
 </section>
 
-<!-- Event Info -->
+<!-- YouTube Embed -->
+<section class="youtube-section" style="padding:80px 30px;background:var(--bk)">
+  <div style="max-width:1000px;margin:0 auto">
+    <h2 style="font-family:var(--fn);font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gs);margin-bottom:40px;text-align:center">Event Highlights</h2>
+    <div class="youtube-wrap" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px">
+      <iframe src="{YOUTUBE_EMBED}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
 <section class="event-info">
   <div class="event-info-inner">
     <h2>About the Event</h2>
