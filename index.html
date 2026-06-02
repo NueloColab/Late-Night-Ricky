@@ -23,7 +23,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .reveal-d3{transition-delay:.45s}
 
 /* Hero */
-.hero-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;background:linear-gradient(135deg,#0f1923 0%,#1B3A4C 50%,#0f1923 100%)}
+.hero-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;background-image:url('assets/ricky-hero.jpg');background-position:55% 30%;background-size:cover;background-repeat:no-repeat;filter:grayscale(100%) brightness(1.05)}
 .hero-bg::after{content:'';position:absolute;inset:0;background:rgba(27,58,76,.35);z-index:1}
 .hero{position:relative;z-index:1;text-align:left;background:transparent;min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:80px 60px 60px}
 .hero .wordmark{position:relative;z-index:2;width:52%;max-width:700px;min-width:280px;display:block;margin-left:4%;margin-bottom:60px;filter:drop-shadow(0 6px 30px rgba(0,0,0,.3))}
@@ -112,10 +112,10 @@ section:not(.hero),footer{position:relative;z-index:2}
 .show-card .card-arrow:hover{gap:14px}
 
 /* Show card gradients */
-.sg-1{background-image:url('assets/show-sidemen.png');background-size:cover;background-position:center}
-.sg-2{background-image:url('assets/show-gin-juice.png');background-size:cover;background-position:center}
-.sg-3{background-image:url('assets/show-abu-dhabi.png');background-size:cover;background-position:center}
-.sg-4{background-image:url('assets/show-royal-wedding.png');background-size:cover;background-position:center}
+.sg-1{background-image:url('assets/ricky-hero.jpg');background-size:cover;background-position:center}
+.sg-2{background-image:url('assets/ricky-radio.jpg');background-size:cover;background-position:center}
+.sg-3{background-image:url('assets/press-bg2.jpg');background-size:cover;background-position:center}
+.sg-4{background-image:url('assets/hero-main.png');background-size:cover;background-position:center}
 
 /* Pill buttons */
 .pill{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;border:2px solid;border-radius:1000px;padding:14px 40px;text-decoration:none;transition:all .3s}
@@ -381,10 +381,10 @@ section:not(.hero),footer{position:relative;z-index:2}
 </div>
 
 <!-- VIDEO / SHOWREEL -->
-<section class="video-section" id="video" style="background:var(--bk);padding:120px 30px;display:flex;align-items:center;justify-content:center">
-  <div class="video-content" style="width:100%;max-width:1100px;text-align:center">
-    <h2 class="reveal" style="margin-bottom:40px">Showreel</h2>
-    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.4)">
+<section class="video-section" id="video" style="padding:100px 30px;min-height:auto">
+  <div class="video-content" style="width:100%;max-width:1100px">
+    <h2 class="reveal">Showreel</h2>
+    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)">
       <iframe src="https://www.youtube.com/embed/Ga-oUBV2k0E?rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
     </div>
   </div>
@@ -407,14 +407,14 @@ section:not(.hero),footer{position:relative;z-index:2}
 <p class="shows-sub reveal">A career built on unforgettable nights, iconic venues, and sold-out crowds.</p>
 
 <div class="shows-mosaic reveal">
-  <div class="m-item m-big"><img src="assets/show-sidemen.png" alt="Late Night Ricky" loading="lazy"></div>
+  <div class="m-item m-big"><img src="assets/ricky-hero.jpg" alt="Late Night Ricky" loading="lazy"></div>
   <div class="m-item m-tall"><img src="assets/press-bg2.jpg" alt="Event" loading="lazy"></div>
-  <div class="m-item"><img src="assets/show-royal-wedding.png" alt="Radio" loading="lazy"></div>
-  <div class="m-item m-wide"><img src="assets/press-bg2.jpg" alt="Show" loading="lazy"></div>
-  <div class="m-item"><img src="assets/show-gin-juice.png" alt="Portrait" loading="lazy"></div>
-  <div class="m-item m-tall"><img src="assets/show-sidemen.png" alt="Event" loading="lazy"></div>
-  <div class="m-item"><img src="assets/show-gin-juice.png" alt="Show" loading="lazy"></div>
-  <div class="m-item"><img src="assets/show-sidemen.png" alt="Late Night Ricky" loading="lazy"></div>
+  <div class="m-item"><img src="assets/ricky-spotify.jpg" alt="Radio" loading="lazy"></div>
+  <div class="m-item m-wide"><img src="assets/hero-main.png" alt="Show" loading="lazy"></div>
+  <div class="m-item"><img src="assets/ricky-portrait.jpg" alt="Portrait" loading="lazy"></div>
+  <div class="m-item m-tall"><img src="assets/hero-overlay.png" alt="Event" loading="lazy"></div>
+  <div class="m-item"><img src="assets/profile.png" alt="Show" loading="lazy"></div>
+  <div class="m-item"><img src="assets/ricky-hero.jpg" alt="Late Night Ricky" loading="lazy"></div>
 </div>
 
 <div class="shows-grid">
@@ -499,7 +499,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 <section class="radio-section" id="radio">
 <div class="radio-layout reveal">
   <div class="radio-image">
-    <img src="assets/show-abu-dhabi.png" alt="Late Night Ricky" loading="lazy">
+    <img src="assets/ricky-radio.jpg" alt="Late Night Ricky" loading="lazy">
     <div class="radio-big-play" id="radioBigPlay">
       <div class="rb-circle"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></div>
     </div>
@@ -548,16 +548,16 @@ section:not(.hero),footer{position:relative;z-index:2}
 <!-- SUPPORTING ACT -->
 <section class="carousel-section">
 <div class="carousel-track">
-  <div class="carousel-item"><img src="assets/show-sidemen.png" alt="Late Night Ricky"></div>
-  <div class="carousel-item"><img src="assets/show-gin-juice.png" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/ricky-hero.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/ricky-portrait.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/hero-main.png" alt="Late Night Ricky"></div>
   <div class="carousel-item"><img src="assets/press-bg2.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/ricky-spotify.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/ricky-hero.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/ricky-portrait.jpg" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/hero-main.png" alt="Late Night Ricky"></div>
   <div class="carousel-item"><img src="assets/press-bg2.jpg" alt="Late Night Ricky"></div>
-  <div class="carousel-item"><img src="assets/show-royal-wedding.png" alt="Late Night Ricky"></div>
-  <div class="carousel-item"><img src="assets/show-sidemen.png" alt="Late Night Ricky"></div>
-  <div class="carousel-item"><img src="assets/show-gin-juice.png" alt="Late Night Ricky"></div>
-  <div class="carousel-item"><img src="assets/press-bg2.jpg" alt="Late Night Ricky"></div>
-  <div class="carousel-item"><img src="assets/press-bg2.jpg" alt="Late Night Ricky"></div>
-  <div class="carousel-item"><img src="assets/show-royal-wedding.png" alt="Late Night Ricky"></div>
+  <div class="carousel-item"><img src="assets/ricky-spotify.jpg" alt="Late Night Ricky"></div>
 </div>
 </section>
 
@@ -566,9 +566,9 @@ section:not(.hero),footer{position:relative;z-index:2}
 <h2 class="reveal">Supporting Act</h2>
 <div class="supporting-layout reveal reveal-d1">
   <div class="side-gallery">
-    <img src="assets/show-sidemen.png" alt="Photo" loading="lazy">
-    <img src="assets/show-gin-juice.png" alt="Photo" loading="lazy">
-    <img src="assets/press-bg2.jpg" alt="Photo" loading="lazy">
+    <img src="assets/ricky-hero.jpg" alt="Photo" loading="lazy">
+    <img src="assets/ricky-portrait.jpg" alt="Photo" loading="lazy">
+    <img src="assets/hero-main.png" alt="Photo" loading="lazy">
   </div>
   <div class="artist-list">
     <div class="artist-name">Stormzy</div>
@@ -586,8 +586,8 @@ section:not(.hero),footer{position:relative;z-index:2}
   </div>
   <div class="side-gallery">
     <img src="assets/press-bg2.jpg" alt="Photo" loading="lazy">
-    <img src="assets/show-sidemen.png" alt="Photo" loading="lazy">
-    <img src="assets/show-gin-juice.png" alt="Photo" loading="lazy">
+    <img src="assets/hero-overlay.png" alt="Photo" loading="lazy">
+    <img src="assets/profile.png" alt="Photo" loading="lazy">
   </div>
 </div>
 </section>
@@ -618,7 +618,7 @@ section:not(.hero),footer{position:relative;z-index:2}
     <a href="#contact-form" class="cta-btn">Get in touch</a>
   </div>
   <div class="reach-out-img">
-    <img src="assets/show-sidemen.png" alt="Late Night Ricky" loading="lazy">
+    <img src="assets/ricky-hero.jpg" alt="Late Night Ricky" loading="lazy">
   </div>
 </div>
 </section>
@@ -627,7 +627,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 <section class="contact-form-section" id="contact-form">
 <div class="contact-split reveal reveal-d1">
   <div class="contact-portrait">
-    <img src="assets/show-sidemen.png" alt="Late Night Ricky" loading="lazy">
+    <img src="assets/ricky-hero.jpg" alt="Late Night Ricky" loading="lazy">
   </div>
   <div class="contact-form-right">
     <div class="form-tabs">
