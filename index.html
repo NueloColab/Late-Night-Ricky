@@ -398,7 +398,7 @@ section:not(.hero),footer{position:relative;z-index:2}
   <div class="showreel-content">
     <button class="showreel-btn" id="showreelBtn" onclick="playShowreel()">WATCH SHOWREEL</button>
   </div>
-  <video class="showreel-video" id="showreelVideo" poster="assets/video-poster-desktop.jpg" playsinline preload="none">
+  <video class="showreel-video" id="showreelVideo" poster="assets/video-poster-desktop.jpg" playsinline muted controls preload="metadata">
     <source src="assets/video-desktop.mp4" type="video/mp4">
     <source src="assets/video-desktop.webm" type="video/webm">
   </video>
@@ -850,7 +850,9 @@ function playShowreel(){
   if(btn)btn.style.display='none';
   if(video){
     video.classList.add('playing');
-    video.play().catch(function(){});
+    video.load();
+    var p=video.play();
+    if(p&&p.catch)p.catch(function(e){console.log('Play error:',e);video.muted=true;video.play().catch(function(){})});
   }
 }
 </script>
