@@ -23,7 +23,7 @@ body{font-family:var(--fn);color:var(--gd);overflow-x:hidden;background:var(--cr
 .reveal-d3{transition-delay:.45s}
 
 /* Hero */
-.hero-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;background-image:url('assets/ricky-hero-new.jpg');background-position:70% center;background-size:cover;background-repeat:no-repeat;filter:grayscale(100%) brightness(1.05)}
+.hero-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;background-image:url('assets/ricky-hero-v2.jpg');background-position:70% center;background-size:cover;background-repeat:no-repeat;filter:grayscale(100%) brightness(1.05)}
 .hero-bg::after{content:'';position:absolute;inset:0;background:rgba(27,58,76,.35);z-index:1}
 .hero{position:relative;z-index:1;text-align:left;background:transparent;min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:80px 60px 60px}
 .hero .wordmark{position:relative;z-index:2;width:52%;max-width:700px;min-width:280px;display:block;margin-left:4%;margin-bottom:60px;filter:drop-shadow(0 6px 30px rgba(0,0,0,.3))}
@@ -60,6 +60,17 @@ section:not(.hero),footer{position:relative;z-index:2}
 .mm a{display:block;color:var(--gd);text-decoration:none;font-family:var(--fs);font-size:32px;font-weight:500;padding:14px 0;letter-spacing:2px;text-transform:uppercase;transition:opacity .3s,transform .3s}
 .mm a:hover{opacity:.6;transform:translateX(8px)}
 
+/* Showreel Hero */
+.showreel-hero{position:relative;width:100%;height:100vh;overflow:hidden;z-index:1;background:var(--bk);display:flex;align-items:center;justify-content:center}
+.showreel-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-image:url('assets/video-poster-desktop.jpg');background-size:cover;background-position:center;z-index:1;transition:opacity .8s ease}
+.showreel-bg.hidden{opacity:0;pointer-events:none}
+.showreel-overlay{position:absolute;inset:0;background:rgba(17,17,17,.45);z-index:2;pointer-events:none}
+.showreel-content{position:relative;z-index:3;text-align:center}
+.showreel-btn{padding:16px 48px;border:2px solid var(--wh);border-radius:100px;background:transparent;color:var(--wh);font-family:var(--fn);font-size:13px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.showreel-btn:hover{background:var(--wh);color:var(--bk)}
+.showreel-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transition:opacity .8s ease}
+.showreel-video.playing{opacity:1;z-index:4}
+
 /* Video */
 .video-section{position:relative;width:100%;min-height:100vh;overflow:hidden;z-index:1;background:var(--bk);display:flex;align-items:center;justify-content:center}
 .video-section video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
@@ -69,7 +80,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 .video-section .video-content h2{font-family:var(--fs);font-size:clamp(32px,5vw,56px);font-weight:400;color:var(--wh);letter-spacing:2px;text-transform:uppercase;text-shadow:0 4px 20px rgba(0,0,0,.3)}
 .video-desktop{display:block}
 .video-mobile{display:none}
-@media(max-width:767px){.video-desktop{display:none}.video-mobile{display:block}}
+@media(max-width:767px){.video-desktop{display:none}.video-mobile{display:block}.showreel-bg{background-image:url('assets/video-poster-mobile.jpg')}}
 
 /* Content */
 .section-cream{position:relative;z-index:10;background:var(--gd)}
@@ -381,20 +392,16 @@ section:not(.hero),footer{position:relative;z-index:2}
 </div>
 
 <!-- VIDEO / SHOWREEL -->
-<section class="video-section" id="video" style="padding:100px 30px;min-height:auto">
-  <div class="video-content" style="width:100%;max-width:1100px">
-    <h2 class="reveal">Showreel</h2>
-    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)">
-      <video class="video-desktop loaded" poster="assets/video-poster-desktop.jpg" playsinline muted loop controls preload="none" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border:0;border-radius:12px">
-        <source src="assets/video-desktop.mp4" type="video/mp4">
-        <source src="assets/video-desktop.webm" type="video/webm">
-      </video>
-      <video class="video-mobile loaded" poster="assets/video-poster-mobile.jpg" playsinline muted loop controls preload="none" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border:0;border-radius:12px">
-        <source src="assets/video-mobile.mp4" type="video/mp4">
-        <source src="assets/video-mobile.webm" type="video/webm">
-      </video>
-    </div>
+<section class="showreel-hero" id="video">
+  <div class="showreel-bg" id="showreelBg"></div>
+  <div class="showreel-overlay"></div>
+  <div class="showreel-content">
+    <button class="showreel-btn" id="showreelBtn" onclick="playShowreel()">WATCH SHOWREEL</button>
   </div>
+  <video class="showreel-video" id="showreelVideo" poster="assets/video-poster-desktop.jpg" playsinline preload="none">
+    <source src="assets/video-desktop.mp4" type="video/mp4">
+    <source src="assets/video-desktop.webm" type="video/webm">
+  </video>
 </section>
 
 <!-- GEOGRAPHIC REACH -->
@@ -834,6 +841,18 @@ section:not(.hero),footer{position:relative;z-index:2}
     }
   });
 })();
+
+function playShowreel(){
+  var bg=document.getElementById('showreelBg');
+  var btn=document.getElementById('showreelBtn');
+  var video=document.getElementById('showreelVideo');
+  if(bg)bg.classList.add('hidden');
+  if(btn)btn.style.display='none';
+  if(video){
+    video.classList.add('playing');
+    video.play().catch(function(){});
+  }
+}
 </script>
 
 </body>
