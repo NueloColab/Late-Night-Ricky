@@ -35,8 +35,9 @@ body{font-family:var(--fn);color:var(--bk);background:var(--wh);overflow-x:hidde
 
 /* Page Title */
 .page-title-bar{padding:100px 30px 20px;border-bottom:2px solid var(--bk)}
-.page-title{font-family:var(--fn);font-size:clamp(48px,10vw,120px);font-weight:900;letter-spacing:-3px;text-transform:uppercase;line-height:.9;color:var(--bk);max-width:1200px;margin:0 auto}
-.page-signature{font-family:var(--sig);font-size:clamp(28px,4vw,48px);font-weight:400;color:var(--gm);margin-top:8px;transform:rotate(-1deg);display:block;text-transform:none;opacity:.85;max-width:1200px;margin-left:auto;margin-right:auto}
+.page-title-row{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;max-width:1200px;margin:0 auto}
+.page-title{font-family:var(--fn);font-size:clamp(48px,10vw,120px);font-weight:900;letter-spacing:-3px;text-transform:uppercase;line-height:.9;color:var(--bk)}
+.page-signature{font-family:var(--sig);font-size:clamp(24px,3vw,40px);font-weight:400;color:var(--gm);transform:rotate(-1deg);display:inline-block;text-transform:none;opacity:.85;line-height:1}
 
 /* Split Layout */
 .split-layout{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 200px)}
@@ -91,8 +92,10 @@ body{font-family:var(--fn);color:var(--bk);background:var(--wh);overflow-x:hidde
 </div>
 
 <div class="page-title-bar">
-  <h1 class="page-title">About</h1>
-  <span class="page-signature">Late Night Ricky</span>
+  <div class="page-title-row">
+    <h1 class="page-title">About</h1>
+    <span class="page-signature">Late Night Ricky</span>
+  </div>
 </div>
 
 <div class="split-layout">
