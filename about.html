@@ -7,9 +7,10 @@
 <meta name="description" content="Late Night Ricky - DJ, host, and entertainer. From London to the world.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+<style>@font-face{font-family:'Rockybilly';src:url('assets/Rockybilly.woff2') format('woff2'),url('assets/Rockybilly.woff') format('woff'),url('assets/Rockybilly.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}</style>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--gd:#1B3A4C;--gs:#8FA8BE;--gm:#6B8FAB;--gl:#A3B5C4;--cr:#E3E8ED;--wh:#fff;--bk:#111;--fs:'Playfair Display',serif;--fn:'Inter',sans-serif}
+:root{--gd:#1B3A4C;--gs:#8FA8BE;--gm:#6B8FAB;--gl:#A3B5C4;--cr:#E3E8ED;--wh:#fff;--bk:#111;--fs:'Playfair Display',serif;--fn:'Inter',sans-serif;--sig:'Rockybilly',cursive}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
 body{font-family:var(--fn);color:var(--bk);background:var(--wh);overflow-x:hidden}
 
@@ -35,6 +36,7 @@ body{font-family:var(--fn);color:var(--bk);background:var(--wh);overflow-x:hidde
 /* Page Title */
 .page-title-bar{padding:100px 30px 20px;border-bottom:2px solid var(--bk)}
 .page-title{font-family:var(--fn);font-size:clamp(48px,10vw,120px);font-weight:900;letter-spacing:-3px;text-transform:uppercase;line-height:.9;color:var(--bk);max-width:1200px;margin:0 auto}
+.page-signature{font-family:var(--sig);font-size:clamp(28px,4vw,48px);font-weight:400;color:var(--gm);margin-top:8px;transform:rotate(-1deg);display:block;text-transform:none;opacity:.85;max-width:1200px;margin-left:auto;margin-right:auto}
 
 /* Split Layout */
 .split-layout{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 200px)}
@@ -90,6 +92,7 @@ body{font-family:var(--fn);color:var(--bk);background:var(--wh);overflow-x:hidde
 
 <div class="page-title-bar">
   <h1 class="page-title">About</h1>
+  <span class="page-signature">Late Night Ricky</span>
 </div>
 
 <div class="split-layout">
