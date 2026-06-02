@@ -62,14 +62,16 @@ section:not(.hero),footer{position:relative;z-index:2}
 
 /* Showreel Hero */
 .showreel-hero{position:relative;width:100%;height:100vh;overflow:hidden;z-index:1;background:var(--bk);display:flex;align-items:center;justify-content:center}
-.showreel-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-image:url('assets/video-poster-desktop.jpg');background-size:cover;background-position:center;z-index:1;transition:opacity .8s ease}
-.showreel-bg.hidden{opacity:0;pointer-events:none}
-.showreel-overlay{position:absolute;inset:0;background:rgba(17,17,17,.45);z-index:2;pointer-events:none}
+.showreel-overlay{position:absolute;inset:0;background:rgba(17,17,17,.45);z-index:2;pointer-events:none;transition:opacity .8s ease}
+.showreel-overlay.hidden{opacity:0}
 .showreel-content{position:relative;z-index:3;text-align:center}
 .showreel-btn{padding:16px 48px;border:2px solid var(--wh);border-radius:100px;background:transparent;color:var(--wh);font-family:var(--fn);font-size:13px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s}
 .showreel-btn:hover{background:var(--wh);color:var(--bk)}
-.showreel-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transition:opacity .8s ease}
-.showreel-video.playing{opacity:1;z-index:4}
+.showreel-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.showreel-video::-webkit-media-controls-panel{display:none!important}
+.showreel-video::-webkit-media-controls{display:none!important}
+.showreel-video.playing::-webkit-media-controls-panel{display:flex!important}
+.showreel-video.playing::-webkit-media-controls{display:flex!important}
 
 /* Video */
 .video-section{position:relative;width:100%;min-height:100vh;overflow:hidden;z-index:1;background:var(--bk);display:flex;align-items:center;justify-content:center}
@@ -80,7 +82,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 .video-section .video-content h2{font-family:var(--fs);font-size:clamp(32px,5vw,56px);font-weight:400;color:var(--wh);letter-spacing:2px;text-transform:uppercase;text-shadow:0 4px 20px rgba(0,0,0,.3)}
 .video-desktop{display:block}
 .video-mobile{display:none}
-@media(max-width:767px){.video-desktop{display:none}.video-mobile{display:block}.showreel-bg{background-image:url('assets/video-poster-mobile.jpg')}}
+@media(max-width:767px){.video-desktop{display:none}.video-mobile{display:block}}
 
 /* Content */
 .section-cream{position:relative;z-index:10;background:var(--gd)}
@@ -393,12 +395,11 @@ section:not(.hero),footer{position:relative;z-index:2}
 
 <!-- VIDEO / SHOWREEL -->
 <section class="showreel-hero" id="video">
-  <div class="showreel-bg" id="showreelBg"></div>
-  <div class="showreel-overlay"></div>
+  <div class="showreel-overlay" id="showreelOverlay"></div>
   <div class="showreel-content">
     <button class="showreel-btn" id="showreelBtn" onclick="playShowreel()">WATCH SHOWREEL</button>
   </div>
-  <video class="showreel-video" id="showreelVideo" poster="assets/video-poster-desktop.jpg" playsinline muted controls preload="metadata">
+  <video class="showreel-video" id="showreelVideo" poster="assets/video-poster-desktop.jpg" playsinline loop preload="metadata">
     <source src="assets/video-desktop.mp4" type="video/mp4">
     <source src="assets/video-desktop.webm" type="video/webm">
   </video>
@@ -843,16 +844,14 @@ section:not(.hero),footer{position:relative;z-index:2}
 })();
 
 function playShowreel(){
-  var bg=document.getElementById('showreelBg');
+  var overlay=document.getElementById('showreelOverlay');
   var btn=document.getElementById('showreelBtn');
   var video=document.getElementById('showreelVideo');
-  if(bg)bg.classList.add('hidden');
+  if(overlay)overlay.classList.add('hidden');
   if(btn)btn.style.display='none';
   if(video){
     video.classList.add('playing');
-    video.load();
-    var p=video.play();
-    if(p&&p.catch)p.catch(function(e){console.log('Play error:',e);video.muted=true;video.play().catch(function(){})});
+    video.play().catch(function(e){console.log('Play error:',e);});
   }
 }
 </script>
