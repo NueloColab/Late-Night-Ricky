@@ -205,18 +205,22 @@ section:not(.hero),footer{position:relative;z-index:2}
 .contact-card a{color:var(--gd);font-weight:500;font-size:14px;text-decoration:none;letter-spacing:.5px;transition:opacity .3s}
 .contact-card a:hover{opacity:.6}
 
-/* Supporting Act */
+/* Clients */
 .supporting-section{padding:40px 0 120px;background:var(--wh)}
 .supporting-section h2{font-family:var(--fn);font-size:clamp(36px,6vw,72px);font-weight:900;letter-spacing:-2px;text-transform:uppercase;margin-bottom:40px;color:var(--bk);text-align:center}
 .supporting-intro{font-size:14px;color:#5B7A8E;margin-bottom:40px;letter-spacing:2px;text-transform:uppercase;text-align:center}
-.supporting-layout{display:grid;grid-template-columns:200px 1fr 200px;gap:40px;align-items:start;max-width:1200px;margin:0 auto;padding:0 30px}
-.side-gallery{display:flex;flex-direction:column;gap:16px}
-.side-gallery img{width:100%;height:180px;object-fit:cover;border-radius:8px;transition:transform .3s}
-.side-gallery img:hover{transform:scale(1.03)}
-.artist-list{text-align:center}
-.artist-name{font-family:var(--fn);font-size:clamp(28px,4vw,48px);font-weight:900;text-transform:uppercase;letter-spacing:-1px;line-height:1.15;color:var(--bk);transition:color .3s;cursor:default;padding:6px 0}
-.artist-name:hover{color:var(--gd)}
-.artist-divider{width:60px;height:2px;background:var(--bk);margin:30px auto;opacity:.15}
+
+/* Clients grid */
+.clients-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px 24px;max-width:1200px;margin:0 auto;padding:0 30px}
+.client-name{font-family:var(--fn);font-size:clamp(18px,2.2vw,28px);font-weight:900;text-transform:uppercase;letter-spacing:-.5px;line-height:1.2;color:var(--bk);text-align:center;padding:12px 8px;transition:color .3s;cursor:default}
+.client-name:hover{color:var(--gd)}
+
+/* Venue marquee */
+.venue-marquee{margin-top:60px;overflow:hidden;background:var(--bk);padding:18px 0}
+.marquee-track{display:flex;gap:40px;animation:marquee-scroll 40s linear infinite;width:max-content;white-space:nowrap;padding:0 20px}
+.marquee-track span{color:var(--gl);font-family:var(--fn);font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;flex-shrink:0}
+.marquee-track span::after{content:'•';margin-left:40px;color:var(--gd)}
+@keyframes marquee-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* Carousel */
 .carousel-section{padding:60px 0;background:var(--wh);overflow:hidden}
@@ -331,6 +335,8 @@ section:not(.hero),footer{position:relative;z-index:2}
   .supporting-layout{grid-template-columns:1fr;gap:30px}
   .side-gallery{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:10px}
   .side-gallery img{flex-shrink:0;width:150px;height:150px}
+  .clients-grid{grid-template-columns:repeat(3,1fr);gap:12px 16px;padding:0 20px}
+  .client-name{font-size:16px;padding:8px 4px}
   .partnerships-section .quote{font-size:26px}
   .logo-grid{grid-template-columns:repeat(2,1fr);gap:30px}
   .radio-section img{max-width:320px}
@@ -343,7 +349,7 @@ section:not(.hero),footer{position:relative;z-index:2}
   .shows-title{font-size:28px}
   .show-card .card-inner h4{font-size:24px}
   .contact-card{padding:30px 20px}
-  .artist-name{font-size:28px}
+  .client-name{font-size:14px}
   .supporting-section h2{font-size:32px}
   .share-section h2{font-size:32px}
   .contact-form-section h2{font-size:32px}
@@ -386,7 +392,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 <a href="#shows">Shows</a>
 <a href="#partnerships">Partners</a>
 <a href="showreel.html">Showreels</a>
-<a href="#supporting">Supporting</a>
+<a href="#supporting">Clients</a>
 <a href="#share-music">Share Music</a>
 <a href="#contact-form">Contact</a>
 </div>
@@ -399,7 +405,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 <a href="#shows">Shows</a>
 <a href="#partnerships">Partners</a>
 <a href="showreel.html">Showreels</a>
-<a href="#supporting">Supporting</a>
+<a href="#supporting">Clients</a>
 <a href="#share-music">Share Music</a>
 <a href="#contact-form">Contact</a>
 </div>
@@ -570,22 +576,99 @@ section:not(.hero),footer{position:relative;z-index:2}
       <div class="track" data-src="">
         <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
         <div class="track-info">
-          <span class="track-title">Late Night Mix — Vol. 1</span>
-          <span class="track-time">0:45</span>
+          <span class="track-title">Chris Brown — 11:11 (Grammy)</span>
+          <span class="track-time">Producer</span>
         </div>
       </div>
       <div class="track" data-src="">
         <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
         <div class="track-info">
-          <span class="track-title">Summer Vibes Radio Edit</span>
-          <span class="track-time">0:38</span>
+          <span class="track-title">Kendrick Lamar</span>
+          <span class="track-time">Producer</span>
         </div>
       </div>
       <div class="track" data-src="">
         <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
         <div class="track-info">
-          <span class="track-title">Afrobeats Session — Live</span>
-          <span class="track-time">0:52</span>
+          <span class="track-title">NAV</span>
+          <span class="track-time">Producer</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">DIVINE</span>
+          <span class="track-time">Producer</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">Swae Lee</span>
+          <span class="track-time">Producer</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">Potter Payper</span>
+          <span class="track-time">Producer</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">Raekwon (Wu-Tang)</span>
+          <span class="track-time">Producer</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">RZA (Wu-Tang)</span>
+          <span class="track-time">Producer</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">Jim Jones</span>
+          <span class="track-time">Producer</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">D Smoke</span>
+          <span class="track-time">Producer</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">Apache Indian</span>
+          <span class="track-time">Producer</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">H33RA</span>
+          <span class="track-time">Producer</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">Stefflon Don</span>
+          <span class="track-time">Producer</span>
+        </div>
+      </div>
+      <div class="track" data-src="">
+        <button type="button" class="track-play" aria-label="Play preview"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></button>
+        <div class="track-info">
+          <span class="track-title">Plus many more...</span>
+          <span class="track-time">N.O.R.E, Styles P, Lil Keed, Ivorian Doll, Safe, MC Altaf</span>
         </div>
       </div>
     </div>
@@ -610,32 +693,36 @@ section:not(.hero),footer{position:relative;z-index:2}
 </section>
 
 <section class="supporting-section" id="supporting">
-<p class="supporting-intro reveal">Late Night Ricky has shared the stage with</p>
-<h2 class="reveal">Supporting Act</h2>
-<div class="supporting-layout reveal reveal-d1">
-  <div class="side-gallery">
-    <img src="assets/ricky-hero-new.jpg" alt="Photo" loading="lazy">
-    <img src="assets/ricky-portrait-new.jpg" alt="Photo" loading="lazy">
-    <img src="assets/ricky-fricktion.jpg" alt="Photo" loading="lazy">
-  </div>
-  <div class="artist-list">
-    <div class="artist-name">Stormzy</div>
-    <div class="artist-name">Dave</div>
-    <div class="artist-name">Burna Boy</div>
-    <div class="artist-name">Central Cee</div>
-    <div class="artist-name">Tion Wayne</div>
-    <div class="artist-name">AJ Tracey</div>
-    <div class="artist-name">D-Block Europe</div>
-    <div class="artist-name">J Hus</div>
-    <div class="artist-name">Skepta</div>
-    <div class="artist-name">Headie One</div>
-    <div class="artist-divider"></div>
-    <p class="supporting-intro">And many more</p>
-  </div>
-  <div class="side-gallery">
-    <img src="assets/press-bg2.jpg" alt="Photo" loading="lazy">
-    <img src="assets/ricky-spotify-new.jpg" alt="Photo" loading="lazy">
-    <img src="assets/ricky-portrait-new.jpg" alt="Photo" loading="lazy">
+<p class="supporting-intro reveal">Acts &amp; Private Clients</p>
+<h2 class="reveal">Trusted By The Best</h2>
+<div class="clients-grid reveal reveal-d1">
+  <div class="client-name">50 Cent</div>
+  <div class="client-name">Bruno Mars</div>
+  <div class="client-name">Chris Brown</div>
+  <div class="client-name">Dr. Dre &amp; Jimmy Iovine</div>
+  <div class="client-name">Drake</div>
+  <div class="client-name">Future</div>
+  <div class="client-name">Jason Momoa</div>
+  <div class="client-name">Jason Statham</div>
+  <div class="client-name">Justin Bieber</div>
+  <div class="client-name">Kendrick Lamar</div>
+  <div class="client-name">Leonardo DiCaprio</div>
+  <div class="client-name">Lewis Hamilton</div>
+  <div class="client-name">Mick Jagger</div>
+  <div class="client-name">Neymar Jnr</div>
+  <div class="client-name">Paul McCartney</div>
+  <div class="client-name">Rihanna</div>
+  <div class="client-name">Ronaldo</div>
+  <div class="client-name">Travis Scott</div>
+  <div class="client-name">Usain Bolt</div>
+  <div class="client-name">Vin Diesel</div>
+</div>
+<p class="supporting-intro reveal reveal-d2">And many more...</p>
+
+<!-- Venue marquee -->
+<div class="venue-marquee reveal reveal-d3">
+  <div class="marquee-track">
+    <span>LIV Miami</span><span>WALL Miami</span><span>TAPE London</span><span>HAKKASAN Las Vegas</span><span>MOVIDA Dubai</span><span>JIMMY'Z Monte Carlo</span><span>MINISTRY OF SOUND London</span><span>1 OAK New York</span><span>BYBLOS Milan</span><span>PACHA Ibiza</span><span>ARMANI Dubai</span><span>MANDALAY BAY Las Vegas</span><span>TEMPLE San Francisco</span><span>POPPY Los Angeles</span><span>CIRQUE LE SOIR London</span><span>HIGHLIGHT ROOM Los Angeles</span><span>TEDDY'S @ ROOSEVELT Los Angeles</span><span>DELILAH Los Angeles</span><span>GIBSON Frankfurt</span><span>LIO Ibiza</span><span>STUDIO PARIS Chicago</span><span>PREMIER @ BORGATE Atlantic City</span><span>PARQ San Diego</span><span>BOOTSY BELLOWS Los Angeles</span><span>WARWICK Los Angeles</span><span>LAVO New York</span><span>TAO New York</span><span>UP &amp; DOWN New York</span><span>LIBERTINE London</span><span>SCANDAL London</span><span>TOY ROOM Dubai</span><span>1 OAK Dubai</span><span>TAO Las Vegas</span><span>BAOLI Cannes</span><span>SHOKO Barcelona</span><span>LASTA Serbia</span><span>REX ROOMS London</span><span>HARRIET'S Los Angeles</span><span>VIP ROOM St. Tropez</span><span>BON BONNIERE Mykonos</span><span>DRAMA London</span><span>DEAR DARLING London</span><span>TRAMP London</span><span>SPIRITO Brussels</span><span>CUCKOO CLUB London</span><span>RAFFLES London</span><span>SUBOIS Montreal</span><span>P1 Munich</span><span>ZELO'S Monte Carlo</span><span>WIRELESS FESTIVAL UK</span><span>READING &amp; LEEDS FESTIVAL UK</span>
   </div>
 </div>
 </section>
@@ -645,7 +732,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 <div class="container">
 <h2 class="reveal">Share Your Music</h2>
 <p class="big-statement reveal reveal-d1">I'm always on the lookout for new music to play, so send me your tracks</p>
-<form id="uploadForm" action="mailto:bookings@latenightricky.com" method="post" enctype="text/plain">
+<form id="uploadForm" action="mailto:samir@wearemediahive.com" method="post" enctype="text/plain">
   <div class="upload-area reveal reveal-d2" id="dropZone">
     <input type="file" id="trackFile" name="track" accept="audio/mp3,audio/mpeg">
     <button type="button" class="upload-btn" id="uploadBtn">Upload your track</button>
@@ -718,7 +805,7 @@ section:not(.hero),footer{position:relative;z-index:2}
   <a href="#shows">Shows</a>
   <a href="#partnerships">Partners</a>
   <a href="showreel.html">Showreels</a>
-  <a href="#supporting">Supporting</a>
+  <a href="#supporting">Clients</a>
   <a href="#share-music">Share Music</a>
   <a href="#contact-form">Contact</a>
 </div>
