@@ -94,7 +94,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 .shows-mosaic .m-tall{grid-row:span 2}
 .shows-mosaic .m-big{grid-column:span 2;grid-row:span 2}
 .shows-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin-bottom:50px}
-.show-card{transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.show-card{display:block;transition:transform .4s cubic-bezier(.22,1,.36,1);cursor:pointer}
 .show-card:hover{transform:translateY(-6px)}
 .show-card .card-img{width:100%;min-height:520px;border-radius:16px;overflow:hidden;margin-bottom:24px;position:relative;display:flex;align-items:flex-end;justify-content:flex-start}
 .show-card .card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(27,58,76,.6) 0%,transparent 55%);pointer-events:none}
@@ -428,7 +428,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 </div>
 
 <div class="shows-grid">
-<div class="show-card reveal">
+<a href="show-sidemen.html" class="show-card reveal" style="text-decoration:none;color:inherit">
 <div class="card-img sg-1">
   <div class="card-inner">
     <h4>Ministry of Sound</h4>
@@ -439,8 +439,8 @@ section:not(.hero),footer{position:relative;z-index:2}
 <p class="season">Spring / Summer 2025</p>
 <h3>Sidemen vs YouTube All Stars</h3>
 <p class="show-meta">One of London's most iconic venues, packed to capacity.</p>
-</div>
-<div class="show-card reveal reveal-d1">
+</a>
+<a href="show-gin-juice.html" class="show-card reveal reveal-d1" style="text-decoration:none;color:inherit">
 <div class="card-img sg-2">
   <div class="card-inner">
     <h4>Ibiza Rocks</h4>
@@ -451,8 +451,8 @@ section:not(.hero),footer{position:relative;z-index:2}
 <p class="season">Spring / Summer 2024</p>
 <h3>Gin &amp; Juice Launch</h3>
 <p class="show-meta">Sunset sets and poolside energy in the White Isle.</p>
-</div>
-<div class="show-card reveal reveal-d2">
+</a>
+<a href="show-abu-dhabi.html" class="show-card reveal reveal-d2" style="text-decoration:none;color:inherit">
 <div class="card-img sg-3">
   <div class="card-inner">
     <h4>Skyline Festival</h4>
@@ -463,8 +463,8 @@ section:not(.hero),footer{position:relative;z-index:2}
 <p class="season">Autumn / Winter 2024</p>
 <h3>Abu Dhabi Grand Prix</h3>
 <p class="show-meta">Major festival appearance under the desert stars.</p>
-</div>
-<div class="show-card reveal reveal-d3">
+</a>
+<a href="show-royal-wedding.html" class="show-card reveal reveal-d3" style="text-decoration:none;color:inherit">
 <div class="card-img sg-4">
   <div class="card-inner">
     <h4>Private Events</h4>
@@ -475,7 +475,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 <p class="season">Spring / Summer 2023</p>
 <h3>Royal Wedding of the Year</h3>
 <p class="show-meta">Exclusive corporate events and private celebrations.</p>
-</div>
+</a>
 </div>
 <div class="reveal text-center btn-wrap">
   <a href="#shows" class="pill pill-blue">ALL SHOWS &amp; STORIES</a>
