@@ -222,7 +222,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 .reach-out-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1200px;margin:0 auto;padding:0 30px}
 .reach-out-text h2{font-family:var(--fs);font-size:clamp(42px,6vw,72px);font-weight:400;line-height:1.1;margin-bottom:40px;color:var(--wh);max-width:500px}
 .reach-out-text .cta-btn{display:inline-block;padding:14px 36px;border:2px solid var(--wh);border-radius:100px;color:var(--wh);font-family:var(--fn);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s;background:transparent;cursor:pointer}
-.reach-out-text .signature{font-family:var(--sig);font-size:clamp(36px,5vw,64px);font-weight:400;color:var(--gs);margin-top:24px;margin-bottom:24px;letter-spacing:1px;transform:rotate(-1deg);display:inline-block;text-transform:none;opacity:.85;white-space:nowrap}
+.reach-out-text .signature{font-family:var(--sig);font-size:clamp(28px,4vw,48px);font-weight:400;color:var(--gs);margin-top:24px;margin-bottom:24px;letter-spacing:1px;transform:rotate(-1deg);display:block;text-transform:none;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .reach-out-img{position:relative;overflow:hidden;border-radius:12px}
 .reach-out-img img{width:100%;height:auto;object-fit:cover;display:block}
 
@@ -327,7 +327,9 @@ section:not(.hero),footer{position:relative;z-index:2}
   .carousel-item{width:200px;height:260px}
   .reach-out-layout{grid-template-columns:1fr;gap:40px;text-align:center}
   .reach-out-text h2{margin:0 auto 30px}
-  .reach-out-img{max-width:320px;margin:0 auto}
+  .reach-out-text .signature{font-size:clamp(24px,7vw,40px);text-align:center;margin-left:auto;margin-right:auto}
+  .reach-out-img{max-width:280px;margin:0 auto}
+  .reach-out-section{overflow-x:hidden}
   .footer{padding:40px 20px 20px}
   .hero .wordmark{width:90%}
 }
