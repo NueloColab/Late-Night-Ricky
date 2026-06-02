@@ -169,11 +169,17 @@ section:not(.hero),footer{position:relative;z-index:2}
 .radio-platforms a{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border:2px solid var(--bk);border-radius:100px;color:var(--bk);font-family:var(--fn);font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:all .3s;background:transparent}
 .radio-platforms a:hover{background:var(--bk);color:var(--wh)}
 .radio-platforms a svg{width:18px;height:18px;fill:currentColor}
-.radio-image{position:relative}
-.radio-big-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;cursor:pointer}
-.radio-big-play .rb-circle{width:80px;height:80px;border-radius:50%;background:rgba(27,58,76,.85);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;color:var(--wh);transition:all .3s;border:2px solid rgba(255,255,255,.3)}
-.radio-big-play:hover .rb-circle{background:var(--wh);color:var(--bk);border-color:var(--wh);transform:scale(1.08)}
-.radio-big-play svg{width:28px;height:28px;fill:currentColor;margin-left:3px}
+
+/* Equalizer animation */
+.eq-anim{position:absolute;bottom:20px;right:20px;display:flex;align-items:flex-end;gap:3px;z-index:2;padding:10px 12px;background:rgba(27,58,76,.7);backdrop-filter:blur(4px);border-radius:8px}
+.eq-bar{display:inline-block;width:4px;background:var(--wh);border-radius:2px;animation:eq-bounce 1.2s ease-in-out infinite}
+.eq-bar:nth-child(1){height:12px;animation-delay:0s}
+.eq-bar:nth-child(2){height:20px;animation-delay:.2s}
+.eq-bar:nth-child(3){height:16px;animation-delay:.4s}
+.eq-bar:nth-child(4){height:24px;animation-delay:.1s}
+.eq-bar:nth-child(5){height:14px;animation-delay:.3s}
+@keyframes eq-bounce{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.4)}}
+
 .tracklist{margin-top:50px;border-top:1px solid #e3e8ed;padding-top:30px}
 .track{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid #e3e8ed;cursor:pointer;transition:background .2s}
 .track:hover{background:rgba(227,232,237,.4);margin:0 -12px;padding:14px 12px;border-radius:8px}
@@ -556,8 +562,12 @@ section:not(.hero),footer{position:relative;z-index:2}
 <div class="radio-layout reveal">
   <div class="radio-image">
     <img src="assets/ricky-radio-new.jpg" alt="Late Night Ricky" loading="lazy">
-    <div class="radio-big-play" id="radioBigPlay">
-      <div class="rb-circle"><svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg></div>
+    <div class="eq-anim">
+      <span class="eq-bar"></span>
+      <span class="eq-bar"></span>
+      <span class="eq-bar"></span>
+      <span class="eq-bar"></span>
+      <span class="eq-bar"></span>
     </div>
   </div>
   <div class="radio-content">
@@ -860,13 +870,6 @@ section:not(.hero),footer{position:relative;z-index:2}
   var currentAudio=null,currentTrack=null;
   var playIcon='<svg viewBox="0 0 24 24"><polygon points="7 4 19 12 7 20" fill="currentColor"/></svg>';
   var pauseIcon='<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" fill="currentColor"/><rect x="14" y="4" width="4" height="16" fill="currentColor"/></svg>';
-  var bigPlay=document.getElementById('radioBigPlay');
-  if(bigPlay){
-    bigPlay.addEventListener('click',function(){
-      var first=tracks[0];
-      if(first)first.querySelector('.track-play').click();
-    });
-  }
   tracks.forEach(function(track){
     var btn=track.querySelector('.track-play');
     var src=track.getAttribute('data-src');
