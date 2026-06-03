@@ -47,14 +47,14 @@ section:not(.hero),footer{position:relative;z-index:2}
 
 /* Morphing pill nav (desktop) */
 .nav-morph-wrap{position:fixed;top:20px;right:30px;z-index:400}
-.nav-morph{position:relative;height:52px;width:52px;border-radius:50%;background:rgba(255,255,255,.95);box-shadow:0 2px 10px rgba(0,0,0,.1);display:flex;align-items:center;overflow:hidden;transition:width 400ms cubic-bezier(.4,0,.2,1),border-radius 400ms cubic-bezier(.4,0,.2,1)}
+.nav-morph{position:relative;height:60px;width:60px;border-radius:50%;background:rgba(255,255,255,.95);box-shadow:0 2px 10px rgba(0,0,0,.1);display:flex;align-items:center;overflow:hidden;transition:width 400ms cubic-bezier(.4,0,.2,1),border-radius 400ms cubic-bezier(.4,0,.2,1)}
 .nav-morph.open{width:780px;border-radius:24px}
-.nav-morph .nav-links{display:flex;gap:20px;align-items:center;padding-left:24px;padding-right:60px;max-width:0;opacity:0;overflow:hidden;position:absolute;transition:max-width 400ms cubic-bezier(.4,0,.2,1),opacity 250ms ease}
-.nav-morph.open .nav-links{max-width:720px;opacity:1;position:static;transition-delay:0ms,120ms}
+.nav-morph .nav-links{display:flex;gap:20px;align-items:center;padding-left:24px;padding-right:68px;opacity:0;transform:translateX(-100%);transition:opacity 250ms ease,transform 400ms cubic-bezier(.4,0,.2,1);pointer-events:none}
+.nav-morph.open .nav-links{opacity:1;transform:translateX(0);pointer-events:auto;transition-delay:120ms,0ms}
 .nav-morph .nav-links a{color:#5B7A8E;text-decoration:none;font-size:13px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;opacity:0;transform:translateX(12px);transition:opacity 350ms cubic-bezier(.4,0,.2,1),transform 350ms cubic-bezier(.4,0,.2,1);transition-delay:calc(120ms + var(--i)*35ms)}
 .nav-morph.open .nav-links a{opacity:1;transform:translateX(0)}
 .nav-morph .nav-links a:hover{color:var(--gd)}
-.nav-morph .nav-toggle{position:absolute;right:0;top:0;width:52px;height:52px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:2;padding:0}
+.nav-morph .nav-toggle{position:absolute;right:0;top:0;width:60px;height:60px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:2;padding:0}
 .nav-morph .hamburger-icon{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:opacity 300ms ease;position:absolute}
 .nav-morph .bar{display:block;width:22px;height:2px;background:var(--gd);border-radius:1px;transition:all 400ms cubic-bezier(.4,0,.2,1);transform-origin:center;animation:wave-pulse 1.4s ease-in-out infinite}
 .nav-morph .bar:nth-child(1){animation-delay:0s}
