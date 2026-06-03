@@ -38,29 +38,34 @@ section:not(.hero),footer{position:relative;z-index:2}
 /* Nav */
 .nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:20px 30px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,backdrop-filter .4s}
 .nav.solid{background:transparent}
-.nav-btn{width:75px;height:75px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s,border-color .3s;border:none;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.nav-btn{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s,border-color .3s;border:none;box-shadow:0 2px 10px rgba(0,0,0,.1)}
 .nav-btn:hover{transform:translateY(-3px)}
 .nav-btn img{width:auto;height:42px;object-fit:contain}
 .logo-btn{background:transparent!important;box-shadow:none!important;border-radius:0!important;width:auto!important;height:auto!important;padding:0}
 .logo-btn:hover{transform:translateY(-3px)}
 .nav-logo-img{width:auto;height:32px;border-radius:0;filter:brightness(0) saturate(100%) invert(18%) sepia(34%) saturate(834%) hue-rotate(164deg) brightness(94%) contrast(89%);transform:translateX(0)}
-.nav-center-sm{display:none}
-.hamburger{display:flex;flex-direction:column;gap:5px}
-.hamburger span{display:block;width:22px;height:2px;background:var(--gd);border-radius:1px;transition:all .3s}
-.dnav{display:none;gap:24px;align-items:center;background:rgba(255,255,255,.92);border-radius:100px;padding:14px 36px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-@media(min-width:992px){.dnav{display:flex}.mob{display:none}.nav-center-sm{display:none}.hamburger{display:none}}
-.dnav a{color:#5B7A8E;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 4px;transition:color .3s;position:relative}
-.dnav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gd);transition:width .4s cubic-bezier(.22,1,.36,1)}
-.dnav a:hover{color:var(--gd)}
-.dnav a:hover::after{width:100%}
 
-/* Mobile */
-.mm{position:fixed;inset:0;background:var(--cr);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateX(100%);transition:transform .5s cubic-bezier(.22,1,.36,1)}
-.mm.open{transform:translateX(0)}
-.mx{position:absolute;top:20px;right:30px;width:50px;height:50px;border-radius:50%;background:0 0;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gd);transition:transform .3s}
+/* Hamburger */
+.hamburger{display:flex;flex-direction:column;gap:5px;position:relative;z-index:400}
+.hamburger span{display:block;width:22px;height:2px;background:var(--gd);border-radius:1px;transition:all .3s;animation:static-jitter .18s steps(2) infinite}
+.hamburger span:nth-child(1){animation-delay:0s}
+.hamburger span:nth-child(2){animation-delay:.06s}
+.hamburger span:nth-child(3){animation-delay:.12s}
+@keyframes static-jitter{0%,100%{transform:translateX(0)}50%{transform:translateX(1.5px)}}
+.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);animation:none}
+.hamburger.active span:nth-child(2){opacity:0;animation:none}
+.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);animation:none}
+
+.dnav{display:none}
+
+/* Full-screen menu */
+.mm{position:fixed;inset:0;background:var(--gd);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s cubic-bezier(.22,1,.36,1)}
+.mm.open{opacity:1;pointer-events:auto}
+.mx{position:absolute;top:24px;right:30px;width:48px;height:48px;border-radius:50%;background:0 0;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--wh);transition:transform .3s;font-size:24px}
 .mx:hover{transform:rotate(90deg)}
-.mm a{display:block;color:var(--gd);text-decoration:none;font-family:var(--fs);font-size:32px;font-weight:500;padding:14px 0;letter-spacing:2px;text-transform:uppercase;transition:opacity .3s,transform .3s}
+.mm a{display:block;color:var(--wh);text-decoration:none;font-family:var(--fs);font-size:clamp(32px,5vw,56px);font-weight:500;padding:14px 0;letter-spacing:2px;text-transform:uppercase;transition:opacity .3s,transform .3s}
 .mm a:hover{opacity:.6;transform:translateX(8px)}
+.mm .menu-label{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);color:var(--gl);font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:500}
 
 /* Showreel Hero */
 .showreel-hero{position:relative;width:100%;height:100vh;overflow:hidden;z-index:1;background:var(--bk);display:flex;align-items:center;justify-content:center}
@@ -330,7 +335,6 @@ section:not(.hero),footer{position:relative;z-index:2}
   .show-card .card-inner h4{font-size:28px}
   .show-card h3{font-size:22px}
   .cta-text h2{font-size:30px}
-  .nav-center-sm{display:flex}
   .cta-img img{max-width:300px}
   .contact-grid{grid-template-columns:1fr}
   .section-dark{padding:80px 0 60px}
@@ -338,8 +342,6 @@ section:not(.hero),footer{position:relative;z-index:2}
   .contact-split{grid-template-columns:1fr;gap:0;min-height:auto}
   .contact-split .contact-portrait{height:50vh;min-height:300px}
   .contact-form-right{padding:40px 30px 60px}
-  .dnav{padding:10px 20px;gap:16px}
-  .dnav a{font-size:13px;padding:6px 2px}
   .supporting-layout{grid-template-columns:1fr;gap:30px}
   .side-gallery{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:10px}
   .side-gallery img{flex-shrink:0;width:150px;height:150px}
@@ -393,20 +395,10 @@ section:not(.hero),footer{position:relative;z-index:2}
 <!-- NAV -->
 <nav class="nav" id="nav">
 <a href="#" class="nav-btn logo-btn"><img src="assets/ricky-logo.png" alt="Late Night Ricky" class="nav-logo-img"></a>
-<a href="#video" class="nav-center-sm" aria-label="Scroll to Video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
 <button type="button" class="nav-btn hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
-<div class="dnav">
-<a href="about.html">About</a>
-<a href="#shows">Shows</a>
-<a href="#partnerships">Partners</a>
-<a href="showreel.html">Showreels</a>
-<a href="#supporting">Clients</a>
-<a href="#share-music">Share Music</a>
-<a href="#contact-form">Contact</a>
-</div>
 </nav>
 
-<!-- MOBILE MENU -->
+<!-- FULL SCREEN MENU -->
 <div class="mm" id="mobileMenu">
 <button type="button" class="mx" id="menuClose" aria-label="Close menu">&#10005;</button>
 <a href="about.html">About</a>
@@ -416,6 +408,7 @@ section:not(.hero),footer{position:relative;z-index:2}
 <a href="#supporting">Clients</a>
 <a href="#share-music">Share Music</a>
 <a href="#contact-form">Contact</a>
+<div class="menu-label">Late Night Ricky</div>
 </div>
 
 <!-- VIDEO / SHOWREEL -->
@@ -768,8 +761,8 @@ section:not(.hero),footer{position:relative;z-index:2}
   var menuClose=document.getElementById('menuClose');
   var mobileMenu=document.getElementById('mobileMenu');
   var menuLinks=document.querySelectorAll('.mm a');
-  function openMenu(){mobileMenu.classList.add('open');document.body.style.overflow='hidden'}
-  function closeMenu(){mobileMenu.classList.remove('open');document.body.style.overflow=''}
+  function openMenu(){mobileMenu.classList.add('open');menuBtn.classList.add('active');document.body.style.overflow='hidden'}
+  function closeMenu(){mobileMenu.classList.remove('open');menuBtn.classList.remove('active');document.body.style.overflow=''}
   menuBtn.addEventListener('click',openMenu);
   menuClose.addEventListener('click',closeMenu);
   menuLinks.forEach(function(a){a.addEventListener('click',closeMenu)});
