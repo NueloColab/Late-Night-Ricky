@@ -52,10 +52,6 @@ section:not(.hero),footer{position:relative;z-index:2}
 .hamburger span:nth-child(2){animation-delay:.25s;height:3px}
 .hamburger span:nth-child(3){animation-delay:.5s}
 @keyframes wave-pulse{0%,100%{width:22px;transform:translateX(0)}25%{width:16px;transform:translateX(2px)}50%{width:26px;transform:translateX(-2px)}75%{width:18px;transform:translateX(1px)}}
-.hamburger.active span{animation:none;width:22px;transform:translateX(0)}
-.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.hamburger.active span:nth-child(2){opacity:0}
-.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 /* Floating pill menu */
 .dnav{display:none;position:absolute;top:calc(100% + 10px);right:0;gap:24px;align-items:center;background:rgba(255,255,255,.95);border-radius:100px;padding:14px 36px;box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:500;backdrop-filter:blur(10px);white-space:nowrap;opacity:0;transform:translateY(-6px) scale(.96);transition:opacity .3s cubic-bezier(.22,1,.36,1),transform .3s cubic-bezier(.22,1,.36,1)}
@@ -782,7 +778,6 @@ section:not(.hero),footer{position:relative;z-index:2}
 
   function openMenu(){
     isOpen=true;
-    menuBtn.classList.add('active');
     if(isDesktop()){
       desktopMenu.classList.add('open');
     }else{
@@ -794,7 +789,6 @@ section:not(.hero),footer{position:relative;z-index:2}
   function closeMenu(){
     if(!isOpen)return;
     isOpen=false;
-    menuBtn.classList.remove('active');
     desktopMenu.classList.remove('open');
     menu.classList.remove('open');
     document.body.style.overflow='';
