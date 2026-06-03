@@ -46,19 +46,27 @@ section:not(.hero),footer{position:relative;z-index:2}
 .nav-logo-img{width:auto;height:32px;border-radius:0;filter:brightness(0) saturate(100%) invert(18%) sepia(34%) saturate(834%) hue-rotate(164deg) brightness(94%) contrast(89%);transform:translateX(0)}
 
 /* Hamburger */
-.hamburger{display:flex;flex-direction:column;gap:5px;position:relative;z-index:400}
-.hamburger span{display:block;width:22px;height:2px;background:var(--gd);border-radius:1px;transition:all .3s;animation:static-jitter .18s steps(2) infinite}
+.hamburger{display:flex;flex-direction:column;gap:5px;position:relative;z-index:400;justify-content:center;align-items:center}
+.hamburger span{display:block;width:24px;height:2px;background:var(--gd);border-radius:1px;transition:all .3s;animation:wave-pulse 1.4s ease-in-out infinite;transform-origin:center}
 .hamburger span:nth-child(1){animation-delay:0s}
-.hamburger span:nth-child(2){animation-delay:.06s}
-.hamburger span:nth-child(3){animation-delay:.12s}
-@keyframes static-jitter{0%,100%{transform:translateX(0)}50%{transform:translateX(1.5px)}}
-.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);animation:none}
-.hamburger.active span:nth-child(2){opacity:0;animation:none}
-.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);animation:none}
+.hamburger span:nth-child(2){animation-delay:.25s;height:3px}
+.hamburger span:nth-child(3){animation-delay:.5s}
+@keyframes wave-pulse{0%,100%{width:24px;transform:translateX(0)}25%{width:18px;transform:translateX(2px)}50%{width:28px;transform:translateX(-2px)}75%{width:20px;transform:translateX(1px)}}
+.hamburger.active span{animation:none;width:24px;transform:translateX(0)}
+.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
-.dnav{display:none}
+/* Desktop floating pill menu */
+.dnav{display:none;position:fixed;top:80px;right:30px;gap:24px;align-items:center;background:rgba(255,255,255,.95);border-radius:100px;padding:14px 36px;box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:500;backdrop-filter:blur(10px)}
+.dnav.open{display:flex;animation:pill-in .3s cubic-bezier(.22,1,.36,1)}
+@keyframes pill-in{0%{opacity:0;transform:translateY(-10px) scale(.95)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.dnav a{color:#5B7A8E;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 4px;transition:color .3s;position:relative}
+.dnav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gd);transition:width .4s cubic-bezier(.22,1,.36,1)}
+.dnav a:hover{color:var(--gd)}
+.dnav a:hover::after{width:100%}
 
-/* Full-screen menu */
+/* Full-screen menu (mobile) */
 .mm{position:fixed;inset:0;background:var(--gd);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s cubic-bezier(.22,1,.36,1)}
 .mm.open{opacity:1;pointer-events:auto}
 .mx{position:absolute;top:24px;right:30px;width:48px;height:48px;border-radius:50%;background:0 0;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--wh);transition:transform .3s;font-size:24px}
@@ -396,6 +404,15 @@ section:not(.hero),footer{position:relative;z-index:2}
 <nav class="nav" id="nav">
 <a href="#" class="nav-btn logo-btn"><img src="assets/ricky-logo.png" alt="Late Night Ricky" class="nav-logo-img"></a>
 <button type="button" class="nav-btn hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+<div class="dnav" id="desktopMenu">
+<a href="about.html">About</a>
+<a href="#shows">Shows</a>
+<a href="#partnerships">Partners</a>
+<a href="showreel.html">Showreels</a>
+<a href="#supporting">Clients</a>
+<a href="#share-music">Share Music</a>
+<a href="#contact-form">Contact</a>
+</div>
 </nav>
 
 <!-- FULL SCREEN MENU -->
@@ -760,13 +777,52 @@ section:not(.hero),footer{position:relative;z-index:2}
   var menuBtn=document.getElementById('menuBtn');
   var menuClose=document.getElementById('menuClose');
   var mobileMenu=document.getElementById('mobileMenu');
-  var menuLinks=document.querySelectorAll('.mm a');
-  function openMenu(){mobileMenu.classList.add('open');menuBtn.classList.add('active');document.body.style.overflow='hidden'}
-  function closeMenu(){mobileMenu.classList.remove('open');menuBtn.classList.remove('active');document.body.style.overflow=''}
-  menuBtn.addEventListener('click',openMenu);
-  menuClose.addEventListener('click',closeMenu);
+  var desktopMenu=document.getElementById('desktopMenu');
+  var menuLinks=document.querySelectorAll('.mm a, .dnav a');
+  var isOpen=false;
+
+  function isDesktop(){return window.innerWidth>=992}
+
+  function openMenu(){
+    isOpen=true;
+    menuBtn.classList.add('active');
+    if(isDesktop()){
+      desktopMenu.classList.add('open');
+    }else{
+      mobileMenu.classList.add('open');
+      document.body.style.overflow='hidden';
+    }
+  }
+
+  function closeMenu(){
+    isOpen=false;
+    menuBtn.classList.remove('active');
+    desktopMenu.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow='';
+  }
+
+  function toggleMenu(){
+    if(isOpen){closeMenu()}else{openMenu()}
+  }
+
+  menuBtn.addEventListener('click',toggleMenu);
+  if(menuClose)menuClose.addEventListener('click',closeMenu);
   menuLinks.forEach(function(a){a.addEventListener('click',closeMenu)});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+
+  // Close desktop menu when clicking outside
+  document.addEventListener('click',function(e){
+    if(!isOpen)return;
+    if(isDesktop() && !desktopMenu.contains(e.target) && !menuBtn.contains(e.target)){
+      closeMenu();
+    }
+  });
+
+  // Close menus on resize to avoid state mismatch
+  window.addEventListener('resize',function(){
+    if(isOpen)closeMenu();
+  });
 })();
 
 (function(){
