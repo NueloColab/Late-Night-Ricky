@@ -45,30 +45,27 @@ section:not(.hero),footer{position:relative;z-index:2}
 .logo-btn:hover{transform:translateY(-3px)}
 .nav-logo-img{width:auto;height:32px;border-radius:0;filter:brightness(0) saturate(100%) invert(18%) sepia(34%) saturate(834%) hue-rotate(164deg) brightness(94%) contrast(89%);transform:translateX(0)}
 
-/* Hamburger */
-.hamburger{display:flex;flex-direction:column;gap:5px;position:relative;z-index:400;background:transparent;border:none;padding:8px;cursor:pointer}
-.hamburger span{display:block;width:22px;height:2px;background:var(--gd);border-radius:1px;transition:all .3s;animation:wave-pulse 1.4s ease-in-out infinite;transform-origin:center}
-.hamburger span:nth-child(1){animation-delay:0s}
-.hamburger span:nth-child(2){animation-delay:.25s;height:3px}
-.hamburger span:nth-child(3){animation-delay:.5s}
-@keyframes wave-pulse{0%,100%{width:22px;transform:translateX(0)}25%{width:16px;transform:translateX(2px)}50%{width:26px;transform:translateX(-2px)}75%{width:18px;transform:translateX(1px)}}
+/* Morphing pill nav (desktop) */
+.nav-morph{display:none}
+@media(min-width:992px){
+.nav-morph{display:flex;position:absolute;top:20px;right:30px;height:48px;width:780px;border-radius:24px;background:rgba(255,255,255,.95);align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.1);clip-path:inset(0 calc(100% - 48px) 0 0 round 50%);transition:clip-path 400ms cubic-bezier(.4,0,.2,1)}
+.nav-morph.open{clip-path:inset(0 0 0 0 round 24px)}
+.nav-links{display:flex;gap:24px;align-items:center;padding-left:20px;padding-right:60px;height:100%}
+.nav-links a{color:#5B7A8E;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 4px;white-space:nowrap;opacity:0;transform:translateX(10px);transition:opacity 400ms cubic-bezier(.4,0,.2,1),transform 400ms cubic-bezier(.4,0,.2,1);transition-delay:calc(150ms + var(--i)*40ms);position:relative}
+.nav-morph.open .nav-links a{opacity:1;transform:translateX(0)}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gd);transition:width 400ms cubic-bezier(.22,1,.36,1)}
+.nav-links a:hover::after{width:100%}
+.nav-toggle{position:absolute;right:0;top:0;width:48px;height:48px;border:none;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;z-index:10}
+.bar{display:block;width:22px;height:2px;background:var(--gd);border-radius:1px;transition:all 400ms cubic-bezier(.4,0,.2,1);transform-origin:center}
+.nav-morph.open .bar.b1{transform:translateY(7px) rotate(45deg)}
+.nav-morph.open .bar.b2{opacity:0;transform:scaleX(0)}
+.nav-morph.open .bar.b3{transform:translateY(-7px) rotate(-45deg)}
+}
 
-/* Floating pill menu */
-.dnav{display:none;position:absolute;top:calc(100% + 10px);right:0;gap:24px;align-items:center;background:rgba(255,255,255,.95);border-radius:100px;padding:14px 36px;box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:500;backdrop-filter:blur(10px);white-space:nowrap;opacity:0;transform:translateY(-6px) scale(.96);transition:opacity .3s cubic-bezier(.22,1,.36,1),transform .3s cubic-bezier(.22,1,.36,1)}
-.dnav.open{display:flex;opacity:1;transform:translateY(0) scale(1)}
-.dnav a{color:#5B7A8E;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 4px;transition:color .3s;position:relative}
-.dnav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gd);transition:width .4s cubic-bezier(.22,1,.36,1)}
-.dnav a:hover{color:var(--gd)}
-.dnav a:hover::after{width:100%}
-
-/* Mobile slide-out (kept for small screens) */
-.mm{position:fixed;inset:0;background:var(--gd);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateX(100%);transition:transform .5s cubic-bezier(.22,1,.36,1)}
-.mm.open{transform:translateX(0)}
-.mm a{display:block;color:var(--wh);text-decoration:none;font-family:var(--fs);font-size:clamp(32px,5vw,56px);font-weight:500;padding:14px 0;letter-spacing:2px;text-transform:uppercase;transition:opacity .3s,transform .3s}
-.mm a:hover{opacity:.6;transform:translateX(8px)}
-.mm .menu-label{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);color:var(--gl);font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:500}
-.mm::before{content:'';position:fixed;inset:0;background:rgba(27,58,76,.4);opacity:0;pointer-events:none;transition:opacity .4s;z-index:-1}
-.mm.open::before{opacity:1;pointer-events:auto}
+/* Mobile hamburger */
+.mob-hamburger{display:flex;flex-direction:column;gap:5px;background:transparent;border:none;padding:8px;cursor:pointer}
+.mob-hamburger span{display:block;width:22px;height:2px;background:var(--gd);border-radius:1px}
+@media(min-width:992px){.mob-hamburger{display:none}}
 
 /* Showreel Hero */
 .showreel-hero{position:relative;width:100%;height:100vh;overflow:hidden;z-index:1;background:var(--bk);display:flex;align-items:center;justify-content:center}
@@ -398,16 +395,27 @@ section:not(.hero),footer{position:relative;z-index:2}
 <!-- NAV -->
 <nav class="nav" id="nav">
 <a href="#" class="nav-btn logo-btn"><img src="assets/ricky-logo.png" alt="Late Night Ricky" class="nav-logo-img"></a>
-<button type="button" class="hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
-<div class="dnav" id="desktopMenu">
-<a href="about.html">About</a>
-<a href="#shows">Shows</a>
-<a href="#partnerships">Partners</a>
-<a href="showreel.html">Showreels</a>
-<a href="#supporting">Clients</a>
-<a href="#share-music">Share Music</a>
-<a href="#contact-form">Contact</a>
+
+<!-- Desktop: morphing pill -->
+<div class="nav-morph" id="navMorph">
+  <div class="nav-links">
+    <a href="about.html" style="--i:0">About</a>
+    <a href="#shows" style="--i:1">Shows</a>
+    <a href="#partnerships" style="--i:2">Partners</a>
+    <a href="showreel.html" style="--i:3">Showreels</a>
+    <a href="#supporting" style="--i:4">Clients</a>
+    <a href="#share-music" style="--i:5">Share Music</a>
+    <a href="#contact-form" style="--i:6">Contact</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span class="bar b1"></span>
+    <span class="bar b2"></span>
+    <span class="bar b3"></span>
+  </button>
 </div>
+
+<!-- Mobile: simple hamburger -->
+<button type="button" class="mob-hamburger" id="mobMenuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- FULL SCREEN MENU (mobile only) -->
@@ -768,51 +776,56 @@ section:not(.hero),footer{position:relative;z-index:2}
 <!-- SCRIPT -->
 <script>
 (function(){
-  var menuBtn=document.getElementById('menuBtn');
-  var menu=document.getElementById('mobileMenu');
-  var desktopMenu=document.getElementById('desktopMenu');
-  var menuLinks=document.querySelectorAll('.mm a, .dnav a');
-  var isOpen=false;
+  var navMorph=document.getElementById('navMorph');
+  var navToggle=document.getElementById('navToggle');
+  var mobMenuBtn=document.getElementById('mobMenuBtn');
+  var mobileMenu=document.getElementById('mobileMenu');
 
-  function isDesktop(){return window.innerWidth>=768}
-
-  function openMenu(){
-    isOpen=true;
-    if(isDesktop()){
-      desktopMenu.classList.add('open');
-    }else{
-      menu.classList.add('open');
-      document.body.style.overflow='hidden';
-    }
+  // Desktop: morphing pill toggle
+  if(navToggle){
+    navToggle.addEventListener('click',function(e){
+      e.stopPropagation();
+      navMorph.classList.toggle('open');
+    });
+    // Close when clicking outside
+    document.addEventListener('click',function(e){
+      if(navMorph.classList.contains('open') && !navMorph.contains(e.target)){
+        navMorph.classList.remove('open');
+      }
+    });
+    // Close links inside pill
+    document.querySelectorAll('.nav-links a').forEach(function(a){
+      a.addEventListener('click',function(){navMorph.classList.remove('open');});
+    });
   }
 
-  function closeMenu(){
-    if(!isOpen)return;
-    isOpen=false;
-    desktopMenu.classList.remove('open');
-    menu.classList.remove('open');
-    document.body.style.overflow='';
+  // Mobile: slide-out menu
+  if(mobMenuBtn && mobileMenu){
+    function closeMobMenu(){mobileMenu.classList.remove('open');document.body.style.overflow='';}
+    mobMenuBtn.addEventListener('click',function(){
+      if(mobileMenu.classList.contains('open')){
+        closeMobMenu();
+      }else{
+        mobileMenu.classList.add('open');document.body.style.overflow='hidden';
+      }
+    });
+    document.querySelectorAll('.mm a').forEach(function(a){a.addEventListener('click',closeMobMenu);});
+    // Click overlay to close
+    mobileMenu.addEventListener('click',function(e){if(e.target===mobileMenu)closeMobMenu();});
   }
 
-  function toggleMenu(){
-    if(isOpen){closeMenu()}else{openMenu()}
-  }
-
-  menuBtn.addEventListener('click',toggleMenu);
-  menuLinks.forEach(function(a){a.addEventListener('click',closeMenu)});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
-
-  // Close desktop pill when clicking outside
-  document.addEventListener('click',function(e){
-    if(!isOpen || !isDesktop())return;
-    if(!desktopMenu.contains(e.target) && !menuBtn.contains(e.target)){
-      closeMenu();
+  // Escape closes all
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){
+      if(navMorph)navMorph.classList.remove('open');
+      if(mobileMenu){mobileMenu.classList.remove('open');document.body.style.overflow='';}
     }
   });
 
-  // Close menus on resize to avoid state mismatch
+  // Close all on resize
   window.addEventListener('resize',function(){
-    if(isOpen)closeMenu();
+    if(navMorph)navMorph.classList.remove('open');
+    if(mobileMenu){mobileMenu.classList.remove('open');document.body.style.overflow='';}
   });
 })();
 
