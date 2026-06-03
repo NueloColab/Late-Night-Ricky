@@ -58,9 +58,8 @@ section:not(.hero),footer{position:relative;z-index:2}
 .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 /* Desktop floating pill menu */
-.dnav{display:none;position:fixed;top:80px;right:30px;gap:24px;align-items:center;background:rgba(255,255,255,.95);border-radius:100px;padding:14px 36px;box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:500;backdrop-filter:blur(10px)}
-.dnav.open{display:flex;animation:pill-in .3s cubic-bezier(.22,1,.36,1)}
-@keyframes pill-in{0%{opacity:0;transform:translateY(-10px) scale(.95)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.dnav{display:none;position:fixed;top:80px;right:30px;gap:24px;align-items:center;background:rgba(255,255,255,.95);border-radius:100px;padding:14px 36px;box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:500;backdrop-filter:blur(10px);opacity:0;transform:translateY(-6px) scale(.96);transition:opacity .35s cubic-bezier(.22,1,.36,1),transform .35s cubic-bezier(.22,1,.36,1)}
+.dnav.open{display:flex;opacity:1;transform:translateY(0) scale(1)}
 .dnav a{color:#5B7A8E;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 4px;transition:color .3s;position:relative}
 .dnav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gd);transition:width .4s cubic-bezier(.22,1,.36,1)}
 .dnav a:hover{color:var(--gd)}
@@ -69,8 +68,6 @@ section:not(.hero),footer{position:relative;z-index:2}
 /* Full-screen menu (mobile) */
 .mm{position:fixed;inset:0;background:var(--gd);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s cubic-bezier(.22,1,.36,1)}
 .mm.open{opacity:1;pointer-events:auto}
-.mx{position:absolute;top:24px;right:30px;width:48px;height:48px;border-radius:50%;background:0 0;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--wh);transition:transform .3s;font-size:24px}
-.mx:hover{transform:rotate(90deg)}
 .mm a{display:block;color:var(--wh);text-decoration:none;font-family:var(--fs);font-size:clamp(32px,5vw,56px);font-weight:500;padding:14px 0;letter-spacing:2px;text-transform:uppercase;transition:opacity .3s,transform .3s}
 .mm a:hover{opacity:.6;transform:translateX(8px)}
 .mm .menu-label{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);color:var(--gl);font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:500}
@@ -415,9 +412,8 @@ section:not(.hero),footer{position:relative;z-index:2}
 </div>
 </nav>
 
-<!-- FULL SCREEN MENU -->
+<!-- FULL SCREEN MENU (mobile only) -->
 <div class="mm" id="mobileMenu">
-<button type="button" class="mx" id="menuClose" aria-label="Close menu">&#10005;</button>
 <a href="about.html">About</a>
 <a href="#shows">Shows</a>
 <a href="#partnerships">Partners</a>
@@ -775,7 +771,6 @@ section:not(.hero),footer{position:relative;z-index:2}
 <script>
 (function(){
   var menuBtn=document.getElementById('menuBtn');
-  var menuClose=document.getElementById('menuClose');
   var mobileMenu=document.getElementById('mobileMenu');
   var desktopMenu=document.getElementById('desktopMenu');
   var menuLinks=document.querySelectorAll('.mm a, .dnav a');
@@ -807,7 +802,6 @@ section:not(.hero),footer{position:relative;z-index:2}
   }
 
   menuBtn.addEventListener('click',toggleMenu);
-  if(menuClose)menuClose.addEventListener('click',closeMenu);
   menuLinks.forEach(function(a){a.addEventListener('click',closeMenu)});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
 
