@@ -57,8 +57,16 @@ section:not(.hero),footer{position:relative;z-index:2}
 .hamburger.active span:nth-child(2){opacity:0}
 .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
-/* Slide-out menu */
-.mm{position:fixed;top:0;right:0;width:100%;max-width:420px;height:100vh;background:var(--gd);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateX(100%);transition:transform .5s cubic-bezier(.22,1,.36,1)}
+/* Floating pill menu */
+.dnav{display:none;position:absolute;top:calc(100% + 10px);right:0;gap:24px;align-items:center;background:rgba(255,255,255,.95);border-radius:100px;padding:14px 36px;box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:500;backdrop-filter:blur(10px);white-space:nowrap;opacity:0;transform:translateY(-6px) scale(.96);transition:opacity .3s cubic-bezier(.22,1,.36,1),transform .3s cubic-bezier(.22,1,.36,1)}
+.dnav.open{display:flex;opacity:1;transform:translateY(0) scale(1)}
+.dnav a{color:#5B7A8E;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 4px;transition:color .3s;position:relative}
+.dnav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gd);transition:width .4s cubic-bezier(.22,1,.36,1)}
+.dnav a:hover{color:var(--gd)}
+.dnav a:hover::after{width:100%}
+
+/* Mobile slide-out (kept for small screens) */
+.mm{position:fixed;inset:0;background:var(--gd);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateX(100%);transition:transform .5s cubic-bezier(.22,1,.36,1)}
 .mm.open{transform:translateX(0)}
 .mm a{display:block;color:var(--wh);text-decoration:none;font-family:var(--fs);font-size:clamp(32px,5vw,56px);font-weight:500;padding:14px 0;letter-spacing:2px;text-transform:uppercase;transition:opacity .3s,transform .3s}
 .mm a:hover{opacity:.6;transform:translateX(8px)}
@@ -395,6 +403,15 @@ section:not(.hero),footer{position:relative;z-index:2}
 <nav class="nav" id="nav">
 <a href="#" class="nav-btn logo-btn"><img src="assets/ricky-logo.png" alt="Late Night Ricky" class="nav-logo-img"></a>
 <button type="button" class="hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+<div class="dnav" id="desktopMenu">
+<a href="about.html">About</a>
+<a href="#shows">Shows</a>
+<a href="#partnerships">Partners</a>
+<a href="showreel.html">Showreels</a>
+<a href="#supporting">Clients</a>
+<a href="#share-music">Share Music</a>
+<a href="#contact-form">Contact</a>
+</div>
 </nav>
 
 <!-- FULL SCREEN MENU (mobile only) -->
@@ -757,31 +774,51 @@ section:not(.hero),footer{position:relative;z-index:2}
 (function(){
   var menuBtn=document.getElementById('menuBtn');
   var menu=document.getElementById('mobileMenu');
-  var menuLinks=document.querySelectorAll('.mm a');
+  var desktopMenu=document.getElementById('desktopMenu');
+  var menuLinks=document.querySelectorAll('.mm a, .dnav a');
   var isOpen=false;
 
-  function toggleMenu(){
-    isOpen=!isOpen;
-    menuBtn.classList.toggle('active');
-    menu.classList.toggle('open');
-    document.body.style.overflow=isOpen?'hidden':'';
+  function isDesktop(){return window.innerWidth>=768}
+
+  function openMenu(){
+    isOpen=true;
+    menuBtn.classList.add('active');
+    if(isDesktop()){
+      desktopMenu.classList.add('open');
+    }else{
+      menu.classList.add('open');
+      document.body.style.overflow='hidden';
+    }
   }
 
   function closeMenu(){
     if(!isOpen)return;
     isOpen=false;
     menuBtn.classList.remove('active');
+    desktopMenu.classList.remove('open');
     menu.classList.remove('open');
     document.body.style.overflow='';
+  }
+
+  function toggleMenu(){
+    if(isOpen){closeMenu()}else{openMenu()}
   }
 
   menuBtn.addEventListener('click',toggleMenu);
   menuLinks.forEach(function(a){a.addEventListener('click',closeMenu)});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
 
-  // Click overlay (outside panel) to close
-  menu.addEventListener('click',function(e){
-    if(e.target===menu)closeMenu();
+  // Close desktop pill when clicking outside
+  document.addEventListener('click',function(e){
+    if(!isOpen || !isDesktop())return;
+    if(!desktopMenu.contains(e.target) && !menuBtn.contains(e.target)){
+      closeMenu();
+    }
+  });
+
+  // Close menus on resize to avoid state mismatch
+  window.addEventListener('resize',function(){
+    if(isOpen)closeMenu();
   });
 })();
 
