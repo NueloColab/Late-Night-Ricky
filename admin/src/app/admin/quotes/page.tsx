@@ -99,8 +99,8 @@ export default function QuotesPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-[#1B3A4C] tracking-tight">Quotes</h1>
-          <p className="text-[#8FA8BE] mt-2 text-sm font-medium tracking-wide uppercase">Build and send quotes</p>
+          <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-white tracking-tight">Quotes</h1>
+          <p className="text-[#8FA3B3] mt-2 text-sm font-medium tracking-wide uppercase">Build and send quotes</p>
         </div>
         <button
           onClick={() => { setShowForm(!showForm); setItems([{ description: "", quantity: 1, rate: 0 }]); }}
@@ -111,18 +111,18 @@ export default function QuotesPage() {
       </div>
 
       {showForm && (
-        <form onSubmit={saveQuote} className="bg-white rounded-xl shadow-sm p-6 mb-8 space-y-4 border border-[#E3E8ED]">
-          <h3 className="text-lg font-bold text-[#1B3A4C] mb-2">Quote Builder</h3>
+        <form onSubmit={saveQuote} className="bg-[#111318] rounded-xl shadow-sm p-6 mb-8 space-y-4 border border-[#2A2E36]">
+          <h3 className="text-lg font-bold text-white mb-2">Quote Builder</h3>
           {projectId !== null && (
-            <p className="text-sm text-[#8FA8BE]">Linked to Project #{projectId}</p>
+            <p className="text-sm text-[#8FA3B3]">Linked to Project #{projectId}</p>
           )}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-1.5">Project</label>
+              <label className="block text-xs font-semibold text-white uppercase tracking-widest mb-1.5">Project</label>
               <select
                 value={projectId ?? ""}
                 onChange={(e) => setProjectId(e.target.value ? Number(e.target.value) : null)}
-                className="w-full px-3 py-2 border-2 border-[#E3E8ED] rounded-lg text-sm focus:border-[#1B3A4C] focus:outline-none"
+                className="w-full px-3 py-2 border-2 border-[#2A2E36] rounded-lg text-sm focus:border-[#1B3A4C] focus:outline-none"
               >
                 <option value="">No project</option>
                 {projects.map((p) => (
@@ -139,7 +139,7 @@ export default function QuotesPage() {
                     placeholder="Description"
                     value={item.description}
                     onChange={(e) => updateItem(idx, "description", e.target.value)}
-                    className="w-full px-3 py-2 border-2 border-[#E3E8ED] rounded-lg focus:border-[#1B3A4C] focus:outline-none text-sm"
+                    className="w-full px-3 py-2 border-2 border-[#2A2E36] rounded-lg focus:border-[#1B3A4C] focus:outline-none text-sm"
                   />
                 </div>
                 <div className="w-20">
@@ -148,7 +148,7 @@ export default function QuotesPage() {
                     placeholder="Qty"
                     value={item.quantity}
                     onChange={(e) => updateItem(idx, "quantity", e.target.value)}
-                    className="w-full px-3 py-2 border-2 border-[#E3E8ED] rounded-lg focus:border-[#1B3A4C] focus:outline-none text-sm"
+                    className="w-full px-3 py-2 border-2 border-[#2A2E36] rounded-lg focus:border-[#1B3A4C] focus:outline-none text-sm"
                   />
                 </div>
                 <div className="w-28">
@@ -157,30 +157,30 @@ export default function QuotesPage() {
                     placeholder="Rate"
                     value={item.rate}
                     onChange={(e) => updateItem(idx, "rate", e.target.value)}
-                    className="w-full px-3 py-2 border-2 border-[#E3E8ED] rounded-lg focus:border-[#1B3A4C] focus:outline-none text-sm"
+                    className="w-full px-3 py-2 border-2 border-[#2A2E36] rounded-lg focus:border-[#1B3A4C] focus:outline-none text-sm"
                   />
                 </div>
-                <div className="w-20 text-sm text-[#8FA8BE] pt-2">
+                <div className="w-20 text-sm text-[#8FA3B3] pt-2">
                   £{(Number(item.quantity) * Number(item.rate)).toLocaleString()}
                 </div>
-                <button type="button" onClick={() => removeItem(idx)} className="text-red-500 text-sm">×</button>
+                <button type="button" onClick={() => removeItem(idx)} className="text-[#5A6A7A] text-sm">×</button>
               </div>
             ))}
           </div>
-          <button type="button" onClick={addItem} className="text-sm text-[#8FA8BE] hover:text-[#1B3A4C] underline">+ Add line item</button>
-          <div className="flex items-center justify-between pt-4 border-t border-[#E3E8ED]">
-            <p className="text-sm text-[#1B3A4C] font-bold">Total: £{items.reduce((s, i) => s + Number(i.quantity) * Number(i.rate), 0).toLocaleString()}</p>
+          <button type="button" onClick={addItem} className="text-sm text-[#8FA3B3] hover:text-white underline">+ Add line item</button>
+          <div className="flex items-center justify-between pt-4 border-t border-[#2A2E36]">
+            <p className="text-sm text-white font-bold">Total: £{items.reduce((s, i) => s + Number(i.quantity) * Number(i.rate), 0).toLocaleString()}</p>
             <button type="submit" className="px-6 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold uppercase tracking-wide hover:bg-[#2a4a5c] transition-colors">Save Quote</button>
           </div>
         </form>
       )}
 
       {loading ? (
-        <p className="text-[#8FA8BE]">Loading...</p>
+        <p className="text-[#8FA3B3]">Loading...</p>
       ) : quotesList.length === 0 ? (
-        <p className="text-[#8FA8BE] italic">No quotes yet.</p>
+        <p className="text-[#8FA3B3] italic">No quotes yet.</p>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-[#E3E8ED] overflow-x-auto">
+        <div className="bg-[#111318] rounded-xl shadow-sm border border-[#2A2E36] overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="bg-[#1B3A4C] text-white">
               <tr>
@@ -189,16 +189,16 @@ export default function QuotesPage() {
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E3E8ED]">
+            <tbody className="divide-y divide-[#2A2E36]">
               {quotesList.map((q) => (
-                <tr key={q.id} className="hover:bg-[#E3E8ED]/40 transition-colors">
-                  <td className="px-4 py-3 font-semibold text-[#1B3A4C]">#{q.id}</td>
+                <tr key={q.id} className="hover:bg-[#0A0A0A]/40 transition-colors">
+                  <td className="px-4 py-3 font-semibold text-white">#{q.id}</td>
                   <td className="px-4 py-3"><span className={`text-xs font-bold uppercase tracking-wide px-2 py-1 rounded ${statusStyle(q.status)}`}>{q.status}</span></td>
-                  <td className="px-4 py-3 text-[#8FA8BE]">{(q.lineItems as any)?.length ?? 0} items</td>
-                  <td className="px-4 py-3 text-[#8FA8BE]">£{Number(q.subtotal).toLocaleString()}</td>
-                  <td className="px-4 py-3 text-[#1B3A4C] font-semibold">£{Number(q.total).toLocaleString()}</td>
+                  <td className="px-4 py-3 text-[#8FA3B3]">{(q.lineItems as any)?.length ?? 0} items</td>
+                  <td className="px-4 py-3 text-[#8FA3B3]">£{Number(q.subtotal).toLocaleString()}</td>
+                  <td className="px-4 py-3 text-white font-semibold">£{Number(q.total).toLocaleString()}</td>
                   <td className="px-4 py-3"><a href={`/api/quotes/${q.id}/pdf`} download className="text-xs font-semibold uppercase tracking-wide border border-[#8FA8BE] rounded px-3 py-1 hover:bg-[#8FA8BE] hover:text-white transition-colors inline-block">Download PDF</a></td>
-                  <td className="px-4 py-3"><button onClick={() => deleteQuote(q.id)} className="text-xs font-semibold uppercase tracking-wide border border-red-300 text-red-600 rounded px-3 py-1 hover:bg-red-600 hover:text-white transition-colors">Delete</button></td>
+                  <td className="px-4 py-3"><button onClick={() => deleteQuote(q.id)} className="text-xs font-semibold uppercase tracking-wide border border-[#2A2E36] text-[#5A6A7A] rounded px-3 py-1 hover:bg-[#5A6A7A] hover:text-white transition-colors">Delete</button></td>
                 </tr>
               ))}
             </tbody>
@@ -210,8 +210,8 @@ export default function QuotesPage() {
 }
 
 function statusStyle(s: string) {
-  if (s === "draft") return "bg-[#E3E8ED] text-[#1B3A4C]";
-  if (s === "sent") return "bg-[#8FA8BE]/20 text-[#1B3A4C]";
+  if (s === "draft") return "bg-[#0A0A0A] text-white";
+  if (s === "sent") return "bg-[#8FA8BE]/20 text-white";
   if (s === "approved") return "bg-[#1B3A4C] text-white";
-  return "bg-[#E3E8ED] text-[#1B3A4C]";
+  return "bg-[#0A0A0A] text-white";
 }

@@ -97,14 +97,14 @@ export default function AboutEditor() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-[#1B3A4C] tracking-tight">About Page Editor</h1>
-          <p className="text-[#8FA8BE] mt-1 text-sm font-medium tracking-wide uppercase">Edit portrait, bio, and stats</p>
+          <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-white tracking-tight">About Page Editor</h1>
+          <p className="text-[#8FA3B3] mt-1 text-sm font-medium tracking-wide uppercase">Edit portrait, bio, and stats</p>
         </div>
         <a
           href="/about"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-5 py-2.5 border-2 border-[#1B3A4C] text-[#1B3A4C] rounded-xl text-sm font-semibold uppercase tracking-wide hover:bg-[#1B3A4C] hover:text-white transition-colors"
+          className="px-5 py-2.5 border-2 border-[#1B3A4C] text-white rounded-xl text-sm font-semibold uppercase tracking-wide hover:bg-[#1B3A4C] hover:text-white transition-colors"
         >
           View on Site →
         </a>
@@ -113,11 +113,11 @@ export default function AboutEditor() {
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Section list */}
         <div className="lg:w-64 flex-shrink-0">
-          <div className="bg-white rounded-2xl border border-[#8FA8BE]/20 overflow-hidden">
-            <div className="px-5 py-4 border-b border-[#E3E8ED]">
-              <h2 className="font-serif text-sm font-semibold text-[#1B3A4C] uppercase tracking-widest">Sections</h2>
+          <div className="bg-[#111318] rounded-2xl border border-[#8FA8BE]/20 overflow-hidden">
+            <div className="px-5 py-4 border-b border-[#2A2E36]">
+              <h2 className="font-serif text-sm font-semibold text-white uppercase tracking-widest">Sections</h2>
             </div>
-            <div className="divide-y divide-[#E3E8ED]">
+            <div className="divide-y divide-[#2A2E36]">
               {ABOUT_SECTIONS.map((name) => {
                 const s = sections.find((sec) => sec.section === name);
                 const label = name === 'portrait' ? 'Portrait' : name === 'bio' ? 'Biography' : 'Stats';
@@ -128,7 +128,7 @@ export default function AboutEditor() {
                     className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${
                       selectedSection === name
                         ? 'bg-[#1B3A4C] text-white'
-                        : 'text-[#1B3A4C] hover:bg-[#E3E8ED]'
+                        : 'text-white hover:bg-[#0A0A0A]'
                     }`}
                   >
                     <span>{label}</span>
@@ -145,16 +145,16 @@ export default function AboutEditor() {
         {/* Editor panel */}
         <div className="flex-1 min-w-0">
           {loading ? (
-            <p className="text-[#8FA8BE] text-sm">Loading...</p>
+            <p className="text-[#8FA3B3] text-sm">Loading...</p>
           ) : selectedSection === 'portrait' ? (
-            <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-              <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-4">Portrait</h3>
-              <div className="relative w-full max-w-sm aspect-[3/4] bg-[#E3E8ED] rounded-xl overflow-hidden mb-4">
+            <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
+              <h3 className="font-serif text-lg font-semibold text-white mb-4">Portrait</h3>
+              <div className="relative w-full max-w-sm aspect-[3/4] bg-[#0A0A0A] rounded-xl overflow-hidden mb-4">
                 {portraitPath ? (
                   <Image src={portraitPath} alt="Portrait" fill className="object-cover" sizes="400px" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
-                    <ImageIcon className="w-12 h-12 text-[#8FA8BE]" />
+                    <ImageIcon className="w-12 h-12 text-[#8FA3B3]" />
                   </div>
                 )}
               </div>
@@ -169,14 +169,14 @@ export default function AboutEditor() {
               </button>
             </div>
           ) : selectedSection === 'stats' ? (
-            <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-              <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-1">Stats</h3>
-              <p className="text-xs text-[#8FA8BE] mb-6">Edit the 4 key numbers</p>
+            <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
+              <h3 className="font-serif text-lg font-semibold text-white mb-1">Stats</h3>
+              <p className="text-xs text-[#8FA3B3] mb-6">Edit the 4 key numbers</p>
 
               <div className="space-y-4">
                 {stats.map((stat, i) => (
                   <div key={stat.key}>
-                    <label className="block text-xs font-semibold text-[#8FA8BE] uppercase tracking-widest mb-1.5">
+                    <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">
                       {stat.label}
                     </label>
                     <input
@@ -192,7 +192,7 @@ export default function AboutEditor() {
                         );
                       }}
                       placeholder="e.g. 3x Grammy Winner"
-                      className="w-full px-4 py-2.5 bg-[#E3E8ED] rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                      className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
                     />
                   </div>
                 ))}

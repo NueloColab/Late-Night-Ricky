@@ -64,8 +64,8 @@ export default function MediaPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-          <h1 className="font-display text-3xl font-semibold text-[#1B3A4C]">Media Library</h1>
-          <p className="text-[#8FA8BE] mt-1 text-sm">Manage images, videos, and documents</p>
+          <h1 className="font-display text-3xl font-semibold text-white">Media Library</h1>
+          <p className="text-[#8FA3B3] mt-1 text-sm">Manage images, videos, and documents</p>
         </div>
         <label className="inline-flex items-center gap-2 px-5 py-3 bg-[#1B3A4C] text-white rounded-xl font-semibold text-sm uppercase tracking-widest cursor-pointer hover:bg-[#2a4f66] transition-colors">
           <UploadIcon className="w-4 h-4" />
@@ -80,12 +80,12 @@ export default function MediaPage() {
           placeholder="Search files..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 px-4 py-3 bg-white rounded-xl border border-[#8FA8BE]/30 text-sm focus:outline-none focus:border-[#1B3A4C] text-[#1B3A4C]"
+          className="flex-1 px-4 py-3 bg-[#111318] rounded-xl border border-[#8FA8BE]/30 text-sm focus:outline-none focus:border-[#1B3A4C] text-white"
         />
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="px-4 py-3 bg-white rounded-xl border border-[#8FA8BE]/30 text-sm focus:outline-none focus:border-[#1B3A4C] text-[#1B3A4C]"
+          className="px-4 py-3 bg-[#111318] rounded-xl border border-[#8FA8BE]/30 text-sm focus:outline-none focus:border-[#1B3A4C] text-white"
         >
           {types.map((t) => (
             <option key={t} value={t}>
@@ -96,19 +96,19 @@ export default function MediaPage() {
       </div>
 
       {loading ? (
-        <p className="text-[#8FA8BE] text-sm">Loading...</p>
+        <p className="text-[#8FA3B3] text-sm">Loading...</p>
       ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-2xl p-12 text-center border border-[#8FA8BE]/20">
-          <p className="text-[#8FA8BE] text-sm">No files found. Upload your first asset above.</p>
+        <div className="bg-[#111318] rounded-2xl p-12 text-center border border-[#8FA8BE]/20">
+          <p className="text-[#8FA3B3] text-sm">No files found. Upload your first asset above.</p>
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {filtered.map((asset) => (
             <div
               key={asset.id}
-              className="group bg-white rounded-2xl overflow-hidden border border-[#8FA8BE]/20 hover:shadow-md transition-shadow"
+              className="group bg-[#111318] rounded-2xl overflow-hidden border border-[#8FA8BE]/20 hover:shadow-md transition-shadow"
             >
-              <div className="aspect-square bg-[#E3E8ED] flex items-center justify-center relative">
+              <div className="aspect-square bg-[#0A0A0A] flex items-center justify-center relative">
                 {asset.type === 'image' ? (
                   <Image
                     src={asset.path}
@@ -120,22 +120,22 @@ export default function MediaPage() {
                 ) : asset.type === 'video' ? (
                   <video src={asset.path} className="w-full h-full object-cover" />
                 ) : (
-                  <FileIcon className="w-10 h-10 text-[#8FA8BE]" />
+                  <FileIcon className="w-10 h-10 text-[#8FA3B3]" />
                 )}
                 <div className="absolute inset-0 bg-[#1B3A4C]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <a
                     href={asset.path}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-1.5 bg-white text-[#1B3A4C] rounded-lg text-xs font-semibold"
+                    className="px-3 py-1.5 bg-[#111318] text-white rounded-lg text-xs font-semibold"
                   >
                     View
                   </a>
                 </div>
               </div>
               <div className="p-3">
-                <p className="text-xs font-medium text-[#1B3A4C] truncate">{asset.originalName}</p>
-                <p className="text-[10px] text-[#8FA8BE] mt-0.5 uppercase tracking-wide">
+                <p className="text-xs font-medium text-white truncate">{asset.originalName}</p>
+                <p className="text-[10px] text-[#8FA3B3] mt-0.5 uppercase tracking-wide">
                   {formatBytes(asset.size)} · {asset.type}
                 </p>
                 {asset.usedIn && asset.usedIn.length > 0 && (
@@ -146,7 +146,7 @@ export default function MediaPage() {
                       </span>
                     ))}
                     {asset.usedIn.length > 2 && (
-                      <span className="text-[10px] px-1.5 py-0.5 bg-[#E3E8ED] text-[#1B3A4C] rounded font-semibold uppercase tracking-wider">+{asset.usedIn.length - 2}</span>
+                      <span className="text-[10px] px-1.5 py-0.5 bg-[#0A0A0A] text-white rounded font-semibold uppercase tracking-wider">+{asset.usedIn.length - 2}</span>
                     )}
                   </div>
                 )}

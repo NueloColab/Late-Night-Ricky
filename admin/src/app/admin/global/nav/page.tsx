@@ -96,22 +96,22 @@ export default function NavEditor() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-[#1B3A4C] tracking-tight">Nav & Logo</h1>
-        <p className="text-[#8FA8BE] mt-1 text-sm font-medium tracking-wide uppercase">Edit navigation links and logo</p>
+        <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-white tracking-tight">Nav & Logo</h1>
+        <p className="text-[#8FA3B3] mt-1 text-sm font-medium tracking-wide uppercase">Edit navigation links and logo</p>
       </div>
 
       <div className="max-w-2xl space-y-6">
         {/* Logo */}
-        <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-          <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-1">Logo</h3>
-          <p className="text-xs text-[#8FA8BE] mb-4">The logo shown in the site navigation</p>
+        <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
+          <h3 className="font-serif text-lg font-semibold text-white mb-1">Logo</h3>
+          <p className="text-xs text-[#8FA3B3] mb-4">The logo shown in the site navigation</p>
 
-          <div className="relative w-40 h-20 bg-[#E3E8ED] rounded-xl overflow-hidden mb-4">
+          <div className="relative w-40 h-20 bg-[#0A0A0A] rounded-xl overflow-hidden mb-4">
             {logoPath ? (
               <Image src={logoPath} alt="Logo" fill className="object-contain p-2" sizes="160px" />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <ImageIcon className="w-8 h-8 text-[#8FA8BE]" />
+                <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
               </div>
             )}
           </div>
@@ -124,25 +124,25 @@ export default function NavEditor() {
         </div>
 
         {/* Links */}
-        <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-          <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-1">Navigation Links</h3>
-          <p className="text-xs text-[#8FA8BE] mb-6">Reorder, rename, and show/hide links</p>
+        <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
+          <h3 className="font-serif text-lg font-semibold text-white mb-1">Navigation Links</h3>
+          <p className="text-xs text-[#8FA3B3] mb-6">Reorder, rename, and show/hide links</p>
 
           <div className="space-y-3">
             {links.map((link, idx) => (
-              <div key={idx} className="flex items-center gap-3 p-3 bg-[#E3E8ED] rounded-xl">
+              <div key={idx} className="flex items-center gap-3 p-3 bg-[#0A0A0A] rounded-xl">
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => moveLink(idx, 'up')}
                     disabled={idx === 0}
-                    className="p-1 text-[#8FA8BE] hover:text-[#1B3A4C] transition-colors disabled:opacity-30"
+                    className="p-1 text-[#8FA3B3] hover:text-white transition-colors disabled:opacity-30"
                   >
                     <UpIcon className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => moveLink(idx, 'down')}
                     disabled={idx === links.length - 1}
-                    className="p-1 text-[#8FA8BE] hover:text-[#1B3A4C] transition-colors disabled:opacity-30"
+                    className="p-1 text-[#8FA3B3] hover:text-white transition-colors disabled:opacity-30"
                   >
                     <DownIcon className="w-4 h-4" />
                   </button>
@@ -154,14 +154,14 @@ export default function NavEditor() {
                     value={link.label}
                     onChange={(e) => updateLink(idx, 'label', e.target.value)}
                     placeholder="Label"
-                    className="px-3 py-2 bg-white rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                    className="px-3 py-2 bg-[#111318] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
                   />
                   <input
                     type="text"
                     value={link.href}
                     onChange={(e) => updateLink(idx, 'href', e.target.value)}
                     placeholder="URL"
-                    className="px-3 py-2 bg-white rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                    className="px-3 py-2 bg-[#111318] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
                   />
                 </div>
 
@@ -172,7 +172,7 @@ export default function NavEditor() {
                   className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
                     link.visible
                       ? 'bg-[#1B3A4C] text-white'
-                      : 'bg-white text-[#8FA8BE]'
+                      : 'bg-[#111318] text-[#8FA3B3]'
                   }`}
                 >
                   {link.visible ? 'Shown' : 'Hidden'}
@@ -191,7 +191,7 @@ export default function NavEditor() {
                   )
                 );
               }}
-              className="px-4 py-2.5 border border-[#1B3A4C] text-[#1B3A4C] rounded-lg text-sm font-semibold hover:bg-[#1B3A4C] hover:text-white transition-colors"
+              className="px-4 py-2.5 border border-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:bg-[#1B3A4C] hover:text-white transition-colors"
             >
               + Add Link
             </button>

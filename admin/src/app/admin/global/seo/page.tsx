@@ -84,22 +84,22 @@ export default function SeoEditor() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-[#1B3A4C] tracking-tight">SEO & Meta</h1>
-        <p className="text-[#8FA8BE] mt-1 text-sm font-medium tracking-wide uppercase">Page titles, descriptions, and favicon</p>
+        <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-white tracking-tight">SEO & Meta</h1>
+        <p className="text-[#8FA3B3] mt-1 text-sm font-medium tracking-wide uppercase">Page titles, descriptions, and favicon</p>
       </div>
 
       <div className="max-w-2xl space-y-6">
         {/* Favicon */}
-        <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-          <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-1">Favicon</h3>
-          <p className="text-xs text-[#8FA8BE] mb-4">The icon shown in browser tabs</p>
+        <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
+          <h3 className="font-serif text-lg font-semibold text-white mb-1">Favicon</h3>
+          <p className="text-xs text-[#8FA3B3] mb-4">The icon shown in browser tabs</p>
 
-          <div className="relative w-16 h-16 bg-[#E3E8ED] rounded-xl overflow-hidden mb-4">
+          <div className="relative w-16 h-16 bg-[#0A0A0A] rounded-xl overflow-hidden mb-4">
             {faviconPath ? (
               <Image src={faviconPath} alt="Favicon" fill className="object-contain p-1" sizes="64px" />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <ImageIcon className="w-6 h-6 text-[#8FA8BE]" />
+                <ImageIcon className="w-6 h-6 text-[#8FA3B3]" />
               </div>
             )}
           </div>
@@ -112,33 +112,33 @@ export default function SeoEditor() {
         </div>
 
         {/* Page Meta */}
-        <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-          <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-1">Page Meta</h3>
-          <p className="text-xs text-[#8FA8BE] mb-6">Titles and descriptions for each page</p>
+        <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
+          <h3 className="font-serif text-lg font-semibold text-white mb-1">Page Meta</h3>
+          <p className="text-xs text-[#8FA3B3] mb-6">Titles and descriptions for each page</p>
 
           <div className="space-y-6">
             {merged.map((meta) => (
-              <div key={meta.page} className="border border-[#E3E8ED] rounded-xl p-4">
-                <p className="text-xs font-semibold text-[#8FA8BE] uppercase tracking-widest mb-3">{meta.page}</p>
+              <div key={meta.page} className="border border-[#2A2E36] rounded-xl p-4">
+                <p className="text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-3">{meta.page}</p>
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-xs font-semibold text-[#8FA8BE] uppercase tracking-widest mb-1.5">Title</label>
+                    <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Title</label>
                     <input
                       type="text"
                       value={meta.title}
                       onChange={(e) => updateMeta(meta.page, 'title', e.target.value)}
                       placeholder="Page title"
-                      className="w-full px-4 py-2.5 bg-[#E3E8ED] rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                      className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#8FA8BE] uppercase tracking-widest mb-1.5">Meta Description</label>
+                    <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Meta Description</label>
                     <textarea
                       value={meta.description}
                       onChange={(e) => updateMeta(meta.page, 'description', e.target.value)}
                       placeholder="Short description for search engines"
                       rows={3}
-                      className="w-full px-4 py-2.5 bg-[#E3E8ED] rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 resize-y"
+                      className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 resize-y"
                     />
                   </div>
                 </div>

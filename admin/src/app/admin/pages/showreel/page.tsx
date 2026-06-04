@@ -141,14 +141,14 @@ export default function ShowreelEditor() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-[#1B3A4C] tracking-tight">Showreel Editor</h1>
-          <p className="text-[#8FA8BE] mt-1 text-sm font-medium tracking-wide uppercase">Edit video and showreel cards</p>
+          <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-white tracking-tight">Showreel Editor</h1>
+          <p className="text-[#8FA3B3] mt-1 text-sm font-medium tracking-wide uppercase">Edit video and showreel cards</p>
         </div>
         <a
           href="/showreel"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-5 py-2.5 border-2 border-[#1B3A4C] text-[#1B3A4C] rounded-xl text-sm font-semibold uppercase tracking-wide hover:bg-[#1B3A4C] hover:text-white transition-colors"
+          className="px-5 py-2.5 border-2 border-[#1B3A4C] text-white rounded-xl text-sm font-semibold uppercase tracking-wide hover:bg-[#1B3A4C] hover:text-white transition-colors"
         >
           View on Site →
         </a>
@@ -157,11 +157,11 @@ export default function ShowreelEditor() {
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Section list */}
         <div className="lg:w-64 flex-shrink-0">
-          <div className="bg-white rounded-2xl border border-[#8FA8BE]/20 overflow-hidden">
-            <div className="px-5 py-4 border-b border-[#E3E8ED]">
-              <h2 className="font-serif text-sm font-semibold text-[#1B3A4C] uppercase tracking-widest">Sections</h2>
+          <div className="bg-[#111318] rounded-2xl border border-[#8FA8BE]/20 overflow-hidden">
+            <div className="px-5 py-4 border-b border-[#2A2E36]">
+              <h2 className="font-serif text-sm font-semibold text-white uppercase tracking-widest">Sections</h2>
             </div>
-            <div className="divide-y divide-[#E3E8ED]">
+            <div className="divide-y divide-[#2A2E36]">
               {SHOWREEL_SECTIONS.map((name) => {
                 const s = sections.find((sec) => sec.section === name);
                 const label = name === 'video' ? 'Main Video' : 'Showreel Cards';
@@ -172,7 +172,7 @@ export default function ShowreelEditor() {
                     className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${
                       selectedSection === name
                         ? 'bg-[#1B3A4C] text-white'
-                        : 'text-[#1B3A4C] hover:bg-[#E3E8ED]'
+                        : 'text-white hover:bg-[#0A0A0A]'
                     }`}
                   >
                     <span>{label}</span>
@@ -189,16 +189,16 @@ export default function ShowreelEditor() {
         {/* Editor panel */}
         <div className="flex-1 min-w-0">
           {loading ? (
-            <p className="text-[#8FA8BE] text-sm">Loading...</p>
+            <p className="text-[#8FA3B3] text-sm">Loading...</p>
           ) : selectedSection === 'video' ? (
-            <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-              <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-4">Main Video</h3>
-              <div className="relative w-full max-w-lg aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-4">
+            <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
+              <h3 className="font-serif text-lg font-semibold text-white mb-4">Main Video</h3>
+              <div className="relative w-full max-w-lg aspect-video bg-[#0A0A0A] rounded-xl overflow-hidden mb-4">
                 {videoPath ? (
                   <video src={videoPath} className="w-full h-full object-cover" controls />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
-                    <VideoIcon className="w-12 h-12 text-[#8FA8BE]" />
+                    <VideoIcon className="w-12 h-12 text-[#8FA3B3]" />
                   </div>
                 )}
               </div>
@@ -215,11 +215,11 @@ export default function ShowreelEditor() {
             </div>
           ) : selectedSection === 'cards' ? (
             <div className="space-y-4">
-              <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
+              <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h3 className="font-serif text-lg font-semibold text-[#1B3A4C]">Showreel Cards</h3>
-                    <p className="text-xs text-[#8FA8BE]">Manage cards shown on the showreel page</p>
+                    <h3 className="font-serif text-lg font-semibold text-white">Showreel Cards</h3>
+                    <p className="text-xs text-[#8FA3B3]">Manage cards shown on the showreel page</p>
                   </div>
                   <button
                     onClick={addCard}
@@ -231,27 +231,27 @@ export default function ShowreelEditor() {
 
                 <div className="space-y-4">
                   {showreelCards.map((card, idx) => (
-                    <div key={card.id} className="border border-[#E3E8ED] rounded-xl p-4">
+                    <div key={card.id} className="border border-[#2A2E36] rounded-xl p-4">
                       <div className="flex items-center gap-3 mb-4">
-                        <span className="text-xs font-semibold text-[#8FA8BE] uppercase tracking-widest">#{idx + 1}</span>
+                        <span className="text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest">#{idx + 1}</span>
                         <div className="flex items-center gap-1 ml-auto">
                           <button
                             onClick={() => moveCard(card.id, 'up')}
                             disabled={idx === 0}
-                            className="p-1.5 text-[#8FA8BE] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"
+                            className="p-1.5 text-[#8FA3B3] hover:text-white hover:bg-[#0A0A0A] rounded-lg transition-colors disabled:opacity-30"
                           >
                             <UpIcon className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => moveCard(card.id, 'down')}
                             disabled={idx === showreelCards.length - 1}
-                            className="p-1.5 text-[#8FA8BE] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"
+                            className="p-1.5 text-[#8FA3B3] hover:text-white hover:bg-[#0A0A0A] rounded-lg transition-colors disabled:opacity-30"
                           >
                             <DownIcon className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => removeCard(card.id)}
-                            className="p-1.5 text-[#8FA8BE] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors"
+                            className="p-1.5 text-[#8FA3B3] hover:text-white hover:bg-[#0A0A0A] rounded-lg transition-colors"
                           >
                             <CloseIcon className="w-4 h-4" />
                           </button>
@@ -260,13 +260,13 @@ export default function ShowreelEditor() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-semibold text-[#8FA8BE] uppercase tracking-widest mb-1.5">Image</label>
-                          <div className="relative w-full aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2">
+                          <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Image</label>
+                          <div className="relative w-full aspect-video bg-[#0A0A0A] rounded-xl overflow-hidden mb-2">
                             {card.imagePath ? (
                               <Image src={card.imagePath} alt={card.title} fill className="object-cover" sizes="400px" />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center">
-                                <ImageIcon className="w-8 h-8 text-[#8FA8BE]" />
+                                <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
                               </div>
                             )}
                           </div>
@@ -284,30 +284,30 @@ export default function ShowreelEditor() {
 
                         <div className="space-y-3">
                           <div>
-                            <label className="block text-xs font-semibold text-[#8FA8BE] uppercase tracking-widest mb-1.5">Title</label>
+                            <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Title</label>
                             <input
                               type="text"
                               value={card.title}
                               onChange={(e) => updateCard(card.id, 'title', e.target.value)}
-                              className="w-full px-4 py-2.5 bg-[#E3E8ED] rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                              className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-semibold text-[#8FA8BE] uppercase tracking-widest mb-1.5">Subtitle</label>
+                            <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Subtitle</label>
                             <input
                               type="text"
                               value={card.subtitle}
                               onChange={(e) => updateCard(card.id, 'subtitle', e.target.value)}
-                              className="w-full px-4 py-2.5 bg-[#E3E8ED] rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                              className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-semibold text-[#8FA8BE] uppercase tracking-widest mb-1.5">Description</label>
+                            <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Description</label>
                             <textarea
                               value={card.description}
                               onChange={(e) => updateCard(card.id, 'description', e.target.value)}
                               rows={3}
-                              className="w-full px-4 py-2.5 bg-[#E3E8ED] rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 resize-y"
+                              className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 resize-y"
                             />
                           </div>
                         </div>

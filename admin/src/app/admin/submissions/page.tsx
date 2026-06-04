@@ -162,8 +162,8 @@ export default function SubmissionsPage() {
     <div className="p-8 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-[#1B3A4C] tracking-tight">Music Submissions</h1>
-          <p className="text-[#8FA8BE] mt-2 text-sm font-medium tracking-wide uppercase">Review, listen, and download submitted tracks</p>
+          <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-white tracking-tight">Music Submissions</h1>
+          <p className="text-[#8FA3B3] mt-2 text-sm font-medium tracking-wide uppercase">Review, listen, and download submitted tracks</p>
         </div>
       </div>
 
@@ -171,7 +171,7 @@ export default function SubmissionsPage() {
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="px-4 py-2 rounded-lg border border-[#A3B5C4] bg-white text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
+          className="px-4 py-2 rounded-lg border border-[#A3B5C4] bg-[#111318] text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
         >
           <option value="all">All Statuses</option>
           <option value="new">New</option>
@@ -182,7 +182,7 @@ export default function SubmissionsPage() {
 
         {selected.size > 0 && (
           <div className="flex items-center gap-2">
-            <span className="text-sm text-[#1B3A4C] font-medium">{selected.size} selected</span>
+            <span className="text-sm text-white font-medium">{selected.size} selected</span>
             <button
               onClick={() => bulkUpdateStatus('reviewed')}
               className="px-3 py-1.5 rounded-md bg-[#6B8FAB] text-white text-xs font-medium hover:bg-[#1B3A4C] transition"
@@ -203,7 +203,7 @@ export default function SubmissionsPage() {
             </button>
             <button
               onClick={bulkDelete}
-              className="px-3 py-1.5 rounded-md bg-[#E3E8ED] text-[#1B3A4C] text-xs font-medium hover:bg-[#d0d8e0] transition"
+              className="px-3 py-1.5 rounded-md bg-[#0A0A0A] text-white text-xs font-medium hover:bg-[#d0d8e0] transition"
             >
               Delete
             </button>
@@ -212,11 +212,11 @@ export default function SubmissionsPage() {
       </div>
 
       {loading ? (
-        <div className="text-center py-20 text-[#8FA8BE]">Loading submissions…</div>
+        <div className="text-center py-20 text-[#8FA3B3]">Loading submissions…</div>
       ) : submissions.length === 0 ? (
-        <div className="text-center py-20 text-[#8FA8BE]">No submissions found.</div>
+        <div className="text-center py-20 text-[#8FA3B3]">No submissions found.</div>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-[#E3E8ED]">
+        <div className="overflow-x-auto rounded-xl border border-[#2A2E36]">
           <table className="w-full text-sm">
             <thead className="bg-[#1B3A4C] text-white">
               <tr>
@@ -239,9 +239,9 @@ export default function SubmissionsPage() {
                 <th className="px-4 py-3 text-left font-medium">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E3E8ED]">
+            <tbody className="divide-y divide-[#2A2E36]">
               {submissions.map((s) => (
-                <tr key={s.id} className="bg-white hover:bg-[#F8FAFB]">
+                <tr key={s.id} className="bg-[#111318] hover:bg-[#111318]">
                   <td className="px-4 py-3">
                     <input
                       type="checkbox"
@@ -250,11 +250,11 @@ export default function SubmissionsPage() {
                       className="accent-[#1B3A4C]"
                     />
                   </td>
-                  <td className="px-4 py-3 text-[#1B3A4C] font-medium">{s.email}</td>
-                  <td className="px-4 py-3 text-[#1B3A4C]">{s.artistName || '-'}</td>
-                  <td className="px-4 py-3 text-[#1B3A4C]">{s.trackTitle || '-'}</td>
-                  <td className="px-4 py-3 text-[#8FA8BE]">{formatDate(s.createdAt)}</td>
-                  <td className="px-4 py-3 text-[#8FA8BE]">{formatSize(s.fileSize)}</td>
+                  <td className="px-4 py-3 text-white font-medium">{s.email}</td>
+                  <td className="px-4 py-3 text-white">{s.artistName || '-'}</td>
+                  <td className="px-4 py-3 text-white">{s.trackTitle || '-'}</td>
+                  <td className="px-4 py-3 text-[#8FA3B3]">{formatDate(s.createdAt)}</td>
+                  <td className="px-4 py-3 text-[#8FA3B3]">{formatSize(s.fileSize)}</td>
                   <td className="px-4 py-3">
                     <select
                       value={s.status}
@@ -263,7 +263,7 @@ export default function SubmissionsPage() {
                       className={`px-2 py-1 rounded-full text-xs font-semibold text-white border-none cursor-pointer ${statusColors[s.status]} disabled:opacity-50`}
                     >
                       {Object.entries(statusLabels).map(([value, label]) => (
-                        <option key={value} value={value} className="bg-white text-[#1B3A4C]">
+                        <option key={value} value={value} className="bg-[#111318] text-white">
                           {label}
                         </option>
                       ))}
@@ -274,7 +274,7 @@ export default function SubmissionsPage() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => togglePlay(s.id, s.filePath!)}
-                          className="w-9 h-9 rounded-full border-2 border-[#1B3A4C] flex items-center justify-center text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition"
+                          className="w-9 h-9 rounded-full border-2 border-[#1B3A4C] flex items-center justify-center text-white hover:bg-[#1B3A4C] hover:text-white transition"
                           title={playingId === s.id ? 'Pause' : 'Play'}
                         >
                           {playingId === s.id ? (
@@ -291,7 +291,7 @@ export default function SubmissionsPage() {
                         <a
                           href={s.filePath}
                           download
-                          className="w-9 h-9 rounded-full border-2 border-[#8FA8BE] flex items-center justify-center text-[#8FA8BE] hover:bg-[#8FA8BE] hover:text-white transition"
+                          className="w-9 h-9 rounded-full border-2 border-[#8FA8BE] flex items-center justify-center text-[#8FA3B3] hover:bg-[#8FA8BE] hover:text-white transition"
                           title="Download"
                         >
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -302,7 +302,7 @@ export default function SubmissionsPage() {
                         </a>
                       </div>
                     ) : (
-                      <span className="text-[#A3B5C4] text-xs">No file</span>
+                      <span className="text-[#8FA3B3] text-xs">No file</span>
                     )}
                   </td>
                   <td className="px-4 py-3">
@@ -311,7 +311,7 @@ export default function SubmissionsPage() {
                       onChange={(e) => updateNotes(s.id, e.target.value)}
                       placeholder="Add notes…"
                       rows={2}
-                      className="w-full min-w-[160px] px-2 py-1 rounded-md border border-[#E3E8ED] text-xs text-[#1B3A4C] bg-white focus:outline-none focus:ring-1 focus:ring-[#1B3A4C] resize-y"
+                      className="w-full min-w-[160px] px-2 py-1 rounded-md border border-[#2A2E36] text-xs text-white bg-[#111318] focus:outline-none focus:ring-1 focus:ring-[#1B3A4C] resize-y"
                     />
                   </td>
                   <td className="px-4 py-3">
@@ -326,7 +326,7 @@ export default function SubmissionsPage() {
                           }
                         }
                       }}
-                      className="text-xs text-[#A3B5C4] hover:text-[#1B3A4C] transition"
+                      className="text-xs text-[#8FA3B3] hover:text-white transition"
                     >
                       Delete
                     </button>

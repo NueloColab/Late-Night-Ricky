@@ -52,14 +52,14 @@ export default function LoginPage() {
             <br />
             Ricky
           </h1>
-          <p className="text-[#8FA8BE] text-sm font-medium uppercase tracking-[0.3em]">
+          <p className="text-[#8FA3B3] text-sm font-medium uppercase tracking-[0.3em]">
             International DJ & Grammy Winning Producer
           </p>
           <div className="mt-12 flex justify-center gap-2">
             {[1, 2, 3, 4, 5].map((i) => (
               <div
                 key={i}
-                className="w-1 bg-white/20 rounded-full animate-pulse"
+                className="w-1 bg-[#111318]/20 rounded-full animate-pulse"
                 style={{ height: `${20 + i * 8}px`, animationDelay: `${i * 100}ms` }}
               />
             ))}
@@ -79,7 +79,7 @@ export default function LoginPage() {
           </div>
 
           <div className="mb-10">
-            <p className="text-[#8FA8BE] text-xs font-semibold uppercase tracking-[0.3em] mb-3">
+            <p className="text-[#8FA3B3] text-xs font-semibold uppercase tracking-[0.3em] mb-3">
               Restricted Access
             </p>
             <h2 className="font-serif text-3xl font-semibold text-white tracking-tight">
@@ -89,7 +89,7 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-xs font-semibold tracking-[0.2em] uppercase text-[#8FA8BE] mb-3">
+              <label className="block text-xs font-semibold tracking-[0.2em] uppercase text-[#8FA3B3] mb-3">
                 Enter PIN
               </label>
               <input
@@ -98,28 +98,28 @@ export default function LoginPage() {
                 maxLength={6}
                 value={pin}
                 onChange={(e) => setPin(e.target.value)}
-                className="w-full px-5 py-4 bg-white/5 border-2 border-white/10 rounded-xl text-white font-mono text-2xl tracking-[0.5em] text-center placeholder:text-white/20 focus:border-[#8FA8BE] focus:outline-none focus:bg-white/10 transition-all"
+                className="w-full px-5 py-4 bg-[#111318]/5 border-2 border-[#2A2E36] rounded-xl text-white font-mono text-2xl tracking-[0.5em] text-center placeholder:text-[#5A6A7A] focus:border-[#8FA8BE] focus:outline-none focus:bg-[#111318]/10 transition-all"
                 placeholder="••••"
                 autoFocus
               />
             </div>
 
             {error && (
-              <div className="px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-                <p className="text-red-300 text-sm font-medium text-center">{error}</p>
+              <div className="px-4 py-3 bg-[#1A1D24] border border-[#2A2E36] rounded-lg">
+                <p className="text-[#8FA3B3] text-sm font-medium text-center">{error}</p>
               </div>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-white text-[#1B3A4C] rounded-xl font-semibold tracking-wide uppercase text-sm hover:bg-[#E3E8ED] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-[#111318] text-white rounded-xl font-semibold tracking-wide uppercase text-sm hover:bg-[#0A0A0A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Checking..." : "Enter"}
             </button>
           </form>
 
-          <p className="mt-8 text-center text-[#8FA8BE]/60 text-xs">
+          <p className="mt-8 text-center text-[#8FA3B3]/60 text-xs">
             Late Night Ricky Admin · © 2026
           </p>
         </div>

@@ -57,7 +57,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="min-h-screen bg-[#E3E8ED] flex">
+    <div className="min-h-screen bg-[#0A0A0A] flex">
       {/* Mobile overlay */}
       {mobileOpen && (
         <div
@@ -72,14 +72,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="p-5 border-b border-white/10 flex items-center justify-between">
+        <div className="p-5 border-b border-[#2A2E36] flex items-center justify-between">
           <div>
             <h2 className="text-lg font-bold tracking-tight font-serif">Late Night Ricky</h2>
-            <p className="text-xs text-[#8FA8BE] mt-0.5 font-medium uppercase tracking-widest">Admin Panel</p>
+            <p className="text-xs text-[#8FA3B3] mt-0.5 font-medium uppercase tracking-widest">Admin Panel</p>
           </div>
           <button
             onClick={() => setMobileOpen(false)}
-            className="lg:hidden text-[#8FA8BE] hover:text-white"
+            className="lg:hidden text-[#8FA3B3] hover:text-white"
           >
             <CloseIcon className="w-5 h-5" />
           </button>
@@ -90,15 +90,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             onClick={() => setMobileOpen(false)}
             className={`block px-3 py-2 rounded-lg text-sm font-semibold uppercase tracking-wide transition-colors ${
               pathname === "/admin"
-                ? "bg-white/10 text-white"
-                : "text-[#8FA8BE] hover:text-white hover:bg-white/5"
+                ? "bg-[#111318]/10 text-white"
+                : "text-[#8FA3B3] hover:text-white hover:bg-[#111318]/5"
             }`}
           >
             Dashboard
           </Link>
           {navGroups.map((group) => (
             <div key={group.label}>
-              <p className="px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-[#5B7A8E] mb-1">
+              <p className="px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-[#5A6A7A] mb-1">
                 {group.label}
               </p>
               <div className="space-y-0.5">
@@ -109,8 +109,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     onClick={() => setMobileOpen(false)}
                     className={`block px-3 py-2 rounded-lg text-sm font-medium uppercase tracking-wide transition-colors ${
                       pathname === item.href
-                        ? "bg-white/10 text-white"
-                        : "text-[#8FA8BE] hover:text-white hover:bg-white/5"
+                        ? "bg-[#111318]/10 text-white"
+                        : "text-[#8FA3B3] hover:text-white hover:bg-[#111318]/5"
                     }`}
                   >
                     {item.label}
@@ -120,13 +120,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </div>
           ))}
         </nav>
-        <div className="p-3 border-t border-white/10">
+        <div className="p-3 border-t border-[#2A2E36]">
           <button
             onClick={async () => {
               await fetch("/api/auth/logout", { method: "POST" });
               window.location.href = "/admin/login";
             }}
-            className="w-full px-3 py-2 text-sm font-semibold text-[#8FA8BE] hover:text-white uppercase tracking-wide transition-colors text-left rounded-lg hover:bg-white/5"
+            className="w-full px-3 py-2 text-sm font-semibold text-[#8FA3B3] hover:text-white uppercase tracking-wide transition-colors text-left rounded-lg hover:bg-[#111318]/5"
           >
             Log Out
           </button>

@@ -70,14 +70,14 @@ export default function ContactEditor() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-[#1B3A4C] tracking-tight">Contact Page Editor</h1>
-          <p className="text-[#8FA8BE] mt-1 text-sm font-medium tracking-wide uppercase">Edit email, Instagram, and form settings</p>
+          <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-white tracking-tight">Contact Page Editor</h1>
+          <p className="text-[#8FA3B3] mt-1 text-sm font-medium tracking-wide uppercase">Edit email, Instagram, and form settings</p>
         </div>
         <a
           href="/contact"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-5 py-2.5 border-2 border-[#1B3A4C] text-[#1B3A4C] rounded-xl text-sm font-semibold uppercase tracking-wide hover:bg-[#1B3A4C] hover:text-white transition-colors"
+          className="px-5 py-2.5 border-2 border-[#1B3A4C] text-white rounded-xl text-sm font-semibold uppercase tracking-wide hover:bg-[#1B3A4C] hover:text-white transition-colors"
         >
           View on Site →
         </a>
@@ -86,11 +86,11 @@ export default function ContactEditor() {
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Section list */}
         <div className="lg:w-64 flex-shrink-0">
-          <div className="bg-white rounded-2xl border border-[#8FA8BE]/20 overflow-hidden">
-            <div className="px-5 py-4 border-b border-[#E3E8ED]">
-              <h2 className="font-serif text-sm font-semibold text-[#1B3A4C] uppercase tracking-widest">Sections</h2>
+          <div className="bg-[#111318] rounded-2xl border border-[#8FA8BE]/20 overflow-hidden">
+            <div className="px-5 py-4 border-b border-[#2A2E36]">
+              <h2 className="font-serif text-sm font-semibold text-white uppercase tracking-widest">Sections</h2>
             </div>
-            <div className="divide-y divide-[#E3E8ED]">
+            <div className="divide-y divide-[#2A2E36]">
               {CONTACT_SECTIONS.map((name) => {
                 const s = sections.find((sec) => sec.section === name);
                 const label = name === 'email' ? 'Email' : name === 'instagram' ? 'Instagram' : 'Contact Form';
@@ -101,7 +101,7 @@ export default function ContactEditor() {
                     className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${
                       selectedSection === name
                         ? 'bg-[#1B3A4C] text-white'
-                        : 'text-[#1B3A4C] hover:bg-[#E3E8ED]'
+                        : 'text-white hover:bg-[#0A0A0A]'
                     }`}
                   >
                     <span>{label}</span>
@@ -118,11 +118,11 @@ export default function ContactEditor() {
         {/* Editor panel */}
         <div className="flex-1 min-w-0">
           {loading ? (
-            <p className="text-[#8FA8BE] text-sm">Loading...</p>
+            <p className="text-[#8FA3B3] text-sm">Loading...</p>
           ) : selectedSection === 'email' ? (
-            <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-              <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-1">Email</h3>
-              <p className="text-xs text-[#8FA8BE] mb-6">The contact email displayed on the site</p>
+            <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
+              <h3 className="font-serif text-lg font-semibold text-white mb-1">Email</h3>
+              <p className="text-xs text-[#8FA3B3] mb-6">The contact email displayed on the site</p>
               <input
                 type="email"
                 value={emailValue}
@@ -134,7 +134,7 @@ export default function ContactEditor() {
                   );
                 }}
                 placeholder="hello@latenightricky.com"
-                className="w-full px-4 py-3 bg-[#E3E8ED] rounded-xl text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 mb-4"
+                className="w-full px-4 py-3 bg-[#0A0A0A] rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 mb-4"
               />
               <button
                 onClick={() => saveField('email', emailValue)}
@@ -145,9 +145,9 @@ export default function ContactEditor() {
               </button>
             </div>
           ) : selectedSection === 'instagram' ? (
-            <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-              <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-1">Instagram</h3>
-              <p className="text-xs text-[#8FA8BE] mb-6">The Instagram handle displayed on the site</p>
+            <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
+              <h3 className="font-serif text-lg font-semibold text-white mb-1">Instagram</h3>
+              <p className="text-xs text-[#8FA3B3] mb-6">The Instagram handle displayed on the site</p>
               <input
                 type="text"
                 value={instagramValue}
@@ -159,7 +159,7 @@ export default function ContactEditor() {
                   );
                 }}
                 placeholder="@latenightricky"
-                className="w-full px-4 py-3 bg-[#E3E8ED] rounded-xl text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 mb-4"
+                className="w-full px-4 py-3 bg-[#0A0A0A] rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 mb-4"
               />
               <button
                 onClick={() => saveField('instagram', instagramValue)}
@@ -170,14 +170,14 @@ export default function ContactEditor() {
                 </button>
             </div>
           ) : selectedSection === 'form' ? (
-            <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-              <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-1">Contact Form</h3>
-              <p className="text-xs text-[#8FA8BE] mb-6">Toggle the contact form on or off</p>
+            <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
+              <h3 className="font-serif text-lg font-semibold text-white mb-1">Contact Form</h3>
+              <p className="text-xs text-[#8FA3B3] mb-6">Toggle the contact form on or off</p>
 
-              <div className="flex items-center justify-between p-4 bg-[#E3E8ED] rounded-xl mb-6">
+              <div className="flex items-center justify-between p-4 bg-[#0A0A0A] rounded-xl mb-6">
                 <div>
-                  <p className="text-sm font-semibold text-[#1B3A4C]">Form Enabled</p>
-                  <p className="text-xs text-[#8FA8BE]">Visitors can submit the contact form</p>
+                  <p className="text-sm font-semibold text-white">Form Enabled</p>
+                  <p className="text-xs text-[#8FA3B3]">Visitors can submit the contact form</p>
                 </div>
                 <button
                   onClick={() => {
@@ -192,12 +192,12 @@ export default function ContactEditor() {
                   className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${formEnabled ? 'bg-[#1B3A4C]' : 'bg-[#8FA8BE]'}`}
                 >
                   <span
-                    className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${formEnabled ? 'translate-x-6' : 'translate-x-1'}`}
+                    className={`inline-block h-5 w-5 transform rounded-full bg-[#111318] transition-transform ${formEnabled ? 'translate-x-6' : 'translate-x-1'}`}
                   />
                 </button>
               </div>
 
-              <p className="text-xs text-[#8FA8BE]">The form fields are managed in the public site code.</p>
+              <p className="text-xs text-[#8FA3B3]">The form fields are managed in the public site code.</p>
             </div>
           ) : (
             <SectionEditor section={activeSection} onSaved={fetchSections} />
