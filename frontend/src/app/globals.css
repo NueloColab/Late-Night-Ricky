@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gd: #1B3A4C;
+  --gs: #8FA8BE;
+  --gm: #6B8FAB;
+  --gl: #A3B5C4;
+  --cr: #E3E8ED;
+  --wh: #ffffff;
+  --bk: #111111;
+}
+
+body {
+  font-family: var(--font-inter), 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--gd);
+  background: var(--cr);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
