@@ -163,7 +163,7 @@ export default function QuotesPage() {
                   <td className="px-4 py-3 text-[#8FA8BE]">{(q.lineItems as any)?.length ?? 0} items</td>
                   <td className="px-4 py-3 text-[#8FA8BE]">£{Number(q.subtotal).toLocaleString()}</td>
                   <td className="px-4 py-3 text-[#1B3A4C] font-semibold">£{Number(q.total).toLocaleString()}</td>
-                  <td className="px-4 py-3"><button onClick={() => alert("PDF generation: coming soon")} className="text-xs font-semibold uppercase tracking-wide border border-[#8FA8BE] rounded px-3 py-1 hover:bg-[#8FA8BE] hover:text-white transition-colors">Download PDF</button></td>
+                  <td className="px-4 py-3"><a href={`/api/quotes/${q.id}/pdf`} download className="text-xs font-semibold uppercase tracking-wide border border-[#8FA8BE] rounded px-3 py-1 hover:bg-[#8FA8BE] hover:text-white transition-colors inline-block">Download PDF</a></td>
                   <td className="px-4 py-3"><button onClick={() => deleteQuote(q.id)} className="text-xs font-semibold uppercase tracking-wide border border-red-300 text-red-600 rounded px-3 py-1 hover:bg-red-600 hover:text-white transition-colors">Delete</button></td>
                 </tr>
               ))}

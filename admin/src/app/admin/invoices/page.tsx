@@ -97,7 +97,7 @@ export default function InvoicesPage() {
                   <td className="px-4 py-3 text-[#8FA8BE]">£{Number(inv.subtotal).toLocaleString()}</td>
                   <td className="px-4 py-3 text-[#1B3A4C] font-semibold">£{Number(inv.total).toLocaleString()}</td>
                   <td className="px-4 py-3 flex gap-2">
-                    <button onClick={() => alert("PDF: coming soon")} className="text-xs font-semibold uppercase tracking-wide border border-[#8FA8BE] rounded px-3 py-1 hover:bg-[#8FA8BE] hover:text-white transition-colors">PDF</button>
+                    <a href={`/api/invoices/${inv.id}/pdf`} download className="text-xs font-semibold uppercase tracking-wide border border-[#8FA8BE] rounded px-3 py-1 hover:bg-[#8FA8BE] hover:text-white transition-colors inline-block">PDF</a>
                     <button onClick={() => deleteInvoice(inv.id)} className="text-xs font-semibold uppercase tracking-wide border border-red-300 text-red-600 rounded px-3 py-1 hover:bg-red-600 hover:text-white transition-colors">Delete</button>
                   </td>
                 </tr>
