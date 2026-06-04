@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
-import { mkdir } from "fs/promises";
-import path from "path";
 import { db } from "@/lib/db";
 import { assets } from "@/lib/db/schema";
+import { storeFile } from "@/lib/storage";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -13,16 +11,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "No file provided" }, { status: 400 });
   }
 
-  const uploadsDir = path.join(process.cwd(), "..", "uploads");
-  await mkdir(uploadsDir, { recursive: true });
+  const ext = file.name.includes(".") ? file.name.split(".").pop() || "" : "";
+  const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}${ext ? `.${ext}` : ""}`;
 
-  const ext = path.extname(file.name);
-  const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
-  const filePath = path.join(uploadsDir, filename);
-  const relativePath = `/uploads/${filename}`;
-
-  const bytes = await file.arrayBuffer();
-  await writeFile(filePath, Buffer.from(bytes));
+  const { url, size } = await storeFile(file, filename, {
+    contentType: file.type,
+  });
 
   const type = file.type.startsWith("image/")
     ? "image"
@@ -36,8 +30,10 @@ export async function POST(request: Request) {
       filename,
       originalName: file.name,
       type,
-      size: file.size,
-      path: relativePath,
+      size,
+      path: url,
+      thumbnailPath: type === "image" ? url : undefined,
+      usedIn: JSON.stringify([]),
     })
     .returning()
     .get();

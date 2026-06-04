@@ -1,10 +1,12 @@
 import { defineConfig } from 'drizzle-kit';
 
+const isTurso = !!process.env.TURSO_DATABASE_URL;
+
 export default defineConfig({
   schema: './src/lib/db/schema.ts',
   out: './drizzle',
-  dialect: 'sqlite',
-  dbCredentials: {
-    url: './sqlite.db',
-  },
+  dialect: isTurso ? 'turso' : 'sqlite',
+  dbCredentials: isTurso
+    ? { url: process.env.TURSO_DATABASE_URL!, authToken: process.env.TURSO_AUTH_TOKEN }
+    : { url: './sqlite.db' },
 });

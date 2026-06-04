@@ -2,8 +2,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { submissions } from '@/lib/db/schema';
 import { desc, eq, and, inArray } from 'drizzle-orm';
-import { writeFile } from 'fs/promises';
-import { mkdir } from 'fs/promises';
+import { storeFile } from '@/lib/storage';
 import path from 'path';
 import { cookies } from 'next/headers';
 
@@ -49,8 +48,8 @@ export async function GET(request: Request) {
       query = query.where(and(...conditions));
     }
 
-    const rows = await query.orderBy(desc(submissions.createdAt)).all();
-    return NextResponse.json({ submissions: rows }, { headers: corsHeaders() });
+    const all = await query.orderBy(desc(submissions.createdAt)).all();
+    return NextResponse.json({ submissions: all }, { headers: corsHeaders() });
   } catch (err) {
     console.error('Submissions GET error:', err);
     return NextResponse.json({ submissions: [] }, { status: 500, headers: corsHeaders() });
@@ -61,12 +60,12 @@ export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     const email = formData.get('email') as string;
-    const artistName = formData.get('artistName') as string;
-    const trackTitle = formData.get('trackTitle') as string;
-    const file = formData.get('file') as File;
+    const artistName = formData.get('artistName') as string | null;
+    const trackTitle = formData.get('trackTitle') as string | null;
+    const file = formData.get('file') as File | null;
 
     if (!email || !email.includes('@')) {
-      return NextResponse.json({ error: 'Valid email is required' }, { status: 400, headers: corsHeaders() });
+      return NextResponse.json({ error: 'Valid email required' }, { status: 400, headers: corsHeaders() });
     }
 
     let filePath: string | null = null;
@@ -83,19 +82,14 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Only MP3 and WAV files are allowed' }, { status: 400, headers: corsHeaders() });
       }
 
-      const uploadsDir = path.join(process.cwd(), '..', 'uploads', 'submissions');
-      await mkdir(uploadsDir, { recursive: true });
-
       const ext = path.extname(file.name) || '.mp3';
-      const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
-      const fullPath = path.join(uploadsDir, filename);
-      const relativePath = `/uploads/submissions/${filename}`;
+      const filename = `submission-${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
+      const { url, size } = await storeFile(file, filename, {
+        contentType: file.type,
+      });
 
-      const bytes = await file.arrayBuffer();
-      await writeFile(fullPath, Buffer.from(bytes));
-
-      filePath = relativePath;
-      fileSize = file.size;
+      filePath = url;
+      fileSize = size;
     }
 
     const row = await db
@@ -132,12 +126,11 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: 'ID required' }, { status: 400, headers: corsHeaders() });
     }
 
-    const updateData: any = {};
-    if (status !== undefined) updateData.status = status;
-    if (notes !== undefined) updateData.notes = notes;
+    const updates: any = {};
+    if (status) updates.status = status;
+    if (notes !== undefined) updates.notes = notes;
 
-    await db.update(submissions).set(updateData).where(eq(submissions.id, id)).run();
-
+    await db.update(submissions).set(updates).where(eq(submissions.id, id));
     return NextResponse.json({ success: true }, { headers: corsHeaders() });
   } catch (err) {
     console.error('Submission PATCH error:', err);
@@ -153,17 +146,18 @@ export async function DELETE(request: Request) {
 
   try {
     const { searchParams } = new URL(request.url);
-    const idsParam = searchParams.get('ids');
-    if (!idsParam) {
+    const ids = searchParams.get('ids');
+
+    if (!ids) {
       return NextResponse.json({ error: 'IDs required' }, { status: 400, headers: corsHeaders() });
     }
 
-    const idList = idsParam.split(',').map((id) => parseInt(id, 10)).filter((id) => !isNaN(id));
+    const idList = ids.split(',').map((id) => parseInt(id, 10)).filter((id) => !isNaN(id));
     if (idList.length === 0) {
       return NextResponse.json({ error: 'No valid IDs' }, { status: 400, headers: corsHeaders() });
     }
 
-    await db.delete(submissions).where(inArray(submissions.id, idList)).run();
+    await db.delete(submissions).where(inArray(submissions.id, idList));
     return NextResponse.json({ success: true }, { headers: corsHeaders() });
   } catch (err) {
     console.error('Submission DELETE error:', err);

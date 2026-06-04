@@ -19,7 +19,7 @@ export async function GET() {
 
   // Pending projects (not paid)
   const allProjects = await db.select().from(projects).all();
-  const pendingProjects = allProjects.filter((p) => p.status !== 'paid').length;
+  const pendingProjects = allProjects.filter((p: { status: string }) => p.status !== 'paid').length;
 
   return NextResponse.json({
     sections: sections.count,

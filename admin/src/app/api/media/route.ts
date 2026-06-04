@@ -2,11 +2,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { assets } from '@/lib/db/schema';
 import { desc } from 'drizzle-orm';
-import { writeFile } from 'fs/promises';
-import { mkdir } from 'fs/promises';
-import path from 'path';
-
-const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads');
+import { storeFile } from '@/lib/storage';
 
 export async function GET() {
   try {
@@ -20,25 +16,18 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    await mkdir(UPLOAD_DIR, { recursive: true });
-
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    const timestamp = Date.now();
     const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-    const filename = `${timestamp}-${safeName}`;
-    const filePath = path.join(UPLOAD_DIR, filename);
+    const filename = `${Date.now()}-${safeName}`;
 
-    await writeFile(filePath, buffer);
-
-    const relativePath = `/uploads/${filename}`;
+    const { url, size } = await storeFile(file, filename, {
+      contentType: file.type,
+    });
 
     const assetType = file.type.startsWith('image/')
       ? 'image'
@@ -52,9 +41,9 @@ export async function POST(request: Request) {
       filename,
       originalName: file.name,
       type: assetType,
-      size: file.size,
-      path: relativePath,
-      thumbnailPath: assetType === 'image' ? relativePath : undefined,
+      size,
+      path: url,
+      thumbnailPath: assetType === 'image' ? url : undefined,
       usedIn: JSON.stringify([]),
     }).returning().get();
 
