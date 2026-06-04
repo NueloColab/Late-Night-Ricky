@@ -122,6 +122,29 @@ async function seed() {
   }
   console.log('✅ Site sections seeded');
 
+  // Seed radio section with snippet tracks and platform links
+  db.insert(schema.siteSections).values({
+    page: 'home',
+    section: 'radio',
+    content: [
+      { title: 'Late Night Vibes', duration: '0:32', src: 'assets/snippet-1.mp3' },
+      { title: 'Desert Heat', duration: '0:28', src: 'assets/snippet-2.mp3' },
+      { title: 'Ibiza Sunrise', duration: '0:30', src: 'assets/snippet-3.mp3' },
+      { title: 'Studio Session', duration: '0:25', src: 'assets/snippet-4.mp3' },
+      { title: 'Afterhours', duration: '0:35', src: 'assets/snippet-5.mp3' },
+    ],
+    images: ['assets/ricky-spotify-new.jpg'],
+    videos: [],
+    links: {
+      spotify: 'https://open.spotify.com/artist/4AK6F2O4Il0oZ8pSpuOOnl',
+      appleMusic: 'https://music.apple.com/gb/artist/late-night-ricky/1234567890',
+      youtube: 'https://youtube.com/@LateNightRicky',
+    },
+    order: 2,
+    isActive: true,
+  }).run();
+  console.log('✅ Radio section seeded');
+
   // Seed show cards from index.html
   const showCardsData = [
     {
