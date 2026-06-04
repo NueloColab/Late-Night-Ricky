@@ -75,7 +75,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               const isActive =
                 item.href === "/admin"
                   ? pathname === "/admin"
-                  : pathname.startsWith(item.href);
+                  : pathname.startsWith(item.href) || 
+                    (item.href === "/admin/content" && (pathname.startsWith("/admin/pages") || pathname.startsWith("/admin/global")));
               return (
                 <Link
                   key={item.href}
@@ -98,7 +99,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="bg-gray-50 border border-gray-200 p-3 space-y-1">
             {bottomMenuItems.map((item) => {
               const Icon = item.icon;
-              const isActive = pathname.startsWith(item.href);
+              const isActive = pathname.startsWith(item.href) || 
+                (item.href === "/admin/content" && (pathname.startsWith("/admin/pages") || pathname.startsWith("/admin/global")));
               return (
                 <Link
                   key={item.href}
