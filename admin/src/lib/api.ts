@@ -1,4 +1,4 @@
-const ADMIN_API = process.env.ADMIN_API_URL || '';
+const ADMIN_API = process.env.ADMIN_API_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '');
 
 async function fetchJson(url: string, options?: RequestInit) {
   try {

@@ -6,7 +6,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
-  title: "Late Night Ricky — Admin",
+  title: "Late Night Ricky — International DJ & Grammy Winning Producer",
+  description: "From London to New York / LA to Las Vegas / Miami to Ibiza and beyond. 150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

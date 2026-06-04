@@ -6,3 +6,4 @@ uploads/submissions/
 *.log
 .env
 .env.local
+.env*
