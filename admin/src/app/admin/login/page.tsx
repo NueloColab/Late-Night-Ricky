@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 export default function LoginPage() {
   const [pin, setPin] = useState("");
@@ -35,20 +34,17 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-[#1B3A4C] flex">
-      {/* Left side — branding */}
+      {/* Left side — branding (desktop only) */}
       <div className="hidden lg:flex lg:w-1/2 relative items-center justify-center">
         <div className="absolute inset-0 opacity-10">
           <div className="w-full h-full bg-[radial-gradient(circle_at_center,_#ffffff_1px,_transparent_1px)] bg-[length:40px_40px]" />
         </div>
         <div className="relative z-10 text-center px-12">
           <div className="mb-8">
-            <Image
+            <img
               src="/assets/ricky-logo.png"
               alt="Late Night Ricky"
-              width={200}
-              height={60}
-              className="mx-auto invert"
-              priority
+              className="mx-auto invert w-[200px] h-auto"
             />
           </div>
           <h1 className="font-serif text-6xl font-semibold text-white tracking-tight mb-4">
@@ -75,13 +71,10 @@ export default function LoginPage() {
       <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-sm">
           <div className="lg:hidden text-center mb-10">
-            <Image
+            <img
               src="/assets/ricky-logo.png"
               alt="Late Night Ricky"
-              width={160}
-              height={48}
-              className="mx-auto invert"
-              priority
+              className="mx-auto invert w-[160px] h-auto"
             />
           </div>
 
