@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface Project {
   id: number;
@@ -185,11 +186,15 @@ export default function ProjectsPage() {
                   {projects
                     .filter((p) => p.status === status)
                     .map((p) => (
-                      <div
+                      <Link
                         key={p.id}
+                        href={`/admin/projects/${p.id}`}
                         draggable
-                        onDragStart={() => setDragId(p.id)}
-                        className="bg-[#E3E8ED] rounded-lg p-3 cursor-move hover:bg-[#d1d8dd] transition-colors group"
+                        onDragStart={(e) => {
+                          e.preventDefault();
+                          setDragId(p.id);
+                        }}
+                        className="bg-[#E3E8ED] rounded-lg p-3 cursor-move hover:bg-[#d1d8dd] transition-colors group block"
                       >
                         <p className="text-sm font-semibold text-[#1B3A4C] leading-tight">{p.title}</p>
                         <p className="text-xs text-[#8FA8BE] mt-0.5">{p.venue || "No venue"}</p>
@@ -197,7 +202,7 @@ export default function ProjectsPage() {
                         <div className="flex justify-end mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button onClick={() => deleteProject(p.id)} className="text-xs text-red-500 hover:underline">Delete</button>
                         </div>
-                      </div>
+                      </Link>
                     ))}
                   {projects.filter((p) => p.status === status).length === 0 && (
                     <p className="text-xs text-[#8FA8BE] italic">Drop here</p>

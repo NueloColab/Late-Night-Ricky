@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { invoices } from '@/lib/db/schema';
+import { count } from 'drizzle-orm';
 
 export async function GET() {
   try {
@@ -15,7 +16,14 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const inserted = await db.insert(invoices).values(body).returning();
+    // Auto-generate invoice number if not provided
+    let invoiceNumber = body.invoiceNumber;
+    if (!invoiceNumber) {
+      const [countRow] = await db.select({ count: count() }).from(invoices);
+      const nextNum = (countRow?.count || 0) + 1;
+      invoiceNumber = `INV-${String(nextNum).padStart(4, '0')}`;
+    }
+    const inserted = await db.insert(invoices).values({ ...body, invoiceNumber }).returning();
     return NextResponse.json({ invoice: inserted[0] });
   } catch (err) {
     console.error('Invoices POST error:', err);

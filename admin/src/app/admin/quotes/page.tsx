@@ -18,9 +18,15 @@ export default function QuotesPage() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [items, setItems] = useState([{ description: "", quantity: 1, rate: 0 }]);
+  const [projects, setProjects] = useState<{ id: number; title: string }[]>([]);
+  const [projectId, setProjectId] = useState<number | null>(null);
 
   useEffect(() => {
+    const url = new URL(window.location.href);
+    const pid = url.searchParams.get("projectId");
+    if (pid) setProjectId(Number(pid));
     fetchQuotes();
+    fetchProjects();
   }, []);
 
   async function fetchQuotes() {
@@ -33,6 +39,16 @@ export default function QuotesPage() {
       console.error("Failed to load quotes", err);
     }
     setLoading(false);
+  }
+
+  async function fetchProjects() {
+    try {
+      const res = await fetch("/api/projects");
+      const data = await res.json();
+      setProjects(data.projects || []);
+    } catch (err) {
+      console.error("Failed to load projects", err);
+    }
   }
 
   async function saveQuote(e: React.FormEvent) {
@@ -49,7 +65,7 @@ export default function QuotesPage() {
       await fetch("/api/quotes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lineItems, subtotal, total, taxRate: 0, status: "draft" }),
+        body: JSON.stringify({ lineItems, subtotal, total, taxRate: 0, status: "draft", projectId: projectId || undefined }),
       });
       setItems([{ description: "", quantity: 1, rate: 0 }]);
       setShowForm(false);
@@ -97,6 +113,24 @@ export default function QuotesPage() {
       {showForm && (
         <form onSubmit={saveQuote} className="bg-white rounded-xl shadow-sm p-6 mb-8 space-y-4 border border-[#E3E8ED]">
           <h3 className="text-lg font-bold text-[#1B3A4C] mb-2">Quote Builder</h3>
+          {projectId !== null && (
+            <p className="text-sm text-[#8FA8BE]">Linked to Project #{projectId}</p>
+          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-1.5">Project</label>
+              <select
+                value={projectId ?? ""}
+                onChange={(e) => setProjectId(e.target.value ? Number(e.target.value) : null)}
+                className="w-full px-3 py-2 border-2 border-[#E3E8ED] rounded-lg text-sm focus:border-[#1B3A4C] focus:outline-none"
+              >
+                <option value="">No project</option>
+                {projects.map((p) => (
+                  <option key={p.id} value={p.id}>{p.title}</option>
+                ))}
+              </select>
+            </div>
+          </div>
           <div className="space-y-3">
             {items.map((item, idx) => (
               <div key={idx} className="flex gap-3 items-start">
