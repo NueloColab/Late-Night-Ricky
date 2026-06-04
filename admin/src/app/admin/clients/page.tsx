@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Plus, Search, Users, Trash2, Eye, Phone, Mail, Instagram, Calendar } from 'lucide-react'
+import { Plus, Search, Users, Trash2, Eye, Phone, Mail, Globe, Calendar } from 'lucide-react'
 import Modal from '@/components/Modal'
 
 interface Client {
@@ -110,7 +110,7 @@ export default function ClientsPage() {
           </div>
           <input
             type="text"
-            placeholder="Search by name, email, or Instagram..."
+            placeholder="Search by name, email, or Globe..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#E3E8ED] text-[#1B3A4C] placeholder-[#A3B5C4] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg"
@@ -157,7 +157,7 @@ export default function ClientsPage() {
                         )}
                         {client.instagram && (
                           <div className="flex items-center gap-1.5 text-xs text-[#8FA8BE]">
-                            <Instagram size={12} /> {client.instagram}
+                            <Globe size={12} /> {client.instagram}
                           </div>
                         )}
                       </div>
@@ -214,7 +214,7 @@ export default function ClientsPage() {
             </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-2">Instagram</label>
+            <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-2">Globe</label>
             <input value={form.instagram} onChange={(e) => setForm({ ...form, instagram: e.target.value })}
               className="w-full px-4 py-2.5 bg-white border-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
           </div>
@@ -253,7 +253,7 @@ export default function ClientsPage() {
               )}
               {selectedClient.instagram && (
                 <div className="flex items-center gap-2 text-sm">
-                  <Instagram size={14} className="text-[#8FA8BE]" />
+                  <Globe size={14} className="text-[#8FA8BE]" />
                   <span className="text-[#1B3A4C]">{selectedClient.instagram}</span>
                 </div>
               )}
