@@ -83,8 +83,8 @@ export default function QuotesPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-[#1B3A4C] tracking-tight">Quotes</h1>
-          <p className="text-[#8FA8BE] text-sm mt-1 font-medium uppercase tracking-wide">Build and send quotes</p>
+          <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-[#1B3A4C] tracking-tight">Quotes</h1>
+          <p className="text-[#8FA8BE] mt-2 text-sm font-medium tracking-wide uppercase">Build and send quotes</p>
         </div>
         <button
           onClick={() => { setShowForm(!showForm); setItems([{ description: "", quantity: 1, rate: 0 }]); }}

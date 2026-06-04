@@ -160,11 +160,11 @@ export default function SubmissionsPage() {
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-[#1B3A4C] tracking-tight">Music Submissions</h1>
-        <p className="text-[#8FA8BE] mt-1 text-sm font-medium tracking-wide uppercase">
-          Review, listen, and download submitted tracks
-        </p>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-[#1B3A4C] tracking-tight">Music Submissions</h1>
+          <p className="text-[#8FA8BE] mt-2 text-sm font-medium tracking-wide uppercase">Review, listen, and download submitted tracks</p>
+        </div>
       </div>
 
       <div className="flex flex-wrap items-center gap-4 mb-6">

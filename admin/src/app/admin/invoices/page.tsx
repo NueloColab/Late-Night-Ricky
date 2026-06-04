@@ -58,8 +58,8 @@ export default function InvoicesPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-[#1B3A4C] tracking-tight">Invoices</h1>
-          <p className="text-[#8FA8BE] text-sm mt-1 font-medium uppercase tracking-wide">Track payments</p>
+          <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-[#1B3A4C] tracking-tight">Invoices</h1>
+          <p className="text-[#8FA8BE] mt-2 text-sm font-medium tracking-wide uppercase">Track payments</p>
         </div>
       </div>
 

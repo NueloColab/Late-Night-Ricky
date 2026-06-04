@@ -79,8 +79,8 @@ export default function ClientsPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-[#1B3A4C] tracking-tight">Clients</h1>
-          <p className="text-[#8FA8BE] text-sm mt-1 font-medium uppercase tracking-wide">{clientsList.length} contact{clientsList.length !== 1 ? "s" : ""}</p>
+          <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-[#1B3A4C] tracking-tight">Clients</h1>
+          <p className="text-[#8FA8BE] mt-2 text-sm font-medium tracking-wide uppercase">{clientsList.length} contact{clientsList.length !== 1 ? "s" : ""}</p>
         </div>
         <button
           onClick={() => { setShowForm(!showForm); setEditId(null); setForm(emptyClient); }}
