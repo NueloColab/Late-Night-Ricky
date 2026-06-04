@@ -6,8 +6,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
-  title: "Late Night Ricky",
-  description: "International DJ & Grammy Winning Producer",
+  title: "Late Night Ricky — International DJ & Grammy Winning Producer",
+  description: "From London to the world. Late Night Ricky — International DJ & Grammy Winning Producer.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
