@@ -3,146 +3,162 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import {
+  LayoutDashboard,
+  Mail,
+  FileText,
+  Quote,
+  Receipt,
+  Users,
+  Image as ImageIcon,
+  PenTool,
+  Settings,
+  LogOut,
+  Music,
+  FolderOpen,
+} from "lucide-react";
 
-const navGroups = [
-  {
-    label: "Content",
-    items: [
-      { label: "Home Page", href: "/admin/pages/home" },
-      { label: "About Page", href: "/admin/pages/about" },
-      { label: "Showreel", href: "/admin/pages/showreel" },
-      { label: "Contact", href: "/admin/pages/contact" },
-    ],
-  },
-  {
-    label: "Global",
-    items: [
-      { label: "Nav & Logo", href: "/admin/global/nav" },
-      { label: "SEO", href: "/admin/global/seo" },
-    ],
-  },
-  {
-    label: "Media",
-    items: [
-      { label: "Media Library", href: "/admin/media" },
-      { label: "Submissions", href: "/admin/submissions" },
-    ],
-  },
-  {
-    label: "Business",
-    items: [
-      { label: "Clients", href: "/admin/clients" },
-      { label: "Projects", href: "/admin/projects" },
-      { label: "Quotes", href: "/admin/quotes" },
-      { label: "Invoices", href: "/admin/invoices" },
-    ],
-  },
-  {
-    label: "System",
-    items: [
-      { label: "Settings", href: "/admin/settings" },
-    ],
-  },
+const mainMenuItems = [
+  { label: "Overview", href: "/admin", icon: LayoutDashboard },
+  { label: "Submissions", href: "/admin/submissions", icon: Mail },
+  { label: "Projects", href: "/admin/projects", icon: FolderOpen },
+  { label: "Quotes", href: "/admin/quotes", icon: Quote },
+  { label: "Invoices", href: "/admin/invoices", icon: Receipt },
+  { label: "Clients", href: "/admin/clients", icon: Users },
+];
+
+const bottomMenuItems = [
+  { label: "Media", href: "/admin/media", icon: ImageIcon },
+  { label: "Shows", href: "/admin/shows", icon: Music },
+  { label: "Content", href: "/admin/content", icon: PenTool },
+  { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Login page is NOT wrapped in this layout — handled by conditional below
-  const isLoginPage = pathname === "/admin/login";
-
-  if (isLoginPage) {
+  if (pathname === "/admin/login") {
     return <>{children}</>;
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex">
-      {/* Mobile overlay */}
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Mobile Overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-[#1B3A4C]/60 z-30 lg:hidden"
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-[#1B3A4C] text-white flex-shrink-0 flex flex-col transform transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-[280px] bg-white border-r border-gray-200 flex flex-col h-screen overflow-y-auto flex-shrink-0 transform transition-transform duration-300 lg:translate-x-0 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="p-5 border-b border-[#2A2E36] flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-bold tracking-tight font-serif">Late Night Ricky</h2>
-            <p className="text-xs text-[#8FA3B3] mt-0.5 font-medium uppercase tracking-widest">Admin Panel</p>
+        {/* Logo */}
+        <Link href="/admin" className="mb-8 pt-6 px-6" onClick={() => setMobileOpen(false)}>
+          <h2 className="font-serif text-2xl font-light text-[#1a1a1a] tracking-tight">Late Night Ricky</h2>
+          <div className="flex items-center gap-3 mt-2">
+            <div className="w-6 h-px bg-black"></div>
+            <p className="text-xs uppercase tracking-widest text-gray-500">Admin Portal</p>
+            <div className="w-6 h-px bg-black"></div>
           </div>
-          <button
-            onClick={() => setMobileOpen(false)}
-            className="lg:hidden text-[#8FA3B3] hover:text-white"
-          >
-            <CloseIcon className="w-5 h-5" />
-          </button>
-        </div>
-        <nav className="flex-1 p-3 space-y-4 overflow-y-auto">
-          <Link
-            href="/admin"
-            onClick={() => setMobileOpen(false)}
-            className={`block px-3 py-2 rounded-lg text-sm font-semibold uppercase tracking-wide transition-colors ${
-              pathname === "/admin"
-                ? "bg-[#111318]/10 text-white"
-                : "text-[#8FA3B3] hover:text-white hover:bg-[#111318]/5"
-            }`}
-          >
-            Dashboard
-          </Link>
-          {navGroups.map((group) => (
-            <div key={group.label}>
-              <p className="px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-[#5A6A7A] mb-1">
-                {group.label}
-              </p>
-              <div className="space-y-0.5">
-                {group.items.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={`block px-3 py-2 rounded-lg text-sm font-medium uppercase tracking-wide transition-colors ${
-                      pathname === item.href
-                        ? "bg-[#111318]/10 text-white"
-                        : "text-[#8FA3B3] hover:text-white hover:bg-[#111318]/5"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
+        </Link>
+
+        {/* Main Navigation */}
+        <nav className="flex-1 px-4">
+          <div className="space-y-1 mb-8">
+            {mainMenuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive =
+                item.href === "/admin"
+                  ? pathname === "/admin"
+                  : pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 text-sm transition-all duration-200 ${
+                    isActive
+                      ? "bg-black text-white font-medium"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  <Icon size={18} />
+                  <span className="tracking-wide">{item.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Bottom section in separated box - matching Nuelo */}
+          <div className="bg-gray-50 border border-gray-200 p-3 space-y-1">
+            {bottomMenuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-3 px-3 py-2 text-sm transition-all duration-200 ${
+                    isActive
+                      ? "bg-black text-white font-medium"
+                      : "text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  <Icon size={16} />
+                  <span className="tracking-wide">{item.label}</span>
+                </Link>
+              );
+            })}
+          </div>
         </nav>
-        <div className="p-3 border-t border-[#2A2E36]">
+
+        {/* Divider */}
+        <div className="px-6 my-4 border-t border-gray-200" />
+
+        {/* Logout */}
+        <div className="px-4 mb-4">
           <button
             onClick={async () => {
               await fetch("/api/auth/logout", { method: "POST" });
               window.location.href = "/admin/login";
             }}
-            className="w-full px-3 py-2 text-sm font-semibold text-[#8FA3B3] hover:text-white uppercase tracking-wide transition-colors text-left rounded-lg hover:bg-[#111318]/5"
+            className="flex items-center gap-3 w-full px-4 py-3 text-sm font-medium border border-gray-200 text-gray-700 bg-white hover:bg-gray-50 transition-all duration-200"
           >
-            Log Out
+            <LogOut size={18} />
+            <span className="tracking-wide">Logout</span>
           </button>
         </div>
       </aside>
 
-      {/* Main */}
-      <main className="flex-1 overflow-auto min-w-0">
+      {/* Main Content Area */}
+      <main className="flex-1 flex flex-col h-screen overflow-hidden">
         {/* Mobile header */}
-        <div className="lg:hidden bg-[#1B3A4C] text-white px-4 py-3 flex items-center gap-3 sticky top-0 z-20">
-          <button onClick={() => setMobileOpen(true)} className="text-white">
-            <MenuIcon className="w-6 h-6" />
-          </button>
-          <span className="font-serif font-semibold text-sm">Late Night Ricky</span>
+        <header className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4 flex-shrink-0 z-30 lg:hidden">
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => setMobileOpen(true)}
+              className="p-2 hover:bg-gray-100 transition-colors"
+            >
+              <MenuIcon className="w-5 h-5 text-gray-700" />
+            </button>
+            <span className="font-serif font-semibold text-sm text-[#1a1a1a]">Late Night Ricky</span>
+            <div className="w-9" />
+          </div>
+        </header>
+
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="max-w-[1600px] mx-auto">
+            <div className="p-6 md:p-8 lg:p-10">{children}</div>
+          </div>
         </div>
-        <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">{children}</div>
       </main>
     </div>
   );
@@ -154,15 +170,6 @@ function MenuIcon({ className }: { className?: string }) {
       <line x1="3" y1="6" x2="21" y2="6" />
       <line x1="3" y1="12" x2="21" y2="12" />
       <line x1="3" y1="18" x2="21" y2="18" />
-    </svg>
-  );
-}
-
-function CloseIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
   );
 }
