@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { quotes } from '@/lib/db/schema';
 
 export async function GET() {
   try {
-    const all = await db.select().from(quotes).orderBy(quotes.id).all();
+    const all = await db.select().from(quotes).orderBy(quotes.id);
     return NextResponse.json({ quotes: all });
   } catch (err) {
     console.error('Quotes GET error:', err);

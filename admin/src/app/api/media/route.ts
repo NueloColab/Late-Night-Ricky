@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { assets } from '@/lib/db/schema';
 import { desc } from 'drizzle-orm';
@@ -6,7 +8,7 @@ import { storeFile } from '@/lib/storage';
 
 export async function GET() {
   try {
-    const allAssets = await db.select().from(assets).orderBy(desc(assets.uploadedAt)).all();
+    const allAssets = await db.select().from(assets).orderBy(desc(assets.uploadedAt));
     return NextResponse.json({ assets: allAssets });
   } catch (err) {
     console.error('Media GET error:', err);
@@ -37,7 +39,7 @@ export async function POST(request: Request) {
       ? 'audio'
       : 'image';
 
-    const result = db.insert(assets).values({
+    const [result] = await db.insert(assets).values({
       filename,
       originalName: file.name,
       type: assetType,
@@ -45,7 +47,7 @@ export async function POST(request: Request) {
       path: url,
       thumbnailPath: assetType === 'image' ? url : undefined,
       usedIn: JSON.stringify([]),
-    }).returning().get();
+    }).returning();
 
     return NextResponse.json({ asset: result });
   } catch (err) {

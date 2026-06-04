@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { submissions } from '@/lib/db/schema';
 import { desc, eq, and, inArray } from 'drizzle-orm';
@@ -37,18 +39,16 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
 
-    let query = db.select().from(submissions).$dynamic();
-    const conditions = [];
+    const query = db.select().from(submissions);
+    const conditions: any[] = [];
 
     if (status && status !== 'all') {
       conditions.push(eq(submissions.status, status as any));
     }
 
-    if (conditions.length > 0) {
-      query = query.where(and(...conditions));
-    }
-
-    const all = await query.orderBy(desc(submissions.createdAt)).all();
+    const all = conditions.length > 0
+      ? await query.where(and(...conditions)).orderBy(desc(submissions.createdAt))
+      : await query.orderBy(desc(submissions.createdAt));
     return NextResponse.json({ submissions: all }, { headers: corsHeaders() });
   } catch (err) {
     console.error('Submissions GET error:', err);
@@ -92,7 +92,7 @@ export async function POST(request: Request) {
       fileSize = size;
     }
 
-    const row = await db
+    const [row] = await db
       .insert(submissions)
       .values({
         email,
@@ -102,8 +102,7 @@ export async function POST(request: Request) {
         fileSize,
         status: 'new',
       })
-      .returning()
-      .get();
+      .returning();
 
     return NextResponse.json({ success: true, submission: row }, { headers: corsHeaders() });
   } catch (err) {

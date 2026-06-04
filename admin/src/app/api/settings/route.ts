@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { users } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -47,7 +49,7 @@ export async function POST(request: Request) {
       if (!currentPin || !newPin || newPin.length < 4) {
         return NextResponse.json({ error: 'Invalid PIN' }, { status: 400 });
       }
-      const user = await db.select().from(users).where(eq(users.id, 1)).get();
+      const [user] = await db.select().from(users).where(eq(users.id, 1));
       if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
       const valid = await bcrypt.compare(currentPin, user.pinHash);
       if (!valid) return NextResponse.json({ error: 'Current PIN incorrect' }, { status: 401 });

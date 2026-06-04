@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { siteSections } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -19,7 +21,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     if (body.isActive !== undefined) updateData.isActive = body.isActive;
     if (body.order !== undefined) updateData.order = body.order;
 
-    await db.update(siteSections).set(updateData).where(eq(siteSections.id, id)).run();
+    await db.update(siteSections).set(updateData).where(eq(siteSections.id, id))
 
     return NextResponse.json({ success: true });
   } catch (err) {

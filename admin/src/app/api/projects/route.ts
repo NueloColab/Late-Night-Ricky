@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { projects } from '@/lib/db/schema';
 
 export async function GET() {
   try {
-    const all = await db.select().from(projects).orderBy(projects.createdAt).all();
+    const all = await db.select().from(projects).orderBy(projects.createdAt);
     return NextResponse.json({ projects: all });
   } catch (err) {
     console.error('Projects GET error:', err);

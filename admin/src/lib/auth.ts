@@ -38,7 +38,7 @@ export async function getSessionUser() {
     const userId = parseInt(decoded.split(':')[0], 10);
     if (!userId || isNaN(userId)) return null;
 
-    const user = await db.select().from(users).where(eq(users.id, userId)).get();
+    const [user] = await db.select().from(users).where(eq(users.id, userId));
     return user || null;
   } catch {
     return null;

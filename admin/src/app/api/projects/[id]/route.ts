@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { projects } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
-    const row = await db.select().from(projects).where(eq(projects.id, Number(params.id))).get();
+    const [row] = await db.select().from(projects).where(eq(projects.id, Number(params.id)));
     if (!row) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     return NextResponse.json({ project: row });
   } catch (err) {
@@ -18,7 +20,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
   try {
     const body = await request.json();
     await db.update(projects).set(body).where(eq(projects.id, Number(params.id)));
-    const row = await db.select().from(projects).where(eq(projects.id, Number(params.id))).get();
+    const [row] = await db.select().from(projects).where(eq(projects.id, Number(params.id)));
     return NextResponse.json({ project: row });
   } catch (err) {
     console.error('Project PUT error:', err);

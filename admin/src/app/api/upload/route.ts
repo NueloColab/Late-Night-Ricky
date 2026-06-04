@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+
+export const dynamic = 'force-dynamic';
 import { db } from "@/lib/db";
 import { assets } from "@/lib/db/schema";
 import { storeFile } from "@/lib/storage";
@@ -24,7 +26,7 @@ export async function POST(request: Request) {
     ? "video"
     : "audio";
 
-  const asset = await db
+  const [asset] = await db
     .insert(assets)
     .values({
       filename,
@@ -35,8 +37,7 @@ export async function POST(request: Request) {
       thumbnailPath: type === "image" ? url : undefined,
       usedIn: JSON.stringify([]),
     })
-    .returning()
-    .get();
+    .returning();
 
   return NextResponse.json({ success: true, asset });
 }

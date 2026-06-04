@@ -1,11 +1,12 @@
-import Database from 'better-sqlite3';
-import { drizzle } from 'drizzle-orm/better-sqlite3';
+import postgres from 'postgres';
+import { drizzle } from 'drizzle-orm/postgres-js';
 import * as schema from '../src/lib/db/schema';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
-const sqlite = new Database('./sqlite.db');
-const db = drizzle(sqlite, { schema });
+const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL || '';
+const client = postgres(connectionString);
+const db = drizzle(client, { schema });
 
 const SITE_ROOT = resolve(__dirname, '..', '..');
 
@@ -70,11 +71,11 @@ async function seed() {
   // Seed admin user
   const bcrypt = await import('bcryptjs');
   const pinHash = await bcrypt.hash('0000', 10);
-  db.insert(schema.users).values({
+  await db.insert(schema.users).values({
     pinHash,
     name: 'Admin',
     email: 'admin@latenightricky.com',
-  }).run();
+  }).returning();
   console.log('✅ Admin user created (PIN: 0000)');
 
   // Parse HTML files
@@ -97,7 +98,7 @@ async function seed() {
     const images = extractImages(html);
     const videos = extractVideos(html);
 
-    db.insert(schema.siteSections).values({
+    await db.insert(schema.siteSections).values({
       page: name,
       section: 'content',
       content: texts,
@@ -106,10 +107,10 @@ async function seed() {
       links: [],
       order: 0,
       isActive: true,
-    }).run();
+    }).returning();
 
     // Also store raw HTML
-    db.insert(schema.siteSections).values({
+    await db.insert(schema.siteSections).values({
       page: name,
       section: 'raw_html',
       content: [html.slice(0, 5000)],
@@ -118,12 +119,12 @@ async function seed() {
       links: [],
       order: 1,
       isActive: true,
-    }).run();
+    }).returning();
   }
   console.log('✅ Site sections seeded');
 
   // Seed radio section with snippet tracks and platform links
-  db.insert(schema.siteSections).values({
+  await db.insert(schema.siteSections).values({
     page: 'home',
     section: 'radio',
     content: [
@@ -142,7 +143,7 @@ async function seed() {
     },
     order: 2,
     isActive: true,
-  }).run();
+  }).returning();
   console.log('✅ Radio section seeded');
 
   // Seed show cards from index.html
@@ -190,7 +191,7 @@ async function seed() {
   ];
 
   for (const card of showCardsData) {
-    db.insert(schema.showCards).values(card).run();
+    await db.insert(schema.showCards).values(card).returning();
   }
   console.log('✅ Show cards seeded');
 
@@ -206,7 +207,7 @@ async function seed() {
     { order: 8, imagePath: 'assets/logo-carrera.png', name: 'Carrera', href: null },
   ];
   for (const p of partners) {
-    db.insert(schema.partnerLogos).values(p).run();
+    await db.insert(schema.partnerLogos).values(p).returning();
   }
   console.log('✅ Partner logos seeded');
 
@@ -217,9 +218,10 @@ async function seed() {
     'Leonardo DiCaprio', 'Lewis Hamilton', 'Mick Jagger', 'Neymar Jnr',
     'Paul McCartney', 'Rihanna', 'Ronaldo', 'Travis Scott', 'Usain Bolt', 'Vin Diesel',
   ];
-  clientsList.forEach((name, i) => {
-    db.insert(schema.clientNames).values({ order: i + 1, name, isActive: true }).run();
-  });
+  for (let i = 0; i < clientsList.length; i++) {
+    const name = clientsList[i];
+    await db.insert(schema.clientNames).values({ order: i + 1, name, isActive: true }).returning();
+  }
   console.log('✅ Client names seeded');
 
   // Seed venue ticker
@@ -239,7 +241,7 @@ async function seed() {
     'CUCKOO CLUB London', 'RAFFLES London', 'SUBOIS Montreal', 'P1 Munich',
     "ZELO'S Monte Carlo", 'WIRELESS FESTIVAL UK', 'READING \u0026 LEEDS FESTIVAL UK',
   ];
-  db.insert(schema.venueTicker).values({ venues }).run();
+  await db.insert(schema.venueTicker).values({ venues }).returning();
   console.log('✅ Venue ticker seeded');
 
   // Seed assets from all discovered files
@@ -256,9 +258,9 @@ async function seed() {
     ...extractVideos(contactHtml),
   ]));
 
-  allImages.forEach((path) => {
+  for (const path of allImages) {
     const name = path.split('/').pop() || path;
-    db.insert(schema.assets).values({
+    await db.insert(schema.assets).values({
       filename: name,
       originalName: name,
       type: 'image',
@@ -266,24 +268,24 @@ async function seed() {
       path,
       thumbnailPath: path,
       usedIn: JSON.stringify(['site']),
-    }).run();
-  });
+    }).returning();
+  }
 
-  allVideos.forEach((path) => {
+  for (const path of allVideos) {
     const name = path.split('/').pop() || path;
-    db.insert(schema.assets).values({
+    await db.insert(schema.assets).values({
       filename: name,
       originalName: name,
       type: 'video',
       size: 0,
       path,
       usedIn: JSON.stringify(['site']),
-    }).run();
-  });
+    }).returning();
+  }
   console.log(`✅ ${allImages.length} images + ${allVideos.length} videos seeded to assets`);
 
   // Seed sample CRM data
-  db.insert(schema.clients).values({
+  await db.insert(schema.clients).values({
     name: 'Ministry of Sound',
     email: 'bookings@ministryofsound.com',
     phone: '+44 20 7740 8600',
@@ -291,9 +293,9 @@ async function seed() {
     notes: 'Long-standing venue partner',
     totalBookings: 12,
     totalRevenue: 150000,
-  }).run();
+  }).returning();
 
-  db.insert(schema.projects).values({
+  await db.insert(schema.projects).values({
     title: 'Summer Residency 2025',
     clientId: 1,
     type: 'dj-booking',
@@ -303,18 +305,18 @@ async function seed() {
     fee: 50000,
     currency: 'GBP',
     notes: 'Weekly DJ residency at Ministry of Sound',
-  }).run();
+  }).returning();
 
-  db.insert(schema.quotes).values({
+  await db.insert(schema.quotes).values({
     projectId: 1,
     lineItems: JSON.stringify([{ description: 'DJ Set', quantity: 10, rate: 5000, total: 50000 }]),
     subtotal: 50000,
     taxRate: 20,
     total: 60000,
     status: 'approved',
-  }).run();
+  }).returning();
 
-  db.insert(schema.invoices).values({
+  await db.insert(schema.invoices).values({
     projectId: 1,
     invoiceNumber: 'LNR-001',
     lineItems: JSON.stringify([{ description: 'Deposit - DJ Residency', amount: 12500 }]),
@@ -323,17 +325,17 @@ async function seed() {
     total: 15000,
     status: 'sent',
     dueDate: '2025-06-15',
-  }).run();
+  }).returning();
 
   console.log('✅ Sample CRM data seeded');
 
   // Seed sample submission
-  db.insert(schema.submissions).values({
+  await db.insert(schema.submissions).values({
     email: 'demo@artist.com',
     artistName: 'Sample Artist',
     trackTitle: 'Demo Track',
     status: 'new',
-  }).run();
+  }).returning();
   console.log('✅ Sample submission seeded');
 
   console.log('\n🎉 Seed complete! Run `npm run dev` to start.');

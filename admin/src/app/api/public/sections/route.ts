@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { siteSections } from '@/lib/db/schema';
 import { eq, asc } from 'drizzle-orm';
@@ -17,7 +19,7 @@ export async function GET(request: Request) {
       .from(siteSections)
       .where(eq(siteSections.page, page as any))
       .orderBy(asc(siteSections.order))
-      .all();
+      ;
 
     return NextResponse.json({ sections });
   } catch (err) {

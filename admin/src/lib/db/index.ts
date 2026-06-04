@@ -1,20 +1,17 @@
-import { createClient } from "@libsql/client";
-import { drizzle as drizzleLibsql } from "drizzle-orm/libsql";
-import Database from "better-sqlite3";
-import { drizzle as drizzleBetterSqlite } from "drizzle-orm/better-sqlite3";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import * as schema from "./schema";
 
-const TURSO_URL = process.env.TURSO_DATABASE_URL;
-const TURSO_AUTH_TOKEN = process.env.TURSO_AUTH_TOKEN;
+const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL || "";
 
-let db: any;
+const client = postgres(connectionString, {
+  max: 20,
+  idle_timeout: 20,
+  connect_timeout: 10,
+  max_lifetime: 60 * 30,
+  onnotice: () => {},
+  prepare: false,
+});
 
-if (TURSO_URL) {
-  const client = createClient({ url: TURSO_URL, authToken: TURSO_AUTH_TOKEN });
-  db = drizzleLibsql(client, { schema });
-} else {
-  const sqlite = new Database("./sqlite.db");
-  db = drizzleBetterSqlite(sqlite, { schema });
-}
-
-export { db };
+export const db = drizzle(client, { schema });
+export { client as sqlClient };

@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { invoices } from '@/lib/db/schema';
 import { count } from 'drizzle-orm';
 
 export async function GET() {
   try {
-    const all = await db.select().from(invoices).orderBy(invoices.invoiceNumber).all();
+    const all = await db.select().from(invoices).orderBy(invoices.invoiceNumber);
     return NextResponse.json({ invoices: all });
   } catch (err) {
     console.error('Invoices GET error:', err);

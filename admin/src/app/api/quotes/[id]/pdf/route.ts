@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { quotes } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -6,7 +8,7 @@ import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
-    const quote = await db.select().from(quotes).where(eq(quotes.id, Number(params.id))).get();
+    const [quote] = await db.select().from(quotes).where(eq(quotes.id, Number(params.id)));
     if (!quote) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
     const pdfDoc = await PDFDocument.create();
