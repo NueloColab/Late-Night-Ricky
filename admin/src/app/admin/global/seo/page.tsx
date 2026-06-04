@@ -26,7 +26,6 @@ const DEFAULT_PAGES = ['home', 'about', 'showreel', 'contact'];
 
 export default function SeoEditor() {
   const [sections, setSections] = useState<SectionData[]>([]);
-  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [mediaOpen, setMediaOpen] = useState(false);
 
@@ -36,7 +35,6 @@ export default function SeoEditor() {
       const data = await res.json();
       setSections(data.sections || []);
     }
-    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -76,8 +74,8 @@ export default function SeoEditor() {
 
   function updateMeta(page: string, field: string, value: string) {
     const updated = merged.map((m) => (m.page === page ? { ...m, [field]: value } : m));
-    setSections((prev) =
-      prev.map((s) =
+    setSections((prev) =>
+      prev.map((s) =>
         s.section === 'seo' ? { ...s, content: updated } : s
       )
     );

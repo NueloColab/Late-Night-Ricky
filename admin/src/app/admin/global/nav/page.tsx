@@ -31,7 +31,6 @@ const DEFAULT_LINKS: NavLink[] = [
 
 export default function NavEditor() {
   const [sections, setSections] = useState<SectionData[]>([]);
-  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [mediaOpen, setMediaOpen] = useState(false);
 
@@ -41,7 +40,6 @@ export default function NavEditor() {
       const data = await res.json();
       setSections(data.sections || []);
     }
-    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -78,8 +76,8 @@ export default function NavEditor() {
     if (newIdx < 0 || newIdx >= links.length) return;
     const newLinks = [...links];
     [newLinks[index], newLinks[newIdx]] = [newLinks[newIdx], newLinks[index]];
-    setSections((prev) =
-      prev.map((s) =
+    setSections((prev) =>
+      prev.map((s) =>
         s.section === 'nav' ? { ...s, content: newLinks } : s
       )
     );
@@ -88,8 +86,8 @@ export default function NavEditor() {
 
   function updateLink(index: number, field: string, value: any) {
     const newLinks = links.map((l, i) => (i === index ? { ...l, [field]: value } : l));
-    setSections((prev) =
-      prev.map((s) =
+    setSections((prev) =>
+      prev.map((s) =>
         s.section === 'nav' ? { ...s, content: newLinks } : s
       )
     );
@@ -187,8 +185,8 @@ export default function NavEditor() {
             <button
               onClick={() => {
                 const newLinks = [...links, { label: 'New Link', href: '/', visible: true }];
-                setSections((prev) =
-                  prev.map((s) =
+                setSections((prev) =>
+                  prev.map((s) =>
                     s.section === 'nav' ? { ...s, content: newLinks } : s
                   )
                 );

@@ -175,7 +175,7 @@ export default function AboutEditor() {
                       onChange={(e) => {
                         const newStats = [...stats];
                         newStats[i] = { ...stat, value: e.target.value };
-                        setSections((prev) =
+                        setSections((prev) =>
                           prev.map((s) =>
                             s.section === 'stats' ? { ...s, content: newStats } : s
                           )

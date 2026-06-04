@@ -117,8 +117,8 @@ export default function ContactEditor() {
                 type="email"
                 value={emailValue}
                 onChange={(e) => {
-                  setSections((prev) =
-                    prev.map((s) =
+                  setSections((prev) =>
+                    prev.map((s) =>
                       s.section === 'email' ? { ...s, content: [e.target.value] } : s
                     )
                   );
@@ -142,8 +142,8 @@ export default function ContactEditor() {
                 type="text"
                 value={instagramValue}
                 onChange={(e) => {
-                  setSections((prev) =
-                    prev.map((s) =
+                  setSections((prev) =>
+                    prev.map((s) =>
                       s.section === 'instagram' ? { ...s, content: [e.target.value] } : s
                     )
                   );
@@ -172,8 +172,8 @@ export default function ContactEditor() {
                 <button
                   onClick={() => {
                     const newVal = !formEnabled;
-                    setSections((prev) =
-                      prev.map((s) =
+                    setSections((prev) =>
+                      prev.map((s) =>
                         s.section === 'form' ? { ...s, isActive: newVal } : s
                       )
                     );

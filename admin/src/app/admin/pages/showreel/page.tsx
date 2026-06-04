@@ -98,8 +98,8 @@ export default function ShowreelEditor() {
       description: '',
     };
     const updated = [...showreelCards, newCard];
-    setSections((prev) =
-      prev.map((s) =
+    setSections((prev) =>
+      prev.map((s) =>
         s.section === 'cards' ? { ...s, content: updated } : s
       )
     );
@@ -107,8 +107,8 @@ export default function ShowreelEditor() {
 
   function updateCard(id: string, field: string, value: string) {
     const updated = showreelCards.map((c) => (c.id === id ? { ...c, [field]: value } : c));
-    setSections((prev) =
-      prev.map((s) =
+    setSections((prev) =>
+      prev.map((s) =>
         s.section === 'cards' ? { ...s, content: updated } : s
       )
     );
@@ -116,8 +116,8 @@ export default function ShowreelEditor() {
 
   function removeCard(id: string) {
     const updated = showreelCards.filter((c) => c.id !== id);
-    setSections((prev) =
-      prev.map((s) =
+    setSections((prev) =>
+      prev.map((s) =>
         s.section === 'cards' ? { ...s, content: updated } : s
       )
     );
@@ -130,8 +130,8 @@ export default function ShowreelEditor() {
     if (newIdx < 0 || newIdx >= showreelCards.length) return;
     const updated = [...showreelCards];
     [updated[idx], updated[newIdx]] = [updated[newIdx], updated[idx]];
-    setSections((prev) =
-      prev.map((s) =
+    setSections((prev) =>
+      prev.map((s) =>
         s.section === 'cards' ? { ...s, content: updated } : s
       )
     );
