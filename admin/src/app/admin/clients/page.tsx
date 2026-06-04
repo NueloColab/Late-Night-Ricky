@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Plus, Search, Users, Trash2, Eye, Phone, Mail, Globe, Calendar } from 'lucide-react'
+import { Plus, Search, Trash2, Eye, Phone, Mail, Globe, Calendar } from 'lucide-react'
 import Modal from '@/components/Modal'
 
 interface Client {

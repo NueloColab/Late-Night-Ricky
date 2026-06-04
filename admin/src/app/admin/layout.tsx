@@ -6,7 +6,6 @@ import { useState } from "react";
 import {
   LayoutDashboard,
   Mail,
-  FileText,
   Quote,
   Receipt,
   Users,

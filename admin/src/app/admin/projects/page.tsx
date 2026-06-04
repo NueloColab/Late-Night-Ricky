@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Plus, FolderOpen, Clock, CheckCircle, TrendingUp, Trash2, Eye } from 'lucide-react'
+import { Plus, FolderOpen, Clock, CheckCircle, TrendingUp, Trash2 } from 'lucide-react'
 
 interface Project {
   id: number
