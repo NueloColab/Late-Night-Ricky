@@ -35,6 +35,18 @@ const PIPELINE_LABELS: Record<string, string> = {
   paid: "Paid",
 };
 
+const PROJECT_TYPES: Record<string, string> = {
+  'dj-booking': 'DJ Booking',
+  'album-release': 'Album Release',
+  'track-release': 'Track/Single Release',
+  'remix': 'Remix Project',
+  'mix-podcast': 'Mix/Podcast',
+  'partnership': 'Brand Partnership',
+  'livestream': 'Live Stream',
+  'consulting': 'Consulting',
+  'production': 'Production',
+};
+
 const emptyProject = { title: "", type: "dj-booking", status: "inquiry", venue: "", eventDate: "", fee: "", currency: "GBP", notes: "" };
 
 export default function ProjectsPage() {
@@ -142,14 +154,9 @@ export default function ProjectsPage() {
                 onChange={(e) => setForm({ ...form, type: e.target.value })}
                 className="w-full px-3 py-2 bg-[#1A1D24] border-2 border-[#2A2E36] rounded-xl text-white focus:border-[#1B3A4C] focus:outline-none text-sm"
               >
-                <option value="dj-booking">DJ Booking</option>
-                <option value="album-release">Album Release</option>
-                <option value="track-single-release">Track/Single Release</option>
-                <option value="remix-project">Remix Project</option>
-                <option value="mix-podcast">Mix/Podcast</option>
-                <option value="brand-partnership">Brand Partnership</option>
-                <option value="live-stream">Live Stream</option>
-                <option value="consulting">Consulting</option>
+                {Object.entries(PROJECT_TYPES).map(([value, label]) => (
+                  <option key={value} value={value}>{label}</option>
+                ))}
               </select>
             </div>
             <div>
