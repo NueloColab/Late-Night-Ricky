@@ -22,14 +22,14 @@ export async function OPTIONS(request: Request) {
   });
 }
 
-async function isAdmin(request: Request) {
+async function isAdmin() {
   const cookieStore = await cookies();
   const session = cookieStore.get('lnr_admin_session')?.value || cookieStore.get('lnr_session')?.value;
   return !!session;
 }
 
 export async function GET(request: Request) {
-  const admin = await isAdmin(request);
+  const admin = await isAdmin();
   if (!admin) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: corsHeaders() });
   }
@@ -119,7 +119,7 @@ export async function POST(request: Request) {
 }
 
 export async function PATCH(request: Request) {
-  const admin = await isAdmin(request);
+  const admin = await isAdmin();
   if (!admin) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: corsHeaders() });
   }
@@ -146,7 +146,7 @@ export async function PATCH(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  const admin = await isAdmin(request);
+  const admin = await isAdmin();
   if (!admin) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: corsHeaders() });
   }

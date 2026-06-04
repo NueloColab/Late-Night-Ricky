@@ -14,8 +14,10 @@ const nav = [
   { label: "SEO", href: "/admin/global/seo" },
   { label: "Media Library", href: "/admin/media" },
   { label: "Submissions", href: "/admin/submissions" },
-  { label: "Projects", href: "/admin/projects" },
   { label: "Clients", href: "/admin/clients" },
+  { label: "Projects", href: "/admin/projects" },
+  { label: "Quotes", href: "/admin/quotes" },
+  { label: "Invoices", href: "/admin/invoices" },
   { label: "Settings", href: "/admin/settings" },
 ];
 
