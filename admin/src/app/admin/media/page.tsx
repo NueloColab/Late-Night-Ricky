@@ -138,6 +138,18 @@ export default function MediaPage() {
                 <p className="text-[10px] text-[#8FA8BE] mt-0.5 uppercase tracking-wide">
                   {formatBytes(asset.size)} · {asset.type}
                 </p>
+                {asset.usedIn && asset.usedIn.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-1.5">
+                    {asset.usedIn.slice(0, 2).map((ref: string, i: number) => (
+                      <span key={i} className="text-[10px] px-1.5 py-0.5 bg-[#1B3A4C] text-white rounded font-semibold uppercase tracking-wider">
+                        {ref}
+                      </span>
+                    ))}
+                    {asset.usedIn.length > 2 && (
+                      <span className="text-[10px] px-1.5 py-0.5 bg-[#E3E8ED] text-[#1B3A4C] rounded font-semibold uppercase tracking-wider">+{asset.usedIn.length - 2}</span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           ))}

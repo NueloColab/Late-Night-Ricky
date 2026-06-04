@@ -139,9 +139,19 @@ export default function ShowreelEditor() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-[#1B3A4C] tracking-tight">Showreel Editor</h1>
-        <p className="text-[#8FA8BE] mt-1 text-sm font-medium tracking-wide uppercase">Edit video and showreel cards</p>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-[#1B3A4C] tracking-tight">Showreel Editor</h1>
+          <p className="text-[#8FA8BE] mt-1 text-sm font-medium tracking-wide uppercase">Edit video and showreel cards</p>
+        </div>
+        <a
+          href="/showreel"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-5 py-2.5 border-2 border-[#1B3A4C] text-[#1B3A4C] rounded-xl text-sm font-semibold uppercase tracking-wide hover:bg-[#1B3A4C] hover:text-white transition-colors"
+        >
+          View on Site →
+        </a>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
