@@ -167,51 +167,91 @@ export default function ProjectsPage() {
       {loading ? (
         <p className="text-[#8FA8BE]">Loading...</p>
       ) : (
-        <div className="overflow-x-auto">
-          <div className="flex gap-4 min-w-[900px]">
-            {PIPELINE.map((status) => (
-              <div
-                key={status}
-                className="flex-1 min-w-[140px] bg-white rounded-xl p-4 border border-[#E3E8ED]"
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={() => {
-                  if (dragId !== null) {
-                    moveStatus(dragId, status);
-                    setDragId(null);
-                  }
-                }}
-              >
-                <h3 className="text-xs font-bold text-[#1B3A4C] uppercase tracking-widest mb-3">{PIPELINE_LABELS[status]}</h3>
-                <div className="space-y-2">
-                  {projects
-                    .filter((p) => p.status === status)
-                    .map((p) => (
-                      <Link
-                        key={p.id}
-                        href={`/admin/projects/${p.id}`}
-                        draggable
-                        onDragStart={(e) => {
-                          e.preventDefault();
-                          setDragId(p.id);
-                        }}
-                        className="bg-[#E3E8ED] rounded-lg p-3 cursor-move hover:bg-[#d1d8dd] transition-colors group block"
-                      >
-                        <p className="text-sm font-semibold text-[#1B3A4C] leading-tight">{p.title}</p>
-                        <p className="text-xs text-[#8FA8BE] mt-0.5">{p.venue || "No venue"}</p>
-                        {p.fee && <p className="text-xs font-semibold text-[#1B3A4C] mt-1">£{Number(p.fee).toLocaleString()}</p>}
-                        <div className="flex justify-end mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button onClick={() => deleteProject(p.id)} className="text-xs text-red-500 hover:underline">Delete</button>
-                        </div>
-                      </Link>
-                    ))}
-                  {projects.filter((p) => p.status === status).length === 0 && (
-                    <p className="text-xs text-[#8FA8BE] italic">Drop here</p>
-                  )}
+        <>
+          {/* Desktop kanban */}
+          <div className="hidden md:block overflow-x-auto">
+            <div className="flex gap-4 min-w-[900px]">
+              {PIPELINE.map((status) => (
+                <div
+                  key={status}
+                  className="flex-1 min-w-[140px] bg-white rounded-xl p-4 border border-[#E3E8ED]"
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={() => {
+                    if (dragId !== null) {
+                      moveStatus(dragId, status);
+                      setDragId(null);
+                    }
+                  }}
+                >
+                  <h3 className="text-xs font-bold text-[#1B3A4C] uppercase tracking-widest mb-3">{PIPELINE_LABELS[status]}</h3>
+                  <div className="space-y-2">
+                    {projects
+                      .filter((p) => p.status === status)
+                      .map((p) => (
+                        <Link
+                          key={p.id}
+                          href={`/admin/projects/${p.id}`}
+                          draggable
+                          onDragStart={(e) => {
+                            e.preventDefault();
+                            setDragId(p.id);
+                          }}
+                          className="bg-[#E3E8ED] rounded-lg p-3 cursor-move hover:bg-[#d1d8dd] transition-colors group block"
+                        >
+                          <p className="text-sm font-semibold text-[#1B3A4C] leading-tight">{p.title}</p>
+                          <p className="text-xs text-[#8FA8BE] mt-0.5">{p.venue || "No venue"}</p>
+                          {p.fee && <p className="text-xs font-semibold text-[#1B3A4C] mt-1">£{Number(p.fee).toLocaleString()}</p>}
+                          <div className="flex justify-end mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onClick={() => deleteProject(p.id)} className="text-xs text-red-500 hover:underline">Delete</button>
+                          </div>
+                        </Link>
+                      ))}
+                    {projects.filter((p) => p.status === status).length === 0 && (
+                      <p className="text-xs text-[#8FA8BE] italic">Drop here</p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+
+          {/* Mobile list view */}
+          <div className="md:hidden space-y-6">
+            {PIPELINE.map((status) => {
+              const statusProjects = projects.filter((p) => p.status === status);
+              if (statusProjects.length === 0) return null;
+              return (
+                <div key={status} className="bg-white rounded-xl p-4 border border-[#E3E8ED]">
+                  <h3 className="text-xs font-bold text-[#1B3A4C] uppercase tracking-widest mb-3">{PIPELINE_LABELS[status]} <span className="text-[#8FA8BE] font-normal">({statusProjects.length})</span></h3>
+                  <div className="space-y-2">
+                    {statusProjects.map((p) => (
+                      <div key={p.id} className="bg-[#E3E8ED] rounded-lg p-3">
+                        <Link href={`/admin/projects/${p.id}`} className="block">
+                          <p className="text-sm font-semibold text-[#1B3A4C] leading-tight">{p.title}</p>
+                          <p className="text-xs text-[#8FA8BE] mt-0.5">{p.venue || "No venue"}</p>
+                          {p.fee && <p className="text-xs font-semibold text-[#1B3A4C] mt-1">£{Number(p.fee).toLocaleString()}</p>}
+                        </Link>
+                        <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/50">
+                          <select
+                            value={p.status}
+                            onChange={(e) => moveStatus(p.id, e.target.value)}
+                            className="text-xs bg-white border border-[#E3E8ED] rounded px-2 py-1 text-[#1B3A4C]"
+                          >
+                            {PIPELINE.map((s) => (
+                              <option key={s} value={s}>{PIPELINE_LABELS[s]}</option>
+                            ))}
+                          </select>
+                          <button onClick={() => deleteProject(p.id)} className="text-xs text-red-500">Delete</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+            {projects.length === 0 && <p className="text-[#8FA8BE] text-center py-8">No projects yet. Tap "+ Add Project" to create one.</p>}
+          </div>
+        </>
       )}
     </div>
   );
