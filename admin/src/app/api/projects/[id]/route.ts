@@ -5,6 +5,9 @@ import { db } from '@/lib/db';
 import { projects } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 
+// Fields that should not be directly set from request body
+const JSONB_FIELDS = ['services', 'team', 'files', 'tasks', 'moodBoard'];
+
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
     const [row] = await db.select().from(projects).where(eq(projects.id, Number(params.id)));
@@ -19,7 +22,20 @@ export async function GET(request: Request, { params }: { params: { id: string }
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   try {
     const body = await request.json();
-    await db.update(projects).set(body).where(eq(projects.id, Number(params.id)));
+
+    // Build update object, handling JSONB fields
+    const updateData: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(body)) {
+      if (key === 'id' || key === 'createdAt') continue; // Don't update these
+      if (JSONB_FIELDS.includes(key)) {
+        // Parse JSONB fields if they come as strings
+        updateData[key] = typeof value === 'string' ? JSON.parse(value) : value;
+      } else {
+        updateData[key] = value;
+      }
+    }
+
+    await db.update(projects).set(updateData).where(eq(projects.id, Number(params.id)));
     const [row] = await db.select().from(projects).where(eq(projects.id, Number(params.id)));
     return NextResponse.json({ project: row });
   } catch (err) {
