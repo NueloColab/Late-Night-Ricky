@@ -142,7 +142,7 @@ export default function HomePage() {
             </p>
             <div className="grammy-float grammy-glow relative w-[120px] md:w-[160px] flex-shrink-0">
               <img
-                src="/assets/grammy-gold.png"
+                src="/assets/grammy-gold-v2.png?v=2"
                 alt="Grammy Award"
                 className="w-full h-auto object-contain"
               />
