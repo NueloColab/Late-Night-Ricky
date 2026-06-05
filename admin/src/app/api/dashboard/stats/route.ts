@@ -2,35 +2,57 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
-import { siteSections, assets, submissions, projects } from '@/lib/db/schema';
-import { count, desc } from 'drizzle-orm';
+import { siteSections, submissions, projects, invoices } from '@/lib/db/schema';
+import { count, desc, eq } from 'drizzle-orm';
 
 export async function GET() {
-  const [sections] = await db.select({ count: count() }).from(siteSections);
-  const [assetsCount] = await db.select({ count: count() }).from(assets);
-  const [submissionsCount] = await db.select({ count: count() }).from(submissions);
-  const [projectsCount] = await db.select({ count: count() }).from(projects);
+  // Upcoming gigs: projects with eventDate >= today, not paid/completed
+  const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  const allProjects = await db.select().from(projects);
+  const upcomingProjects = allProjects.filter(p => {
+    if (!p.eventDate) return false;
+    if (p.status === 'paid' || p.status === 'completed') return false;
+    return (p.eventDate as string) >= today;
+  });
+  const upcomingGigsList = upcomingProjects
+    .sort((a, b) => (a.eventDate as string).localeCompare(b.eventDate as string))
+    .slice(0, 5);
+  const upcomingGigs = upcomingProjects.length;
 
-  // Last updated section
-  const lastUpdatedRows = await db
+  // Revenue this month: sum of paid invoices
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+  const allInvoices = await db.select().from(invoices);
+  const paidThisMonth = allInvoices.filter(i =>
+    i.status === 'paid' && i.paidAt && new Date(i.paidAt).toISOString() >= monthStart
+  );
+  const revenueThisMonth = paidThisMonth.reduce((sum, i) => sum + (i.total || 0), 0);
+
+  // Unpaid invoices
+  const unpaidInvoices = allInvoices.filter(i => i.status !== 'paid');
+  const unpaidTotal = unpaidInvoices.reduce((sum, i) => sum + (i.total || 0), 0);
+
+  // New submissions
+  const [submissionsCount] = await db.select({ count: count() }).from(submissions).where(eq(submissions.status, 'new'));
+
+  // Last 5 updated sections
+  const lastUpdated = await db
     .select()
     .from(siteSections)
     .orderBy(desc(siteSections.updatedAt))
-    .limit(1);
-  const lastUpdated = lastUpdatedRows[0];
-
-  // Pending projects (not paid)
-  const allProjects = await db.select().from(projects);
-  const pendingProjects = allProjects.filter((p) => p.status !== 'paid').length;
+    .limit(5);
 
   return NextResponse.json({
-    sections: sections.count,
-    assets: assetsCount.count,
-    submissions: submissionsCount.count,
-    projects: projectsCount.count,
-    lastUpdated: lastUpdated
-      ? { page: lastUpdated.page, section: lastUpdated.section, updatedAt: lastUpdated.updatedAt }
-      : null,
-    pendingProjects,
+    upcomingGigs,
+    upcomingGigsList,
+    revenueThisMonth,
+    unpaidInvoices: unpaidInvoices.length,
+    unpaidTotal,
+    newSubmissions: submissionsCount.count,
+    lastUpdated: lastUpdated.map(s => ({
+      page: s.page,
+      section: s.section,
+      updatedAt: s.updatedAt?.toISOString() || null,
+    })),
   });
 }

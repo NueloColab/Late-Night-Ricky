@@ -19,6 +19,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   try {
     const body = await request.json();
+    // Set sentAt when status changes to sent
+    if (body.status === 'sent' && !body.sentAt) {
+      body.sentAt = new Date();
+    }
     await db.update(quotes).set(body).where(eq(quotes.id, Number(params.id)));
     const [row] = await db.select().from(quotes).where(eq(quotes.id, Number(params.id)));
     return NextResponse.json({ quote: row });

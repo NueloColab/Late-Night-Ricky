@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { Plus, Music, Eye, GripVertical } from 'lucide-react'
 import Modal from '@/components/Modal'
 
 interface ShowCard {

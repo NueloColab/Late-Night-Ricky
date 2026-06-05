@@ -1,0 +1,1 @@
+ALTER TABLE "quotes" ADD COLUMN IF NOT EXISTS "payment_terms" text DEFAULT 'net-30';

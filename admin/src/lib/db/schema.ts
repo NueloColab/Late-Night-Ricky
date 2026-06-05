@@ -104,6 +104,7 @@ export const quotes = pgTable("quotes", {
   taxRate: real("tax_rate").default(0),
   total: real("total").default(0),
   status: text("status").default("draft"),
+  paymentTerms: text("payment_terms").default("net-30"),
   pdfUrl: text("pdf_url"),
   sentAt: timestamp("sent_at", { mode: "date" }),
   expiryDate: text("expiry_date"),

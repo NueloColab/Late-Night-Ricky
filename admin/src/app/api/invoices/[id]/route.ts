@@ -19,6 +19,11 @@ export async function GET(request: Request, { params }: { params: { id: string }
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   try {
     const body = await request.json();
+    // Clean up paidAt: convert ISO string to Date, or null if empty
+    if ('paidAt' in body) {
+      body.paidAt = body.paidAt ? new Date(body.paidAt) : null;
+    }
+    // Only allow status and paidAt updates, plus other invoice fields
     await db.update(invoices).set(body).where(eq(invoices.id, Number(params.id)));
     const [row] = await db.select().from(invoices).where(eq(invoices.id, Number(params.id)));
     return NextResponse.json({ invoice: row });
