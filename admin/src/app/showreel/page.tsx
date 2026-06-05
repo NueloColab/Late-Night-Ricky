@@ -1,11 +1,8 @@
+'use client';
+
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 export const dynamic = 'force-dynamic';
-
-export const metadata = {
-  title: 'Showreels — Late Night Ricky',
-  description: 'Showreels from Late Night Ricky\'s performances around the world.',
-};
 
 export default function ShowreelPage() {
   return (
