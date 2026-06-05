@@ -44,15 +44,16 @@ const shows = [
 ];
 
 const logos = [
-  { src: '/assets/logo-f1.png?v=8', alt: 'Formula 1' },
-  { src: '/assets/logo-coca-cola.png?v=8', alt: 'Coca-Cola' },
-  { src: '/assets/logo-dior.png?v=8', alt: 'Dior' },
-  { src: '/assets/logo-patek.png?v=8', alt: 'Patek Philippe' },
-  { src: '/assets/logo-ciroc.png?v=8', alt: 'Cîroc' },
-  { src: '/assets/logo-louis-vuitton.png?v=8', alt: 'Louis Vuitton' },
-  { src: '/assets/logo-prime-boxing.png?v=8', alt: 'Prime Boxing' },
-  { src: '/assets/logo-cannes.png?v=8', alt: 'Festival de Cannes' },
-  { src: '/assets/logo-cartier.png?v=8', alt: 'Cartier' },
+  { src: '/assets/logo-f1.png?v=9', alt: 'Formula 1' },
+  { src: '/assets/logo-coca-cola.png?v=9', alt: 'Coca-Cola' },
+  { src: '/assets/logo-dior.png?v=9', alt: 'Dior' },
+  { src: '/assets/logo-patek.png?v=9', alt: 'Patek Philippe' },
+  { src: '/assets/logo-ciroc.png?v=9', alt: 'Cîroc' },
+  { src: '/assets/logo-louis-vuitton.png?v=9', alt: 'Louis Vuitton' },
+  { src: '/assets/logo-prime-boxing.png?v=9', alt: 'Prime Boxing' },
+  { src: '/assets/logo-cannes.png?v=9', alt: 'Festival de Cannes' },
+  { src: '/assets/logo-cartier.png?v=9', alt: 'Cartier' },
+  { src: '/assets/logo-mf-boxing.png?v=9', alt: 'MF Boxing' },
 ];
 
 const clients = [
