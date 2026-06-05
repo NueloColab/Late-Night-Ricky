@@ -52,6 +52,7 @@ const logos = [
   { src: '/assets/logo-louis-vuitton.png?v=1', alt: 'Louis Vuitton' },
   { src: '/assets/logo-prime-boxing.png?v=1', alt: 'Prime Boxing' },
   { src: '/assets/logo-cannes.png?v=1', alt: 'Festival de Cannes' },
+  { src: '/assets/logo-cartier.png?v=1', alt: 'Cartier' },
 ];
 
 const clients = [
