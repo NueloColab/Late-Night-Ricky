@@ -166,9 +166,9 @@ export default function HomePage() {
               <a key={show.title} href={show.href} className={`reveal reveal-d${Math.min(i + 1, 3)} group block transition-transform duration-500 hover:-translate-y-1.5`}>
                 <div
                   className="relative w-full min-h-[520px] rounded-2xl overflow-hidden mb-6 flex items-end justify-start"
-                  style={{ backgroundImage: `url('${show.image}')`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'grayscale(100%) brightness(1.05)' }}
+                  style={{ backgroundImage: `url('${show.image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}
                 >
-                  <div className="absolute inset-0 bg-[rgba(27,58,76,0.35)] pointer-events-none" />
+                  <div className="absolute inset-0 bg-[#1B3A4C]/60 pointer-events-none" />
                   <div className="relative z-10 p-10">
                     <h4 className="text-[clamp(28px,4vw,42px)] font-black text-white leading-none tracking-[-1px] uppercase mb-1.5 drop-shadow-[0_2px_14px_rgba(0,0,0,0.25)]">
                       {show.venue}
