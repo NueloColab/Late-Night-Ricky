@@ -44,15 +44,15 @@ const shows = [
 ];
 
 const logos = [
-  { src: '/assets/logo-coca-cola.png?v=4', alt: 'Coca-Cola' },
-  { src: '/assets/logo-f1.png?v=4', alt: 'Formula 1' },
-  { src: '/assets/logo-dior.png?v=4', alt: 'Dior' },
-  { src: '/assets/logo-patek.png?v=4', alt: 'Patek Philippe' },
-  { src: '/assets/logo-ciroc.png?v=4', alt: 'Cîroc' },
-  { src: '/assets/logo-louis-vuitton.png?v=4', alt: 'Louis Vuitton' },
-  { src: '/assets/logo-prime-boxing.png?v=4', alt: 'Prime Boxing' },
-  { src: '/assets/logo-cannes.png?v=4', alt: 'Festival de Cannes' },
-  { src: '/assets/logo-cartier.png?v=4', alt: 'Cartier' },
+  { src: '/assets/logo-coca-cola.png?v=5', alt: 'Coca-Cola' },
+  { src: '/assets/logo-f1.png?v=5', alt: 'Formula 1' },
+  { src: '/assets/logo-dior.png?v=5', alt: 'Dior' },
+  { src: '/assets/logo-patek.png?v=5', alt: 'Patek Philippe' },
+  { src: '/assets/logo-ciroc.png?v=5', alt: 'Cîroc' },
+  { src: '/assets/logo-louis-vuitton.png?v=5', alt: 'Louis Vuitton' },
+  { src: '/assets/logo-prime-boxing.png?v=5', alt: 'Prime Boxing' },
+  { src: '/assets/logo-cannes.png?v=5', alt: 'Festival de Cannes' },
+  { src: '/assets/logo-cartier.png?v=5', alt: 'Cartier' },
 ];
 
 const clients = [
@@ -205,7 +205,7 @@ export default function HomePage() {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-12 max-w-[1000px] mx-auto mb-16 items-center">
             {logos.map((logo) => (
-              <img key={logo.alt} src={logo.src} alt={logo.alt} className="w-full max-w-[180px] mx-auto brightness-200 opacity-60 hover:brightness-100 hover:opacity-100 transition duration-500" />
+              <img key={logo.alt} src={logo.src} alt={logo.alt} className="h-20 w-auto mx-auto opacity-60 hover:opacity-100 transition duration-500" />
             ))}
           </div>
           <a href="mailto:samir@wearemediahive.com" className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-white rounded-full text-white text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition">
