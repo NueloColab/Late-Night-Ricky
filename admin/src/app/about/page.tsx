@@ -17,7 +17,7 @@ export default async function AboutPage() {
         <div className="border-b-2 border-[#111] pt-24 pb-5 px-6">
           <div className="max-w-[1200px] mx-auto flex items-baseline gap-5 flex-wrap">
             <h1 className="text-[clamp(48px,10vw,120px)] font-black tracking-[-3px] uppercase leading-[0.9] text-[#111]">About</h1>
-            <span className="font-['Rockybilly',cursive] text-[clamp(24px,3vw,40px)] text-[#6B8FAB] -rotate-1 inline-block opacity-85">Late Night Ricky</span>
+            <span className="font-['Rockybilly',cursive] text-[clamp(24px,3vw,40px)] text-[#6B8FAB] -rotate-1 inline-block opacity-85 whitespace-nowrap">Late Night Ricky</span>
           </div>
         </div>
         <div className="grid md:grid-cols-2 min-h-[calc(100vh-200px)]">
