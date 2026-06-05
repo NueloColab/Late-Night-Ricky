@@ -123,7 +123,7 @@ export default function HomePage() {
       <section id="shows" className="relative z-10 bg-white pt-28">
         <div className="max-w-[1200px] mx-auto px-6">
           <h2 className="text-[clamp(36px,5.5vw,64px)] font-black text-center mb-5 text-[#111] tracking-[-2px] uppercase leading-[0.95]">
-            Recent Shows &amp; Stories
+            RECENT SHOWS &amp; STORIES
           </h2>
           <p className="text-center text-sm text-[#5B7A8E] mb-16 max-w-[600px] mx-auto leading-relaxed font-semibold uppercase tracking-[0.5px]">
             A career built on unforgettable nights, iconic venues, and sold-out crowds.
