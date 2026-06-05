@@ -96,7 +96,7 @@ export default async function HomePage() {
       </section>
 
       {/* Clients */}
-      <section className="relative z-10 bg-white pt-10 pb-28">
+      <section id="supporting" className="relative z-10 bg-white pt-10 pb-28">
         <div className="max-w-[1200px] mx-auto px-6">
           <h2 className="text-[clamp(36px,6vw,72px)] font-black tracking-[-2px] uppercase mb-10 text-[#111] text-center">Supporting Act</h2>
           <p className="text-sm text-[#5B7A8E] mb-10 tracking-[2px] uppercase text-center">A few names we&apos;ve shared the stage with</p>

@@ -9,6 +9,7 @@ const navLinks = [
   { href: '/#shows', label: 'Shows' },
   { href: '/#partnerships', label: 'Partners' },
   { href: '/showreel', label: 'Showreel' },
+  { href: '/#supporting', label: 'Supporting' },
   { href: '/share-music', label: 'Share Music' },
   { href: '/contact', label: 'Contact' },
 ];
