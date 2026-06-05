@@ -44,15 +44,12 @@ const shows = [
 ];
 
 const logos = [
-  { src: '/assets/logo-cartier.png', alt: 'Cartier' },
-  { src: '/assets/logo-f1.png', alt: 'Formula 1' },
-  { src: '/assets/logo-coca-cola.png', alt: 'Coca-Cola' },
-  { src: '/assets/logo-dior.png', alt: 'Dior' },
-  { src: '/assets/logo-ciroc.png', alt: 'Cîroc' },
-  { src: '/assets/logo-patek.png', alt: 'Patek Philippe' },
-  { src: '/assets/logo-louis-vuitton.png', alt: 'Louis Vuitton' },
-  { src: '/assets/logo-prime-boxing.png', alt: 'Prime Boxing' },
-  { src: '/assets/logo-cannes.png', alt: 'Festival de Cannes' },
+  { src: '/assets/logo-f1.png?v=2', alt: 'Formula 1' },
+  { src: '/assets/logo-coca-cola.png?v=2', alt: 'Coca-Cola' },
+  { src: '/assets/logo-dior.png?v=2', alt: 'Dior' },
+  { src: '/assets/logo-patek.png?v=2', alt: 'Patek Philippe' },
+  { src: '/assets/logo-prime-boxing.png?v=2', alt: 'Prime Boxing' },
+  { src: '/assets/logo-cannes.png?v=2', alt: 'Festival de Cannes' },
 ];
 
 const clients = [
