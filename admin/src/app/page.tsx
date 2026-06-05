@@ -44,14 +44,14 @@ const shows = [
 ];
 
 const logos = [
-  { src: '/assets/logo-bafta.png', alt: 'BAFTA' },
+  { src: '/assets/logo-cartier.png', alt: 'Cartier' },
   { src: '/assets/logo-f1.png', alt: 'Formula 1' },
-  { src: '/assets/logo-chanel.png', alt: 'Chanel' },
-  { src: '/assets/logo-patron.png', alt: 'Patron' },
-  { src: '/assets/logo-lacoste.png', alt: 'Lacoste' },
-  { src: '/assets/logo-montblanc.png', alt: 'Montblanc' },
-  { src: '/assets/logo-lvmh.png', alt: 'LVMH' },
-  { src: '/assets/logo-carrera.png', alt: 'Carrera' },
+  { src: '/assets/logo-coca-cola.png', alt: 'Coca-Cola' },
+  { src: '/assets/logo-dior.png', alt: 'Dior' },
+  { src: '/assets/logo-ciroc.png', alt: 'Cîroc' },
+  { src: '/assets/logo-patek.png', alt: 'Patek Philippe' },
+  { src: '/assets/logo-louis-vuitton.png', alt: 'Louis Vuitton' },
+  { src: '/assets/logo-prime-boxing.png', alt: 'Prime Boxing' },
 ];
 
 const clients = [
@@ -204,8 +204,15 @@ export default function HomePage() {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-[1000px] mx-auto mb-16 items-center">
             {logos.map((logo) => (
-              <img key={logo.alt} src={logo.src} alt={logo.alt} className="w-full max-w-[180px] mx-auto grayscale brightness-200 opacity-60 hover:grayscale-0 hover:brightness-100 hover:opacity-100 transition duration-500" />
+              <div key={logo.alt} className="text-center py-4">
+                <span className="font-serif text-[clamp(18px,2.5vw,26px)] text-white/70 tracking-[1px] hover:text-white transition duration-500 cursor-default">
+                  {logo.alt}
+                </span>
+              </div>
             ))}
+          </div>
+          <div className="flex justify-center mb-8">
+            <span className="font-serif text-[clamp(14px,1.8vw,20px)] text-white/50 tracking-[2px] hover:text-white/80 transition duration-500 cursor-default">Festival de Cannes</span>
           </div>
           <a href="mailto:samir@wearemediahive.com" className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-white rounded-full text-white text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition">
             All Partnerships
