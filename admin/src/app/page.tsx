@@ -1,6 +1,5 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import VideoShowreelSection from '../components/VideoShowreelSection';
 export const dynamic = 'force-dynamic';
 // Force rebuild
 
@@ -106,8 +105,6 @@ export default function HomePage() {
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
         </div>
       </section>
-
-      <VideoShowreelSection />
 
       {/* Reach */}
       <section id="reach" className="relative z-10 bg-[#1B3A4C] py-28">
