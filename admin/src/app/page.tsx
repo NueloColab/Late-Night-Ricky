@@ -44,15 +44,15 @@ const shows = [
 ];
 
 const logos = [
-  { src: '/assets/logo-f1.png?v=7', alt: 'Formula 1' },
-  { src: '/assets/logo-coca-cola.png?v=7', alt: 'Coca-Cola' },
-  { src: '/assets/logo-dior.png?v=7', alt: 'Dior' },
-  { src: '/assets/logo-patek.png?v=7', alt: 'Patek Philippe' },
-  { src: '/assets/logo-ciroc.png?v=7', alt: 'Cîroc' },
-  { src: '/assets/logo-louis-vuitton.png?v=7', alt: 'Louis Vuitton' },
-  { src: '/assets/logo-prime-boxing.png?v=7', alt: 'Prime Boxing' },
-  { src: '/assets/logo-cannes.png?v=7', alt: 'Festival de Cannes' },
-  { src: '/assets/logo-cartier.png?v=7', alt: 'Cartier' },
+  { src: '/assets/logo-f1.png?v=8', alt: 'Formula 1' },
+  { src: '/assets/logo-coca-cola.png?v=8', alt: 'Coca-Cola' },
+  { src: '/assets/logo-dior.png?v=8', alt: 'Dior' },
+  { src: '/assets/logo-patek.png?v=8', alt: 'Patek Philippe' },
+  { src: '/assets/logo-ciroc.png?v=8', alt: 'Cîroc' },
+  { src: '/assets/logo-louis-vuitton.png?v=8', alt: 'Louis Vuitton' },
+  { src: '/assets/logo-prime-boxing.png?v=8', alt: 'Prime Boxing' },
+  { src: '/assets/logo-cannes.png?v=8', alt: 'Festival de Cannes' },
+  { src: '/assets/logo-cartier.png?v=8', alt: 'Cartier' },
 ];
 
 const clients = [
@@ -205,7 +205,9 @@ export default function HomePage() {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-12 max-w-[1000px] mx-auto mb-16 items-center">
             {logos.map((logo) => (
-              <img key={logo.alt} src={logo.src} alt={logo.alt} className="h-14 w-auto mx-auto opacity-70 hover:opacity-100 transition duration-500" />
+              <div key={logo.alt} className="flex items-center justify-center h-20 w-32 mx-auto">
+                <img src={logo.src} alt={logo.alt} className="max-h-full max-w-full object-contain opacity-70 hover:opacity-100 transition duration-500" />
+              </div>
             ))}
           </div>
           <a href="mailto:samir@wearemediahive.com" className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-white rounded-full text-white text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition">
