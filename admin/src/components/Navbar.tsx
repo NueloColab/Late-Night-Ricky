@@ -8,8 +8,8 @@ const navLinks = [
   { href: '/about', label: 'About' },
   { href: '/#shows', label: 'Shows' },
   { href: '/#partnerships', label: 'Partners' },
-  { href: '/showreel', label: 'Showreel' },
-  { href: '/#supporting', label: 'Supporting' },
+  { href: '/showreel', label: 'Showreels' },
+  { href: '/#supporting', label: 'Clients' },
   { href: '/share-music', label: 'Share Music' },
   { href: '/contact', label: 'Contact' },
 ];
