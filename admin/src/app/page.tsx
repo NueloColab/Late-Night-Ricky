@@ -43,7 +43,9 @@ const shows = [
   },
 ];
 
-const logos = [];
+const logos = [
+  { src: '/assets/logo-coca-cola.png?v=1', alt: 'Coca-Cola' },
+];
 
 const clients = [
   '50 Cent', 'Bruno Mars', 'Chris Brown', 'Dr. Dre & Jimmy Iovine', 'Drake',
