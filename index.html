@@ -182,9 +182,9 @@ section:not(.hero),footer{position:relative;z-index:2}
 .partnerships-section{padding:120px 0;background:linear-gradient(180deg,var(--bk) 0%,#1a1b20 100%);text-align:center}
 .partnerships-section .quote{font-family:var(--fs);font-size:clamp(28px,4vw,44px);font-weight:400;color:var(--wh);max-width:900px;margin:0 auto 24px;line-height:1.3}
 .partnerships-section .quote-sub{font-size:17px;color:var(--gs);max-width:640px;margin:0 auto 60px;line-height:1.6}
-.logo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:50px;max-width:1000px;margin:0 auto 60px;align-items:center}
-.logo-grid img{width:100%;max-width:180px;height:auto;filter:grayscale(100%) brightness(200%) opacity(.6);transition:all .4s;margin:0 auto}
-.logo-grid img:hover{filter:grayscale(0%) brightness(100%) opacity(1)}
+.logo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:50px;max-width:1200px;margin:0 auto 60px;align-items:center}
+.logo-grid img{width:100%;max-width:160px;height:auto;opacity:.6;transition:opacity .4s;margin:0 auto}
+.logo-grid img:hover{opacity:1}
 .download-link{display:inline-block;color:var(--gl);font-size:14px;letter-spacing:.5px;text-decoration:none;transition:color .3s;margin-top:20px}
 .download-link:hover{color:var(--wh)}
 
@@ -330,7 +330,8 @@ section:not(.hero),footer{position:relative;z-index:2}
 
 /* Responsive */
 @media(max-width:991px){
-  .logo-grid{grid-template-columns:repeat(3,1fr);gap:40px}
+  .logo-grid{grid-template-columns:repeat(2,1fr);gap:40px}
+  .logo-grid img{max-width:140px}
   .cta-row{flex-direction:column;text-align:center;gap:50px}
   .cta-text h2{text-align:center}
   .cta-img{text-align:center}
@@ -551,14 +552,16 @@ section:not(.hero),footer{position:relative;z-index:2}
 <blockquote class="quote reveal">&ldquo;The best DJ I've heard.&rdquo;</blockquote>
 <p class="quote-sub reveal reveal-d1">&mdash; Cristiano Ronaldo. Trusted by A-list artists, global brands, and sold-out crowds worldwide.</p>
 <div class="logo-grid reveal reveal-d2">
-  <img src="assets/logo-cocacola-new.png" alt="Coca-Cola" loading="lazy">
-  <img src="assets/logo-dior-new.png" alt="Dior" loading="lazy">
-  <img src="assets/logo-f1-new.png" alt="Formula 1" loading="lazy">
-  <img src="assets/logo-patek-new.png" alt="Patek Philippe" loading="lazy">
-  <img src="assets/logo-lv-new.png" alt="Louis Vuitton" loading="lazy">
-  <img src="assets/logo-ciroc-new.png" alt="Cîroc" loading="lazy">
-  <img src="assets/logo-cannes-new.png" alt="Festival de Cannes" loading="lazy">
-  <img src="assets/logo-prime-new.png" alt="Prime Boxing" loading="lazy">
+  <img src="assets/logo-coca-cola.png" alt="Coca-Cola" loading="lazy">
+  <img src="assets/logo-dior.png" alt="Dior" loading="lazy">
+  <img src="assets/logo-f1.png" alt="Formula 1" loading="lazy">
+  <img src="assets/logo-patek.png" alt="Patek Philippe" loading="lazy">
+  <img src="assets/logo-louisvuitton.png" alt="Louis Vuitton" loading="lazy">
+  <img src="assets/logo-ciroc.png" alt="Cîroc" loading="lazy">
+  <img src="assets/logo-cannes.png" alt="Festival de Cannes" loading="lazy">
+  <img src="assets/logo-prime.png" alt="Prime Boxing" loading="lazy">
+  <img src="assets/logo-thombrowne.png" alt="Thom Browne" loading="lazy">
+  <img src="assets/logo-porsche.png" alt="Porsche" loading="lazy">
 </div>
 <a href="mailto:samir@wearemediahive.com" class="pill pill-white reveal reveal-d3">ALL PARTNERSHIPS</a>
 <div class="mt-30 reveal reveal-d3">
