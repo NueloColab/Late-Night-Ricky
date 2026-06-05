@@ -50,6 +50,11 @@ const logos = [
   { src: '/assets/logo-patek.png?v=2', alt: 'Patek Philippe' },
   { src: '/assets/logo-prime-boxing.png?v=2', alt: 'Prime Boxing' },
   { src: '/assets/logo-cannes.png?v=2', alt: 'Festival de Cannes' },
+  { src: '/assets/logo-louis-vuitton.png?v=2', alt: 'Louis Vuitton' },
+  { src: '/assets/logo-ciroc.png?v=2', alt: 'Cîroc' },
+  { src: '/assets/logo-cartier.png?v=2', alt: 'Cartier' },
+  { src: '/assets/logo-thombrowne.png?v=2', alt: 'Thom Browne' },
+  { src: '/assets/logo-porsche.png?v=2', alt: 'Porsche' },
 ];
 
 const clients = [
