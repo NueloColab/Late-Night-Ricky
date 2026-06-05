@@ -1,44 +1,64 @@
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import { getSections } from '../../lib/api';
 export const dynamic = 'force-dynamic';
 
-export const revalidate = 60;
+export const metadata = {
+  title: 'Showreels — Late Night Ricky',
+  description: 'Showreels from Late Night Ricky\'s performances around the world.',
+};
 
-export default async function ShowreelPage() {
-  const sections = await getSections('showreel');
-  const contentSection = sections.find((s: any) => s.section === 'content');
-  const texts: string[] = Array.isArray(contentSection?.content) ? contentSection.content : [];
-
+export default function ShowreelPage() {
   return (
     <>
       <Navbar />
-      <div className="bg-[#111] min-h-screen">
-        <section className="relative w-full h-screen overflow-hidden flex items-center justify-center">
-          <video autoPlay muted loop playsInline className="absolute top-0 left-0 w-full h-full object-cover">
-            <source src="/assets/video-desktop.webm" type="video/webm" />
-            <source src="/assets/video-desktop.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-[rgba(17,17,17,0.45)] pointer-events-none z-[2]" />
-          <div className="relative z-[3] text-center">
-            <a href="#showreel" className="inline-block px-12 py-4 border-2 border-white rounded-full bg-transparent text-white text-sm font-semibold uppercase tracking-[2.5px] hover:bg-white hover:text-[#111] transition">Watch Showreel</a>
+      <main className="bg-white min-h-screen">
+        {/* Page Title Bar */}
+        <div className="border-b-2 border-[#111] pt-24 pb-5 px-8">
+          <div className="max-w-[1200px] mx-auto">
+            <h1 className="text-[clamp(48px,10vw,120px)] font-black tracking-[-3px] uppercase leading-[0.9] text-[#111]">Showreels</h1>
           </div>
-        </section>
-        <section id="showreel" className="py-28 px-6">
-          <div className="max-w-[800px] mx-auto text-center">
-            <h2 className="font-serif text-[clamp(32px,4vw,52px)] font-normal text-white mb-8 leading-tight">The Sound of Late Night Ricky</h2>
-            {texts.length > 0 ? (
-              texts.slice(0, 4).map((t: string, i: number) => (
-                <p key={i} className="text-[17px] text-[#8FA8BE] leading-relaxed mb-6">{t}</p>
-              ))
-            ) : (
-              <p className="text-[17px] text-[#8FA8BE] leading-relaxed mb-6">
-                A curated showcase of performances, productions, and behind-the-scenes moments from around the globe. From sold-out arenas to intimate sunset sets, this is the sound that moves the world.
-              </p>
-            )}
+        </div>
+
+        {/* Showreels Grid */}
+        <div className="max-w-[1200px] mx-auto px-8 py-16 grid md:grid-cols-2 gap-10">
+          {/* 2025 Showreel Card */}
+          <div className="bg-white border-2 border-[#111] overflow-hidden hover:-translate-y-1.5 transition duration-400">
+            <div className="relative pb-[56.25%] bg-[#111] cursor-pointer group">
+              <video poster="/assets/ricky-hero-new.jpg" playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover"
+                onClick={(e) => {
+                  const v = e.currentTarget;
+                  v.play();
+                  (v.nextSibling as HTMLElement)?.classList.add('hidden');
+                }}
+              >
+                <source src="/assets/video-desktop.mp4" type="video/mp4" />
+                <source src="/assets/video-desktop.webm" type="video/webm" />
+              </video>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/90 flex items-center justify-center z-[2] group-hover:bg-white group-hover:scale-110 transition"
+                onClick={(e) => {
+                  const btn = e.currentTarget;
+                  const video = btn.previousSibling as HTMLVideoElement;
+                  video?.play();
+                  btn.classList.add('hidden');
+                }}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#111"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+            <div className="p-8">
+              <h3 className="text-[clamp(24px,3vw,36px)] font-black uppercase leading-none tracking-[-1px] mb-3 text-[#111]">2025 Showreel</h3>
+              <p className="text-sm text-[#555] leading-relaxed uppercase tracking-[0.5px]">Highlights from Ricky&apos;s biggest year yet — over 150 shows across five continents.</p>
+              <p className="text-xs text-[#6B8FAB] uppercase tracking-[1.5px] mt-4 font-semibold">Dec 2025</p>
+            </div>
           </div>
-        </section>
-      </div>
+
+          {/* Coming Soon Card */}
+          <div className="bg-[#E3E8ED] border-2 border-[#111] flex flex-col items-center justify-center min-h-[300px] p-10 text-center">
+            <h3 className="text-[clamp(24px,3vw,36px)] font-black uppercase leading-none tracking-[-1px] mb-4 text-[#111]">More coming soon</h3>
+            <p className="text-sm text-[#555] uppercase tracking-[0.5px]">Upload new showreels here as they become available.</p>
+          </div>
+        </div>
+      </main>
       <Footer />
     </>
   );
