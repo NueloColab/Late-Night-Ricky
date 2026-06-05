@@ -44,17 +44,17 @@ const shows = [
 ];
 
 const logos = [
-  { src: '/assets/logo-f1.png?v=2', alt: 'Formula 1' },
-  { src: '/assets/logo-coca-cola.png?v=2', alt: 'Coca-Cola' },
-  { src: '/assets/logo-dior.png?v=2', alt: 'Dior' },
-  { src: '/assets/logo-patek.png?v=2', alt: 'Patek Philippe' },
-  { src: '/assets/logo-prime-boxing.png?v=2', alt: 'Prime Boxing' },
-  { src: '/assets/logo-cannes.png?v=2', alt: 'Festival de Cannes' },
-  { src: '/assets/logo-louis-vuitton.png?v=2', alt: 'Louis Vuitton' },
-  { src: '/assets/logo-ciroc.png?v=2', alt: 'Cîroc' },
-  { src: '/assets/logo-cartier.png?v=2', alt: 'Cartier' },
-  { src: '/assets/logo-thombrowne.png?v=2', alt: 'Thom Browne' },
-  { src: '/assets/logo-porsche.png?v=2', alt: 'Porsche' },
+  { src: '/assets/logo-f1.png?v=3', alt: 'Formula 1' },
+  { src: '/assets/logo-coca-cola.png?v=3', alt: 'Coca-Cola' },
+  { src: '/assets/logo-dior.png?v=3', alt: 'Dior' },
+  { src: '/assets/logo-patek.png?v=3', alt: 'Patek Philippe' },
+  { src: '/assets/logo-prime-boxing.png?v=3', alt: 'Prime Boxing' },
+  { src: '/assets/logo-cannes.png?v=3', alt: 'Festival de Cannes' },
+  { src: '/assets/logo-louis-vuitton.png?v=3', alt: 'Louis Vuitton' },
+  { src: '/assets/logo-ciroc.png?v=3', alt: 'Cîroc' },
+  { src: '/assets/logo-cartier.png?v=3', alt: 'Cartier' },
+  { src: '/assets/logo-thombrowne.png?v=3', alt: 'Thom Browne' },
+  { src: '/assets/logo-porsche.png?v=3', alt: 'Porsche' },
 ];
 
 const clients = [
