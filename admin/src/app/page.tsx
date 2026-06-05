@@ -205,7 +205,7 @@ export default function HomePage() {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-12 max-w-[1000px] mx-auto mb-16 items-center">
             {logos.map((logo) => (
-              <img key={logo.alt} src={logo.src} alt={logo.alt} className="w-full max-w-[180px] mx-auto brightness-200 opacity-60 hover:brightness-100 hover:opacity-100 transition duration-500" />
+              <img key={logo.alt} src={logo.src} alt={logo.alt} className="h-14 w-auto mx-auto opacity-70 hover:opacity-100 transition duration-500" />
             ))}
           </div>
           <a href="mailto:samir@wearemediahive.com" className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-white rounded-full text-white text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition">
