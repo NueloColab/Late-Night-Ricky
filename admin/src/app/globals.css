@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Rockybilly';
+  src: url('/assets/Rockybilly.woff2') format('woff2'),
+       url('/assets/Rockybilly.woff') format('woff'),
+       url('/assets/Rockybilly.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --gd: #1B3A4C;
   --gs: #8FA8BE;
