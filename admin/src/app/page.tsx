@@ -140,11 +140,13 @@ export default function HomePage() {
             <p className="reveal reveal-d1 text-sm leading-relaxed max-w-[560px] text-[#8FA8BE] font-semibold uppercase tracking-[0.5px]">
               150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
             </p>
-            <img
-              src="/assets/grammy-gold.png"
-              alt="Grammy Award"
-              className="grammy-float grammy-glow w-[120px] md:w-[160px] h-auto object-contain opacity-90"
-            />
+            <div className="grammy-float grammy-glow relative w-[120px] md:w-[160px] flex-shrink-0">
+              <img
+                src="/assets/grammy-gold.png"
+                alt="Grammy Award"
+                className="w-full h-auto object-contain"
+              />
+            </div>
           </div>
           <div className="w-full h-px bg-gradient-to-r from-transparent via-[#A3B5C4] to-transparent my-20" />
         </div>
