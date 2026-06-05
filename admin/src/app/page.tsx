@@ -52,6 +52,7 @@ const logos = [
   { src: '/assets/logo-patek.png', alt: 'Patek Philippe' },
   { src: '/assets/logo-louis-vuitton.png', alt: 'Louis Vuitton' },
   { src: '/assets/logo-prime-boxing.png', alt: 'Prime Boxing' },
+  { src: '/assets/logo-cannes.png', alt: 'Festival de Cannes' },
 ];
 
 const clients = [
@@ -202,17 +203,10 @@ export default function HomePage() {
           <p className="text-[17px] text-[#8FA8BE] max-w-[640px] mx-auto mb-16 leading-relaxed">
             &mdash; Cristiano Ronaldo. Trusted by A-list artists, global brands, and sold-out crowds worldwide.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-[1000px] mx-auto mb-16 items-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-12 max-w-[1000px] mx-auto mb-16 items-center">
             {logos.map((logo) => (
-              <div key={logo.alt} className="text-center py-4">
-                <span className="font-serif text-[clamp(18px,2.5vw,26px)] text-white/70 tracking-[1px] hover:text-white transition duration-500 cursor-default">
-                  {logo.alt}
-                </span>
-              </div>
+              <img key={logo.alt} src={logo.src} alt={logo.alt} className="w-full max-w-[180px] mx-auto brightness-200 opacity-60 hover:brightness-100 hover:opacity-100 transition duration-500" />
             ))}
-          </div>
-          <div className="flex justify-center mb-8">
-            <span className="font-serif text-[clamp(14px,1.8vw,20px)] text-white/50 tracking-[2px] hover:text-white/80 transition duration-500 cursor-default">Festival de Cannes</span>
           </div>
           <a href="mailto:samir@wearemediahive.com" className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-white rounded-full text-white text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition">
             All Partnerships
