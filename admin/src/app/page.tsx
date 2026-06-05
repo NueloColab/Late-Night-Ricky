@@ -153,7 +153,7 @@ export default function HomePage() {
       </section>
 
       {/* Shows */}
-      <section id="shows" className="relative z-10 bg-white pt-28">
+      <section id="shows" className="relative z-10 bg-white pt-28 pb-10">
         <div className="max-w-[1200px] mx-auto px-6">
           <h2 className="reveal text-[clamp(36px,5.5vw,64px)] font-black text-center mb-5 text-[#111] tracking-[-2px] uppercase leading-[0.95]">
             RECENT SHOWS &amp; STORIES
@@ -186,7 +186,7 @@ export default function HomePage() {
             ))}
           </div>
           <div className="text-center mb-12">
-            <a href="#shows" className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-[#1B3A4C] rounded-full text-[#1B3A4C] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#1B3A4C] hover:text-white transition">
+            <a href="#shows" className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-[#1B3A4C] rounded-full text-[#1B3A4C] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#1B3A4C] hover:text-white transition mb-10">
               All Shows &amp; Stories
             </a>
           </div>
