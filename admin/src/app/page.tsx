@@ -136,9 +136,16 @@ export default function HomePage() {
           <h1 className="reveal font-black text-[clamp(36px,5.5vw,64px)] leading-[0.95] max-w-[960px] text-white tracking-[-2px] uppercase">
             International DJ &amp; Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.
           </h1>
-          <p className="reveal reveal-d1 text-sm mt-6 leading-relaxed max-w-[560px] text-[#8FA8BE] font-semibold uppercase tracking-[0.5px]">
-            150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
-          </p>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mt-6">
+            <p className="reveal reveal-d1 text-sm leading-relaxed max-w-[560px] text-[#8FA8BE] font-semibold uppercase tracking-[0.5px]">
+              150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
+            </p>
+            <img
+              src="/assets/grammy-gold.png"
+              alt="Grammy Award"
+              className="grammy-float grammy-glow w-[120px] md:w-[160px] h-auto object-contain opacity-90"
+            />
+          </div>
           <div className="w-full h-px bg-gradient-to-r from-transparent via-[#A3B5C4] to-transparent my-20" />
         </div>
       </section>
