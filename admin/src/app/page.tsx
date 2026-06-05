@@ -45,6 +45,10 @@ const shows = [
 
 const logos = [
   { src: '/assets/logo-coca-cola.png?v=1', alt: 'Coca-Cola' },
+  { src: '/assets/logo-f1.png?v=1', alt: 'Formula 1' },
+  { src: '/assets/logo-ciroc.png?v=1', alt: 'Cîroc' },
+  { src: '/assets/logo-louis-vuitton.png?v=1', alt: 'Louis Vuitton' },
+  { src: '/assets/logo-prime-boxing.png?v=1', alt: 'Prime Boxing' },
 ];
 
 const clients = [
