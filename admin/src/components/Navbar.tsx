@@ -17,6 +17,10 @@ export default function Navbar() {
   const [morphOpen, setMorphOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+  }, [mobileOpen]);
+
   return (
     <>
       <style>{`
