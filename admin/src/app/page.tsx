@@ -1,5 +1,6 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import ScrollReveal from '../components/ScrollReveal';
 export const dynamic = 'force-dynamic';
 // Force rebuild
 
@@ -89,6 +90,7 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
+      <ScrollReveal />
 
       {/* Hero */}
       <section className="relative min-h-[100dvh] flex flex-col items-start justify-center px-8 md:px-14 pb-14 pt-20">
@@ -131,10 +133,10 @@ export default function HomePage() {
       {/* Reach */}
       <section id="reach" className="relative z-10 bg-[#1B3A4C] py-28">
         <div className="max-w-[1200px] mx-auto px-6">
-          <h1 className="font-black text-[clamp(36px,5.5vw,64px)] leading-[0.95] max-w-[960px] text-white tracking-[-2px] uppercase">
+          <h1 className="reveal font-black text-[clamp(36px,5.5vw,64px)] leading-[0.95] max-w-[960px] text-white tracking-[-2px] uppercase">
             International DJ &amp; Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.
           </h1>
-          <p className="text-sm mt-6 leading-relaxed max-w-[560px] text-[#8FA8BE] font-semibold uppercase tracking-[0.5px]">
+          <p className="reveal reveal-d1 text-sm mt-6 leading-relaxed max-w-[560px] text-[#8FA8BE] font-semibold uppercase tracking-[0.5px]">
             150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
           </p>
           <div className="w-full h-px bg-gradient-to-r from-transparent via-[#A3B5C4] to-transparent my-20" />
@@ -144,15 +146,15 @@ export default function HomePage() {
       {/* Shows */}
       <section id="shows" className="relative z-10 bg-white pt-28">
         <div className="max-w-[1200px] mx-auto px-6">
-          <h2 className="text-[clamp(36px,5.5vw,64px)] font-black text-center mb-5 text-[#111] tracking-[-2px] uppercase leading-[0.95]">
+          <h2 className="reveal text-[clamp(36px,5.5vw,64px)] font-black text-center mb-5 text-[#111] tracking-[-2px] uppercase leading-[0.95]">
             RECENT SHOWS &amp; STORIES
           </h2>
-          <p className="text-center text-sm text-[#5B7A8E] mb-16 max-w-[600px] mx-auto leading-relaxed font-semibold uppercase tracking-[0.5px]">
+          <p className="reveal reveal-d1 text-center text-sm text-[#5B7A8E] mb-16 max-w-[600px] mx-auto leading-relaxed font-semibold uppercase tracking-[0.5px]">
             A career built on unforgettable nights, iconic venues, and sold-out crowds.
           </p>
           <div className="grid md:grid-cols-2 gap-12 mb-12">
-            {shows.map((show) => (
-              <a key={show.title} href={show.href} className="group block transition-transform duration-500 hover:-translate-y-1.5">
+            {shows.map((show, i) => (
+              <a key={show.title} href={show.href} className={`reveal reveal-d${Math.min(i + 1, 3)} group block transition-transform duration-500 hover:-translate-y-1.5`}>
                 <div
                   className="relative w-full min-h-[520px] rounded-2xl overflow-hidden mb-6 flex items-end justify-start"
                   style={{ backgroundImage: `url('${show.image}')`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'grayscale(100%) brightness(1.05)' }}
@@ -185,7 +187,7 @@ export default function HomePage() {
       {/* Partnerships */}
       <section id="partnerships" className="relative z-10 py-28 text-center" style={{ background: 'linear-gradient(180deg,#111 0%,#1a1b20 100%)' }}>
         <div className="max-w-[1200px] mx-auto px-6">
-          <blockquote className="font-serif text-[clamp(28px,4vw,44px)] font-normal text-white max-w-[900px] mx-auto mb-6 leading-snug">
+          <blockquote className="reveal font-serif text-[clamp(28px,4vw,44px)] font-normal text-white max-w-[900px] mx-auto mb-6 leading-snug">
             &ldquo;The best DJ I&apos;ve heard.&rdquo;
           </blockquote>
           <p className="text-[17px] text-[#8FA8BE] max-w-[640px] mx-auto mb-16 leading-relaxed">
@@ -208,7 +210,7 @@ export default function HomePage() {
       </section>
 
       {/* Radio */}
-      <section id="radio" className="relative z-10 bg-white py-28">
+      <section id="radio" className="reveal relative z-10 bg-white py-28">
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative overflow-hidden rounded-2xl">
@@ -265,7 +267,7 @@ export default function HomePage() {
       </section>
 
       {/* Clients */}
-      <section id="supporting" className="relative z-10 bg-white pt-10 pb-28">
+      <section id="supporting" className="reveal relative z-10 bg-white pt-10 pb-28">
         <div className="max-w-[1200px] mx-auto px-6">
           <p className="text-sm text-[#5B7A8E] mb-10 tracking-[2px] uppercase text-center">Acts &amp; Private Clients</p>
           <h2 className="text-[clamp(36px,6vw,72px)] font-black tracking-[-2px] uppercase mb-10 text-[#111] text-center">Trusted By The Best</h2>
@@ -292,7 +294,7 @@ export default function HomePage() {
       </section>
 
       {/* Share Music */}
-      <section id="share-music" className="relative z-10 bg-[#E3E8ED] py-28 text-center">
+      <section id="share-music" className="reveal relative z-10 bg-[#E3E8ED] py-28 text-center">
         <div className="max-w-[700px] mx-auto px-6">
           <h2 className="text-[clamp(36px,5vw,56px)] font-black tracking-[-2px] uppercase mb-4 text-[#111]">Share Your Music</h2>
           <p className="text-[clamp(22px,3vw,36px)] font-black uppercase leading-tight tracking-[-1px] mb-12 text-[#111]">
@@ -311,7 +313,7 @@ export default function HomePage() {
       </section>
 
       {/* Reach Out */}
-      <section id="reach-out" className="relative z-10 bg-[#111] text-white py-28">
+      <section id="reach-out" className="reveal relative z-10 bg-[#111] text-white py-28">
         <div className="max-w-[1200px] mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="font-serif text-[clamp(42px,6vw,72px)] font-normal leading-tight mb-6 max-w-[500px]">Let&apos;s collaborate</h2>
