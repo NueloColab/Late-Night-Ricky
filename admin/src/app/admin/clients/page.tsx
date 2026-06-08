@@ -93,7 +93,7 @@ export default function ClientsPage() {
               setForm({ name: '', email: '', phone: '', instagram: '', notes: '' })
               setShowForm(true)
             }}
-            className="px-5 py-2.5 bg-[#1B3A4C] text-white text-sm font-semibold uppercase tracking-wide rounded-lg hover:bg-[#2a4a5c] transition-colors flex items-center gap-2"
+            className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg hover:bg-[#2a4a5c] transition-colors flex items-center gap-2"
           >
             <Plus size={16} />
             Add Client
@@ -102,7 +102,7 @@ export default function ClientsPage() {
       </div>
 
       {/* Search */}
-      <div className="bg-white border border-[#E3E8ED] rounded-xl p-6 mb-6">
+      <div className="border border-[#A3B5C4]/30 bg-white border-[#E3E8ED] rounded-xl p-6 mb-6">
         <label className="block text-xs uppercase tracking-widest font-semibold text-[#1B3A4C] mb-3">Search Clients</label>
         <div className="relative">
           <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#E3E8ED]">
@@ -113,7 +113,7 @@ export default function ClientsPage() {
             placeholder="Search by name, email, or Globe..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#E3E8ED] text-[#1B3A4C] placeholder-[#A3B5C4] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg"
+            className="w-full pl-14 pr-4 py-3 border border-[#A3B5C4]/30 bg-white-2 border-[#E3E8ED] text-[#1B3A4C] placeholder-[#A3B5C4] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg"
           />
         </div>
       </div>
@@ -122,11 +122,11 @@ export default function ClientsPage() {
       {loading ? (
         <p className="text-[#8FA8BE] text-center py-8">Loading...</p>
       ) : filteredClients.length === 0 ? (
-        <div className="bg-white border border-[#E3E8ED] rounded-xl p-8 text-center">
+        <div className="border border-[#A3B5C4]/30 bg-white border-[#E3E8ED] rounded-xl p-8 text-center">
           <p className="text-[#8FA8BE]">No clients found. Add your first client above.</p>
         </div>
       ) : (
-        <div className="bg-white border border-[#E3E8ED] rounded-xl overflow-hidden">
+        <div className="border border-[#A3B5C4]/30 bg-white border-[#E3E8ED] rounded-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
@@ -199,29 +199,29 @@ export default function ClientsPage() {
           <div>
             <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-2">Name *</label>
             <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full px-4 py-2.5 bg-white border-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
+              className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-2">Email</label>
               <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-2">Phone</label>
               <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
             </div>
           </div>
           <div>
             <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-2">Globe</label>
             <input value={form.instagram} onChange={(e) => setForm({ ...form, instagram: e.target.value })}
-              className="w-full px-4 py-2.5 bg-white border-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
+              className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
           </div>
           <div>
             <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-2">Notes</label>
             <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3}
-              className="w-full px-4 py-2.5 bg-white border-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] resize-none" />
+              className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] resize-none" />
           </div>
           <div className="flex justify-end">
             <button type="submit"
@@ -238,7 +238,7 @@ export default function ClientsPage() {
               <Calendar size={14} />
               Added {new Date(selectedClient.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
             </div>
-            <div className="bg-white border border-[#E3E8ED] rounded-xl p-4 space-y-3">
+            <div className="border border-[#A3B5C4]/30 bg-white border-[#E3E8ED] rounded-xl p-4 space-y-3">
               {selectedClient.email && (
                 <div className="flex items-center gap-2 text-sm">
                   <Mail size={14} className="text-[#8FA8BE]" />
@@ -260,11 +260,11 @@ export default function ClientsPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white border border-[#E3E8ED] rounded-xl p-4 text-center">
+              <div className="border border-[#A3B5C4]/30 bg-white border-[#E3E8ED] rounded-xl p-4 text-center">
                 <p className="text-2xl font-serif font-semibold text-[#1B3A4C]">{selectedClient.totalBookings || 0}</p>
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#8FA8BE] font-medium mt-1">Bookings</p>
               </div>
-              <div className="bg-white border border-[#E3E8ED] rounded-xl p-4 text-center">
+              <div className="border border-[#A3B5C4]/30 bg-white border-[#E3E8ED] rounded-xl p-4 text-center">
                 <p className="text-2xl font-serif font-semibold text-[#1B3A4C]">
                   {selectedClient.totalRevenue ? `£${Number(selectedClient.totalRevenue).toLocaleString()}` : '—'}
                 </p>

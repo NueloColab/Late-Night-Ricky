@@ -227,12 +227,12 @@ export default function QuotesPage() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-3">
           <div className="w-10 h-px bg-[#1B3A4C]"></div>
-          <p className="text-xs uppercase tracking-widest text-[#5c7a94] font-medium">Quote Management</p>
+          <p className="text-xs uppercase tracking-widest text-[#1B3A4C] font-medium">Quote Management</p>
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="font-serif text-3xl md:text-4xl font-semibold text-[#1a1a1a] tracking-tight">Quotes</h1>
-            <p className="text-sm text-[#666] mt-1">Create, send and track client quotes.</p>
+            <h1 className="font-serif text-3xl md:text-4xl font-semibold text-[#111] tracking-tight">Quotes</h1>
+            <p className="text-sm text-[#5B7A8E] mt-1">Create, send and track client quotes.</p>
           </div>
           <button
             onClick={() => {
@@ -243,7 +243,7 @@ export default function QuotesPage() {
               setPaymentTerms('net-30')
               setIsModalOpen(true)
             }}
-            className="px-5 py-2.5 bg-[#5c7a94] text-white text-sm font-medium rounded-md hover:opacity-90 transition-opacity flex items-center gap-2"
+            className="px-5 py-2.5 bg-[#1B3A4C] text-white text-sm font-medium rounded-md hover:opacity-90 transition-opacity flex items-center gap-2"
           >
             <Plus size={16} />
             New Quote
@@ -253,66 +253,66 @@ export default function QuotesPage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white border border-gray-200 p-5">
+        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#1a1a1a] text-white rounded-lg"><FileText size={16} /></div>
+            <div className="p-2 bg-[#111] text-white rounded-lg"><FileText size={16} /></div>
           </div>
-          <p className="text-2xl font-serif font-semibold text-[#1a1a1a]">{loading ? '–' : stats.total}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#666] font-medium">Total Quotes</p>
+          <p className="text-2xl font-serif font-semibold text-[#111]">{loading ? '–' : stats.total}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#5B7A8E] font-medium">Total Quotes</p>
         </div>
-        <div className="bg-white border border-gray-200 p-5">
+        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#5c7a94] text-white rounded-lg"><Send size={16} /></div>
+            <div className="p-2 bg-[#1B3A4C] text-white rounded-lg"><Send size={16} /></div>
           </div>
-          <p className="text-2xl font-serif font-semibold text-[#5c7a94]">{loading ? '–' : stats.sent}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#666] font-medium">Sent</p>
+          <p className="text-2xl font-serif font-semibold text-[#1B3A4C]">{loading ? '–' : stats.sent}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#5B7A8E] font-medium">Sent</p>
         </div>
-        <div className="bg-white border border-gray-200 p-5">
+        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#2d6a2d] text-white rounded-lg"><CheckCircle size={16} /></div>
           </div>
           <p className="text-2xl font-serif font-semibold text-[#2d6a2d]">{loading ? '–' : stats.accepted}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#666] font-medium">Accepted</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#5B7A8E] font-medium">Accepted</p>
         </div>
-        <div className="bg-white border border-gray-200 p-5">
+        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#91715c] text-white rounded-lg"><Clock size={16} /></div>
+            <div className="p-2 bg-[#6B8FAB] text-white rounded-lg"><Clock size={16} /></div>
           </div>
-          <p className="text-2xl font-serif font-semibold text-[#91715c]">
+          <p className="text-2xl font-serif font-semibold text-[#6B8FAB]">
             {loading ? '–' : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(stats.totalValue)}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#666] font-medium">Total Value</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#5B7A8E] font-medium">Total Value</p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white border border-gray-200 p-6 mb-6 rounded-xl">
+      <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-6 mb-6 rounded-xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs uppercase tracking-widest font-semibold text-[#1a1a1a] mb-3">Search Quotes</label>
+            <label className="block text-xs uppercase tracking-widest font-semibold text-[#111] mb-3">Search Quotes</label>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-gray-200">
-                <Search className="w-4 h-4 text-[#999]" />
+              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A3B5C4]/30">
+                <Search className="w-4 h-4 text-[#6B8FAB]" />
               </div>
               <input
                 type="text"
                 placeholder="Search by description or ID..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-gray-200 text-[#1a1a1a] placeholder-gray-400 text-sm focus:outline-none focus:border-[#5c7a94] transition-colors rounded-lg"
+                className="w-full pl-14 pr-4 py-3 border border-[#A3B5C4]/30 bg-white-2 border-[#A3B5C4]/30 text-[#111] placeholder-gray-400 text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg"
               />
             </div>
           </div>
           <div>
-            <label className="block text-xs uppercase tracking-widest font-semibold text-[#1a1a1a] mb-3">Filter by Status</label>
+            <label className="block text-xs uppercase tracking-widest font-semibold text-[#111] mb-3">Filter by Status</label>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-gray-200">
-                <Filter className="w-4 h-4 text-[#999]" />
+              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A3B5C4]/30">
+                <Filter className="w-4 h-4 text-[#6B8FAB]" />
               </div>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-gray-200 text-[#1a1a1a] text-sm focus:outline-none focus:border-[#5c7a94] transition-colors rounded-lg appearance-none"
+                className="w-full pl-14 pr-4 py-3 border border-[#A3B5C4]/30 bg-white-2 border-[#A3B5C4]/30 text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg appearance-none"
               >
                 {STATUS_OPTIONS.map((s) => (
                   <option key={s} value={s}>
@@ -327,19 +327,19 @@ export default function QuotesPage() {
 
       {/* Table */}
       {loading ? (
-        <p className="text-[#999] text-center py-8">Loading...</p>
+        <p className="text-[#6B8FAB] text-center py-8">Loading...</p>
       ) : filteredQuotes.length === 0 ? (
-        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
-          <p className="text-[#999]">No quotes found. Create your first quote above.</p>
+        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-xl p-8 text-center">
+          <p className="text-[#6B8FAB]">No quotes found. Create your first quote above.</p>
         </div>
       ) : (
-        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-gray-200">
+                <tr className="border-b border-[#A3B5C4]/30">
                   {['Quote #', 'Project', 'Status', 'Items', 'Total', 'Terms', 'Actions'].map((h) => (
-                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#666]">{h}</th>
+                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#5B7A8E]">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -349,30 +349,30 @@ export default function QuotesPage() {
                   const clientName = proj?.clientId ? getClientName(proj.clientId) : ''
                   return (
                     <tr key={quote.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-4 py-3 font-semibold text-[#1a1a1a]">#{quote.id}</td>
-                      <td className="px-4 py-3 text-[#666]">
+                      <td className="px-4 py-3 font-semibold text-[#111]">#{quote.id}</td>
+                      <td className="px-4 py-3 text-[#5B7A8E]">
                         {proj ? (clientName ? `${proj.title} — ${clientName}` : proj.title) : '—'}
                       </td>
                       <td className="px-4 py-3">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-gray-100 text-[#1a1a1a]">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-gray-100 text-[#111]">
                           {STATUS_ICONS[quote.status] || <Clock size={14} />}
                           {STATUS_LABELS[quote.status] || quote.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-[#666]">{quote.lineItems.length} items</td>
-                      <td className="px-4 py-3 text-[#1a1a1a] font-semibold">£{quote.total.toLocaleString()}</td>
-                      <td className="px-4 py-3 text-[#666] text-xs">{PAYMENT_TERMS[quote.paymentTerms || 'net-30'] || quote.paymentTerms || 'Net 30'}</td>
+                      <td className="px-4 py-3 text-[#5B7A8E]">{quote.lineItems.length} items</td>
+                      <td className="px-4 py-3 text-[#111] font-semibold">£{quote.total.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-[#5B7A8E] text-xs">{PAYMENT_TERMS[quote.paymentTerms || 'net-30'] || quote.paymentTerms || 'Net 30'}</td>
                       <td className="px-4 py-3">
                         <div className="flex gap-2">
                           <button
                             onClick={() => openView(quote)}
-                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-[#666] hover:text-[#1a1a1a]"
+                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-[#5B7A8E] hover:text-[#111]"
                           >
                             <Eye size={16} />
                           </button>
                           <button
                             onClick={() => deleteQuote(quote.id)}
-                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-[#999] hover:text-red-500"
+                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-[#6B8FAB] hover:text-red-500"
                           >
                             <Trash2 size={16} />
                           </button>
@@ -398,11 +398,11 @@ export default function QuotesPage() {
           {/* Project Link */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[#1a1a1a] uppercase tracking-widest mb-2">Project (Optional)</label>
+              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-2">Project (Optional)</label>
               <select
                 value={projectId ?? ''}
                 onChange={(e) => setProjectId(e.target.value ? Number(e.target.value) : null)}
-                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-[#1a1a1a] text-sm focus:outline-none focus:border-[#5c7a94] transition-colors"
+                className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
               >
                 <option value="">No project</option>
                 {projects.map((p) => {
@@ -414,11 +414,11 @@ export default function QuotesPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#1a1a1a] uppercase tracking-widest mb-2">Payment Terms</label>
+              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-2">Payment Terms</label>
               <select
                 value={paymentTerms}
                 onChange={(e) => setPaymentTerms(e.target.value)}
-                className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-[#1a1a1a] text-sm focus:outline-none focus:border-[#5c7a94] transition-colors"
+                className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
               >
                 {Object.entries(PAYMENT_TERMS).map(([value, label]) => (
                   <option key={value} value={value}>{label}</option>
@@ -429,18 +429,18 @@ export default function QuotesPage() {
 
           {/* Tax Rate */}
           <div>
-            <label className="block text-xs font-semibold text-[#1a1a1a] uppercase tracking-widest mb-2">Tax Rate (%)</label>
+            <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-2">Tax Rate (%)</label>
             <input
               type="number"
               value={taxRate}
               onChange={(e) => setTaxRate(Number(e.target.value))}
-              className="w-24 px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-[#1a1a1a] text-sm focus:outline-none focus:border-[#5c7a94] transition-colors"
+              className="w-24 px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
             />
           </div>
 
           {/* Line Items */}
           <div className="space-y-3">
-            <p className="text-xs font-semibold text-[#1a1a1a] uppercase tracking-widest">Line Items</p>
+            <p className="text-xs font-semibold text-[#111] uppercase tracking-widest">Line Items</p>
             {items.map((item, idx) => (
               <div key={idx} className="flex gap-3 items-start">
                 <div className="flex-1">
@@ -448,7 +448,7 @@ export default function QuotesPage() {
                     placeholder="Description"
                     value={item.description}
                     onChange={(e) => updateItem(idx, 'description', e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-[#1a1a1a] text-sm focus:outline-none focus:border-[#5c7a94] transition-colors"
+                    className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
                   />
                 </div>
                 <div className="w-20">
@@ -457,7 +457,7 @@ export default function QuotesPage() {
                     placeholder="Qty"
                     value={item.quantity}
                     onChange={(e) => updateItem(idx, 'quantity', e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-[#1a1a1a] text-sm focus:outline-none focus:border-[#5c7a94] transition-colors text-center"
+                    className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors text-center"
                   />
                 </div>
                 <div className="w-28">
@@ -466,16 +466,16 @@ export default function QuotesPage() {
                     placeholder="Rate £"
                     value={item.rate}
                     onChange={(e) => updateItem(idx, 'rate', e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-[#1a1a1a] text-sm focus:outline-none focus:border-[#5c7a94] transition-colors"
+                    className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
                   />
                 </div>
-                <div className="w-20 text-sm text-[#666] pt-2.5 text-right">
+                <div className="w-20 text-sm text-[#5B7A8E] pt-2.5 text-right">
                   £{(Number(item.quantity) * Number(item.rate)).toLocaleString()}
                 </div>
                 <button
                   type="button"
                   onClick={() => removeItem(idx)}
-                  className="text-[#999] hover:text-red-500 text-sm pt-2.5 px-2"
+                  className="text-[#6B8FAB] hover:text-red-500 text-sm pt-2.5 px-2"
                 >
                   ×
                 </button>
@@ -486,31 +486,31 @@ export default function QuotesPage() {
           <button
             type="button"
             onClick={addItem}
-            className="text-sm text-[#5c7a94] hover:underline underline-offset-2 transition-colors"
+            className="text-sm text-[#1B3A4C] hover:underline underline-offset-2 transition-colors"
           >
             + Add line item
           </button>
 
           {/* Totals */}
-          <div className="border-t border-gray-200 pt-4 space-y-1">
+          <div className="border-t border-[#A3B5C4]/30 pt-4 space-y-1">
             <div className="flex justify-between text-sm">
-              <span className="text-[#666]">Subtotal</span>
-              <span className="text-[#1a1a1a] font-semibold">£{subtotal.toLocaleString()}</span>
+              <span className="text-[#5B7A8E]">Subtotal</span>
+              <span className="text-[#111] font-semibold">£{subtotal.toLocaleString()}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-[#666]">Tax ({taxRate}%)</span>
-              <span className="text-[#1a1a1a] font-semibold">£{tax.toLocaleString()}</span>
+              <span className="text-[#5B7A8E]">Tax ({taxRate}%)</span>
+              <span className="text-[#111] font-semibold">£{tax.toLocaleString()}</span>
             </div>
-            <div className="flex justify-between text-lg font-semibold pt-2 border-t border-gray-200">
-              <span className="text-[#1a1a1a]">Total</span>
-              <span className="text-[#1a1a1a]">£{total.toLocaleString()}</span>
+            <div className="flex justify-between text-lg font-semibold pt-2 border-t border-[#A3B5C4]/30">
+              <span className="text-[#111]">Total</span>
+              <span className="text-[#111]">£{total.toLocaleString()}</span>
             </div>
           </div>
 
           <div className="flex justify-end">
             <button
               type="submit"
-              className="px-6 py-2.5 bg-[#5c7a94] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+              className="px-6 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
             >
               Save Quote
             </button>
@@ -528,35 +528,35 @@ export default function QuotesPage() {
         {selectedQuote && (
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-gray-100 text-[#1a1a1a]">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-gray-100 text-[#111]">
                 {STATUS_ICONS[selectedQuote.status]}
                 {STATUS_LABELS[selectedQuote.status] || selectedQuote.status}
               </span>
               {selectedQuote.paymentTerms && (
-                <span className="text-xs text-[#666] bg-gray-50 px-2 py-1 rounded">
+                <span className="text-xs text-[#5B7A8E] bg-gray-50 px-2 py-1 rounded">
                   {PAYMENT_TERMS[selectedQuote.paymentTerms] || selectedQuote.paymentTerms}
                 </span>
               )}
             </div>
 
             {/* Line items table */}
-            <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-xl overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="px-4 py-2 text-left font-semibold text-[#1a1a1a]">Description</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#1a1a1a]">Qty</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#1a1a1a]">Rate</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#1a1a1a]">Amount</th>
+                  <tr className="border-b border-[#A3B5C4]/30">
+                    <th className="px-4 py-2 text-left font-semibold text-[#111]">Description</th>
+                    <th className="px-4 py-2 text-right font-semibold text-[#111]">Qty</th>
+                    <th className="px-4 py-2 text-right font-semibold text-[#111]">Rate</th>
+                    <th className="px-4 py-2 text-right font-semibold text-[#111]">Amount</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {selectedQuote.lineItems.map((item, idx) => (
                     <tr key={idx}>
-                      <td className="px-4 py-2 text-[#1a1a1a]">{item.description}</td>
-                      <td className="px-4 py-2 text-right text-[#666]">{item.quantity}</td>
-                      <td className="px-4 py-2 text-right text-[#666]">£{item.rate.toLocaleString()}</td>
-                      <td className="px-4 py-2 text-right font-semibold text-[#1a1a1a]">£{item.amount.toLocaleString()}</td>
+                      <td className="px-4 py-2 text-[#111]">{item.description}</td>
+                      <td className="px-4 py-2 text-right text-[#5B7A8E]">{item.quantity}</td>
+                      <td className="px-4 py-2 text-right text-[#5B7A8E]">£{item.rate.toLocaleString()}</td>
+                      <td className="px-4 py-2 text-right font-semibold text-[#111]">£{item.amount.toLocaleString()}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -564,20 +564,20 @@ export default function QuotesPage() {
             </div>
 
             <div className="flex justify-between items-center pt-2">
-              <span className="text-[#666] text-sm">Tax: {selectedQuote.taxRate}%</span>
-              <span className="text-xl font-serif font-semibold text-[#1a1a1a]">
+              <span className="text-[#5B7A8E] text-sm">Tax: {selectedQuote.taxRate}%</span>
+              <span className="text-xl font-serif font-semibold text-[#111]">
                 Total: £{selectedQuote.total.toLocaleString()}
               </span>
             </div>
 
             {/* Status Workflow Buttons */}
-            <div className="border-t border-gray-200 pt-4">
-              <p className="text-xs font-semibold text-[#1a1a1a] uppercase tracking-widest mb-3">Actions</p>
+            <div className="border-t border-[#A3B5C4]/30 pt-4">
+              <p className="text-xs font-semibold text-[#111] uppercase tracking-widest mb-3">Actions</p>
               <div className="flex flex-wrap gap-2">
                 {selectedQuote.status === 'draft' && (
                   <button
                     onClick={() => updateQuoteStatus(selectedQuote.id, 'sent')}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#5c7a94] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
                   >
                     <Send size={14} />
                     Send Quote
@@ -604,7 +604,7 @@ export default function QuotesPage() {
                 {selectedQuote.status === 'accepted' && (
                   <Link
                     href={`/admin/invoices?projectId=${selectedQuote.projectId || ''}`}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#91715c] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#6B8FAB] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
                   >
                     <ArrowRight size={14} />
                     Create Invoice
@@ -613,7 +613,7 @@ export default function QuotesPage() {
                 {selectedQuote.status === 'declined' && (
                   <button
                     onClick={() => updateQuoteStatus(selectedQuote.id, 'draft')}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 text-[#1a1a1a] rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 text-[#111] rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
                   >
                     <RotateCcw size={14} />
                     Reopen as Draft

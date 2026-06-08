@@ -132,7 +132,7 @@ export default function TracksPage() {
       ) : trackList.length === 0 ? (
         <p className="text-sm text-gray-500">No tracks yet. Add your first track.</p>
       ) : (
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-lg border border-[#A3B5C4]/30 overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50">
               <tr>
