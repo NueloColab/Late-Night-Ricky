@@ -352,6 +352,38 @@ export default function HomeEditor() {
     setSavingTrack(null);
   }
 
+  async function uploadTrackFile(id: number, file: File) {
+    const track = tracks.find((t) => t.id === id);
+    if (!track) return;
+    setSavingTrack(id);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        alert(data.error || 'Upload failed');
+        setSavingTrack(null);
+        return;
+      }
+      // Update the track with the new file path
+      await fetch(`/api/tracks/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: track.title,
+          filePath: data.asset.path,
+          duration: track.duration,
+          order: track.order,
+        }),
+      });
+      fetchTracks();
+    } catch (err: any) {
+      alert(err.message || 'Upload failed');
+    }
+    setSavingTrack(null);
+  }
+
   async function deleteTrack(id: number) {
     if (!confirm('Delete this track?')) return;
     await fetch(`/api/tracks/${id}`, { method: 'DELETE' });
@@ -611,6 +643,7 @@ export default function HomeEditor() {
               onSave={saveTrack}
               onDelete={deleteTrack}
               onAdd={addTrack}
+              onUploadFile={uploadTrackFile}
             />
           ) : selectedSection === 'clients' ? (
             <ClientsEditor
@@ -1011,6 +1044,7 @@ function RadioEditor({
   onSave,
   onDelete,
   onAdd,
+  onUploadFile,
 }: {
   tracks: Track[];
   loading: boolean;
@@ -1022,6 +1056,7 @@ function RadioEditor({
   onSave: (id: number) => void;
   onDelete: (id: number) => void;
   onAdd: () => void;
+  onUploadFile: (id: number, file: File) => void;
 }) {
   return (
     <div className="bg-white border border-[#A3B5C4]/30 p-6 space-y-6">
@@ -1110,14 +1145,33 @@ function RadioEditor({
               </div>
 
               <div className="mt-2">
-                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">File Path</label>
-                <input
-                  type="text"
-                  value={track.filePath || ''}
-                  onChange={(e) => onUpdate(track.id, 'filePath', e.target.value)}
-                  placeholder="/assets/snippet.mp3"
-                  className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
-                />
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Audio File</label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={track.filePath || ''}
+                    onChange={(e) => onUpdate(track.id, 'filePath', e.target.value)}
+                    placeholder="/assets/snippet.mp3"
+                    className="flex-1 px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                  />
+                  <label className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold cursor-pointer transition-colors ${
+                    savingTrack === track.id ? 'bg-[#6B8FAB] text-white' : 'bg-[#1B3A4C] text-white hover:bg-[#2a4f66]'
+                  }`}>
+                    <UploadIcon className="w-3.5 h-3.5" />
+                    {savingTrack === track.id ? 'Uploading...' : 'Upload MP3'}
+                    <input
+                      type="file"
+                      accept="audio/mp3,audio/mpeg,audio/wav,audio/aac"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) onUploadFile(track.id, file);
+                        e.target.value = '';
+                      }}
+                      disabled={savingTrack === track.id}
+                    />
+                  </label>
+                </div>
               </div>
             </div>
           ))}
@@ -1513,6 +1567,16 @@ function PauseIcon({ className }: { className?: string }) {
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" stroke="none">
       <rect x="6" y="4" width="4" height="16" />
       <rect x="14" y="4" width="4" height="16" />
+    </svg>
+  );
+}
+
+function UploadIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+      <polyline points="17 8 12 3 7 8" />
+      <line x1="12" y1="3" x2="12" y2="15" />
     </svg>
   );
 }
