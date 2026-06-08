@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     const ext = file.name.includes(".") ? file.name.split(".").pop() || "" : "";
     const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}${ext ? `.${ext}` : ""}`;
 
-    console.log(`[Upload] Storing file: ${filename}, size: ${file.size}, type: ${file.type}`);
+    console.log(`[Upload] Storing file: ${filename}, size: ${file.size}, type: ${file.type}, name: ${file.name}`);
 
     const { url, size } = await storeFile(file, filename);
 
@@ -54,8 +54,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, asset });
   } catch (err: any) {
     console.error("[Upload] Error:", err);
+    console.error("[Upload] Error stack:", err.stack);
     return NextResponse.json(
-      { error: err.message || "Upload failed", details: err.toString() },
+      { error: err.message || "Upload failed", details: err.toString(), stack: err.stack?.substring(0, 200) },
       { status: 500 }
     );
   }

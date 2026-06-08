@@ -33,7 +33,9 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
       const data = await res.json();
 
       if (!res.ok || data.error) {
-        setError(data.error || `Upload failed (${res.status})`);
+        const errorMsg = data.details || data.error || `Upload failed (${res.status})`;
+        console.error('[MediaPicker] Upload error:', data);
+        setError(errorMsg);
         setUploading(false);
         e.target.value = '';
         return;
