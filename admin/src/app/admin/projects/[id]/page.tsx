@@ -365,26 +365,11 @@ export default function ProjectDetailPage() {
       {/* Progress & Stats Dashboard — Nuelo style */}
       <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-5"
            style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          {/* Left metrics */}
-          <div className="flex items-center gap-8"
-               style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Progress</p>
-              <p className="text-3xl font-bold text-[#111]" style={{ fontFamily: "Georgia, serif" }}>{progress}%</p>
-            </div>
-            <div className="h-12 w-px bg-[#A3B5C4]/30 hidden sm:block" />
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Tasks</p>
-              <p className="text-sm font-bold text-[#111]">{(project?.tasks || []).filter((t) => t.completed).length}/{(project?.tasks || []).length} done</p>
-            </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Services</p>
-              <p className="text-sm font-bold text-[#111]">{(project?.services || []).filter((s) => s.status === "Delivered").length}/{(project?.services || []).length} delivered</p>
-            </div>
-          </div>
-          {/* Right action buttons */}
-          <div className="flex items-center gap-2" style={{ fontFamily: "system-ui, sans-serif" }}>
+        {/* Top row: PROGRESS label left, action buttons right */}
+        <div className="flex items-start justify-between mb-3"
+             style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Progress</p>
+          <div className="flex items-center gap-2">
             <button
               onClick={() => setShowTaskInput(!showTaskInput)}
               className="px-4 py-2 bg-[#111] text-white rounded text-xs font-semibold uppercase tracking-wide hover:opacity-90 transition flex items-center gap-1"
@@ -404,13 +389,34 @@ export default function ProjectDetailPage() {
             </div>
           </div>
         </div>
-        <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mt-4 mb-2">Overall Completion</p>
-        <div className="w-full bg-[#E3E8ED]/50 rounded-full h-2 overflow-hidden">
+        {/* Metrics row */}
+        <div className="flex items-center gap-6 mb-4"
+             style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+          <p className="text-3xl font-bold text-[#111]" style={{ fontFamily: "Georgia, serif" }}>{progress}%</p>
+          <div className="h-10 w-px bg-[#A3B5C4]/30" />
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-0.5">Tasks</p>
+            <p className="text-sm font-bold text-[#111]">{(project?.tasks || []).filter((t) => t.completed).length}/{(project?.tasks || []).length} done</p>
+          </div>
+          <div className="h-10 w-px bg-[#A3B5C4]/30 hidden sm:block" />
+          <div className="hidden sm:block">
+            <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-0.5">Milestones</p>
+            <p className="text-sm font-bold text-[#111]">0/0 hit</p>
+          </div>
+          <div className="h-10 w-px bg-[#A3B5C4]/30 hidden sm:block" />
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-0.5">Services</p>
+            <p className="text-sm font-bold text-[#111]">{(project?.services || []).filter((s) => s.status === "Delivered").length}/{(project?.services || []).length} delivered</p>
+          </div>
+        </div>
+        {/* Progress bar */}
+        <div className="w-full bg-[#E3E8ED]/50 rounded-full h-2 overflow-hidden mb-2">
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{ width: `${progress}%`, backgroundColor: progress >= 100 ? "#2d6a2d" : "#1B3A4C" }}
           />
         </div>
+        <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Overall Completion</p>
       </div>
 
       {/* Two Column Layout */}
@@ -489,8 +495,8 @@ export default function ProjectDetailPage() {
                       <span className={`text-sm ${task.completed ? "line-through text-[#999]" : "text-[#111]"}`}>{task.text}</span>
                       <div className="flex items-center gap-2 mt-1">
                         {task.phase && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#E3E8ED]/80 text-[#5B7A8E] font-medium">{task.phase}</span>}
+                        {task.dueDate && <span className="text-[10px] text-[#999]">{new Date(task.dueDate + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>}
                         {task.assignee && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1B3A4C]/10 text-[#1B3A4C] font-medium">{task.assignee}</span>}
-                        {task.dueDate && <span className="text-[10px] text-[#999]">{new Date(task.dueDate + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</span>}
                       </div>
                     </div>
                     <button onClick={() => removeTask(task.id)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
@@ -594,18 +600,33 @@ export default function ProjectDetailPage() {
             ) : (
               <div className="space-y-2">
                 {(project.team || []).map((member, idx) => (
-                  <div key={member.id || idx} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-[#111]">{member.name}</span>
-                        <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1B3A4C]/10 text-[#1B3A4C] font-medium">{member.role}</span>
+                  <div key={member.id || idx} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg"
+                  >
+                    <div className="flex items-center gap-3 flex-1"
+                    >
+                      {/* Avatar with initial */}
+                      <div className="w-10 h-10 rounded bg-[#6B8FAB] flex items-center justify-center flex-shrink-0"
+                      >
+                        <span className="text-white text-sm font-bold"
+                        >{member.name.charAt(0).toUpperCase()}</span>
                       </div>
-                      {member.email && <p className="text-xs text-[#5B7A8E] mt-0.5">{member.email}</p>}
-                      {member.notes && <p className="text-xs text-[#999] mt-0.5">{member.notes}</p>}
+                      <div>
+                        <p className="text-sm font-medium text-[#111]"
+                        >{member.name}</p>
+                        <p className="text-xs text-[#5B7A8E]"
+                        >{member.role.toLowerCase()} · {member.email}</p>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      {member.fee && <span className="text-sm font-semibold text-[#6B8FAB]">{gbp.format(member.fee)}</span>}
-                      <button onClick={() => removeTeamMember(member.id || String(idx))} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
+                    <div className="flex items-center gap-2"
+                    >
+                      <button className="text-[#999] hover:text-[#1B3A4C] transition-colors"
+                      >
+                        <Edit size={14} />
+                      </button>
+                      <button onClick={() => removeTeamMember(member.id || String(idx))} className="text-[#999] hover:text-red-500 transition-colors"
+                      >
+                        <Trash2 size={14} />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -845,7 +866,22 @@ export default function ProjectDetailPage() {
                             <p className="text-[10px] text-[#999]">Due on completion</p>
                           </div>
                           <span className="text-sm font-bold text-[#111]">{gbpFull.format(outstanding)}</span>
-                          <button className="px-3 py-1.5 bg-[#111] text-white text-[10px] font-semibold uppercase tracking-wide rounded hover:opacity-90">Mark Paid</button>
+                          <button
+                            onClick={async () => {
+                              const unpaid = invoices.find((i) => i.status !== "paid");
+                              if (unpaid) {
+                                await fetch(`/api/invoices/${unpaid.id}`, {
+                                  method: "PUT",
+                                  headers: { "Content-Type": "application/json" },
+                                  body: JSON.stringify({ status: "paid", paidAt: new Date().toISOString() }),
+                                });
+                                fetchAll();
+                              }
+                            }}
+                            className="px-3 py-1.5 bg-[#111] text-white text-[10px] font-semibold uppercase tracking-wide rounded hover:opacity-90"
+                          >
+                            Mark Paid
+                          </button>
                         </div>
                       </div>
                     </div>

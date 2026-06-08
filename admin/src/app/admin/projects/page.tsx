@@ -232,27 +232,28 @@ export default function ProjectsPage() {
                     </div>
                     <div className="space-y-2">
                       {statusProjects.map((p) => (
-                        <Link
+                        <div
                           key={p.id}
-                          href={`/admin/projects/${p.id}`}
                           draggable
-                          onDragStart={(e) => { e.preventDefault(); setDragId(p.id) }}
-                          className="block bg-white rounded-lg p-3 border border-[#A3B5C4]/30 hover:border-[#1B3A4C] transition-shadow group"
+                          onDragStart={() => setDragId(p.id)}
+                          className="bg-white rounded-lg p-3 border border-[#A3B5C4]/30 hover:border-[#1B3A4C] transition-shadow group cursor-move"
                         >
-                          <div className="flex items-start justify-between">
-                            <p className="text-sm font-semibold text-[#1B3A4C] leading-tight">{p.title}</p>
-                            <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); deleteProject(p.id) }} className="text-xs text-[#A3B5C4] hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity ml-2 flex-shrink-0">
-                              <Trash2 size={14} />
-                            </button>
-                          </div>
-                          <p className="text-xs text-[#5B7A8E] mt-0.5">{p.venue || 'No venue'}</p>
-                          {p.fee && <p className="text-xs font-semibold text-[#91715c] mt-1">£{Number(p.fee).toLocaleString()}</p>}
-                          <span className={`inline-block mt-2 text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wide ${style.bg} ${style.text}`}>
-                            {PROJECT_TYPES[p.type] || p.type}
-                          </span>
-                        </Link>
+                          <Link href={`/admin/projects/${p.id}`} className="block">
+                            <div className="flex items-start justify-between">
+                              <p className="text-sm font-semibold text-[#1B3A4C] leading-tight">{p.title}</p>
+                              <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); deleteProject(p.id) }} className="text-xs text-[#A3B5C4] hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity ml-2 flex-shrink-0">
+                                <Trash2 size={14} />
+                              </button>
+                            </div>
+                            <p className="text-xs text-[#5B7A8E] mt-0.5">{p.venue || 'No venue'}</p>
+                            {p.fee && <p className="text-xs font-semibold text-[#91715c] mt-1">£{Number(p.fee).toLocaleString()}</p>}
+                            <span className={`inline-block mt-2 text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wide ${style.bg} ${style.text}`}>
+                              {PROJECT_TYPES[p.type] || p.type}
+                            </span>
+                          </Link>
+                        </div>
                       ))}
-                      {statusProjects.length === 0 && <p className="text-xs text-[#A3B5C4] italic py-2 text-center">Drop here</p>}
+                      {statusProjects.length === 0 && <p className="text-xs text-[#A3B5C4] italic py-4 text-center">Drop here</p>}
                     </div>
                   </div>
                 )

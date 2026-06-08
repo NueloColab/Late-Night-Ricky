@@ -133,7 +133,7 @@ export default function MoodBoardSection({ projectId }: MoodBoardSectionProps) {
         </div>
         <button
           onClick={() => setShowCreator(!showCreator)}
-          className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition flex items-center gap-1"
+          className="px-4 py-2 bg-[#111] text-white rounded text-xs font-semibold uppercase tracking-wide hover:opacity-90 transition flex items-center gap-1"
         >
           <Plus size={14} /> New Board
         </button>
@@ -172,7 +172,10 @@ export default function MoodBoardSection({ projectId }: MoodBoardSectionProps) {
       )}
 
       {boards.length === 0 && !showCreator && (
-        <p className="text-sm text-[#6B8FAB] text-center py-8">No mood boards yet. Create one to collect inspiration.</p>
+        <div className="text-center py-8">
+          <ImageIcon size={32} className="mx-auto text-[#A3B5C4] mb-3" />
+          <p className="text-sm text-[#999]">No mood boards yet. Create one to start collecting visual inspiration.</p>
+        </div>
       )}
 
       {boards.length > 0 && (
