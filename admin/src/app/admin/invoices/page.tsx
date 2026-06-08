@@ -250,7 +250,7 @@ export default function InvoicesPage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
         <div className="bg-white border border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#111] text-white rounded-lg"><Receipt size={16} /></div>
+            <div className="p-2 bg-[#1B3A4C] text-white rounded-lg"><Receipt size={16} /></div>
           </div>
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
           <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Invoices</p>

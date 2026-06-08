@@ -76,24 +76,21 @@ export default function ClientsPage() {
   })
 
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-px bg-[#1B3A4C]"></div>
-          <p className="text-xs uppercase tracking-widest text-[#8FA8BE] font-medium">Client Management</p>
-        </div>
+      <div className="mb-12">
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Client Management</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="font-serif text-3xl md:text-4xl font-semibold text-[#1B3A4C] tracking-tight">Clients</h1>
-            <p className="text-sm text-[#8FA8BE] mt-1">Manage contacts, venues and partners.</p>
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Clients</h1>
+            <p className="text-sm text-[#5B7A8E] mt-4 font-semibold uppercase tracking-[0.5px]">Manage contacts, venues and partners.</p>
           </div>
           <button
             onClick={() => {
               setForm({ name: '', email: '', phone: '', instagram: '', notes: '' })
               setShowForm(true)
             }}
-            className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition transition-colors flex items-center gap-2"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition"
           >
             <Plus size={16} />
             Add Client
@@ -102,37 +99,37 @@ export default function ClientsPage() {
       </div>
 
       {/* Search */}
-      <div className="border border-[#A3B5C4]/30 bg-white border-[#E3E8ED] rounded-xl p-6 mb-6">
-        <label className="block text-xs uppercase tracking-widest font-semibold text-[#1B3A4C] mb-3">Search Clients</label>
+      <div className="bg-white border border-[#A3B5C4]/30 p-6 mb-6">
+        <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#6B8FAB] mb-3">Search Clients</label>
         <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#E3E8ED]">
-            <Search className="w-4 h-4 text-[#8FA8BE]" />
+          <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A3B5C4]/30">
+            <Search className="w-4 h-4 text-[#A3B5C4]" />
           </div>
           <input
             type="text"
-            placeholder="Search by name, email, or Globe..."
+            placeholder="Search by name, email, or Instagram..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-14 pr-4 py-3 border border-[#A3B5C4]/30 bg-white-2 border-[#E3E8ED] text-[#1B3A4C] placeholder-[#A3B5C4] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg"
+            className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#A3B5C4]/30 text-[#1B3A4C] placeholder-[#A3B5C4] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg"
           />
         </div>
       </div>
 
       {/* Table */}
       {loading ? (
-        <p className="text-[#8FA8BE] text-center py-8">Loading...</p>
+        <p className="text-[#6B8FAB] text-center py-8">Loading...</p>
       ) : filteredClients.length === 0 ? (
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#E3E8ED] rounded-xl p-8 text-center">
-          <p className="text-[#8FA8BE]">No clients found. Add your first client above.</p>
+        <div className="bg-white border border-[#A3B5C4]/30 p-8 text-center">
+          <p className="text-[#6B8FAB]">No clients found. Add your first client above.</p>
         </div>
       ) : (
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#E3E8ED] rounded-xl overflow-hidden">
+        <div className="bg-white border border-[#A3B5C4]/30 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-[#E3E8ED]">
+                <tr className="border-b border-[#A3B5C4]/30">
                   {['Name', 'Contact', 'Bookings', 'Revenue', 'Actions'].map((h) => (
-                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#8FA8BE]">{h}</th>
+                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#6B8FAB]">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -141,22 +138,22 @@ export default function ClientsPage() {
                   <tr key={client.id} className="hover:bg-[#F8FAFB] transition-colors">
                     <td className="px-4 py-3">
                       <div className="font-semibold text-[#1B3A4C]">{client.name}</div>
-                      <div className="text-xs text-[#8FA8BE] mt-0.5">Added {new Date(client.createdAt).toLocaleDateString('en-GB')}</div>
+                      <div className="text-xs text-[#6B8FAB] mt-0.5">Added {new Date(client.createdAt).toLocaleDateString('en-GB')}</div>
                     </td>
                     <td className="px-4 py-3">
                       <div className="space-y-1">
                         {client.email && (
-                          <div className="flex items-center gap-1.5 text-xs text-[#8FA8BE]">
+                          <div className="flex items-center gap-1.5 text-xs text-[#5B7A8E]">
                             <Mail size={12} /> {client.email}
                           </div>
                         )}
                         {client.phone && (
-                          <div className="flex items-center gap-1.5 text-xs text-[#8FA8BE]">
+                          <div className="flex items-center gap-1.5 text-xs text-[#5B7A8E]">
                             <Phone size={12} /> {client.phone}
                           </div>
                         )}
                         {client.instagram && (
-                          <div className="flex items-center gap-1.5 text-xs text-[#8FA8BE]">
+                          <div className="flex items-center gap-1.5 text-xs text-[#5B7A8E]">
                             <Globe size={12} /> {client.instagram}
                           </div>
                         )}
@@ -173,13 +170,13 @@ export default function ClientsPage() {
                             setSelectedClient(client)
                             setIsViewOpen(true)
                           }}
-                          className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#8FA8BE] hover:text-[#1B3A4C]"
+                          className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C]"
                         >
                           <Eye size={16} />
                         </button>
                         <button
                           onClick={() => deleteClient(client.id)}
-                          className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#8FA8BE] hover:text-[#5A6A7A]"
+                          className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#A3B5C4] hover:text-red-500"
                         >
                           <Trash2 size={16} />
                         </button>
@@ -197,35 +194,35 @@ export default function ClientsPage() {
       <Modal isOpen={showForm} onClose={() => setShowForm(false)} title="Add Client" maxWidth="max-w-lg">
         <form onSubmit={saveClient} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-2">Name *</label>
+            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Name *</label>
             <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
+              className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-2">Email</label>
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Email</label>
               <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-2">Phone</label>
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Phone</label>
               <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-2">Globe</label>
+            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Instagram</label>
             <input value={form.instagram} onChange={(e) => setForm({ ...form, instagram: e.target.value })}
-              className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
+              className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest mb-2">Notes</label>
+            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Notes</label>
             <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3}
-              className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white-2 border-[#E3E8ED] rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] resize-none" />
+              className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] resize-none" />
           </div>
           <div className="flex justify-end">
             <button type="submit"
-              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition text-sm font-semibold uppercase tracking-wide hover:bg-[#2a4a5c] transition-colors">Save Client</button>
+              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition">Save Client</button>
           </div>
         </form>
       </Modal>
@@ -234,41 +231,41 @@ export default function ClientsPage() {
       <Modal isOpen={isViewOpen} onClose={() => setIsViewOpen(false)} title={selectedClient?.name} maxWidth="max-w-lg">
         {selectedClient && (
           <div className="space-y-4">
-            <div className="flex items-center gap-2 text-sm text-[#8FA8BE]">
+            <div className="flex items-center gap-2 text-sm text-[#5B7A8E]">
               <Calendar size={14} />
               Added {new Date(selectedClient.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
             </div>
-            <div className="border border-[#A3B5C4]/30 bg-white border-[#E3E8ED] rounded-xl p-4 space-y-3">
+            <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-4 space-y-3">
               {selectedClient.email && (
                 <div className="flex items-center gap-2 text-sm">
-                  <Mail size={14} className="text-[#8FA8BE]" />
+                  <Mail size={14} className="text-[#6B8FAB]" />
                   <span className="text-[#1B3A4C]">{selectedClient.email}</span>
                 </div>
               )}
               {selectedClient.phone && (
                 <div className="flex items-center gap-2 text-sm">
-                  <Phone size={14} className="text-[#8FA8BE]" />
+                  <Phone size={14} className="text-[#6B8FAB]" />
                   <span className="text-[#1B3A4C]">{selectedClient.phone}</span>
                 </div>
               )}
               {selectedClient.instagram && (
                 <div className="flex items-center gap-2 text-sm">
-                  <Globe size={14} className="text-[#8FA8BE]" />
+                  <Globe size={14} className="text-[#6B8FAB]" />
                   <span className="text-[#1B3A4C]">{selectedClient.instagram}</span>
                 </div>
               )}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="border border-[#A3B5C4]/30 bg-white border-[#E3E8ED] rounded-xl p-4 text-center">
-                <p className="text-2xl font-serif font-semibold text-[#1B3A4C]">{selectedClient.totalBookings || 0}</p>
-                <p className="text-[10px] uppercase tracking-[0.15em] text-[#8FA8BE] font-medium mt-1">Bookings</p>
+              <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-4 text-center">
+                <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{selectedClient.totalBookings || 0}</p>
+                <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Bookings</p>
               </div>
-              <div className="border border-[#A3B5C4]/30 bg-white border-[#E3E8ED] rounded-xl p-4 text-center">
-                <p className="text-2xl font-serif font-semibold text-[#1B3A4C]">
+              <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-4 text-center">
+                <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">
                   {selectedClient.totalRevenue ? `£${Number(selectedClient.totalRevenue).toLocaleString()}` : '—'}
                 </p>
-                <p className="text-[10px] uppercase tracking-[0.15em] text-[#8FA8BE] font-medium mt-1">Revenue</p>
+                <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Revenue</p>
               </div>
             </div>
           </div>
