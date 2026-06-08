@@ -905,6 +905,49 @@ function HeroEditor({
         </label>
       </div>
 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+        <div>
+          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Zoom (Background Size)</label>
+          <select
+            value={content.backgroundSize || 'cover'}
+            onChange={(e) => onChange('backgroundSize', e.target.value)}
+            className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+          >
+            <option value="cover">Cover (default)</option>
+            <option value="contain">Contain (fit whole image)</option>
+            <option value="100%">100% (actual size)</option>
+            <option value="120%">120% (slight zoom)</option>
+            <option value="150%">150% (zoom in)</option>
+            <option value="200%">200% (zoom in more)</option>
+            <option value="250%">250% (zoom in max)</option>
+            <option value="80%">80% (zoom out)</option>
+            <option value="50%">50% (zoom out more)</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Position (Focus Point)</label>
+          <select
+            value={content.backgroundPosition || 'center'}
+            onChange={(e) => onChange('backgroundPosition', e.target.value)}
+            className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+          >
+            <option value="center">Center</option>
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+            <option value="top left">Top Left</option>
+            <option value="top right">Top Right</option>
+            <option value="bottom left">Bottom Left</option>
+            <option value="bottom right">Bottom Right</option>
+            <option value="25% center">25% Left (focus left)</option>
+            <option value="75% center">75% Right (focus right)</option>
+            <option value="center 25%">25% Top (focus top)</option>
+            <option value="center 75%">75% Bottom (focus bottom)</option>
+          </select>
+        </div>
+      </div>
+
       <div className="flex justify-end">
         <button
           onClick={onSave}
