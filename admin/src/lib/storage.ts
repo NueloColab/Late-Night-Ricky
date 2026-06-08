@@ -2,7 +2,6 @@ import { v2 as cloudinary } from 'cloudinary';
 import { writeFile } from 'fs/promises';
 import { mkdir } from 'fs/promises';
 import path from 'path';
-import { Readable } from 'stream';
 
 // Cloudinary configuration
 cloudinary.config({
@@ -30,29 +29,16 @@ export async function storeFile(
 
   try {
     const buffer = Buffer.isBuffer(file) ? file : Buffer.from(await file.arrayBuffer());
+    const base64Data = `data:application/octet-stream;base64,${buffer.toString('base64')}`;
     
-    // Use upload_stream for reliability with larger files (audio, video)
-    const result = await new Promise<{ secure_url: string; bytes: number }>((resolve, reject) => {
-      const uploadStream = cloudinary.uploader.upload_stream(
-        {
-          public_id: filename.replace(/\.[^.]+$/, ''),
-          folder: CLOUDINARY_FOLDER,
-          overwrite: true,
-          resource_type: 'auto',
-        },
-        (error, result) => {
-          if (error) reject(error);
-          else if (result) resolve({ secure_url: result.secure_url, bytes: result.bytes || size });
-          else reject(new Error('Cloudinary upload returned no result'));
-        }
-      );
-
-      // Pipe the buffer through a readable stream
-      const readable = Readable.from(buffer);
-      readable.pipe(uploadStream);
+    const result = await cloudinary.uploader.upload(base64Data, {
+      public_id: filename.replace(/\.[^.]+$/, ''),
+      folder: CLOUDINARY_FOLDER,
+      overwrite: true,
+      resource_type: 'auto',
     });
 
-    return { url: result.secure_url, size };
+    return { url: result.secure_url, size: result.bytes || size };
   } catch (err: any) {
     console.error('[Cloudinary] Upload failed:', err);
     // Fallback to local storage in development
