@@ -117,6 +117,8 @@ export default async function HomePage() {
   let pressPack = '/assets/press-pack.pdf';
   let clientsTitle = 'Trusted By The Best';
   let contactEmail = 'samir@wearemediahive.com';
+  let shareMusicHeadline = 'Share Your Music';
+  let shareMusicDescription = "I'm always on the lookout for new music to play, so send me your tracks";
 
   try {
     const [dbCards, dbNames, dbVenues, dbTracks, dbSections] = await Promise.all([
@@ -174,6 +176,12 @@ export default async function HomePage() {
       if (contactSection?.content) {
         const c = typeof contactSection.content === 'string' ? JSON.parse(contactSection.content) : contactSection.content;
         if (c.bookingEmail) contactEmail = c.bookingEmail;
+      }
+      const shareMusicSection = dbSections.find((s) => s.section === 'share_music');
+      if (shareMusicSection?.content) {
+        const c = typeof shareMusicSection.content === 'string' ? JSON.parse(shareMusicSection.content) : shareMusicSection.content;
+        if (c.headline) shareMusicHeadline = c.headline;
+        if (c.description) shareMusicDescription = c.description;
       }
     }
 
@@ -403,9 +411,9 @@ export default async function HomePage() {
       {/* Share Music */}
       <section id="share-music" className="reveal relative z-10 bg-[#E3E8ED] py-28 text-center">
         <div className="max-w-[700px] mx-auto px-6">
-          <h2 className="text-[clamp(36px,5vw,56px)] font-black tracking-[-2px] uppercase mb-4 text-[#111]">Share Your Music</h2>
+          <h2 className="text-[clamp(36px,5vw,56px)] font-black tracking-[-2px] uppercase mb-4 text-[#111]">{shareMusicHeadline}</h2>
           <p className="text-[clamp(22px,3vw,36px)] font-black uppercase leading-tight tracking-[-1px] mb-12 text-[#111]">
-            I&apos;m always on the lookout for new music to play, so send me your tracks
+            {shareMusicDescription}
           </p>
           <div className="border-[3px] border-dashed border-[#111] p-12 md:p-16 text-center transition-colors hover:border-[#1B3A4C] hover:bg-[rgba(27,58,76,0.02)] cursor-pointer max-w-[600px] mx-auto mb-8">
             <a href="/share-music" className="inline-block px-10 py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition">
