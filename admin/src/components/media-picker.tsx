@@ -101,11 +101,8 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
 
           {error && (
             <div className="w-full px-4 py-3 bg-red-50 border border-red-100 rounded-xl">
-              <p className="text-sm text-red-600 font-medium">⚠ Upload failed</p>
+              <p className="text-sm text-red-600 font-medium">Upload failed</p>
               <p className="text-xs text-red-500 mt-1">{error}</p>
-              <p className="text-xs text-red-400 mt-2">
-                Fix: Add <code className="bg-red-100 px-1 rounded">BLOB_READ_WRITE_TOKEN</code> to Vercel Dashboard → Project Settings → Environment Variables, then redeploy.
-              </p>
             </div>
           )}
         </div>
