@@ -471,9 +471,13 @@ export default function HomeEditor() {
 
   const sectionList = HOME_SECTIONS.map((name) => {
     const s = sections.find((sec) => sec.section === name);
+    const customLabels: Record<string, string> = {
+      share_music: 'Share Music',
+      contact: 'Reach Out',
+    };
     return {
       name,
-      label: name.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
+      label: customLabels[name] || name.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
       exists: !!s,
       id: s?.id,
       isActive: s?.isActive ?? true,
@@ -1287,7 +1291,7 @@ function ContactEditor({
   return (
     <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20 space-y-6">
       <div>
-        <h2 className="font-serif text-xl font-semibold text-white mb-1">Contact</h2>
+        <h2 className="font-serif text-xl font-semibold text-white mb-1">Reach Out</h2>
         <p className="text-xs text-[#8FA3B3] mb-6">Edit contact details</p>
       </div>
 
