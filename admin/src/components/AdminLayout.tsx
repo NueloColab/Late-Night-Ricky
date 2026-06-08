@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import AdminSidebar from './AdminSidebar';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -21,30 +20,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white flex">
+    <div className="min-h-screen bg-[#E3E8ED] text-[#1B3A4C] flex">
       <AdminSidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         isMobile={isMobile}
       />
 
-      {/* Mobile overlay */}
-      {isMobile && sidebarOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/70 z-40"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="h-16 border-b border-white/10 flex items-center px-6 sticky top-0 z-30 bg-[#0a0a0a]/95 backdrop-blur-sm">
+        <header className="h-16 border-b border-[#A3B5C4]/30 flex items-center px-6 sticky top-0 z-30 bg-[#E3E8ED]/95 backdrop-blur-sm">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="lg:hidden mr-4 p-2 hover:bg-white/10 rounded transition"
+            className="lg:hidden mr-4 p-2 hover:bg-[#1B3A4C]/10 rounded transition"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M3 12h18M3 6h18M3 18h18" />
@@ -52,17 +40,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </button>
 
           <div className="flex items-center gap-3">
-            <span className="font-serif text-lg tracking-tight">Late Night Ricky</span>
-            <div className="w-px h-4 bg-white/20" />
-            <span className="text-xs uppercase tracking-[3px] text-white/40 font-medium">Admin</span>
+            <span className="font-['Rockybilly'] text-lg text-[#1B3A4C]">Late Night Ricky</span>
+            <div className="w-px h-4 bg-[#A3B5C4]" />
+            <span className="text-[10px] uppercase tracking-[3px] text-[#6B8FAB] font-semibold">Admin</span>
           </div>
 
-          <div className="ml-auto flex items-center gap-4">
+          <div className="ml-auto">
             <a
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs uppercase tracking-[2px] text-white/40 hover:text-white transition"
+              className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#1B3A4C] rounded-full text-[#1B3A4C] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#1B3A4C] hover:text-white transition"
             >
               View Site →
             </a>
