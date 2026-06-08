@@ -1,7 +1,16 @@
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import { getSiteSections } from '@/lib/cms';
+import { getSiteSections, getSeoMeta } from '@/lib/cms';
+import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const meta = await getSeoMeta('about');
+  return {
+    title: meta?.title || 'About — Late Night Ricky',
+    description: meta?.description || 'International DJ & Grammy Winning Producer based in London.',
+  };
+}
 
 export default async function AboutPage() {
   let sections: any[] = [];

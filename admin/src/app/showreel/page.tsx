@@ -13,33 +13,63 @@ interface VideoData {
   description: string;
 }
 
+interface ShowreelCard {
+  id: string;
+  imagePath: string;
+  title: string;
+  subtitle: string;
+  description: string;
+}
+
 const DEFAULT_VIDEOS: VideoData[] = [
   {
     title: '2025 Showreel',
     src: '/assets/video-desktop.mp4',
     poster: '/assets/ricky-hero-new.jpg',
     year: '2025',
-    description: 'Highlights from Ricky\'s biggest year yet — over 150 shows across five continents.',
+    description: "Highlights from Ricky's biggest year yet — over 150 shows across five continents.",
   },
 ];
 
 export default function ShowreelPage() {
   const [videos, setVideos] = useState<VideoData[]>(DEFAULT_VIDEOS);
+  const [cards, setCards] = useState<ShowreelCard[]>([]);
 
   useEffect(() => {
     async function fetchSections() {
       try {
         const res = await fetch('/api/public/sections?page=showreel');
         const data = await res.json();
-        const section = data.sections?.find((s: any) => s.section === 'main');
-        if (section?.content?.videos && Array.isArray(section.content.videos) && section.content.videos.length > 0) {
-          setVideos(section.content.videos.map((v: any) => ({
-            title: v.title || 'Showreel',
-            src: v.src || '/assets/video-desktop.mp4',
-            poster: v.poster || '/assets/ricky-hero-new.jpg',
-            year: v.year || '2025',
-            description: v.description || '',
-          })));
+        const sections = data.sections || [];
+
+        // Video section
+        const videoSection = sections.find((s: any) => s.section === 'video');
+        if (videoSection) {
+          const videoPath = videoSection.videos?.[0] || videoSection.content?.[0];
+          if (videoPath) {
+            setVideos([{
+              title: 'Showreel',
+              src: videoPath,
+              poster: '/assets/ricky-hero-new.jpg',
+              year: new Date().getFullYear().toString(),
+              description: '',
+            }]);
+          }
+        }
+
+        // Cards section
+        const cardsSection = sections.find((s: any) => s.section === 'cards');
+        if (cardsSection?.content) {
+          const parsed = Array.isArray(cardsSection.content) ? cardsSection.content : [];
+          if (parsed.length > 0 && typeof parsed[0] === 'object') {
+            setCards(parsed.map((c: any) => ({
+              id: c.id || `card-${Math.random()}`,
+              imagePath: c.imagePath || '',
+              title: c.title || 'Showreel',
+              subtitle: c.subtitle || '',
+              description: c.description || '',
+            })));
+          }
         }
       } catch {
         // keep defaults
@@ -93,10 +123,26 @@ export default function ShowreelPage() {
             </div>
           ))}
 
+          {/* Showreel Cards from CMS */}
+          {cards.map((card) => (
+            <div key={card.id} className="bg-white border-2 border-[#111] overflow-hidden hover:-translate-y-1.5 transition duration-400">
+              {card.imagePath && (
+                <div className="relative pb-[56.25%] bg-[#111]">
+                  <img src={card.imagePath} alt={card.title} className="absolute inset-0 w-full h-full object-cover" />
+                </div>
+              )}
+              <div className="p-8">
+                <h3 className="text-[clamp(24px,3vw,36px)] font-black uppercase leading-none tracking-[-1px] mb-3 text-[#111]">{card.title}</h3>
+                {card.subtitle && <p className="text-xs text-[#6B8FAB] uppercase tracking-[1.5px] mb-2 font-semibold">{card.subtitle}</p>}
+                <p className="text-sm text-[#555] leading-relaxed uppercase tracking-[0.5px]">{card.description}</p>
+              </div>
+            </div>
+          ))}
+
           {/* Coming Soon Card */}
           <div className="bg-[#E3E8ED] border-2 border-[#111] flex flex-col items-center justify-center min-h-[300px] p-10 text-center">
             <h3 className="text-[clamp(24px,3vw,36px)] font-black uppercase leading-none tracking-[-1px] mb-4 text-[#111]">More coming soon</h3>
-            <p className="text-sm text-[#555] uppercase tracking-[0.5px]">Upload new showreels here as they become available.</p>
+            <p className="text-sm text-[#555] uppercase tracking-[0.5px]">Upload new showreels in the admin panel.</p>
           </div>
         </div>
       </main>

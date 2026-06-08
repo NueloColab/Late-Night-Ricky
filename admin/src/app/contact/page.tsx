@@ -8,9 +8,10 @@ export const dynamic = 'force-dynamic';
 export default function ContactPage() {
   const [activeTab, setActiveTab] = useState('booking');
   const [contactInfo, setContactInfo] = useState({
-    bookingEmail: 'samir@wearemediahive.com',
+    email: 'hello@latenightricky.com',
     instagram: '@latenightricky',
     image: '/assets/ricky-hero-new.jpg',
+    formEnabled: true,
   });
 
   const [submitting, setSubmitting] = useState(false);
@@ -22,14 +23,19 @@ export default function ContactPage() {
       try {
         const res = await fetch('/api/public/sections?page=contact');
         const data = await res.json();
-        const section = data.sections?.find((s: any) => s.section === 'info');
-        if (section?.content) {
-          setContactInfo({
-            bookingEmail: section.content.bookingEmail || contactInfo.bookingEmail,
-            instagram: section.content.instagram || contactInfo.instagram,
-            image: section.content.image || contactInfo.image,
-          });
-        }
+        const sections = data.sections || [];
+
+        const emailSection = sections.find((s: any) => s.section === 'email');
+        const instagramSection = sections.find((s: any) => s.section === 'instagram');
+        const formSection = sections.find((s: any) => s.section === 'form');
+        const infoSection = sections.find((s: any) => s.section === 'info');
+
+        const email = emailSection?.content?.[0] || infoSection?.content?.bookingEmail || contactInfo.email;
+        const instagram = instagramSection?.content?.[0] || infoSection?.content?.instagram || contactInfo.instagram;
+        const image = infoSection?.content?.image || contactInfo.image;
+        const formEnabled = formSection?.isActive !== false;
+
+        setContactInfo({ email, instagram, image, formEnabled });
       } catch {
         // keep defaults
       }
@@ -39,6 +45,7 @@ export default function ContactPage() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!contactInfo.formEnabled) return;
     setSubmitting(true);
     setError('');
     setSubmitted(false);
@@ -130,7 +137,7 @@ export default function ContactPage() {
                   Send another
                 </button>
               </div>
-            ) : (
+            ) : contactInfo.formEnabled ? (
               <form onSubmit={handleSubmit} className={activeTab === 'booking' ? 'block' : 'hidden'}>
                 <div className="mb-7">
                   <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>
@@ -165,9 +172,17 @@ export default function ContactPage() {
                   {submitting ? 'Sending...' : 'Submit'}
                 </button>
               </form>
+            ) : (
+              <div className="text-center py-10">
+                <p className="text-lg font-semibold text-[#111] mb-2">Contact form is currently disabled</p>
+                <p className="text-sm text-[#6B8FAB]">Please reach out directly via email.</p>
+                <a href={`mailto:${contactInfo.email}`} className="mt-4 inline-block px-6 py-2 border-2 border-[#111] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#111] hover:text-white transition">
+                  Email {contactInfo.email}
+                </a>
+              </div>
             )}
 
-            {!submitted && (
+            {!submitted && contactInfo.formEnabled && (
               <form onSubmit={handleSubmit} className={activeTab === 'private' ? 'block' : 'hidden'}>
                 <div className="mb-7">
                   <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>

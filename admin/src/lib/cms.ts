@@ -87,3 +87,34 @@ export async function getCarouselImages() {
     return [];
   }
 }
+
+// SEO helpers
+export async function getSeoMeta(page: string) {
+  try {
+    const sections = await db
+      .select()
+      .from(siteSections)
+      .where(eq(siteSections.page, 'global'));
+    const seoSection = sections.find((s) => s.section === 'seo');
+    if (!seoSection?.content) return null;
+    const metaList = Array.isArray(seoSection.content) ? seoSection.content : [];
+    return metaList.find((m: any) => m.page === page) || null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getFavicon() {
+  try {
+    const sections = await db
+      .select()
+      .from(siteSections)
+      .where(eq(siteSections.page, 'global'));
+    const seoSection = sections.find((s) => s.section === 'seo');
+    if (!seoSection?.images) return null;
+    const images = Array.isArray(seoSection.images) ? seoSection.images : [];
+    return images[0] || null;
+  } catch {
+    return null;
+  }
+}

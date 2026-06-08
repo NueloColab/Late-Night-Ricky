@@ -3,10 +3,19 @@ import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
 import PartnerLogosSection from '../components/PartnerLogosSection';
-import { getShowCards, getClientNames, getVenueTicker, getTracks, getSiteSections, getCarouselImages } from '@/lib/cms';
+import { getShowCards, getClientNames, getVenueTicker, getTracks, getSiteSections, getCarouselImages, getSeoMeta } from '@/lib/cms';
+import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const fetchCache = 'force-no-store';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const meta = await getSeoMeta('home');
+  return {
+    title: meta?.title || 'Late Night Ricky — International DJ & Grammy Winning Producer',
+    description: meta?.description || 'From London to New York / LA to Las Vegas / Miami to Ibiza and beyond. 150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.',
+  };
+}
 
 const DEFAULT_SHOWS = [
   {
