@@ -332,7 +332,7 @@ export default function ProjectDetailPage() {
         </Link>
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="flex-1">
-            <h1 className="font-serif text-3xl md:text-4xl font-semibold text-[#111] tracking-tight">{project.title}</h1>
+            <h1 className="font-black text-[clamp(28px,4vw,42px)] text-[#111] tracking-[-1px] uppercase">{project.title}</h1>
             <div className="flex flex-wrap items-center gap-2 mt-2">
               <span className={`text-xs font-bold uppercase tracking-wide px-2 py-0.5 rounded ${project.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : project.status === "in-progress" || project.status === "approved" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : project.status === "completed" || project.status === "invoiced" ? "bg-[#6B8FAB]/10 text-[#6B8FAB]" : "bg-[#E3E8ED]/50 text-[#5B7A8E]"}`}>
                 {PIPELINE_LABELS[project.status] || project.status}
@@ -432,7 +432,7 @@ export default function ProjectDetailPage() {
       {/* Edit form */}
       {editing && (
         <form onSubmit={saveEdit} className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6 space-y-4">
-          <h3 className="font-serif text-lg font-semibold text-[#111]">Edit Project</h3>
+          <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Edit Project</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Title</label>
@@ -495,7 +495,7 @@ export default function ProjectDetailPage() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <PoundSterling size={18} className="text-[#6B8FAB]" />
-            <h3 className="font-serif text-lg font-semibold text-[#111]">Services</h3>
+            <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Services</h3>
           </div>
           <button
             onClick={() => setShowServiceForm(!showServiceForm)}
@@ -567,7 +567,7 @@ export default function ProjectDetailPage() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Users size={18} className="text-[#6B8FAB]" />
-            <h3 className="font-serif text-lg font-semibold text-[#111]">Team & Assignments</h3>
+            <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Team & Assignments</h3>
           </div>
           <button
             onClick={() => setShowTeamForm(!showTeamForm)}
@@ -624,7 +624,7 @@ export default function ProjectDetailPage() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <CheckCircle size={18} className="text-[#6B8FAB]" />
-            <h3 className="font-serif text-lg font-semibold text-[#111]">Tasks</h3>
+            <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Tasks</h3>
           </div>
           <button
             onClick={() => setShowTaskInput(!showTaskInput)}
@@ -676,7 +676,7 @@ export default function ProjectDetailPage() {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Upload size={18} className="text-[#6B8FAB]" />
-            <h3 className="font-serif text-lg font-semibold text-[#111]">Files & Deliverables</h3>
+            <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Files & Deliverables</h3>
           </div>
           <button
             onClick={() => setShowFileUpload(!showFileUpload)}
@@ -730,7 +730,7 @@ export default function ProjectDetailPage() {
       {/* Notes */}
       {project.notes && (
         <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
-          <h3 className="font-serif text-lg font-semibold text-[#111] mb-3">Notes</h3>
+          <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase mb-3">Notes</h3>
           <p className="text-sm text-[#5B7A8E] whitespace-pre-wrap">{project.notes}</p>
         </div>
       )}
@@ -738,7 +738,7 @@ export default function ProjectDetailPage() {
       {/* Quotes */}
       <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-serif text-lg font-semibold text-[#111]">Quotes</h3>
+          <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Quotes</h3>
           <Link
             href={`/admin/quotes?projectId=${project.id}`}
             className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition transition-opacity flex items-center gap-1"
@@ -780,7 +780,7 @@ export default function ProjectDetailPage() {
       {/* Invoices */}
       <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-serif text-lg font-semibold text-[#111]">Invoices</h3>
+          <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Invoices</h3>
           <Link
             href={`/admin/invoices?projectId=${project.id}`}
             className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition transition-opacity flex items-center gap-1"
