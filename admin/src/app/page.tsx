@@ -299,7 +299,7 @@ export default async function HomePage() {
                   Spotify
                 </a>
                 <a href="https://music.apple.com/gb/artist/late-night-ricky/1759491226" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.6 8.35c-.1 0-.2.02-.3.06-.7.23-1.4.35-2.1.35-.7 0-1.4-.12-2.1-.35-.1-.04-.2-.06-.3-.06-.35 0-.65.28-.65.63v4.04c0 .35.3.63.65.63.1 0 .2-.02.3-.06.7-.23 1.4-.35 2.1-.35.7 0 1.4.12 2.1.35.1.04.2.06.3.06.35 0 .65-.28.65-.63V8.98c0-.35-.3-.63-.65-.63zM12 13.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M15.6 8.35c-.1 0-.2.02-.3.06-.7.23-1.4.35-2.1.35-.7 0-1.4-.12-2.1-.35-.1-.04-.2-.06-.3-.06-.35 0-.65.28-.65.63v4.04c0 .35.3.63.65.63.1 0 .2-.02.3-.06.7-.23 1.4-.35 2.1-.35.7 0 1.4.12 2.1.35.1.04.2.06.3.06.35 0 .65-.28.65-.63V8.98c0-.35-.3-.63-.65-.63zM12 13.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" fill="#fff"/></svg>
                   Apple
                 </a>
                 <a href="https://www.youtube.com/@LateNightRicky" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
