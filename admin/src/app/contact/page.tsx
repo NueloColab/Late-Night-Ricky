@@ -147,7 +147,7 @@ export default function ContactPage() {
                 </a>
               </div>
             ) : activeTab === 'booking' ? (
-              <form onSubmit={handleSubmit}>
+              <form key="booking" onSubmit={handleSubmit}>
                 <div className="mb-7">
                   <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>
                   <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
