@@ -1,7 +1,7 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
-import { getShowCards, getPartnerLogos, getClientNames, getVenueTicker } from '@/lib/cms';
+import { getShowCards, getPartnerLogos, getClientNames, getVenueTicker, getTracks } from '@/lib/cms';
 export const dynamic = 'force-dynamic';
 
 const DEFAULT_SHOWS = [
@@ -94,15 +94,23 @@ export default async function HomePage() {
   let logos: any[] = DEFAULT_LOGOS;
   let clients: string[] = DEFAULT_CLIENTS;
   let venues: string[] = DEFAULT_VENUES;
-  const tracks = DEFAULT_TRACKS; // no DB table for tracks yet
+  let tracks = DEFAULT_TRACKS;
 
   try {
-    const [dbCards, dbLogos, dbNames, dbVenues] = await Promise.all([
+    const [dbCards, dbLogos, dbNames, dbVenues, dbTracks] = await Promise.all([
       getShowCards(),
       getPartnerLogos(),
       getClientNames(),
       getVenueTicker(),
+      getTracks(),
     ]);
+
+    if (dbTracks.length > 0) {
+      tracks = dbTracks.map((t: any) => ({
+        title: t.title,
+        time: t.duration || '0:30',
+      }));
+    }
 
     if (dbCards.length > 0) {
       shows = dbCards.map((c: any) => ({

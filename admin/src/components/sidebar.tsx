@@ -8,6 +8,7 @@ const nav = [
   { href: '/admin/media', label: 'Media Library', icon: MediaIcon },
   { href: '/admin/content', label: 'Content', icon: ContentIcon },
   { href: '/admin/shows', label: 'Shows', icon: ShowsIcon },
+  { href: '/admin/tracks', label: 'Tracks', icon: MusicIcon },
   { href: '/admin/clients', label: 'Clients', icon: ClientsIcon },
   { href: '/admin/projects', label: 'Projects', icon: ProjectsIcon },
   { href: '/admin/invoices', label: 'Invoices', icon: InvoiceIcon },
@@ -100,6 +101,15 @@ function ShowsIcon({ className }: { className?: string }) {
       <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
       <path d="M2 2l7.586 7.586" />
       <circle cx="11" cy="11" r="2" />
+    </svg>
+  );
+}
+function MusicIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 18V5l12-2v13" />
+      <circle cx="6" cy="18" r="3" />
+      <circle cx="18" cy="16" r="3" />
     </svg>
   );
 }

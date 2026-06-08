@@ -4,7 +4,7 @@
  * Run with: npx tsx scripts/populate-cms.ts
  */
 import { db } from '../src/lib/db';
-import { showCards, partnerLogos, clientNames, venueTicker, siteSections } from '../src/lib/db/schema';
+import { showCards, partnerLogos, clientNames, venueTicker, siteSections, tracks } from '../src/lib/db/schema';
 import { eq } from 'drizzle-orm';
 
 async function main() {
@@ -176,6 +176,20 @@ async function main() {
       updatedAt: new Date(),
     }).returning();
     console.log(`  ✅ ${section.page}/${section.section} (id=${section.id})`);
+  }
+
+  // --- TRACKS ---
+  console.log('\nInserting tracks...');
+  const defaultTracks = [
+    { title: 'Late Night Ricky — Midnight in London', duration: '0:30', filePath: '/assets/snippet-1.mp3', order: 0, isActive: true },
+    { title: 'Late Night Ricky — Vegas Lights', duration: '0:30', filePath: '/assets/snippet-2.mp3', order: 1, isActive: true },
+    { title: 'Late Night Ricky — Ibiza Sunrise', duration: '0:30', filePath: '/assets/snippet-3.mp3', order: 2, isActive: true },
+    { title: 'Late Night Ricky — South Side', duration: '0:30', filePath: '/assets/snippet-4.mp3', order: 3, isActive: true },
+    { title: 'Late Night Ricky — After Hours', duration: '0:30', filePath: '/assets/snippet-5.mp3', order: 4, isActive: true },
+  ];
+  for (const t of defaultTracks) {
+    const [track] = await db.insert(tracks).values(t).returning();
+    console.log(`  ✅ ${track.title} (id=${track.id})`);
   }
 
   console.log('\n🎉 CMS populated successfully!');

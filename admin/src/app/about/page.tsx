@@ -1,8 +1,26 @@
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import { getSiteSections } from '@/lib/cms';
 export const dynamic = 'force-dynamic';
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  let sections: any[] = [];
+  try {
+    sections = await getSiteSections('about');
+  } catch {
+    // keep fallback
+  }
+
+  const introSection = sections.find(s => s.section === 'intro');
+  const content = introSection?.content || {};
+
+  const headline = content.headline || 'International DJ & Grammy Winning Producer';
+  const bio1 = content.bio1 || 'Late Night Ricky (Previously DJ Fricktion) is an Award-Winning DJ, Grammy Award Winner and Platinum Certified Music Producer based in London. From teaching music in prison programs to performing at some of the world\'s most exclusive celebrity events, Ricky\'s rich and diverse music career has led him to become one of the most popular and trusted faces in London\'s thriving music scene.';
+  const bio2 = content.bio2 || 'As a producer, Ricky cites his key influences as Michael Jackson, Dr. Dre, Quincy Jones, and Timbaland, merging soulful R&B, House and cinematic grooves. Having earned Grammy recognition for his work with Chris Brown on the 11:11 album, plus previous cuts with Kendrick Lamar and NAV, Ricky has now stepped into a creative chapter with a new wave of releases scheduled for release.';
+  const bio3 = content.bio3 || 'Ricky has embraced his British and South Asian Roots working with some legendary South Asian talent such as DIVINE and rising British R&B star H33RA as well as showcasing Punjabi artists such as Diljit Dosanjh, Karan Aujla and Sidhu Moosewala to mainstream audiences.';
+  const bio4 = content.bio4 || 'With many unreleased tracks in the works, plans to further expand his brand and collaborations with other artists, there is a lot more to come this year.';
+  const image = content.image || '/assets/ricky-portrait-new.jpg';
+
   return (
     <>
       <Navbar />
@@ -15,23 +33,23 @@ export default function AboutPage() {
         </div>
         <div className="grid md:grid-cols-2 min-h-[calc(100vh-200px)]">
           <div className="relative overflow-hidden min-h-[50vh]">
-            <img src="/assets/ricky-portrait-new.jpg" alt="Late Night Ricky" className="w-full h-full object-cover object-top" />
+            <img src={image} alt="Late Night Ricky" className="w-full h-full object-cover object-top" />
           </div>
           <div className="p-10 md:p-14 flex flex-col justify-center max-w-[680px]">
             <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase leading-tight tracking-[-1px] mb-10 text-[#111]">
-              International DJ &amp; Grammy Winning Producer
+              {headline}
             </h2>
             <p className="text-sm leading-relaxed text-[#333] mb-5 uppercase tracking-[1px]">
-              Late Night Ricky (Previously DJ Fricktion) is an Award-Winning DJ, Grammy Award Winner and Platinum Certified Music Producer based in London. From teaching music in prison programs to performing at some of the world&apos;s most exclusive celebrity events, Ricky&apos;s rich and diverse music career has led him to become one of the most popular and trusted faces in London&apos;s thriving music scene.
+              {bio1}
             </p>
             <p className="text-sm leading-relaxed text-[#333] mb-5 uppercase tracking-[1px]">
-              As a producer, Ricky cites his key influences as Michael Jackson, Dr. Dre, Quincy Jones, and Timbaland, merging soulful R&amp;B, House and cinematic grooves. Having earned Grammy recognition for his work with Chris Brown on the 11:11 album, plus previous cuts with Kendrick Lamar and NAV, Ricky has now stepped into a creative chapter with a new wave of releases scheduled for release.
+              {bio2}
             </p>
             <p className="text-sm leading-relaxed text-[#333] mb-5 uppercase tracking-[1px]">
-              Ricky has embraced his British and South Asian Roots working with some legendary South Asian talent such as DIVINE and rising British R&amp;B star H33RA as well as showcasing Punjabi artists such as Diljit Dosanjh, Karan Aujla and Sidhu Moosewala to mainstream audiences.
+              {bio3}
             </p>
             <p className="text-sm leading-relaxed text-[#333] mb-5 uppercase tracking-[1px]">
-              With many unreleased tracks in the works, plans to further expand his brand and collaborations with other artists, there is a lot more to come this year.
+              {bio4}
             </p>
           </div>
         </div>

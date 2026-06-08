@@ -5,6 +5,7 @@ import {
   clientNames,
   venueTicker,
   siteSections,
+  tracks,
 } from './db/schema';
 import { eq, asc } from 'drizzle-orm';
 
@@ -55,6 +56,19 @@ export async function getSiteSections(page: string) {
       .where(eq(siteSections.page, page))
       .orderBy(asc(siteSections.order));
     return sections.filter(s => s.isActive !== false);
+  } catch {
+    return [];
+  }
+}
+
+export async function getTracks() {
+  try {
+    const allTracks = await db
+      .select()
+      .from(tracks)
+      .where(eq(tracks.isActive, true))
+      .orderBy(asc(tracks.order));
+    return allTracks;
   } catch {
     return [];
   }

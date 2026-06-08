@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { showCards, partnerLogos, clientNames, venueTicker, siteSections } from '@/lib/db/schema';
+import { showCards, partnerLogos, clientNames, venueTicker, siteSections, tracks } from '@/lib/db/schema';
 
 export const dynamic = 'force-dynamic';
 
@@ -70,6 +70,19 @@ export async function POST() {
         { page: 'contact', section: 'info', order: 0, content: { bookingEmail: 'samir@wearemediahive.com', instagram: '@latenightricky' } },
       ];
       for (const s of sections) { await db.insert(siteSections).values(s); seeded++; }
+    }
+
+    // Seed tracks if none exist
+    const existingTracks = await db.select().from(tracks);
+    if (existingTracks.length === 0) {
+      const defaultTracks = [
+        { title: 'Late Night Ricky — Midnight in London', duration: '0:30', filePath: '/assets/snippet-1.mp3', order: 0, isActive: true },
+        { title: 'Late Night Ricky — Vegas Lights', duration: '0:30', filePath: '/assets/snippet-2.mp3', order: 1, isActive: true },
+        { title: 'Late Night Ricky — Ibiza Sunrise', duration: '0:30', filePath: '/assets/snippet-3.mp3', order: 2, isActive: true },
+        { title: 'Late Night Ricky — South Side', duration: '0:30', filePath: '/assets/snippet-4.mp3', order: 3, isActive: true },
+        { title: 'Late Night Ricky — After Hours', duration: '0:30', filePath: '/assets/snippet-5.mp3', order: 4, isActive: true },
+      ];
+      for (const t of defaultTracks) { await db.insert(tracks).values(t); seeded++; }
     }
 
     return NextResponse.json({ success: true, seeded, message: `Seeded ${seeded} items` });

@@ -18,6 +18,7 @@ const statusLabels: Record<string, string> = {
   new: 'New',
   reviewed: 'Reviewed',
   shortlisted: 'Shortlisted',
+  accepted: 'Accepted',
   rejected: 'Rejected',
 };
 
@@ -25,6 +26,7 @@ const statusColors: Record<string, string> = {
   new: 'bg-[#8FA8BE]',
   reviewed: 'bg-[#6B8FAB]',
   shortlisted: 'bg-[#1B3A4C]',
+  accepted: 'bg-[#2d6a2d]',
   rejected: 'bg-[#A3B5C4]',
 };
 
@@ -177,6 +179,7 @@ export default function SubmissionsPage() {
           <option value="new">New</option>
           <option value="reviewed">Reviewed</option>
           <option value="shortlisted">Shortlisted</option>
+          <option value="accepted">Accepted</option>
           <option value="rejected">Rejected</option>
         </select>
 
@@ -194,6 +197,12 @@ export default function SubmissionsPage() {
               className="px-3 py-1.5 rounded-md bg-[#1B3A4C] text-white text-xs font-medium hover:bg-[#0f2330] transition"
             >
               Shortlist
+            </button>
+            <button
+              onClick={() => bulkUpdateStatus('accepted')}
+              className="px-3 py-1.5 rounded-md bg-[#2d6a2d] text-white text-xs font-medium hover:bg-[#1f4a1f] transition"
+            >
+              Accept
             </button>
             <button
               onClick={() => bulkUpdateStatus('rejected')}
@@ -315,21 +324,44 @@ export default function SubmissionsPage() {
                     />
                   </td>
                   <td className="px-4 py-3">
-                    <button
-                      onClick={async () => {
-                        if (confirm('Delete this submission?')) {
-                          try {
-                            await fetch(`/api/submissions?ids=${s.id}`, { method: 'DELETE' });
-                            setSubmissions((prev) => prev.filter((x) => x.id !== s.id));
-                          } catch (err) {
-                            console.error('Delete failed', err);
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => updateStatus(s.id, 'accepted')}
+                        disabled={updating.has(s.id)}
+                        className="px-2 py-1 rounded-md bg-[#2d6a2d] text-white text-xs font-medium hover:bg-[#1f4a1f] transition disabled:opacity-50"
+                      >
+                        Accept
+                      </button>
+                      {s.filePath && (
+                        <a
+                          href={s.filePath}
+                          download
+                          className="w-7 h-7 rounded-md border border-[#8FA8BE] flex items-center justify-center text-[#8FA3B3] hover:bg-[#8FA8BE] hover:text-white transition"
+                          title="Download"
+                        >
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                          </svg>
+                        </a>
+                      )}
+                      <button
+                        onClick={async () => {
+                          if (confirm('Delete this submission?')) {
+                            try {
+                              await fetch(`/api/submissions?ids=${s.id}`, { method: 'DELETE' });
+                              setSubmissions((prev) => prev.filter((x) => x.id !== s.id));
+                            } catch (err) {
+                              console.error('Delete failed', err);
+                            }
                           }
-                        }
-                      }}
-                      className="text-xs text-[#8FA3B3] hover:text-white transition"
-                    >
-                      Delete
-                    </button>
+                        }}
+                        className="text-xs text-[#8FA3B3] hover:text-white transition"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

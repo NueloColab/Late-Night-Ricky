@@ -1,12 +1,37 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 export const dynamic = 'force-dynamic';
 
 export default function ContactPage() {
   const [activeTab, setActiveTab] = useState('booking');
+  const [contactInfo, setContactInfo] = useState({
+    bookingEmail: 'samir@wearemediahive.com',
+    instagram: '@latenightricky',
+    image: '/assets/ricky-hero-new.jpg',
+  });
+
+  useEffect(() => {
+    async function fetchSections() {
+      try {
+        const res = await fetch('/api/public/sections?page=contact');
+        const data = await res.json();
+        const section = data.sections?.find((s: any) => s.section === 'info');
+        if (section?.content) {
+          setContactInfo({
+            bookingEmail: section.content.bookingEmail || contactInfo.bookingEmail,
+            instagram: section.content.instagram || contactInfo.instagram,
+            image: section.content.image || contactInfo.image,
+          });
+        }
+      } catch {
+        // keep defaults
+      }
+    }
+    fetchSections();
+  }, []);
 
   return (
     <>
@@ -23,7 +48,7 @@ export default function ContactPage() {
         <div className="grid md:grid-cols-2 min-h-[calc(100vh-200px)] items-stretch">
           {/* Left Image */}
           <div className="relative overflow-hidden min-h-[50vh] md:min-h-0">
-            <img src="/assets/ricky-hero-new.jpg" alt="Late Night Ricky" className="absolute top-0 left-0 w-full h-full object-cover object-top" />
+            <img src={contactInfo.image} alt="Late Night Ricky" className="absolute top-0 left-0 w-full h-full object-cover object-top" />
           </div>
 
           {/* Right Form */}
@@ -50,7 +75,7 @@ export default function ContactPage() {
 
             {/* Booking Form */}
             <form
-              action="mailto:samir@wearemediahive.com"
+              action={`mailto:${contactInfo.bookingEmail}`}
               method="post"
               encType="text/plain"
               className={activeTab === 'booking' ? 'block' : 'hidden'}
@@ -84,7 +109,7 @@ export default function ContactPage() {
 
             {/* Private Message Form */}
             <form
-              action="mailto:samir@wearemediahive.com"
+              action={`mailto:${contactInfo.bookingEmail}`}
               method="post"
               encType="text/plain"
               className={activeTab === 'private' ? 'block' : 'hidden'}

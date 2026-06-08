@@ -146,3 +146,15 @@ export const clients = pgTable("clients", {
   totalRevenue: real("total_revenue").default(0),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
 });
+
+export const tracks = pgTable("tracks", {
+  id: serial("id").primaryKey(),
+  order: integer("order").default(0),
+  title: text("title").notNull(),
+  filePath: text("file_path"),
+  duration: text("duration").default("0:30"),
+  spotifyUrl: text("spotify_url"),
+  appleMusicUrl: text("apple_music_url"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+});
