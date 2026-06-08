@@ -377,23 +377,67 @@ export default function HomeEditor() {
     const track = tracks.find((t) => t.id === id);
     if (!track) return;
     setSavingTrack(id);
+
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      const res = await fetch('/api/upload', { method: 'POST', body: formData });
-      const data = await res.json();
-      if (!res.ok || data.error) {
-        alert(data.error || 'Upload failed');
+      // Step 1: Get Cloudinary upload signature
+      const sigRes = await fetch('/api/upload-signature?' + new URLSearchParams({
+        filename: file.name,
+      }));
+      const sigData = await sigRes.json();
+
+      if (!sigRes.ok || sigData.error) {
+        alert(sigData.error || 'Failed to get upload signature');
         setSavingTrack(null);
         return;
       }
-      // Update the track with the new file path
+
+      // Step 2: Upload directly to Cloudinary (bypasses Vercel size limits)
+      const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${sigData.cloudName}/auto/upload`;
+      const cFormData = new FormData();
+      cFormData.append('file', file);
+      cFormData.append('api_key', sigData.apiKey);
+      cFormData.append('timestamp', sigData.timestamp);
+      cFormData.append('signature', sigData.signature);
+      cFormData.append('public_id', sigData.publicId);
+      cFormData.append('folder', sigData.folder);
+      cFormData.append('overwrite', 'true');
+
+      const uploadRes = await fetch(cloudinaryUrl, { method: 'POST', body: cFormData });
+      const uploadData = await uploadRes.json();
+
+      if (!uploadRes.ok || uploadData.error) {
+        alert(uploadData.error?.message || 'Upload to Cloudinary failed');
+        setSavingTrack(null);
+        return;
+      }
+
+      // Step 3: Save the Cloudinary URL to our DB
+      const saveRes = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          url: uploadData.secure_url,
+          filename: sigData.publicId,
+          originalName: file.name,
+          type: 'audio',
+          size: file.size,
+        }),
+      });
+      const saveData = await saveRes.json();
+
+      if (!saveRes.ok || saveData.error) {
+        alert(saveData.error || 'Failed to save asset');
+        setSavingTrack(null);
+        return;
+      }
+
+      // Step 4: Update the track with the new file path
       await fetch(`/api/tracks/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: track.title,
-          filePath: data.asset.path,
+          filePath: saveData.asset.path,
           duration: track.duration,
           order: track.order,
         }),
