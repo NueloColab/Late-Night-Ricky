@@ -698,7 +698,7 @@ function HeroEditor({
             <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Background Image</label>
             <div className="relative w-full aspect-video bg-[#0A0A0A] rounded-xl overflow-hidden mb-2">
               {content.image ? (
-                <Image src={content.image} alt="Hero background" fill className="object-cover" sizes="400px" />
+                <img src={content.image} alt="Hero background" className="object-cover" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
@@ -716,7 +716,7 @@ function HeroEditor({
             <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Logo</label>
             <div className="relative w-full aspect-video bg-[#0A0A0A] rounded-xl overflow-hidden mb-2">
               {content.logo ? (
-                <Image src={content.logo} alt="Hero logo" fill className="object-contain p-4" sizes="400px" />
+                <img src={content.logo} alt="Hero logo" className="object-contain p-4" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
@@ -790,7 +790,7 @@ function VideoEditor({
           <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Poster Image</label>
           <div className="relative w-full aspect-video bg-[#0A0A0A] rounded-xl overflow-hidden mb-2 max-w-md">
             {content.poster ? (
-              <Image src={content.poster} alt="Video poster" fill className="object-cover" sizes="400px" />
+              <img src={content.poster} alt="Video poster" className="object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
@@ -951,7 +951,7 @@ function PartnersEditor({
 
               <div className="relative w-full aspect-[3/2] bg-[#0A0A0A] rounded-xl overflow-hidden">
                 {logo.imagePath ? (
-                  <Image src={logo.imagePath} alt={logo.name} fill className="object-contain p-2" sizes="200px" />
+                  <img src={logo.imagePath} alt={logo.name} className="object-contain p-2" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
@@ -1374,7 +1374,7 @@ function ShowCardsEditor({
                   <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Image</label>
                   <div className="relative w-full aspect-video bg-[#0A0A0A] rounded-xl overflow-hidden mb-2">
                     {card.imagePath ? (
-                      <Image src={card.imagePath} alt={card.title} fill className="object-cover" sizes="400px" />
+                      <img src={card.imagePath} alt={card.title} className="object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
