@@ -5,6 +5,8 @@ import AudioTrackList from '../components/AudioTrackList';
 import PartnerLogosSection from '../components/PartnerLogosSection';
 import { getShowCards, getClientNames, getVenueTicker, getTracks } from '@/lib/cms';
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 const DEFAULT_SHOWS = [
   {
