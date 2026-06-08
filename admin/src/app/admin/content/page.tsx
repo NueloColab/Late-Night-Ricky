@@ -136,6 +136,9 @@ export default function ContentPage() {
         </div>
         <p className="text-sm text-[#5B7A8E] mb-6 font-semibold uppercase tracking-[0.5px]">
           First time? Seed the database with default content from your existing pages.
+          <span className="block mt-1 text-xs text-[#6B8FAB] font-normal normal-case tracking-normal">
+            “Seed Missing Content” only fills empty tables — it will NOT overwrite anything you’ve already set up.
+          </span>
         </p>
         <div className="flex flex-wrap gap-3">
           <button
@@ -144,14 +147,14 @@ export default function ContentPage() {
             className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition disabled:opacity-50"
           >
             {seeding ? <RefreshCw size={14} className="animate-spin" /> : <Database size={14} />}
-            {seeding ? 'Seeding...' : 'Seed Missing Content'}
+            {seeding ? 'Seeding...' : 'Seed Missing Content Only'}
           </button>
           <button
             onClick={() => handleSeed(true)}
             disabled={seeding}
             className="inline-flex items-center gap-2 px-7 py-3 border-2 border-red-300 rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-red-600 hover:bg-red-50 transition disabled:opacity-50"
           >
-            Force Reset All Content
+            ⚠️ Force Reset All Content
           </button>
         </div>
         {seedResult && (

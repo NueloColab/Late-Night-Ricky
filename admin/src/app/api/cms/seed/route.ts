@@ -1,36 +1,59 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { count } from 'drizzle-orm';
 import { showCards, partnerLogos, clientNames, venueTicker, siteSections } from '@/lib/db/schema';
 
 export const dynamic = 'force-dynamic';
 
-export async function POST() {
+export async function POST(request: Request) {
+  let force = false;
+  try {
+    const body = await request.json();
+    force = body.force === true;
+  } catch {
+    // no body, default false
+  }
+
   let seeded = 0;
   const errors: string[] = [];
 
-  // Helper to safely delete and insert
+  // Helper: only seed if table is empty (or force=true)
   async function safeSeed(
     label: string,
     table: any,
-    data: any[]
+    data: any[],
+    checkEmpty = true
   ) {
     try {
-      await db.delete(table);
-      for (const item of data) {
-        await db.insert(table).values(item);
-        seeded++;
+      if (checkEmpty && !force) {
+        const existing = await db.select({ count: count() }).from(table);
+        if (existing[0]?.count > 0) {
+          return;
+        }
       }
-      return true;
+      if (!force) {
+        // Insert only if table is empty
+        for (const item of data) {
+          await db.insert(table).values(item);
+          seeded++;
+        }
+      } else {
+        // Force mode: delete then insert
+        await db.delete(table);
+        for (const item of data) {
+          await db.insert(table).values(item);
+          seeded++;
+        }
+      }
     } catch (err: any) {
       errors.push(`${label}: ${err.message || String(err)}`);
-      return false;
     }
   }
 
   // --- SHOW CARDS ---
   await safeSeed('Show Cards', showCards, [
     { title: 'Sidemen vs YouTube All Stars', venue: 'Ministry of Sound', location: 'London', season: 'Spring / Summer 2025', description: "One of London's most iconic venues, packed to capacity.", href: '/show-sidemen', imagePath: '/assets/ricky-hero-new.jpg', order: 0, isActive: true },
-    { title: 'Gin & Juice Launch', venue: 'Ibiza Rocks', location: 'Ibiza', season: 'Spring / Summer 2024', description: 'Sunset sets and poolside energy in the White Isle.', href: '/show-gin-juice', imagePath: '/assets/ricky-radio-new.jpg', order: 1, isActive: true },
+    { title: 'Gin \u0026 Juice Launch', venue: 'Ibiza Rocks', location: 'Ibiza', season: 'Spring / Summer 2024', description: 'Sunset sets and poolside energy in the White Isle.', href: '/show-gin-juice', imagePath: '/assets/ricky-radio-new.jpg', order: 1, isActive: true },
     { title: 'Abu Dhabi Grand Prix', venue: 'Skyline Festival', location: 'International', season: 'Autumn / Winter 2024', description: 'Major festival appearance under the desert stars.', href: '/show-abu-dhabi', imagePath: '/assets/press-bg2.jpg', order: 2, isActive: true },
     { title: 'Royal Wedding of the Year', venue: 'Private Events', location: 'Worldwide', season: 'Spring / Summer 2023', description: 'Exclusive corporate events and private celebrations.', href: '/show-royal-wedding', imagePath: '/assets/ricky-fricktion.jpg', order: 3, isActive: true },
   ]);
@@ -54,7 +77,7 @@ export async function POST() {
     { name: '50 Cent', order: 0, isActive: true },
     { name: 'Bruno Mars', order: 1, isActive: true },
     { name: 'Chris Brown', order: 2, isActive: true },
-    { name: 'Dr. Dre & Jimmy Iovine', order: 3, isActive: true },
+    { name: 'Dr. Dre \u0026 Jimmy Iovine', order: 3, isActive: true },
     { name: 'Drake', order: 4, isActive: true },
     { name: 'Future', order: 5, isActive: true },
     { name: 'Jason Momoa', order: 6, isActive: true },
@@ -75,34 +98,40 @@ export async function POST() {
 
   // --- VENUE TICKER ---
   try {
-    await db.delete(venueTicker);
-    await db.insert(venueTicker).values({
-      venues: ['LIV Miami', 'WALL Miami', 'TAPE London', 'HAKKASAN Las Vegas', 'MOVIDA Dubai', "JIMMY'Z Monte Carlo", 'MINISTRY OF SOUND London', '1 OAK New York', 'BYBLOS Milan', 'PACHA Ibiza', 'ARMANI Dubai', 'MANDALAY BAY Las Vegas', 'TEMPLE San Francisco', 'POPPY Los Angeles', 'CIRQUE LE SOIR London', 'HIGHLIGHT ROOM Los Angeles', "TEDDY'S @ ROOSEVELT Los Angeles", 'DELILAH Los Angeles', 'GIBSON Frankfurt', 'LIO Ibiza', 'STUDIO PARIS Chicago', 'PREMIER @ BORGATE Atlantic City', 'PARQ San Diego', 'BOOTSY BELLOWS Los Angeles', 'WARWICK Los Angeles', 'LAVO New York', 'TAO New York', 'UP & DOWN New York', 'LIBERTINE London', 'SCANDAL London', 'TOY ROOM Dubai', '1 OAK Dubai', 'TAO Las Vegas', 'BAOLI Cannes', 'SHOKO Barcelona', 'LASTA Serbia', 'REX ROOMS London', "HARRIET'S Los Angeles", 'VIP ROOM St. Tropez', 'BON BONNIERE Mykonos', 'DRAMA London', 'DEAR DARLING London', 'TRAMP London', 'SPIRITO Brussels', 'CUCKOO CLUB London', 'RAFFLES London', 'SUBOIS Montreal', 'P1 Munich', "ZELO'S Monte Carlo", 'WIRELESS FESTIVAL UK', 'READING & LEEDS FESTIVAL UK'],
-    });
-    seeded++;
+    const existing = await db.select({ count: count() }).from(venueTicker);
+    if (existing[0]?.count === 0 || force) {
+      if (force) await db.delete(venueTicker);
+      await db.insert(venueTicker).values({
+        venues: ['LIV Miami', 'WALL Miami', 'TAPE London', 'HAKKASAN Las Vegas', 'MOVIDA Dubai', "JIMMY'Z Monte Carlo", 'MINISTRY OF SOUND London', '1 OAK New York', 'BYBLOS Milan', 'PACHA Ibiza', 'ARMANI Dubai', 'MANDALAY BAY Las Vegas', 'TEMPLE San Francisco', 'POPPY Los Angeles', 'CIRQUE LE SOIR London', 'HIGHLIGHT ROOM Los Angeles', "TEDDY'S @ ROOSEVELT Los Angeles", 'DELILAH Los Angeles', 'GIBSON Frankfurt', 'LIO Ibiza', 'STUDIO PARIS Chicago', 'PREMIER @ BORGATE Atlantic City', 'PARQ San Diego', 'BOOTSY BELLOWS Los Angeles', 'WARWICK Los Angeles', 'LAVO New York', 'TAO New York', 'UP \u0026 DOWN New York', 'LIBERTINE London', 'SCANDAL London', 'TOY ROOM Dubai', '1 OAK Dubai', 'TAO Las Vegas', 'BAOLI Cannes', 'SHOKO Barcelona', 'LASTA Serbia', 'REX ROOMS London', "HARRIET'S Los Angeles", 'VIP ROOM St. Tropez', 'BON BONNIERE Mykonos', 'DRAMA London', 'DEAR DARLING London', 'TRAMP London', 'SPIRITO Brussels', 'CUCKOO CLUB London', 'RAFFLES London', 'SUBOIS Montreal', 'P1 Munich', "ZELO'S Monte Carlo", 'WIRELESS FESTIVAL UK', 'READING \u0026 LEEDS FESTIVAL UK'],
+      });
+      seeded++;
+    }
   } catch (err: any) {
     errors.push(`Venue Ticker: ${err.message || String(err)}`);
   }
 
   // --- SITE SECTIONS ---
   try {
-    await db.delete(siteSections);
-    const sections = [
-      { page: 'home', section: 'hero', order: 0, content: { title: 'Late Night Ricky', subtitle: 'International DJ & Grammy Winning Producer', image: '/assets/ricky-hero-v2.jpg', logo: '/assets/ricky-logo.png', overlay: true, grayscale: true, backgroundSize: 'cover', backgroundPosition: '70% center', backgroundColor: '#c8cdd2' }, isActive: true },
-      { page: 'home', section: 'video', order: 1, content: { poster: '/assets/video-poster-desktop.jpg', src: '/assets/video-desktop.mp4' }, isActive: true },
-      { page: 'home', section: 'reach', order: 2, content: { headline: 'International DJ & Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.', subtext: '150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.', grammyBadge: '/assets/grammy-gold-v2.png?v=2' }, isActive: true },
-      { page: 'home', section: 'shows', order: 3, content: { title: 'Recent Shows & Stories' }, isActive: true },
-      { page: 'home', section: 'partners', order: 4, content: { quote: 'The best DJ I\'ve heard.', attribution: 'Cristiano Ronaldo', description: 'Trusted by A-list artists, global brands, and sold-out crowds worldwide.', pressPack: '/assets/press-pack.pdf' }, isActive: true },
-      { page: 'home', section: 'radio', order: 5, content: { label: 'Music \u0026 Radio', headline: 'As Heard On', description: 'Preview snippets of the latest releases. Click play to hear 30-second previews, then stream or download the full tracks on Spotify, Apple Music and YouTube.', image: '/assets/ricky-radio-new.jpg', spotifyUrl: 'https://open.spotify.com/artist/3lOtUgicoyDn2qKe5zc3dl', appleMusicUrl: 'https://music.apple.com/gb/artist/late-night-ricky/1759491226', youtubeUrl: 'https://www.youtube.com/@LateNightRicky' }, isActive: true },
-      { page: 'home', section: 'clients', order: 6, content: { title: 'Trusted By The Best' }, isActive: true },
-      { page: 'home', section: 'share_music', order: 7, content: { headline: 'Share Your Music', description: 'I\'m always on the lookout for new music to play, so send me your tracks' }, isActive: true },
-      { page: 'home', section: 'reach_out', order: 8, content: { image: '/assets/ricky-hero-new.jpg', headline: "Let's collaborate", signature: 'Late Night Ricky', cta: 'Get in touch' }, isActive: true },
-      { page: 'home', section: 'contact', order: 9, content: { bookingEmail: 'samir@wearemediahive.com', instagram: '@latenightricky' }, isActive: true },
-      { page: 'about', section: 'intro', order: 0, content: { headline: 'International DJ & Grammy Winning Producer' }, isActive: true },
-    ];
-    for (const s of sections) {
-      await db.insert(siteSections).values(s);
-      seeded++;
+    const existing = await db.select({ count: count() }).from(siteSections);
+    if (existing[0]?.count === 0 || force) {
+      if (force) await db.delete(siteSections);
+      const sections = [
+        { page: 'home', section: 'hero', order: 0, content: { title: 'Late Night Ricky', subtitle: 'International DJ \u0026 Grammy Winning Producer', image: '/assets/ricky-hero-v2.jpg', logo: '/assets/ricky-logo.png', overlay: true, grayscale: true, backgroundSize: 'cover', backgroundPosition: '70% center', backgroundColor: '#c8cdd2' }, isActive: true },
+        { page: 'home', section: 'video', order: 1, content: { poster: '/assets/video-poster-desktop.jpg', src: '/assets/video-desktop.mp4' }, isActive: true },
+        { page: 'home', section: 'reach', order: 2, content: { headline: 'International DJ \u0026 Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.', subtext: '150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.', grammyBadge: '/assets/grammy-gold-v2.png?v=2' }, isActive: true },
+        { page: 'home', section: 'shows', order: 3, content: { title: 'Recent Shows \u0026 Stories' }, isActive: true },
+        { page: 'home', section: 'partners', order: 4, content: { quote: 'The best DJ I\'ve heard.', attribution: 'Cristiano Ronaldo', description: 'Trusted by A-list artists, global brands, and sold-out crowds worldwide.', pressPack: '/assets/press-pack.pdf' }, isActive: true },
+        { page: 'home', section: 'radio', order: 5, content: { label: 'Music \u0026 Radio', headline: 'As Heard On', description: 'Preview snippets of the latest releases. Click play to hear 30-second previews, then stream or download the full tracks on Spotify, Apple Music and YouTube.', image: '/assets/ricky-radio-new.jpg', spotifyUrl: 'https://open.spotify.com/artist/3lOtUgicoyDn2qKe5zc3dl', appleMusicUrl: 'https://music.apple.com/gb/artist/late-night-ricky/1759491226', youtubeUrl: 'https://www.youtube.com/@LateNightRicky' }, isActive: true },
+        { page: 'home', section: 'clients', order: 6, content: { title: 'Trusted By The Best' }, isActive: true },
+        { page: 'home', section: 'share_music', order: 7, content: { headline: 'Share Your Music', description: 'I\'m always on the lookout for new music to play, so send me your tracks' }, isActive: true },
+        { page: 'home', section: 'reach_out', order: 8, content: { image: '/assets/ricky-hero-new.jpg', headline: "Let's collaborate", signature: 'Late Night Ricky', cta: 'Get in touch' }, isActive: true },
+        { page: 'home', section: 'contact', order: 9, content: { bookingEmail: 'samir@wearemediahive.com', instagram: '@latenightricky' }, isActive: true },
+        { page: 'about', section: 'intro', order: 0, content: { headline: 'International DJ \u0026 Grammy Winning Producer' }, isActive: true },
+      ];
+      for (const s of sections) {
+        await db.insert(siteSections).values(s);
+        seeded++;
+      }
     }
   } catch (err: any) {
     errors.push(`Site Sections: ${err.message || String(err)}`);
@@ -111,19 +140,22 @@ export async function POST() {
   // Try to seed carousel images
   try {
     const { carouselImages } = await import('@/lib/db/schema');
-    await db.delete(carouselImages);
-    const defaultCarousel = [
-      { imagePath: '/assets/carousel-1.jpg', alt: 'Arena DJ', order: 0, page: 'home', isActive: true },
-      { imagePath: '/assets/carousel-2.jpg', alt: 'Club shot with 50 Cent', order: 1, page: 'home', isActive: true },
-      { imagePath: '/assets/carousel-3.jpg', alt: 'Red-lit arena', order: 2, page: 'home', isActive: true },
-      { imagePath: '/assets/ricky-hero-new.jpg', alt: 'Ricky portrait', order: 3, page: 'home', isActive: true },
-      { imagePath: '/assets/ricky-radio-new.jpg', alt: 'Ricky radio', order: 4, page: 'home', isActive: true },
-      { imagePath: '/assets/press-bg2.jpg', alt: 'Press', order: 5, page: 'home', isActive: true },
-      { imagePath: '/assets/ricky-fricktion.jpg', alt: 'Fricktion', order: 6, page: 'home', isActive: true },
-    ];
-    for (const c of defaultCarousel) {
-      await db.insert(carouselImages).values(c);
-      seeded++;
+    const existing = await db.select({ count: count() }).from(carouselImages);
+    if (existing[0]?.count === 0 || force) {
+      if (force) await db.delete(carouselImages);
+      const defaultCarousel = [
+        { imagePath: '/assets/carousel-1.jpg', alt: 'Arena DJ', order: 0, page: 'home', isActive: true },
+        { imagePath: '/assets/carousel-2.jpg', alt: 'Club shot with 50 Cent', order: 1, page: 'home', isActive: true },
+        { imagePath: '/assets/carousel-3.jpg', alt: 'Red-lit arena', order: 2, page: 'home', isActive: true },
+        { imagePath: '/assets/ricky-hero-new.jpg', alt: 'Ricky portrait', order: 3, page: 'home', isActive: true },
+        { imagePath: '/assets/ricky-radio-new.jpg', alt: 'Ricky radio', order: 4, page: 'home', isActive: true },
+        { imagePath: '/assets/press-bg2.jpg', alt: 'Press', order: 5, page: 'home', isActive: true },
+        { imagePath: '/assets/ricky-fricktion.jpg', alt: 'Fricktion', order: 6, page: 'home', isActive: true },
+      ];
+      for (const c of defaultCarousel) {
+        await db.insert(carouselImages).values(c);
+        seeded++;
+      }
     }
   } catch {
     // Carousel table may not exist yet
@@ -132,17 +164,20 @@ export async function POST() {
   // Try to seed tracks if table exists, but don't fail if it doesn't
   try {
     const { tracks } = await import('@/lib/db/schema');
-    await db.delete(tracks);
-    const defaultTracks = [
-      { title: 'Late Night Ricky — Midnight in London', duration: '0:30', filePath: '/assets/snippet-1.mp3', order: 0, isActive: true },
-      { title: 'Late Night Ricky — Vegas Lights', duration: '0:30', filePath: '/assets/snippet-2.mp3', order: 1, isActive: true },
-      { title: 'Late Night Ricky — Ibiza Sunrise', duration: '0:30', filePath: '/assets/snippet-3.mp3', order: 2, isActive: true },
-      { title: 'Late Night Ricky — South Side', duration: '0:30', filePath: '/assets/snippet-4.mp3', order: 3, isActive: true },
-      { title: 'Late Night Ricky — After Hours', duration: '0:30', filePath: '/assets/snippet-5.mp3', order: 4, isActive: true },
-    ];
-    for (const t of defaultTracks) {
-      await db.insert(tracks).values(t);
-      seeded++;
+    const existing = await db.select({ count: count() }).from(tracks);
+    if (existing[0]?.count === 0 || force) {
+      if (force) await db.delete(tracks);
+      const defaultTracks = [
+        { title: 'Late Night Ricky — Midnight in London', duration: '0:30', filePath: '/assets/snippet-1.mp3', order: 0, isActive: true },
+        { title: 'Late Night Ricky — Vegas Lights', duration: '0:30', filePath: '/assets/snippet-2.mp3', order: 1, isActive: true },
+        { title: 'Late Night Ricky — Ibiza Sunrise', duration: '0:30', filePath: '/assets/snippet-3.mp3', order: 2, isActive: true },
+        { title: 'Late Night Ricky — South Side', duration: '0:30', filePath: '/assets/snippet-4.mp3', order: 3, isActive: true },
+        { title: 'Late Night Ricky — After Hours', duration: '0:30', filePath: '/assets/snippet-5.mp3', order: 4, isActive: true },
+      ];
+      for (const t of defaultTracks) {
+        await db.insert(tracks).values(t);
+        seeded++;
+      }
     }
   } catch {
     // Tracks table may not exist yet — skip silently
