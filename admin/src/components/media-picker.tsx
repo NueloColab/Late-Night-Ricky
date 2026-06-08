@@ -25,6 +25,7 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  const [blobStatus, setBlobStatus] = useState<{ configured?: boolean; error?: string } | null>(null);
   const [search, setSearch] = useState('');
 
   const fetchAssets = useCallback(async () => {
@@ -33,8 +34,6 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
       if (res.ok) {
         const data = await res.json();
         setAssets(data.assets || []);
-      } else {
-        console.error('Failed to fetch assets');
       }
     } catch (e) {
       console.error('Assets fetch error:', e);
@@ -42,13 +41,26 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
     setLoading(false);
   }, []);
 
+  const checkBlob = useCallback(async () => {
+    try {
+      const res = await fetch('/api/diagnostics');
+      if (res.ok) {
+        const data = await res.json();
+        setBlobStatus(data.blob);
+      }
+    } catch {
+      // silently fail
+    }
+  }, []);
+
   useEffect(() => {
     if (open) {
       setLoading(true);
       setUploadError('');
       fetchAssets();
+      checkBlob();
     }
-  }, [open, fetchAssets]);
+  }, [open, fetchAssets, checkBlob]);
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -111,11 +123,18 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
           />
           <label className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors ${
             uploading ? 'bg-[#6B8FAB] text-white' : 'bg-[#1B3A4C] text-white hover:bg-[#2a4f66]'
-          }`}>
+          }`}
+          >
             {uploading ? 'Uploading...' : 'Upload New'}
             <input type="file" className="hidden" onChange={handleUpload} disabled={uploading} accept={filterType === 'image' ? 'image/*' : filterType === 'video' ? 'video/*' : undefined} />
           </label>
         </div>
+
+        {blobStatus && !blobStatus.configured && (
+          <div className="px-4 py-3 bg-amber-50 border-b border-amber-100">
+            <p className="text-sm text-amber-700 font-medium">⚠ Storage not configured: {blobStatus.error}</p>
+          </div>
+        )}
 
         {uploadError && (
           <div className="px-4 py-3 bg-red-50 border-b border-red-100">
