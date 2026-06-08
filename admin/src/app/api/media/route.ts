@@ -25,7 +25,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    const MAX_SIZE = 4.5 * 1024 * 1024;
+    const MAX_SIZE = 10 * 1024 * 1024; // 10MB, Cloudinary handles larger files
     if (file.size > MAX_SIZE) {
       return NextResponse.json({ error: `File too large. Max ${(MAX_SIZE / 1024 / 1024).toFixed(1)}MB` }, { status: 413 });
     }

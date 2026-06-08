@@ -15,8 +15,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
-    // Check file size (warn if > 4MB for Vercel hobby plan)
-    const MAX_SIZE = 4.5 * 1024 * 1024; // 4.5MB
+    // Cloudinary handles larger files, 10MB limit
+    const MAX_SIZE = 10 * 1024 * 1024; // 10MB
     if (file.size > MAX_SIZE) {
       return NextResponse.json({ error: `File too large. Max size is ${(MAX_SIZE / 1024 / 1024).toFixed(1)}MB` }, { status: 413 });
     }

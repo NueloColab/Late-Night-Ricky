@@ -9,7 +9,7 @@ export async function GET() {
     blob: status,
     env: {
       nodeEnv: process.env.NODE_ENV,
-      hasBlobToken: !!process.env.BLOB_READ_WRITE_TOKEN,
+      storage: 'cloudinary',
     },
   });
 }
