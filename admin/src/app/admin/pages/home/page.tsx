@@ -957,6 +957,24 @@ function HeroEditor({
             <option value="center 75%">75% Bottom (focus bottom)</option>
           </select>
         </div>
+        <div>
+          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Background Color (for gaps)</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="color"
+              value={content.backgroundColor || '#c8cdd2'}
+              onChange={(e) => onChange('backgroundColor', e.target.value)}
+              className="w-10 h-10 rounded-lg border border-[#A3B5C4]/30 cursor-pointer"
+            />
+            <input
+              type="text"
+              value={content.backgroundColor || '#c8cdd2'}
+              onChange={(e) => onChange('backgroundColor', e.target.value)}
+              className="flex-1 px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+            />
+          </div>
+          <p className="text-xs text-[#6B8FAB] mt-1">Pick a color that matches the photo background for seamless edges</p>
+        </div>
       </div>
 
       <div className="flex justify-end">

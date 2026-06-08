@@ -104,6 +104,7 @@ export default async function HomePage() {
   let heroGrayscale = true;
   let heroBackgroundSize = 'cover';
   let heroBackgroundPosition = '70% center';
+  let heroBackgroundColor = '#c8cdd2';
   let videoPoster = '/assets/video-poster-desktop.jpg';
   let videoSrc = '/assets/video-desktop.mp4';
   let reachHeadline = 'International DJ \u0026 Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.';
@@ -150,6 +151,7 @@ export default async function HomePage() {
         if (c.grayscale !== undefined) heroGrayscale = c.grayscale;
         if (c.backgroundSize) heroBackgroundSize = c.backgroundSize;
         if (c.backgroundPosition) heroBackgroundPosition = c.backgroundPosition;
+        if (c.backgroundColor) heroBackgroundColor = c.backgroundColor;
       }
       const videoSection = dbSections.find((s: any) => s.section === 'video');
       if (videoSection?.content) {
@@ -251,7 +253,7 @@ export default async function HomePage() {
 
       {/* Hero */}
       <section className="relative min-h-[100dvh] flex flex-col items-start justify-center px-8 md:px-14 pb-14 pt-20">
-        <div className="fixed inset-0 -z-10">
+        <div className="fixed inset-0 -z-10" style={{ backgroundColor: heroBackgroundColor }}>
           <div
             className="absolute inset-0 bg-cover bg-no-repeat"
             style={{
