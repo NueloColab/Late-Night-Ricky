@@ -922,15 +922,17 @@ function HeroEditor({
             onChange={(e) => onChange('backgroundSize', e.target.value)}
             className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
           >
-            <option value="cover">Cover (default)</option>
-            <option value="contain">Contain (fit whole image)</option>
-            <option value="100%">100% (actual size)</option>
-            <option value="120%">120% (slight zoom)</option>
+            <option value="cover">Cover (fill screen, may crop)</option>
+            <option value="contain">Contain (show full image, white bars)</option>
+            <option value="auto 100%">Auto Height (show full height, crop sides)</option>
+            <option value="100% auto">Auto Width (show full width, crop top/bottom)</option>
+            <option value="100%">100% (actual size, may leave gaps)</option>
+            <option value="120%">120% (slight zoom in)</option>
             <option value="150%">150% (zoom in)</option>
             <option value="200%">200% (zoom in more)</option>
             <option value="250%">250% (zoom in max)</option>
-            <option value="80%">80% (zoom out)</option>
-            <option value="50%">50% (zoom out more)</option>
+            <option value="80%">80% (zoom out, leaves gaps)</option>
+            <option value="50%">50% (zoom out more, leaves gaps)</option>
           </select>
         </div>
         <div>
