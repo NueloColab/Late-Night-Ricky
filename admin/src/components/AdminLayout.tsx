@@ -32,7 +32,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <header className="h-16 border-b border-[#A3B5C4]/30 flex items-center px-6 sticky top-0 z-30 bg-[#E3E8ED]/95 backdrop-blur-sm">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="lg:hidden mr-4 p-2 hover:bg-[#1B3A4C]/10 rounded transition"
+            className="mr-4 p-2 hover:bg-[#1B3A4C]/10 rounded transition"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M3 12h18M3 6h18M3 18h18" />
