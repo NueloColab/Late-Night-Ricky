@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import Image from 'next/image';
-import MediaPicker from '@/components/media-picker';
 
 interface SectionData {
   id: number;
@@ -27,7 +25,7 @@ const DEFAULT_PAGES = ['home', 'about', 'showreel', 'contact'];
 export default function SeoEditor() {
   const [sections, setSections] = useState<SectionData[]>([]);
   const [saving, setSaving] = useState(false);
-  const [mediaOpen, setMediaOpen] = useState(false);
+  const [savedMsg, setSavedMsg] = useState('');
 
   const fetchSections = useCallback(async () => {
     const res = await fetch('/api/sections?page=global');
@@ -63,11 +61,15 @@ export default function SeoEditor() {
   async function saveSeo(update: { content?: any; images?: any }) {
     if (!seoSection) return;
     setSaving(true);
-    await fetch(`/api/sections/${seoSection.id}`, {
+    const res = await fetch(`/api/sections/${seoSection.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(update),
     });
+    if (res.ok) {
+      setSavedMsg('Saved');
+      setTimeout(() => setSavedMsg(''), 3000);
+    }
     await fetchSections();
     setSaving(false);
   }
@@ -82,63 +84,88 @@ export default function SeoEditor() {
   }
 
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-white tracking-tight">SEO & Meta</h1>
-        <p className="text-[#8FA3B3] mt-1 text-sm font-medium tracking-wide uppercase">Page titles, descriptions, and favicon</p>
+    <div className="max-w-7xl mx-auto relative">
+      {savedMsg && (
+        <div className="fixed top-4 right-4 z-50 bg-emerald-600 text-white px-5 py-3 rounded-xl text-sm font-semibold shadow-lg animate-fade-in">
+          {savedMsg}
+        </div>
+      )}
+
+      <div className="mb-12">
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Global Settings</p>
+        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">SEO &amp; Meta</h1>
+        <p className="text-sm text-[#5B7A8E] mt-4 font-semibold uppercase tracking-[0.5px]">Page titles, descriptions, and favicon</p>
       </div>
 
-      <div className="max-w-2xl space-y-6">
+      <div className="max-w-3xl space-y-6">
         {/* Favicon */}
-        <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
-          <h3 className="font-serif text-lg font-semibold text-white mb-1">Favicon</h3>
-          <p className="text-xs text-[#8FA3B3] mb-4">The icon shown in browser tabs</p>
+        <div className="bg-white border border-[#A3B5C4]/30 p-6">
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Branding</p>
+          <p className="text-sm text-[#5B7A8E] mb-4 font-semibold uppercase tracking-[0.5px]">The icon shown in browser tabs</p>
 
-          <div className="relative w-16 h-16 bg-[#0A0A0A] rounded-xl overflow-hidden mb-4">
+          <div className="relative w-16 h-16 bg-[#E3E8ED] rounded-xl overflow-hidden mb-4 border border-[#A3B5C4]/30">
             {faviconPath ? (
-              <Image src={faviconPath} alt="Favicon" fill className="object-contain p-1" sizes="64px" />
+              <img src={faviconPath} alt="Favicon" className="object-contain p-1 w-full h-full" />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <ImageIcon className="w-6 h-6 text-[#8FA3B3]" />
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A3B5C4" strokeWidth="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" />
+                </svg>
               </div>
             )}
           </div>
-          <button
-            onClick={() => setMediaOpen(true)}
-            className="px-4 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:bg-[#2a4f66] transition-colors"
-          >
-            {faviconPath ? 'Replace Favicon' : 'Upload Favicon'}
-          </button>
+          <div className="flex items-center gap-3">
+            <input
+              type="text"
+              value={faviconPath || ''}
+              onChange={(e) => {
+                setSections((prev) =>
+                  prev.map((s) =>
+                    s.section === 'seo' ? { ...s, images: [e.target.value] } : s
+                  )
+                );
+              }}
+              placeholder="/assets/favicon.png"
+              className="flex-1 px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+            />
+            <button
+              onClick={() => faviconPath && saveSeo({ images: [faviconPath] })}
+              disabled={saving || !faviconPath}
+              className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#111] hover:text-white transition disabled:opacity-50"
+            >
+              {saving ? 'Saving...' : 'Save Favicon'}
+            </button>
+          </div>
         </div>
 
         {/* Page Meta */}
-        <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
-          <h3 className="font-serif text-lg font-semibold text-white mb-1">Page Meta</h3>
-          <p className="text-xs text-[#8FA3B3] mb-6">Titles and descriptions for each page</p>
+        <div className="bg-white border border-[#A3B5C4]/30 p-6">
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">SEO</p>
+          <p className="text-sm text-[#5B7A8E] mb-6 font-semibold uppercase tracking-[0.5px]">Titles and descriptions for each page</p>
 
           <div className="space-y-6">
             {merged.map((meta) => (
-              <div key={meta.page} className="border border-[#2A2E36] rounded-xl p-4">
-                <p className="text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-3">{meta.page}</p>
+              <div key={meta.page} className="border border-[#A3B5C4]/30 rounded-xl p-4 bg-white">
+                <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">{meta.page}</p>
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Title</label>
+                    <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Title</label>
                     <input
                       type="text"
                       value={meta.title}
                       onChange={(e) => updateMeta(meta.page, 'title', e.target.value)}
                       placeholder="Page title"
-                      className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                      className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Meta Description</label>
+                    <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Meta Description</label>
                     <textarea
                       value={meta.description}
                       onChange={(e) => updateMeta(meta.page, 'description', e.target.value)}
                       placeholder="Short description for search engines"
                       rows={3}
-                      className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 resize-y"
+                      className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-y"
                     />
                   </div>
                 </div>
@@ -150,32 +177,13 @@ export default function SeoEditor() {
             <button
               onClick={() => saveSeo({ content: merged })}
               disabled={saving}
-              className="px-6 py-3 bg-[#1B3A4C] text-white rounded-xl font-semibold text-sm uppercase tracking-widest hover:bg-[#2a4f66] transition-colors disabled:opacity-50"
+              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save Meta'}
             </button>
           </div>
         </div>
       </div>
-
-      <MediaPicker
-        open={mediaOpen}
-        onClose={() => setMediaOpen(false)}
-        onSelect={(path) => {
-          saveSeo({ images: [path] });
-        }}
-        filterType="image"
-      />
     </div>
-  );
-}
-
-function ImageIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="3" width="18" height="18" rx="2" />
-      <circle cx="8.5" cy="8.5" r="1.5" />
-      <path d="M21 15l-5-5L5 21" />
-    </svg>
   );
 }

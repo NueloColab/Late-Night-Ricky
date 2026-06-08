@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import SectionEditor from '@/components/section-editor';
 
 interface SectionData {
   id: number;
@@ -22,8 +21,10 @@ export default function ContactEditor() {
   const [selectedSection, setSelectedSection] = useState<string | null>('email');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [savedMsg, setSavedMsg] = useState('');
 
   const fetchSections = useCallback(async () => {
+    setLoading(true);
     const res = await fetch('/api/sections?page=contact');
     if (res.ok) {
       const data = await res.json();
@@ -36,9 +37,6 @@ export default function ContactEditor() {
     fetchSections();
   }, [fetchSections]);
 
-  const activeSection = sections.find((s) => s.section === selectedSection) || null;
-
-  // Simple editors for email, instagram, form toggle
   const emailSection = sections.find((s) => s.section === 'email');
   const instagramSection = sections.find((s) => s.section === 'instagram');
   const formSection = sections.find((s) => s.section === 'form');
@@ -57,60 +55,75 @@ export default function ContactEditor() {
     const s = sections.find((sec) => sec.section === sectionName);
     if (!s) return;
     setSaving(true);
-    await fetch(`/api/sections/${s.id}`, {
+    const res = await fetch(`/api/sections/${s.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(isToggle ? { isActive: value } : { content: [value] }),
     });
+    if (res.ok) {
+      setSavedMsg('Saved');
+      setTimeout(() => setSavedMsg(''), 3000);
+    }
     await fetchSections();
     setSaving(false);
   }
 
+  const sectionList = CONTACT_SECTIONS.map((name) => {
+    const s = sections.find((sec) => sec.section === name);
+    const label = name === 'email' ? 'Email' : name === 'instagram' ? 'Instagram' : 'Contact Form';
+    return { name, label, exists: !!s, id: s?.id, isActive: s?.isActive ?? true };
+  });
+
   return (
-    <div>
-      <div className="flex items-center justify-between mb-8">
+    <div className="max-w-7xl mx-auto relative">
+      {/* Saved toast */}
+      {savedMsg && (
+        <div className="fixed top-4 right-4 z-50 bg-emerald-600 text-white px-5 py-3 rounded-xl text-sm font-semibold shadow-lg animate-fade-in">
+          {savedMsg}
+        </div>
+      )}
+
+      {/* Header */}
+      <div className="flex items-center justify-between mb-12">
         <div>
-          <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-white tracking-tight">Contact Page Editor</h1>
-          <p className="text-[#8FA3B3] mt-1 text-sm font-medium tracking-wide uppercase">Edit email, Instagram, and form settings</p>
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Page Editor</p>
+          <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Contact Page</h1>
+          <p className="text-sm text-[#5B7A8E] mt-4 font-semibold uppercase tracking-[0.5px]">Edit email, Instagram, and form settings</p>
         </div>
         <a
           href="/contact"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-5 py-2.5 border-2 border-[#1B3A4C] text-white rounded-xl text-sm font-semibold uppercase tracking-wide hover:bg-[#1B3A4C] hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition"
         >
           View on Site →
         </a>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-8">
         {/* Section list */}
         <div className="lg:w-64 flex-shrink-0">
-          <div className="bg-[#111318] rounded-2xl border border-[#8FA8BE]/20 overflow-hidden">
-            <div className="px-5 py-4 border-b border-[#2A2E36]">
-              <h2 className="font-serif text-sm font-semibold text-white uppercase tracking-widest">Sections</h2>
+          <div className="bg-white border border-[#A3B5C4]/30 overflow-hidden">
+            <div className="px-5 py-4 border-b border-[#A3B5C4]/30">
+              <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold">Sections</p>
             </div>
-            <div className="divide-y divide-[#2A2E36]">
-              {CONTACT_SECTIONS.map((name) => {
-                const s = sections.find((sec) => sec.section === name);
-                const label = name === 'email' ? 'Email' : name === 'instagram' ? 'Instagram' : 'Contact Form';
-                return (
-                  <button
-                    key={name}
-                    onClick={() => setSelectedSection(name)}
-                    className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${
-                      selectedSection === name
-                        ? 'bg-[#1B3A4C] text-white'
-                        : 'text-white hover:bg-[#0A0A0A]'
-                    }`}
-                  >
-                    <span>{label}</span>
-                    {!s && (
-                      <span className="text-[10px] uppercase tracking-wider opacity-60">New</span>
-                    )}
-                  </button>
-                );
-              })}
+            <div className="divide-y divide-[#E3E8ED]">
+              {sectionList.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => setSelectedSection(item.name)}
+                  className={`w-full text-left px-5 py-3 text-sm transition-colors flex items-center justify-between ${
+                    selectedSection === item.name
+                      ? 'bg-[#1B3A4C] text-white'
+                      : 'text-[#1B3A4C] hover:bg-[#E3E8ED]'
+                  }`}
+                >
+                  <span className="font-semibold uppercase tracking-[1px] text-[13px]">{item.label}</span>
+                  {!item.exists && (
+                    <span className="text-[10px] uppercase tracking-wider opacity-60">New</span>
+                  )}
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -118,11 +131,11 @@ export default function ContactEditor() {
         {/* Editor panel */}
         <div className="flex-1 min-w-0">
           {loading ? (
-            <p className="text-[#8FA3B3] text-sm">Loading...</p>
+            <p className="text-[#6B8FAB] text-sm">Loading...</p>
           ) : selectedSection === 'email' ? (
-            <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
-              <h3 className="font-serif text-lg font-semibold text-white mb-1">Email</h3>
-              <p className="text-xs text-[#8FA3B3] mb-6">The contact email displayed on the site</p>
+            <div className="bg-white border border-[#A3B5C4]/30 p-6">
+              <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Contact</p>
+              <p className="text-sm text-[#5B7A8E] mb-6 font-semibold uppercase tracking-[0.5px]">The contact email displayed on the site</p>
               <input
                 type="email"
                 value={emailValue}
@@ -134,20 +147,20 @@ export default function ContactEditor() {
                   );
                 }}
                 placeholder="hello@latenightricky.com"
-                className="w-full px-4 py-3 bg-[#0A0A0A] rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 mb-4"
+                className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] mb-4"
               />
               <button
                 onClick={() => saveField('email', emailValue)}
                 disabled={saving}
-                className="px-6 py-3 bg-[#1B3A4C] text-white rounded-xl font-semibold text-sm uppercase tracking-widest hover:bg-[#2a4f66] transition-colors disabled:opacity-50"
+                className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition disabled:opacity-50"
               >
                 {saving ? 'Saving...' : 'Save Email'}
               </button>
             </div>
           ) : selectedSection === 'instagram' ? (
-            <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
-              <h3 className="font-serif text-lg font-semibold text-white mb-1">Instagram</h3>
-              <p className="text-xs text-[#8FA3B3] mb-6">The Instagram handle displayed on the site</p>
+            <div className="bg-white border border-[#A3B5C4]/30 p-6">
+              <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Contact</p>
+              <p className="text-sm text-[#5B7A8E] mb-6 font-semibold uppercase tracking-[0.5px]">The Instagram handle displayed on the site</p>
               <input
                 type="text"
                 value={instagramValue}
@@ -159,25 +172,25 @@ export default function ContactEditor() {
                   );
                 }}
                 placeholder="@latenightricky"
-                className="w-full px-4 py-3 bg-[#0A0A0A] rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 mb-4"
+                className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] mb-4"
               />
               <button
                 onClick={() => saveField('instagram', instagramValue)}
                 disabled={saving}
-                className="px-6 py-3 bg-[#1B3A4C] text-white rounded-xl font-semibold text-sm uppercase tracking-widest hover:bg-[#2a4f66] transition-colors disabled:opacity-50"
+                className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition disabled:opacity-50"
               >
                 {saving ? 'Saving...' : 'Save Instagram'}
-                </button>
+              </button>
             </div>
           ) : selectedSection === 'form' ? (
-            <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
-              <h3 className="font-serif text-lg font-semibold text-white mb-1">Contact Form</h3>
-              <p className="text-xs text-[#8FA3B3] mb-6">Toggle the contact form on or off</p>
+            <div className="bg-white border border-[#A3B5C4]/30 p-6">
+              <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Contact</p>
+              <p className="text-sm text-[#5B7A8E] mb-6 font-semibold uppercase tracking-[0.5px]">Toggle the contact form on or off</p>
 
-              <div className="flex items-center justify-between p-4 bg-[#0A0A0A] rounded-xl mb-6">
+              <div className="flex items-center justify-between p-4 bg-[#E3E8ED] rounded-xl mb-6">
                 <div>
-                  <p className="text-sm font-semibold text-white">Form Enabled</p>
-                  <p className="text-xs text-[#8FA3B3]">Visitors can submit the contact form</p>
+                  <p className="text-sm font-semibold text-[#1B3A4C]">Form Enabled</p>
+                  <p className="text-xs text-[#6B8FAB]">Visitors can submit the contact form</p>
                 </div>
                 <button
                   onClick={() => {
@@ -189,19 +202,17 @@ export default function ContactEditor() {
                     );
                     saveField('form', newVal, true);
                   }}
-                  className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${formEnabled ? 'bg-[#1B3A4C]' : 'bg-[#8FA8BE]'}`}
+                  className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${formEnabled ? 'bg-[#1B3A4C]' : 'bg-[#A3B5C4]'}`}
                 >
                   <span
-                    className={`inline-block h-5 w-5 transform rounded-full bg-[#111318] transition-transform ${formEnabled ? 'translate-x-6' : 'translate-x-1'}`}
+                    className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${formEnabled ? 'translate-x-6' : 'translate-x-1'}`}
                   />
                 </button>
               </div>
 
-              <p className="text-xs text-[#8FA3B3]">The form fields are managed in the public site code.</p>
+              <p className="text-xs text-[#6B8FAB]">The form fields are managed in the public site code.</p>
             </div>
-          ) : (
-            <SectionEditor section={activeSection} onSaved={fetchSections} />
-          )}
+          ) : null}
         </div>
       </div>
     </div>
