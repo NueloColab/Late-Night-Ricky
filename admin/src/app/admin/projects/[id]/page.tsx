@@ -14,10 +14,13 @@ import {
   CheckCircle,
   Circle,
   PoundSterling,
-  AlertTriangle,
   Briefcase,
   ExternalLink,
   Mail,
+  Paperclip,
+  ChevronDown,
+  DollarSign,
+  CheckSquare,
 } from "lucide-react";
 import MoodBoardSection from "@/components/MoodBoardSection";
 
@@ -50,6 +53,7 @@ interface Task {
   completed: boolean;
   assignee: string;
   dueDate: string | null;
+  phase?: string;
 }
 
 interface MoodBoardImage {
@@ -116,12 +120,6 @@ const PIPELINE_LABELS: Record<string, string> = {
   paid: "Paid",
 };
 
-const PRIORITY_STYLES: Record<string, { bg: string; text: string; border: string }> = {
-  high: { bg: "bg-red-50", text: "text-red-600", border: "border-red-200" },
-  medium: { bg: "bg-amber-50", text: "text-amber-600", border: "border-amber-200" },
-  low: { bg: "bg-[#E3E8ED]/50", text: "text-gray-600", border: "border-[#A3B5C4]/30" },
-};
-
 const SERVICE_STATUSES = ["Pending", "In Progress", "Delivered"];
 
 const SERVICE_STATUS_STYLES: Record<string, string> = {
@@ -132,22 +130,10 @@ const SERVICE_STATUS_STYLES: Record<string, string> = {
 
 const TEAM_ROLES = ["DJ", "Producer", "Engineer", "Manager", "Coordinator", "Other"];
 
-const gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 0, maximumFractionDigits: 0 });
+const TASK_PHASES = ["ALL", "DISCOVERY", "STRATEGY", "DESIGN", "DEVELOPMENT", "DELIVERY", "REVIEW"];
 
-function getDeadlineInfo(deadline: string | null, status: string) {
-  if (!deadline) return null;
-  const s = (status || "").toLowerCase();
-  if (s === "completed" || s === "paid" || s === "cancelled") return null;
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
-  const dl = new Date(deadline);
-  dl.setHours(0, 0, 0, 0);
-  const diffDays = Math.round((dl.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-  if (diffDays < 0) return { text: `${Math.abs(diffDays)} day${Math.abs(diffDays) !== 1 ? "s" : ""} overdue`, color: "text-red-600", overdue: true };
-  if (diffDays === 0) return { text: "Due today", color: "text-red-600", overdue: false };
-  if (diffDays <= 7) return { text: `Due in ${diffDays} day${diffDays !== 1 ? "s" : ""}`, color: "text-amber-600", overdue: false };
-  return { text: `Due in ${diffDays} days`, color: "text-[#2d6a2d]", overdue: false };
-}
+const gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 0, maximumFractionDigits: 0 });
+const gbpFull = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export default function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -157,21 +143,24 @@ export default function ProjectDetailPage() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
+  const [taskFilter, setTaskFilter] = useState("ALL");
 
   // Sub-section states
   const [showServiceForm, setShowServiceForm] = useState(false);
   const [showTeamForm, setShowTeamForm] = useState(false);
   const [showTaskInput, setShowTaskInput] = useState(false);
   const [showFileUpload, setShowFileUpload] = useState(false);
+  const [showReferralForm, setShowReferralForm] = useState(false);
 
   // Form states
   const [form, setForm] = useState<Partial<Project>>({});
   const [newService, setNewService] = useState({ name: "", status: "Pending", fee: null as number | null });
   const [newTeam, setNewTeam] = useState({ name: "", role: "DJ", email: "", fee: null as number | null, notes: "" });
-  const [newTask, setNewTask] = useState({ text: "", assignee: "", dueDate: "" });
+  const [newTask, setNewTask] = useState({ text: "", assignee: "", dueDate: "", phase: "DISCOVERY" });
   const [fileUrl, setFileUrl] = useState("");
   const [fileName, setFileName] = useState("");
   const [filePhase, setFilePhase] = useState("");
+  const [newReferral, setNewReferral] = useState({ name: "", email: "", commission: null as number | null });
 
   useEffect(() => {
     if (!id) return;
@@ -194,7 +183,6 @@ export default function ProjectDetailPage() {
       setQuotes(quotesData.quotes || []);
       setInvoices(invData.invoices || []);
       if (projData.project) setForm(projData.project);
-      // Fetch client if clientId exists
       if (projData.project?.clientId) {
         try {
           const clientRes = await fetch(`/api/clients/${projData.project.clientId}`);
@@ -242,10 +230,6 @@ export default function ProjectDetailPage() {
     setEditing(false);
   }
 
-  async function moveStatus(newStatus: string) {
-    await updateProject({ status: newStatus });
-  }
-
   // Services
   async function addService() {
     if (!newService.name.trim()) return;
@@ -284,10 +268,10 @@ export default function ProjectDetailPage() {
   // Tasks
   async function addTask() {
     if (!newTask.text.trim()) return;
-    const task: Task = { id: String(Date.now()), text: newTask.text, completed: false, assignee: newTask.assignee, dueDate: newTask.dueDate || null };
+    const task: Task = { id: String(Date.now()), text: newTask.text, completed: false, assignee: newTask.assignee, dueDate: newTask.dueDate || null, phase: newTask.phase };
     const tasks = [...(project?.tasks || []), task];
     await updateProject({ tasks });
-    setNewTask({ text: "", assignee: "", dueDate: "" });
+    setNewTask({ text: "", assignee: "", dueDate: "", phase: "DISCOVERY" });
     setShowTaskInput(false);
   }
 
@@ -318,11 +302,6 @@ export default function ProjectDetailPage() {
     await updateProject({ files });
   }
 
-  // Progress
-  async function updateProgress(value: number) {
-    await updateProject({ progress: value });
-  }
-
   // Auto-progress based on completed tasks
   function calculateProgress() {
     const tasks = project?.tasks || [];
@@ -336,87 +315,97 @@ export default function ProjectDetailPage() {
   const totalPaid = invoices.filter((i) => i.status === "paid").reduce((s, i) => s + Number(i.total), 0);
   const outstanding = totalInvoiced - totalPaid;
   const teamCosts = (project?.team || []).reduce((s, m) => s + (Number(m.fee) || 0), 0);
-  const deadlineInfo = getDeadlineInfo(project?.deadline || null, project?.status || "");
+  const profit = (project?.fee || 0) - teamCosts;
+  const profitPercent = project?.fee ? Math.round((profit / project.fee) * 100) : 0;
   const progress = calculateProgress();
+
+  const filteredTasks = taskFilter === "ALL"
+    ? (project?.tasks || [])
+    : (project?.tasks || []).filter((t) => (t.phase || "DISCOVERY") === taskFilter);
 
   if (loading) return <p className="text-[#5B7A8E] p-8 text-center">Loading...</p>;
   if (!project) return <p className="text-[#5B7A8E] p-8 text-center">Project not found.</p>;
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Header — Nuelo style */}
       <div>
-        <Link href="/admin/projects" className="text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest hover:underline flex items-center gap-1 mb-3">
+        <Link href="/admin/projects" className="text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest hover:underline flex items-center gap-1 mb-4">
           <ArrowLeft size={12} /> Back to Pipeline
         </Link>
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="flex-1">
-            <h1 className="font-black text-[clamp(28px,4vw,42px)] text-[#111] tracking-[-1px] uppercase">{project.title}</h1>
-            <div className="flex flex-wrap items-center gap-2 mt-2">
-              <span className={`text-xs font-bold uppercase tracking-wide px-2 py-0.5 rounded ${project.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : project.status === "in-progress" || project.status === "approved" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : project.status === "completed" || project.status === "invoiced" ? "bg-[#6B8FAB]/10 text-[#6B8FAB]" : "bg-[#E3E8ED]/50 text-[#5B7A8E]"}`}>
-                {PIPELINE_LABELS[project.status] || project.status}
-              </span>
-              <span className="text-xs text-[#5B7A8E] uppercase tracking-wide">{project.type.replace(/-/g, " ")}</span>
-              {project.venue && <span className="text-xs text-[#5B7A8E]">· {project.venue}</span>}
-              {project.eventDate && <span className="text-xs text-[#5B7A8E]">· {new Date(project.eventDate + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>}
-              {project.priority && (
-                <span className={`text-xs font-medium uppercase tracking-wide px-2 py-0.5 rounded ${PRIORITY_STYLES[project.priority]?.bg || ""} ${PRIORITY_STYLES[project.priority]?.text || ""}`}>
-                  {project.priority}
-                </span>
-              )}
-              {deadlineInfo && (
-                <span className={`text-xs font-medium flex items-center gap-1 ${deadlineInfo.color}`}>
-                  {deadlineInfo.overdue && <AlertTriangle size={12} />}
-                  {deadlineInfo.text}
-                </span>
-              )}
+            {/* Project code */}
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-8 h-px bg-[#A3B5C4]" />
+              <span className="text-xs text-[#999] uppercase tracking-wider">PRJ-{String(project.id).padStart(3, "0")}</span>
             </div>
-            {project.description && <p className="text-sm text-[#5B7A8E] mt-2 max-w-2xl">{project.description}</p>}
+            {/* Title — elegant serif style */}
+            <h1 className="font-bold text-[clamp(24px,3.5vw,36px)] text-[#111] tracking-[-0.5px]"
+                style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
+              {project.title}
+            </h1>
+            {/* Subtitle */}
+            <p className="text-sm text-[#5B7A8E] mt-1">
+              {client?.name || "Unknown Client"} — Late Night Ricky
+            </p>
           </div>
-          <button
-            onClick={() => setEditing(!editing)}
-            className="px-5 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] transition flex items-center gap-2 flex-shrink-0"
-          >
-            <Edit size={14} /> {editing ? "Cancel" : "Edit Project"}
-          </button>
+          {/* Status badge */}
+          <span className={`text-xs font-medium uppercase tracking-wide px-3 py-1.5 rounded border ${
+            project.status === "paid" ? "bg-[#2d6a2d]/5 text-[#2d6a2d] border-[#2d6a2d]/20" :
+            project.status === "in-progress" || project.status === "approved" ? "bg-[#1B3A4C]/5 text-[#1B3A4C] border-[#1B3A4C]/20" :
+            project.status === "completed" || project.status === "invoiced" ? "bg-[#6B8FAB]/10 text-[#6B8FAB] border-[#6B8FAB]/20" :
+            "bg-[#E3E8ED]/50 text-[#5B7A8E] border-[#A3B5C4]/30"
+          }`}>
+            {PIPELINE_LABELS[project.status] || project.status}
+          </span>
         </div>
       </div>
 
-      {/* Progress & Stats Dashboard */}
-      <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-5">
+      {/* Progress & Stats Dashboard — Nuelo style */}
+      <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-5"
+           style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div className="flex items-center gap-6">
+          {/* Left metrics */}
+          <div className="flex items-center gap-8"
+               style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
             <div>
-              <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Overall Completion</p>
-              <p className="text-2xl font-black text-[#111]">{progress}%</p>
+              <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Progress</p>
+              <p className="text-3xl font-bold text-[#111]" style={{ fontFamily: "Georgia, serif" }}>{progress}%</p>
             </div>
-            <div className="h-10 w-px bg-[#A3B5C4]/30 hidden sm:block" />
-            <div className="flex gap-6">
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Tasks</p>
-                <p className="text-sm font-bold text-[#111]">{(project?.tasks || []).filter((t) => t.completed).length}/{(project?.tasks || []).length} done</p>
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Services</p>
-                <p className="text-sm font-bold text-[#111]">{(project?.services || []).filter((s) => s.status === "Delivered").length}/{(project?.services || []).length} delivered</p>
-              </div>
+            <div className="h-12 w-px bg-[#A3B5C4]/30 hidden sm:block" />
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Tasks</p>
+              <p className="text-sm font-bold text-[#111]">{(project?.tasks || []).filter((t) => t.completed).length}/{(project?.tasks || []).length} done</p>
+            </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Services</p>
+              <p className="text-sm font-bold text-[#111]">{(project?.services || []).filter((s) => s.status === "Delivered").length}/{(project?.services || []).length} delivered</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <input
-                type="range"
-                min={0}
-                max={100}
-                value={progress}
-                onChange={(e) => updateProgress(Number(e.target.value))}
-                className="w-24 h-1 accent-[#1B3A4C]"
-              />
-              <span className="text-[10px] text-[#999]">Manual override</span>
+          {/* Right action buttons */}
+          <div className="flex items-center gap-2" style={{ fontFamily: "system-ui, sans-serif" }}>
+            <button
+              onClick={() => setShowTaskInput(!showTaskInput)}
+              className="px-4 py-2 bg-[#111] text-white rounded text-xs font-semibold uppercase tracking-wide hover:opacity-90 transition flex items-center gap-1"
+            >
+              <Plus size={14} /> Task
+            </button>
+            <button
+              onClick={() => setShowFileUpload(!showFileUpload)}
+              className="px-4 py-2 border border-[#A3B5C4]/30 rounded text-xs font-semibold uppercase tracking-wide text-[#111] hover:bg-[#E3E8ED]/50 transition flex items-center gap-1"
+            >
+              <Paperclip size={14} /> File
+            </button>
+            <div className="relative">
+              <button className="px-4 py-2 border border-[#A3B5C4]/30 rounded text-xs font-semibold uppercase tracking-wide text-[#111] hover:bg-[#E3E8ED]/50 transition flex items-center gap-1">
+                {PIPELINE_LABELS[project.status] || project.status} <ChevronDown size={14} />
+              </button>
             </div>
           </div>
         </div>
-        <div className="w-full bg-[#E3E8ED]/50 rounded-full h-2 overflow-hidden mt-4">
+        <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mt-4 mb-2">Overall Completion</p>
+        <div className="w-full bg-[#E3E8ED]/50 rounded-full h-2 overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{ width: `${progress}%`, backgroundColor: progress >= 100 ? "#2d6a2d" : "#1B3A4C" }}
@@ -424,110 +413,59 @@ export default function ProjectDetailPage() {
         </div>
       </div>
 
-      {/* Pipeline Status */}
-      <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-4">
-        <p className="text-xs font-semibold text-[#111] uppercase tracking-widest mb-3">Pipeline Status</p>
-        <div className="flex flex-wrap gap-2">
-          {Object.entries(PIPELINE_LABELS).map(([k, v]) => (
-            <button
-              key={k}
-              onClick={() => moveStatus(k)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wide transition-colors ${
-                project.status === k
-                  ? "bg-[#1B3A4C] text-white"
-                  : "bg-[#E3E8ED]/50 text-[#5B7A8E] hover:bg-[#1B3A4C]/10 hover:text-[#1B3A4C]"
-              }`}
-            >
-              {v}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Edit form */}
-      {editing && (
-        <form onSubmit={saveEdit} className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6 space-y-4">
-          <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Edit Project</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Title</label>
-              <input value={form.title || ""} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Type</label>
-              <select value={form.type || ""} onChange={(e) => setForm({ ...form, type: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]">
-                <option value="dj-booking">DJ Booking</option>
-                <option value="production">Production</option>
-                <option value="remix">Remix</option>
-                <option value="mix-podcast">Mix / Podcast</option>
-                <option value="partnership">Brand Partnership</option>
-                <option value="livestream">Live Stream</option>
-                <option value="consulting">Consulting</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Priority</label>
-              <select value={form.priority || "medium"} onChange={(e) => setForm({ ...form, priority: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]">
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Venue</label>
-              <input value={form.venue || ""} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Event Date</label>
-              <input type="date" value={form.eventDate || ""} onChange={(e) => setForm({ ...form, eventDate: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Deadline</label>
-              <input type="date" value={form.deadline || ""} onChange={(e) => setForm({ ...form, deadline: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Fee (£)</label>
-              <input type="number" value={form.fee ?? ""} onChange={(e) => setForm({ ...form, fee: e.target.value ? Number(e.target.value) : null })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Description</label>
-              <textarea value={form.description || ""} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C] resize-y" placeholder="Project description..." />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Notes</label>
-              <textarea value={form.notes || ""} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C] resize-y" />
-            </div>
-          </div>
-          <div className="flex justify-end gap-3 pt-2">
-            <button type="button" onClick={() => setEditing(false)} className="px-4 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm font-medium text-[#111] hover:bg-[#E3E8ED]/50">Cancel</button>
-            <button type="submit" className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition">Save Changes</button>
-          </div>
-        </form>
-      )}
-
       {/* Two Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6"
+           style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
         {/* LEFT COLUMN — Main Content */}
         <div className="lg:col-span-3 space-y-6">
-          {/* Tasks */}
-          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
+          {/* Tasks & Milestones */}
+          <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <CheckCircle size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Tasks</h3>
+                <CheckSquare size={18} className="text-[#6B8FAB]" />
+                <h3 className="font-semibold text-base text-[#111]"
+                    style={{ fontFamily: "Georgia, serif" }}>Tasks & Milestones</h3>
               </div>
-              <button
-                onClick={() => setShowTaskInput(!showTaskInput)}
-                className="px-4 py-2 bg-[#111] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
-              >
-                <Plus size={14} /> Add Task
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setShowTaskInput(!showTaskInput)}
+                  className="px-4 py-2 border border-[#A3B5C4]/30 rounded text-xs font-semibold uppercase tracking-wide text-[#111] hover:bg-[#E3E8ED]/50 transition flex items-center gap-1"
+                >
+                  <Plus size={14} /> Milestone
+                </button>
+                <button
+                  onClick={() => setShowTaskInput(!showTaskInput)}
+                  className="px-4 py-2 bg-[#111] text-white rounded text-xs font-semibold uppercase tracking-wide hover:opacity-90 transition flex items-center gap-1"
+                >
+                  <Plus size={14} /> Task
+                </button>
+              </div>
+            </div>
+
+            {/* Phase filter pills */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {TASK_PHASES.map((phase) => (
+                <button
+                  key={phase}
+                  onClick={() => setTaskFilter(phase)}
+                  className={`px-3 py-1.5 rounded text-xs font-medium uppercase tracking-wide transition-colors ${
+                    taskFilter === phase
+                      ? "bg-[#111] text-white"
+                      : "bg-white border border-[#A3B5C4]/30 text-[#5B7A8E] hover:bg-[#E3E8ED]/50"
+                  }`}
+                >
+                  {phase}
+                </button>
+              ))}
             </div>
 
             {showTaskInput && (
               <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                   <input placeholder="Task description" value={newTask.text} onChange={(e) => setNewTask({ ...newTask, text: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <select value={newTask.phase} onChange={(e) => setNewTask({ ...newTask, phase: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
+                    {TASK_PHASES.filter((p) => p !== "ALL").map((p) => <option key={p} value={p}>{p}</option>)}
+                  </select>
                   <input placeholder="Assignee" value={newTask.assignee} onChange={(e) => setNewTask({ ...newTask, assignee: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
                   <input type="date" value={newTask.dueDate} onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
                 </div>
@@ -538,18 +476,19 @@ export default function ProjectDetailPage() {
               </div>
             )}
 
-            {(project.tasks || []).length === 0 ? (
-              <p className="text-sm text-[#999] italic py-4 text-center">No tasks yet. Add tasks to track project progress.</p>
+            {filteredTasks.length === 0 ? (
+              <p className="text-sm text-[#999] italic py-4 text-center">No tasks in this phase yet.</p>
             ) : (
               <div className="space-y-2">
-                {(project.tasks || []).map((task) => (
+                {filteredTasks.map((task) => (
                   <div key={task.id} className={`flex items-center gap-3 p-3 rounded-lg ${task.completed ? "bg-[#2d6a2d]/5" : "bg-[#E3E8ED]/50"}`}>
                     <button onClick={() => toggleTask(task.id)} className="flex-shrink-0">
                       {task.completed ? <CheckCircle size={18} className="text-[#2d6a2d]" /> : <Circle size={18} className="text-[#999]" />}
                     </button>
                     <div className="flex-1">
                       <span className={`text-sm ${task.completed ? "line-through text-[#999]" : "text-[#111]"}`}>{task.text}</span>
-                      <div className="flex items-center gap-2 mt-0.5">
+                      <div className="flex items-center gap-2 mt-1">
+                        {task.phase && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#E3E8ED]/80 text-[#5B7A8E] font-medium">{task.phase}</span>}
                         {task.assignee && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1B3A4C]/10 text-[#1B3A4C] font-medium">{task.assignee}</span>}
                         {task.dueDate && <span className="text-[10px] text-[#999]">{new Date(task.dueDate + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</span>}
                       </div>
@@ -562,15 +501,15 @@ export default function ProjectDetailPage() {
           </div>
 
           {/* Services */}
-          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
+          <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <PoundSterling size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Services</h3>
+                <h3 className="font-semibold text-base text-[#111]" style={{ fontFamily: "Georgia, serif" }}>Services</h3>
               </div>
               <button
                 onClick={() => setShowServiceForm(!showServiceForm)}
-                className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition flex items-center gap-1"
+                className="px-4 py-2 border border-[#A3B5C4]/30 rounded text-xs font-semibold uppercase tracking-wide text-[#111] hover:bg-[#E3E8ED]/50 transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add Service
               </button>
@@ -614,16 +553,19 @@ export default function ProjectDetailPage() {
             )}
           </div>
 
+          {/* Mood Boards */}
+          <MoodBoardSection projectId={project.id} />
+
           {/* Team & Assignments */}
-          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
+          <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Users size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Team & Assignments</h3>
+                <h3 className="font-semibold text-base text-[#111]" style={{ fontFamily: "Georgia, serif" }}>Team & Assignments</h3>
               </div>
               <button
                 onClick={() => setShowTeamForm(!showTeamForm)}
-                className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition flex items-center gap-1"
+                className="px-4 py-2 bg-[#111] text-white rounded text-xs font-semibold uppercase tracking-wide hover:opacity-90 transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add Member
               </button>
@@ -671,19 +613,48 @@ export default function ProjectDetailPage() {
             )}
           </div>
 
-          {/* Mood Boards */}
-          <MoodBoardSection projectId={project.id} />
+          {/* Referrals & Commissions */}
+          <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <DollarSign size={18} className="text-[#6B8FAB]" />
+                <h3 className="font-semibold text-base text-[#111]" style={{ fontFamily: "Georgia, serif" }}>Referrals & Commissions</h3>
+              </div>
+              <button
+                onClick={() => setShowReferralForm(!showReferralForm)}
+                className="px-4 py-2 bg-[#111] text-white rounded text-xs font-semibold uppercase tracking-wide hover:opacity-90 transition flex items-center gap-1"
+              >
+                <Plus size={14} /> Add Referral
+              </button>
+            </div>
+
+            {showReferralForm && (
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <input placeholder="Referral name" value={newReferral.name} onChange={(e) => setNewReferral({ ...newReferral, name: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="Email" value={newReferral.email} onChange={(e) => setNewReferral({ ...newReferral, email: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="number" placeholder="Commission (£)" value={newReferral.commission ?? ""} onChange={(e) => setNewReferral({ ...newReferral, commission: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={() => { setShowReferralForm(false); setNewReferral({ name: "", email: "", commission: null }); }} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => setShowReferralForm(false)} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
+                </div>
+              </div>
+            )}
+
+            <p className="text-sm text-[#999] italic py-4 text-center">No referrals added yet</p>
+          </div>
 
           {/* Files & Deliverables */}
-          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
+          <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Upload size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Files & Deliverables</h3>
+                <h3 className="font-semibold text-base text-[#111]" style={{ fontFamily: "Georgia, serif" }}>Files & Deliverables</h3>
               </div>
               <button
                 onClick={() => setShowFileUpload(!showFileUpload)}
-                className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition flex items-center gap-1"
+                className="px-4 py-2 bg-[#111] text-white rounded text-xs font-semibold uppercase tracking-wide hover:opacity-90 transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add File
               </button>
@@ -732,8 +703,8 @@ export default function ProjectDetailPage() {
 
           {/* Notes */}
           {project.notes && (
-            <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
-              <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase mb-3">Notes</h3>
+            <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-6">
+              <h3 className="font-semibold text-base text-[#111] mb-3" style={{ fontFamily: "Georgia, serif" }}>Notes</h3>
               <p className="text-sm text-[#5B7A8E] whitespace-pre-wrap">{project.notes}</p>
             </div>
           )}
@@ -741,42 +712,8 @@ export default function ProjectDetailPage() {
 
         {/* RIGHT COLUMN — Sidebar */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Financial Summary */}
-          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-5">
-            <h3 className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-semibold mb-4">Financial Summary</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-[#5B7A8E]">Agreed Fee</span>
-                <span className="text-sm font-bold text-[#111]">{project.fee ? gbp.format(project.fee) : "---"}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-[#5B7A8E]">Total Quoted</span>
-                <span className="text-sm font-bold text-[#111]">{gbp.format(totalQuoted)}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-[#5B7A8E]">Total Invoiced</span>
-                <span className="text-sm font-bold text-[#111]">{gbp.format(totalInvoiced)}</span>
-              </div>
-              <div className="flex justify-between items-center pt-2 border-t border-[#A3B5C4]/20">
-                <span className="text-sm font-medium text-[#111]">Outstanding</span>
-                <span className={`text-sm font-bold ${outstanding > 0 ? "text-amber-600" : "text-[#2d6a2d]"}`}>{gbp.format(outstanding)}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-[#5B7A8E]">Team Costs</span>
-                <span className="text-sm font-bold text-[#666]">{gbp.format(teamCosts)}</span>
-              </div>
-              <div className="flex justify-between items-center pt-2 border-t border-[#A3B5C4]/20">
-                <span className="text-sm font-medium text-[#111]">Profit</span>
-                <span className={`text-sm font-bold ${(project.fee || 0) - teamCosts > 0 ? "text-[#2d6a2d]" : "text-red-600"}`}>
-                  {gbp.format((project.fee || 0) - teamCosts)}
-                  {project.fee ? ` (${Math.round(((project.fee - teamCosts) / project.fee) * 100)}%)` : ""}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Project Details */}
-          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-5">
+          {/* Details Card */}
+          <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Briefcase size={16} className="text-[#6B8FAB]" />
@@ -787,6 +724,7 @@ export default function ProjectDetailPage() {
               </button>
             </div>
 
+            {/* Client */}
             {client && (
               <div className="mb-4">
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Client</p>
@@ -797,6 +735,22 @@ export default function ProjectDetailPage() {
               </div>
             )}
 
+            {/* Financial Summary nested */}
+            <div className="bg-[#F8F9FA] rounded-lg p-4 mb-4">
+              <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-3">Financial Summary</p>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm text-[#5B7A8E]">Revenue</span>
+                <span className="text-sm font-bold text-[#111]">{gbpFull.format(project.fee || totalQuoted || 0)}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-[#5B7A8E]">Profit</span>
+                <span className={`text-sm font-bold ${profit >= 0 ? "text-[#2d6a2d]" : "text-red-600"}`}>
+                  {gbpFull.format(profit)} {project.fee ? `(${profitPercent}%)` : ""}
+                </span>
+              </div>
+            </div>
+
+            {/* Start / Deadline */}
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Start</p>
@@ -808,6 +762,7 @@ export default function ProjectDetailPage() {
               </div>
             </div>
 
+            {/* Description */}
             {project.description && (
               <div>
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Description</p>
@@ -816,8 +771,8 @@ export default function ProjectDetailPage() {
             )}
           </div>
 
-          {/* Financials / Invoices */}
-          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-5">
+          {/* Financials Card */}
+          <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-5">
             <div className="flex items-center gap-2 mb-4">
               <PoundSterling size={16} className="text-[#6B8FAB]" />
               <h3 className="text-sm font-bold text-[#111] uppercase tracking-wider">Financials</h3>
@@ -826,26 +781,79 @@ export default function ProjectDetailPage() {
             {invoices.length === 0 && quotes.length === 0 ? (
               <p className="text-sm text-[#999] italic text-center py-4">No invoices or quotes yet.</p>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {invoices.map((inv) => (
-                  <div key={inv.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-[#111]">{inv.invoiceNumber}</span>
-                      <ExternalLink size={12} className="text-[#6B8FAB]" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${inv.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : inv.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : "bg-red-50 text-red-600"}`}>
-                        {inv.status}
+                  <div key={inv.id}>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-[#111]">{inv.invoiceNumber}</span>
+                        <ExternalLink size={12} className="text-[#6B8FAB]" />
+                      </div>
+                      <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${inv.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : inv.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : "bg-amber-50 text-amber-600"}`}>
+                        {inv.status === "paid" ? "DEPOSIT PAID" : inv.status}
                       </span>
-                      <span className="text-sm font-semibold text-[#111]">{gbp.format(inv.total)}</span>
+                    </div>
+                    {/* Payment schedule */}
+                    <div className="bg-[#F8F9FA] rounded-lg p-3 mt-2">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs text-[#5B7A8E]">Total</span>
+                        <span className="text-sm font-bold text-[#111]">{gbpFull.format(inv.total)}</span>
+                      </div>
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="text-xs text-[#5B7A8E]">Status</span>
+                        <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${inv.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : "bg-red-50 text-red-600"}`}>
+                          {inv.status === "paid" ? "PAID" : "PARTIALLY PAID"}
+                        </span>
+                      </div>
+                      {/* Progress bar */}
+                      <div className="mb-3">
+                        <div className="flex justify-between text-[10px] text-[#999] mb-1">
+                          <span>{gbpFull.format(totalPaid)} paid</span>
+                          <span>{gbpFull.format(inv.total)} total</span>
+                        </div>
+                        <div className="w-full bg-[#E3E8ED]/50 rounded-full h-1.5 overflow-hidden">
+                          <div className="h-full rounded-full bg-[#8B7355]" style={{ width: `${inv.status === "paid" ? 100 : 50}%` }} />
+                        </div>
+                        <p className="text-[10px] text-[#999] text-right mt-1">{inv.status === "paid" ? "100%" : "50%"} paid</p>
+                      </div>
+                      {/* Paid / Outstanding boxes */}
+                      <div className="grid grid-cols-2 gap-2 mb-3">
+                        <div className="bg-[#E8F5E9] rounded p-2 text-center">
+                          <p className="text-[10px] uppercase text-[#999] mb-1">Paid</p>
+                          <p className="text-sm font-bold text-[#2d6a2d]">{gbpFull.format(totalPaid)}</p>
+                        </div>
+                        <div className="bg-[#F8F9FA] rounded p-2 text-center">
+                          <p className="text-[10px] uppercase text-[#999] mb-1">Outstanding</p>
+                          <p className="text-sm font-bold text-[#111]">{gbpFull.format(outstanding)}</p>
+                        </div>
+                      </div>
+                      {/* Payment milestones */}
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-3 p-2 bg-[#E8F5E9] rounded">
+                          <CheckCircle size={16} className="text-[#2d6a2d] flex-shrink-0" />
+                          <div className="flex-1">
+                            <p className="text-sm font-medium text-[#111]">Deposit</p>
+                            <p className="text-[10px] text-[#999]">Due upfront</p>
+                          </div>
+                          <span className="text-sm font-bold text-[#111]">{gbpFull.format(totalPaid)}</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded bg-[#2d6a2d]/10 text-[#2d6a2d]">PAID ✓</span>
+                        </div>
+                        <div className="flex items-center gap-3 p-2 bg-white border border-[#A3B5C4]/20 rounded">
+                          <Circle size={16} className="text-[#999] flex-shrink-0" />
+                          <div className="flex-1">
+                            <p className="text-sm font-medium text-[#111]">Final Payment</p>
+                            <p className="text-[10px] text-[#999]">Due on completion</p>
+                          </div>
+                          <span className="text-sm font-bold text-[#111]">{gbpFull.format(outstanding)}</span>
+                          <button className="px-3 py-1.5 bg-[#111] text-white text-[10px] font-semibold uppercase tracking-wide rounded hover:opacity-90">Mark Paid</button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
                 {quotes.map((q) => (
                   <div key={q.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-[#111]">Quote #{q.id}</span>
-                    </div>
+                    <span className="text-sm font-semibold text-[#111]">Quote #{q.id}</span>
                     <div className="flex items-center gap-2">
                       <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${q.status === "accepted" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : q.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : "bg-[#E3E8ED]/50 text-[#5B7A8E]"}`}>
                         {q.status}
@@ -855,6 +863,13 @@ export default function ProjectDetailPage() {
                   </div>
                 ))}
               </div>
+            )}
+
+            {/* Send reminder */}
+            {invoices.length > 0 && (
+              <button className="w-full mt-4 px-4 py-3 border border-[#A3B5C4]/30 rounded-lg text-xs font-semibold uppercase tracking-wide text-amber-600 hover:bg-amber-50 transition flex items-center justify-center gap-2">
+                <Mail size={14} /> Send Payment Reminder
+              </button>
             )}
 
             <div className="flex gap-2 mt-4">
@@ -874,6 +889,72 @@ export default function ProjectDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* Edit form modal */}
+      {editing && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <form onSubmit={saveEdit} className="bg-white rounded-xl p-6 w-full max-w-3xl max-h-[90vh] overflow-y-auto space-y-4">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="font-bold text-lg text-[#111]" style={{ fontFamily: "Georgia, serif" }}>Edit Project</h3>
+              <button type="button" onClick={() => setEditing(false)} className="text-[#999] hover:text-[#111]"><Trash2 size={18} /></button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Title</label>
+                <input value={form.title || ""} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Type</label>
+                <select value={form.type || ""} onChange={(e) => setForm({ ...form, type: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]">
+                  <option value="dj-booking">DJ Booking</option>
+                  <option value="production">Production</option>
+                  <option value="remix">Remix</option>
+                  <option value="mix-podcast">Mix / Podcast</option>
+                  <option value="partnership">Brand Partnership</option>
+                  <option value="livestream">Live Stream</option>
+                  <option value="consulting">Consulting</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Priority</label>
+                <select value={form.priority || "medium"} onChange={(e) => setForm({ ...form, priority: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]">
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                  <option value="low">Low</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Venue</label>
+                <input value={form.venue || ""} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Event Date</label>
+                <input type="date" value={form.eventDate || ""} onChange={(e) => setForm({ ...form, eventDate: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Deadline</label>
+                <input type="date" value={form.deadline || ""} onChange={(e) => setForm({ ...form, deadline: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Fee (£)</label>
+                <input type="number" value={form.fee ?? ""} onChange={(e) => setForm({ ...form, fee: e.target.value ? Number(e.target.value) : null })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Description</label>
+                <textarea value={form.description || ""} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C] resize-y" placeholder="Project description..." />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Notes</label>
+                <textarea value={form.notes || ""} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C] resize-y" />
+              </div>
+            </div>
+            <div className="flex justify-end gap-3 pt-2">
+              <button type="button" onClick={() => setEditing(false)} className="px-4 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm font-medium text-[#111] hover:bg-[#E3E8ED]/50">Cancel</button>
+              <button type="submit" className="px-7 py-3 bg-[#111] text-white rounded-lg text-[13px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 }
