@@ -331,7 +331,7 @@ export default function InvoicesPage() {
                   const proj = projects.find(p => p.id === inv.projectId)
                   const clientName = proj?.clientId ? getClientName(proj.clientId) : ''
                   return (
-                    <tr key={inv.id} className="hover:bg-gray-50 transition-colors">
+                    <tr key={inv.id} className="hover:bg-[#E3E8ED]/50 transition-colors">
                       <td className="px-4 py-3 font-semibold text-[#111]">{inv.invoiceNumber}</td>
                       <td className="px-4 py-3 text-[#5B7A8E]">
                         {proj ? (clientName ? `${proj.title} — ${clientName}` : proj.title) : '—'}
@@ -341,7 +341,7 @@ export default function InvoicesPage() {
                           inv.status === 'paid' ? 'bg-[#2d6a2d]/10 text-[#2d6a2d]' :
                           inv.status === 'overdue' ? 'bg-red-50 text-red-600' :
                           inv.status === 'sent' ? 'bg-[#1B3A4C]/10 text-[#1B3A4C]' :
-                          'bg-gray-100 text-[#5B7A8E]'
+                          'bg-[#E3E8ED]/50 text-[#5B7A8E]'
                         }`}>
                           {STATUS_ICONS[inv.status]}
                           {STATUS_LABELS[inv.status] || inv.status}
@@ -352,15 +352,15 @@ export default function InvoicesPage() {
                       <td className="px-4 py-3">
                         <div className="flex gap-2">
                           <button onClick={() => openView(inv)}
-                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-[#5B7A8E] hover:text-[#111]">
+                            className="p-1.5 hover:bg-[#E3E8ED]/50 rounded-lg transition-colors text-[#5B7A8E] hover:text-[#111]">
                             <Eye size={16} />
                           </button>
                           <a href={`/api/invoices/${inv.id}/pdf`} download
-                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-[#5B7A8E] hover:text-[#111] inline-flex">
+                            className="p-1.5 hover:bg-[#E3E8ED]/50 rounded-lg transition-colors text-[#5B7A8E] hover:text-[#111] inline-flex">
                             <Download size={16} />
                           </a>
                           <button onClick={() => deleteInvoice(inv.id)}
-                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-[#6B8FAB] hover:text-red-500">
+                            className="p-1.5 hover:bg-[#E3E8ED]/50 rounded-lg transition-colors text-[#6B8FAB] hover:text-red-500">
                             <Trash2 size={16} />
                           </button>
                         </div>
@@ -442,7 +442,7 @@ export default function InvoicesPage() {
 
           <div className="flex justify-end">
             <button type="submit"
-              className="px-6 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">Save Invoice</button>
+              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition text-sm font-medium hover:opacity-90 transition-opacity">Save Invoice</button>
           </div>
         </form>
       </Modal>
@@ -457,7 +457,7 @@ export default function InvoicesPage() {
                   selectedInvoice.status === 'paid' ? 'bg-[#2d6a2d]/10 text-[#2d6a2d]' :
                   selectedInvoice.status === 'overdue' ? 'bg-red-50 text-red-600' :
                   selectedInvoice.status === 'sent' ? 'bg-[#1B3A4C]/10 text-[#1B3A4C]' :
-                  'bg-gray-100 text-[#5B7A8E]'
+                  'bg-[#E3E8ED]/50 text-[#5B7A8E]'
                 }`}>
                   {STATUS_ICONS[selectedInvoice.status]}
                   {STATUS_LABELS[selectedInvoice.status] || selectedInvoice.status}
@@ -519,7 +519,7 @@ export default function InvoicesPage() {
                     </button>
                     <button
                       onClick={() => updateInvoiceStatus(selectedInvoice.id, 'overdue')}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 border border-red-300 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors"
+                      className="inline-flex items-center gap-2 px-7 py-3 border-2 border-red-400 rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-red-600 hover:bg-red-50 transition text-sm font-medium hover:bg-red-50 transition-colors"
                     >
                       <Clock size={14} />
                       Mark Overdue
@@ -529,7 +529,7 @@ export default function InvoicesPage() {
                 {selectedInvoice.status === 'paid' && (
                   <button
                     onClick={() => updateInvoiceStatus(selectedInvoice.id, 'sent')}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 text-[#111] rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
+                    className="inline-flex items-center gap-2 px-5 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[12px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#111] transition text-sm font-medium hover:bg-[#E3E8ED] transition-colors"
                   >
                     <RotateCcw size={14} />
                     Mark Unpaid
@@ -546,7 +546,7 @@ export default function InvoicesPage() {
                     </button>
                     <button
                       onClick={() => updateInvoiceStatus(selectedInvoice.id, 'draft')}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 text-[#111] rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
+                      className="inline-flex items-center gap-2 px-5 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[12px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#111] transition text-sm font-medium hover:bg-[#E3E8ED] transition-colors"
                     >
                       <RotateCcw size={14} />
                       Reopen as Draft
@@ -556,7 +556,7 @@ export default function InvoicesPage() {
                 <a
                   href={`/api/invoices/${selectedInvoice.id}/pdf`}
                   download
-                  className="inline-flex items-center gap-2 px-4 py-2.5 border border-[#A3B5C4]/30 text-[#111] rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[12px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#111] transition text-sm font-medium hover:bg-[#E3E8ED]/50 transition-colors"
                 >
                   <Download size={14} />
                   Download PDF

@@ -151,7 +151,7 @@ export default function ShowsPage() {
           {cards.map((card) => (
             <div key={card.id} className={`border border-[#A3B5C4]/30 bg-white rounded-lg overflow-hidden transition-opacity ${card.isActive ? 'border-[#A3B5C4]/30' : 'border-gray-100 opacity-60'}`}>
               {card.imagePath && (
-                <div className="aspect-video bg-gray-100 overflow-hidden">
+                <div className="aspect-video bg-[#E3E8ED]/50 overflow-hidden">
                   <img src={card.imagePath} alt={card.title} className="w-full h-full object-cover" />
                 </div>
               )}
@@ -163,7 +163,7 @@ export default function ShowsPage() {
                   </div>
                   <button
                     onClick={() => toggleActive(card.id, !card.isActive)}
-                    className={`text-xs px-2 py-1 rounded-full font-medium uppercase tracking-wide ${card.isActive ? 'bg-[#2d6a2d]/10 text-[#2d6a2d]' : 'bg-gray-100 text-[#6B8FAB]'}`}
+                    className={`text-xs px-2 py-1 rounded-full font-medium uppercase tracking-wide ${card.isActive ? 'bg-[#2d6a2d]/10 text-[#2d6a2d]' : 'bg-[#E3E8ED]/50 text-[#6B8FAB]'}`}
                   >
                     {card.isActive ? 'Active' : 'Hidden'}
                   </button>
@@ -217,7 +217,7 @@ export default function ShowsPage() {
             <button type="submit" className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#1B3A4C] text-white text-sm font-medium rounded-md hover:opacity-90 transition-opacity">
               {editCard ? 'Update Show' : 'Add Show'}
             </button>
-            <button type="button" onClick={() => { setIsModalOpen(false); setEditCard(null) }} className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-50 transition-colors">
+            <button type="button" onClick={() => { setIsModalOpen(false); setEditCard(null) }} className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#A3B5C4]/30 text-[#1B3A4C] text-sm font-medium rounded-md hover:bg-[#E3E8ED]/50 transition-colors">
               Cancel
             </button>
           </div>

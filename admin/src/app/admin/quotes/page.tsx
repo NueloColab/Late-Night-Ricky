@@ -348,13 +348,13 @@ export default function QuotesPage() {
                   const proj = projects.find(p => p.id === quote.projectId)
                   const clientName = proj?.clientId ? getClientName(proj.clientId) : ''
                   return (
-                    <tr key={quote.id} className="hover:bg-gray-50 transition-colors">
+                    <tr key={quote.id} className="hover:bg-[#E3E8ED]/50 transition-colors">
                       <td className="px-4 py-3 font-semibold text-[#111]">#{quote.id}</td>
                       <td className="px-4 py-3 text-[#5B7A8E]">
                         {proj ? (clientName ? `${proj.title} — ${clientName}` : proj.title) : '—'}
                       </td>
                       <td className="px-4 py-3">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-gray-100 text-[#111]">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-[#E3E8ED]/50 text-[#111]">
                           {STATUS_ICONS[quote.status] || <Clock size={14} />}
                           {STATUS_LABELS[quote.status] || quote.status}
                         </span>
@@ -366,13 +366,13 @@ export default function QuotesPage() {
                         <div className="flex gap-2">
                           <button
                             onClick={() => openView(quote)}
-                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-[#5B7A8E] hover:text-[#111]"
+                            className="p-1.5 hover:bg-[#E3E8ED]/50 rounded-lg transition-colors text-[#5B7A8E] hover:text-[#111]"
                           >
                             <Eye size={16} />
                           </button>
                           <button
                             onClick={() => deleteQuote(quote.id)}
-                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-[#6B8FAB] hover:text-red-500"
+                            className="p-1.5 hover:bg-[#E3E8ED]/50 rounded-lg transition-colors text-[#6B8FAB] hover:text-red-500"
                           >
                             <Trash2 size={16} />
                           </button>
@@ -510,7 +510,7 @@ export default function QuotesPage() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="px-6 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition text-sm font-medium hover:opacity-90 transition-opacity"
             >
               Save Quote
             </button>
@@ -528,7 +528,7 @@ export default function QuotesPage() {
         {selectedQuote && (
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-gray-100 text-[#111]">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-[#E3E8ED]/50 text-[#111]">
                 {STATUS_ICONS[selectedQuote.status]}
                 {STATUS_LABELS[selectedQuote.status] || selectedQuote.status}
               </span>
@@ -594,7 +594,7 @@ export default function QuotesPage() {
                     </button>
                     <button
                       onClick={() => updateQuoteStatus(selectedQuote.id, 'declined')}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 border border-red-300 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors"
+                      className="inline-flex items-center gap-2 px-7 py-3 border-2 border-red-400 rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-red-600 hover:bg-red-50 transition text-sm font-medium hover:bg-red-50 transition-colors"
                     >
                       <XCircle size={14} />
                       Mark Declined
@@ -613,7 +613,7 @@ export default function QuotesPage() {
                 {selectedQuote.status === 'declined' && (
                   <button
                     onClick={() => updateQuoteStatus(selectedQuote.id, 'draft')}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 text-[#111] rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
+                    className="inline-flex items-center gap-2 px-5 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[12px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#111] transition text-sm font-medium hover:bg-[#E3E8ED] transition-colors"
                   >
                     <RotateCcw size={14} />
                     Reopen as Draft

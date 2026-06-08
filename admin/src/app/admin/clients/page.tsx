@@ -93,7 +93,7 @@ export default function ClientsPage() {
               setForm({ name: '', email: '', phone: '', instagram: '', notes: '' })
               setShowForm(true)
             }}
-            className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg hover:bg-[#2a4a5c] transition-colors flex items-center gap-2"
+            className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition transition-colors flex items-center gap-2"
           >
             <Plus size={16} />
             Add Client
@@ -225,7 +225,7 @@ export default function ClientsPage() {
           </div>
           <div className="flex justify-end">
             <button type="submit"
-              className="px-6 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold uppercase tracking-wide hover:bg-[#2a4a5c] transition-colors">Save Client</button>
+              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition text-sm font-semibold uppercase tracking-wide hover:bg-[#2a4a5c] transition-colors">Save Client</button>
           </div>
         </form>
       </Modal>

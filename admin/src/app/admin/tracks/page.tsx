@@ -120,7 +120,7 @@ export default function TracksPage() {
         <h1 className="text-2xl font-bold tracking-tight">Tracks</h1>
         <button
           onClick={() => { setEditTrack(null); setForm(emptyTrack); setIsModalOpen(true) }}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-[#111] text-white rounded-lg hover:bg-[#1B3A4C] transition"
+          className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition transition"
         >
           <Plus size={18} />
           Add Track
@@ -146,13 +146,13 @@ export default function TracksPage() {
             </thead>
             <tbody>
               {trackList.map((track, i) => (
-                <tr key={track.id} className="border-t border-gray-100 hover:bg-gray-50">
+                <tr key={track.id} className="border-t border-gray-100 hover:bg-[#E3E8ED]/50">
                   <td className="px-4 py-3 text-gray-500">
                     <div className="flex items-center gap-1">
-                      <button onClick={() => moveOrder(track.id, 'up')} className="p-1 hover:bg-gray-200 rounded" disabled={i === 0}>
+                      <button onClick={() => moveOrder(track.id, 'up')} className="p-1 hover:bg-[#E3E8ED] rounded" disabled={i === 0}>
                         <ArrowUp size={14} />
                       </button>
-                      <button onClick={() => moveOrder(track.id, 'down')} className="p-1 hover:bg-gray-200 rounded" disabled={i === trackList.length - 1}>
+                      <button onClick={() => moveOrder(track.id, 'down')} className="p-1 hover:bg-[#E3E8ED] rounded" disabled={i === trackList.length - 1}>
                         <ArrowDown size={14} />
                       </button>
                     </div>
@@ -166,7 +166,7 @@ export default function TracksPage() {
                     {track.filePath ? (
                       <button
                         onClick={() => setPlayingId(playingId === track.id ? null : track.id)}
-                        className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 rounded text-xs hover:bg-gray-200"
+                        className="inline-flex items-center gap-1 px-2 py-1 bg-[#E3E8ED]/50 rounded text-xs hover:bg-[#E3E8ED]"
                       >
                         {playingId === track.id ? <Pause size={14} /> : <Play size={14} />}
                         {playingId === track.id ? 'Pause' : 'Play'}
@@ -181,7 +181,7 @@ export default function TracksPage() {
                   <td className="px-4 py-3">
                     <button
                       onClick={() => toggleActive(track.id, track.isActive)}
-                      className={`px-2 py-1 rounded text-xs font-medium ${track.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}
+                      className={`px-2 py-1 rounded text-xs font-medium ${track.isActive ? 'bg-green-100 text-green-700' : 'bg-[#E3E8ED]/50 text-gray-500'}`}
                     >
                       {track.isActive ? 'Active' : 'Inactive'}
                     </button>
@@ -190,7 +190,7 @@ export default function TracksPage() {
                     <div className="flex items-center justify-end gap-1">
                       <button
                         onClick={() => { setEditTrack(track); setForm({ ...track }); setIsModalOpen(true) }}
-                        className="p-2 hover:bg-gray-100 rounded"
+                        className="p-2 hover:bg-[#E3E8ED]/50 rounded"
                       >
                         <Pencil size={14} />
                       </button>
@@ -218,7 +218,7 @@ export default function TracksPage() {
               value={form.title}
               onChange={e => setForm({ ...form, title: e.target.value })}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
+              className="w-full px-3 py-2 border border-[#A3B5C4]/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
               placeholder="Late Night Ricky — Midnight in London"
             />
           </div>
@@ -230,7 +230,7 @@ export default function TracksPage() {
                 type="text"
                 value={form.duration}
                 onChange={e => setForm({ ...form, duration: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
+                className="w-full px-3 py-2 border border-[#A3B5C4]/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
                 placeholder="0:30"
               />
             </div>
@@ -240,7 +240,7 @@ export default function TracksPage() {
                 type="number"
                 value={form.order}
                 onChange={e => setForm({ ...form, order: Number(e.target.value) })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
+                className="w-full px-3 py-2 border border-[#A3B5C4]/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
               />
             </div>
           </div>
@@ -259,7 +259,7 @@ export default function TracksPage() {
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading}
-                className="inline-flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm"
+                className="inline-flex items-center gap-2 px-3 py-2 border border-[#A3B5C4]/30 rounded-lg hover:bg-[#E3E8ED]/50 text-sm"
               >
                 <Upload size={14} />
                 {uploading ? 'Uploading...' : form.filePath ? 'Replace Audio' : 'Upload Audio'}
@@ -274,7 +274,7 @@ export default function TracksPage() {
               type="url"
               value={form.spotifyUrl || ''}
               onChange={e => setForm({ ...form, spotifyUrl: e.target.value || null })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
+              className="w-full px-3 py-2 border border-[#A3B5C4]/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
               placeholder="https://open.spotify.com/..."
             />
           </div>
@@ -285,7 +285,7 @@ export default function TracksPage() {
               type="url"
               value={form.appleMusicUrl || ''}
               onChange={e => setForm({ ...form, appleMusicUrl: e.target.value || null })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
+              className="w-full px-3 py-2 border border-[#A3B5C4]/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
               placeholder="https://music.apple.com/..."
             />
           </div>
@@ -301,10 +301,10 @@ export default function TracksPage() {
           </div>
 
           <div className="flex gap-3 pt-2">
-            <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+            <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-2 border border-[#A3B5C4]/30 rounded-lg hover:bg-[#E3E8ED]/50">
               Cancel
             </button>
-            <button type="submit" className="flex-1 px-4 py-2 bg-[#111] text-white rounded-lg hover:bg-[#1B3A4C]">
+            <button type="submit" className="flex-1 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition">
               {editTrack ? 'Save Changes' : 'Add Track'}
             </button>
           </div>
