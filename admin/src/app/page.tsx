@@ -291,7 +291,7 @@ export default async function HomePage() {
               <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Music &amp; Radio</p>
               <h2 className="text-[clamp(40px,6vw,80px)] font-black text-[#111] mb-5 leading-[0.95] tracking-[-2px] uppercase">As Heard On</h2>
               <p className="text-sm text-[#111] leading-relaxed mb-10 max-w-[420px] font-semibold uppercase tracking-[0.5px]">
-                Preview snippets of the latest releases. Click play to hear 30-second previews, then stream or download the full tracks on Spotify and Apple Music.
+                Preview snippets of the latest releases. Click play to hear 30-second previews, then stream or download the full tracks on Spotify, Apple Music and YouTube.
               </p>
               <div className="flex gap-4 flex-wrap mb-10">
                 <a href="https://open.spotify.com/artist/4AK6F2O4Il0oZ8pSpuOOnl" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
@@ -301,6 +301,10 @@ export default async function HomePage() {
                 <a href="https://music.apple.com/gb/artist/late-night-ricky/1234567890" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
                   <svg width="18" height="20" viewBox="0 0 384 512" fill="currentColor"><path d="M310.9 55.6c-5.5-4.3-12.5-5.7-19.1-3.8L128 104.2V32c0-17.7-14.3-32-32-32S64 14.3 64 32v456c0 4.4-3.6 8-8 8H40c-17.7 0-32 14.3-32 32s14.3 32 32 32h16c35.3 0 64-28.7 64-64V201.5l163.8-42.9c11.8-3.1 19.1-15.3 16-27.1s-15.3-19.1-27.1-16l-80.7 21.2V96l144-37.7c17.7-4.6 28.3-22.7 23.7-40.3-2.1-8.3-7.8-15.2-15.4-19.4z" fill="currentColor"/></svg>
                   Apple Music
+                </a>
+                <a href="https://www.youtube.com/@LateNightRicky" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
+                  <svg width="20" height="14" viewBox="0 0 24 17" fill="currentColor"><path d="M23.5 2.6c-.3-1.1-1.1-1.9-2.2-2.2C19.5 0 12 0 12 0S4.5 0 2.7.4C1.6.7.8 1.5.5 2.6 0 4.4 0 8.5 0 8.5s0 4.1.5 5.9c.3 1.1 1.1 1.9 2.2 2.2 1.8.4 9.3.4 9.3.4s7.5 0 9.3-.4c1.1-.3 1.9-1.1 2.2-2.2.5-1.8.5-5.9.5-5.9s0-4.1-.5-5.9zM9.6 12.1V4.9l6.2 3.6-6.2 3.6z" fill="currentColor"/></svg>
+                  YouTube
                 </a>
               </div>
               <div className="border-t border-[#E3E8ED] pt-6">
