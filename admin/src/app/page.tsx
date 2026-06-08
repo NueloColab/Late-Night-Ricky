@@ -1,10 +1,10 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
+import { getShowCards, getPartnerLogos, getClientNames, getVenueTicker } from '@/lib/cms';
 export const dynamic = 'force-dynamic';
-// Force rebuild
 
-const shows = [
+const DEFAULT_SHOWS = [
   {
     href: '/show-sidemen',
     image: '/assets/ricky-hero-new.jpg',
@@ -43,7 +43,7 @@ const shows = [
   },
 ];
 
-const logos = [
+const DEFAULT_LOGOS = [
   { src: '/assets/logo-f1.png?v=11', alt: 'Formula 1' },
   { src: '/assets/logo-coca-cola.png?v=11', alt: 'Coca-Cola' },
   { src: '/assets/logo-dior.png?v=11', alt: 'Dior' },
@@ -56,14 +56,14 @@ const logos = [
   { src: '/assets/logo-cartier.png?v=11', alt: 'Cartier' },
 ];
 
-const clients = [
+const DEFAULT_CLIENTS = [
   '50 Cent', 'Bruno Mars', 'Chris Brown', 'Dr. Dre & Jimmy Iovine', 'Drake',
   'Future', 'Jason Momoa', 'Jason Statham', 'Justin Bieber', 'Kendrick Lamar',
   'Leonardo DiCaprio', 'Lewis Hamilton', 'Mick Jagger', 'Neymar Jnr', 'Paul McCartney',
   'Rihanna', 'Ronaldo', 'Travis Scott', 'Usain Bolt', 'Vin Diesel',
 ];
 
-const venues = [
+const DEFAULT_VENUES = [
   'LIV Miami', 'WALL Miami', 'TAPE London', 'HAKKASAN Las Vegas', 'MOVIDA Dubai',
   "JIMMY'Z Monte Carlo", 'MINISTRY OF SOUND London', '1 OAK New York', 'BYBLOS Milan',
   'PACHA Ibiza', 'ARMANI Dubai', 'MANDALAY BAY Las Vegas', 'TEMPLE San Francisco',
@@ -80,7 +80,7 @@ const venues = [
   "ZELO'S Monte Carlo", 'WIRELESS FESTIVAL UK', 'READING & LEEDS FESTIVAL UK',
 ];
 
-const tracks = [
+const DEFAULT_TRACKS = [
   { title: 'Late Night Ricky — Midnight in London', time: '0:30' },
   { title: 'Late Night Ricky — Vegas Lights', time: '0:30' },
   { title: 'Late Night Ricky — Ibiza Sunrise', time: '0:30' },
@@ -88,7 +88,52 @@ const tracks = [
   { title: 'Late Night Ricky — After Hours', time: '0:30' },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Fetch from CMS — fall back to hardcoded defaults if DB is empty or unreachable
+  let shows: any[] = DEFAULT_SHOWS;
+  let logos: any[] = DEFAULT_LOGOS;
+  let clients: string[] = DEFAULT_CLIENTS;
+  let venues: string[] = DEFAULT_VENUES;
+  const tracks = DEFAULT_TRACKS; // no DB table for tracks yet
+
+  try {
+    const [dbCards, dbLogos, dbNames, dbVenues] = await Promise.all([
+      getShowCards(),
+      getPartnerLogos(),
+      getClientNames(),
+      getVenueTicker(),
+    ]);
+
+    if (dbCards.length > 0) {
+      shows = dbCards.map((c: any) => ({
+        href: c.href || '#',
+        image: c.imagePath || '/assets/ricky-hero-new.jpg',
+        venue: c.venue,
+        location: c.location,
+        season: c.season,
+        title: c.title,
+        description: c.description,
+      }));
+    }
+
+    if (dbLogos.length > 0) {
+      logos = dbLogos.map((l: any) => ({
+        src: l.imagePath || '',
+        alt: l.name,
+      }));
+    }
+
+    if (dbNames.length > 0) {
+      clients = dbNames.map((n: any) => n.name);
+    }
+
+    if (dbVenues && Array.isArray(dbVenues) && dbVenues.length > 0) {
+      venues = dbVenues;
+    }
+  } catch {
+    // DB unreachable — use hardcoded defaults, site works fine
+  }
+
   return (
     <>
       <Navbar />

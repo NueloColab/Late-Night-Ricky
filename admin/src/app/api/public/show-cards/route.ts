@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
+import { getShowCards } from '@/lib/cms';
 
 export const dynamic = 'force-dynamic';
-import { db } from '@/lib/db';
-import { showCards } from '@/lib/db/schema';
-import { asc } from 'drizzle-orm';
 
 export async function GET() {
   try {
-    const cards = await db.select().from(showCards).orderBy(asc(showCards.order));
+    const cards = await getShowCards();
     return NextResponse.json({ cards });
   } catch (err) {
     console.error('Public show cards GET error:', err);

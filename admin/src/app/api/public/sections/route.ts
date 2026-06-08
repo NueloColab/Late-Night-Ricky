@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
+import { getSiteSections } from '@/lib/cms';
 
 export const dynamic = 'force-dynamic';
-import { db } from '@/lib/db';
-import { siteSections } from '@/lib/db/schema';
-import { eq, asc } from 'drizzle-orm';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -14,13 +12,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const sections = await db
-      .select()
-      .from(siteSections)
-      .where(eq(siteSections.page, page as any))
-      .orderBy(asc(siteSections.order))
-      ;
-
+    const sections = await getSiteSections(page);
     return NextResponse.json({ sections });
   } catch (err) {
     console.error('Public sections GET error:', err);

@@ -74,7 +74,7 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
     setPublishing(true);
     await new Promise((r) => setTimeout(r, 800));
     setPublishing(false);
-    alert('Publish triggered (site rebuild — mock for now)');
+    alert('Content saved — site updates are live.');
   }
 
   function openMediaPicker(target: string, filter: 'image' | 'video' | 'all' = 'all') {

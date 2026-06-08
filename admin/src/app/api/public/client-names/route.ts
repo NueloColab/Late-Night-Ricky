@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
+import { getClientNames } from '@/lib/cms';
 
 export const dynamic = 'force-dynamic';
-import { db } from '@/lib/db';
-import { clientNames } from '@/lib/db/schema';
-import { asc } from 'drizzle-orm';
 
 export async function GET() {
   try {
-    const names = await db.select().from(clientNames).orderBy(asc(clientNames.order));
+    const names = await getClientNames();
     return NextResponse.json({ names });
   } catch (err) {
     console.error('Public client names GET error:', err);

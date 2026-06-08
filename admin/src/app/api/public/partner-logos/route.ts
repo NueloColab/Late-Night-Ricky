@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
+import { getPartnerLogos } from '@/lib/cms';
 
 export const dynamic = 'force-dynamic';
-import { db } from '@/lib/db';
-import { partnerLogos } from '@/lib/db/schema';
-import { asc } from 'drizzle-orm';
 
 export async function GET() {
   try {
-    const logos = await db.select().from(partnerLogos).orderBy(asc(partnerLogos.order));
+    const logos = await getPartnerLogos();
     return NextResponse.json({ logos });
   } catch (err) {
     console.error('Public partner logos GET error:', err);

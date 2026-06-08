@@ -28,3 +28,14 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     return NextResponse.json({ error: 'Update failed' }, { status: 500 });
   }
 }
+
+export async function DELETE(_request: Request, { params }: { params: { id: string } }) {
+  try {
+    const id = parseInt(params.id);
+    await db.delete(showCards).where(eq(showCards.id, id));
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error('Show card DELETE error:', err);
+    return NextResponse.json({ error: 'Delete failed' }, { status: 500 });
+  }
+}
