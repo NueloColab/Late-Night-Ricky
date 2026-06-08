@@ -379,14 +379,17 @@ export default function HomeEditor() {
     setSavingTrack(id);
 
     try {
+      console.log('[Track Upload] Starting upload for:', file.name, 'size:', file.size);
+
       // Step 1: Get Cloudinary upload signature
       const sigRes = await fetch('/api/upload-signature?' + new URLSearchParams({
         filename: file.name,
       }));
       const sigData = await sigRes.json();
+      console.log('[Track Upload] Signature response:', sigRes.status, sigData);
 
       if (!sigRes.ok || sigData.error) {
-        alert(sigData.error || 'Failed to get upload signature');
+        alert(sigData.error || `Failed to get upload signature (${sigRes.status})`);
         setSavingTrack(null);
         return;
       }
@@ -402,16 +405,20 @@ export default function HomeEditor() {
       cFormData.append('folder', sigData.folder);
       cFormData.append('overwrite', 'true');
 
+      console.log('[Track Upload] Uploading to Cloudinary...');
       const uploadRes = await fetch(cloudinaryUrl, { method: 'POST', body: cFormData });
       const uploadData = await uploadRes.json();
+      console.log('[Track Upload] Cloudinary response:', uploadRes.status, uploadData);
 
       if (!uploadRes.ok || uploadData.error) {
-        alert(uploadData.error?.message || 'Upload to Cloudinary failed');
+        const errMsg = uploadData.error?.message || JSON.stringify(uploadData.error) || 'Cloudinary upload failed';
+        alert(errMsg);
         setSavingTrack(null);
         return;
       }
 
       // Step 3: Save the Cloudinary URL to our DB
+      console.log('[Track Upload] Saving to DB...');
       const saveRes = await fetch('/api/upload', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -424,6 +431,7 @@ export default function HomeEditor() {
         }),
       });
       const saveData = await saveRes.json();
+      console.log('[Track Upload] DB save response:', saveRes.status, saveData);
 
       if (!saveRes.ok || saveData.error) {
         alert(saveData.error || 'Failed to save asset');
@@ -444,6 +452,7 @@ export default function HomeEditor() {
       });
       fetchTracks();
     } catch (err: any) {
+      console.error('[Track Upload] Exception:', err);
       alert(err.message || 'Upload failed');
     }
     setSavingTrack(null);

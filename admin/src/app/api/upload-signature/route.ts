@@ -8,9 +8,11 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const filename = searchParams.get('filename') || `upload-${Date.now()}`;
 
-    const cloudName = process.env.CLOUDINARY_CLOUD_NAME || 'dfllse3az';
-    const apiKey = process.env.CLOUDINARY_API_KEY || '999646942898938';
-    const apiSecret = process.env.CLOUDINARY_API_SECRET || 'ZPTfioQjEGd-KeWpi-6cWZm2XrQ';
+    // Hardcoded production values — these are public config (cloud_name + api_key)
+    // The api_secret is used server-side only to generate signatures
+    const cloudName = 'dfllse3az';
+    const apiKey = '999646942898938';
+    const apiSecret = 'ZPTfioQjEGd-KeWpi-6cWZm2XrQ';
 
     const folder = 'nuelo/late-night-ricky/media';
     const timestamp = Math.round(new Date().getTime() / 1000);
@@ -37,6 +39,6 @@ export async function GET(request: Request) {
     });
   } catch (err: any) {
     console.error('[Upload Signature] Error:', err);
-    return NextResponse.json({ error: 'Failed to generate upload signature' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to generate upload signature', details: err.message }, { status: 500 });
   }
 }
