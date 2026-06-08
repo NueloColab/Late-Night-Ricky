@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 const mainMenuItems = [
   { label: 'Overview', href: '/admin' },
   { label: 'Submissions', href: '/admin/submissions' },
+  { label: 'Enquiries', href: '/admin/enquiries' },
   { label: 'Projects', href: '/admin/projects' },
   { label: 'Quotes', href: '/admin/quotes' },
   { label: 'Invoices', href: '/admin/invoices' },

@@ -88,6 +88,21 @@ export const submissions = pgTable("submissions", {
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
 });
 
+export const enquiries = pgTable("enquiries", {
+  id: serial("id").primaryKey(),
+  type: text("type").notNull(), // 'booking' | 'private_message'
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  clubName: text("club_name"),
+  city: text("city"),
+  fee: text("fee"),
+  eventDate: text("event_date"),
+  message: text("message"),
+  status: text("status").default("new"), // new, read, replied, archived
+  notes: text("notes"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+});
+
 export const projects = pgTable("projects", {
   id: serial("id").primaryKey(),
   clientId: integer("client_id"),

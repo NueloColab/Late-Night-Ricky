@@ -9,6 +9,7 @@ export default function Dashboard() {
     tracks: 0,
     submissions: 0,
     invoices: 0,
+    enquiries: 0,
   });
 
   useEffect(() => {
@@ -30,10 +31,11 @@ export default function Dashboard() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
         <StatCard label="Shows" value={stats.shows} href="/admin/projects" />
         <StatCard label="Tracks" value={stats.tracks} href="/admin/tracks" />
         <StatCard label="Submissions" value={stats.submissions} href="/admin/submissions" />
+        <StatCard label="Enquiries" value={stats.enquiries} href="/admin/enquiries" />
         <StatCard label="Invoices" value={stats.invoices} href="/admin/invoices" />
       </div>
 
@@ -49,9 +51,9 @@ export default function Dashboard() {
         </div>
 
         <div className="bg-white border border-[#A3B5C4]/30 p-8">
-          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Recent Submissions</p>
-          <p className="text-sm text-[#5B7A8E] font-semibold uppercase tracking-[0.5px]">Fan uploads awaiting review</p>
-          <Link href="/admin/submissions" className="inline-block mt-6 text-[13px] text-[#1B3A4C] font-semibold uppercase tracking-[1.5px] hover:underline">
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Recent Enquiries</p>
+          <p className="text-sm text-[#5B7A8E] font-semibold uppercase tracking-[0.5px]">Booking & message inbox</p>
+          <Link href="/admin/enquiries" className="inline-block mt-6 text-[13px] text-[#1B3A4C] font-semibold uppercase tracking-[1.5px] hover:underline">
             View all →
           </Link>
         </div>
