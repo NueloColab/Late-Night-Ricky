@@ -14,3 +14,30 @@ export async function GET() {
     return NextResponse.json({ logos: [] }, { status: 500 });
   }
 }
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const { name, imagePath, href, order, isActive } = body;
+
+    if (!name) {
+      return NextResponse.json({ error: 'Name is required' }, { status: 400 });
+    }
+
+    const [logo] = await db
+      .insert(partnerLogos)
+      .values({
+        name,
+        imagePath: imagePath || null,
+        href: href || null,
+        order: order ?? 0,
+        isActive: isActive !== undefined ? isActive : true,
+      })
+      .returning();
+
+    return NextResponse.json({ logo }, { status: 201 });
+  } catch (err) {
+    console.error('Partner logos POST error:', err);
+    return NextResponse.json({ error: 'Create failed' }, { status: 500 });
+  }
+}
