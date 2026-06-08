@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 import { db } from '@/lib/db';
 import { assets } from '@/lib/db/schema';
 import { desc } from 'drizzle-orm';
@@ -24,12 +25,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
+    const MAX_SIZE = 4.5 * 1024 * 1024;
+    if (file.size > MAX_SIZE) {
+      return NextResponse.json({ error: `File too large. Max ${(MAX_SIZE / 1024 / 1024).toFixed(1)}MB` }, { status: 413 });
+    }
+
     const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
     const filename = `${Date.now()}-${safeName}`;
+
+    console.log(`[Media Upload] Storing: ${filename}, size: ${file.size}, type: ${file.type}`);
 
     const { url, size } = await storeFile(file, filename, {
       contentType: file.type,
     });
+
+    console.log(`[Media Upload] Stored at: ${url}`);
 
     const assetType = file.type.startsWith('image/')
       ? 'image'
@@ -37,7 +47,7 @@ export async function POST(request: Request) {
       ? 'video'
       : file.type.startsWith('audio/')
       ? 'audio'
-      : 'image';
+      : 'document';
 
     const [result] = await db.insert(assets).values({
       filename,
@@ -50,8 +60,8 @@ export async function POST(request: Request) {
     }).returning();
 
     return NextResponse.json({ asset: result });
-  } catch (err) {
+  } catch (err: any) {
     console.error('Media POST error:', err);
-    return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
+    return NextResponse.json({ error: err.message || 'Upload failed', details: err.toString() }, { status: 500 });
   }
 }

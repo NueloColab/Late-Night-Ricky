@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import Image from 'next/image';
 
 interface Asset {
   id: number;
@@ -25,19 +24,28 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
   const [assets, setAssets] = useState<Asset[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
   const [search, setSearch] = useState('');
 
   const fetchAssets = useCallback(async () => {
-    const res = await fetch('/api/assets');
-    if (res.ok) {
-      const data = await res.json();
-      setAssets(data.assets || []);
+    try {
+      const res = await fetch('/api/assets');
+      if (res.ok) {
+        const data = await res.json();
+        setAssets(data.assets || []);
+      } else {
+        console.error('Failed to fetch assets');
+      }
+    } catch (e) {
+      console.error('Assets fetch error:', e);
     }
     setLoading(false);
   }, []);
 
   useEffect(() => {
     if (open) {
+      setLoading(true);
+      setUploadError('');
       fetchAssets();
     }
   }, [open, fetchAssets]);
@@ -47,13 +55,28 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
     if (!file) return;
 
     setUploading(true);
-    const formData = new FormData();
-    formData.append('file', file);
-    const res = await fetch('/api/upload', { method: 'POST', body: formData });
-    const data = await res.json();
-    if (data.success && data.asset) {
-      onSelect(data.asset.path);
-      onClose();
+    setUploadError('');
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        setUploadError(data.error || `Upload failed (${res.status})`);
+        setUploading(false);
+        e.target.value = '';
+        return;
+      }
+
+      if (data.success && data.asset) {
+        onSelect(data.asset.path);
+        onClose();
+      } else {
+        setUploadError('Upload returned invalid response');
+      }
+    } catch (err: any) {
+      setUploadError(err.message || 'Network error during upload');
     }
     setUploading(false);
     e.target.value = '';
@@ -86,11 +109,19 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
             onChange={(e) => setSearch(e.target.value)}
             className="flex-1 px-4 py-2 bg-[#E3E8ED] rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
           />
-          <label className="inline-flex items-center gap-2 px-4 py-2 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold cursor-pointer hover:bg-[#2a4f66] transition-colors">
+          <label className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors ${
+            uploading ? 'bg-[#6B8FAB] text-white' : 'bg-[#1B3A4C] text-white hover:bg-[#2a4f66]'
+          }`}>
             {uploading ? 'Uploading...' : 'Upload New'}
             <input type="file" className="hidden" onChange={handleUpload} disabled={uploading} accept={filterType === 'image' ? 'image/*' : filterType === 'video' ? 'video/*' : undefined} />
           </label>
         </div>
+
+        {uploadError && (
+          <div className="px-4 py-3 bg-red-50 border-b border-red-100">
+            <p className="text-sm text-red-600 font-medium">⚠ {uploadError}</p>
+          </div>
+        )}
 
         <div className="flex-1 overflow-y-auto p-4">
           {loading ? (
@@ -109,9 +140,17 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
                   className="group relative aspect-square bg-[#E3E8ED] rounded-xl overflow-hidden hover:ring-2 hover:ring-[#1B3A4C] transition-all text-left"
                 >
                   {asset.type === 'image' ? (
-                    <Image src={asset.path} alt={asset.originalName} fill className="object-cover" sizes="150px" />
+                    <img
+                      src={asset.path}
+                      alt={asset.originalName}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%238FA8BE%22 stroke-width=%222%22%3E%3Crect x=%223%22 y=%223%22 width=%2218%22 height=%2218%22 rx=%222%22/%3E%3Ccircle cx=%228.5%22 cy=%228.5%22 r=%221.5%22/%3E%3Cpath d=%22M21 15l-5-5L5 21%22/%3E%3C/svg%3E';
+                      }}
+                    />
                   ) : asset.type === 'video' ? (
-                    <video src={asset.path} className="w-full h-full object-cover" />
+                    <video src={asset.path} className="w-full h-full object-cover" preload="metadata" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
                       <FileIcon className="w-8 h-8 text-[#8FA8BE]" />

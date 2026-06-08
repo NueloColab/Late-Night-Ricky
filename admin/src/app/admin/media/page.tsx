@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import Image from 'next/image';
 
 interface Asset {
   id: number;
@@ -21,12 +20,17 @@ export default function MediaPage() {
   const [filter, setFilter] = useState('all');
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
   const fetchAssets = useCallback(async () => {
-    const res = await fetch('/api/media');
-    if (res.ok) {
-      const data = await res.json();
-      setAssets(data.assets || []);
+    try {
+      const res = await fetch('/api/media');
+      if (res.ok) {
+        const data = await res.json();
+        setAssets(data.assets || []);
+      }
+    } catch (e) {
+      console.error('Fetch assets error:', e);
     }
     setLoading(false);
   }, []);
@@ -40,12 +44,22 @@ export default function MediaPage() {
     if (!files?.length) return;
 
     setUploading(true);
-    for (const file of Array.from(files)) {
-      const formData = new FormData();
-      formData.append('file', file);
-      await fetch('/api/media', { method: 'POST', body: formData });
+    setUploadError('');
+    try {
+      for (const file of Array.from(files)) {
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch('/api/media', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || data.error) {
+          setUploadError(data.error || `Upload failed (${res.status})`);
+          break;
+        }
+      }
+      await fetchAssets();
+    } catch (err: any) {
+      setUploadError(err.message || 'Network error');
     }
-    await fetchAssets();
     setUploading(false);
     e.target.value = '';
   }
@@ -95,6 +109,12 @@ export default function MediaPage() {
         </select>
       </div>
 
+      {uploadError && (
+        <div className="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-xl">
+          <p className="text-sm text-red-600 font-medium">⚠ {uploadError}</p>
+        </div>
+      )}
+
       {loading ? (
         <p className="text-[#8FA3B3] text-sm">Loading...</p>
       ) : filtered.length === 0 ? (
@@ -110,15 +130,17 @@ export default function MediaPage() {
             >
               <div className="aspect-square bg-[#0A0A0A] flex items-center justify-center relative">
                 {asset.type === 'image' ? (
-                  <Image
+                  <img
                     src={asset.path}
                     alt={asset.originalName}
-                    fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                    className="object-cover"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%238FA8BE%22 stroke-width=%222%22%3E%3Crect x=%223%22 y=%223%22 width=%2218%22 height=%2218%22 rx=%222%22/%3E%3Ccircle cx=%228.5%22 cy=%228.5%22 r=%221.5%22/%3E%3Cpath d=%22M21 15l-5-5L5 21%22/%3E%3C/svg%3E';
+                    }}
                   />
                 ) : asset.type === 'video' ? (
-                  <video src={asset.path} className="w-full h-full object-cover" />
+                  <video src={asset.path} className="w-full h-full object-cover" preload="metadata" />
                 ) : (
                   <FileIcon className="w-10 h-10 text-[#8FA3B3]" />
                 )}
