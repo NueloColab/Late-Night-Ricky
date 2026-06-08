@@ -28,11 +28,12 @@ export default function ContactPage() {
         const emailSection = sections.find((s: any) => s.section === 'email');
         const instagramSection = sections.find((s: any) => s.section === 'instagram');
         const formSection = sections.find((s: any) => s.section === 'form');
+        const imageSection = sections.find((s: any) => s.section === 'image');
         const infoSection = sections.find((s: any) => s.section === 'info');
 
         const email = emailSection?.content?.[0] || infoSection?.content?.bookingEmail || contactInfo.email;
         const instagram = instagramSection?.content?.[0] || infoSection?.content?.instagram || contactInfo.instagram;
-        const image = infoSection?.content?.image || contactInfo.image;
+        const image = imageSection?.content?.[0] || infoSection?.content?.image || contactInfo.image;
         const formEnabled = formSection?.isActive !== false;
 
         setContactInfo({ email, instagram, image, formEnabled });

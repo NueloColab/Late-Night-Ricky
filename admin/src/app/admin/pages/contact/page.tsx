@@ -14,7 +14,7 @@ interface SectionData {
   isActive: boolean;
 }
 
-const CONTACT_SECTIONS = ['email', 'instagram', 'form'];
+const CONTACT_SECTIONS = ['image', 'email', 'instagram', 'form'];
 
 export default function ContactEditor() {
   const [sections, setSections] = useState<SectionData[]>([]);
@@ -37,9 +37,14 @@ export default function ContactEditor() {
     fetchSections();
   }, [fetchSections]);
 
+  const imageSection = sections.find((s) => s.section === 'image');
   const emailSection = sections.find((s) => s.section === 'email');
   const instagramSection = sections.find((s) => s.section === 'instagram');
   const formSection = sections.find((s) => s.section === 'form');
+
+  const imageValue = typeof imageSection?.content === 'string'
+    ? imageSection.content
+    : (imageSection?.content?.[0] || '');
 
   const emailValue = typeof emailSection?.content === 'string'
     ? emailSection.content
@@ -70,7 +75,7 @@ export default function ContactEditor() {
 
   const sectionList = CONTACT_SECTIONS.map((name) => {
     const s = sections.find((sec) => sec.section === name);
-    const label = name === 'email' ? 'Email' : name === 'instagram' ? 'Instagram' : 'Contact Form';
+    const label = name === 'image' ? 'Portrait Image' : name === 'email' ? 'Email' : name === 'instagram' ? 'Instagram' : 'Contact Form';
     return { name, label, exists: !!s, id: s?.id, isActive: s?.isActive ?? true };
   });
 
@@ -132,6 +137,42 @@ export default function ContactEditor() {
         <div className="flex-1 min-w-0">
           {loading ? (
             <p className="text-[#6B8FAB] text-sm">Loading...</p>
+          ) : selectedSection === 'image' ? (
+            <div className="bg-white border border-[#A3B5C4]/30 p-6">
+              <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Contact</p>
+              <p className="text-sm text-[#5B7A8E] mb-6 font-semibold uppercase tracking-[0.5px]">The portrait image on the left side of the contact page</p>
+              <div className="relative w-full max-w-md aspect-[3/4] bg-[#E3E8ED] rounded-xl overflow-hidden mb-4 border border-[#A3B5C4]/30">
+                {imageValue ? (
+                  <img src={imageValue} alt="Contact portrait" className="object-cover w-full h-full" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A3B5C4" strokeWidth="2">
+                      <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" />
+                    </svg>
+                  </div>
+                )}
+              </div>
+              <input
+                type="text"
+                value={imageValue}
+                onChange={(e) => {
+                  setSections((prev) =>
+                    prev.map((s) =>
+                      s.section === 'image' ? { ...s, content: [e.target.value] } : s
+                    )
+                  );
+                }}
+                placeholder="/assets/ricky-hero-new.jpg"
+                className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] mb-4"
+              />
+              <button
+                onClick={() => saveField('image', imageValue)}
+                disabled={saving}
+                className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition disabled:opacity-50"
+              >
+                {saving ? 'Saving...' : 'Save Image'}
+              </button>
+            </div>
           ) : selectedSection === 'email' ? (
             <div className="bg-white border border-[#A3B5C4]/30 p-6">
               <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Contact</p>
