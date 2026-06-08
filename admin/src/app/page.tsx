@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
+import AudioTrackList from '../components/AudioTrackList';
 import { getShowCards, getPartnerLogos, getClientNames, getVenueTicker, getTracks } from '@/lib/cms';
 export const dynamic = 'force-dynamic';
 
@@ -109,6 +110,7 @@ export default async function HomePage() {
       tracks = dbTracks.map((t: any) => ({
         title: t.title,
         time: t.duration || '0:30',
+        src: t.filePath,
       }));
     }
 
@@ -308,17 +310,7 @@ export default async function HomePage() {
                 </a>
               </div>
               <div className="border-t border-[#E3E8ED] pt-6">
-                {tracks.map((track, i) => (
-                  <div key={i} className="flex items-center gap-4 py-3.5 border-b border-[#E3E8ED] hover:bg-[rgba(227,232,237,0.4)] hover:mx-[-12px] hover:px-3 hover:rounded-lg transition cursor-pointer group">
-                    <button className="w-10 h-10 rounded-full border-[1.5px] border-[#111] bg-transparent flex items-center justify-center text-[#111] group-hover:bg-[#111] group-hover:text-white transition flex-shrink-0">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="7 4 19 12 7 20" /></svg>
-                    </button>
-                    <div className="flex-1 flex justify-between items-center gap-4">
-                      <span className="font-serif text-[16px] font-medium text-[#1B3A4C]">{track.title}</span>
-                      <span className="text-[13px] text-[#6B8FAB] font-variant-numeric-tabular">{track.time}</span>
-                    </div>
-                  </div>
-                ))}
+                <AudioTrackList tracks={tracks} />
               </div>
             </div>
           </div>
