@@ -627,6 +627,8 @@ export default function HomeEditor() {
       updateSectionContent('reach_out', 'image', path);
     } else if (mediaTarget.type === 'reach-grammy') {
       updateSectionContent('reach', 'grammyBadge', path);
+    } else if (mediaTarget.type === 'radio-image') {
+      updateSectionContent('radio', 'image', path);
     }
   }
 
@@ -785,10 +787,12 @@ export default function HomeEditor() {
             />
           ) : selectedSection === 'radio' ? (
             <RadioEditor
+              section={getSection('radio')}
               tracks={tracks}
               loading={tracksLoading}
               savingTrack={savingTrack}
               playingTrack={playingTrack}
+              savingSection={savingSection === 'radio'}
               onTogglePlay={togglePlay}
               onMove={moveTrack}
               onUpdate={updateTrack}
@@ -796,6 +800,9 @@ export default function HomeEditor() {
               onDelete={deleteTrack}
               onAdd={addTrack}
               onUploadFile={uploadTrackFile}
+              onSectionChange={(key, val) => updateSectionContent('radio', key, val)}
+              onSectionSave={() => saveSection('radio')}
+              onOpenMedia={() => openMediaPicker('radio-image')}
             />
           ) : selectedSection === 'clients' ? (
             <ClientsEditor
@@ -1311,10 +1318,12 @@ function PartnersEditor({
 }
 
 function RadioEditor({
+  section,
   tracks,
   loading,
   savingTrack,
   playingTrack,
+  savingSection,
   onTogglePlay,
   onMove,
   onUpdate,
@@ -1322,11 +1331,16 @@ function RadioEditor({
   onDelete,
   onAdd,
   onUploadFile,
+  onSectionChange,
+  onSectionSave,
+  onOpenMedia,
 }: {
+  section?: SectionData;
   tracks: Track[];
   loading: boolean;
   savingTrack: number | null;
   playingTrack: number | null;
+  savingSection?: boolean;
   onTogglePlay: (id: number, filePath: string | null) => void;
   onMove: (id: number, dir: 'up' | 'down') => void;
   onUpdate: (id: number, field: string, value: any) => void;
@@ -1334,12 +1348,114 @@ function RadioEditor({
   onDelete: (id: number) => void;
   onAdd: () => void;
   onUploadFile: (id: number, file: File) => void;
+  onSectionChange?: (key: string, val: any) => void;
+  onSectionSave?: () => void;
+  onOpenMedia?: () => void;
 }) {
+  const content = section ? parseContent(section.content) : {};
   return (
     <div className="bg-white border border-[#A3B5C4]/30 p-6 space-y-6">
+      {section && (
+        <div className="space-y-4 pb-4 border-b border-[#A3B5C4]/20">
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Radio Section</p>
+          <p className="text-sm text-[#5B7A8E] mb-4 font-semibold uppercase tracking-[0.5px]">Edit the radio section content and image</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Portrait Image</label>
+              <div className="relative w-full aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 border border-[#A3B5C4]/30">
+                {content.image ? (
+                  <img src={content.image} alt="Radio portrait" className="object-cover w-full h-full" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <ImageIcon className="w-8 h-8 text-[#A3B5C4]" />
+                  </div>
+                )}
+              </div>
+              {onOpenMedia && (
+                <button
+                  onClick={onOpenMedia}
+                  className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#111] hover:text-white transition"
+                >
+                  Replace Image
+                </button>
+              )}
+            </div>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Label</label>
+                <input
+                  type="text"
+                  value={content.label || ''}
+                  onChange={(e) => onSectionChange?.('label', e.target.value)}
+                  className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Headline</label>
+                <input
+                  type="text"
+                  value={content.headline || ''}
+                  onChange={(e) => onSectionChange?.('headline', e.target.value)}
+                  className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Description</label>
+                <textarea
+                  value={content.description || ''}
+                  onChange={(e) => onSectionChange?.('description', e.target.value)}
+                  rows={3}
+                  className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-y"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div>
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Spotify URL</label>
+              <input
+                type="text"
+                value={content.spotifyUrl || ''}
+                onChange={(e) => onSectionChange?.('spotifyUrl', e.target.value)}
+                className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Apple Music URL</label>
+              <input
+                type="text"
+                value={content.appleMusicUrl || ''}
+                onChange={(e) => onSectionChange?.('appleMusicUrl', e.target.value)}
+                className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">YouTube URL</label>
+              <input
+                type="text"
+                value={content.youtubeUrl || ''}
+                onChange={(e) => onSectionChange?.('youtubeUrl', e.target.value)}
+                className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+              />
+            </div>
+          </div>
+          {onSectionSave && (
+            <div className="flex justify-end">
+              <button
+                onClick={onSectionSave}
+                disabled={savingSection}
+                className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition disabled:opacity-50"
+              >
+                {savingSection ? 'Saving...' : 'Save Section'}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Radio</p>
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Tracks</p>
           <p className="text-sm text-[#5B7A8E] font-semibold uppercase tracking-[0.5px]">Edit audio tracks — {tracks.length} total</p>
         </div>
         <button
