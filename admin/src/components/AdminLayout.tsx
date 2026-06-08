@@ -1,23 +1,52 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import AdminSidebar from './AdminSidebar';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const userToggled = useRef(false);
+  const lastWidth = useRef(0);
 
-  useEffect(() => {
-    const checkMobile = () => {
-      const mobile = window.innerWidth < 1024;
-      setIsMobile(mobile);
+  const checkMobile = useCallback(() => {
+    const width = window.innerWidth;
+    const mobile = width < 1024;
+
+    // Only update if crossing the breakpoint (significant change)
+    const wasMobile = lastWidth.current < 1024;
+    const crossingBreakpoint = wasMobile !== mobile || lastWidth.current === 0;
+    lastWidth.current = width;
+
+    setIsMobile(mobile);
+
+    // Only auto-toggle if user hasn't manually toggled AND we're crossing breakpoint
+    if (!userToggled.current && crossingBreakpoint) {
       if (!mobile) setSidebarOpen(true);
       else setSidebarOpen(false);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    }
   }, []);
+
+  useEffect(() => {
+    // Debounce resize to avoid iPad URL bar triggering
+    let timeout: ReturnType<typeof setTimeout>;
+    const debouncedCheck = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(checkMobile, 150);
+    };
+
+    checkMobile(); // initial check
+    window.addEventListener('resize', debouncedCheck);
+    return () => {
+      window.removeEventListener('resize', debouncedCheck);
+      clearTimeout(timeout);
+    };
+  }, [checkMobile]);
+
+  const toggleSidebar = () => {
+    userToggled.current = true;
+    setSidebarOpen((prev) => !prev);
+  };
 
   return (
     <div className="min-h-screen bg-[#E3E8ED] text-[#1B3A4C] flex">
@@ -50,7 +79,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Header */}
         <header className="h-20 border-b border-[#A3B5C4]/30 flex items-center px-6 sticky top-0 z-30 bg-[#E3E8ED]/95 backdrop-blur-sm">
           <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
+            onClick={toggleSidebar}
             className="mr-4 p-2 hover:bg-[#1B3A4C]/10 rounded transition"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

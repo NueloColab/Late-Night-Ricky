@@ -56,11 +56,6 @@ interface Task {
   phase?: string;
 }
 
-interface MoodBoardImage {
-  url: string;
-  caption: string;
-}
-
 interface Project {
   id: number;
   clientId: number | null;
@@ -80,7 +75,6 @@ interface Project {
   team: TeamMember[] | null;
   files: ProjectFile[] | null;
   tasks: Task[] | null;
-  moodBoard: MoodBoardImage[] | null;
   contractNumber: string | null;
   createdAt: string;
   updatedAt: string;
@@ -100,6 +94,7 @@ interface Invoice {
   status: string;
   subtotal: number;
   total: number;
+  amountPaid: number | null;
   dueDate: string | null;
   createdAt: string;
 }
@@ -130,7 +125,8 @@ const SERVICE_STATUS_STYLES: Record<string, string> = {
 
 const TEAM_ROLES = ["DJ", "Producer", "Engineer", "Manager", "Coordinator", "Other"];
 
-const TASK_PHASES = ["ALL", "DISCOVERY", "STRATEGY", "DESIGN", "DEVELOPMENT", "DELIVERY", "REVIEW"];
+// Music-specific phases for DJ/Producer projects
+const TASK_PHASES = ["ALL", "PRE-PRODUCTION", "PRODUCTION", "MIXING", "MASTERING", "RELEASE", "PROMOTION"];
 
 const gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 0, maximumFractionDigits: 0 });
 const gbpFull = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -156,7 +152,7 @@ export default function ProjectDetailPage() {
   const [form, setForm] = useState<Partial<Project>>({});
   const [newService, setNewService] = useState({ name: "", status: "Pending", fee: null as number | null });
   const [newTeam, setNewTeam] = useState({ name: "", role: "DJ", email: "", fee: null as number | null, notes: "" });
-  const [newTask, setNewTask] = useState({ text: "", assignee: "", dueDate: "", phase: "DISCOVERY" });
+  const [newTask, setNewTask] = useState({ text: "", assignee: "", dueDate: "", phase: "PRE-PRODUCTION" });
   const [fileUrl, setFileUrl] = useState("");
   const [fileName, setFileName] = useState("");
   const [filePhase, setFilePhase] = useState("");
@@ -271,7 +267,7 @@ export default function ProjectDetailPage() {
     const task: Task = { id: String(Date.now()), text: newTask.text, completed: false, assignee: newTask.assignee, dueDate: newTask.dueDate || null, phase: newTask.phase };
     const tasks = [...(project?.tasks || []), task];
     await updateProject({ tasks });
-    setNewTask({ text: "", assignee: "", dueDate: "", phase: "DISCOVERY" });
+    setNewTask({ text: "", assignee: "", dueDate: "", phase: "PRE-PRODUCTION" });
     setShowTaskInput(false);
   }
 
@@ -311,9 +307,6 @@ export default function ProjectDetailPage() {
   }
 
   const totalQuoted = quotes.reduce((s, q) => s + Number(q.total), 0);
-  const totalInvoiced = invoices.reduce((s, i) => s + Number(i.total), 0);
-  const totalPaid = invoices.filter((i) => i.status === "paid").reduce((s, i) => s + Number(i.total), 0);
-  const outstanding = totalInvoiced - totalPaid;
   const teamCosts = (project?.team || []).reduce((s, m) => s + (Number(m.fee) || 0), 0);
   const profit = (project?.fee || 0) - teamCosts;
   const profitPercent = project?.fee ? Math.round((profit / project.fee) * 100) : 0;
@@ -321,78 +314,64 @@ export default function ProjectDetailPage() {
 
   const filteredTasks = taskFilter === "ALL"
     ? (project?.tasks || [])
-    : (project?.tasks || []).filter((t) => (t.phase || "DISCOVERY") === taskFilter);
+    : (project?.tasks || []).filter((t) => (t.phase || "PRE-PRODUCTION") === taskFilter);
 
   if (loading) return <p className="text-[#5B7A8E] p-8 text-center">Loading...</p>;
   if (!project) return <p className="text-[#5B7A8E] p-8 text-center">Project not found.</p>;
 
   return (
     <div className="space-y-6">
-      {/* Header — Nuelo style */}
+      {/* Header — LNR Admin style */}
       <div>
         <Link href="/admin/projects" className="text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest hover:underline flex items-center gap-1 mb-4">
           <ArrowLeft size={12} /> Back to Pipeline
         </Link>
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="flex-1">
-            {/* Project code */}
             <div className="flex items-center gap-3 mb-2">
               <div className="w-8 h-px bg-[#A3B5C4]" />
               <span className="text-xs text-[#999] uppercase tracking-wider">PRJ-{String(project.id).padStart(3, "0")}</span>
             </div>
-            {/* Title — elegant serif style */}
-            <h1 className="font-bold text-[clamp(24px,3.5vw,36px)] text-[#111] tracking-[-0.5px]"
-                style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              {project.title}
-            </h1>
-            {/* Subtitle */}
-            <p className="text-sm text-[#5B7A8E] mt-1">
-              {client?.name || "Unknown Client"} — Late Night Ricky
-            </p>
+            <h1 className="font-black text-[clamp(24px,3.5vw,36px)] text-[#111] tracking-[-0.5px] uppercase">{project.title}</h1>
+            <p className="text-sm text-[#5B7A8E] mt-1">{client?.name || "Unknown Client"} — Late Night Ricky</p>
           </div>
-          {/* Status badge */}
-          <span className={`text-xs font-medium uppercase tracking-wide px-3 py-1.5 rounded border ${
-            project.status === "paid" ? "bg-[#2d6a2d]/5 text-[#2d6a2d] border-[#2d6a2d]/20" :
-            project.status === "in-progress" || project.status === "approved" ? "bg-[#1B3A4C]/5 text-[#1B3A4C] border-[#1B3A4C]/20" :
-            project.status === "completed" || project.status === "invoiced" ? "bg-[#6B8FAB]/10 text-[#6B8FAB] border-[#6B8FAB]/20" :
-            "bg-[#E3E8ED]/50 text-[#5B7A8E] border-[#A3B5C4]/30"
+          <span className={`text-xs font-bold uppercase tracking-wide px-3 py-1.5 rounded ${
+            project.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" :
+            project.status === "in-progress" || project.status === "approved" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" :
+            project.status === "completed" || project.status === "invoiced" ? "bg-[#6B8FAB]/10 text-[#6B8FAB]" :
+            "bg-[#E3E8ED]/50 text-[#5B7A8E]"
           }`}>
             {PIPELINE_LABELS[project.status] || project.status}
           </span>
         </div>
       </div>
 
-      {/* Progress & Stats Dashboard — Nuelo style */}
-      <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-5"
-           style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-        {/* Top row: PROGRESS label left, action buttons right */}
-        <div className="flex items-start justify-between mb-3"
-             style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+      {/* Progress & Stats Dashboard — LNR style */}
+      <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-5">
+        <div className="flex items-start justify-between mb-3">
           <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Progress</p>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowTaskInput(!showTaskInput)}
-              className="px-4 py-2 bg-[#111] text-white rounded text-xs font-semibold uppercase tracking-wide hover:opacity-90 transition flex items-center gap-1"
+              className="px-4 py-2 bg-[#111] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
             >
               <Plus size={14} /> Task
             </button>
             <button
               onClick={() => setShowFileUpload(!showFileUpload)}
-              className="px-4 py-2 border border-[#A3B5C4]/30 rounded text-xs font-semibold uppercase tracking-wide text-[#111] hover:bg-[#E3E8ED]/50 transition flex items-center gap-1"
+              className="px-4 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] transition flex items-center gap-1"
             >
               <Paperclip size={14} /> File
             </button>
             <div className="relative">
-              <button className="px-4 py-2 border border-[#A3B5C4]/30 rounded text-xs font-semibold uppercase tracking-wide text-[#111] hover:bg-[#E3E8ED]/50 transition flex items-center gap-1">
+              <button className="px-4 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] transition flex items-center gap-1">
                 {PIPELINE_LABELS[project.status] || project.status} <ChevronDown size={14} />
               </button>
             </div>
           </div>
         </div>
-        {/* Metrics row */}
-        <div className="flex items-center gap-6 mb-4"
-             style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
-          <p className="text-3xl font-bold text-[#111]" style={{ fontFamily: "Georgia, serif" }}>{progress}%</p>
+        <div className="flex items-center gap-6 mb-4">
+          <p className="text-3xl font-black text-[#111]">{progress}%</p>
           <div className="h-10 w-px bg-[#A3B5C4]/30" />
           <div>
             <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-0.5">Tasks</p>
@@ -409,7 +388,6 @@ export default function ProjectDetailPage() {
             <p className="text-sm font-bold text-[#111]">{(project?.services || []).filter((s) => s.status === "Delivered").length}/{(project?.services || []).length} delivered</p>
           </div>
         </div>
-        {/* Progress bar */}
         <div className="w-full bg-[#E3E8ED]/50 rounded-full h-2 overflow-hidden mb-2">
           <div
             className="h-full rounded-full transition-all duration-500"
@@ -420,28 +398,26 @@ export default function ProjectDetailPage() {
       </div>
 
       {/* Two Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6"
-           style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
-        {/* LEFT COLUMN — Main Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        {/* LEFT COLUMN */}
         <div className="lg:col-span-3 space-y-6">
           {/* Tasks & Milestones */}
           <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <CheckSquare size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-semibold text-base text-[#111]"
-                    style={{ fontFamily: "Georgia, serif" }}>Tasks & Milestones</h3>
+                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Tasks & Milestones</h3>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setShowTaskInput(!showTaskInput)}
-                  className="px-4 py-2 border border-[#A3B5C4]/30 rounded text-xs font-semibold uppercase tracking-wide text-[#111] hover:bg-[#E3E8ED]/50 transition flex items-center gap-1"
+                  className="px-4 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] transition flex items-center gap-1"
                 >
                   <Plus size={14} /> Milestone
                 </button>
                 <button
                   onClick={() => setShowTaskInput(!showTaskInput)}
-                  className="px-4 py-2 bg-[#111] text-white rounded text-xs font-semibold uppercase tracking-wide hover:opacity-90 transition flex items-center gap-1"
+                  className="px-4 py-2 bg-[#111] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
                 >
                   <Plus size={14} /> Task
                 </button>
@@ -454,7 +430,7 @@ export default function ProjectDetailPage() {
                 <button
                   key={phase}
                   onClick={() => setTaskFilter(phase)}
-                  className={`px-3 py-1.5 rounded text-xs font-medium uppercase tracking-wide transition-colors ${
+                  className={`px-3 py-1.5 rounded text-[11px] font-semibold uppercase tracking-[1.5px] transition-colors ${
                     taskFilter === phase
                       ? "bg-[#111] text-white"
                       : "bg-white border border-[#A3B5C4]/30 text-[#5B7A8E] hover:bg-[#E3E8ED]/50"
@@ -511,11 +487,11 @@ export default function ProjectDetailPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <PoundSterling size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-semibold text-base text-[#111]" style={{ fontFamily: "Georgia, serif" }}>Services</h3>
+                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Services</h3>
               </div>
               <button
                 onClick={() => setShowServiceForm(!showServiceForm)}
-                className="px-4 py-2 border border-[#A3B5C4]/30 rounded text-xs font-semibold uppercase tracking-wide text-[#111] hover:bg-[#E3E8ED]/50 transition flex items-center gap-1"
+                className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add Service
               </button>
@@ -567,11 +543,11 @@ export default function ProjectDetailPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Users size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-semibold text-base text-[#111]" style={{ fontFamily: "Georgia, serif" }}>Team & Assignments</h3>
+                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Team & Assignments</h3>
               </div>
               <button
                 onClick={() => setShowTeamForm(!showTeamForm)}
-                className="px-4 py-2 bg-[#111] text-white rounded text-xs font-semibold uppercase tracking-wide hover:opacity-90 transition flex items-center gap-1"
+                className="px-4 py-2 bg-[#111] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add Member
               </button>
@@ -604,7 +580,6 @@ export default function ProjectDetailPage() {
                   >
                     <div className="flex items-center gap-3 flex-1"
                     >
-                      {/* Avatar with initial */}
                       <div className="w-10 h-10 rounded bg-[#6B8FAB] flex items-center justify-center flex-shrink-0"
                       >
                         <span className="text-white text-sm font-bold"
@@ -639,11 +614,11 @@ export default function ProjectDetailPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <DollarSign size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-semibold text-base text-[#111]" style={{ fontFamily: "Georgia, serif" }}>Referrals & Commissions</h3>
+                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Referrals & Commissions</h3>
               </div>
               <button
                 onClick={() => setShowReferralForm(!showReferralForm)}
-                className="px-4 py-2 bg-[#111] text-white rounded text-xs font-semibold uppercase tracking-wide hover:opacity-90 transition flex items-center gap-1"
+                className="px-4 py-2 bg-[#111] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add Referral
               </button>
@@ -671,11 +646,11 @@ export default function ProjectDetailPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Upload size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-semibold text-base text-[#111]" style={{ fontFamily: "Georgia, serif" }}>Files & Deliverables</h3>
+                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Files & Deliverables</h3>
               </div>
               <button
                 onClick={() => setShowFileUpload(!showFileUpload)}
-                className="px-4 py-2 bg-[#111] text-white rounded text-xs font-semibold uppercase tracking-wide hover:opacity-90 transition flex items-center gap-1"
+                className="px-4 py-2 bg-[#111] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add File
               </button>
@@ -725,7 +700,7 @@ export default function ProjectDetailPage() {
           {/* Notes */}
           {project.notes && (
             <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-6">
-              <h3 className="font-semibold text-base text-[#111] mb-3" style={{ fontFamily: "Georgia, serif" }}>Notes</h3>
+              <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase mb-3">Notes</h3>
               <p className="text-sm text-[#5B7A8E] whitespace-pre-wrap">{project.notes}</p>
             </div>
           )}
@@ -745,7 +720,6 @@ export default function ProjectDetailPage() {
               </button>
             </div>
 
-            {/* Client */}
             {client && (
               <div className="mb-4">
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Client</p>
@@ -756,7 +730,6 @@ export default function ProjectDetailPage() {
               </div>
             )}
 
-            {/* Financial Summary nested */}
             <div className="bg-[#F8F9FA] rounded-lg p-4 mb-4">
               <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-3">Financial Summary</p>
               <div className="flex justify-between items-center mb-2">
@@ -771,7 +744,6 @@ export default function ProjectDetailPage() {
               </div>
             </div>
 
-            {/* Start / Deadline */}
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Start</p>
@@ -783,7 +755,6 @@ export default function ProjectDetailPage() {
               </div>
             </div>
 
-            {/* Description */}
             {project.description && (
               <div>
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Description</p>
@@ -803,90 +774,96 @@ export default function ProjectDetailPage() {
               <p className="text-sm text-[#999] italic text-center py-4">No invoices or quotes yet.</p>
             ) : (
               <div className="space-y-4">
-                {invoices.map((inv) => (
-                  <div key={inv.id}>
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-semibold text-[#111]">{inv.invoiceNumber}</span>
-                        <ExternalLink size={12} className="text-[#6B8FAB]" />
-                      </div>
-                      <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${inv.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : inv.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : "bg-amber-50 text-amber-600"}`}>
-                        {inv.status === "paid" ? "DEPOSIT PAID" : inv.status}
-                      </span>
-                    </div>
-                    {/* Payment schedule */}
-                    <div className="bg-[#F8F9FA] rounded-lg p-3 mt-2">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs text-[#5B7A8E]">Total</span>
-                        <span className="text-sm font-bold text-[#111]">{gbpFull.format(inv.total)}</span>
-                      </div>
-                      <div className="flex justify-between items-center mb-3">
-                        <span className="text-xs text-[#5B7A8E]">Status</span>
-                        <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${inv.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : "bg-red-50 text-red-600"}`}>
-                          {inv.status === "paid" ? "PAID" : "PARTIALLY PAID"}
+                {invoices.map((inv) => {
+                  const invPaid = Number(inv.amountPaid || 0);
+                  const invTotal = Number(inv.total);
+                  const invOutstanding = invTotal - invPaid;
+                  const invDeposit = Math.round(invTotal * 0.5);
+                  const isFullyPaid = inv.status === "paid";
+                  return (
+                    <div key={inv.id}>
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-semibold text-[#111]">{inv.invoiceNumber}</span>
+                          <ExternalLink size={12} className="text-[#6B8FAB]" />
+                        </div>
+                        <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${isFullyPaid ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : inv.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : "bg-amber-50 text-amber-600"}`}>
+                          {isFullyPaid ? "PAID" : inv.status === "sent" ? "DEPOSIT PAID" : inv.status}
                         </span>
                       </div>
-                      {/* Progress bar */}
-                      <div className="mb-3">
-                        <div className="flex justify-between text-[10px] text-[#999] mb-1">
-                          <span>{gbpFull.format(totalPaid)} paid</span>
-                          <span>{gbpFull.format(inv.total)} total</span>
+
+                      <div className="bg-[#F8F9FA] rounded-lg p-3 mt-2">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-xs text-[#5B7A8E]">Total</span>
+                          <span className="text-sm font-bold text-[#111]">{gbpFull.format(invTotal)}</span>
                         </div>
-                        <div className="w-full bg-[#E3E8ED]/50 rounded-full h-1.5 overflow-hidden">
-                          <div className="h-full rounded-full bg-[#8B7355]" style={{ width: `${inv.status === "paid" ? 100 : 50}%` }} />
+                        <div className="flex justify-between items-center mb-3">
+                          <span className="text-xs text-[#5B7A8E]">Status</span>
+                          <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${isFullyPaid ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : "bg-amber-50 text-amber-600"}`}>
+                            {isFullyPaid ? "PAID" : "PARTIALLY PAID"}
+                          </span>
                         </div>
-                        <p className="text-[10px] text-[#999] text-right mt-1">{inv.status === "paid" ? "100%" : "50%"} paid</p>
-                      </div>
-                      {/* Paid / Outstanding boxes */}
-                      <div className="grid grid-cols-2 gap-2 mb-3">
-                        <div className="bg-[#E8F5E9] rounded p-2 text-center">
-                          <p className="text-[10px] uppercase text-[#999] mb-1">Paid</p>
-                          <p className="text-sm font-bold text-[#2d6a2d]">{gbpFull.format(totalPaid)}</p>
-                        </div>
-                        <div className="bg-[#F8F9FA] rounded p-2 text-center">
-                          <p className="text-[10px] uppercase text-[#999] mb-1">Outstanding</p>
-                          <p className="text-sm font-bold text-[#111]">{gbpFull.format(outstanding)}</p>
-                        </div>
-                      </div>
-                      {/* Payment milestones */}
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-3 p-2 bg-[#E8F5E9] rounded">
-                          <CheckCircle size={16} className="text-[#2d6a2d] flex-shrink-0" />
-                          <div className="flex-1">
-                            <p className="text-sm font-medium text-[#111]">Deposit</p>
-                            <p className="text-[10px] text-[#999]">Due upfront</p>
+
+                        <div className="mb-3">
+                          <div className="flex justify-between text-[10px] text-[#999] mb-1">
+                            <span>{gbpFull.format(invPaid)} paid</span>
+                            <span>{gbpFull.format(invTotal)} total</span>
                           </div>
-                          <span className="text-sm font-bold text-[#111]">{gbpFull.format(totalPaid)}</span>
-                          <span className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded bg-[#2d6a2d]/10 text-[#2d6a2d]">PAID ✓</span>
-                        </div>
-                        <div className="flex items-center gap-3 p-2 bg-white border border-[#A3B5C4]/20 rounded">
-                          <Circle size={16} className="text-[#999] flex-shrink-0" />
-                          <div className="flex-1">
-                            <p className="text-sm font-medium text-[#111]">Final Payment</p>
-                            <p className="text-[10px] text-[#999]">Due on completion</p>
+                          <div className="w-full bg-[#E3E8ED]/50 rounded-full h-1.5 overflow-hidden">
+                            <div className="h-full rounded-full bg-[#8B7355]" style={{ width: `${invTotal > 0 ? (invPaid / invTotal) * 100 : 0}%` }} />
                           </div>
-                          <span className="text-sm font-bold text-[#111]">{gbpFull.format(outstanding)}</span>
-                          <button
-                            onClick={async () => {
-                              const unpaid = invoices.find((i) => i.status !== "paid");
-                              if (unpaid) {
-                                await fetch(`/api/invoices/${unpaid.id}`, {
-                                  method: "PUT",
-                                  headers: { "Content-Type": "application/json" },
-                                  body: JSON.stringify({ status: "paid", paidAt: new Date().toISOString() }),
-                                });
-                                fetchAll();
-                              }
-                            }}
-                            className="px-3 py-1.5 bg-[#111] text-white text-[10px] font-semibold uppercase tracking-wide rounded hover:opacity-90"
-                          >
-                            Mark Paid
-                          </button>
+                          <p className="text-[10px] text-[#999] text-right mt-1">{invTotal > 0 ? Math.round((invPaid / invTotal) * 100) : 0}% paid</p>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2 mb-3">
+                          <div className="bg-[#E8F5E9] rounded p-2 text-center">
+                            <p className="text-[10px] uppercase text-[#999] mb-1">Paid</p>
+                            <p className="text-sm font-bold text-[#2d6a2d]">{gbpFull.format(invPaid)}</p>
+                          </div>
+                          <div className="bg-[#F8F9FA] rounded p-2 text-center">
+                            <p className="text-[10px] uppercase text-[#999] mb-1">Outstanding</p>
+                            <p className="text-sm font-bold text-[#111]">{gbpFull.format(invOutstanding)}</p>
+                          </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-3 p-2 bg-[#E8F5E9] rounded">
+                            <CheckCircle size={16} className="text-[#2d6a2d] flex-shrink-0" />
+                            <div className="flex-1">
+                              <p className="text-sm font-medium text-[#111]">Deposit</p>
+                              <p className="text-[10px] text-[#999]">Due upfront</p>
+                            </div>
+                            <span className="text-sm font-bold text-[#111]">{gbpFull.format(Math.min(invDeposit, invPaid))}</span>
+                            <span className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded bg-[#2d6a2d]/10 text-[#2d6a2d]">PAID ✓</span>
+                          </div>
+                          <div className="flex items-center gap-3 p-2 bg-white border border-[#A3B5C4]/20 rounded">
+                            <Circle size={16} className="text-[#999] flex-shrink-0" />
+                            <div className="flex-1">
+                              <p className="text-sm font-medium text-[#111]">Final Payment</p>
+                              <p className="text-[10px] text-[#999]">Due on completion</p>
+                            </div>
+                            <span className="text-sm font-bold text-[#111]">{gbpFull.format(invOutstanding)}</span>
+                            {!isFullyPaid && (
+                              <button
+                                onClick={async () => {
+                                  await fetch(`/api/invoices/${inv.id}`, {
+                                    method: "PUT",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({ status: "paid", paidAt: new Date().toISOString(), amountPaid: invTotal }),
+                                  });
+                                  fetchAll();
+                                }}
+                                className="px-3 py-1.5 bg-[#111] text-white text-[10px] font-semibold uppercase tracking-wide rounded hover:opacity-90"
+                              >
+                                Mark Paid
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
                 {quotes.map((q) => (
                   <div key={q.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
                     <span className="text-sm font-semibold text-[#111]">Quote #{q.id}</span>
@@ -901,9 +878,8 @@ export default function ProjectDetailPage() {
               </div>
             )}
 
-            {/* Send reminder */}
             {invoices.length > 0 && (
-              <button className="w-full mt-4 px-4 py-3 border border-[#A3B5C4]/30 rounded-lg text-xs font-semibold uppercase tracking-wide text-amber-600 hover:bg-amber-50 transition flex items-center justify-center gap-2">
+              <button className="w-full mt-4 px-4 py-3 border-2 border-[#A3B5C4]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-amber-600 hover:bg-amber-50 transition flex items-center justify-center gap-2">
                 <Mail size={14} /> Send Payment Reminder
               </button>
             )}
@@ -911,13 +887,13 @@ export default function ProjectDetailPage() {
             <div className="flex gap-2 mt-4">
               <Link
                 href={`/admin/quotes?projectId=${project.id}`}
-                className="flex-1 px-4 py-2 border border-[#A3B5C4]/30 rounded-lg text-xs font-semibold uppercase tracking-wide text-[#111] hover:bg-[#E3E8ED]/50 text-center"
+                className="flex-1 px-4 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] text-center"
               >
                 + Quote
               </Link>
               <Link
                 href={`/admin/invoices?projectId=${project.id}`}
-                className="flex-1 px-4 py-2 border border-[#A3B5C4]/30 rounded-lg text-xs font-semibold uppercase tracking-wide text-[#111] hover:bg-[#E3E8ED]/50 text-center"
+                className="flex-1 px-4 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] text-center"
               >
                 + Invoice
               </Link>
@@ -931,7 +907,7 @@ export default function ProjectDetailPage() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <form onSubmit={saveEdit} className="bg-white rounded-xl p-6 w-full max-w-3xl max-h-[90vh] overflow-y-auto space-y-4">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="font-bold text-lg text-[#111]" style={{ fontFamily: "Georgia, serif" }}>Edit Project</h3>
+              <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Edit Project</h3>
               <button type="button" onClick={() => setEditing(false)} className="text-[#999] hover:text-[#111]"><Trash2 size={18} /></button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -986,7 +962,7 @@ export default function ProjectDetailPage() {
             </div>
             <div className="flex justify-end gap-3 pt-2">
               <button type="button" onClick={() => setEditing(false)} className="px-4 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm font-medium text-[#111] hover:bg-[#E3E8ED]/50">Cancel</button>
-              <button type="submit" className="px-7 py-3 bg-[#111] text-white rounded-lg text-[13px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition">Save Changes</button>
+              <button type="submit" className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition">Save Changes</button>
             </div>
           </form>
         </div>
