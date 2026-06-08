@@ -147,6 +147,26 @@ export const clients = pgTable("clients", {
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
 });
 
+export const moodBoards = pgTable("mood_boards", {
+  id: serial("id").primaryKey(),
+  projectId: integer("project_id").notNull(),
+  title: text("title").notNull(),
+  description: text("description"),
+  shareToken: text("share_token"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
+});
+
+export const moodBoardPins = pgTable("mood_board_pins", {
+  id: serial("id").primaryKey(),
+  boardId: integer("board_id").notNull(),
+  imageUrl: text("image_url").notNull(),
+  caption: text("caption"),
+  positionX: integer("position_x").default(0),
+  positionY: integer("position_y").default(0),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+});
+
 export const tracks = pgTable("tracks", {
   id: serial("id").primaryKey(),
   order: integer("order").default(0),

@@ -16,6 +16,7 @@ import {
   PoundSterling,
   AlertTriangle,
 } from "lucide-react";
+import MoodBoardSection from "@/components/MoodBoardSection";
 
 interface Service {
   name: string;
@@ -734,6 +735,9 @@ export default function ProjectDetailPage() {
           <p className="text-sm text-[#5B7A8E] whitespace-pre-wrap">{project.notes}</p>
         </div>
       )}
+
+      {/* Mood Boards */}
+      <MoodBoardSection projectId={project.id} />
 
       {/* Quotes */}
       <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
