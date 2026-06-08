@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { moodBoards, moodBoardPins } from '@/lib/db/schema';
+import { moodBoards } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 
 export const dynamic = 'force-dynamic';

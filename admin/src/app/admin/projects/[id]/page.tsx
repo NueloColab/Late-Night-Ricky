@@ -15,6 +15,9 @@ import {
   Circle,
   PoundSterling,
   AlertTriangle,
+  Briefcase,
+  ExternalLink,
+  Mail,
 } from "lucide-react";
 import MoodBoardSection from "@/components/MoodBoardSection";
 
@@ -97,6 +100,12 @@ interface Invoice {
   createdAt: string;
 }
 
+interface Client {
+  id: number;
+  name: string;
+  email: string | null;
+}
+
 const PIPELINE_LABELS: Record<string, string> = {
   inquiry: "Inquiry",
   quoted: "Quoted",
@@ -143,6 +152,7 @@ function getDeadlineInfo(deadline: string | null, status: string) {
 export default function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
   const [project, setProject] = useState<Project | null>(null);
+  const [client, setClient] = useState<Client | null>(null);
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
@@ -162,8 +172,6 @@ export default function ProjectDetailPage() {
   const [fileUrl, setFileUrl] = useState("");
   const [fileName, setFileName] = useState("");
   const [filePhase, setFilePhase] = useState("");
-
-  // File ref removed - upload uses URL input
 
   useEffect(() => {
     if (!id) return;
@@ -186,6 +194,16 @@ export default function ProjectDetailPage() {
       setQuotes(quotesData.quotes || []);
       setInvoices(invData.invoices || []);
       if (projData.project) setForm(projData.project);
+      // Fetch client if clientId exists
+      if (projData.project?.clientId) {
+        try {
+          const clientRes = await fetch(`/api/clients/${projData.project.clientId}`);
+          const clientData = await clientRes.json();
+          setClient(clientData.client || null);
+        } catch {
+          setClient(null);
+        }
+      }
     } catch (err) {
       console.error("Failed to load project", err);
     }
@@ -364,53 +382,49 @@ export default function ProjectDetailPage() {
         </div>
       </div>
 
-      {/* Financial Summary */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-        {[
-          { label: "Agreed Fee", value: project.fee ? gbp.format(project.fee) : "---", colour: "#1a1a1a" },
-          { label: "Total Quoted", value: gbp.format(totalQuoted), colour: "#1B3A4C" },
-          { label: "Total Invoiced", value: gbp.format(totalInvoiced), colour: "#6B8FAB" },
-          { label: "Outstanding", value: gbp.format(outstanding), colour: outstanding > 0 ? "#b45309" : "#2d6a2d" },
-          { label: "Team Costs", value: gbp.format(teamCosts), colour: "#666" },
-        ].map((stat) => (
-          <div key={stat.label} className="bg-white border border-[#A3B5C4]/30 rounded-xl p-4">
-            <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">{stat.label}</p>
-            <p className="text-xl font-serif font-semibold" style={{ color: stat.colour }}>{stat.value}</p>
+      {/* Progress & Stats Dashboard */}
+      <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-5">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div className="flex items-center gap-6">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Overall Completion</p>
+              <p className="text-2xl font-black text-[#111]">{progress}%</p>
+            </div>
+            <div className="h-10 w-px bg-[#A3B5C4]/30 hidden sm:block" />
+            <div className="flex gap-6">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Tasks</p>
+                <p className="text-sm font-bold text-[#111]">{(project?.tasks || []).filter((t) => t.completed).length}/{(project?.tasks || []).length} done</p>
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Services</p>
+                <p className="text-sm font-bold text-[#111]">{(project?.services || []).filter((s) => s.status === "Delivered").length}/{(project?.services || []).length} delivered</p>
+              </div>
+            </div>
           </div>
-        ))}
-      </div>
-
-      {/* Progress Bar */}
-      <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-4">
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-xs font-semibold text-[#111] uppercase tracking-widest">Progress</p>
-          <span className="text-sm font-semibold text-[#111]">{progress}%</span>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={progress}
+                onChange={(e) => updateProgress(Number(e.target.value))}
+                className="w-24 h-1 accent-[#1B3A4C]"
+              />
+              <span className="text-[10px] text-[#999]">Manual override</span>
+            </div>
+          </div>
         </div>
-        <div className="w-full bg-[#E3E8ED]/50 rounded-full h-2.5 overflow-hidden">
+        <div className="w-full bg-[#E3E8ED]/50 rounded-full h-2 overflow-hidden mt-4">
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{ width: `${progress}%`, backgroundColor: progress >= 100 ? "#2d6a2d" : "#1B3A4C" }}
           />
         </div>
-        <div className="flex justify-between mt-2">
-          <span className="text-[10px] text-[#999] uppercase tracking-wide">
-            {(project?.tasks || []).filter((t) => t.completed).length}/{(project?.tasks || []).length} tasks completed
-          </span>
-          <div className="flex items-center gap-2">
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={progress}
-              onChange={(e) => updateProgress(Number(e.target.value))}
-              className="w-20 h-1 accent-[#1B3A4C]"
-            />
-            <span className="text-[10px] text-[#999]">Manual override</span>
-          </div>
-        </div>
       </div>
 
-      {/* Status Workflow */}
+      {/* Pipeline Status */}
       <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-4">
         <p className="text-xs font-semibold text-[#111] uppercase tracking-widest mb-3">Pipeline Status</p>
         <div className="flex flex-wrap gap-2">
@@ -418,7 +432,7 @@ export default function ProjectDetailPage() {
             <button
               key={k}
               onClick={() => moveStatus(k)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wide transition-colors ${
+              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wide transition-colors ${
                 project.status === k
                   ? "bg-[#1B3A4C] text-white"
                   : "bg-[#E3E8ED]/50 text-[#5B7A8E] hover:bg-[#1B3A4C]/10 hover:text-[#1B3A4C]"
@@ -491,336 +505,374 @@ export default function ProjectDetailPage() {
         </form>
       )}
 
-      {/* Services */}
-      <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <PoundSterling size={18} className="text-[#6B8FAB]" />
-            <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Services</h3>
-          </div>
-          <button
-            onClick={() => setShowServiceForm(!showServiceForm)}
-            className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition transition-opacity flex items-center gap-1"
-          >
-            <Plus size={14} /> Add Service
-          </button>
-        </div>
-
-        {showServiceForm && (
-          <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <input
-                placeholder="Service name"
-                value={newService.name}
-                onChange={(e) => setNewService({ ...newService, name: e.target.value })}
-                className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]"
-              />
-              <select
-                value={newService.status}
-                onChange={(e) => setNewService({ ...newService, status: e.target.value })}
-                className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]"
+      {/* Two Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        {/* LEFT COLUMN — Main Content */}
+        <div className="lg:col-span-3 space-y-6">
+          {/* Tasks */}
+          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <CheckCircle size={18} className="text-[#6B8FAB]" />
+                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Tasks</h3>
+              </div>
+              <button
+                onClick={() => setShowTaskInput(!showTaskInput)}
+                className="px-4 py-2 bg-[#111] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
               >
-                {SERVICE_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-              </select>
-              <input
-                type="number"
-                placeholder="Fee (£)"
-                value={newService.fee ?? ""}
-                onChange={(e) => setNewService({ ...newService, fee: e.target.value ? Number(e.target.value) : null })}
-                className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]"
-              />
+                <Plus size={14} /> Add Task
+              </button>
             </div>
-            <div className="flex gap-2">
-              <button onClick={addService} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
-              <button onClick={() => setShowServiceForm(false)} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
-            </div>
-          </div>
-        )}
 
-        {(project.services || []).length === 0 ? (
-          <p className="text-sm text-[#999] italic py-4 text-center">No services yet. Add service line items to track deliverables.</p>
-        ) : (
-          <div className="space-y-2">
-            {(project.services || []).map((service, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
-                <div className="flex items-center gap-3 flex-1">
-                  <span className="text-sm font-medium text-[#111]">{service.name}</span>
-                  {service.fee && <span className="text-sm text-[#6B8FAB] font-semibold">{gbp.format(service.fee)}</span>}
+            {showTaskInput && (
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <input placeholder="Task description" value={newTask.text} onChange={(e) => setNewTask({ ...newTask, text: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="Assignee" value={newTask.assignee} onChange={(e) => setNewTask({ ...newTask, assignee: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="date" value={newTask.dueDate} onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
                 </div>
-                <div className="flex items-center gap-3">
-                  <select
-                    value={service.status}
-                    onChange={(e) => updateServiceStatus(idx, e.target.value)}
-                    className={`text-xs font-medium px-2 py-1 rounded-full ${SERVICE_STATUS_STYLES[service.status] || "bg-[#E3E8ED]/50 text-gray-600"}`}
-                  >
+                <div className="flex gap-2">
+                  <button onClick={addTask} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => setShowTaskInput(false)} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
+                </div>
+              </div>
+            )}
+
+            {(project.tasks || []).length === 0 ? (
+              <p className="text-sm text-[#999] italic py-4 text-center">No tasks yet. Add tasks to track project progress.</p>
+            ) : (
+              <div className="space-y-2">
+                {(project.tasks || []).map((task) => (
+                  <div key={task.id} className={`flex items-center gap-3 p-3 rounded-lg ${task.completed ? "bg-[#2d6a2d]/5" : "bg-[#E3E8ED]/50"}`}>
+                    <button onClick={() => toggleTask(task.id)} className="flex-shrink-0">
+                      {task.completed ? <CheckCircle size={18} className="text-[#2d6a2d]" /> : <Circle size={18} className="text-[#999]" />}
+                    </button>
+                    <div className="flex-1">
+                      <span className={`text-sm ${task.completed ? "line-through text-[#999]" : "text-[#111]"}`}>{task.text}</span>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        {task.assignee && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1B3A4C]/10 text-[#1B3A4C] font-medium">{task.assignee}</span>}
+                        {task.dueDate && <span className="text-[10px] text-[#999]">{new Date(task.dueDate + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</span>}
+                      </div>
+                    </div>
+                    <button onClick={() => removeTask(task.id)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Services */}
+          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <PoundSterling size={18} className="text-[#6B8FAB]" />
+                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Services</h3>
+              </div>
+              <button
+                onClick={() => setShowServiceForm(!showServiceForm)}
+                className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition flex items-center gap-1"
+              >
+                <Plus size={14} /> Add Service
+              </button>
+            </div>
+
+            {showServiceForm && (
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <input placeholder="Service name" value={newService.name} onChange={(e) => setNewService({ ...newService, name: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <select value={newService.status} onChange={(e) => setNewService({ ...newService, status: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
                     {SERVICE_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
                   </select>
-                  <button onClick={() => removeService(idx)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
+                  <input type="number" placeholder="Fee (£)" value={newService.fee ?? ""} onChange={(e) => setNewService({ ...newService, fee: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={addService} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => setShowServiceForm(false)} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+            )}
 
-      {/* Team & Assignments */}
-      <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <Users size={18} className="text-[#6B8FAB]" />
-            <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Team & Assignments</h3>
-          </div>
-          <button
-            onClick={() => setShowTeamForm(!showTeamForm)}
-            className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition transition-opacity flex items-center gap-1"
-          >
-            <Plus size={14} /> Add Member
-          </button>
-        </div>
-
-        {showTeamForm && (
-          <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <input placeholder="Name" value={newTeam.name} onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
-              <select value={newTeam.role} onChange={(e) => setNewTeam({ ...newTeam, role: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
-                {TEAM_ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
-              </select>
-              <input placeholder="Email" value={newTeam.email} onChange={(e) => setNewTeam({ ...newTeam, email: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
-              <input type="number" placeholder="Fee (£)" value={newTeam.fee ?? ""} onChange={(e) => setNewTeam({ ...newTeam, fee: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
-              <input placeholder="Notes" value={newTeam.notes} onChange={(e) => setNewTeam({ ...newTeam, notes: e.target.value })} className="sm:col-span-2 px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
-            </div>
-            <div className="flex gap-2">
-              <button onClick={addTeamMember} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
-              <button onClick={() => setShowTeamForm(false)} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
-            </div>
-          </div>
-        )}
-
-        {(project.team || []).length === 0 ? (
-          <p className="text-sm text-[#999] italic py-4 text-center">No team members assigned yet.</p>
-        ) : (
-          <div className="space-y-2">
-            {(project.team || []).map((member, idx) => (
-              <div key={member.id || idx} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-[#111]">{member.name}</span>
-                    <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1B3A4C]/10 text-[#1B3A4C] font-medium">{member.role}</span>
+            {(project.services || []).length === 0 ? (
+              <p className="text-sm text-[#999] italic py-4 text-center">No services yet. Add service line items to track deliverables.</p>
+            ) : (
+              <div className="space-y-2">
+                {(project.services || []).map((service, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
+                    <div className="flex items-center gap-3 flex-1">
+                      <span className="text-sm font-medium text-[#111]">{service.name}</span>
+                      {service.fee && <span className="text-sm text-[#6B8FAB] font-semibold">{gbp.format(service.fee)}</span>}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <select value={service.status} onChange={(e) => updateServiceStatus(idx, e.target.value)} className={`text-xs font-medium px-2 py-1 rounded-full ${SERVICE_STATUS_STYLES[service.status] || "bg-[#E3E8ED]/50 text-gray-600"}`}>
+                        {SERVICE_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+                      </select>
+                      <button onClick={() => removeService(idx)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
+                    </div>
                   </div>
-                  {member.email && <p className="text-xs text-[#5B7A8E] mt-0.5">{member.email}</p>}
-                  {member.notes && <p className="text-xs text-[#999] mt-0.5">{member.notes}</p>}
-                </div>
-                <div className="flex items-center gap-3">
-                  {member.fee && <span className="text-sm font-semibold text-[#6B8FAB]">{gbp.format(member.fee)}</span>}
-                  <button onClick={() => removeTeamMember(member.id || String(idx))} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Tasks */}
-      <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <CheckCircle size={18} className="text-[#6B8FAB]" />
-            <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Tasks</h3>
-          </div>
-          <button
-            onClick={() => setShowTaskInput(!showTaskInput)}
-            className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition transition-opacity flex items-center gap-1"
-          >
-            <Plus size={14} /> Add Task
-          </button>
-        </div>
-
-        {showTaskInput && (
-          <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <input placeholder="Task description" value={newTask.text} onChange={(e) => setNewTask({ ...newTask, text: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
-              <input placeholder="Assignee" value={newTask.assignee} onChange={(e) => setNewTask({ ...newTask, assignee: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
-              <input type="date" value={newTask.dueDate} onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
-            </div>
-            <div className="flex gap-2">
-              <button onClick={addTask} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
-              <button onClick={() => setShowTaskInput(false)} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
-            </div>
-          </div>
-        )}
-
-        {(project.tasks || []).length === 0 ? (
-          <p className="text-sm text-[#999] italic py-4 text-center">No tasks yet. Add tasks to track project progress.</p>
-        ) : (
-          <div className="space-y-2">
-            {(project.tasks || []).map((task) => (
-              <div key={task.id} className={`flex items-center gap-3 p-3 rounded-lg ${task.completed ? "bg-[#2d6a2d]/5" : "bg-[#E3E8ED]/50"}`}>
-                <button onClick={() => toggleTask(task.id)} className="flex-shrink-0">
-                  {task.completed ? <CheckCircle size={18} className="text-[#2d6a2d]" /> : <Circle size={18} className="text-[#999]" />}
-                </button>
-                <div className="flex-1">
-                  <span className={`text-sm ${task.completed ? "line-through text-[#999]" : "text-[#111]"}`}>{task.text}</span>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    {task.assignee && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1B3A4C]/10 text-[#1B3A4C] font-medium">{task.assignee}</span>}
-                    {task.dueDate && <span className="text-[10px] text-[#999]">{new Date(task.dueDate + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</span>}
-                  </div>
-                </div>
-                <button onClick={() => removeTask(task.id)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Files & Deliverables */}
-      <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <Upload size={18} className="text-[#6B8FAB]" />
-            <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Files & Deliverables</h3>
-          </div>
-          <button
-            onClick={() => setShowFileUpload(!showFileUpload)}
-            className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition transition-opacity flex items-center gap-1"
-          >
-            <Plus size={14} /> Add File
-          </button>
-        </div>
-
-        {showFileUpload && (
-          <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <input placeholder="File name" value={fileName} onChange={(e) => setFileName(e.target.value)} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
-              <input placeholder="URL (paste link)" value={fileUrl} onChange={(e) => setFileUrl(e.target.value)} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
-              <input placeholder="Phase (e.g. Brief, Draft, Final)" value={filePhase} onChange={(e) => setFilePhase(e.target.value)} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
-            </div>
-            <div className="flex gap-2">
-              <button onClick={addFile} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add Link</button>
-              <button onClick={() => setShowFileUpload(false)} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
-            </div>
-          </div>
-        )}
-
-        {(project.files || []).length === 0 ? (
-          <div className="border border-dashed border-[#A3B5C4]/30 rounded-lg p-8 text-center">
-            <Upload size={28} className="mx-auto text-gray-300 mb-3" />
-            <p className="text-sm text-[#999]">No files uploaded yet.</p>
-            <p className="text-xs text-[#999] mt-1">Add links to contracts, MP3s, briefs, and other documents.</p>
-          </div>
-        ) : (
-          <div className="space-y-2">
-            {(project.files || []).map((file, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
-                <div className="flex items-center gap-3 flex-1">
-                  <FileText size={16} className="text-[#1B3A4C]" />
-                  <div>
-                    <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-[#111] hover:text-[#1B3A4C]">{file.name}</a>
-                    {file.phase && <span className="text-[10px] ml-2 uppercase tracking-wider px-2 py-0.5 rounded bg-[#6B8FAB]/10 text-[#6B8FAB] font-medium">{file.phase}</span>}
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-[#999]">{new Date(file.uploadedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</span>
-                  <button onClick={() => removeFile(idx)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Notes */}
-      {project.notes && (
-        <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
-          <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase mb-3">Notes</h3>
-          <p className="text-sm text-[#5B7A8E] whitespace-pre-wrap">{project.notes}</p>
-        </div>
-      )}
-
-      {/* Mood Boards */}
-      <MoodBoardSection projectId={project.id} />
-
-      {/* Quotes */}
-      <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Quotes</h3>
-          <Link
-            href={`/admin/quotes?projectId=${project.id}`}
-            className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition transition-opacity flex items-center gap-1"
-          >
-            <Plus size={14} /> New Quote
-          </Link>
-        </div>
-        {quotes.length === 0 ? (
-          <p className="text-sm text-[#999] italic py-4 text-center">No quotes yet.</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead>
-                <tr className="border-b border-[#A3B5C4]/30">
-                  {["Quote #", "Status", "Total", "Date"].map((h) => (
-                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#5B7A8E]">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {quotes.map((q) => (
-                  <tr key={q.id} className="hover:bg-[#E3E8ED]/50 transition-colors">
-                    <td className="px-4 py-3 font-semibold text-[#111]">#{q.id}</td>
-                    <td className="px-4 py-3">
-                      <span className={`text-xs font-bold uppercase tracking-wide px-2 py-1 rounded ${q.status === "draft" ? "bg-[#E3E8ED]/50 text-[#5B7A8E]" : q.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : q.status === "accepted" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : "bg-red-50 text-red-600"}`}>
-                        {q.status}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-[#111] font-semibold">{gbp.format(q.total)}</td>
-                    <td className="px-4 py-3 text-[#5B7A8E]">{new Date(q.createdAt).toLocaleDateString("en-GB")}</td>
-                  </tr>
                 ))}
-              </tbody>
-            </table>
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      {/* Invoices */}
-      <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Invoices</h3>
-          <Link
-            href={`/admin/invoices?projectId=${project.id}`}
-            className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition transition-opacity flex items-center gap-1"
-          >
-            <Plus size={14} /> New Invoice
-          </Link>
+          {/* Team & Assignments */}
+          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Users size={18} className="text-[#6B8FAB]" />
+                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Team & Assignments</h3>
+              </div>
+              <button
+                onClick={() => setShowTeamForm(!showTeamForm)}
+                className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition flex items-center gap-1"
+              >
+                <Plus size={14} /> Add Member
+              </button>
+            </div>
+
+            {showTeamForm && (
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <input placeholder="Name" value={newTeam.name} onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <select value={newTeam.role} onChange={(e) => setNewTeam({ ...newTeam, role: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
+                    {TEAM_ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
+                  </select>
+                  <input placeholder="Email" value={newTeam.email} onChange={(e) => setNewTeam({ ...newTeam, email: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="number" placeholder="Fee (£)" value={newTeam.fee ?? ""} onChange={(e) => setNewTeam({ ...newTeam, fee: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="Notes" value={newTeam.notes} onChange={(e) => setNewTeam({ ...newTeam, notes: e.target.value })} className="sm:col-span-2 px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={addTeamMember} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => setShowTeamForm(false)} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
+                </div>
+              </div>
+            )}
+
+            {(project.team || []).length === 0 ? (
+              <p className="text-sm text-[#999] italic py-4 text-center">No team members assigned yet.</p>
+            ) : (
+              <div className="space-y-2">
+                {(project.team || []).map((member, idx) => (
+                  <div key={member.id || idx} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-[#111]">{member.name}</span>
+                        <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1B3A4C]/10 text-[#1B3A4C] font-medium">{member.role}</span>
+                      </div>
+                      {member.email && <p className="text-xs text-[#5B7A8E] mt-0.5">{member.email}</p>}
+                      {member.notes && <p className="text-xs text-[#999] mt-0.5">{member.notes}</p>}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      {member.fee && <span className="text-sm font-semibold text-[#6B8FAB]">{gbp.format(member.fee)}</span>}
+                      <button onClick={() => removeTeamMember(member.id || String(idx))} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Mood Boards */}
+          <MoodBoardSection projectId={project.id} />
+
+          {/* Files & Deliverables */}
+          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Upload size={18} className="text-[#6B8FAB]" />
+                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Files & Deliverables</h3>
+              </div>
+              <button
+                onClick={() => setShowFileUpload(!showFileUpload)}
+                className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition flex items-center gap-1"
+              >
+                <Plus size={14} /> Add File
+              </button>
+            </div>
+
+            {showFileUpload && (
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <input placeholder="File name" value={fileName} onChange={(e) => setFileName(e.target.value)} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="URL (paste link)" value={fileUrl} onChange={(e) => setFileUrl(e.target.value)} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="Phase (e.g. Brief, Draft, Final)" value={filePhase} onChange={(e) => setFilePhase(e.target.value)} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={addFile} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add Link</button>
+                  <button onClick={() => setShowFileUpload(false)} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
+                </div>
+              </div>
+            )}
+
+            {(project.files || []).length === 0 ? (
+              <div className="border border-dashed border-[#A3B5C4]/30 rounded-lg p-8 text-center">
+                <Upload size={28} className="mx-auto text-gray-300 mb-3" />
+                <p className="text-sm text-[#999]">No files uploaded yet.</p>
+                <p className="text-xs text-[#999] mt-1">Add links to contracts, MP3s, briefs, and other documents.</p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {(project.files || []).map((file, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
+                    <div className="flex items-center gap-3 flex-1">
+                      <FileText size={16} className="text-[#1B3A4C]" />
+                      <div>
+                        <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-[#111] hover:text-[#1B3A4C]">{file.name}</a>
+                        {file.phase && <span className="text-[10px] ml-2 uppercase tracking-wider px-2 py-0.5 rounded bg-[#6B8FAB]/10 text-[#6B8FAB] font-medium">{file.phase}</span>}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] text-[#999]">{new Date(file.uploadedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</span>
+                      <button onClick={() => removeFile(idx)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Notes */}
+          {project.notes && (
+            <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6">
+              <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase mb-3">Notes</h3>
+              <p className="text-sm text-[#5B7A8E] whitespace-pre-wrap">{project.notes}</p>
+            </div>
+          )}
         </div>
-        {invoices.length === 0 ? (
-          <p className="text-sm text-[#999] italic py-4 text-center">No invoices yet.</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead>
-                <tr className="border-b border-[#A3B5C4]/30">
-                  {["Invoice #", "Status", "Due Date", "Total"].map((h) => (
-                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#5B7A8E]">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
+
+        {/* RIGHT COLUMN — Sidebar */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Financial Summary */}
+          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-5">
+            <h3 className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-semibold mb-4">Financial Summary</h3>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-[#5B7A8E]">Agreed Fee</span>
+                <span className="text-sm font-bold text-[#111]">{project.fee ? gbp.format(project.fee) : "---"}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-[#5B7A8E]">Total Quoted</span>
+                <span className="text-sm font-bold text-[#111]">{gbp.format(totalQuoted)}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-[#5B7A8E]">Total Invoiced</span>
+                <span className="text-sm font-bold text-[#111]">{gbp.format(totalInvoiced)}</span>
+              </div>
+              <div className="flex justify-between items-center pt-2 border-t border-[#A3B5C4]/20">
+                <span className="text-sm font-medium text-[#111]">Outstanding</span>
+                <span className={`text-sm font-bold ${outstanding > 0 ? "text-amber-600" : "text-[#2d6a2d]"}`}>{gbp.format(outstanding)}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-[#5B7A8E]">Team Costs</span>
+                <span className="text-sm font-bold text-[#666]">{gbp.format(teamCosts)}</span>
+              </div>
+              <div className="flex justify-between items-center pt-2 border-t border-[#A3B5C4]/20">
+                <span className="text-sm font-medium text-[#111]">Profit</span>
+                <span className={`text-sm font-bold ${(project.fee || 0) - teamCosts > 0 ? "text-[#2d6a2d]" : "text-red-600"}`}>
+                  {gbp.format((project.fee || 0) - teamCosts)}
+                  {project.fee ? ` (${Math.round(((project.fee - teamCosts) / project.fee) * 100)}%)` : ""}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Project Details */}
+          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Briefcase size={16} className="text-[#6B8FAB]" />
+                <h3 className="text-sm font-bold text-[#111] uppercase tracking-wider">Details</h3>
+              </div>
+              <button onClick={() => setEditing(!editing)} className="text-xs text-[#5B7A8E] hover:text-[#1B3A4C] flex items-center gap-1">
+                <Edit size={12} /> Edit
+              </button>
+            </div>
+
+            {client && (
+              <div className="mb-4">
+                <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Client</p>
+                <div className="flex items-center gap-2">
+                  <Mail size={12} className="text-[#6B8FAB]" />
+                  <span className="text-sm text-[#111]">{client.email || client.name}</span>
+                </div>
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Start</p>
+                <p className="text-sm text-[#111] font-medium">{project.createdAt ? new Date(project.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "---"}</p>
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Deadline</p>
+                <p className="text-sm text-[#111] font-medium">{project.deadline ? new Date(project.deadline + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "---"}</p>
+              </div>
+            </div>
+
+            {project.description && (
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Description</p>
+                <p className="text-sm text-[#5B7A8E]">{project.description}</p>
+              </div>
+            )}
+          </div>
+
+          {/* Financials / Invoices */}
+          <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <PoundSterling size={16} className="text-[#6B8FAB]" />
+              <h3 className="text-sm font-bold text-[#111] uppercase tracking-wider">Financials</h3>
+            </div>
+
+            {invoices.length === 0 && quotes.length === 0 ? (
+              <p className="text-sm text-[#999] italic text-center py-4">No invoices or quotes yet.</p>
+            ) : (
+              <div className="space-y-3">
                 {invoices.map((inv) => (
-                  <tr key={inv.id} className="hover:bg-[#E3E8ED]/50 transition-colors">
-                    <td className="px-4 py-3 font-semibold text-[#111]">{inv.invoiceNumber}</td>
-                    <td className="px-4 py-3">
-                      <span className={`text-xs font-bold uppercase tracking-wide px-2 py-1 rounded ${inv.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : inv.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : inv.status === "overdue" ? "bg-red-50 text-red-600" : "bg-[#E3E8ED]/50 text-[#5B7A8E]"}`}>
+                  <div key={inv.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold text-[#111]">{inv.invoiceNumber}</span>
+                      <ExternalLink size={12} className="text-[#6B8FAB]" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${inv.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : inv.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : "bg-red-50 text-red-600"}`}>
                         {inv.status}
                       </span>
-                    </td>
-                    <td className="px-4 py-3 text-[#5B7A8E]">{inv.dueDate || "---"}</td>
-                    <td className="px-4 py-3 text-[#111] font-semibold">{gbp.format(inv.total)}</td>
-                  </tr>
+                      <span className="text-sm font-semibold text-[#111]">{gbp.format(inv.total)}</span>
+                    </div>
+                  </div>
                 ))}
-              </tbody>
-            </table>
+                {quotes.map((q) => (
+                  <div key={q.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold text-[#111]">Quote #{q.id}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${q.status === "accepted" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : q.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : "bg-[#E3E8ED]/50 text-[#5B7A8E]"}`}>
+                        {q.status}
+                      </span>
+                      <span className="text-sm font-semibold text-[#111]">{gbp.format(q.total)}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="flex gap-2 mt-4">
+              <Link
+                href={`/admin/quotes?projectId=${project.id}`}
+                className="flex-1 px-4 py-2 border border-[#A3B5C4]/30 rounded-lg text-xs font-semibold uppercase tracking-wide text-[#111] hover:bg-[#E3E8ED]/50 text-center"
+              >
+                + Quote
+              </Link>
+              <Link
+                href={`/admin/invoices?projectId=${project.id}`}
+                className="flex-1 px-4 py-2 border border-[#A3B5C4]/30 rounded-lg text-xs font-semibold uppercase tracking-wide text-[#111] hover:bg-[#E3E8ED]/50 text-center"
+              >
+                + Invoice
+              </Link>
+            </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

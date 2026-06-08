@@ -1,11 +1,9 @@
 'use client';
 
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import {
   Plus,
   Trash2,
-  ExternalLink,
-  X,
   ImageIcon,
 } from 'lucide-react';
 
@@ -36,7 +34,7 @@ export default function MoodBoardSection({ projectId }: MoodBoardSectionProps) {
   const [boards, setBoards] = useState<MoodBoard[]>([]);
   const [selectedBoard, setSelectedBoard] = useState<MoodBoard | null>(null);
   const [pins, setPins] = useState<MoodBoardPin[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const [showCreator, setShowCreator] = useState(false);
   const [showPinForm, setShowPinForm] = useState(false);
   const [newBoardTitle, setNewBoardTitle] = useState('');
