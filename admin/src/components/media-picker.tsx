@@ -13,7 +13,7 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
   const [preview, setPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
-  const [fileType, setFileType] = useState('');
+  const [isVideo, setIsVideo] = useState(false);
 
   if (!open) return null;
 
@@ -23,13 +23,13 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
 
     setError('');
     setPreview(URL.createObjectURL(file));
+    setIsVideo(file.type.startsWith('video/'));
     setUploading(true);
 
     try {
       // Step 1: Get upload signature from our API
       const sigRes = await fetch('/api/upload-signature?' + new URLSearchParams({
         filename: file.name,
-        filetype: file.type,
       }));
       const sigData = await sigRes.json();
 
@@ -115,7 +115,7 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
         <div className="p-6 flex flex-col items-center gap-4">
           {preview ? (
             <div className="w-full aspect-video bg-[#0A0A0A] rounded-xl overflow-hidden flex items-center justify-center">
-              {fileType.startsWith('video/') ? (
+              {isVideo ? (
                 <video src={preview} className="w-full h-full object-cover" controls preload="metadata" />
               ) : (
                 <img src={preview} alt="Preview" className="w-full h-full object-cover" />

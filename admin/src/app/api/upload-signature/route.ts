@@ -7,7 +7,6 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const filename = searchParams.get('filename') || `upload-${Date.now()}`;
-    const filetype = searchParams.get('filetype') || 'application/octet-stream';
 
     const cloudName = process.env.CLOUDINARY_CLOUD_NAME || 'dfllse3az';
     const apiKey = process.env.CLOUDINARY_API_KEY || '999646942898938';

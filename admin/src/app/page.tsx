@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
 import PartnerLogosSection from '../components/PartnerLogosSection';
-import { getShowCards, getPartnerLogos, getClientNames, getVenueTicker, getTracks } from '@/lib/cms';
+import { getShowCards, getClientNames, getVenueTicker, getTracks } from '@/lib/cms';
 export const dynamic = 'force-dynamic';
 
 const DEFAULT_SHOWS = [
@@ -93,15 +93,13 @@ const DEFAULT_TRACKS = [
 export default async function HomePage() {
   // Fetch from CMS — fall back to hardcoded defaults if DB is empty or unreachable
   let shows: any[] = DEFAULT_SHOWS;
-  let logos: any[] = DEFAULT_LOGOS;
   let clients: string[] = DEFAULT_CLIENTS;
   let venues: string[] = DEFAULT_VENUES;
   let tracks = DEFAULT_TRACKS;
 
   try {
-    const [dbCards, dbLogos, dbNames, dbVenues, dbTracks] = await Promise.all([
+    const [dbCards, dbNames, dbVenues, dbTracks] = await Promise.all([
       getShowCards(),
-      getPartnerLogos(),
       getClientNames(),
       getVenueTicker(),
       getTracks(),
@@ -124,13 +122,6 @@ export default async function HomePage() {
         season: c.season,
         title: c.title,
         description: c.description,
-      }));
-    }
-
-    if (dbLogos.length > 0) {
-      logos = dbLogos.map((l: any) => ({
-        src: l.imagePath || '',
-        alt: l.name,
       }));
     }
 
