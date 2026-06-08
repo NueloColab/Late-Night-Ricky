@@ -86,10 +86,16 @@ export default function HomeEditor() {
   const [savingLogo, setSavingLogo] = useState<number | null>(null);
   const [savingTrack, setSavingTrack] = useState<number | null>(null);
   const [savingClient, setSavingClient] = useState<number | null>(null);
+  const [savedMsg, setSavedMsg] = useState<string | null>(null);
   const [mediaOpen, setMediaOpen] = useState(false);
   const [mediaTarget, setMediaTarget] = useState<{ type: string; id?: number; field?: string } | null>(null);
   const [playingTrack, setPlayingTrack] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  function flashSaved(msg: string) {
+    setSavedMsg(msg);
+    setTimeout(() => setSavedMsg(null), 2000);
+  }
 
   const fetchSections = useCallback(async () => {
     const res = await fetch('/api/sections?page=home');
@@ -183,6 +189,7 @@ export default function HomeEditor() {
       body: JSON.stringify(payload),
     });
     setSavingSection(null);
+    flashSaved(`${name.charAt(0).toUpperCase() + name.slice(1)} saved`);
     fetchSections();
   }
 
@@ -517,7 +524,13 @@ export default function HomeEditor() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto relative">
+      {/* Saved toast */}
+      {savedMsg && (
+        <div className="fixed top-4 right-4 z-50 bg-emerald-600 text-white px-5 py-3 rounded-xl text-sm font-semibold shadow-lg animate-fade-in">
+          {savedMsg}
+        </div>
+      )}
       {/* Header */}
       <div className="flex items-center justify-between mb-12">
         <div>
