@@ -2,6 +2,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import { writeFile } from 'fs/promises';
 import { mkdir } from 'fs/promises';
 import path from 'path';
+import { Readable } from 'stream';
 
 // Cloudinary configuration
 cloudinary.config({
@@ -14,7 +15,7 @@ cloudinary.config({
 const CLOUDINARY_FOLDER = 'nuelo/late-night-ricky/media';
 
 export function isBlobConfigured(): boolean {
-  return true; // Cloudinary is always configured with defaults
+  return true;
 }
 
 export function getBlobStatus(): { configured: boolean; tokenPrefix: string | null; error?: string } {
@@ -24,22 +25,32 @@ export function getBlobStatus(): { configured: boolean; tokenPrefix: string | nu
 export async function storeFile(
   file: File | Buffer,
   filename: string,
-  options?: { access?: "public" | "private"; contentType?: string }
 ): Promise<{ url: string; size: number }> {
   const size = Buffer.isBuffer(file) ? file.length : file.size;
 
   try {
     const buffer = Buffer.isBuffer(file) ? file : Buffer.from(await file.arrayBuffer());
+    
+    // Use upload_stream for reliability with larger files (audio, video)
+    const result = await new Promise<{ secure_url: string; bytes: number }>((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          public_id: filename.replace(/\.[^.]+$/, ''),
+          folder: CLOUDINARY_FOLDER,
+          overwrite: true,
+          resource_type: 'auto',
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else if (result) resolve({ secure_url: result.secure_url, bytes: result.bytes || size });
+          else reject(new Error('Cloudinary upload returned no result'));
+        }
+      );
 
-    const result = await cloudinary.uploader.upload(
-      `data:${options?.contentType || 'application/octet-stream'};base64,${buffer.toString('base64')}`,
-      {
-        public_id: filename.replace(/\.[^.]+$/, ''), // Remove extension, Cloudinary adds it back
-        folder: CLOUDINARY_FOLDER,
-        overwrite: true,
-        resource_type: 'auto',
-      }
-    );
+      // Pipe the buffer through a readable stream
+      const readable = Readable.from(buffer);
+      readable.pipe(uploadStream);
+    });
 
     return { url: result.secure_url, size };
   } catch (err: any) {
@@ -49,8 +60,8 @@ export async function storeFile(
       const uploadsDir = path.join(process.cwd(), '..', 'uploads');
       await mkdir(uploadsDir, { recursive: true });
       const filePath = path.join(uploadsDir, filename);
-      const buffer = Buffer.isBuffer(file) ? file : Buffer.from(await (file as File).arrayBuffer());
-      await writeFile(filePath, buffer);
+      const buf = Buffer.isBuffer(file) ? file : Buffer.from(await (file as File).arrayBuffer());
+      await writeFile(filePath, buf);
       return { url: `/uploads/${filename}`, size };
     }
     throw new Error(`Cloudinary upload failed: ${err.message || err}`);

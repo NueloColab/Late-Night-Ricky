@@ -84,9 +84,7 @@ export async function POST(request: Request) {
 
       const ext = path.extname(file.name) || '.mp3';
       const filename = `submission-${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
-      const { url, size } = await storeFile(file, filename, {
-        contentType: file.type,
-      });
+      const { url, size } = await storeFile(file, filename);
 
       filePath = url;
       fileSize = size;

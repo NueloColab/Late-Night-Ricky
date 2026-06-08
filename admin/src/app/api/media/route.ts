@@ -35,9 +35,7 @@ export async function POST(request: Request) {
 
     console.log(`[Media Upload] Storing: ${filename}, size: ${file.size}, type: ${file.type}`);
 
-    const { url, size } = await storeFile(file, filename, {
-      contentType: file.type,
-    });
+    const { url, size } = await storeFile(file, filename);
 
     console.log(`[Media Upload] Stored at: ${url}`);
 
