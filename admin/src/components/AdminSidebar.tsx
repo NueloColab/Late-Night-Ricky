@@ -40,7 +40,7 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
         className={`${
           isMobile
             ? 'fixed left-0 top-0 bottom-0 z-50 w-[280px] h-screen overflow-y-auto'
-            : 'relative h-screen overflow-y-auto w-[280px] flex-shrink-0'
+            : 'h-screen overflow-y-auto w-[280px] flex-shrink-0'
         } bg-[#E3E8ED] border-r border-[#A3B5C4]/30 flex flex-col`}
         style={{
           transform: isMobile && !isOpen ? 'translateX(-100%)' : 'translateX(0)',
@@ -53,7 +53,8 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
             <img
               src="/assets/ricky-logo.png"
               alt="Late Night Ricky"
-              className="h-12 w-auto mx-auto"
+              className="h-12 w-auto mx-auto brightness-0 invert-[#1B3A4C]"
+              style={{ filter: 'brightness(0) saturate(100%) invert(23%) sepia(18%) saturate(1620%) hue-rotate(163deg)' }}
             />
             <div className="flex items-center justify-center gap-3 mt-3">
               <div className="w-6 h-px bg-[#6B8FAB]" />
