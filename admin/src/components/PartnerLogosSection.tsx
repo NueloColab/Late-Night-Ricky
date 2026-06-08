@@ -17,18 +17,15 @@ interface PartnerLogosSectionProps {
 
 export default function PartnerLogosSection({ defaultLogos }: PartnerLogosSectionProps) {
   const [logos, setLogos] = useState<Logo[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/partner-logos')
       .then((res) => res.json())
       .then((data) => {
         setLogos(data.logos || []);
-        setLoading(false);
       })
       .catch(() => {
         setLogos([]);
-        setLoading(false);
       });
   }, []);
 

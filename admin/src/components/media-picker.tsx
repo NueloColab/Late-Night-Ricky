@@ -23,7 +23,6 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
 
     setError('');
     setPreview(URL.createObjectURL(file));
-    setFileType(file.type);
     setUploading(true);
 
     try {
@@ -149,6 +148,7 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
             <div className="w-full px-4 py-3 bg-red-50 border border-red-100 rounded-xl">
               <p className="text-sm text-red-600 font-medium">Upload failed</p>
               <p className="text-xs text-red-500 mt-1">{error}</p>
+              <p className="text-xs text-gray-500 mt-2">Maximum file size: 10MB. Supported formats: JPG, PNG, GIF, WebP, MP3, MP4, WAV.</p>
             </div>
           )}
         </div>
