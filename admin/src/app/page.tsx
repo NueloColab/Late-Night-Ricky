@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
 import PartnerLogosSection from '../components/PartnerLogosSection';
-import { getShowCards, getClientNames, getVenueTicker, getTracks } from '@/lib/cms';
+import { getShowCards, getClientNames, getVenueTicker, getTracks, getSiteSections } from '@/lib/cms';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const fetchCache = 'force-no-store';
@@ -98,14 +98,42 @@ export default async function HomePage() {
   let clients: string[] = DEFAULT_CLIENTS;
   let venues: string[] = DEFAULT_VENUES;
   let tracks = DEFAULT_TRACKS;
+  let heroImage = '/assets/ricky-hero-v2.jpg';
+  let heroLogo = '/assets/ricky-logo.png';
+  let videoPoster = '/assets/video-poster-desktop.jpg';
+  let videoSrc = '/assets/video-desktop.mp4';
+  let reachHeadline = 'International DJ \u0026 Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.';
+  let reachSubtext = '150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.';
 
   try {
-    const [dbCards, dbNames, dbVenues, dbTracks] = await Promise.all([
+    const [dbCards, dbNames, dbVenues, dbTracks, dbSections] = await Promise.all([
       getShowCards(),
       getClientNames(),
       getVenueTicker(),
       getTracks(),
+      getSiteSections('home'),
     ]);
+
+    if (dbSections.length > 0) {
+      const heroSection = dbSections.find((s) => s.section === 'hero');
+      if (heroSection?.content) {
+        const c = typeof heroSection.content === 'string' ? JSON.parse(heroSection.content) : heroSection.content;
+        if (c.image) heroImage = c.image;
+        if (c.logo) heroLogo = c.logo;
+      }
+      const videoSection = dbSections.find((s) => s.section === 'video');
+      if (videoSection?.content) {
+        const c = typeof videoSection.content === 'string' ? JSON.parse(videoSection.content) : videoSection.content;
+        if (c.poster) videoPoster = c.poster;
+        if (c.src) videoSrc = c.src;
+      }
+      const reachSection = dbSections.find((s) => s.section === 'reach');
+      if (reachSection?.content) {
+        const c = typeof reachSection.content === 'string' ? JSON.parse(reachSection.content) : reachSection.content;
+        if (c.headline) reachHeadline = c.headline;
+        if (c.subtext) reachSubtext = c.subtext;
+      }
+    }
 
     if (dbTracks.length > 0) {
       tracks = dbTracks.map((t: any) => ({
@@ -148,11 +176,11 @@ export default async function HomePage() {
         <div className="fixed inset-0 -z-10">
           <div
             className="absolute inset-0 bg-cover bg-no-repeat bg-[70%_center]"
-            style={{ backgroundImage: "url('/assets/ricky-hero-v2.jpg')", filter: 'grayscale(100%) brightness(1.05)' }}
+            style={{ backgroundImage: `url('${heroImage}')`, filter: 'grayscale(100%) brightness(1.05)' }}
           />
           <div className="absolute inset-0 bg-[rgba(27,58,76,0.35)]" />
         </div>
-        <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] ml-[4%] mb-14 drop-shadow-[0_6px_30px_rgba(0,0,0,0.3)] brightness-0 invert" />
+        <img src={heroLogo} alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] ml-[4%] mb-14 drop-shadow-[0_6px_30px_rgba(0,0,0,0.3)] brightness-0 invert" />
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white opacity-70">
           <span className="text-[11px] tracking-[2.5px] uppercase font-medium">Scroll</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
@@ -169,15 +197,14 @@ export default async function HomePage() {
         </div>
         <video
           className="absolute top-0 left-0 w-full h-full object-cover"
-          poster="/assets/video-poster-desktop.jpg"
+          poster={videoPoster}
           playsInline
           autoPlay
           muted
           loop
           preload="metadata"
         >
-          <source src="/assets/video-desktop.mp4" type="video/mp4" />
-          <source src="/assets/video-desktop.webm" type="video/webm" />
+          <source src={videoSrc} type="video/mp4" />
         </video>
       </section>
 
@@ -185,11 +212,11 @@ export default async function HomePage() {
       <section id="reach" className="relative z-10 bg-[#1B3A4C] py-28">
         <div className="max-w-[1200px] mx-auto px-6">
           <h1 className="reveal font-black text-[clamp(36px,5.5vw,64px)] leading-[0.95] max-w-[960px] text-white tracking-[-2px] uppercase">
-            International DJ &amp; Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.
+            {reachHeadline}
           </h1>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mt-6">
             <p className="reveal reveal-d1 text-sm leading-relaxed max-w-[560px] text-[#8FA8BE] font-semibold uppercase tracking-[0.5px]">
-              150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
+              {reachSubtext}
             </p>
             <div className="grammy-float grammy-glow relative w-[120px] md:w-[160px] flex-shrink-0">
               <img
