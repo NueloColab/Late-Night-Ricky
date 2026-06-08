@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import Image from 'next/image';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import MediaPicker from '@/components/media-picker';
 
 interface SectionData {
   id: number;
@@ -37,6 +37,17 @@ interface PartnerLogo {
   isActive: boolean;
 }
 
+interface Track {
+  id: number;
+  order: number;
+  title: string;
+  filePath: string | null;
+  duration: string | null;
+  spotifyUrl: string | null;
+  appleMusicUrl: string | null;
+  isActive: boolean;
+}
+
 interface ClientName {
   id: number;
   order: number;
@@ -44,530 +55,1456 @@ interface ClientName {
   isActive: boolean;
 }
 
-interface Track {
-  id: number;
-  order: number;
-  title: string;
-  duration: string;
-  filePath: string;
-  isActive: boolean;
+const HOME_SECTIONS = ['hero', 'video', 'reach', 'shows', 'partners', 'radio', 'clients', 'share_music', 'contact'];
+
+function parseContent(content: any): Record<string, any> {
+  if (!content) return {};
+  if (typeof content === 'string') {
+    try {
+      return JSON.parse(content);
+    } catch {
+      return {};
+    }
+  }
+  return content;
 }
 
-const SECTIONS = [
-  { key: 'hero', label: 'Hero' },
-  { key: 'video', label: 'Video' },
-  { key: 'reach', label: 'Reach' },
-  { key: 'shows', label: 'Shows' },
-  { key: 'partners', label: 'Partners' },
-  { key: 'radio', label: 'Radio' },
-  { key: 'clients', label: 'Clients' },
-  { key: 'share', label: 'Share Music' },
-  { key: 'contact', label: 'Contact' },
-];
-
 export default function HomeEditor() {
-  const [activeTab, setActiveTab] = useState('hero');
   const [sections, setSections] = useState<SectionData[]>([]);
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [showCards, setShowCards] = useState<ShowCard[]>([]);
-  const [logos, setLogos] = useState<PartnerLogo[]>([]);
-  const [clients, setClients] = useState<ClientName[]>([]);
+  const [partnerLogos, setPartnerLogos] = useState<PartnerLogo[]>([]);
   const [tracks, setTracks] = useState<Track[]>([]);
+  const [clientNames, setClientNames] = useState<ClientName[]>([]);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [message, setMessage] = useState('');
+  const [cardsLoading, setCardsLoading] = useState(true);
+  const [logosLoading, setLogosLoading] = useState(false);
+  const [tracksLoading, setTracksLoading] = useState(false);
+  const [clientsLoading, setClientsLoading] = useState(false);
+  const [savingCard, setSavingCard] = useState<number | null>(null);
+  const [savingSection, setSavingSection] = useState<string | null>(null);
+  const [savingLogo, setSavingLogo] = useState<number | null>(null);
+  const [savingTrack, setSavingTrack] = useState<number | null>(null);
+  const [savingClient, setSavingClient] = useState<number | null>(null);
+  const [mediaOpen, setMediaOpen] = useState(false);
+  const [mediaTarget, setMediaTarget] = useState<{ type: string; id?: number; field?: string } | null>(null);
+  const [playingTrack, setPlayingTrack] = useState<number | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const fetchAll = useCallback(async () => {
-    setLoading(true);
-    try {
-      const [secRes, cardsRes, logosRes, clientsRes, tracksRes] = await Promise.all([
-        fetch('/api/sections?page=home'),
-        fetch('/api/show-cards'),
-        fetch('/api/partner-logos'),
-        fetch('/api/client-names'),
-        fetch('/api/tracks'),
-      ]);
-      const secData = await secRes.json();
-      const cardsData = await cardsRes.json();
-      const logosData = await logosRes.json();
-      const clientsData = await clientsRes.json();
-      const tracksData = await tracksRes.json();
-
-      setSections(secData.sections || []);
-      setShowCards(cardsData.cards || []);
-      setLogos(logosData.logos || []);
-      setClients(clientsData.names || []);
-      setTracks(tracksData.tracks || []);
-    } catch (err) {
-      console.error('Fetch error:', err);
+  const fetchSections = useCallback(async () => {
+    const res = await fetch('/api/sections?page=home');
+    if (res.ok) {
+      const data = await res.json();
+      setSections(data.sections || []);
+      if (data.sections?.length > 0 && !selectedSection) {
+        setSelectedSection(data.sections[0].section);
+      }
     }
     setLoading(false);
+  }, [selectedSection]);
+
+  const fetchShowCards = useCallback(async () => {
+    const res = await fetch('/api/show-cards');
+    if (res.ok) {
+      const data = await res.json();
+      setShowCards(data.cards || []);
+    }
+    setCardsLoading(false);
+  }, []);
+
+  const fetchPartnerLogos = useCallback(async () => {
+    setLogosLoading(true);
+    const res = await fetch('/api/partner-logos');
+    if (res.ok) {
+      const data = await res.json();
+      setPartnerLogos(data.logos || []);
+    }
+    setLogosLoading(false);
+  }, []);
+
+  const fetchTracks = useCallback(async () => {
+    setTracksLoading(true);
+    const res = await fetch('/api/public/tracks');
+    if (res.ok) {
+      const data = await res.json();
+      setTracks(data.tracks || []);
+    }
+    setTracksLoading(false);
+  }, []);
+
+  const fetchClientNames = useCallback(async () => {
+    setClientsLoading(true);
+    const res = await fetch('/api/public/client-names');
+    if (res.ok) {
+      const data = await res.json();
+      setClientNames(data.names || []);
+    }
+    setClientsLoading(false);
   }, []);
 
   useEffect(() => {
-    fetchAll();
-  }, [fetchAll]);
+    fetchSections();
+    fetchShowCards();
+    fetchPartnerLogos();
+    fetchTracks();
+    fetchClientNames();
+  }, [fetchSections, fetchShowCards, fetchPartnerLogos, fetchTracks, fetchClientNames]);
 
-  function getSection(key: string): SectionData | null {
-    return sections.find((s) => s.section === key) || null;
+  function getSection(name: string): SectionData | undefined {
+    return sections.find((s) => s.section === name);
   }
 
-  function getContent(key: string, field: string, fallback = '') {
-    const s = getSection(key);
-    if (!s?.content) return fallback;
-    if (typeof s.content === 'string') {
-      try {
-        const parsed = JSON.parse(s.content);
-        return parsed[field] || fallback;
-      } catch {
-        return fallback;
-      }
-    }
-    return s.content[field] || fallback;
+  function updateSectionField(name: string, field: 'content' | 'images' | 'videos' | 'links', value: any) {
+    setSections((prev) =>
+      prev.map((s) => (s.section === name ? { ...s, [field]: value } : s))
+    );
   }
 
-  async function saveSection(key: string, updates: any) {
-    const s = getSection(key);
-    if (!s) return;
-    setSaving(true);
-    try {
-      const currentContent = typeof s.content === 'string' ? JSON.parse(s.content) : (s.content || {});
-      const newContent = { ...currentContent, ...updates };
-      await fetch(`/api/sections?id=${s.id}`, {
+  function updateSectionContent(name: string, key: string, value: any) {
+    const section = getSection(name);
+    if (!section) return;
+    const content = parseContent(section.content);
+    const updated = { ...content, [key]: value };
+    updateSectionField(name, 'content', updated);
+  }
+
+  async function saveSection(name: string) {
+    const section = getSection(name);
+    if (!section) return;
+    setSavingSection(name);
+    const payload: any = {};
+    if (section.content !== undefined) payload.content = section.content;
+    if (section.images !== undefined) payload.images = section.images;
+    if (section.videos !== undefined) payload.videos = section.videos;
+    if (section.links !== undefined) payload.links = section.links;
+    await fetch(`/api/sections/${section.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    setSavingSection(null);
+    fetchSections();
+  }
+
+  async function moveCard(id: number, direction: 'up' | 'down') {
+    const idx = showCards.findIndex((c) => c.id === id);
+    if (idx === -1) return;
+    const newIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (newIdx < 0 || newIdx >= showCards.length) return;
+
+    const newCards = [...showCards];
+    const temp = newCards[idx];
+    newCards[idx] = newCards[newIdx];
+    newCards[newIdx] = temp;
+
+    const updated = newCards.map((c, i) => ({ ...c, order: i + 1 }));
+    setShowCards(updated);
+
+    await Promise.all([
+      fetch(`/api/show-cards/${updated[idx].id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: newContent }),
-      });
-      setSections((prev) => prev.map((sec) => sec.id === s.id ? { ...sec, content: newContent } : sec));
-      setMessage('Saved');
-      setTimeout(() => setMessage(''), 2000);
-    } catch (err) {
-      setMessage('Save failed');
-    }
-    setSaving(false);
+        body: JSON.stringify({ order: updated[idx].order }),
+      }),
+      fetch(`/api/show-cards/${updated[newIdx].id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order: updated[newIdx].order }),
+      }),
+    ]);
   }
 
-  async function updateShowCard(id: number, field: string, value: any) {
-    setShowCards((prev) => prev.map((c) => c.id === id ? { ...c, [field]: value } : c));
+  async function updateCard(id: number, field: string, value: any) {
+    setShowCards((prev) => prev.map((c) => (c.id === id ? { ...c, [field]: value } : c)));
   }
 
-  async function saveShowCard(id: number) {
+  async function saveCard(id: number) {
     const card = showCards.find((c) => c.id === id);
     if (!card) return;
-    setSaving(true);
+    setSavingCard(id);
     await fetch(`/api/show-cards/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(card),
+      body: JSON.stringify({
+        imagePath: card.imagePath,
+        venue: card.venue,
+        location: card.location,
+        season: card.season,
+        title: card.title,
+        description: card.description,
+        href: card.href,
+      }),
     });
-    setSaving(false);
-    setMessage('Card saved');
-    setTimeout(() => setMessage(''), 2000);
+    setSavingCard(null);
   }
 
-  async function updateLogo(id: number, field: string, value: any) {
-    setLogos((prev) => prev.map((l) => l.id === id ? { ...l, [field]: value } : l));
+  async function movePartnerLogo(id: number, direction: 'up' | 'down') {
+    const idx = partnerLogos.findIndex((l) => l.id === id);
+    if (idx === -1) return;
+    const newIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (newIdx < 0 || newIdx >= partnerLogos.length) return;
+
+    const newLogos = [...partnerLogos];
+    const temp = newLogos[idx];
+    newLogos[idx] = newLogos[newIdx];
+    newLogos[newIdx] = temp;
+
+    const updated = newLogos.map((l, i) => ({ ...l, order: i + 1 }));
+    setPartnerLogos(updated);
+
+    await Promise.all([
+      fetch(`/api/partner-logos/${updated[idx].id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order: updated[idx].order }),
+      }),
+      fetch(`/api/partner-logos/${updated[newIdx].id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order: updated[newIdx].order }),
+      }),
+    ]);
   }
 
-  async function saveLogo(id: number) {
-    const logo = logos.find((l) => l.id === id);
+  function updatePartnerLogo(id: number, field: string, value: any) {
+    setPartnerLogos((prev) => prev.map((l) => (l.id === id ? { ...l, [field]: value } : l)));
+  }
+
+  async function savePartnerLogo(id: number) {
+    const logo = partnerLogos.find((l) => l.id === id);
     if (!logo) return;
-    setSaving(true);
-    await fetch(`/api/partner-logos?id=${id}`, {
+    setSavingLogo(id);
+    await fetch(`/api/partner-logos/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(logo),
+      body: JSON.stringify({
+        name: logo.name,
+        imagePath: logo.imagePath,
+        href: logo.href,
+        order: logo.order,
+      }),
     });
-    setSaving(false);
-    setMessage('Logo saved');
-    setTimeout(() => setMessage(''), 2000);
+    setSavingLogo(null);
   }
 
-  async function deleteLogo(id: number) {
+  async function deletePartnerLogo(id: number) {
     if (!confirm('Delete this logo?')) return;
-    await fetch(`/api/partner-logos?id=${id}`, { method: 'DELETE' });
-    setLogos((prev) => prev.filter((l) => l.id !== id));
+    await fetch(`/api/partner-logos/${id}`, { method: 'DELETE' });
+    fetchPartnerLogos();
   }
 
-  async function addLogo() {
-    const res = await fetch('/api/partner-logos', {
+  async function addPartnerLogo() {
+    const order = partnerLogos.length + 1;
+    await fetch('/api/partner-logos', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'New Logo', imagePath: '/assets/logo-placeholder.png', order: logos.length }),
+      body: JSON.stringify({ name: 'New Partner', imagePath: null, order }),
     });
-    const data = await res.json();
-    if (data.logo) setLogos((prev) => [...prev, data.logo]);
+    fetchPartnerLogos();
   }
 
-  async function updateClient(id: number, value: string) {
-    setClients((prev) => prev.map((c) => c.id === id ? { ...c, name: value } : c));
+  async function moveTrack(id: number, direction: 'up' | 'down') {
+    const idx = tracks.findIndex((t) => t.id === id);
+    if (idx === -1) return;
+    const newIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (newIdx < 0 || newIdx >= tracks.length) return;
+
+    const newTracks = [...tracks];
+    const temp = newTracks[idx];
+    newTracks[idx] = newTracks[newIdx];
+    newTracks[newIdx] = temp;
+
+    const updated = newTracks.map((t, i) => ({ ...t, order: i + 1 }));
+    setTracks(updated);
+
+    await Promise.all([
+      fetch(`/api/tracks/${updated[idx].id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order: updated[idx].order }),
+      }),
+      fetch(`/api/tracks/${updated[newIdx].id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order: updated[newIdx].order }),
+      }),
+    ]);
   }
 
-  async function saveClient(id: number) {
-    const client = clients.find((c) => c.id === id);
-    if (!client) return;
-    setSaving(true);
-    await fetch(`/api/client-names?id=${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(client),
-    });
-    setSaving(false);
-    setMessage('Client saved');
-    setTimeout(() => setMessage(''), 2000);
-  }
-
-  async function deleteClient(id: number) {
-    if (!confirm('Delete this client?')) return;
-    await fetch(`/api/client-names?id=${id}`, { method: 'DELETE' });
-    setClients((prev) => prev.filter((c) => c.id !== id));
-  }
-
-  async function addClient() {
-    const res = await fetch('/api/client-names', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'New Client', order: clients.length }),
-    });
-    const data = await res.json();
-    if (data.name) setClients((prev) => [...prev, data.name]);
-  }
-
-  async function updateTrack(id: number, field: string, value: any) {
-    setTracks((prev) => prev.map((t) => t.id === id ? { ...t, [field]: value } : t));
+  function updateTrack(id: number, field: string, value: any) {
+    setTracks((prev) => prev.map((t) => (t.id === id ? { ...t, [field]: value } : t)));
   }
 
   async function saveTrack(id: number) {
     const track = tracks.find((t) => t.id === id);
     if (!track) return;
-    setSaving(true);
-    await fetch(`/api/tracks?id=${id}`, {
+    setSavingTrack(id);
+    await fetch(`/api/tracks/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(track),
+      body: JSON.stringify({
+        title: track.title,
+        filePath: track.filePath,
+        duration: track.duration,
+        order: track.order,
+      }),
     });
-    setSaving(false);
-    setMessage('Track saved');
-    setTimeout(() => setMessage(''), 2000);
+    setSavingTrack(null);
   }
 
   async function deleteTrack(id: number) {
     if (!confirm('Delete this track?')) return;
-    await fetch(`/api/tracks?id=${id}`, { method: 'DELETE' });
-    setTracks((prev) => prev.filter((t) => t.id !== id));
+    await fetch(`/api/tracks/${id}`, { method: 'DELETE' });
+    fetchTracks();
   }
 
   async function addTrack() {
-    const res = await fetch('/api/tracks', {
+    const order = tracks.length + 1;
+    await fetch('/api/tracks', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: 'New Track', duration: '0:30', filePath: '/assets/snippet-1.mp3', order: tracks.length }),
+      body: JSON.stringify({ title: 'New Track', duration: '0:30', filePath: null, order }),
     });
-    const data = await res.json();
-    if (data.track) setTracks((prev) => [...prev, data.track]);
+    fetchTracks();
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center">
-        <p>Loading...</p>
-      </div>
-    );
+  async function moveClient(id: number, direction: 'up' | 'down') {
+    const idx = clientNames.findIndex((c) => c.id === id);
+    if (idx === -1) return;
+    const newIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (newIdx < 0 || newIdx >= clientNames.length) return;
+
+    const newClients = [...clientNames];
+    const temp = newClients[idx];
+    newClients[idx] = newClients[newIdx];
+    newClients[newIdx] = temp;
+
+    const updated = newClients.map((c, i) => ({ ...c, order: i + 1 }));
+    setClientNames(updated);
+
+    await Promise.all([
+      fetch(`/api/client-names/${updated[idx].id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order: updated[idx].order }),
+      }),
+      fetch(`/api/client-names/${updated[newIdx].id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order: updated[newIdx].order }),
+      }),
+    ]);
   }
+
+  function updateClient(id: number, field: string, value: any) {
+    setClientNames((prev) => prev.map((c) => (c.id === id ? { ...c, [field]: value } : c)));
+  }
+
+  async function saveClient(id: number) {
+    const client = clientNames.find((c) => c.id === id);
+    if (!client) return;
+    setSavingClient(id);
+    await fetch(`/api/client-names/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: client.name,
+        order: client.order,
+      }),
+    });
+    setSavingClient(null);
+  }
+
+  async function deleteClient(id: number) {
+    if (!confirm('Delete this client?')) return;
+    await fetch(`/api/client-names/${id}`, { method: 'DELETE' });
+    fetchClientNames();
+  }
+
+  async function addClient() {
+    const order = clientNames.length + 1;
+    await fetch('/api/client-names', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: 'New Client', order }),
+    });
+    fetchClientNames();
+  }
+
+  function openMediaPicker(type: string, id?: number, field?: string) {
+    setMediaTarget({ type, id, field });
+    setMediaOpen(true);
+  }
+
+  function handleMediaSelect(path: string) {
+    if (!mediaTarget) return;
+
+    if (mediaTarget.type === 'showcard' && mediaTarget.id !== undefined) {
+      updateCard(mediaTarget.id, 'imagePath', path);
+    } else if (mediaTarget.type === 'hero-image') {
+      updateSectionContent('hero', 'image', path);
+    } else if (mediaTarget.type === 'hero-logo') {
+      updateSectionContent('hero', 'logo', path);
+    } else if (mediaTarget.type === 'video-poster') {
+      updateSectionContent('video', 'poster', path);
+    } else if (mediaTarget.type === 'partner-logo' && mediaTarget.id !== undefined) {
+      updatePartnerLogo(mediaTarget.id, 'imagePath', path);
+    }
+  }
+
+  function togglePlay(trackId: number, filePath: string | null) {
+    if (!filePath) return;
+    if (playingTrack === trackId) {
+      audioRef.current?.pause();
+      setPlayingTrack(null);
+    } else {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      const audio = new Audio(filePath);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
+      setPlayingTrack(trackId);
+      audio.onended = () => setPlayingTrack(null);
+    }
+  }
+
+  const sectionList = HOME_SECTIONS.map((name) => {
+    const s = sections.find((sec) => sec.section === name);
+    return {
+      name,
+      label: name.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
+      exists: !!s,
+      id: s?.id,
+      isActive: s?.isActive ?? true,
+    };
+  });
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white p-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-bold">Home Page Editor</h1>
-            <p className="text-gray-400 text-sm">Edit sections and content</p>
-          </div>
-          <div className="flex items-center gap-3">
-            {message && (
-              <span className={`text-sm ${message.includes('failed') ? 'text-red-400' : 'text-green-400'}`}>
-                {message}
-              </span>
-            )}
-            {saving && <span className="text-sm text-gray-400">Saving...</span>}
-            <a href="/" target="_blank" className="px-4 py-2 bg-[#1B3A4C] rounded text-sm hover:bg-[#2a4f66]">
-              View Site →
-            </a>
-          </div>
+    <div>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-white tracking-tight">Home Page Editor</h1>
+          <p className="text-[#8FA3B3] mt-1 text-sm font-medium tracking-wide uppercase">Edit sections and show cards</p>
         </div>
+        <a
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-5 py-2.5 border-2 border-[#1B3A4C] text-white rounded-xl text-sm font-semibold uppercase tracking-wide hover:bg-[#1B3A4C] hover:text-white transition-colors"
+        >
+          View on Site →
+        </a>
+      </div>
 
-        <div className="flex gap-6">
-          {/* Sidebar */}
-          <div className="w-56 flex-shrink-0">
-            <div className="bg-[#111318] rounded-xl border border-[#2A2E36] overflow-hidden">
-              {SECTIONS.map((s) => (
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Section list */}
+        <div className="lg:w-64 flex-shrink-0">
+          <div className="bg-[#111318] rounded-2xl border border-[#8FA8BE]/20 overflow-hidden">
+            <div className="px-5 py-4 border-b border-[#2A2E36]">
+              <h2 className="font-serif text-sm font-semibold text-white uppercase tracking-widest">Sections</h2>
+            </div>
+            <div className="divide-y divide-[#2A2E36]">
+              {sectionList.map((item) => (
                 <button
-                  key={s.key}
-                  onClick={() => setActiveTab(s.key)}
-                  className={`w-full text-left px-4 py-3 text-sm transition-colors ${
-                    activeTab === s.key ? 'bg-[#1B3A4C] text-white' : 'text-gray-300 hover:bg-[#1a1a1a]'
+                  key={item.name}
+                  onClick={() => setSelectedSection(item.name)}
+                  className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${
+                    selectedSection === item.name
+                      ? 'bg-[#1B3A4C] text-white'
+                      : 'text-white hover:bg-[#0A0A0A]'
                   }`}
                 >
-                  {s.label}
+                  <span>{item.label}</span>
+                  {!item.exists && (
+                    <span className="text-[10px] uppercase tracking-wider opacity-60">New</span>
+                  )}
+                  {item.exists && !item.isActive && selectedSection !== item.name && (
+                    <span className="text-[10px] uppercase tracking-wider opacity-60">Hidden</span>
+                  )}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Content */}
-          <div className="flex-1">
-            {activeTab === 'hero' && (
-              <SectionPanel title="Hero Section">
-                <Field label="Title" value={getContent('hero', 'title')} onChange={(v) => saveSection('hero', { title: v })} />
-                <Field label="Subtitle" value={getContent('hero', 'subtitle')} onChange={(v) => saveSection('hero', { subtitle: v })} />
-                <Field label="Hero Image Path" value={getContent('hero', 'image')} onChange={(v) => saveSection('hero', { image: v })} />
-                <Field label="Logo Path" value={getContent('hero', 'logo')} onChange={(v) => saveSection('hero', { logo: v })} />
-              </SectionPanel>
-            )}
+          {/* Show Cards quick nav */}
+          <div className="mt-4 bg-[#111318] rounded-2xl border border-[#8FA8BE]/20 overflow-hidden">
+            <button
+              onClick={() => setSelectedSection('showcards')}
+              className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${
+                selectedSection === 'showcards'
+                  ? 'bg-[#1B3A4C] text-white'
+                  : 'text-white hover:bg-[#0A0A0A]'
+              }`}
+            >
+              <span>Show Cards</span>
+              <span className="text-xs text-[#8FA3B3]">{showCards.length}</span>
+            </button>
+          </div>
+        </div>
 
-            {activeTab === 'video' && (
-              <SectionPanel title="Video Section">
-                <Field label="Video Poster" value={getContent('video', 'poster')} onChange={(v) => saveSection('video', { poster: v })} />
-                <Field label="Video Source (MP4)" value={getContent('video', 'src')} onChange={(v) => saveSection('video', { src: v })} />
-              </SectionPanel>
-            )}
+        {/* Editor panel */}
+        <div className="flex-1 min-w-0">
+          {loading || cardsLoading ? (
+            <p className="text-[#8FA3B3] text-sm">Loading...</p>
+          ) : selectedSection === 'showcards' ? (
+            <ShowCardsEditor
+              cards={showCards}
+              onMove={moveCard}
+              onUpdate={updateCard}
+              onSave={saveCard}
+              savingCard={savingCard}
+              onOpenMedia={(id) => openMediaPicker('showcard', id)}
+            />
+          ) : selectedSection === 'hero' ? (
+            <HeroEditor
+              section={getSection('hero')}
+              onChange={(key, val) => updateSectionContent('hero', key, val)}
+              onSave={() => saveSection('hero')}
+              saving={savingSection === 'hero'}
+              onOpenMedia={(field) => openMediaPicker(field === 'image' ? 'hero-image' : 'hero-logo')}
+            />
+          ) : selectedSection === 'video' ? (
+            <VideoEditor
+              section={getSection('video')}
+              onChange={(key, val) => updateSectionContent('video', key, val)}
+              onSave={() => saveSection('video')}
+              saving={savingSection === 'video'}
+              onOpenMedia={() => openMediaPicker('video-poster')}
+            />
+          ) : selectedSection === 'reach' ? (
+            <ReachEditor
+              section={getSection('reach')}
+              onChange={(key, val) => updateSectionContent('reach', key, val)}
+              onSave={() => saveSection('reach')}
+              saving={savingSection === 'reach'}
+            />
+          ) : selectedSection === 'partners' ? (
+            <PartnersEditor
+              logos={partnerLogos}
+              loading={logosLoading}
+              savingLogo={savingLogo}
+              onMove={movePartnerLogo}
+              onUpdate={updatePartnerLogo}
+              onSave={savePartnerLogo}
+              onDelete={deletePartnerLogo}
+              onAdd={addPartnerLogo}
+              onOpenMedia={(id) => openMediaPicker('partner-logo', id)}
+            />
+          ) : selectedSection === 'radio' ? (
+            <RadioEditor
+              tracks={tracks}
+              loading={tracksLoading}
+              savingTrack={savingTrack}
+              playingTrack={playingTrack}
+              onTogglePlay={togglePlay}
+              onMove={moveTrack}
+              onUpdate={updateTrack}
+              onSave={saveTrack}
+              onDelete={deleteTrack}
+              onAdd={addTrack}
+            />
+          ) : selectedSection === 'clients' ? (
+            <ClientsEditor
+              clients={clientNames}
+              loading={clientsLoading}
+              savingClient={savingClient}
+              onMove={moveClient}
+              onUpdate={updateClient}
+              onSave={saveClient}
+              onDelete={deleteClient}
+              onAdd={addClient}
+            />
+          ) : selectedSection === 'share_music' ? (
+            <ShareEditor
+              section={getSection('share_music')}
+              onChange={(key, val) => updateSectionContent('share_music', key, val)}
+              onSave={() => saveSection('share_music')}
+              saving={savingSection === 'share_music'}
+            />
+          ) : selectedSection === 'contact' ? (
+            <ContactEditor
+              section={getSection('contact')}
+              onChange={(key, val) => updateSectionContent('contact', key, val)}
+              onSave={() => saveSection('contact')}
+              saving={savingSection === 'contact'}
+            />
+          ) : (
+            <p className="text-[#8FA3B3] text-sm">Select a section to edit.</p>
+          )}
+        </div>
+      </div>
 
-            {activeTab === 'reach' && (
-              <SectionPanel title="Reach Section">
-                <TextArea label="Headline" value={getContent('reach', 'headline')} onChange={(v) => saveSection('reach', { headline: v })} />
-                <TextArea label="Subtext" value={getContent('reach', 'subtext')} onChange={(v) => saveSection('reach', { subtext: v })} />
-              </SectionPanel>
-            )}
+      <MediaPicker
+        open={mediaOpen}
+        onClose={() => setMediaOpen(false)}
+        onSelect={handleMediaSelect}
+        filterType="image"
+      />
+    </div>
+  );
+}
 
-            {activeTab === 'shows' && (
-              <SectionPanel title="Show Cards">
-                <div className="space-y-4">
-                  {showCards.map((card, idx) => (
-                    <div key={card.id} className="bg-[#111318] rounded-lg p-4 border border-[#2A2E36]">
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="text-xs text-gray-400">#{idx + 1}</span>
-                        <span className="text-sm font-semibold">{card.title}</span>
-                      </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        <input
-                          type="text"
-                          value={card.title}
-                          onChange={(e) => updateShowCard(card.id, 'title', e.target.value)}
-                          className="bg-[#0a0a0a] border border-[#2A2E36] rounded px-3 py-2 text-sm"
-                          placeholder="Title"
-                        />
-                        <input
-                          type="text"
-                          value={card.venue}
-                          onChange={(e) => updateShowCard(card.id, 'venue', e.target.value)}
-                          className="bg-[#0a0a0a] border border-[#2A2E36] rounded px-3 py-2 text-sm"
-                          placeholder="Venue"
-                        />
-                        <input
-                          type="text"
-                          value={card.location}
-                          onChange={(e) => updateShowCard(card.id, 'location', e.target.value)}
-                          className="bg-[#0a0a0a] border border-[#2A2E36] rounded px-3 py-2 text-sm"
-                          placeholder="Location"
-                        />
-                        <input
-                          type="text"
-                          value={card.season}
-                          onChange={(e) => updateShowCard(card.id, 'season', e.target.value)}
-                          className="bg-[#0a0a0a] border border-[#2A2E36] rounded px-3 py-2 text-sm"
-                          placeholder="Season"
-                        />
-                        <input
-                          type="text"
-                          value={card.href}
-                          onChange={(e) => updateShowCard(card.id, 'href', e.target.value)}
-                          className="bg-[#0a0a0a] border border-[#2A2E36] rounded px-3 py-2 text-sm col-span-2"
-                          placeholder="Link"
-                        />
-                        <textarea
-                          value={card.description}
-                          onChange={(e) => updateShowCard(card.id, 'description', e.target.value)}
-                          className="bg-[#0a0a0a] border border-[#2A2E36] rounded px-3 py-2 text-sm col-span-2"
-                          placeholder="Description"
-                          rows={2}
-                        />
-                      </div>
-                      <div className="mt-3 flex justify-end">
-                        <button onClick={() => saveShowCard(card.id)} className="px-4 py-2 bg-[#1B3A4C] rounded text-sm hover:bg-[#2a4f66]">
-                          Save Card
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+function HeroEditor({
+  section,
+  onChange,
+  onSave,
+  saving,
+  onOpenMedia,
+}: {
+  section?: SectionData;
+  onChange: (key: string, val: any) => void;
+  onSave: () => void;
+  saving: boolean;
+  onOpenMedia: (field: 'image' | 'logo') => void;
+}) {
+  if (!section) {
+    return (
+      <div className="bg-[#111318] rounded-2xl p-8 border border-[#8FA8BE]/20">
+        <p className="text-[#8FA3B3] text-sm">Hero section not found in database.</p>
+      </div>
+    );
+  }
+  const content = parseContent(section.content);
+  return (
+    <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20 space-y-6">
+      <div>
+        <h2 className="font-serif text-xl font-semibold text-white mb-1">Hero</h2>
+        <p className="text-xs text-[#8FA3B3] mb-6">Edit the hero headline and background image</p>
+      </div>
+
+      <div className="space-y-4">
+        <div>
+          <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Title</label>
+          <input
+            type="text"
+            value={content.title || ''}
+            onChange={(e) => onChange('title', e.target.value)}
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Subtitle</label>
+          <input
+            type="text"
+            value={content.subtitle || ''}
+            onChange={(e) => onChange('subtitle', e.target.value)}
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Background Image</label>
+            <div className="relative w-full aspect-video bg-[#0A0A0A] rounded-xl overflow-hidden mb-2">
+              {content.image ? (
+                <Image src={content.image} alt="Hero background" fill className="object-cover" sizes="400px" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
                 </div>
-              </SectionPanel>
-            )}
-
-            {activeTab === 'partners' && (
-              <SectionPanel title="Partner Logos">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {logos.map((logo, idx) => (
-                    <div key={logo.id} className="bg-[#111318] rounded-lg p-4 border border-[#2A2E36]">
-                      <div className="text-xs text-gray-400 mb-2">#{idx + 1}</div>
-                      {logo.imagePath && (
-                        <img src={logo.imagePath} alt={logo.name} className="w-full h-16 object-contain mb-3" />
-                      )}
-                      <input
-                        type="text"
-                        value={logo.name}
-                        onChange={(e) => updateLogo(logo.id, 'name', e.target.value)}
-                        className="w-full bg-[#0a0a0a] border border-[#2A2E36] rounded px-3 py-2 text-sm mb-2"
-                        placeholder="Name"
-                      />
-                      <input
-                        type="text"
-                        value={logo.imagePath || ''}
-                        onChange={(e) => updateLogo(logo.id, 'imagePath', e.target.value)}
-                        className="w-full bg-[#0a0a0a] border border-[#2A2E36] rounded px-3 py-2 text-sm mb-2"
-                        placeholder="Image path"
-                      />
-                      <div className="flex gap-2">
-                        <button onClick={() => saveLogo(logo.id)} className="flex-1 py-2 bg-[#1B3A4C] rounded text-sm hover:bg-[#2a4f66]">
-                          Save
-                        </button>
-                        <button onClick={() => deleteLogo(logo.id)} className="px-3 py-2 bg-red-900/50 text-red-400 rounded text-sm hover:bg-red-900">
-                          ×
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+              )}
+            </div>
+            <button
+              onClick={() => onOpenMedia('image')}
+              className="px-3 py-1.5 bg-[#1B3A4C] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
+            >
+              Replace Image
+            </button>
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Logo</label>
+            <div className="relative w-full aspect-video bg-[#0A0A0A] rounded-xl overflow-hidden mb-2">
+              {content.logo ? (
+                <Image src={content.logo} alt="Hero logo" fill className="object-contain p-4" sizes="400px" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
                 </div>
-                <button onClick={addLogo} className="mt-4 px-4 py-2 bg-[#1B3A4C] rounded text-sm hover:bg-[#2a4f66]">
-                  + Add Logo
-                </button>
-              </SectionPanel>
-            )}
+              )}
+            </div>
+            <button
+              onClick={() => onOpenMedia('logo')}
+              className="px-3 py-1.5 bg-[#1B3A4C] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
+            >
+              Replace Logo
+            </button>
+          </div>
+        </div>
+      </div>
 
-            {activeTab === 'radio' && (
-              <SectionPanel title="Radio Tracks">
-                <div className="space-y-3">
-                  {tracks.map((track, idx) => (
-                    <div key={track.id} className="bg-[#111318] rounded-lg p-4 border border-[#2A2E36] flex items-center gap-4">
-                      <span className="text-xs text-gray-400 w-8">#{idx + 1}</span>
-                      <div className="flex-1 grid grid-cols-3 gap-3">
-                        <input
-                          type="text"
-                          value={track.title}
-                          onChange={(e) => updateTrack(track.id, 'title', e.target.value)}
-                          className="bg-[#0a0a0a] border border-[#2A2E36] rounded px-3 py-2 text-sm"
-                          placeholder="Title"
-                        />
-                        <input
-                          type="text"
-                          value={track.duration}
-                          onChange={(e) => updateTrack(track.id, 'duration', e.target.value)}
-                          className="bg-[#0a0a0a] border border-[#2A2E36] rounded px-3 py-2 text-sm"
-                          placeholder="Duration"
-                        />
-                        <input
-                          type="text"
-                          value={track.filePath}
-                          onChange={(e) => updateTrack(track.id, 'filePath', e.target.value)}
-                          className="bg-[#0a0a0a] border border-[#2A2E36] rounded px-3 py-2 text-sm"
-                          placeholder="File path"
-                        />
-                      </div>
-                      <div className="flex gap-2">
-                        <button onClick={() => saveTrack(track.id)} className="px-3 py-2 bg-[#1B3A4C] rounded text-sm hover:bg-[#2a4f66]">
-                          Save
-                        </button>
-                        <button onClick={() => deleteTrack(track.id)} className="px-3 py-2 bg-red-900/50 text-red-400 rounded text-sm hover:bg-red-900">
-                          ×
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <button onClick={addTrack} className="mt-4 px-4 py-2 bg-[#1B3A4C] rounded text-sm hover:bg-[#2a4f66]">
-                  + Add Track
-                </button>
-              </SectionPanel>
-            )}
+      <div className="flex justify-end">
+        <button
+          onClick={onSave}
+          disabled={saving}
+          className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold uppercase tracking-widest hover:bg-[#2a4f66] transition-colors disabled:opacity-50"
+        >
+          {saving ? 'Saving...' : 'Save Hero'}
+        </button>
+      </div>
+    </div>
+  );
+}
 
-            {activeTab === 'clients' && (
-              <SectionPanel title="Client Names">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {clients.map((client, idx) => (
-                    <div key={client.id} className="bg-[#111318] rounded-lg p-3 border border-[#2A2E36] flex items-center gap-2">
-                      <span className="text-xs text-gray-400">#{idx + 1}</span>
-                      <input
-                        type="text"
-                        value={client.name}
-                        onChange={(e) => updateClient(client.id, e.target.value)}
-                        className="flex-1 bg-[#0a0a0a] border border-[#2A2E36] rounded px-3 py-2 text-sm"
-                      />
-                      <button onClick={() => saveClient(client.id)} className="px-3 py-2 bg-[#1B3A4C] rounded text-sm hover:bg-[#2a4f66]">
-                        Save
-                      </button>
-                      <button onClick={() => deleteClient(client.id)} className="px-2 py-2 bg-red-900/50 text-red-400 rounded text-sm hover:bg-red-900">
-                        ×
-                      </button>
-                    </div>
-                  ))}
-                </div>
-                <button onClick={addClient} className="mt-4 px-4 py-2 bg-[#1B3A4C] rounded text-sm hover:bg-[#2a4f66]">
-                  + Add Client
-                </button>
-              </SectionPanel>
-            )}
+function VideoEditor({
+  section,
+  onChange,
+  onSave,
+  saving,
+  onOpenMedia,
+}: {
+  section?: SectionData;
+  onChange: (key: string, val: any) => void;
+  onSave: () => void;
+  saving: boolean;
+  onOpenMedia: () => void;
+}) {
+  if (!section) {
+    return (
+      <div className="bg-[#111318] rounded-2xl p-8 border border-[#8FA8BE]/20">
+        <p className="text-[#8FA3B3] text-sm">Video section not found in database.</p>
+      </div>
+    );
+  }
+  const content = parseContent(section.content);
+  return (
+    <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20 space-y-6">
+      <div>
+        <h2 className="font-serif text-xl font-semibold text-white mb-1">Video</h2>
+        <p className="text-xs text-[#8FA3B3] mb-6">Edit the video poster and source URL</p>
+      </div>
 
-            {activeTab === 'share' && (
-              <SectionPanel title="Share Music Section">
-                <Field label="Headline" value={getContent('share', 'headline')} onChange={(v) => saveSection('share', { headline: v })} />
-                <TextArea label="Description" value={getContent('share', 'description')} onChange={(v) => saveSection('share', { description: v })} />
-              </SectionPanel>
-            )}
+      <div className="space-y-4">
+        <div>
+          <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Video Source URL</label>
+          <input
+            type="url"
+            value={content.src || ''}
+            onChange={(e) => onChange('src', e.target.value)}
+            placeholder="https://..."
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+          />
+        </div>
 
-            {activeTab === 'contact' && (
-              <SectionPanel title="Contact Section">
-                <Field label="Booking Email" value={getContent('contact', 'bookingEmail')} onChange={(v) => saveSection('contact', { bookingEmail: v })} />
-                <Field label="Instagram" value={getContent('contact', 'instagram')} onChange={(v) => saveSection('contact', { instagram: v })} />
-              </SectionPanel>
+        <div>
+          <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Poster Image</label>
+          <div className="relative w-full aspect-video bg-[#0A0A0A] rounded-xl overflow-hidden mb-2 max-w-md">
+            {content.poster ? (
+              <Image src={content.poster} alt="Video poster" fill className="object-cover" sizes="400px" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
+              </div>
             )}
           </div>
+          <button
+            onClick={onOpenMedia}
+            className="px-3 py-1.5 bg-[#1B3A4C] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
+          >
+            Replace Poster
+          </button>
+        </div>
+      </div>
+
+      <div className="flex justify-end">
+        <button
+          onClick={onSave}
+          disabled={saving}
+          className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold uppercase tracking-widest hover:bg-[#2a4f66] transition-colors disabled:opacity-50"
+        >
+          {saving ? 'Saving...' : 'Save Video'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ReachEditor({
+  section,
+  onChange,
+  onSave,
+  saving,
+}: {
+  section?: SectionData;
+  onChange: (key: string, val: any) => void;
+  onSave: () => void;
+  saving: boolean;
+}) {
+  if (!section) {
+    return (
+      <div className="bg-[#111318] rounded-2xl p-8 border border-[#8FA8BE]/20">
+        <p className="text-[#8FA3B3] text-sm">Reach section not found in database.</p>
+      </div>
+    );
+  }
+  const content = parseContent(section.content);
+  return (
+    <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20 space-y-6">
+      <div>
+        <h2 className="font-serif text-xl font-semibold text-white mb-1">Reach</h2>
+        <p className="text-xs text-[#8FA3B3] mb-6">Edit the reach headline and subtext</p>
+      </div>
+
+      <div className="space-y-4">
+        <div>
+          <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Headline</label>
+          <textarea
+            value={content.headline || ''}
+            onChange={(e) => onChange('headline', e.target.value)}
+            rows={3}
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 resize-y"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Subtext</label>
+          <textarea
+            value={content.subtext || ''}
+            onChange={(e) => onChange('subtext', e.target.value)}
+            rows={4}
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 resize-y"
+          />
+        </div>
+      </div>
+
+      <div className="flex justify-end">
+        <button
+          onClick={onSave}
+          disabled={saving}
+          className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold uppercase tracking-widest hover:bg-[#2a4f66] transition-colors disabled:opacity-50"
+        >
+          {saving ? 'Saving...' : 'Save Reach'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function PartnersEditor({
+  logos,
+  loading,
+  savingLogo,
+  onMove,
+  onUpdate,
+  onSave,
+  onDelete,
+  onAdd,
+  onOpenMedia,
+}: {
+  logos: PartnerLogo[];
+  loading: boolean;
+  savingLogo: number | null;
+  onMove: (id: number, dir: 'up' | 'down') => void;
+  onUpdate: (id: number, field: string, value: any) => void;
+  onSave: (id: number) => void;
+  onDelete: (id: number) => void;
+  onAdd: () => void;
+  onOpenMedia: (id: number) => void;
+}) {
+  return (
+    <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="font-serif text-xl font-semibold text-white mb-1">Partners</h2>
+          <p className="text-xs text-[#8FA3B3]">Edit partner logos — {logos.length} total</p>
+        </div>
+        <button
+          onClick={onAdd}
+          className="px-4 py-2 bg-[#1B3A4C] text-white rounded-lg text-xs font-semibold uppercase tracking-widest hover:bg-[#2a4f66] transition-colors"
+        >
+          + Add Logo
+        </button>
+      </div>
+
+      {loading ? (
+        <p className="text-[#8FA3B3] text-sm">Loading...</p>
+      ) : logos.length === 0 ? (
+        <p className="text-[#8FA3B3] text-sm">No partner logos yet.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {logos.map((logo, idx) => (
+            <div key={logo.id} className="border border-[#2A2E36] rounded-xl p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest">#{idx + 1}</span>
+                <div className="flex items-center gap-1 ml-auto">
+                  <button
+                    onClick={() => onMove(logo.id, 'up')}
+                    disabled={idx === 0}
+                    className="p-1.5 text-[#8FA3B3] hover:text-white hover:bg-[#0A0A0A] rounded-lg transition-colors disabled:opacity-30"
+                  >
+                    <UpIcon className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => onMove(logo.id, 'down')}
+                    disabled={idx === logos.length - 1}
+                    className="p-1.5 text-[#8FA3B3] hover:text-white hover:bg-[#0A0A0A] rounded-lg transition-colors disabled:opacity-30"
+                  >
+                    <DownIcon className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => onDelete(logo.id)}
+                    className="p-1.5 text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded-lg transition-colors"
+                  >
+                    <TrashIcon className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="relative w-full aspect-[3/2] bg-[#0A0A0A] rounded-xl overflow-hidden">
+                {logo.imagePath ? (
+                  <Image src={logo.imagePath} alt={logo.name} fill className="object-contain p-2" sizes="200px" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Name</label>
+                <input
+                  type="text"
+                  value={logo.name}
+                  onChange={(e) => onUpdate(logo.id, 'name', e.target.value)}
+                  className="w-full px-3 py-2 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => onOpenMedia(logo.id)}
+                  className="flex-1 px-3 py-1.5 bg-[#1B3A4C] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
+                >
+                  Replace Image
+                </button>
+                <button
+                  onClick={() => onSave(logo.id)}
+                  disabled={savingLogo === logo.id}
+                  className="px-3 py-1.5 bg-[#0A0A0A] text-white rounded-lg text-xs font-semibold hover:bg-[#1B3A4C] transition-colors disabled:opacity-50"
+                >
+                  {savingLogo === logo.id ? 'Saving...' : 'Save'}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function RadioEditor({
+  tracks,
+  loading,
+  savingTrack,
+  playingTrack,
+  onTogglePlay,
+  onMove,
+  onUpdate,
+  onSave,
+  onDelete,
+  onAdd,
+}: {
+  tracks: Track[];
+  loading: boolean;
+  savingTrack: number | null;
+  playingTrack: number | null;
+  onTogglePlay: (id: number, filePath: string | null) => void;
+  onMove: (id: number, dir: 'up' | 'down') => void;
+  onUpdate: (id: number, field: string, value: any) => void;
+  onSave: (id: number) => void;
+  onDelete: (id: number) => void;
+  onAdd: () => void;
+}) {
+  return (
+    <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="font-serif text-xl font-semibold text-white mb-1">Radio</h2>
+          <p className="text-xs text-[#8FA3B3]">Edit audio tracks — {tracks.length} total</p>
+        </div>
+        <button
+          onClick={onAdd}
+          className="px-4 py-2 bg-[#1B3A4C] text-white rounded-lg text-xs font-semibold uppercase tracking-widest hover:bg-[#2a4f66] transition-colors"
+        >
+          + Add Track
+        </button>
+      </div>
+
+      {loading ? (
+        <p className="text-[#8FA3B3] text-sm">Loading...</p>
+      ) : tracks.length === 0 ? (
+        <p className="text-[#8FA3B3] text-sm">No tracks yet.</p>
+      ) : (
+        <div className="space-y-3">
+          {tracks.map((track, idx) => (
+            <div key={track.id} className="border border-[#2A2E36] rounded-xl p-4">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest">#{idx + 1}</span>
+                <div className="flex items-center gap-1 ml-auto">
+                  <button
+                    onClick={() => onMove(track.id, 'up')}
+                    disabled={idx === 0}
+                    className="p-1.5 text-[#8FA3B3] hover:text-white hover:bg-[#0A0A0A] rounded-lg transition-colors disabled:opacity-30"
+                  >
+                    <UpIcon className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => onMove(track.id, 'down')}
+                    disabled={idx === tracks.length - 1}
+                    className="p-1.5 text-[#8FA3B3] hover:text-white hover:bg-[#0A0A0A] rounded-lg transition-colors disabled:opacity-30"
+                  >
+                    <DownIcon className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => onDelete(track.id)}
+                    className="p-1.5 text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded-lg transition-colors"
+                  >
+                    <TrashIcon className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                <div className="md:col-span-2">
+                  <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Title</label>
+                  <input
+                    type="text"
+                    value={track.title}
+                    onChange={(e) => onUpdate(track.id, 'title', e.target.value)}
+                    className="w-full px-3 py-2 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Duration</label>
+                  <input
+                    type="text"
+                    value={track.duration || ''}
+                    onChange={(e) => onUpdate(track.id, 'duration', e.target.value)}
+                    className="w-full px-3 py-2 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => onTogglePlay(track.id, track.filePath)}
+                    disabled={!track.filePath}
+                    className="p-2 bg-[#1B3A4C] text-white rounded-lg hover:bg-[#2a4f66] transition-colors disabled:opacity-30"
+                  >
+                    {playingTrack === track.id ? <PauseIcon className="w-4 h-4" /> : <PlayIcon className="w-4 h-4" />}
+                  </button>
+                  <button
+                    onClick={() => onSave(track.id)}
+                    disabled={savingTrack === track.id}
+                    className="flex-1 px-3 py-2 bg-[#0A0A0A] text-white rounded-lg text-xs font-semibold hover:bg-[#1B3A4C] transition-colors disabled:opacity-50"
+                  >
+                    {savingTrack === track.id ? 'Saving...' : 'Save'}
+                  </button>
+                </div>
+              </div>
+
+              <div className="mt-2">
+                <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">File Path</label>
+                <input
+                  type="text"
+                  value={track.filePath || ''}
+                  onChange={(e) => onUpdate(track.id, 'filePath', e.target.value)}
+                  placeholder="/assets/snippet.mp3"
+                  className="w-full px-3 py-2 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ClientsEditor({
+  clients,
+  loading,
+  savingClient,
+  onMove,
+  onUpdate,
+  onSave,
+  onDelete,
+  onAdd,
+}: {
+  clients: ClientName[];
+  loading: boolean;
+  savingClient: number | null;
+  onMove: (id: number, dir: 'up' | 'down') => void;
+  onUpdate: (id: number, field: string, value: any) => void;
+  onSave: (id: number) => void;
+  onDelete: (id: number) => void;
+  onAdd: () => void;
+}) {
+  return (
+    <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="font-serif text-xl font-semibold text-white mb-1">Clients</h2>
+          <p className="text-xs text-[#8FA3B3]">Edit client names — {clients.length} total</p>
+        </div>
+        <button
+          onClick={onAdd}
+          className="px-4 py-2 bg-[#1B3A4C] text-white rounded-lg text-xs font-semibold uppercase tracking-widest hover:bg-[#2a4f66] transition-colors"
+        >
+          + Add Client
+        </button>
+      </div>
+
+      {loading ? (
+        <p className="text-[#8FA3B3] text-sm">Loading...</p>
+      ) : clients.length === 0 ? (
+        <p className="text-[#8FA3B3] text-sm">No clients yet.</p>
+      ) : (
+        <div className="space-y-2">
+          {clients.map((client, idx) => (
+            <div key={client.id} className="flex items-center gap-3 border border-[#2A2E36] rounded-xl px-4 py-3">
+              <span className="text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest w-8">{idx + 1}</span>
+              <input
+                type="text"
+                value={client.name}
+                onChange={(e) => onUpdate(client.id, 'name', e.target.value)}
+                className="flex-1 px-3 py-2 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+              />
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => onMove(client.id, 'up')}
+                  disabled={idx === 0}
+                  className="p-1.5 text-[#8FA3B3] hover:text-white hover:bg-[#0A0A0A] rounded-lg transition-colors disabled:opacity-30"
+                >
+                  <UpIcon className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => onMove(client.id, 'down')}
+                  disabled={idx === clients.length - 1}
+                  className="p-1.5 text-[#8FA3B3] hover:text-white hover:bg-[#0A0A0A] rounded-lg transition-colors disabled:opacity-30"
+                >
+                  <DownIcon className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => onSave(client.id)}
+                  disabled={savingClient === client.id}
+                  className="px-3 py-1.5 bg-[#0A0A0A] text-white rounded-lg text-xs font-semibold hover:bg-[#1B3A4C] transition-colors disabled:opacity-50"
+                >
+                  {savingClient === client.id ? 'Saving...' : 'Save'}
+                </button>
+                <button
+                  onClick={() => onDelete(client.id)}
+                  className="p-1.5 text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded-lg transition-colors"
+                >
+                  <TrashIcon className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ShareEditor({
+  section,
+  onChange,
+  onSave,
+  saving,
+}: {
+  section?: SectionData;
+  onChange: (key: string, val: any) => void;
+  onSave: () => void;
+  saving: boolean;
+}) {
+  if (!section) {
+    return (
+      <div className="bg-[#111318] rounded-2xl p-8 border border-[#8FA8BE]/20">
+        <p className="text-[#8FA3B3] text-sm">Share Music section not found in database.</p>
+      </div>
+    );
+  }
+  const content = parseContent(section.content);
+  return (
+    <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20 space-y-6">
+      <div>
+        <h2 className="font-serif text-xl font-semibold text-white mb-1">Share Music</h2>
+        <p className="text-xs text-[#8FA3B3] mb-6">Edit the share music headline and description</p>
+      </div>
+
+      <div className="space-y-4">
+        <div>
+          <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Headline</label>
+          <input
+            type="text"
+            value={content.headline || ''}
+            onChange={(e) => onChange('headline', e.target.value)}
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Description</label>
+          <textarea
+            value={content.description || ''}
+            onChange={(e) => onChange('description', e.target.value)}
+            rows={4}
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 resize-y"
+          />
+        </div>
+      </div>
+
+      <div className="flex justify-end">
+        <button
+          onClick={onSave}
+          disabled={saving}
+          className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold uppercase tracking-widest hover:bg-[#2a4f66] transition-colors disabled:opacity-50"
+        >
+          {saving ? 'Saving...' : 'Save Share Music'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ContactEditor({
+  section,
+  onChange,
+  onSave,
+  saving,
+}: {
+  section?: SectionData;
+  onChange: (key: string, val: any) => void;
+  onSave: () => void;
+  saving: boolean;
+}) {
+  if (!section) {
+    return (
+      <div className="bg-[#111318] rounded-2xl p-8 border border-[#8FA8BE]/20">
+        <p className="text-[#8FA3B3] text-sm">Contact section not found in database.</p>
+      </div>
+    );
+  }
+  const content = parseContent(section.content);
+  return (
+    <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20 space-y-6">
+      <div>
+        <h2 className="font-serif text-xl font-semibold text-white mb-1">Contact</h2>
+        <p className="text-xs text-[#8FA3B3] mb-6">Edit contact details</p>
+      </div>
+
+      <div className="space-y-4">
+        <div>
+          <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Booking Email</label>
+          <input
+            type="email"
+            value={content.bookingEmail || ''}
+            onChange={(e) => onChange('bookingEmail', e.target.value)}
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Instagram</label>
+          <input
+            type="text"
+            value={content.instagram || ''}
+            onChange={(e) => onChange('instagram', e.target.value)}
+            className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+          />
+        </div>
+      </div>
+
+      <div className="flex justify-end">
+        <button
+          onClick={onSave}
+          disabled={saving}
+          className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold uppercase tracking-widest hover:bg-[#2a4f66] transition-colors disabled:opacity-50"
+        >
+          {saving ? 'Saving...' : 'Save Contact'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ShowCardsEditor({
+  cards,
+  onMove,
+  onUpdate,
+  onSave,
+  savingCard,
+  onOpenMedia,
+}: {
+  cards: ShowCard[];
+  onMove: (id: number, dir: 'up' | 'down') => void;
+  onUpdate: (id: number, field: string, value: any) => void;
+  onSave: (id: number) => void;
+  savingCard: number | null;
+  onOpenMedia: (id: number) => void;
+}) {
+  return (
+    <div className="space-y-4">
+      <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
+        <h2 className="font-serif text-xl font-semibold text-white mb-1">Show Cards</h2>
+        <p className="text-xs text-[#8FA3B3] mb-6">Reorder and edit each show card</p>
+
+        <div className="space-y-4">
+          {cards.map((card, idx) => (
+            <div key={card.id} className="border border-[#2A2E36] rounded-xl p-4">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest">#{idx + 1}</span>
+                <div className="flex items-center gap-1 ml-auto">
+                  <button
+                    onClick={() => onMove(card.id, 'up')}
+                    disabled={idx === 0}
+                    className="p-1.5 text-[#8FA3B3] hover:text-white hover:bg-[#0A0A0A] rounded-lg transition-colors disabled:opacity-30"
+                  >
+                    <UpIcon className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => onMove(card.id, 'down')}
+                    disabled={idx === cards.length - 1}
+                    className="p-1.5 text-[#8FA3B3] hover:text-white hover:bg-[#0A0A0A] rounded-lg transition-colors disabled:opacity-30"
+                  >
+                    <DownIcon className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Image</label>
+                  <div className="relative w-full aspect-video bg-[#0A0A0A] rounded-xl overflow-hidden mb-2">
+                    {card.imagePath ? (
+                      <Image src={card.imagePath} alt={card.title} fill className="object-cover" sizes="400px" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => onOpenMedia(card.id)}
+                    className="px-3 py-1.5 bg-[#1B3A4C] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
+                  >
+                    Replace Image
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Title</label>
+                    <input
+                      type="text"
+                      value={card.title}
+                      onChange={(e) => onUpdate(card.id, 'title', e.target.value)}
+                      className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Venue</label>
+                      <input
+                        type="text"
+                        value={card.venue}
+                        onChange={(e) => onUpdate(card.id, 'venue', e.target.value)}
+                        className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Location</label>
+                      <input
+                        type="text"
+                        value={card.location}
+                        onChange={(e) => onUpdate(card.id, 'location', e.target.value)}
+                        className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Season</label>
+                    <input
+                      type="text"
+                      value={card.season}
+                      onChange={(e) => onUpdate(card.id, 'season', e.target.value)}
+                      className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-[#8FA3B3] uppercase tracking-widest mb-1.5">Description</label>
+                    <textarea
+                      value={card.description}
+                      onChange={(e) => onUpdate(card.id, 'description', e.target.value)}
+                      rows={3}
+                      className="w-full px-4 py-2.5 bg-[#0A0A0A] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 resize-y"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 flex justify-end">
+                <button
+                  onClick={() => onSave(card.id)}
+                  disabled={savingCard === card.id}
+                  className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold uppercase tracking-widest hover:bg-[#2a4f66] transition-colors disabled:opacity-50"
+                >
+                  {savingCard === card.id ? 'Saving...' : 'Save Card'}
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 }
 
-function SectionPanel({ title, children }: { title: string; children: React.ReactNode }) {
+function ImageIcon({ className }: { className?: string }) {
   return (
-    <div className="bg-[#111318] rounded-xl border border-[#2A2E36] p-6">
-      <h2 className="text-lg font-semibold mb-4">{title}</h2>
-      <div className="space-y-4">{children}</div>
-    </div>
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <circle cx="8.5" cy="8.5" r="1.5" />
+      <path d="M21 15l-5-5L5 21" />
+    </svg>
   );
 }
 
-function Field({ label, value, onChange }: { label: string; value: string; onChange: (val: string) => void }) {
+function UpIcon({ className }: { className?: string }) {
   return (
-    <div>
-      <label className="block text-sm text-gray-400 mb-1">{label}</label>
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-[#0a0a0a] border border-[#2A2E36] rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#1B3A4C]"
-      />
-    </div>
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="18 15 12 9 6 15" />
+    </svg>
   );
 }
 
-function TextArea({ label, value, onChange }: { label: string; value: string; onChange: (val: string) => void }) {
+function DownIcon({ className }: { className?: string }) {
   return (
-    <div>
-      <label className="block text-sm text-gray-400 mb-1">{label}</label>
-      <textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        rows={3}
-        className="w-full bg-[#0a0a0a] border border-[#2A2E36] rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#1B3A4C] resize-y"
-      />
-    </div>
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  );
+}
+
+function TrashIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="3 6 5 6 21 6" />
+      <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+    </svg>
+  );
+}
+
+function PlayIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" stroke="none">
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+  );
+}
+
+function PauseIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" stroke="none">
+      <rect x="6" y="4" width="4" height="16" />
+      <rect x="14" y="4" width="4" height="16" />
+    </svg>
   );
 }

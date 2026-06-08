@@ -9,7 +9,7 @@ export async function POST() {
   const errors: string[] = [];
 
   // Helper to safely delete and insert
-  async function safeSeed<T>(
+  async function safeSeed(
     label: string,
     table: any,
     data: any[]
