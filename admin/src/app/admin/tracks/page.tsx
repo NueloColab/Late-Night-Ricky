@@ -146,7 +146,7 @@ export default function TracksPage() {
             </thead>
             <tbody>
               {trackList.map((track, i) => (
-                <tr key={track.id} className="border-t border-gray-100 hover:bg-[#E3E8ED]/50">
+                <tr key={track.id} className="border-t border-[#A3B5C4]/30 hover:bg-[#E3E8ED]/50">
                   <td className="px-4 py-3 text-gray-500">
                     <div className="flex items-center gap-1">
                       <button onClick={() => moveOrder(track.id, 'up')} className="p-1 hover:bg-[#E3E8ED] rounded" disabled={i === 0}>

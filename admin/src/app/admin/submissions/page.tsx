@@ -322,7 +322,7 @@ export default function SubmissionsPage() {
                       onChange={(e) => updateNotes(s.id, e.target.value)}
                       placeholder="Add notes…"
                       rows={2}
-                      className="w-full min-w-[160px] px-2 py-1 rounded-md border border-[#A3B5C4]/30 text-xs text-[#1B3A4C] bg-white focus:outline-none focus:border-[#1B3A4C] resize-y"
+                      className="w-full min-w-[160px] px-2 py-1 rounded-lg border border-[#A3B5C4]/30 text-xs text-[#1B3A4C] bg-white focus:outline-none focus:border-[#1B3A4C] resize-y"
                     />
                   </td>
                   <td className="px-4 py-3">

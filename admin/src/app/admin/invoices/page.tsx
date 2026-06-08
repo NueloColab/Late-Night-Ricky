@@ -221,17 +221,14 @@ export default function InvoicesPage() {
   }
 
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-px bg-[#6B8FAB]"></div>
-          <p className="text-xs uppercase tracking-widest text-[#6B8FAB] font-medium">Invoice Management</p>
-        </div>
+      <div className="mb-12">
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Invoice Management</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="font-serif text-3xl md:text-4xl font-semibold text-[#111] tracking-tight">Invoices</h1>
-            <p className="text-sm text-[#5B7A8E] mt-1">Create, send and track payments.</p>
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Invoices</h1>
+            <p className="text-sm text-[#5B7A8E] mt-4 font-semibold uppercase tracking-[0.5px]">Create, send and track payments.</p>
           </div>
           <button
             onClick={() => {
@@ -241,7 +238,7 @@ export default function InvoicesPage() {
               setTaxRate(20)
               setIsModalOpen(true)
             }}
-            className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition"
           >
             <Plus size={16} />
             New Invoice
@@ -250,56 +247,56 @@ export default function InvoicesPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+        <div className="bg-white border border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#111] text-white rounded-lg"><Receipt size={16} /></div>
           </div>
-          <p className="text-2xl font-serif font-semibold text-[#111]">{loading ? '–' : stats.total}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#5B7A8E] font-medium">Total Invoices</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Invoices</p>
         </div>
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-5">
+        <div className="bg-white border border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#1B3A4C] text-white rounded-lg"><Send size={16} /></div>
           </div>
-          <p className="text-2xl font-serif font-semibold text-[#1B3A4C]">{loading ? '–' : stats.sent}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#5B7A8E] font-medium">Sent</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#1B3A4C] leading-none tracking-[-1px]">{loading ? '–' : stats.sent}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Sent</p>
         </div>
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-5">
+        <div className="bg-white border border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#2d6a2d] text-white rounded-lg"><CheckCircle size={16} /></div>
           </div>
-          <p className="text-2xl font-serif font-semibold text-[#2d6a2d]">{loading ? '–' : stats.paid}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#5B7A8E] font-medium">Paid</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#2d6a2d] leading-none tracking-[-1px]">{loading ? '–' : stats.paid}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Paid</p>
         </div>
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-5">
+        <div className="bg-white border border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#6B8FAB] text-white rounded-lg"><DollarSign size={16} /></div>
+            <div className="p-2 bg-[#91715c] text-white rounded-lg"><DollarSign size={16} /></div>
           </div>
-          <p className="text-2xl font-serif font-semibold text-[#6B8FAB]">
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#91715c] leading-none tracking-[-1px]">
             {loading ? '–' : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(stats.outstanding)}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#5B7A8E] font-medium">Outstanding</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Outstanding</p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-6 rounded-xl mb-6">
+      <div className="bg-white border border-[#A3B5C4]/30 p-6 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs uppercase tracking-widest font-semibold text-[#111] mb-3">Search Invoices</label>
+            <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#6B8FAB] mb-3">Search Invoices</label>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A3B5C4]/30"><Search className="w-4 h-4 text-[#6B8FAB]" /></div>
+              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A3B5C4]/30"><Search className="w-4 h-4 text-[#A3B5C4]" /></div>
               <input type="text" placeholder="Search by number or description..." value={search} onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 border border-[#A3B5C4]/30 bg-white-2 border-[#A3B5C4]/30 text-[#111] placeholder-gray-400 text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg" />
+                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#A3B5C4]/30 text-[#1B3A4C] placeholder-[#A3B5C4] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg" />
             </div>
           </div>
           <div>
-            <label className="block text-xs uppercase tracking-widest font-semibold text-[#111] mb-3">Filter by Status</label>
+            <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#6B8FAB] mb-3">Filter by Status</label>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A3B5C4]/30"><Filter className="w-4 h-4 text-[#6B8FAB]" /></div>
+              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A3B5C4]/30"><Filter className="w-4 h-4 text-[#A3B5C4]" /></div>
               <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 border border-[#A3B5C4]/30 bg-white-2 border-[#A3B5C4]/30 text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg appearance-none"
+                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#A3B5C4]/30 text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg appearance-none"
               >
                 {STATUS_OPTIONS.map((s) => <option key={s} value={s}>{s === 'all' ? 'All Invoices' : STATUS_LABELS[s]}</option>)}
               </select>
@@ -312,27 +309,27 @@ export default function InvoicesPage() {
       {loading ? (
         <p className="text-[#6B8FAB] text-center py-8">Loading...</p>
       ) : filteredInvoices.length === 0 ? (
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-xl p-8 text-center">
+        <div className="bg-white border border-[#A3B5C4]/30 p-8 text-center">
           <p className="text-[#6B8FAB]">No invoices found. Create your first invoice above.</p>
         </div>
       ) : (
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-xl overflow-hidden">
+        <div className="bg-white border border-[#A3B5C4]/30 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-[#A3B5C4]/30">
                   {['Invoice #', 'Project', 'Status', 'Due Date', 'Total', 'Actions'].map((h) => (
-                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#5B7A8E]">{h}</th>
+                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#6B8FAB]">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-[#E3E8ED]">
                 {filteredInvoices.map((inv) => {
                   const proj = projects.find(p => p.id === inv.projectId)
                   const clientName = proj?.clientId ? getClientName(proj.clientId) : ''
                   return (
-                    <tr key={inv.id} className="hover:bg-[#E3E8ED]/50 transition-colors">
-                      <td className="px-4 py-3 font-semibold text-[#111]">{inv.invoiceNumber}</td>
+                    <tr key={inv.id} className="hover:bg-[#F8FAFB] transition-colors">
+                      <td className="px-4 py-3 font-semibold text-[#1B3A4C]">{inv.invoiceNumber}</td>
                       <td className="px-4 py-3 text-[#5B7A8E]">
                         {proj ? (clientName ? `${proj.title} — ${clientName}` : proj.title) : '—'}
                       </td>
@@ -341,26 +338,26 @@ export default function InvoicesPage() {
                           inv.status === 'paid' ? 'bg-[#2d6a2d]/10 text-[#2d6a2d]' :
                           inv.status === 'overdue' ? 'bg-red-50 text-red-600' :
                           inv.status === 'sent' ? 'bg-[#1B3A4C]/10 text-[#1B3A4C]' :
-                          'bg-[#E3E8ED]/50 text-[#5B7A8E]'
+                          'bg-[#E3E8ED] text-[#5B7A8E]'
                         }`}>
                           {STATUS_ICONS[inv.status]}
                           {STATUS_LABELS[inv.status] || inv.status}
                         </span>
                       </td>
                       <td className="px-4 py-3 text-[#5B7A8E]">{inv.dueDate || '—'}</td>
-                      <td className="px-4 py-3 text-[#111] font-semibold">£{inv.total.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-[#1B3A4C] font-semibold">£{inv.total.toLocaleString()}</td>
                       <td className="px-4 py-3">
                         <div className="flex gap-2">
                           <button onClick={() => openView(inv)}
-                            className="p-1.5 hover:bg-[#E3E8ED]/50 rounded-lg transition-colors text-[#5B7A8E] hover:text-[#111]">
+                            className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C]">
                             <Eye size={16} />
                           </button>
                           <a href={`/api/invoices/${inv.id}/pdf`} download
-                            className="p-1.5 hover:bg-[#E3E8ED]/50 rounded-lg transition-colors text-[#5B7A8E] hover:text-[#111] inline-flex">
+                            className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C] inline-flex">
                             <Download size={16} />
                           </a>
                           <button onClick={() => deleteInvoice(inv.id)}
-                            className="p-1.5 hover:bg-[#E3E8ED]/50 rounded-lg transition-colors text-[#6B8FAB] hover:text-red-500">
+                            className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#A3B5C4] hover:text-red-500">
                             <Trash2 size={16} />
                           </button>
                         </div>
@@ -379,9 +376,9 @@ export default function InvoicesPage() {
         <form onSubmit={saveInvoice} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-2">Project (Optional)</label>
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Project (Optional)</label>
               <select value={projectId ?? ''} onChange={(e) => setProjectId(e.target.value ? Number(e.target.value) : null)}
-                className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C]"
+                className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
               >
                 <option value="">No project</option>
                 {projects.map((p) => {
@@ -393,46 +390,46 @@ export default function InvoicesPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-2">Due Date</label>
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Due Date</label>
               <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)}
-                className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-2">Tax Rate (%)</label>
+            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Tax Rate (%)</label>
             <input type="number" value={taxRate} onChange={(e) => setTaxRate(Number(e.target.value))}
-              className="w-24 px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C]" />
+              className="w-24 px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
           </div>
 
           <div className="space-y-3">
-            <p className="text-xs font-semibold text-[#111] uppercase tracking-widest">Line Items</p>
+            <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Line Items</p>
             {items.map((item, idx) => (
               <div key={idx} className="flex gap-3 items-start">
                 <div className="flex-1">
                   <input placeholder="Description" value={item.description} onChange={(e) => updateItem(idx, 'description', e.target.value)}
-                    className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                    className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
                 </div>
                 <div className="w-32">
                   <input type="number" placeholder="Amount £" value={item.amount} onChange={(e) => updateItem(idx, 'amount', e.target.value)}
-                    className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                    className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]" />
                 </div>
-                <button type="button" onClick={() => removeItem(idx)} className="text-[#6B8FAB] hover:text-red-500 text-sm pt-2.5 px-2">×</button>
+                <button type="button" onClick={() => removeItem(idx)} className="text-[#A3B5C4] hover:text-red-500 text-sm pt-2.5 px-2">×</button>
               </div>
             ))}
           </div>
 
           <button type="button" onClick={addItem}
-            className="text-sm text-[#1B3A4C] hover:underline underline-offset-2">+ Add line item</button>
+            className="text-sm text-[#1B3A4C] hover:underline underline-offset-2 font-semibold">+ Add line item</button>
 
           <div className="border-t border-[#A3B5C4]/30 pt-4 space-y-1">
             <div className="flex justify-between text-sm">
               <span className="text-[#5B7A8E]">Subtotal</span>
-              <span className="text-[#111] font-semibold">£{subtotal.toLocaleString()}</span>
+              <span className="text-[#1B3A4C] font-semibold">£{subtotal.toLocaleString()}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-[#5B7A8E]">Tax ({taxRate}%)</span>
-              <span className="text-[#111] font-semibold">£{tax.toLocaleString()}</span>
+              <span className="text-[#1B3A4C] font-semibold">£{tax.toLocaleString()}</span>
             </div>
             <div className="flex justify-between text-lg font-semibold pt-2 border-t border-[#A3B5C4]/30">
               <span className="text-[#111]">Total</span>
@@ -442,7 +439,7 @@ export default function InvoicesPage() {
 
           <div className="flex justify-end">
             <button type="submit"
-              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition text-sm font-medium hover:opacity-90 transition-opacity">Save Invoice</button>
+              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition">Save Invoice</button>
           </div>
         </form>
       </Modal>
@@ -457,7 +454,7 @@ export default function InvoicesPage() {
                   selectedInvoice.status === 'paid' ? 'bg-[#2d6a2d]/10 text-[#2d6a2d]' :
                   selectedInvoice.status === 'overdue' ? 'bg-red-50 text-red-600' :
                   selectedInvoice.status === 'sent' ? 'bg-[#1B3A4C]/10 text-[#1B3A4C]' :
-                  'bg-[#E3E8ED]/50 text-[#5B7A8E]'
+                  'bg-[#E3E8ED] text-[#5B7A8E]'
                 }`}>
                   {STATUS_ICONS[selectedInvoice.status]}
                   {STATUS_LABELS[selectedInvoice.status] || selectedInvoice.status}
@@ -471,19 +468,19 @@ export default function InvoicesPage() {
               <span className="text-sm text-[#5B7A8E]">Due: {selectedInvoice.dueDate || '—'}</span>
             </div>
 
-            <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-xl overflow-hidden">
+            <div className="bg-white border border-[#A3B5C4]/30 overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-[#A3B5C4]/30">
-                    <th className="px-4 py-2 text-left font-semibold text-[#111]">Description</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#111]">Amount</th>
+                    <th className="px-4 py-2 text-left font-semibold text-[#1B3A4C]">Description</th>
+                    <th className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">Amount</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-[#E3E8ED]">
                   {selectedInvoice.lineItems.map((item, idx) => (
                     <tr key={idx}>
-                      <td className="px-4 py-2 text-[#111]">{item.description}</td>
-                      <td className="px-4 py-2 text-right font-semibold text-[#111]">£{item.amount.toLocaleString()}</td>
+                      <td className="px-4 py-2 text-[#1B3A4C]">{item.description}</td>
+                      <td className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">£{item.amount.toLocaleString()}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -492,17 +489,17 @@ export default function InvoicesPage() {
 
             <div className="flex justify-between items-center pt-2">
               <span className="text-[#5B7A8E] text-sm">Tax: {selectedInvoice.taxRate}%</span>
-              <span className="text-xl font-serif font-semibold text-[#111]">Total: £{selectedInvoice.total.toLocaleString()}</span>
+              <span className="text-xl font-black text-[#111] tracking-[-1px]">Total: £{selectedInvoice.total.toLocaleString()}</span>
             </div>
 
             {/* Status Workflow Buttons */}
             <div className="border-t border-[#A3B5C4]/30 pt-4">
-              <p className="text-xs font-semibold text-[#111] uppercase tracking-widest mb-3">Actions</p>
+              <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Actions</p>
               <div className="flex flex-wrap gap-2">
                 {selectedInvoice.status === 'draft' && (
                   <button
                     onClick={() => updateInvoiceStatus(selectedInvoice.id, 'sent')}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#1B3A4C] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition"
                   >
                     <Send size={14} />
                     Send Invoice
@@ -512,14 +509,14 @@ export default function InvoicesPage() {
                   <>
                     <button
                       onClick={() => updateInvoiceStatus(selectedInvoice.id, 'paid')}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#2d6a2d] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                      className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#2d6a2d] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2d6a2d] hover:bg-[#2d6a2d] hover:text-white transition"
                     >
                       <CheckCircle size={14} />
                       Mark as Paid
                     </button>
                     <button
                       onClick={() => updateInvoiceStatus(selectedInvoice.id, 'overdue')}
-                      className="inline-flex items-center gap-2 px-7 py-3 border-2 border-red-400 rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-red-600 hover:bg-red-50 transition text-sm font-medium hover:bg-red-50 transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 border-2 border-red-300 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-red-600 hover:bg-red-50 transition"
                     >
                       <Clock size={14} />
                       Mark Overdue
@@ -529,7 +526,7 @@ export default function InvoicesPage() {
                 {selectedInvoice.status === 'paid' && (
                   <button
                     onClick={() => updateInvoiceStatus(selectedInvoice.id, 'sent')}
-                    className="inline-flex items-center gap-2 px-5 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[12px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#111] transition text-sm font-medium hover:bg-[#E3E8ED] transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#A3B5C4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
                   >
                     <RotateCcw size={14} />
                     Mark Unpaid
@@ -539,14 +536,14 @@ export default function InvoicesPage() {
                   <>
                     <button
                       onClick={() => updateInvoiceStatus(selectedInvoice.id, 'paid')}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#2d6a2d] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                      className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#2d6a2d] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2d6a2d] hover:bg-[#2d6a2d] hover:text-white transition"
                     >
                       <CheckCircle size={14} />
                       Mark as Paid
                     </button>
                     <button
                       onClick={() => updateInvoiceStatus(selectedInvoice.id, 'draft')}
-                      className="inline-flex items-center gap-2 px-5 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[12px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#111] transition text-sm font-medium hover:bg-[#E3E8ED] transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#A3B5C4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
                     >
                       <RotateCcw size={14} />
                       Reopen as Draft
@@ -556,7 +553,7 @@ export default function InvoicesPage() {
                 <a
                   href={`/api/invoices/${selectedInvoice.id}/pdf`}
                   download
-                  className="inline-flex items-center gap-2 px-5 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[12px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#111] transition text-sm font-medium hover:bg-[#E3E8ED]/50 transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#A3B5C4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
                 >
                   <Download size={14} />
                   Download PDF

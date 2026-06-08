@@ -222,17 +222,14 @@ export default function QuotesPage() {
   }
 
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-px bg-[#1B3A4C]"></div>
-          <p className="text-xs uppercase tracking-widest text-[#1B3A4C] font-medium">Quote Management</p>
-        </div>
+      <div className="mb-12">
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Quote Management</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="font-serif text-3xl md:text-4xl font-semibold text-[#111] tracking-tight">Quotes</h1>
-            <p className="text-sm text-[#5B7A8E] mt-1">Create, send and track client quotes.</p>
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Quotes</h1>
+            <p className="text-sm text-[#5B7A8E] mt-4 font-semibold uppercase tracking-[0.5px]">Create, send and track client quotes.</p>
           </div>
           <button
             onClick={() => {
@@ -243,7 +240,7 @@ export default function QuotesPage() {
               setPaymentTerms('net-30')
               setIsModalOpen(true)
             }}
-            className="px-5 py-2.5 bg-[#1B3A4C] text-white text-sm font-medium rounded-md hover:opacity-90 transition-opacity flex items-center gap-2"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition"
           >
             <Plus size={16} />
             New Quote
@@ -252,67 +249,67 @@ export default function QuotesPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+        <div className="bg-white border border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#111] text-white rounded-lg"><FileText size={16} /></div>
           </div>
-          <p className="text-2xl font-serif font-semibold text-[#111]">{loading ? '–' : stats.total}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#5B7A8E] font-medium">Total Quotes</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Quotes</p>
         </div>
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-5">
+        <div className="bg-white border border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#1B3A4C] text-white rounded-lg"><Send size={16} /></div>
           </div>
-          <p className="text-2xl font-serif font-semibold text-[#1B3A4C]">{loading ? '–' : stats.sent}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#5B7A8E] font-medium">Sent</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#1B3A4C] leading-none tracking-[-1px]">{loading ? '–' : stats.sent}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Sent</p>
         </div>
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-5">
+        <div className="bg-white border border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#2d6a2d] text-white rounded-lg"><CheckCircle size={16} /></div>
           </div>
-          <p className="text-2xl font-serif font-semibold text-[#2d6a2d]">{loading ? '–' : stats.accepted}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#5B7A8E] font-medium">Accepted</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#2d6a2d] leading-none tracking-[-1px]">{loading ? '–' : stats.accepted}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Accepted</p>
         </div>
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-5">
+        <div className="bg-white border border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#6B8FAB] text-white rounded-lg"><Clock size={16} /></div>
+            <div className="p-2 bg-[#91715c] text-white rounded-lg"><Clock size={16} /></div>
           </div>
-          <p className="text-2xl font-serif font-semibold text-[#6B8FAB]">
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#91715c] leading-none tracking-[-1px]">
             {loading ? '–' : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(stats.totalValue)}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#5B7A8E] font-medium">Total Value</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Value</p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 p-6 mb-6 rounded-xl">
+      <div className="bg-white border border-[#A3B5C4]/30 p-6 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs uppercase tracking-widest font-semibold text-[#111] mb-3">Search Quotes</label>
+            <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#6B8FAB] mb-3">Search Quotes</label>
             <div className="relative">
               <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A3B5C4]/30">
-                <Search className="w-4 h-4 text-[#6B8FAB]" />
+                <Search className="w-4 h-4 text-[#A3B5C4]" />
               </div>
               <input
                 type="text"
                 placeholder="Search by description or ID..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 border border-[#A3B5C4]/30 bg-white-2 border-[#A3B5C4]/30 text-[#111] placeholder-gray-400 text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg"
+                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#A3B5C4]/30 text-[#1B3A4C] placeholder-[#A3B5C4] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg"
               />
             </div>
           </div>
           <div>
-            <label className="block text-xs uppercase tracking-widest font-semibold text-[#111] mb-3">Filter by Status</label>
+            <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#6B8FAB] mb-3">Filter by Status</label>
             <div className="relative">
               <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A3B5C4]/30">
-                <Filter className="w-4 h-4 text-[#6B8FAB]" />
+                <Filter className="w-4 h-4 text-[#A3B5C4]" />
               </div>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 border border-[#A3B5C4]/30 bg-white-2 border-[#A3B5C4]/30 text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg appearance-none"
+                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#A3B5C4]/30 text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg appearance-none"
               >
                 {STATUS_OPTIONS.map((s) => (
                   <option key={s} value={s}>
@@ -329,50 +326,50 @@ export default function QuotesPage() {
       {loading ? (
         <p className="text-[#6B8FAB] text-center py-8">Loading...</p>
       ) : filteredQuotes.length === 0 ? (
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-xl p-8 text-center">
+        <div className="bg-white border border-[#A3B5C4]/30 p-8 text-center">
           <p className="text-[#6B8FAB]">No quotes found. Create your first quote above.</p>
         </div>
       ) : (
-        <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-xl overflow-hidden">
+        <div className="bg-white border border-[#A3B5C4]/30 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-[#A3B5C4]/30">
                   {['Quote #', 'Project', 'Status', 'Items', 'Total', 'Terms', 'Actions'].map((h) => (
-                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#5B7A8E]">{h}</th>
+                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#6B8FAB]">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-[#E3E8ED]">
                 {filteredQuotes.map((quote) => {
                   const proj = projects.find(p => p.id === quote.projectId)
                   const clientName = proj?.clientId ? getClientName(proj.clientId) : ''
                   return (
-                    <tr key={quote.id} className="hover:bg-[#E3E8ED]/50 transition-colors">
-                      <td className="px-4 py-3 font-semibold text-[#111]">#{quote.id}</td>
+                    <tr key={quote.id} className="hover:bg-[#F8FAFB] transition-colors">
+                      <td className="px-4 py-3 font-semibold text-[#1B3A4C]">#{quote.id}</td>
                       <td className="px-4 py-3 text-[#5B7A8E]">
                         {proj ? (clientName ? `${proj.title} — ${clientName}` : proj.title) : '—'}
                       </td>
                       <td className="px-4 py-3">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-[#E3E8ED]/50 text-[#111]">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-[#E3E8ED] text-[#1B3A4C]">
                           {STATUS_ICONS[quote.status] || <Clock size={14} />}
                           {STATUS_LABELS[quote.status] || quote.status}
                         </span>
                       </td>
                       <td className="px-4 py-3 text-[#5B7A8E]">{quote.lineItems.length} items</td>
-                      <td className="px-4 py-3 text-[#111] font-semibold">£{quote.total.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-[#1B3A4C] font-semibold">£{quote.total.toLocaleString()}</td>
                       <td className="px-4 py-3 text-[#5B7A8E] text-xs">{PAYMENT_TERMS[quote.paymentTerms || 'net-30'] || quote.paymentTerms || 'Net 30'}</td>
                       <td className="px-4 py-3">
                         <div className="flex gap-2">
                           <button
                             onClick={() => openView(quote)}
-                            className="p-1.5 hover:bg-[#E3E8ED]/50 rounded-lg transition-colors text-[#5B7A8E] hover:text-[#111]"
+                            className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C]"
                           >
                             <Eye size={16} />
                           </button>
                           <button
                             onClick={() => deleteQuote(quote.id)}
-                            className="p-1.5 hover:bg-[#E3E8ED]/50 rounded-lg transition-colors text-[#6B8FAB] hover:text-red-500"
+                            className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#A3B5C4] hover:text-red-500"
                           >
                             <Trash2 size={16} />
                           </button>
@@ -398,11 +395,11 @@ export default function QuotesPage() {
           {/* Project Link */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-2">Project (Optional)</label>
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Project (Optional)</label>
               <select
                 value={projectId ?? ''}
                 onChange={(e) => setProjectId(e.target.value ? Number(e.target.value) : null)}
-                className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
+                className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
               >
                 <option value="">No project</option>
                 {projects.map((p) => {
@@ -414,11 +411,11 @@ export default function QuotesPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-2">Payment Terms</label>
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Payment Terms</label>
               <select
                 value={paymentTerms}
                 onChange={(e) => setPaymentTerms(e.target.value)}
-                className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
+                className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
               >
                 {Object.entries(PAYMENT_TERMS).map(([value, label]) => (
                   <option key={value} value={value}>{label}</option>
@@ -429,18 +426,18 @@ export default function QuotesPage() {
 
           {/* Tax Rate */}
           <div>
-            <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-2">Tax Rate (%)</label>
+            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Tax Rate (%)</label>
             <input
               type="number"
               value={taxRate}
               onChange={(e) => setTaxRate(Number(e.target.value))}
-              className="w-24 px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
+              className="w-24 px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
             />
           </div>
 
           {/* Line Items */}
           <div className="space-y-3">
-            <p className="text-xs font-semibold text-[#111] uppercase tracking-widest">Line Items</p>
+            <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Line Items</p>
             {items.map((item, idx) => (
               <div key={idx} className="flex gap-3 items-start">
                 <div className="flex-1">
@@ -448,7 +445,7 @@ export default function QuotesPage() {
                     placeholder="Description"
                     value={item.description}
                     onChange={(e) => updateItem(idx, 'description', e.target.value)}
-                    className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
+                    className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
                   />
                 </div>
                 <div className="w-20">
@@ -457,7 +454,7 @@ export default function QuotesPage() {
                     placeholder="Qty"
                     value={item.quantity}
                     onChange={(e) => updateItem(idx, 'quantity', e.target.value)}
-                    className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors text-center"
+                    className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] text-center"
                   />
                 </div>
                 <div className="w-28">
@@ -466,7 +463,7 @@ export default function QuotesPage() {
                     placeholder="Rate £"
                     value={item.rate}
                     onChange={(e) => updateItem(idx, 'rate', e.target.value)}
-                    className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
+                    className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
                   />
                 </div>
                 <div className="w-20 text-sm text-[#5B7A8E] pt-2.5 text-right">
@@ -475,7 +472,7 @@ export default function QuotesPage() {
                 <button
                   type="button"
                   onClick={() => removeItem(idx)}
-                  className="text-[#6B8FAB] hover:text-red-500 text-sm pt-2.5 px-2"
+                  className="text-[#A3B5C4] hover:text-red-500 text-sm pt-2.5 px-2"
                 >
                   ×
                 </button>
@@ -486,7 +483,7 @@ export default function QuotesPage() {
           <button
             type="button"
             onClick={addItem}
-            className="text-sm text-[#1B3A4C] hover:underline underline-offset-2 transition-colors"
+            className="text-sm text-[#1B3A4C] hover:underline underline-offset-2 font-semibold"
           >
             + Add line item
           </button>
@@ -495,11 +492,11 @@ export default function QuotesPage() {
           <div className="border-t border-[#A3B5C4]/30 pt-4 space-y-1">
             <div className="flex justify-between text-sm">
               <span className="text-[#5B7A8E]">Subtotal</span>
-              <span className="text-[#111] font-semibold">£{subtotal.toLocaleString()}</span>
+              <span className="text-[#1B3A4C] font-semibold">£{subtotal.toLocaleString()}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-[#5B7A8E]">Tax ({taxRate}%)</span>
-              <span className="text-[#111] font-semibold">£{tax.toLocaleString()}</span>
+              <span className="text-[#1B3A4C] font-semibold">£{tax.toLocaleString()}</span>
             </div>
             <div className="flex justify-between text-lg font-semibold pt-2 border-t border-[#A3B5C4]/30">
               <span className="text-[#111]">Total</span>
@@ -510,7 +507,7 @@ export default function QuotesPage() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition text-sm font-medium hover:opacity-90 transition-opacity"
+              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition"
             >
               Save Quote
             </button>
@@ -528,35 +525,35 @@ export default function QuotesPage() {
         {selectedQuote && (
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-[#E3E8ED]/50 text-[#111]">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-[#E3E8ED] text-[#1B3A4C]">
                 {STATUS_ICONS[selectedQuote.status]}
                 {STATUS_LABELS[selectedQuote.status] || selectedQuote.status}
               </span>
               {selectedQuote.paymentTerms && (
-                <span className="text-xs text-[#5B7A8E] bg-gray-50 px-2 py-1 rounded">
+                <span className="text-xs text-[#5B7A8E] bg-white border border-[#A3B5C4]/30 px-2 py-1 rounded">
                   {PAYMENT_TERMS[selectedQuote.paymentTerms] || selectedQuote.paymentTerms}
                 </span>
               )}
             </div>
 
             {/* Line items table */}
-            <div className="border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-xl overflow-hidden">
+            <div className="bg-white border border-[#A3B5C4]/30 overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-[#A3B5C4]/30">
-                    <th className="px-4 py-2 text-left font-semibold text-[#111]">Description</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#111]">Qty</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#111]">Rate</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#111]">Amount</th>
+                    <th className="px-4 py-2 text-left font-semibold text-[#1B3A4C]">Description</th>
+                    <th className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">Qty</th>
+                    <th className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">Rate</th>
+                    <th className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">Amount</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-[#E3E8ED]">
                   {selectedQuote.lineItems.map((item, idx) => (
                     <tr key={idx}>
-                      <td className="px-4 py-2 text-[#111]">{item.description}</td>
+                      <td className="px-4 py-2 text-[#1B3A4C]">{item.description}</td>
                       <td className="px-4 py-2 text-right text-[#5B7A8E]">{item.quantity}</td>
                       <td className="px-4 py-2 text-right text-[#5B7A8E]">£{item.rate.toLocaleString()}</td>
-                      <td className="px-4 py-2 text-right font-semibold text-[#111]">£{item.amount.toLocaleString()}</td>
+                      <td className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">£{item.amount.toLocaleString()}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -565,19 +562,19 @@ export default function QuotesPage() {
 
             <div className="flex justify-between items-center pt-2">
               <span className="text-[#5B7A8E] text-sm">Tax: {selectedQuote.taxRate}%</span>
-              <span className="text-xl font-serif font-semibold text-[#111]">
+              <span className="text-xl font-black text-[#111] tracking-[-1px]">
                 Total: £{selectedQuote.total.toLocaleString()}
               </span>
             </div>
 
             {/* Status Workflow Buttons */}
             <div className="border-t border-[#A3B5C4]/30 pt-4">
-              <p className="text-xs font-semibold text-[#111] uppercase tracking-widest mb-3">Actions</p>
+              <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Actions</p>
               <div className="flex flex-wrap gap-2">
                 {selectedQuote.status === 'draft' && (
                   <button
                     onClick={() => updateQuoteStatus(selectedQuote.id, 'sent')}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#1B3A4C] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition"
                   >
                     <Send size={14} />
                     Send Quote
@@ -587,14 +584,14 @@ export default function QuotesPage() {
                   <>
                     <button
                       onClick={() => updateQuoteStatus(selectedQuote.id, 'accepted')}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#2d6a2d] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                      className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#2d6a2d] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2d6a2d] hover:bg-[#2d6a2d] hover:text-white transition"
                     >
                       <CheckCircle size={14} />
                       Mark Accepted
                     </button>
                     <button
                       onClick={() => updateQuoteStatus(selectedQuote.id, 'declined')}
-                      className="inline-flex items-center gap-2 px-7 py-3 border-2 border-red-400 rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-red-600 hover:bg-red-50 transition text-sm font-medium hover:bg-red-50 transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 border-2 border-red-300 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-red-600 hover:bg-red-50 transition"
                     >
                       <XCircle size={14} />
                       Mark Declined
@@ -604,7 +601,7 @@ export default function QuotesPage() {
                 {selectedQuote.status === 'accepted' && (
                   <Link
                     href={`/admin/invoices?projectId=${selectedQuote.projectId || ''}`}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#6B8FAB] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#91715c] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#91715c] hover:bg-[#91715c] hover:text-white transition"
                   >
                     <ArrowRight size={14} />
                     Create Invoice
@@ -613,7 +610,7 @@ export default function QuotesPage() {
                 {selectedQuote.status === 'declined' && (
                   <button
                     onClick={() => updateQuoteStatus(selectedQuote.id, 'draft')}
-                    className="inline-flex items-center gap-2 px-5 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[12px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#111] transition text-sm font-medium hover:bg-[#E3E8ED] transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#A3B5C4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
                   >
                     <RotateCcw size={14} />
                     Reopen as Draft

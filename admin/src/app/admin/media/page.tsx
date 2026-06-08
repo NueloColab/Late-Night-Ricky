@@ -80,12 +80,12 @@ export default function MediaPage() {
           placeholder="Search files..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 px-4 py-3 bg-[#111318] rounded-xl border border-[#8FA8BE]/30 text-sm focus:outline-none focus:border-[#1B3A4C] text-white"
+          className="flex-1 px-4 py-3 bg-white rounded-xl border border-[#8FA8BE]/30 text-sm focus:outline-none focus:border-[#1B3A4C] text-white"
         />
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="px-4 py-3 bg-[#111318] rounded-xl border border-[#8FA8BE]/30 text-sm focus:outline-none focus:border-[#1B3A4C] text-white"
+          className="px-4 py-3 bg-white rounded-xl border border-[#8FA8BE]/30 text-sm focus:outline-none focus:border-[#1B3A4C] text-white"
         >
           {types.map((t) => (
             <option key={t} value={t}>
@@ -98,7 +98,7 @@ export default function MediaPage() {
       {loading ? (
         <p className="text-[#8FA3B3] text-sm">Loading...</p>
       ) : filtered.length === 0 ? (
-        <div className="bg-[#111318] rounded-2xl p-12 text-center border border-[#8FA8BE]/20">
+        <div className="bg-white rounded-2xl p-12 text-center border border-[#8FA8BE]/20">
           <p className="text-[#8FA3B3] text-sm">No files found. Upload your first asset above.</p>
         </div>
       ) : (
@@ -106,7 +106,7 @@ export default function MediaPage() {
           {filtered.map((asset) => (
             <div
               key={asset.id}
-              className="group bg-[#111318] rounded-2xl overflow-hidden border border-[#8FA8BE]/20 hover:shadow-md transition-shadow"
+              className="group bg-white rounded-2xl overflow-hidden border border-[#8FA8BE]/20 hover:border-[#1B3A4C] transition-shadow"
             >
               <div className="aspect-square bg-[#0A0A0A] flex items-center justify-center relative">
                 {asset.type === 'image' ? (
@@ -127,7 +127,7 @@ export default function MediaPage() {
                     href={asset.path}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-1.5 bg-[#111318] text-white rounded-lg text-xs font-semibold"
+                    className="px-3 py-1.5 bg-white text-white rounded-lg text-xs font-semibold"
                   >
                     View
                   </a>

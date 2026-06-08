@@ -107,7 +107,7 @@ export default function ShowsPage() {
             <h1 className="font-serif text-3xl md:text-4xl font-semibold text-[#111] tracking-tight">Shows</h1>
             <p className="text-sm text-[#5B7A8E] mt-1">Manage show cards displayed on the front end.</p>
           </div>
-          <button onClick={openNew} className="px-5 py-2.5 bg-[#1B3A4C] text-white text-sm font-medium rounded-md hover:opacity-90 transition-opacity flex items-center gap-2">
+          <button onClick={openNew} className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition flex items-center gap-2">
             <Plus size={16} />
             Add Show
           </button>
@@ -149,7 +149,7 @@ export default function ShowsPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {cards.map((card) => (
-            <div key={card.id} className={`border border-[#A3B5C4]/30 bg-white rounded-lg overflow-hidden transition-opacity ${card.isActive ? 'border-[#A3B5C4]/30' : 'border-gray-100 opacity-60'}`}>
+            <div key={card.id} className={`border border-[#A3B5C4]/30 bg-white rounded-lg overflow-hidden transition-opacity ${card.isActive ? 'border-[#A3B5C4]/30' : 'border-[#A3B5C4]/30 opacity-60'}`}>
               {card.imagePath && (
                 <div className="aspect-video bg-[#E3E8ED]/50 overflow-hidden">
                   <img src={card.imagePath} alt={card.title} className="w-full h-full object-cover" />
@@ -170,7 +170,7 @@ export default function ShowsPage() {
                 </div>
                 {card.season && <p className="text-xs text-[#8FA8BE] mt-1">{card.season}</p>}
                 {card.description && <p className="text-xs text-[#6B8FAB] mt-2 line-clamp-2">{card.description}</p>}
-                <div className="flex gap-2 mt-3 pt-3 border-t border-gray-100">
+                <div className="flex gap-2 mt-3 pt-3 border-t border-[#A3B5C4]/30">
                   <button onClick={() => openEdit(card)} className="text-xs text-[#1B3A4C] hover:underline">Edit</button>
                   <button onClick={() => deleteCard(card.id)} className="text-xs text-[#6B8FAB] hover:text-red-500">Delete</button>
                 </div>
@@ -190,34 +190,34 @@ export default function ShowsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
               <label className="block text-xs font-medium text-[#5B7A8E] mb-1.5">Title <span className="text-red-400">*</span></label>
-              <input type="text" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-md text-sm text-[#111] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C] focus:border-transparent" placeholder="Show name" />
+              <input type="text" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C] focus:border-transparent" placeholder="Show name" />
             </div>
             <div>
               <label className="block text-xs font-medium text-[#5B7A8E] mb-1.5">Venue</label>
-              <input type="text" value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-md text-sm text-[#111] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C] focus:border-transparent" placeholder="Venue name" />
+              <input type="text" value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C] focus:border-transparent" placeholder="Venue name" />
             </div>
             <div>
               <label className="block text-xs font-medium text-[#5B7A8E] mb-1.5">Location</label>
-              <input type="text" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-md text-sm text-[#111] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C] focus:border-transparent" placeholder="City, Country" />
+              <input type="text" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C] focus:border-transparent" placeholder="City, Country" />
             </div>
             <div>
               <label className="block text-xs font-medium text-[#5B7A8E] mb-1.5">Season</label>
-              <input type="text" value={form.season} onChange={(e) => setForm({ ...form, season: e.target.value })} className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-md text-sm text-[#111] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C] focus:border-transparent" placeholder="e.g. Summer 2026" />
+              <input type="text" value={form.season} onChange={(e) => setForm({ ...form, season: e.target.value })} className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C] focus:border-transparent" placeholder="e.g. Summer 2026" />
             </div>
             <div>
               <label className="block text-xs font-medium text-[#5B7A8E] mb-1.5">Link URL</label>
-              <input type="text" value={form.href} onChange={(e) => setForm({ ...form, href: e.target.value })} className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-md text-sm text-[#111] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C] focus:border-transparent" placeholder="https://" />
+              <input type="text" value={form.href} onChange={(e) => setForm({ ...form, href: e.target.value })} className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C] focus:border-transparent" placeholder="https://" />
             </div>
             <div className="md:col-span-2">
               <label className="block text-xs font-medium text-[#5B7A8E] mb-1.5">Description</label>
-              <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-md text-sm text-[#111] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C] focus:border-transparent resize-none" placeholder="Brief description of the show..." />
+              <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} className="w-full px-4 py-2.5 border border-[#A3B5C4]/30 bg-white border-[#A3B5C4]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C] focus:border-transparent resize-none" placeholder="Brief description of the show..." />
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 pt-4">
-            <button type="submit" className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#1B3A4C] text-white text-sm font-medium rounded-md hover:opacity-90 transition-opacity">
+            <button type="submit" className="flex-1 inline-flex items-center justify-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition">
               {editCard ? 'Update Show' : 'Add Show'}
             </button>
-            <button type="button" onClick={() => { setIsModalOpen(false); setEditCard(null) }} className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#A3B5C4]/30 text-[#1B3A4C] text-sm font-medium rounded-md hover:bg-[#E3E8ED]/50 transition-colors">
+            <button type="button" onClick={() => { setIsModalOpen(false); setEditCard(null) }} className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-7 py-3 border-2 border-[#A3B5C4]/30 rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#1B3A4C] hover:border-[#111] transition">
               Cancel
             </button>
           </div>
