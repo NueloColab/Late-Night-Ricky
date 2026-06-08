@@ -101,6 +101,7 @@ export default async function HomePage() {
   let heroImage = '/assets/ricky-hero-v2.jpg';
   let heroLogo = '/assets/ricky-logo.png';
   let heroOverlay = true;
+  let heroGrayscale = true;
   let heroBackgroundSize = 'cover';
   let heroBackgroundPosition = '70% center';
   let videoPoster = '/assets/video-poster-desktop.jpg';
@@ -146,6 +147,7 @@ export default async function HomePage() {
         if (c.image) heroImage = c.image;
         if (c.logo) heroLogo = c.logo;
         if (c.overlay !== undefined) heroOverlay = c.overlay;
+        if (c.grayscale !== undefined) heroGrayscale = c.grayscale;
         if (c.backgroundSize) heroBackgroundSize = c.backgroundSize;
         if (c.backgroundPosition) heroBackgroundPosition = c.backgroundPosition;
       }
@@ -256,7 +258,7 @@ export default async function HomePage() {
               backgroundImage: `url('${heroImage}')`,
               backgroundSize: heroBackgroundSize,
               backgroundPosition: heroBackgroundPosition,
-              filter: 'grayscale(100%) brightness(1.05)',
+              filter: heroGrayscale ? 'grayscale(100%) brightness(1.05)' : 'none',
             }}
           />
           {heroOverlay && <div className="absolute inset-0 bg-[rgba(27,58,76,0.35)]" />}

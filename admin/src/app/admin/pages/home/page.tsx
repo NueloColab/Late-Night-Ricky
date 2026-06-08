@@ -893,7 +893,7 @@ function HeroEditor({
         </div>
       </div>
 
-      <div className="flex items-center gap-3 py-2">
+      <div className="flex items-center gap-6 py-2">
         <label className="inline-flex items-center gap-2 cursor-pointer">
           <input
             type="checkbox"
@@ -902,6 +902,15 @@ function HeroEditor({
             className="w-4 h-4 accent-[#1B3A4C]"
           />
           <span className="text-sm font-semibold text-[#1B3A4C]">Steel blue overlay</span>
+        </label>
+        <label className="inline-flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={content.grayscale !== false}
+            onChange={(e) => onChange('grayscale', e.target.checked)}
+            className="w-4 h-4 accent-[#1B3A4C]"
+          />
+          <span className="text-sm font-semibold text-[#1B3A4C]">Black & white filter</span>
         </label>
       </div>
 

@@ -88,7 +88,7 @@ export async function POST() {
   try {
     await db.delete(siteSections);
     const sections = [
-      { page: 'home', section: 'hero', order: 0, content: { title: 'Late Night Ricky', subtitle: 'International DJ & Grammy Winning Producer', image: '/assets/ricky-hero-v2.jpg', logo: '/assets/ricky-logo.png', overlay: true, backgroundSize: 'cover', backgroundPosition: '70% center' }, isActive: true },
+      { page: 'home', section: 'hero', order: 0, content: { title: 'Late Night Ricky', subtitle: 'International DJ & Grammy Winning Producer', image: '/assets/ricky-hero-v2.jpg', logo: '/assets/ricky-logo.png', overlay: true, grayscale: true, backgroundSize: 'cover', backgroundPosition: '70% center' }, isActive: true },
       { page: 'home', section: 'video', order: 1, content: { poster: '/assets/video-poster-desktop.jpg', src: '/assets/video-desktop.mp4' }, isActive: true },
       { page: 'home', section: 'reach', order: 2, content: { headline: 'International DJ & Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.', subtext: '150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.', grammyBadge: '/assets/grammy-gold-v2.png?v=2' }, isActive: true },
       { page: 'home', section: 'shows', order: 3, content: { title: 'Recent Shows & Stories' }, isActive: true },
