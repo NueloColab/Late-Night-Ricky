@@ -122,7 +122,7 @@ export async function POST() {
   }
 
   if (errors.length > 0) {
-    return NextResponse.json({ success: true, seeded, warnings: errors }, { status: 207 });
+    return NextResponse.json({ success: true, seeded, warnings: errors });
   }
 
   return NextResponse.json({ success: true, seeded, message: `Seeded ${seeded} items` });
