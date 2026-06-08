@@ -104,6 +104,19 @@ export default async function HomePage() {
   let videoSrc = '/assets/video-desktop.mp4';
   let reachHeadline = 'International DJ \u0026 Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.';
   let reachSubtext = '150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.';
+  let radioImage = '/assets/ricky-radio-new.jpg';
+  let radioHeadline = 'As Heard On';
+  let radioLabel = 'Music \u0026 Radio';
+  let radioDescription = 'Preview snippets of the latest releases. Click play to hear 30-second previews, then stream or download the full tracks on Spotify, Apple Music and YouTube.';
+  let spotifyUrl = 'https://open.spotify.com/artist/3lOtUgicoyDn2qKe5zc3dl?si=M3MjTUy7TOmOhc676Dsgvw';
+  let appleMusicUrl = 'https://music.apple.com/gb/artist/late-night-ricky/1759491226';
+  let youtubeUrl = 'https://www.youtube.com/@LateNightRicky';
+  let partnersQuote = "The best DJ I've heard.";
+  let partnersAttribution = 'Cristiano Ronaldo';
+  let partnersDescription = 'Trusted by A-list artists, global brands, and sold-out crowds worldwide.';
+  let pressPack = '/assets/press-pack.pdf';
+  let clientsTitle = 'Trusted By The Best';
+  let contactEmail = 'samir@wearemediahive.com';
 
   try {
     const [dbCards, dbNames, dbVenues, dbTracks, dbSections] = await Promise.all([
@@ -132,6 +145,35 @@ export default async function HomePage() {
         const c = typeof reachSection.content === 'string' ? JSON.parse(reachSection.content) : reachSection.content;
         if (c.headline) reachHeadline = c.headline;
         if (c.subtext) reachSubtext = c.subtext;
+      }
+      const radioSection = dbSections.find((s) => s.section === 'radio');
+      if (radioSection?.content) {
+        const c = typeof radioSection.content === 'string' ? JSON.parse(radioSection.content) : radioSection.content;
+        if (c.headline) radioHeadline = c.headline;
+        if (c.description) radioDescription = c.description;
+        if (c.image) radioImage = c.image;
+        if (c.label) radioLabel = c.label;
+        if (c.spotifyUrl) spotifyUrl = c.spotifyUrl;
+        if (c.appleMusicUrl) appleMusicUrl = c.appleMusicUrl;
+        if (c.youtubeUrl) youtubeUrl = c.youtubeUrl;
+      }
+      const partnersSection = dbSections.find((s) => s.section === 'partners');
+      if (partnersSection?.content) {
+        const c = typeof partnersSection.content === 'string' ? JSON.parse(partnersSection.content) : partnersSection.content;
+        if (c.quote) partnersQuote = c.quote;
+        if (c.attribution) partnersAttribution = c.attribution;
+        if (c.description) partnersDescription = c.description;
+        if (c.pressPack) pressPack = c.pressPack;
+      }
+      const clientsSection = dbSections.find((s) => s.section === 'clients');
+      if (clientsSection?.content) {
+        const c = typeof clientsSection.content === 'string' ? JSON.parse(clientsSection.content) : clientsSection.content;
+        if (c.title) clientsTitle = c.title;
+      }
+      const contactSection = dbSections.find((s) => s.section === 'contact');
+      if (contactSection?.content) {
+        const c = typeof contactSection.content === 'string' ? JSON.parse(contactSection.content) : contactSection.content;
+        if (c.bookingEmail) contactEmail = c.bookingEmail;
       }
     }
 
@@ -272,14 +314,20 @@ export default async function HomePage() {
       </section>
 
       {/* Partnerships */}
-      <PartnerLogosSection defaultLogos={DEFAULT_LOGOS} />
+      <PartnerLogosSection
+        defaultLogos={DEFAULT_LOGOS}
+        quote={partnersQuote}
+        attribution={partnersAttribution}
+        description={partnersDescription}
+        pressPack={pressPack}
+      />
 
       {/* Radio */}
       <section id="radio" className="reveal relative z-10 bg-white py-28">
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative overflow-hidden rounded-2xl">
-              <img src="/assets/ricky-radio-new.jpg" alt="Late Night Ricky" className="w-full h-auto object-cover" />
+              <img src={radioImage} alt="Late Night Ricky" className="w-full h-auto object-cover" />
               <div className="absolute bottom-5 right-5 flex items-end gap-[3px] z-10 p-3 rounded-lg bg-[#1B3A4C]/70 backdrop-blur-sm">
                 {[12, 20, 16, 24, 14].map((h, i) => (
                   <span key={i} className="eq-bar" style={{ height: `${h}px`, animationDelay: `${[0, 0.2, 0.4, 0.1, 0.3][i]}s` }} />
@@ -287,21 +335,21 @@ export default async function HomePage() {
               </div>
             </div>
             <div>
-              <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Music &amp; Radio</p>
-              <h2 className="text-[clamp(40px,6vw,80px)] font-black text-[#111] mb-5 leading-[0.95] tracking-[-2px] uppercase">As Heard On</h2>
+              <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">{radioLabel}</p>
+              <h2 className="text-[clamp(40px,6vw,80px)] font-black text-[#111] mb-5 leading-[0.95] tracking-[-2px] uppercase">{radioHeadline}</h2>
               <p className="text-sm text-[#111] leading-relaxed mb-10 max-w-[420px] font-semibold uppercase tracking-[0.5px]">
-                Preview snippets of the latest releases. Click play to hear 30-second previews, then stream or download the full tracks on Spotify, Apple Music and YouTube.
+                {radioDescription}
               </p>
               <div className="flex gap-4 flex-wrap mb-10">
-                <a href="https://open.spotify.com/artist/3lOtUgicoyDn2qKe5zc3dl?si=M3MjTUy7TOmOhc676Dsgvw" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
+                <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.521 17.31a.746.746 0 01-1.03.24c-2.66-1.62-6.008-1.98-9.95-1.083a.746.746 0 11-.413-1.433c4.308-1.244 8.007-.706 10.953 1.075a.746.746 0 01.44 1.201zm1.47-3.27a.934.934 0 01-1.288.308c-3.044-1.86-7.683-2.398-11.282-1.312a.934.934 0 11-.558-1.783c4.125-1.29 9.218-.663 12.637 1.421.443.27.562.856.29 1.366zm.126-3.403c-3.652-2.167-9.674-2.374-13.158-1.31a1.121 1.121 0 11-.662-2.142c3.977-1.239 10.56-.998 14.703 1.463a1.121 1.121 0 11-.883 1.989z" fill="currentColor"/></svg>
                   Spotify
                 </a>
-                <a href="https://music.apple.com/gb/artist/late-night-ricky/1759491226" target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
-                  <img src="/assets/apple-logo.png" alt="Apple" className="h-5 w-auto invert-0 group-hover:invert transition" />
+                <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18.7 5.3c-.4-.4-1.1-.6-2-.5-.9.1-1.8.6-2.6 1.3-.8.7-1.3 1.6-1.3 2.4 0 .2 0 .4.1.6-.5-.1-1-.2-1.6-.2-1.6 0-3.2.6-4.4 1.7-1.2 1.1-1.9 2.6-2 4.2-.1 1.6.4 3.2 1.5 4.4 1.1 1.2 2.6 1.9 4.2 2 1.6.1 3.2-.4 4.4-1.5 1.2-1.1 1.9-2.6 2-4.2v-9.2c0-.3-.1-.5-.3-.8zm-6.5 11.5c-.4.4-.9.6-1.5.6-.6 0-1.1-.2-1.5-.6-.4-.4-.6-.9-.6-1.5 0-.6.2-1.1.6-1.5.4-.4.9-.6 1.5-.6.6 0 1.1.2 1.5.6.4.4.6.9.6 1.5 0 .6-.2 1.1-.6 1.5z" fill="currentColor"/></svg>
                   Apple
                 </a>
-                <a href="https://www.youtube.com/@LateNightRicky" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
+                <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
                   <svg width="20" height="16" viewBox="0 0 24 24" fill="none"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"/></svg>
                   YouTube
                 </a>
@@ -329,7 +377,7 @@ export default async function HomePage() {
       <section id="supporting" className="reveal relative z-10 bg-white pt-10 pb-28">
         <div className="max-w-[1200px] mx-auto px-6">
           <p className="text-sm text-[#5B7A8E] mb-10 tracking-[2px] uppercase text-center">Acts &amp; Private Clients</p>
-          <h2 className="text-[clamp(36px,6vw,72px)] font-black tracking-[-2px] uppercase mb-10 text-[#111] text-center">Trusted By The Best</h2>
+          <h2 className="text-[clamp(36px,6vw,72px)] font-black tracking-[-2px] uppercase mb-10 text-[#111] text-center">{clientsTitle}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
             {clients.map((name) => (
               <div key={name} className="text-[clamp(18px,2.2vw,28px)] font-black uppercase tracking-[-0.5px] leading-tight text-[#111] text-center py-3 px-2 hover:text-[#1B3A4C] transition cursor-default">{name}</div>
@@ -398,7 +446,7 @@ export default async function HomePage() {
               <button className="flex-1 py-3.5 px-7 border-2 border-[#111] bg-[#111] text-white text-xs font-semibold uppercase tracking-[1.5px]">Booking</button>
               <button className="flex-1 py-3.5 px-7 border-2 border-[#111] bg-white text-[#111] text-xs font-semibold uppercase tracking-[1.5px]">Private Message</button>
             </div>
-            <form action="mailto:samir@wearemediahive.com" method="post" encType="text/plain">
+            <form action={`mailto:${contactEmail}`} method="post" encType="text/plain">
               {[
                 { label: 'Name *', name: 'name', type: 'text' },
                 { label: 'Email *', name: 'email', type: 'email' },

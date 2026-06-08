@@ -13,9 +13,13 @@ interface Logo {
 
 interface PartnerLogosSectionProps {
   defaultLogos: { src: string; alt: string }[];
+  quote?: string;
+  attribution?: string;
+  description?: string;
+  pressPack?: string;
 }
 
-export default function PartnerLogosSection({ defaultLogos }: PartnerLogosSectionProps) {
+export default function PartnerLogosSection({ defaultLogos, quote, attribution, description, pressPack }: PartnerLogosSectionProps) {
   const [logos, setLogos] = useState<Logo[]>([]);
 
   useEffect(() => {
@@ -39,9 +43,9 @@ export default function PartnerLogosSection({ defaultLogos }: PartnerLogosSectio
   return (
     <section id="partnerships" className="relative z-10 py-28 text-center" style={{ background: 'linear-gradient(180deg,#111 0%,#1a1b20 100%)' }}>
       <div className="max-w-[1200px] mx-auto px-6">
-        <h2 className="font-serif text-[clamp(28px,4vw,48px)] italic text-white mb-4">“The best DJ I&apos;ve heard.”</h2>
+        <h2 className="font-serif text-[clamp(28px,4vw,48px)] italic text-white mb-4">“{quote}”</h2>
         <p className="text-sm text-[#8FA8BE] mb-16 max-w-[500px] mx-auto">
-          — Cristiano Ronaldo. Trusted by A-list artists, global brands, and sold-out crowds worldwide.
+          — {attribution}{description ? `. ${description}` : ''}
         </p>
         <div className="grid grid-cols-3 gap-8 md:gap-12 max-w-[900px] mx-auto">
           {displayLogos.map((logo, i) => (
@@ -70,16 +74,18 @@ export default function PartnerLogosSection({ defaultLogos }: PartnerLogosSectio
             All Partnerships
           </a>
         </div>
-        <div className="mt-8">
-          <a
-            href="/assets/press-pack.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-[#8FA8BE] hover:text-white transition"
-          >
-            Download Press Pack
-          </a>
-        </div>
+        {pressPack && (
+          <div className="mt-8">
+            <a
+              href={pressPack}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-[#8FA8BE] hover:text-white transition"
+            >
+              Download Press Pack
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );
