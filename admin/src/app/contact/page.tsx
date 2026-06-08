@@ -137,8 +137,16 @@ export default function ContactPage() {
                   Send another
                 </button>
               </div>
-            ) : contactInfo.formEnabled ? (
-              <form onSubmit={handleSubmit} className={activeTab === 'booking' ? 'block' : 'hidden'}>
+            ) : !contactInfo.formEnabled ? (
+              <div className="text-center py-10">
+                <p className="text-lg font-semibold text-[#111] mb-2">Contact form is currently disabled</p>
+                <p className="text-sm text-[#6B8FAB]">Please reach out directly via email.</p>
+                <a href={`mailto:${contactInfo.email}`} className="mt-4 inline-block px-6 py-2 border-2 border-[#111] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#111] hover:text-white transition">
+                  Email {contactInfo.email}
+                </a>
+              </div>
+            ) : activeTab === 'booking' ? (
+              <form onSubmit={handleSubmit}>
                 <div className="mb-7">
                   <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>
                   <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
@@ -173,17 +181,7 @@ export default function ContactPage() {
                 </button>
               </form>
             ) : (
-              <div className="text-center py-10">
-                <p className="text-lg font-semibold text-[#111] mb-2">Contact form is currently disabled</p>
-                <p className="text-sm text-[#6B8FAB]">Please reach out directly via email.</p>
-                <a href={`mailto:${contactInfo.email}`} className="mt-4 inline-block px-6 py-2 border-2 border-[#111] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#111] hover:text-white transition">
-                  Email {contactInfo.email}
-                </a>
-              </div>
-            )}
-
-            {!submitted && contactInfo.formEnabled && (
-              <form onSubmit={handleSubmit} className={activeTab === 'private' ? 'block' : 'hidden'}>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-7">
                   <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>
                   <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
