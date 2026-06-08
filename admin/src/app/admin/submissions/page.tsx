@@ -1,4 +1,4 @@
-'use client';
+use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 
@@ -162,7 +162,6 @@ export default function SubmissionsPage() {
 
   return (
     <div className="max-w-7xl mx-auto">
-      {/* Header */}
       <div className="mb-12">
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Music Submissions</p>
         <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">
@@ -223,7 +222,7 @@ export default function SubmissionsPage() {
       </div>
 
       {loading ? (
-        <div className="text-center py-20 text-[#6B8FAB]">Loading submissions…</div>
+        <div className="text-center py-20 text-[#6B8FAB]">Loading submissions...</div>
       ) : submissions.length === 0 ? (
         <div className="text-center py-20 text-[#6B8FAB]">No submissions found.</div>
       ) : (
@@ -320,9 +319,9 @@ export default function SubmissionsPage() {
                     <textarea
                       value={s.notes || ''}
                       onChange={(e) => updateNotes(s.id, e.target.value)}
-                      placeholder="Add notes…"
+                      placeholder="Add notes..."
                       rows={2}
-                      className="w-full min-w-[160px] px-2 py-1 rounded-lg border border-[#A3B5C4]/30 text-xs text-[#1B3A4C] bg-white focus:outline-none focus:border-[#1B3A4C] resize-y"
+                      className="w-full min-w-[160px] px-2 py-1 rounded-md border border-[#A3B5C4]/30 text-xs text-[#1B3A4C] bg-white focus:outline-none focus:border-[#1B3A4C] resize-y"
                     />
                   </td>
                   <td className="px-4 py-3">

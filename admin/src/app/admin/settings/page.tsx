@@ -79,7 +79,6 @@ export default function SettingsPage() {
 
   return (
     <div className="max-w-5xl mx-auto">
-      {/* Header */}
       <div className="mb-12">
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Configuration</p>
         <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">
@@ -92,7 +91,6 @@ export default function SettingsPage() {
         <p className="text-[#6B8FAB] text-sm">Loading...</p>
       ) : (
         <div className="space-y-8">
-          {/* Business Settings */}
           <div className="bg-white border border-[#A3B5C4]/30 p-8">
             <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-6">Business Settings</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -144,7 +142,6 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          {/* PIN Change */}
           <div className="bg-white border border-[#A3B5C4]/30 p-8">
             <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-6">Security</p>
             <form onSubmit={changePin} className="max-w-md space-y-5">

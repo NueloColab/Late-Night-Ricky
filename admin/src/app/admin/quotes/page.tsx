@@ -273,9 +273,9 @@ export default function QuotesPage() {
         </div>
         <div className="bg-white border border-[#A3B5C4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#91715c] text-white rounded-lg"><Clock size={16} /></div>
+            <div className="p-2 bg-[#6B8FAB] text-white rounded-lg"><Clock size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#91715c] leading-none tracking-[-1px]">
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#6B8FAB] leading-none tracking-[-1px]">
             {loading ? '–' : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(stats.totalValue)}
           </p>
           <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Value</p>
@@ -601,7 +601,7 @@ export default function QuotesPage() {
                 {selectedQuote.status === 'accepted' && (
                   <Link
                     href={`/admin/invoices?projectId=${selectedQuote.projectId || ''}`}
-                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#91715c] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#91715c] hover:bg-[#91715c] hover:text-white transition"
+                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#6B8FAB] hover:bg-[#6B8FAB] hover:text-white transition"
                   >
                     <ArrowRight size={14} />
                     Create Invoice

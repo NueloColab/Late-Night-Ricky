@@ -50,8 +50,12 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
         {/* Logo */}
         <Link href="/admin" className="mb-8 pt-8 px-6" onClick={isMobile ? onClose : undefined}>
           <div className="text-center">
-            <p className="font-['Rockybilly'] text-2xl text-[#1B3A4C]">Late Night Ricky</p>
-            <div className="flex items-center justify-center gap-3 mt-2">
+            <img
+              src="/assets/ricky-logo.png"
+              alt="Late Night Ricky"
+              className="h-12 w-auto mx-auto"
+            />
+            <div className="flex items-center justify-center gap-3 mt-3">
               <div className="w-6 h-px bg-[#6B8FAB]" />
               <p className="text-[10px] uppercase tracking-[3px] text-[#6B8FAB] font-semibold">Admin Portal</p>
               <div className="w-6 h-px bg-[#6B8FAB]" />
