@@ -55,7 +55,7 @@ export default function ShareMusicPage() {
       setFile(null);
       setArtistName('');
       setTrackTitle('');
-    } catch (err) {
+    } catch {
       setStatus('error');
       setErrorMsg('Upload failed. Please try again or email bookings@latenightricky.com directly.');
     } finally {

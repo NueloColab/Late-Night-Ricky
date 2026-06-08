@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useRef, FormEvent } from 'react'
-import { Plus, Music, Trash2, GripVertical, Pencil, ArrowUp, ArrowDown, Play, Pause, Upload } from 'lucide-react'
+import { Plus, Trash2, Pencil, ArrowUp, ArrowDown, Play, Pause, Upload } from 'lucide-react'
 import Modal from '@/components/Modal'
 
 interface Track {
@@ -44,7 +44,7 @@ export default function TracksPage() {
       const res = await fetch('/api/tracks')
       const data = await res.json()
       setTrackList(data.tracks || [])
-    } catch (err) { console.error('Failed to load tracks:', err) }
+    } catch { console.error('Failed to load tracks') }
     setLoading(false)
   }
 
@@ -58,7 +58,7 @@ export default function TracksPage() {
       setEditTrack(null)
       setIsModalOpen(false)
       fetchTracks()
-    } catch (err) { console.error('Save failed:', err) }
+    } catch { console.error('Save failed') }
   }
 
   async function deleteTrack(id: number) {
@@ -66,7 +66,7 @@ export default function TracksPage() {
     try {
       await fetch(`/api/tracks/${id}`, { method: 'DELETE' })
       fetchTracks()
-    } catch (err) { console.error('Delete failed:', err) }
+    } catch { console.error('Delete failed') }
   }
 
   async function toggleActive(id: number, isActive: boolean) {
@@ -77,7 +77,7 @@ export default function TracksPage() {
         body: JSON.stringify({ isActive: !isActive }),
       })
       fetchTracks()
-    } catch (err) { console.error('Toggle failed:', err) }
+    } catch { console.error('Toggle failed') }
   }
 
   async function moveOrder(id: number, direction: 'up' | 'down') {
@@ -95,7 +95,7 @@ export default function TracksPage() {
         fetch(`/api/tracks/${updated[swapIdx].id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ order: updated[swapIdx].order }) }),
       ])
       fetchTracks()
-    } catch (err) { console.error('Reorder failed:', err) }
+    } catch { console.error('Reorder failed') }
   }
 
   async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -110,7 +110,7 @@ export default function TracksPage() {
       if (data.url) {
         setForm(f => ({ ...f, filePath: data.url }))
       }
-    } catch (err) { console.error('Upload failed:', err) }
+    } catch { console.error('Upload failed') }
     setUploading(false)
   }
 
