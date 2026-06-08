@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+export const maxDuration = 60;
+
 import { db } from '@/lib/db';
 import { assets } from '@/lib/db/schema';
 import { desc } from 'drizzle-orm';
