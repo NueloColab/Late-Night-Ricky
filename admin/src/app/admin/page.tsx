@@ -23,7 +23,7 @@ export default function Dashboard() {
       {/* Header */}
       <div className="mb-10">
         <h1 className="font-serif text-4xl tracking-tight mb-2">Overview</h1>
-        <p className="text-white/40 text-sm">Welcome back. Here's what's happening.</p>
+        <p className="text-white/40 text-sm">Welcome back. Here&apos;s what&apos;s happening.</p>
       </div>
 
       {/* Stats Grid */}
