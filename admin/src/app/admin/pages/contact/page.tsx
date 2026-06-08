@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import MediaPicker from '@/components/media-picker';
 
 interface SectionData {
   id: number;
@@ -22,6 +23,7 @@ export default function ContactEditor() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [savedMsg, setSavedMsg] = useState('');
+  const [mediaOpen, setMediaOpen] = useState(false);
 
   const fetchSections = useCallback(async () => {
     setLoading(true);
@@ -152,25 +154,12 @@ export default function ContactEditor() {
                   </div>
                 )}
               </div>
-              <input
-                type="text"
-                value={imageValue}
-                onChange={(e) => {
-                  setSections((prev) =>
-                    prev.map((s) =>
-                      s.section === 'image' ? { ...s, content: [e.target.value] } : s
-                    )
-                  );
-                }}
-                placeholder="/assets/ricky-hero-new.jpg"
-                className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] mb-4"
-              />
               <button
-                onClick={() => saveField('image', imageValue)}
+                onClick={() => setMediaOpen(true)}
                 disabled={saving}
                 className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition disabled:opacity-50"
               >
-                {saving ? 'Saving...' : 'Save Image'}
+                {imageValue ? 'Replace Image' : 'Upload Image'}
               </button>
             </div>
           ) : selectedSection === 'email' ? (
@@ -256,6 +245,15 @@ export default function ContactEditor() {
           ) : null}
         </div>
       </div>
+
+      <MediaPicker
+        open={mediaOpen}
+        onClose={() => setMediaOpen(false)}
+        onSelect={(path) => {
+          saveField('image', path);
+        }}
+        filterType="image"
+      />
     </div>
   );
 }
