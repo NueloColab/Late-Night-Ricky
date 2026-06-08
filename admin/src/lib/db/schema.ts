@@ -178,3 +178,49 @@ export const tracks = pgTable("tracks", {
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
 });
+
+// ─── Royalties ───
+export const royalties = pgTable("royalties", {
+  id: serial("id").primaryKey(),
+  projectId: integer("project_id").notNull(),
+  source: text("source").notNull(), // spotify, apple_music, sync, performance, publishing, other
+  amount: real("amount").default(0),
+  currency: text("currency").default("GBP"),
+  periodStart: text("period_start"),
+  periodEnd: text("period_end"),
+  streams: integer("streams"),
+  status: text("status").default("pending"), // pending, received, forecast
+  notes: text("notes"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+});
+
+// ─── Contracts ───
+export const contracts = pgTable("contracts", {
+  id: serial("id").primaryKey(),
+  projectId: integer("project_id").notNull(),
+  title: text("title").notNull(),
+  fileUrl: text("file_url"),
+  status: text("status").default("draft"), // draft, sent, signed, expired, cancelled
+  contractType: text("contract_type").default("general"), // dj_booking, production, remix, sync, management, other
+  signedAt: timestamp("signed_at", { mode: "date" }),
+  expiryDate: text("expiry_date"),
+  terms: text("terms"),
+  counterpartyName: text("counterparty_name"),
+  counterpartyEmail: text("counterparty_email"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
+});
+
+// ─── Referrals ───
+export const referrals = pgTable("referrals", {
+  id: serial("id").primaryKey(),
+  projectId: integer("project_id").notNull(),
+  name: text("name").notNull(),
+  email: text("email"),
+  commission: real("commission").default(0),
+  commissionPercent: real("commission_percent"),
+  status: text("status").default("active"), // active, paid, cancelled
+  paidAt: timestamp("paid_at", { mode: "date" }),
+  notes: text("notes"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+});

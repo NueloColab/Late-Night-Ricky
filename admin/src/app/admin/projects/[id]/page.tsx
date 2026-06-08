@@ -137,6 +137,9 @@ export default function ProjectDetailPage() {
   const [client, setClient] = useState<Client | null>(null);
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [royalties, setRoyalties] = useState<any[]>([]);
+  const [contracts, setContracts] = useState<any[]>([]);
+  const [referrals, setReferrals] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
   const [taskFilter, setTaskFilter] = useState("ALL");
@@ -147,6 +150,8 @@ export default function ProjectDetailPage() {
   const [showTaskInput, setShowTaskInput] = useState(false);
   const [showFileUpload, setShowFileUpload] = useState(false);
   const [showReferralForm, setShowReferralForm] = useState(false);
+  const [showRoyaltyForm, setShowRoyaltyForm] = useState(false);
+  const [showContractForm, setShowContractForm] = useState(false);
 
   // Form states
   const [form, setForm] = useState<Partial<Project>>({});
@@ -156,7 +161,9 @@ export default function ProjectDetailPage() {
   const [fileUrl, setFileUrl] = useState("");
   const [fileName, setFileName] = useState("");
   const [filePhase, setFilePhase] = useState("");
-  const [newReferral, setNewReferral] = useState({ name: "", email: "", commission: null as number | null });
+  const [newReferral, setNewReferral] = useState({ name: "", email: "", commission: null as number | null, commissionPercent: null as number | null });
+  const [newRoyalty, setNewRoyalty] = useState({ source: "spotify", amount: null as number | null, periodStart: "", periodEnd: "", streams: null as number | null, status: "pending", notes: "" });
+  const [newContract, setNewContract] = useState({ title: "", fileUrl: "", status: "draft", contractType: "general", counterpartyName: "", counterpartyEmail: "", expiryDate: "", terms: "" });
 
   useEffect(() => {
     if (!id) return;
@@ -167,17 +174,26 @@ export default function ProjectDetailPage() {
   async function fetchAll() {
     setLoading(true);
     try {
-      const [projRes, quotesRes, invRes] = await Promise.all([
+      const [projRes, quotesRes, invRes, royaltyRes, contractRes, referralRes] = await Promise.all([
         fetch(`/api/projects/${id}`),
         fetch(`/api/projects/${id}/quotes`),
         fetch(`/api/projects/${id}/invoices`),
+        fetch(`/api/projects/${id}/royalties`),
+        fetch(`/api/projects/${id}/contracts`),
+        fetch(`/api/projects/${id}/referrals`),
       ]);
       const projData = await projRes.json();
       const quotesData = await quotesRes.json();
       const invData = await invRes.json();
+      const royaltyData = await royaltyRes.json();
+      const contractData = await contractRes.json();
+      const referralData = await referralRes.json();
       setProject(projData.project);
       setQuotes(quotesData.quotes || []);
       setInvoices(invData.invoices || []);
+      setRoyalties(royaltyData.royalties || []);
+      setContracts(contractData.contracts || []);
+      setReferrals(referralData.referrals || []);
       if (projData.project) setForm(projData.project);
       if (projData.project?.clientId) {
         try {
@@ -296,6 +312,60 @@ export default function ProjectDetailPage() {
   async function removeFile(index: number) {
     const files = (project?.files || []).filter((_, i) => i !== index);
     await updateProject({ files });
+  }
+
+  // Royalties
+  async function addRoyalty() {
+    if (!newRoyalty.amount && !newRoyalty.streams) return;
+    await fetch(`/api/projects/${id}/royalties`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newRoyalty),
+    });
+    setNewRoyalty({ source: "spotify", amount: null, periodStart: "", periodEnd: "", streams: null, status: "pending", notes: "" });
+    setShowRoyaltyForm(false);
+    fetchAll();
+  }
+
+  async function removeRoyalty(royaltyId: number) {
+    await fetch(`/api/projects/${id}/royalties?royaltyId=${royaltyId}`, { method: "DELETE" });
+    fetchAll();
+  }
+
+  // Contracts
+  async function addContract() {
+    if (!newContract.title.trim()) return;
+    await fetch(`/api/projects/${id}/contracts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newContract),
+    });
+    setNewContract({ title: "", fileUrl: "", status: "draft", contractType: "general", counterpartyName: "", counterpartyEmail: "", expiryDate: "", terms: "" });
+    setShowContractForm(false);
+    fetchAll();
+  }
+
+  async function removeContract(contractId: number) {
+    await fetch(`/api/projects/${id}/contracts?contractId=${contractId}`, { method: "DELETE" });
+    fetchAll();
+  }
+
+  // Referrals (wired)
+  async function addReferral() {
+    if (!newReferral.name.trim()) return;
+    await fetch(`/api/projects/${id}/referrals`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newReferral),
+    });
+    setNewReferral({ name: "", email: "", commission: null, commissionPercent: null });
+    setShowReferralForm(false);
+    fetchAll();
+  }
+
+  async function removeReferral(referralId: number) {
+    await fetch(`/api/projects/${id}/referrals?referralId=${referralId}`, { method: "DELETE" });
+    fetchAll();
   }
 
   // Auto-progress based on completed tasks
@@ -538,6 +608,75 @@ export default function ProjectDetailPage() {
           {/* Mood Boards */}
           <MoodBoardSection projectId={project.id} />
 
+          {/* Contracts */}
+          <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <FileText size={18} className="text-[#6B8FAB]" />
+                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Contracts</h3>
+              </div>
+              <button
+                onClick={() => setShowContractForm(!showContractForm)}
+                className="px-4 py-2 bg-[#111] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
+              >
+                <Plus size={14} /> Add Contract
+              </button>
+            </div>
+
+            {showContractForm && (
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <input placeholder="Contract title" value={newContract.title} onChange={(e) => setNewContract({ ...newContract, title: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <select value={newContract.contractType} onChange={(e) => setNewContract({ ...newContract, contractType: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
+                    <option value="dj_booking">DJ Booking</option>
+                    <option value="production">Production</option>
+                    <option value="remix">Remix</option>
+                    <option value="sync">Sync License</option>
+                    <option value="management">Management</option>
+                    <option value="general">General</option>
+                  </select>
+                  <input placeholder="Counterparty name" value={newContract.counterpartyName} onChange={(e) => setNewContract({ ...newContract, counterpartyName: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="Counterparty email" value={newContract.counterpartyEmail} onChange={(e) => setNewContract({ ...newContract, counterpartyEmail: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="File URL" value={newContract.fileUrl} onChange={(e) => setNewContract({ ...newContract, fileUrl: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="date" placeholder="Expiry date" value={newContract.expiryDate} onChange={(e) => setNewContract({ ...newContract, expiryDate: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <textarea placeholder="Terms / notes" value={newContract.terms} onChange={(e) => setNewContract({ ...newContract, terms: e.target.value })} rows={2} className="sm:col-span-2 px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C] resize-y" />
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={addContract} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => setShowContractForm(false)} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
+                </div>
+              </div>
+            )}
+
+            {contracts.length === 0 ? (
+              <p className="text-sm text-[#999] italic py-4 text-center">No contracts yet. Add booking agreements, production deals, sync licenses, etc.</p>
+            ) : (
+              <div className="space-y-2">
+                {contracts.map((c: any) => (
+                  <div key={c.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-[#111]">{c.title}</span>
+                        <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded font-medium ${
+                          c.status === "signed" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" :
+                          c.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" :
+                          c.status === "expired" ? "bg-red-50 text-red-600" :
+                          "bg-[#E3E8ED]/80 text-[#5B7A8E]"
+                        }`}>{c.status}</span>
+                      </div>
+                      <p className="text-xs text-[#5B7A8E] mt-0.5">{c.contractType.replace(/_/g, " ")} · {c.counterpartyName || "No counterparty"}</p>
+                      {c.expiryDate && <p className="text-xs text-[#999] mt-0.5">Expires {new Date(c.expiryDate + "T00:00:00").toLocaleDateString("en-GB")}</p>}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {c.fileUrl && <a href={c.fileUrl} target="_blank" rel="noopener noreferrer" className="text-[#6B8FAB] hover:text-[#1B3A4C]"><ExternalLink size={14} /></a>}
+                      <button onClick={() => removeContract(c.id)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Team & Assignments */}
           <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
@@ -632,13 +771,35 @@ export default function ProjectDetailPage() {
                   <input type="number" placeholder="Commission (£)" value={newReferral.commission ?? ""} onChange={(e) => setNewReferral({ ...newReferral, commission: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={() => { setShowReferralForm(false); setNewReferral({ name: "", email: "", commission: null }); }} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
-                  <button onClick={() => setShowReferralForm(false)} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
+                  <button onClick={addReferral} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => { setShowReferralForm(false); setNewReferral({ name: "", email: "", commission: null, commissionPercent: null }); }} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
                 </div>
               </div>
             )}
 
-            <p className="text-sm text-[#999] italic py-4 text-center">No referrals added yet</p>
+            {referrals.length === 0 ? (
+              <p className="text-sm text-[#999] italic py-4 text-center">No referrals added yet</p>
+            ) : (
+              <div className="space-y-2">
+                {referrals.map((r: any) => (
+                  <div key={r.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-[#111]">{r.name}</span>
+                        <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded font-medium ${
+                          r.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : "bg-[#1B3A4C]/10 text-[#1B3A4C]"
+                        }`}>{r.status}</span>
+                      </div>
+                      {r.email && <p className="text-xs text-[#5B7A8E] mt-0.5">{r.email}</p>}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      {r.commission > 0 && <span className="text-sm font-semibold text-[#6B8FAB]">{gbp.format(r.commission)}</span>}
+                      <button onClick={() => removeReferral(r.id)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Files & Deliverables */}
@@ -898,6 +1059,81 @@ export default function ProjectDetailPage() {
                 + Invoice
               </Link>
             </div>
+          </div>
+
+          {/* Royalties Card */}
+          <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <PoundSterling size={16} className="text-[#6B8FAB]" />
+                <h3 className="text-sm font-bold text-[#111] uppercase tracking-wider">Royalties</h3>
+              </div>
+              <button
+                onClick={() => setShowRoyaltyForm(!showRoyaltyForm)}
+                className="px-4 py-2 bg-[#111] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
+              >
+                <Plus size={14} /> Add
+              </button>
+            </div>
+
+            {showRoyaltyForm && (
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <select value={newRoyalty.source} onChange={(e) => setNewRoyalty({ ...newRoyalty, source: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
+                    <option value="spotify">Spotify</option>
+                    <option value="apple_music">Apple Music</option>
+                    <option value="sync">Sync License</option>
+                    <option value="performance">Performance</option>
+                    <option value="publishing">Publishing</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <input type="number" placeholder="Amount (£)" value={newRoyalty.amount ?? ""} onChange={(e) => setNewRoyalty({ ...newRoyalty, amount: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="date" placeholder="Period start" value={newRoyalty.periodStart} onChange={(e) => setNewRoyalty({ ...newRoyalty, periodStart: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="date" placeholder="Period end" value={newRoyalty.periodEnd} onChange={(e) => setNewRoyalty({ ...newRoyalty, periodEnd: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="number" placeholder="Streams" value={newRoyalty.streams ?? ""} onChange={(e) => setNewRoyalty({ ...newRoyalty, streams: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <select value={newRoyalty.status} onChange={(e) => setNewRoyalty({ ...newRoyalty, status: e.target.value })} className="px-3 py-2 border border-[#A3B5C4]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
+                    <option value="pending">Pending</option>
+                    <option value="received">Received</option>
+                    <option value="forecast">Forecast</option>
+                  </select>
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={addRoyalty} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => { setShowRoyaltyForm(false); setNewRoyalty({ source: "spotify", amount: null, periodStart: "", periodEnd: "", streams: null, status: "pending", notes: "" }); }} className="px-4 py-2 border border-[#A3B5C4]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
+                </div>
+              </div>
+            )}
+
+            {royalties.length === 0 ? (
+              <p className="text-sm text-[#999] italic text-center py-4">No royalties tracked yet.</p>
+            ) : (
+              <div className="space-y-3">
+                <div className="flex justify-between items-center mb-2 pb-2 border-b border-[#A3B5C4]/20">
+                  <span className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Total Royalties</span>
+                  <span className="text-sm font-bold text-[#2d6a2d]">{gbpFull.format(royalties.reduce((s, r) => s + Number(r.amount || 0), 0))}</span>
+                </div>
+                {royalties.map((r: any) => (
+                  <div key={r.id} className="flex items-center justify-between p-2 bg-[#E3E8ED]/50 rounded-lg">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-[#111] capitalize">{r.source.replace(/_/g, " ")}</span>
+                        <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded font-medium ${
+                          r.status === "received" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" :
+                          r.status === "pending" ? "bg-amber-50 text-amber-600" :
+                          "bg-[#1B3A4C]/10 text-[#1B3A4C]"
+                        }`}>{r.status}</span>
+                      </div>
+                      {r.streams && <p className="text-xs text-[#5B7A8E]">{r.streams.toLocaleString()} streams</p>}
+                      {r.periodStart && r.periodEnd && <p className="text-[10px] text-[#999]">{r.periodStart} → {r.periodEnd}</p>}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-bold text-[#111]">{gbpFull.format(r.amount || 0)}</span>
+                      <button onClick={() => removeRoyalty(r.id)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
