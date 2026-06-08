@@ -27,22 +27,65 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
     setUploading(true);
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      const res = await fetch('/api/upload?_t=' + Date.now(), { method: 'POST', body: formData });
-      const data = await res.json();
+      // Step 1: Get upload signature from our API
+      const sigRes = await fetch('/api/upload-signature?' + new URLSearchParams({
+        filename: file.name,
+        filetype: file.type,
+      }));
+      const sigData = await sigRes.json();
 
-      if (!res.ok || data.error) {
-        const errorMsg = data.details || data.error || `Upload failed (${res.status})`;
-        console.error('[MediaPicker] Upload error:', data);
-        setError(errorMsg);
+      if (!sigRes.ok || sigData.error) {
+        setError(sigData.error || 'Failed to get upload signature');
         setUploading(false);
         e.target.value = '';
         return;
       }
 
-      if (data.success && data.asset?.path) {
-        onSelect(data.asset.path);
+      // Step 2: Upload directly to Cloudinary using signed upload
+      const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${sigData.cloudName}/auto/upload`;
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('api_key', sigData.apiKey);
+      formData.append('timestamp', sigData.timestamp);
+      formData.append('signature', sigData.signature);
+      formData.append('public_id', sigData.publicId);
+      formData.append('folder', sigData.folder);
+      formData.append('overwrite', 'true');
+
+      const uploadRes = await fetch(cloudinaryUrl, { method: 'POST', body: formData });
+      const uploadData = await uploadRes.json();
+
+      if (!uploadRes.ok || uploadData.error) {
+        setError(uploadData.error?.message || 'Upload to Cloudinary failed');
+        setUploading(false);
+        e.target.value = '';
+        return;
+      }
+
+      // Step 3: Save the asset to our database
+      const saveRes = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          url: uploadData.secure_url,
+          filename: sigData.publicId,
+          originalName: file.name,
+          type: file.type.startsWith('image/') ? 'image' : file.type.startsWith('video/') ? 'video' : file.type.startsWith('audio/') ? 'audio' : 'document',
+          size: file.size,
+        }),
+      });
+
+      const saveData = await saveRes.json();
+
+      if (!saveRes.ok || saveData.error) {
+        setError(saveData.error || 'Failed to save asset');
+        setUploading(false);
+        e.target.value = '';
+        return;
+      }
+
+      if (saveData.success && saveData.asset?.path) {
+        onSelect(saveData.asset.path);
         onClose();
       } else {
         setError('Upload returned invalid response');
@@ -57,7 +100,7 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
   const accept =
     filterType === 'image' ? 'image/*' :
     filterType === 'video' ? 'video/*' :
-    'image/*,video/*';
+    'image/*,video/*,audio/*';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -83,6 +126,7 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
             <div className="w-full aspect-video bg-[#E3E8ED] rounded-xl flex flex-col items-center justify-center gap-2">
               <UploadIcon className="w-10 h-10 text-[#8FA8BE]" />
               <p className="text-sm text-[#8FA8BE]">Choose a file to upload</p>
+              <p className="text-xs text-[#8FA8BE]">Images, video, and audio supported</p>
             </div>
           )}
 

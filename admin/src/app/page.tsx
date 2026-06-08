@@ -2,6 +2,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
+import PartnerLogosSection from '../components/PartnerLogosSection';
 import { getShowCards, getPartnerLogos, getClientNames, getVenueTicker, getTracks } from '@/lib/cms';
 export const dynamic = 'force-dynamic';
 
@@ -251,31 +252,7 @@ export default async function HomePage() {
       </section>
 
       {/* Partnerships */}
-      <section id="partnerships" className="relative z-10 py-28 text-center" style={{ background: 'linear-gradient(180deg,#111 0%,#1a1b20 100%)' }}>
-        <div className="max-w-[1200px] mx-auto px-6">
-          <blockquote className="reveal font-serif text-[clamp(28px,4vw,44px)] font-normal text-white max-w-[900px] mx-auto mb-6 leading-snug">
-            &ldquo;The best DJ I&apos;ve heard.&rdquo;
-          </blockquote>
-          <p className="text-[17px] text-[#8FA8BE] max-w-[640px] mx-auto mb-16 leading-relaxed">
-            &mdash; Cristiano Ronaldo. Trusted by A-list artists, global brands, and sold-out crowds worldwide.
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-12 max-w-[1000px] mx-auto mb-16 items-center">
-            {logos.map((logo) => (
-              <div key={logo.alt} className="flex items-center justify-center h-20 w-32 mx-auto">
-                <img src={logo.src} alt={logo.alt} className="max-h-full max-w-full object-contain opacity-70 hover:opacity-100 transition duration-500" />
-              </div>
-            ))}
-          </div>
-          <a href="mailto:samir@wearemediahive.com" className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-white rounded-full text-white text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition">
-            All Partnerships
-          </a>
-          <div className="mt-8">
-            <a href="/assets/press-pack.pdf" download="press-pack.pdf" target="_blank" rel="noopener noreferrer" className="text-[#A3B5C4] text-sm tracking-[0.5px] hover:text-white transition">
-              Download Press Pack
-            </a>
-          </div>
-        </div>
-      </section>
+      <PartnerLogosSection defaultLogos={DEFAULT_LOGOS} />
 
       {/* Radio */}
       <section id="radio" className="reveal relative z-10 bg-white py-28">
