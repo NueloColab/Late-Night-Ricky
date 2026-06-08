@@ -14,6 +14,8 @@ interface Submission {
   createdAt: string;
 }
 
+const statusOptions = ['all', 'new', 'reviewed', 'shortlisted', 'accepted', 'rejected'];
+
 const statusLabels: Record<string, string> = {
   new: 'New',
   reviewed: 'Reviewed',
@@ -23,11 +25,11 @@ const statusLabels: Record<string, string> = {
 };
 
 const statusColors: Record<string, string> = {
-  new: 'bg-[#8FA8BE]',
-  reviewed: 'bg-[#6B8FAB]',
-  shortlisted: 'bg-[#1B3A4C]',
-  accepted: 'bg-[#2d6a2d]',
-  rejected: 'bg-[#A3B5C4]',
+  new: 'bg-[#8FA8BE] text-[#111]',
+  reviewed: 'bg-[#6B8FAB] text-white',
+  shortlisted: 'bg-[#1B3A4C] text-white',
+  accepted: 'bg-[#2d6a2d] text-white',
+  rejected: 'bg-[#A3B5C4] text-[#111]',
 };
 
 export default function SubmissionsPage() {
@@ -46,8 +48,8 @@ export default function SubmissionsPage() {
       const res = await fetch(url);
       const data = await res.json();
       setSubmissions(data.submissions || []);
-    } catch (err) {
-      console.error('Failed to load submissions', err);
+    } catch {
+      console.error('Failed to load submissions');
     } finally {
       setLoading(false);
     }
@@ -83,8 +85,8 @@ export default function SubmissionsPage() {
       setSubmissions((prev) =>
         prev.map((s) => (s.id === id ? { ...s, status: status as any } : s))
       );
-    } catch (err) {
-      console.error('Update failed', err);
+    } catch {
+      console.error('Update failed');
     } finally {
       setUpdating((prev) => {
         const next = new Set(prev);
@@ -104,16 +106,9 @@ export default function SubmissionsPage() {
       setSubmissions((prev) =>
         prev.map((s) => (s.id === id ? { ...s, notes } : s))
       );
-    } catch (err) {
-      console.error('Notes update failed', err);
+    } catch {
+      console.error('Notes update failed');
     }
-  };
-
-  const bulkUpdateStatus = async (status: string) => {
-    if (selected.size === 0) return;
-    const ids = Array.from(selected);
-    await Promise.all(ids.map((id) => updateStatus(id, status)));
-    setSelected(new Set());
   };
 
   const bulkDelete = async () => {
@@ -124,8 +119,8 @@ export default function SubmissionsPage() {
       await fetch(`/api/submissions?ids=${ids}`, { method: 'DELETE' });
       setSubmissions((prev) => prev.filter((s) => !selected.has(s.id)));
       setSelected(new Set());
-    } catch (err) {
-      console.error('Bulk delete failed', err);
+    } catch {
+      console.error('Bulk delete failed');
     }
   };
 
@@ -161,203 +156,160 @@ export default function SubmissionsPage() {
   };
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-white tracking-tight">Music Submissions</h1>
-          <p className="text-[#8FA3B3] mt-2 text-sm font-medium tracking-wide uppercase">Review, listen, and download submitted tracks</p>
-        </div>
+    <div className="max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="mb-10">
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Submissions</p>
+        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">
+          Music Submissions
+        </h1>
+        <p className="text-sm text-[#5B7A8E] mt-4 font-semibold uppercase tracking-[0.5px]">Review, listen, and download submitted tracks</p>
       </div>
 
-      <div className="flex flex-wrap items-center gap-4 mb-6">
+      {/* Filter + Bulk Actions */}
+      <div className="flex flex-wrap items-center gap-4 mb-8">
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="px-4 py-2 rounded-lg border border-[#A3B5C4] bg-[#111318] text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]"
+          className="px-5 py-3 bg-white border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] focus:outline-none cursor-pointer"
         >
-          <option value="all">All Statuses</option>
-          <option value="new">New</option>
-          <option value="reviewed">Reviewed</option>
-          <option value="shortlisted">Shortlisted</option>
-          <option value="accepted">Accepted</option>
-          <option value="rejected">Rejected</option>
+          {statusOptions.map((s) => (
+            <option key={s} value={s}>{s === 'all' ? 'All Statuses' : statusLabels[s]}</option>
+          ))}
         </select>
 
         {selected.size > 0 && (
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-white font-medium">{selected.size} selected</span>
-            <button
-              onClick={() => bulkUpdateStatus('reviewed')}
-              className="px-3 py-1.5 rounded-md bg-[#6B8FAB] text-white text-xs font-medium hover:bg-[#1B3A4C] transition"
-            >
-              Mark Reviewed
-            </button>
-            <button
-              onClick={() => bulkUpdateStatus('shortlisted')}
-              className="px-3 py-1.5 rounded-md bg-[#1B3A4C] text-white text-xs font-medium hover:bg-[#0f2330] transition"
-            >
-              Shortlist
-            </button>
-            <button
-              onClick={() => bulkUpdateStatus('accepted')}
-              className="px-3 py-1.5 rounded-md bg-[#2d6a2d] text-white text-xs font-medium hover:bg-[#1f4a1f] transition"
-            >
-              Accept
-            </button>
-            <button
-              onClick={() => bulkUpdateStatus('rejected')}
-              className="px-3 py-1.5 rounded-md bg-[#A3B5C4] text-white text-xs font-medium hover:bg-[#8FA8BE] transition"
-            >
-              Reject
-            </button>
+          <>
+            <span className="text-xs text-[#6B8FAB] tracking-[2px] uppercase font-semibold">{selected.size} selected</span>
             <button
               onClick={bulkDelete}
-              className="px-3 py-1.5 rounded-md bg-[#0A0A0A] text-white text-xs font-medium hover:bg-[#d0d8e0] transition"
+              className="px-7 py-3 border-2 border-red-400 rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-red-600 hover:bg-red-50 transition"
             >
-              Delete
+              Delete Selected
             </button>
-          </div>
+            <button onClick={() => setSelected(new Set())} className="text-xs text-[#6B8FAB] uppercase tracking-[2px] font-semibold hover:text-[#1B3A4C]">Clear</button>
+          </>
         )}
       </div>
 
+      {/* Table */}
       {loading ? (
-        <div className="text-center py-20 text-[#8FA3B3]">Loading submissions…</div>
+        <p className="text-[#6B8FAB] text-sm">Loading...</p>
       ) : submissions.length === 0 ? (
-        <div className="text-center py-20 text-[#8FA3B3]">No submissions found.</div>
+        <div className="bg-white border border-[#A3B5C4]/30 p-12 text-center">
+          <p className="text-[#6B8FAB] text-sm">No submissions yet.</p>
+        </div>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-[#2A2E36]">
-          <table className="w-full text-sm">
-            <thead className="bg-[#1B3A4C] text-white">
-              <tr>
-                <th className="px-4 py-3 text-left w-10">
+        <div className="bg-white border border-[#A3B5C4]/30 overflow-hidden">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-[#A3B5C4]/30">
+                <th className="px-4 py-3 text-left">
                   <input
                     type="checkbox"
-                    checked={selected.size > 0 && selected.size === submissions.length}
+                    checked={selected.size === submissions.length && submissions.length > 0}
                     onChange={selectAll}
-                    className="accent-white"
+                    className="w-4 h-4 accent-[#1B3A4C]"
                   />
                 </th>
-                <th className="px-4 py-3 text-left font-medium">Email</th>
-                <th className="px-4 py-3 text-left font-medium">Artist</th>
-                <th className="px-4 py-3 text-left font-medium">Track</th>
-                <th className="px-4 py-3 text-left font-medium">Date</th>
-                <th className="px-4 py-3 text-left font-medium">Size</th>
-                <th className="px-4 py-3 text-left font-medium">Status</th>
-                <th className="px-4 py-3 text-left font-medium">Player</th>
-                <th className="px-4 py-3 text-left font-medium">Notes</th>
-                <th className="px-4 py-3 text-left font-medium">Actions</th>
+                <th className="px-4 py-3 text-left text-[10px] uppercase tracking-[3px] font-semibold text-[#6B8FAB]">Artist</th>
+                <th className="px-4 py-3 text-left text-[10px] uppercase tracking-[3px] font-semibold text-[#6B8FAB]">Track</th>
+                <th className="px-4 py-3 text-left text-[10px] uppercase tracking-[3px] font-semibold text-[#6B8FAB]">Date</th>
+                <th className="px-4 py-3 text-left text-[10px] uppercase tracking-[3px] font-semibold text-[#6B8FAB]">Size</th>
+                <th className="px-4 py-3 text-left text-[10px] uppercase tracking-[3px] font-semibold text-[#6B8FAB]">Status</th>
+                <th className="px-4 py-3 text-left text-[10px] uppercase tracking-[3px] font-semibold text-[#6B8FAB]">Player</th>
+                <th className="px-4 py-3 text-left text-[10px] uppercase tracking-[3px] font-semibold text-[#6B8FAB]">Notes</th>
+                <th className="px-4 py-3 text-left text-[10px] uppercase tracking-[3px] font-semibold text-[#6B8FAB]">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#2A2E36]">
-              {submissions.map((s) => (
-                <tr key={s.id} className="bg-[#111318] hover:bg-[#111318]">
-                  <td className="px-4 py-3">
+            <tbody>
+              {submissions.map((sub) => (
+                <tr
+                  key={sub.id}
+                  className="border-b border-[#A3B5C4]/20 hover:bg-[#E3E8ED]/50 transition"
+                >
+                  <td className="px-4 py-4">
                     <input
                       type="checkbox"
-                      checked={selected.has(s.id)}
-                      onChange={() => toggleSelect(s.id)}
-                      className="accent-[#1B3A4C]"
+                      checked={selected.has(sub.id)}
+                      onChange={() => toggleSelect(sub.id)}
+                      className="w-4 h-4 accent-[#1B3A4C]"
                     />
                   </td>
-                  <td className="px-4 py-3 text-white font-medium">{s.email}</td>
-                  <td className="px-4 py-3 text-white">{s.artistName || '-'}</td>
-                  <td className="px-4 py-3 text-white">{s.trackTitle || '-'}</td>
-                  <td className="px-4 py-3 text-[#8FA3B3]">{formatDate(s.createdAt)}</td>
-                  <td className="px-4 py-3 text-[#8FA3B3]">{formatSize(s.fileSize)}</td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-4">
+                    <div className="font-medium text-[#111] text-sm">{sub.artistName || 'Unknown'}</div>
+                    <div className="text-xs text-[#6B8FAB]">{sub.email}</div>
+                  </td>
+                  <td className="px-4 py-4 text-sm text-[#1B3A4C]">{sub.trackTitle || '-'}</td>
+                  <td className="px-4 py-4 text-xs text-[#6B8FAB]">{formatDate(sub.createdAt)}</td>
+                  <td className="px-4 py-4 text-xs text-[#6B8FAB]">{formatSize(sub.fileSize)}</td>
+                  <td className="px-4 py-4">
                     <select
-                      value={s.status}
-                      onChange={(e) => updateStatus(s.id, e.target.value)}
-                      disabled={updating.has(s.id)}
-                      className={`px-2 py-1 rounded-full text-xs font-semibold text-white border-none cursor-pointer ${statusColors[s.status]} disabled:opacity-50`}
+                      value={sub.status}
+                      onChange={(e) => updateStatus(sub.id, e.target.value)}
+                      disabled={updating.has(sub.id)}
+                      className={`px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] border-0 cursor-pointer ${statusColors[sub.status] || 'bg-[#A3B5C4] text-[#111]'}`}
                     >
                       {Object.entries(statusLabels).map(([value, label]) => (
-                        <option key={value} value={value} className="bg-[#111318] text-white">
-                          {label}
-                        </option>
+                        <option key={value} value={value}>{label}</option>
                       ))}
                     </select>
                   </td>
-                  <td className="px-4 py-3">
-                    {s.filePath ? (
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => togglePlay(s.id, s.filePath!)}
-                          className="w-9 h-9 rounded-full border-2 border-[#1B3A4C] flex items-center justify-center text-white hover:bg-[#1B3A4C] hover:text-white transition"
-                          title={playingId === s.id ? 'Pause' : 'Play'}
-                        >
-                          {playingId === s.id ? (
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                              <rect x="6" y="4" width="4" height="16" />
-                              <rect x="14" y="4" width="4" height="16" />
-                            </svg>
-                          ) : (
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                              <polygon points="5,3 19,12 5,21" />
-                            </svg>
-                          )}
-                        </button>
-                        <a
-                          href={s.filePath}
-                          download
-                          className="w-9 h-9 rounded-full border-2 border-[#8FA8BE] flex items-center justify-center text-[#8FA3B3] hover:bg-[#8FA8BE] hover:text-white transition"
-                          title="Download"
-                        >
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                            <polyline points="7 10 12 15 17 10" />
-                            <line x1="12" y1="15" x2="12" y2="3" />
+                  <td className="px-4 py-4">
+                    {sub.filePath ? (
+                      <button
+                        onClick={() => togglePlay(sub.id, sub.filePath!)}
+                        className="w-8 h-8 rounded-full border-[1.5px] border-[#111] flex items-center justify-center text-[#111] hover:bg-[#111] hover:text-white transition"
+                      >
+                        {playingId === sub.id ? (
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" />
                           </svg>
-                        </a>
-                      </div>
+                        ) : (
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        )}
+                      </button>
                     ) : (
-                      <span className="text-[#8FA3B3] text-xs">No file</span>
+                      <span className="text-xs text-[#A3B5C4]">No file</span>
                     )}
                   </td>
-                  <td className="px-4 py-3">
-                    <textarea
-                      value={s.notes || ''}
-                      onChange={(e) => updateNotes(s.id, e.target.value)}
-                      placeholder="Add notes…"
-                      rows={2}
-                      className="w-full min-w-[160px] px-2 py-1 rounded-md border border-[#2A2E36] text-xs text-white bg-[#111318] focus:outline-none focus:ring-1 focus:ring-[#1B3A4C] resize-y"
+                  <td className="px-4 py-4">
+                    <input
+                      type="text"
+                      defaultValue={sub.notes || ''}
+                      onBlur={(e) => updateNotes(sub.id, e.target.value)}
+                      placeholder="Add notes..."
+                      className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded text-xs text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
                     />
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-4">
                     <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => updateStatus(s.id, 'accepted')}
-                        disabled={updating.has(s.id)}
-                        className="px-2 py-1 rounded-md bg-[#2d6a2d] text-white text-xs font-medium hover:bg-[#1f4a1f] transition disabled:opacity-50"
-                      >
-                        Accept
-                      </button>
-                      {s.filePath && (
+                      {sub.filePath && (
                         <a
-                          href={s.filePath}
+                          href={sub.filePath}
                           download
-                          className="w-7 h-7 rounded-md border border-[#8FA8BE] flex items-center justify-center text-[#8FA3B3] hover:bg-[#8FA8BE] hover:text-white transition"
-                          title="Download"
+                          className="text-xs text-[#1B3A4C] font-semibold uppercase tracking-[1.5px] hover:underline"
                         >
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                            <polyline points="7 10 12 15 17 10" />
-                            <line x1="12" y1="15" x2="12" y2="3" />
-                          </svg>
+                          Download
                         </a>
                       )}
                       <button
+                        onClick={() => updateStatus(sub.id, 'accepted')}
+                        className="px-3 py-1 bg-[#2d6a2d] text-white text-[11px] font-semibold uppercase tracking-[1.5px] rounded-full hover:bg-[#1a4d1a] transition"
+                      >
+                        Accept
+                      </button>
+                      <button
                         onClick={async () => {
-                          if (confirm('Delete this submission?')) {
-                            try {
-                              await fetch(`/api/submissions?ids=${s.id}`, { method: 'DELETE' });
-                              setSubmissions((prev) => prev.filter((x) => x.id !== s.id));
-                            } catch (err) {
-                              console.error('Delete failed', err);
-                            }
-                          }
+                          if (!confirm('Delete this submission?')) return;
+                          try {
+                            await fetch(`/api/submissions?ids=${sub.id}`, { method: 'DELETE' });
+                            setSubmissions((prev) => prev.filter((s) => s.id !== sub.id));
+                          } catch {}
                         }}
-                        className="text-xs text-[#8FA3B3] hover:text-white transition"
+                        className="text-xs text-red-500 hover:text-red-700"
                       >
                         Delete
                       </button>
