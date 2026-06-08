@@ -268,7 +268,7 @@ export default async function HomePage() {
             All Partnerships
           </a>
           <div className="mt-8">
-            <a href="/assets/press-pack.pdf" download className="text-[#A3B5C4] text-sm tracking-[0.5px] hover:text-white transition">
+            <a href="/assets/press-pack.pdf" download="press-pack.pdf" target="_blank" rel="noopener noreferrer" className="text-[#A3B5C4] text-sm tracking-[0.5px] hover:text-white transition">
               Download Press Pack
             </a>
           </div>
