@@ -6,6 +6,7 @@ import {
   venueTicker,
   siteSections,
   tracks,
+  carouselImages,
 } from './db/schema';
 import { eq, asc } from 'drizzle-orm';
 
@@ -69,6 +70,19 @@ export async function getTracks() {
       .where(eq(tracks.isActive, true))
       .orderBy(asc(tracks.order));
     return allTracks;
+  } catch {
+    return [];
+  }
+}
+
+export async function getCarouselImages() {
+  try {
+    const images = await db
+      .select()
+      .from(carouselImages)
+      .where(eq(carouselImages.isActive, true))
+      .orderBy(asc(carouselImages.order));
+    return images;
   } catch {
     return [];
   }

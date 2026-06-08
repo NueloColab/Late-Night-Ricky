@@ -55,7 +55,7 @@ interface ClientName {
   isActive: boolean;
 }
 
-const HOME_SECTIONS = ['hero', 'video', 'reach', 'shows', 'partners', 'radio', 'clients', 'share_music', 'contact'];
+const HOME_SECTIONS = ['hero', 'video', 'reach', 'shows', 'partners', 'radio', 'clients', 'carousel', 'share_music', 'reach_out', 'contact'];
 
 function parseContent(content: any): Record<string, any> {
   if (!content) return {};
@@ -76,6 +76,9 @@ export default function HomeEditor() {
   const [partnerLogos, setPartnerLogos] = useState<PartnerLogo[]>([]);
   const [tracks, setTracks] = useState<Track[]>([]);
   const [clientNames, setClientNames] = useState<ClientName[]>([]);
+  const [carouselImages, setCarouselImages] = useState<{ id: number; imagePath: string | null; alt: string; order: number; isActive: boolean }[]>([]);
+  const [carouselLoading, setCarouselLoading] = useState(false);
+  const [savingCarousel, setSavingCarousel] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [cardsLoading, setCardsLoading] = useState(true);
   const [logosLoading, setLogosLoading] = useState(false);
@@ -148,13 +151,24 @@ export default function HomeEditor() {
     setClientsLoading(false);
   }, []);
 
+  const fetchCarousel = useCallback(async () => {
+    setCarouselLoading(true);
+    const res = await fetch('/api/carousel');
+    if (res.ok) {
+      const data = await res.json();
+      setCarouselImages(data.images || []);
+    }
+    setCarouselLoading(false);
+  }, []);
+
   useEffect(() => {
     fetchSections();
     fetchShowCards();
     fetchPartnerLogos();
     fetchTracks();
     fetchClientNames();
-  }, [fetchSections, fetchShowCards, fetchPartnerLogos, fetchTracks, fetchClientNames]);
+    fetchCarousel();
+  }, [fetchSections, fetchShowCards, fetchPartnerLogos, fetchTracks, fetchClientNames, fetchCarousel]);
 
   function getSection(name: string): SectionData | undefined {
     return sections.find((s) => s.section === name);
@@ -470,6 +484,72 @@ export default function HomeEditor() {
     fetchClientNames();
   }
 
+  function updateCarousel(id: number, field: string, value: any) {
+    setCarouselImages((prev) => prev.map((c) => (c.id === id ? { ...c, [field]: value } : c)));
+  }
+
+  async function saveCarousel(id: number) {
+    const img = carouselImages.find((c) => c.id === id);
+    if (!img) return;
+    setSavingCarousel(id);
+    await fetch(`/api/carousel/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        imagePath: img.imagePath,
+        alt: img.alt,
+        order: img.order,
+        isActive: img.isActive,
+      }),
+    });
+    setSavingCarousel(null);
+  }
+
+  async function deleteCarousel(id: number) {
+    if (!confirm('Delete this image?')) return;
+    await fetch(`/api/carousel/${id}`, { method: 'DELETE' });
+    fetchCarousel();
+  }
+
+  async function addCarousel() {
+    const order = carouselImages.length + 1;
+    await fetch('/api/carousel', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ imagePath: null, alt: '', order }),
+    });
+    fetchCarousel();
+  }
+
+  async function moveCarousel(id: number, direction: 'up' | 'down') {
+    const idx = carouselImages.findIndex((c) => c.id === id);
+    if (idx === -1) return;
+    const newIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (newIdx < 0 || newIdx >= carouselImages.length) return;
+
+    const updated = [...carouselImages];
+    const temp = updated[idx];
+    updated[idx] = updated[newIdx];
+    updated[newIdx] = temp;
+
+    updated[idx].order = idx;
+    updated[newIdx].order = newIdx;
+
+    setCarouselImages(updated);
+    await Promise.all([
+      fetch(`/api/carousel/${updated[idx].id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order: updated[idx].order }),
+      }),
+      fetch(`/api/carousel/${updated[newIdx].id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order: updated[newIdx].order }),
+      }),
+    ]);
+  }
+
   function openMediaPicker(type: string, id?: number, field?: string) {
     setMediaTarget({ type, id, field });
     setMediaOpen(true);
@@ -488,6 +568,12 @@ export default function HomeEditor() {
       updateSectionContent('video', 'poster', path);
     } else if (mediaTarget.type === 'partner-logo' && mediaTarget.id !== undefined) {
       updatePartnerLogo(mediaTarget.id, 'imagePath', path);
+    } else if (mediaTarget.type === 'carousel' && mediaTarget.id !== undefined) {
+      updateCarousel(mediaTarget.id, 'imagePath', path);
+    } else if (mediaTarget.type === 'reach-out-image') {
+      updateSectionContent('reach_out', 'image', path);
+    } else if (mediaTarget.type === 'reach-grammy') {
+      updateSectionContent('reach', 'grammyBadge', path);
     }
   }
 
@@ -669,6 +755,26 @@ export default function HomeEditor() {
               onDelete={deleteClient}
               onAdd={addClient}
             />
+          ) : selectedSection === 'carousel' ? (
+            <CarouselEditor
+              images={carouselImages}
+              loading={carouselLoading}
+              saving={savingCarousel}
+              onMove={moveCarousel}
+              onUpdate={updateCarousel}
+              onSave={saveCarousel}
+              onDelete={deleteCarousel}
+              onAdd={addCarousel}
+              onOpenMedia={(id) => openMediaPicker('carousel', id)}
+            />
+          ) : selectedSection === 'reach_out' ? (
+            <ReachOutEditor
+              section={getSection('reach_out')}
+              onChange={(key, val) => updateSectionContent('reach_out', key, val)}
+              onSave={() => saveSection('reach_out')}
+              saving={savingSection === 'reach_out'}
+              onOpenMedia={() => openMediaPicker('reach-out-image')}
+            />
           ) : selectedSection === 'share_music' ? (
             <ShareEditor
               section={getSection('share_music')}
@@ -787,6 +893,18 @@ function HeroEditor({
         </div>
       </div>
 
+      <div className="flex items-center gap-3 py-2">
+        <label className="inline-flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={content.overlay !== false}
+            onChange={(e) => onChange('overlay', e.target.checked)}
+            className="w-4 h-4 accent-[#1B3A4C]"
+          />
+          <span className="text-sm font-semibold text-[#1B3A4C]">Steel blue overlay</span>
+        </label>
+      </div>
+
       <div className="flex justify-end">
         <button
           onClick={onSave}
@@ -878,11 +996,13 @@ function ReachEditor({
   onChange,
   onSave,
   saving,
+  onOpenMedia,
 }: {
   section?: SectionData;
   onChange: (key: string, val: any) => void;
   onSave: () => void;
   saving: boolean;
+  onOpenMedia?: () => void;
 }) {
   if (!section) {
     return (
@@ -917,6 +1037,25 @@ function ReachEditor({
             rows={4}
             className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-y"
           />
+        </div>
+        <div>
+          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Grammy Badge</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              value={content.grammyBadge || ''}
+              onChange={(e) => onChange('grammyBadge', e.target.value)}
+              className="flex-1 px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+            />
+            {onOpenMedia && (
+              <button
+                onClick={onOpenMedia}
+                className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#111] hover:text-white transition"
+              >
+                Replace Badge
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -1591,5 +1730,188 @@ function UploadIcon({ className }: { className?: string }) {
       <polyline points="17 8 12 3 7 8" />
       <line x1="12" y1="3" x2="12" y2="15" />
     </svg>
+  );
+}
+
+function CarouselEditor({
+  images,
+  loading,
+  saving,
+  onMove,
+  onUpdate,
+  onSave,
+  onDelete,
+  onAdd,
+  onOpenMedia,
+}: {
+  images: { id: number; imagePath: string | null; alt: string; order: number; isActive: boolean }[];
+  loading: boolean;
+  saving: number | null;
+  onMove: (id: number, dir: 'up' | 'down') => void;
+  onUpdate: (id: number, field: string, value: any) => void;
+  onSave: (id: number) => void;
+  onDelete: (id: number) => void;
+  onAdd: () => void;
+  onOpenMedia: (id: number) => void;
+}) {
+  return (
+    <div className="bg-white border border-[#A3B5C4]/30 p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Carousel</p>
+          <p className="text-sm text-[#5B7A8E] font-semibold uppercase tracking-[0.5px]">Edit carousel images — {images.length} total</p>
+        </div>
+        <button
+          onClick={onAdd}
+          className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#111] hover:text-white transition"
+        >
+          + Add Image
+        </button>
+      </div>
+      {loading ? (
+        <p className="text-[#6B8FAB] text-sm">Loading...</p>
+      ) : images.length === 0 ? (
+        <p className="text-[#6B8FAB] text-sm">No images yet.</p>
+      ) : (
+        <div className="space-y-3">
+          {images.map((img, idx) => (
+            <div key={img.id} className="border border-[#A3B5C4]/30 rounded-xl p-4 bg-white">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px]">#{idx + 1}</span>
+                <div className="flex items-center gap-1 ml-auto">
+                  <button
+                    onClick={() => onMove(img.id, 'up')}
+                    disabled={idx === 0}
+                    className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"
+                  >
+                    <UpIcon className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => onMove(img.id, 'down')}
+                    disabled={idx === images.length - 1}
+                    className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"
+                  >
+                    <DownIcon className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => onDelete(img.id)}
+                    className="p-1.5 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <TrashIcon className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+                <div className="md:col-span-2">
+                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Alt Text</label>
+                  <input
+                    type="text"
+                    value={img.alt}
+                    onChange={(e) => onUpdate(img.id, 'alt', e.target.value)}
+                    className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => onOpenMedia(img.id)}
+                    className="px-3 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#111] hover:text-white transition"
+                  >
+                    Replace Image
+                  </button>
+                  <button
+                    onClick={() => onSave(img.id)}
+                    disabled={saving === img.id}
+                    className="flex-1 px-3 py-2 border border-[#A3B5C4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition disabled:opacity-50"
+                  >
+                    {saving === img.id ? 'Saving...' : 'Save'}
+                  </button>
+                </div>
+              </div>
+              {img.imagePath && (
+                <div className="mt-2 aspect-video bg-[#E3E8ED] rounded-lg overflow-hidden">
+                  <img src={img.imagePath} alt={img.alt} className="w-full h-full object-cover" />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ReachOutEditor({
+  section,
+  onChange,
+  onSave,
+  saving,
+  onOpenMedia,
+}: {
+  section: SectionData | undefined;
+  onChange: (key: string, val: any) => void;
+  onSave: () => void;
+  saving: boolean;
+  onOpenMedia: () => void;
+}) {
+  if (!section) return <p className="text-[#6B8FAB] text-sm">Section not found.</p>;
+  const content = parseContent(section.content);
+  return (
+    <div className="bg-white border border-[#A3B5C4]/30 p-6 space-y-6">
+      <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Reach Out</p>
+      <p className="text-sm text-[#5B7A8E] mb-6 font-semibold uppercase tracking-[0.5px]">Edit the reach out section.</p>
+      <div className="space-y-4">
+        <div>
+          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Headline</label>
+          <input
+            type="text"
+            value={content.headline || ''}
+            onChange={(e) => onChange('headline', e.target.value)}
+            className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Signature</label>
+          <input
+            type="text"
+            value={content.signature || ''}
+            onChange={(e) => onChange('signature', e.target.value)}
+            className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">CTA Text</label>
+          <input
+            type="text"
+            value={content.cta || ''}
+            onChange={(e) => onChange('cta', e.target.value)}
+            className="w-full px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Image</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              value={content.image || ''}
+              onChange={(e) => onChange('image', e.target.value)}
+              className="flex-1 px-3 py-2 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+            />
+            <button
+              onClick={onOpenMedia}
+              className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#111] hover:text-white transition"
+            >
+              Replace Image
+            </button>
+          </div>
+        </div>
+        <button
+          onClick={onSave}
+          disabled={saving}
+          className="px-6 py-2.5 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition disabled:opacity-50"
+        >
+          {saving ? 'Saving...' : 'Save Changes'}
+        </button>
+      </div>
+    </div>
   );
 }

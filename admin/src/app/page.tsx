@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
 import PartnerLogosSection from '../components/PartnerLogosSection';
-import { getShowCards, getClientNames, getVenueTicker, getTracks, getSiteSections } from '@/lib/cms';
+import { getShowCards, getClientNames, getVenueTicker, getTracks, getSiteSections, getCarouselImages } from '@/lib/cms';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const fetchCache = 'force-no-store';
@@ -100,6 +100,7 @@ export default async function HomePage() {
   let tracks = DEFAULT_TRACKS;
   let heroImage = '/assets/ricky-hero-v2.jpg';
   let heroLogo = '/assets/ricky-logo.png';
+  let heroOverlay = true;
   let videoPoster = '/assets/video-poster-desktop.jpg';
   let videoSrc = '/assets/video-desktop.mp4';
   let reachHeadline = 'International DJ \u0026 Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.';
@@ -119,36 +120,45 @@ export default async function HomePage() {
   let contactEmail = 'samir@wearemediahive.com';
   let shareMusicHeadline = 'Share Your Music';
   let shareMusicDescription = "I'm always on the lookout for new music to play, so send me your tracks";
+  let grammyBadge = '/assets/grammy-gold-v2.png?v=2';
+  let reachOutImage = '/assets/ricky-hero-new.jpg';
+  let reachOutHeadline = "Let's collaborate";
+  let reachOutSignature = 'Late Night Ricky';
+  let reachOutCta = 'Get in touch';
+  let carouselImagesList: { imagePath: string | null; alt: string }[] = [];
 
   try {
-    const [dbCards, dbNames, dbVenues, dbTracks, dbSections] = await Promise.all([
+    const [dbCards, dbNames, dbVenues, dbTracks, dbSections, dbCarousel] = await Promise.all([
       getShowCards(),
       getClientNames(),
       getVenueTicker(),
       getTracks(),
       getSiteSections('home'),
+      getCarouselImages(),
     ]);
 
     if (dbSections.length > 0) {
-      const heroSection = dbSections.find((s) => s.section === 'hero');
+      const heroSection = dbSections.find((s: any) => s.section === 'hero');
       if (heroSection?.content) {
         const c = typeof heroSection.content === 'string' ? JSON.parse(heroSection.content) : heroSection.content;
         if (c.image) heroImage = c.image;
         if (c.logo) heroLogo = c.logo;
+        if (c.overlay !== undefined) heroOverlay = c.overlay;
       }
-      const videoSection = dbSections.find((s) => s.section === 'video');
+      const videoSection = dbSections.find((s: any) => s.section === 'video');
       if (videoSection?.content) {
         const c = typeof videoSection.content === 'string' ? JSON.parse(videoSection.content) : videoSection.content;
         if (c.poster) videoPoster = c.poster;
         if (c.src) videoSrc = c.src;
       }
-      const reachSection = dbSections.find((s) => s.section === 'reach');
+      const reachSection = dbSections.find((s: any) => s.section === 'reach');
       if (reachSection?.content) {
         const c = typeof reachSection.content === 'string' ? JSON.parse(reachSection.content) : reachSection.content;
         if (c.headline) reachHeadline = c.headline;
         if (c.subtext) reachSubtext = c.subtext;
+        if (c.grammyBadge) grammyBadge = c.grammyBadge;
       }
-      const radioSection = dbSections.find((s) => s.section === 'radio');
+      const radioSection = dbSections.find((s: any) => s.section === 'radio');
       if (radioSection?.content) {
         const c = typeof radioSection.content === 'string' ? JSON.parse(radioSection.content) : radioSection.content;
         if (c.headline) radioHeadline = c.headline;
@@ -159,7 +169,7 @@ export default async function HomePage() {
         if (c.appleMusicUrl) appleMusicUrl = c.appleMusicUrl;
         if (c.youtubeUrl) youtubeUrl = c.youtubeUrl;
       }
-      const partnersSection = dbSections.find((s) => s.section === 'partners');
+      const partnersSection = dbSections.find((s: any) => s.section === 'partners');
       if (partnersSection?.content) {
         const c = typeof partnersSection.content === 'string' ? JSON.parse(partnersSection.content) : partnersSection.content;
         if (c.quote) partnersQuote = c.quote;
@@ -167,22 +177,34 @@ export default async function HomePage() {
         if (c.description) partnersDescription = c.description;
         if (c.pressPack) pressPack = c.pressPack;
       }
-      const clientsSection = dbSections.find((s) => s.section === 'clients');
+      const clientsSection = dbSections.find((s: any) => s.section === 'clients');
       if (clientsSection?.content) {
         const c = typeof clientsSection.content === 'string' ? JSON.parse(clientsSection.content) : clientsSection.content;
         if (c.title) clientsTitle = c.title;
       }
-      const contactSection = dbSections.find((s) => s.section === 'contact');
+      const contactSection = dbSections.find((s: any) => s.section === 'contact');
       if (contactSection?.content) {
         const c = typeof contactSection.content === 'string' ? JSON.parse(contactSection.content) : contactSection.content;
         if (c.bookingEmail) contactEmail = c.bookingEmail;
       }
-      const shareMusicSection = dbSections.find((s) => s.section === 'share_music');
+      const shareMusicSection = dbSections.find((s: any) => s.section === 'share_music');
       if (shareMusicSection?.content) {
         const c = typeof shareMusicSection.content === 'string' ? JSON.parse(shareMusicSection.content) : shareMusicSection.content;
         if (c.headline) shareMusicHeadline = c.headline;
         if (c.description) shareMusicDescription = c.description;
       }
+      const reachOutSection = dbSections.find((s: any) => s.section === 'reach_out');
+      if (reachOutSection?.content) {
+        const c = typeof reachOutSection.content === 'string' ? JSON.parse(reachOutSection.content) : reachOutSection.content;
+        if (c.image) reachOutImage = c.image;
+        if (c.headline) reachOutHeadline = c.headline;
+        if (c.signature) reachOutSignature = c.signature;
+        if (c.cta) reachOutCta = c.cta;
+      }
+    }
+
+    if (dbCarousel.length > 0) {
+      carouselImagesList = dbCarousel.map((c: any) => ({ imagePath: c.imagePath, alt: c.alt || '' }));
     }
 
     if (dbTracks.length > 0) {
@@ -228,7 +250,7 @@ export default async function HomePage() {
             className="absolute inset-0 bg-cover bg-no-repeat bg-[70%_center]"
             style={{ backgroundImage: `url('${heroImage}')`, filter: 'grayscale(100%) brightness(1.05)' }}
           />
-          <div className="absolute inset-0 bg-[rgba(27,58,76,0.35)]" />
+          {heroOverlay && <div className="absolute inset-0 bg-[rgba(27,58,76,0.35)]" />}
         </div>
         <img src={heroLogo} alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] ml-[4%] mb-14 drop-shadow-[0_6px_30px_rgba(0,0,0,0.3)] brightness-0 invert" />
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white opacity-70">
@@ -270,7 +292,7 @@ export default async function HomePage() {
             </p>
             <div className="grammy-float grammy-glow relative w-[120px] md:w-[160px] flex-shrink-0">
               <img
-                src="/assets/grammy-gold-v2.png?v=2"
+                src={grammyBadge}
                 alt="Grammy Award"
                 className="w-full h-auto object-contain"
               />
@@ -373,11 +395,19 @@ export default async function HomePage() {
       {/* Carousel */}
       <section className="relative z-10 bg-white py-16 overflow-hidden">
         <div className="carousel-track">
-          {['carousel-1.jpg','carousel-2.jpg','carousel-3.jpg','ricky-hero-new.jpg','ricky-radio-new.jpg','press-bg2.jpg','ricky-fricktion.jpg'].map((src, i) => (
-            <div key={i} className="flex-shrink-0 w-[280px] h-[360px] rounded-xl overflow-hidden">
-              <img src={`/assets/${src}`} alt="" className="w-full h-full object-cover hover:scale-105 transition duration-500" />
-            </div>
-          ))}
+          {carouselImagesList.length > 0 ? (
+            carouselImagesList.map((img, i) => (
+              <div key={i} className="flex-shrink-0 w-[280px] h-[360px] rounded-xl overflow-hidden">
+                <img src={img.imagePath || ''} alt={img.alt} className="w-full h-full object-cover hover:scale-105 transition duration-500" />
+              </div>
+            ))
+          ) : (
+            ['carousel-1.jpg','carousel-2.jpg','carousel-3.jpg','ricky-hero-new.jpg','ricky-radio-new.jpg','press-bg2.jpg','ricky-fricktion.jpg'].map((src, i) => (
+              <div key={i} className="flex-shrink-0 w-[280px] h-[360px] rounded-xl overflow-hidden">
+                <img src={`/assets/${src}`} alt="" className="w-full h-full object-cover hover:scale-105 transition duration-500" />
+              </div>
+            ))
+          )}
         </div>
       </section>
 
@@ -431,14 +461,14 @@ export default async function HomePage() {
       <section id="reach-out" className="reveal relative z-10 bg-[#111] text-white py-28">
         <div className="max-w-[1200px] mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="font-serif text-[clamp(42px,6vw,72px)] font-normal leading-tight mb-6 max-w-[500px]">Let&apos;s collaborate</h2>
-            <p className="font-['Rockybilly',cursive] text-[clamp(28px,4vw,48px)] font-normal text-[#8FA8BE] mb-8 rotate-[-1deg] opacity-85 whitespace-nowrap">Late Night Ricky</p>
+            <h2 className="font-serif text-[clamp(42px,6vw,72px)] font-normal leading-tight mb-6 max-w-[500px]">{reachOutHeadline}</h2>
+            <p className="font-['Rockybilly',cursive] text-[clamp(28px,4vw,48px)] font-normal text-[#8FA8BE] mb-8 rotate-[-1deg] opacity-85 whitespace-nowrap">{reachOutSignature}</p>
             <a href="#contact-form" className="inline-block px-9 py-3.5 border-2 border-white rounded-full text-white text-[13px] font-semibold uppercase tracking-[2px] hover:bg-white hover:text-[#111] transition">
-              Get in touch
+              {reachOutCta}
             </a>
           </div>
           <div className="relative overflow-hidden rounded-xl">
-            <img src="/assets/ricky-hero-new.jpg" alt="Late Night Ricky" className="w-full h-auto object-cover grayscale" />
+            <img src={reachOutImage} alt="Late Night Ricky" className="w-full h-auto object-cover grayscale" />
           </div>
         </div>
       </section>

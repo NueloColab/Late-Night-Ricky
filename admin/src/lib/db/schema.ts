@@ -55,6 +55,15 @@ export const venueTicker = pgTable("venue_ticker", {
   venues: jsonb("venues").default([]),
 });
 
+export const carouselImages = pgTable("carousel_images", {
+  id: serial("id").primaryKey(),
+  order: integer("order").default(0),
+  imagePath: text("image_path"),
+  alt: text("alt").default(""),
+  page: text("page").default("home"),
+  isActive: boolean("is_active").default(true),
+});
+
 export const assets = pgTable("assets", {
   id: serial("id").primaryKey(),
   filename: text("filename").notNull(),
