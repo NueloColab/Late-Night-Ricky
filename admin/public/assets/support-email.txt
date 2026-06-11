@@ -5,10 +5,9 @@ Hi Samir,
 Your admin platform is live and ready.
 
 Login here: https://late-night-ricky.vercel.app/admin
-Username: [RORY TO FILL]
-Password: [RORY TO FILL]
+Your PIN: 7291
 
-Please change your password after first login.
+Just enter your 4-digit PIN on the login screen — no username needed.
 
 I've attached a full user guide (same navy branding as your site) that walks you through every section — what's on the front end, what's on the back end, and how to manage your business from one place.
 
@@ -30,8 +29,6 @@ Create Quote → Send Branded Email → Client Accepts → Auto Invoice → Clie
 Everything is tracked. Everything is branded. Everything is in one place.
 
 If anything needs changing, if something doesn't feel quite right, or if you just want a walkthrough — jump on a call with me anytime. No question too small.
-
-Looking forward to hearing what you think.
 
 Best,
 Rory

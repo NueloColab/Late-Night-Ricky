@@ -5,7 +5,7 @@ import { users } from './db/schema';
 import { eq } from 'drizzle-orm';
 
 const SESSION_COOKIE = 'lnr_session';
-const PIN = '0000';
+const PIN = '7291';
 
 export async function hashPin(pin: string): Promise<string> {
   return bcrypt.hash(pin, 10);
