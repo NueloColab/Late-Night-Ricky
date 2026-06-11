@@ -175,7 +175,7 @@ export default function SubmissionsPage() {
           <button
             key={status}
             onClick={() => setFilter(status)}
-            className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[1.5px] transition-all border ${
+            className={`px-3 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] transition-all border ${
               filter === status
                 ? 'bg-[#1B3A4C] text-white border-[#1B3A4C]'
                 : 'bg-white text-[#6B8FAB] border-[#A3B5C4]/40 hover:border-[#1B3A4C] hover:text-[#1B3A4C]'
