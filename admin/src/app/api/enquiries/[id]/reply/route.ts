@@ -43,7 +43,20 @@ export async function POST(request: Request, { params }: { params: { id: string 
       return NextResponse.json({ error: result.error || 'Failed to send email' }, { status: 500 })
     }
 
-    await db.update(enquiries).set({ status: 'replied' }).where(eq(enquiries.id, id))
+    const existingReplies = Array.isArray(enquiry.replies) ? enquiry.replies : []
+    const newReply = {
+      subject,
+      message,
+      sentAt: new Date().toISOString(),
+      sentBy: 'Late Night Ricky',
+    }
+
+    await db.update(enquiries)
+      .set({
+        status: 'replied',
+        replies: [...existingReplies, newReply],
+      })
+      .where(eq(enquiries.id, id))
 
     return NextResponse.json({ success: true, messageId: result.messageId })
   } catch (error: any) {

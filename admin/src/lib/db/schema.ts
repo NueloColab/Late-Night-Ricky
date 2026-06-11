@@ -100,6 +100,7 @@ export const enquiries = pgTable("enquiries", {
   message: text("message"),
   status: text("status").default("new"), // new, read, replied, archived
   notes: text("notes"),
+  replies: jsonb("replies").default([]),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
 });
 
