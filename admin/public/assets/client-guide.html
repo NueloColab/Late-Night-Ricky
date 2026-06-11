@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Late Night Ricky — Admin Platform Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0f1923;
+      --navy-light: #1B3A4C;
+      --navy-mid: #2A4A5E;
+      --slate: #5B7A8E;
+      --slate-light: #6B8FAB;
+      --border: #A3B5C4;
+      --bg: #E3E8ED;
+      --bg-light: #F8FAFB;
+      --white: #ffffff;
+      --accent: #8FA8BE;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--navy);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .tagline {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--slate);
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 0.95;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--slate-light);
+      font-weight: 700;
+      margin: 48px 0 20px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 28px 0 12px;
+      color: var(--navy-light);
+    }
+
+    p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--navy-light);
+    }
+
+    .lead {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--slate);
+      margin-bottom: 32px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .card-dark {
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+    }
+
+    .card-dark p,
+    .card-dark h3 {
+      color: var(--white);
+    }
+
+    .card-dark h3 {
+      color: var(--accent);
+    }
+
+    /* Login Box */
+    .login-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 24px 0;
+    }
+
+    .login-field {
+      background: var(--bg-light);
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .login-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--slate);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .login-value {
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Courier New', monospace;
+      color: var(--navy);
+    }
+
+    /* Feature Grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .feature {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+
+    .feature:hover {
+      border-color: var(--navy-light);
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .feature-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--accent);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .feature-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 13px;
+      color: var(--slate);
+      line-height: 1.5;
+    }
+
+    /* Flow Steps */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .flow-step {
+      background: var(--navy);
+      color: var(--white);
+      padding: 16px 24px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-align: center;
+      min-width: 140px;
+    }
+
+    .flow-arrow {
+      color: var(--slate-light);
+      font-size: 20px;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 16px 0;
+    }
+
+    th {
+      text-align: left;
+      padding: 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--slate);
+      font-weight: 700;
+      border-bottom: 2px solid var(--navy);
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    /* Lists */
+    ul {
+      margin: 12px 0 12px 20px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--navy-light);
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: var(--navy);
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .badge-light {
+      background: var(--bg-light);
+      color: var(--slate);
+      border: 1px solid var(--border);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 80px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer p {
+      font-size: 13px;
+      color: var(--slate);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .login-box {
+        grid-template-columns: 1fr;
+      }
+
+      .flow {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .flow-arrow {
+        text-align: center;
+        transform: rotate(90deg);
+      }
+
+      .container {
+        padding: 40px 16px;
+      }
+
+      .card {
+        padding: 24px;
+      }
+    }
+
+    /* Print */
+    @media print {
+      body {
+        background: white;
+      }
+
+      .card {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">Late Night Ricky</div>
+      <div class="tagline">Admin Platform &mdash; Client Handover</div>
+    </div>
+
+    <h1>Your Platform<br>Is Live</h1>
+    <p class="lead">
+      Everything you need to run Late Night Ricky in one place. From enquiries and bookings to quotes, invoices, and branded client emails &mdash; all built to match your brand and workflow.
+    </p>
+
+    <!-- Login -->
+    <div class="card card-dark">
+      <span class="badge" style="background: var(--accent); color: var(--navy);">Login Details</span>
+      <h3 style="color: var(--white);">Access Your Admin Panel</h3>
+      <p style="color: var(--accent);">
+        Your platform is hosted at <strong style="color: var(--white);">https://late-night-ricky.vercel.app/admin</strong>
+      </p>
+      <div class="login-box">
+        <div class="login-field">
+          <div class="login-label">Username</div>
+          <div class="login-value">[TO BE SET BY RORY]</div>
+        </div>
+        <div class="login-field">
+          <div class="login-label">Password</div>
+          <div class="login-value">[TO BE SET BY RORY]</div>
+        </div>
+      </div>
+      <p style="font-size: 13px; color: var(--slate-light); margin-bottom: 0;">
+        <strong style="color: var(--white);">Important:</strong> Rory will set your login credentials before handover. Please change your password after first login.
+      </p>
+    </div>
+
+    <!-- What You Can Do -->
+    <h2>What Your Platform Can Do</h2>
+    <p>
+      This isn't just a website &mdash; it's a complete business management system built around how you work. Below is everything you can manage from your admin panel, plus a few complimentary features we added to make running your projects smoother.
+    </p>
+
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <div class="feature-title">Manage Enquiries</div>
+        <div class="feature-desc">All contact form submissions land in your inbox. Reply directly via email, convert to quotes or invoices, and track status.</div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="feature-title">Create Quotes</div>
+        <div class="feature-desc">Build detailed quotes with services, pricing, discounts, VAT, and payment schedules. Send branded emails to clients.</div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        <div class="feature-title">Send Invoices</div>
+        <div class="feature-desc">Auto-convert accepted quotes to invoices. Clients get a payment link. You get confirmation when they pay.</div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="feature-title">Client Database</div>
+        <div class="feature-desc">Every client you work with is saved. View their full history &mdash; every quote, invoice, and enquiry in one place.</div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        </div>
+        <div class="feature-title">Music Submissions</div>
+        <div class="feature-desc">Artists upload tracks directly to your platform. Listen inline, download files, and track submission status.</div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div class="feature-title">Edit Your Content</div>
+        <div class="feature-desc">Update your homepage, about page, showreel, and contact info anytime. No code needed. Changes go live instantly.</div>
+      </div>
+    </div>
+
+    <!-- Complimentary Features -->
+    <div class="card" style="border-left: 4px solid var(--navy);">
+      <span class="badge">Complimentary</span>
+      <h3>Extra Features to Run Your Business Smoother</h3>
+      <p>We built these in because they make a real difference to your day-to-day workflow:</p>
+      <ul>
+        <li><strong>Branded Email Templates</strong> &mdash; Every quote and invoice email is styled in your Late Night Ricky navy branding with your script logo. No generic templates.</li>
+        <li><strong>Auto Quote-to-Invoice</strong> &mdash; When a client accepts a quote, it automatically becomes an invoice. No double data entry.</li>
+        <li><strong>Payment Confirmation</strong> &mdash; Clients upload proof of payment. You confirm it in one click. Everything tracked.</li>
+        <li><strong>Reply Threading</strong> &mdash; All email replies to enquiries are stored in the platform. You always know what was said.</li>
+        <li><strong>Mobile-Ready Admin</strong> &mdash; Manage quotes, check enquiries, and review submissions from your phone. Fully responsive.</li>
+      </ul>
+    </div>
+
+    <!-- Navigation Guide -->
+    <h2>How to Navigate Your Admin</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Section</th>
+          <th>What It Does</th>
+          <th>When to Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Dashboard</strong></td>
+          <td>Overview of your business. Revenue, pending enquiries, draft quotes, recent activity.</td>
+          <td>Start here every day. See what's urgent.</td>
+        </tr>
+        <tr>
+          <td><strong>Enquiries</strong></td>
+          <td>All contact form submissions. Reply via email, convert to quote/invoice, mark as read or archive.</td>
+          <td>When new bookings or messages come in.</td>
+        </tr>
+        <tr>
+          <td><strong>Quotes</strong></td>
+          <td>Create quotes for clients. Add services, pricing, terms. Send branded emails. Track acceptance.</td>
+          <td>When someone requests a price or booking.</td>
+        </tr>
+        <tr>
+          <td><strong>Invoices</strong></td>
+          <td>Send payment requests. Clients pay via your branded page. Confirm receipt uploads.</td>
+          <td>After a quote is accepted or for direct billing.</td>
+        </tr>
+        <tr>
+          <td><strong>Clients</strong></td>
+          <td>Your address book with superpowers. See every quote and invoice per client.</td>
+          <td>When you need a client's history or contact details.</td>
+        </tr>
+        <tr>
+          <td><strong>Submissions</strong></td>
+          <td>Music uploads from artists. Listen, download, track status (new, reviewed, shortlisted, etc.).</td>
+          <td>When reviewing demos or A&amp;R.</td>
+        </tr>
+        <tr>
+          <td><strong>Projects</strong></td>
+          <td>Track your shows and gigs. Organise by date, venue, status.</td>
+          <td>When managing your calendar and bookings.</td>
+        </tr>
+        <tr>
+          <td><strong>Content</strong></td>
+          <td>Edit your website pages: Home, About, Contact, Showreel. No coding required.</td>
+          <td>When you need to update text, images, or video.</td>
+        </tr>
+        <tr>
+          <td><strong>Shows / Show Pages</strong></td>
+          <td>Add and manage individual show pages (e.g., Abu Dhabi, Sidemen, Royal Wedding).</td>
+          <td>When you want to showcase specific performances.</td>
+        </tr>
+        <tr>
+          <td><strong>Tracks</strong></td>
+          <td>Upload and manage your own music or mixes.</td>
+          <td>When adding new releases to the platform.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- The Business Flow -->
+    <h2>Your Quote &rarr; Invoice &rarr; Payment Flow</h2>
+    <p>This is the core of how your platform handles money. It's designed to be smooth for your clients and traceable for you:</p>
+
+    <div class="flow">
+      <div class="flow-step">1. Create Quote</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">2. Send Email</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">3. Client Accepts</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">4. Auto Invoice</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">5. Client Pays</div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-step">6. You Confirm</div>
+    </div>
+
+    <div class="card">
+      <h3>How It Works in Detail</h3>
+      <ul>
+        <li><strong>Create a Quote</strong> &mdash; Add line items (services, fees, travel, etc.). Toggle VAT and discounts. Set payment terms (e.g., 50% deposit, 50% on completion). Every quote gets a unique number like QT-001.</li>
+        <li><strong>Send to Client</strong> &mdash; Click "Send Quote". They receive a branded Late Night Ricky email with your logo. The email contains a secure link to view and accept the quote.</li>
+        <li><strong>Client Accepts</strong> &mdash; They click the link, see their quote beautifully presented, and click Accept. They get a confirmation. You get notified.</li>
+        <li><strong>Auto-Convert to Invoice</strong> &mdash; The moment they accept, the platform creates a matching invoice with the same line items, totals, and payment schedule. No retyping anything.</li>
+        <li><strong>Invoice Email Sent</strong> &mdash; The client automatically receives their invoice by email with a payment link and your bank details.</li>
+        <li><strong>Client Pays</strong> &mdash; They follow the payment page, upload proof of payment (screenshot/photo), and submit.</li>
+        <li><strong>You Confirm</strong> &mdash; In your admin, you see the payment confirmation with their receipt. Mark it confirmed. Done.</li>
+      </ul>
+    </div>
+
+    <div class="card" style="background: var(--bg-light);">
+      <h3>Bank Details on Invoices</h3>
+      <p style="margin-bottom: 0;">Your invoices display your Tide business account details automatically:</p>
+      <div class="login-box" style="margin-top: 16px; margin-bottom: 0;">
+        <div class="login-field">
+          <div class="login-label">Account Name</div>
+          <div class="login-value">Late Night Ricky</div>
+        </div>
+        <div class="login-field">
+          <div class="login-label">Sort Code</div>
+          <div class="login-value">04-06-05</div>
+        </div>
+        <div class="login-field">
+          <div class="login-label">Account Number</div>
+          <div class="login-value">23690693</div>
+        </div>
+        <div class="login-field">
+          <div class="login-label">Bank</div>
+          <div class="login-value">Tide</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <h2>What's Under the Hood</h2>
+    <p>You don't need to manage any of this &mdash; but it's worth knowing your platform is built on solid, modern technology:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Technology</th>
+          <th>Why It Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Frontend</strong></td>
+          <td>Next.js 14 (React)</td>
+          <td>Fast, modern, mobile-friendly. Your site loads instantly and works on any device.</td>
+        </tr>
+        <tr>
+          <td><strong>Backend</strong></td>
+          <td>Next.js API Routes + Drizzle ORM</td>
+          <td>All data is type-safe and reliable. No fragile custom scripts.</td>
+        </tr>
+        <tr>
+          <td><strong>Database</strong></td>
+          <td>Neon Postgres (Serverless)</td>
+          <td>Enterprise-grade database that scales automatically. Backed up and secure.</td>
+        </tr>
+        <tr>
+          <td><strong>Storage</strong></td>
+          <td>Cloudinary</td>
+          <td>Images and videos are optimised and delivered fast worldwide.</td>
+        </tr>
+        <tr>
+          <td><strong>Email</strong></td>
+          <td>Resend (SMTP fallback)</td>
+          <td>Branded emails land in inboxes, not spam folders. High deliverability.</td>
+        </tr>
+        <tr>
+          <td><strong>Hosting</strong></td>
+          <td>Vercel (Edge Network)</td>
+          <td>Your site is served from 100+ locations globally. Always fast, always online.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Getting Started -->
+    <h2>Getting Started Checklist</h2>
+    <div class="card">
+      <ul style="margin-bottom: 0;">
+        <li>Rory will set your admin username and password and share them securely</li>
+        <li>Log in at <strong>https://late-night-ricky.vercel.app/admin</strong></li>
+        <li>Change your password after first login</li>
+        <li>Review your Dashboard &mdash; this is your daily command centre</li>
+        <li>Click through Enquiries, Quotes, and Clients to familiarise yourself</li>
+        <li>Try creating a test quote to see the full client experience</li>
+        <li>Check your Contact page on the public site &mdash; submissions will land in Enquiries</li>
+        <li>Update your About page and Showreel from the Content section</li>
+      </ul>
+    </div>
+
+    <!-- Support -->
+    <div class="card card-dark">
+      <span class="badge" style="background: var(--accent); color: var(--navy);">Support</span>
+      <h3 style="color: var(--white); margin-top: 16px;">Need Changes or Have Questions?</h3>
+      <p style="color: var(--accent);">
+        This platform was built specifically for your workflow. If anything feels off, if you want tweaks, or if you need a walkthrough &mdash; just reach out.
+      </p>
+      <div class="login-box" style="margin-bottom: 0;">
+        <div class="login-field" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);">
+          <div class="login-label" style="color: var(--slate-light);">Contact</div>
+          <div class="login-value" style="color: var(--white);">Rory May &mdash; Nuelo</div>
+        </div>
+        <div class="login-field" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);">
+          <div class="login-label" style="color: var(--slate-light);">Best Way to Reach</div>
+          <div class="login-value" style="color: var(--white);">Jump on a call anytime</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p style="font-size: 11px; text-transform: uppercase; letter-spacing: 3px; font-weight: 700; color: var(--slate); margin-bottom: 8px;">
+        Built by Nuelo
+      </p>
+      <p style="font-size: 13px; color: var(--slate-light);">
+        Late Night Ricky Admin Platform &mdash; Version 186<br>
+        Handover Date: June 2026
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>

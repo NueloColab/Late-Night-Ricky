@@ -1,0 +1,38 @@
+Subject: Your Late Night Ricky Admin Platform — Ready to Explore
+
+Hi Samir,
+
+Your admin platform is live and ready.
+
+Login here: https://late-night-ricky.vercel.app/admin
+Username: [RORY TO FILL]
+Password: [RORY TO FILL]
+
+Please change your password after first login.
+
+I've attached a full user guide (same navy branding as your site) that walks you through every section — what's on the front end, what's on the back end, and how to manage your business from one place.
+
+A few things we built in as complimentary extras to help you run projects more efficiently:
+
+→ Branded quote & invoice emails — Every email your clients receive carries the Late Night Ricky look and feel, not a generic template.
+
+→ Auto quote-to-invoice — When a client accepts a quote, it instantly becomes an invoice. No retyping services or prices.
+
+→ Payment confirmation flow — Clients upload proof of payment directly through their invoice page. You see it, you confirm it, it's tracked.
+
+→ Enquiry reply threading — All back-and-forth with potential clients is stored in the platform. You never lose context.
+
+→ Full client history — Every quote, invoice, and enquiry per client in one view.
+
+The core flow works like this:
+Create Quote → Send Branded Email → Client Accepts → Auto Invoice → Client Pays → You Confirm
+
+Everything is tracked. Everything is branded. Everything is in one place.
+
+If anything needs changing, if something doesn't feel quite right, or if you just want a walkthrough — jump on a call with me anytime. No question too small.
+
+Looking forward to hearing what you think.
+
+Best,
+Rory
+Nuelo
