@@ -83,7 +83,7 @@ export default function Dashboard() {
       <div className="mb-12">
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Overview</p>
         <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Dashboard</h1>
-        <p className="text-sm text-[#5B7A8E] mt-4 font-semibold uppercase tracking-[0.5px]">Welcome back. Here&apos;s what&apos;s happening.</p>
+        <p className="text-sm text-[#5B7A8E] mt-4 font-semibold uppercase tracking-[0.5px]">Welcome back bro. Here&apos;s what&apos;s happening.</p>
       </div>
 
       {/* Main Stats */}
