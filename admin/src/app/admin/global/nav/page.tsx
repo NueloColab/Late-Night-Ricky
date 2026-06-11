@@ -29,6 +29,8 @@ const DEFAULT_LINKS: NavLink[] = [
   { label: 'Contact', href: '/contact', visible: true },
 ];
 
+const inputClass = 'w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors';
+
 export default function NavEditor() {
   const [sections, setSections] = useState<SectionData[]>([]);
   const [saving, setSaving] = useState(false);
@@ -94,74 +96,87 @@ export default function NavEditor() {
   }
 
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-white tracking-tight">Nav & Logo</h1>
-        <p className="text-[#8FA3B3] mt-1 text-sm font-medium tracking-wide uppercase">Edit navigation links and logo</p>
+    <div className="max-w-3xl">
+      {/* Header */}
+      <div className="mb-12">
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Global Settings</p>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Nav & Logo</h1>
+            <p className="text-sm text-[#5B7A8E] mt-4 font-semibold uppercase tracking-[0.5px]">Edit navigation links and logo</p>
+          </div>
+        </div>
       </div>
 
-      <div className="max-w-2xl space-y-6">
+      <div className="space-y-6">
         {/* Logo */}
-        <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
-          <h3 className="font-serif text-lg font-semibold text-white mb-1">Logo</h3>
-          <p className="text-xs text-[#8FA3B3] mb-4">The logo shown in the site navigation</p>
-
-          <div className="relative w-40 h-20 bg-[#0A0A0A] rounded-xl overflow-hidden mb-4">
-            {logoPath ? (
-              <Image src={logoPath} alt="Logo" fill className="object-contain p-2" sizes="160px" />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center">
-                <ImageIcon className="w-8 h-8 text-[#8FA3B3]" />
-              </div>
-            )}
+        <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6 md:p-8">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E3E8ED]">
+            <div className="w-10 h-px bg-[#1B3A4C]"></div>
+            <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Logo</p>
           </div>
-          <button
-            onClick={() => setMediaOpen(true)}
-            className="px-4 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:bg-[#2a4f66] transition-colors"
-          >
-            {logoPath ? 'Replace Logo' : 'Upload Logo'}
-          </button>
+          <p className="text-xs text-[#6B8FAB] mb-4">The logo shown in the site navigation</p>
+
+          <div className="flex items-center gap-6">
+            <div className="relative w-40 h-20 bg-[#F8FAFB] rounded-lg border border-[#E3E8ED] overflow-hidden flex items-center justify-center">
+              {logoPath ? (
+                <Image src={logoPath} alt="Logo" fill className="object-contain p-2" sizes="160px" />
+              ) : (
+                <ImageIcon className="w-8 h-8 text-[#A3B5C4]" />
+              )}
+            </div>
+            <button
+              onClick={() => setMediaOpen(true)}
+              className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+            >
+              {logoPath ? 'Replace Logo' : 'Upload Logo'}
+            </button>
+          </div>
+          {logoPath && <p className="text-xs text-[#6B8FAB] mt-3">{logoPath}</p>}
         </div>
 
         {/* Links */}
-        <div className="bg-[#111318] rounded-2xl p-6 border border-[#8FA8BE]/20">
-          <h3 className="font-serif text-lg font-semibold text-white mb-1">Navigation Links</h3>
-          <p className="text-xs text-[#8FA3B3] mb-6">Reorder, rename, and show/hide links</p>
+        <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-6 md:p-8">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E3E8ED]">
+            <div className="w-10 h-px bg-[#1B3A4C]"></div>
+            <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Navigation Links</p>
+          </div>
+          <p className="text-xs text-[#6B8FAB] mb-6">Reorder, rename, and show/hide links</p>
 
           <div className="space-y-3">
             {links.map((link, idx) => (
-              <div key={idx} className="flex items-center gap-3 p-3 bg-[#0A0A0A] rounded-xl">
-                <div className="flex items-center gap-1">
+              <div key={idx} className="flex items-center gap-3 p-4 bg-[#F8FAFB] rounded-lg border border-[#E3E8ED]">
+                <div className="flex flex-col gap-1">
                   <button
                     onClick={() => moveLink(idx, 'up')}
                     disabled={idx === 0}
-                    className="p-1 text-[#8FA3B3] hover:text-white transition-colors disabled:opacity-30"
+                    className="p-1 text-[#A3B5C4] hover:text-[#1B3A4C] transition-colors disabled:opacity-30"
                   >
                     <UpIcon className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => moveLink(idx, 'down')}
                     disabled={idx === links.length - 1}
-                    className="p-1 text-[#8FA3B3] hover:text-white transition-colors disabled:opacity-30"
+                    className="p-1 text-[#A3B5C4] hover:text-[#1B3A4C] transition-colors disabled:opacity-30"
                   >
                     <DownIcon className="w-4 h-4" />
                   </button>
                 </div>
 
-                <div className="flex-1 min-w-0 grid grid-cols-2 gap-3">
+                <div className="flex-1 min-w-0 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <input
                     type="text"
                     value={link.label}
                     onChange={(e) => updateLink(idx, 'label', e.target.value)}
                     placeholder="Label"
-                    className="px-3 py-2 bg-[#111318] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                    className={inputClass}
                   />
                   <input
                     type="text"
                     value={link.href}
                     onChange={(e) => updateLink(idx, 'href', e.target.value)}
                     placeholder="URL"
-                    className="px-3 py-2 bg-[#111318] rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                    className={inputClass}
                   />
                 </div>
 
@@ -172,7 +187,7 @@ export default function NavEditor() {
                   className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
                     link.visible
                       ? 'bg-[#1B3A4C] text-white'
-                      : 'bg-[#111318] text-[#8FA3B3]'
+                      : 'bg-[#E3E8ED] text-[#6B8FAB]'
                   }`}
                 >
                   {link.visible ? 'Shown' : 'Hidden'}
@@ -181,7 +196,7 @@ export default function NavEditor() {
             ))}
           </div>
 
-          <div className="mt-6 flex justify-end gap-3">
+          <div className="mt-6 flex flex-wrap gap-3">
             <button
               onClick={() => {
                 const newLinks = [...links, { label: 'New Link', href: '/', visible: true }];
@@ -191,14 +206,14 @@ export default function NavEditor() {
                   )
                 );
               }}
-              className="px-4 py-2.5 border border-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:bg-[#1B3A4C] hover:text-white transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition"
             >
               + Add Link
             </button>
             <button
               onClick={() => saveNav({ content: links })}
               disabled={saving}
-              className="px-6 py-3 bg-[#1B3A4C] text-white rounded-xl font-semibold text-sm uppercase tracking-widest hover:bg-[#2a4f66] transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-7 py-3 bg-[#111] text-white rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save Links'}
             </button>
