@@ -56,14 +56,7 @@ export default function ServiceSelector({
     if (serviceName === '__custom__') {
       applyUpdates({ _custom: true, serviceName: '' })
     } else {
-      const found = LNR_SERVICES.find(
-        (s) => s.name === serviceName && s.category === service.serviceCategory
-      )
-      const updates: Partial<Service> = { _custom: false, serviceName }
-      if (found && found.price) {
-        updates.price = found.price
-      }
-      applyUpdates(updates)
+      applyUpdates({ _custom: false, serviceName })
     }
   }
 
@@ -146,7 +139,7 @@ export default function ServiceSelector({
             <option value="">Select service...</option>
             {servicesInCategory.map((s) => (
               <option key={s.name} value={s.name}>
-                {s.name} {s.price ? `(£${s.price})` : ''}
+                {s.name}
               </option>
             ))}
             <option value="__custom__">Other (Custom)</option>

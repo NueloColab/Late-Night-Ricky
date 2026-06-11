@@ -1,5 +1,5 @@
 // LNR Services Catalog — Late Night Ricky specific
-// Adapted from project services model: { name, status, fee }
+// No preset prices — client sets their own
 
 export const LNR_SERVICE_CATEGORIES = [
   'Entertainment & Performance',
@@ -10,34 +10,34 @@ export const LNR_SERVICE_CATEGORIES = [
 
 export const LNR_SERVICES = [
   // Entertainment & Performance
-  { name: 'DJ Set — Wedding', category: 'Entertainment & Performance', price: 1500 },
-  { name: 'DJ Set — Corporate Event', category: 'Entertainment & Performance', price: 2000 },
-  { name: 'DJ Set — Club Night', category: 'Entertainment & Performance', price: 800 },
-  { name: 'DJ Set — Private Party', category: 'Entertainment & Performance', price: 1200 },
-  { name: 'DJ Set — Festival', category: 'Entertainment & Performance', price: 3000 },
-  { name: 'Event Hosting / MC', category: 'Entertainment & Performance', price: 500 },
-  { name: 'Live Performance', category: 'Entertainment & Performance', price: 2500 },
+  { name: 'DJ Set — Wedding', category: 'Entertainment & Performance' },
+  { name: 'DJ Set — Corporate Event', category: 'Entertainment & Performance' },
+  { name: 'DJ Set — Club Night', category: 'Entertainment & Performance' },
+  { name: 'DJ Set — Private Party', category: 'Entertainment & Performance' },
+  { name: 'DJ Set — Festival', category: 'Entertainment & Performance' },
+  { name: 'Event Hosting / MC', category: 'Entertainment & Performance' },
+  { name: 'Live Performance', category: 'Entertainment & Performance' },
 
   // Production & Technical
-  { name: 'Sound System Hire', category: 'Production & Technical', price: 600 },
-  { name: 'Lighting Package', category: 'Production & Technical', price: 400 },
-  { name: 'AV Production', category: 'Production & Technical', price: 1500 },
-  { name: 'Stage Design', category: 'Production & Technical', price: 2000 },
-  { name: 'Technical Rider', category: 'Production & Technical', price: 300 },
+  { name: 'Sound System Hire', category: 'Production & Technical' },
+  { name: 'Lighting Package', category: 'Production & Technical' },
+  { name: 'AV Production', category: 'Production & Technical' },
+  { name: 'Stage Design', category: 'Production & Technical' },
+  { name: 'Technical Rider', category: 'Production & Technical' },
 
   // Brand & Partnership
-  { name: 'Brand Partnership', category: 'Brand & Partnership', price: 5000 },
-  { name: 'Social Media Promotion', category: 'Brand & Partnership', price: 1000 },
-  { name: 'Brand Ambassador', category: 'Brand & Partnership', price: 3500 },
-  { name: 'Event Sponsorship', category: 'Brand & Partnership', price: 7500 },
-  { name: 'Content Collaboration', category: 'Brand & Partnership', price: 2000 },
+  { name: 'Brand Partnership', category: 'Brand & Partnership' },
+  { name: 'Social Media Promotion', category: 'Brand & Partnership' },
+  { name: 'Brand Ambassador', category: 'Brand & Partnership' },
+  { name: 'Event Sponsorship', category: 'Brand & Partnership' },
+  { name: 'Content Collaboration', category: 'Brand & Partnership' },
 
   // Creative & Consulting
-  { name: 'Music Production', category: 'Creative & Consulting', price: 3000 },
-  { name: 'Artist Consulting', category: 'Creative & Consulting', price: 1500 },
-  { name: 'Event Strategy', category: 'Creative & Consulting', price: 2500 },
-  { name: 'Playlist Curation', category: 'Creative & Consulting', price: 500 },
-  { name: 'Remix / Edit', category: 'Creative & Consulting', price: 800 },
+  { name: 'Music Production', category: 'Creative & Consulting' },
+  { name: 'Artist Consulting', category: 'Creative & Consulting' },
+  { name: 'Event Strategy', category: 'Creative & Consulting' },
+  { name: 'Playlist Curation', category: 'Creative & Consulting' },
+  { name: 'Remix / Edit', category: 'Creative & Consulting' },
 ]
 
 export function getServicesByCategory(category: string) {
