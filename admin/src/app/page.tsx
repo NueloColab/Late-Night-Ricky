@@ -177,6 +177,7 @@ export default async function HomePage() {
       const legacyVideos = showreelVideoSection?.videos as any;
       if (Array.isArray(legacyVideos) && legacyVideos[0]) {
         videoSrc = legacyVideos[0];
+        videoPoster = ''; // Clear old poster so new video frame shows
       }
     }
 
