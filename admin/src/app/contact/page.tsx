@@ -150,7 +150,7 @@ export default function ContactPage() {
               <>
                 <form
                   onSubmit={handleSubmit}
-                  className={activeTab === 'booking' ? 'block' : 'hidden'}
+                  hidden={activeTab !== 'booking'}
                   data-tab="booking"
                 >
                   <div className="mb-7">
@@ -188,7 +188,7 @@ export default function ContactPage() {
                 </form>
                 <form
                   onSubmit={handleSubmit}
-                  className={activeTab === 'private' ? 'block' : 'hidden'}
+                  hidden={activeTab !== 'private'}
                   data-tab="private"
                 >
                   <div className="mb-7">
