@@ -1,6 +1,6 @@
 'use client'
 
-import { LNR_SERVICES, LNR_SERVICE_CATEGORIES, getServicesByCategory } from '@/lib/services'
+import { LNR_SERVICE_CATEGORIES, getServicesByCategory } from '@/lib/services'
 
 interface Service {
   serviceName?: string
