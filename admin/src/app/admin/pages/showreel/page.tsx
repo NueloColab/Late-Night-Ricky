@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import MediaPicker from '@/components/media-picker';
 
 interface SectionData {
@@ -426,6 +428,13 @@ export default function ShowreelEditor() {
     cards: 'Showreel Cards',
   };
 
+      <Link
+        href="/admin/content"
+        className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#111] transition-colors mb-6"
+      >
+        <ArrowLeft size={14} />
+        <span>Back to Content</span>
+      </Link>
   return (
     <div className="max-w-5xl">
       <div className="mb-12">

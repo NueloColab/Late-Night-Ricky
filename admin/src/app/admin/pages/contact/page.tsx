@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import MediaPicker from '@/components/media-picker';
 
 interface SectionData {
@@ -143,6 +145,13 @@ export default function ContactEditor() {
       )}
 
       {/* Header */}
+      <Link
+        href="/admin/content"
+        className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#111] transition-colors mb-6"
+      >
+        <ArrowLeft size={14} />
+        <span>Back to Content</span>
+      </Link>
       <div className="flex items-center justify-between mb-12">
         <div>
           <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Page Editor</p>

@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import MediaPicker from '@/components/media-picker';
 
@@ -132,6 +134,13 @@ export default function AboutEditor() {
 
   return (
     <div className="max-w-5xl">
+      <Link
+        href="/admin/content"
+        className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#111] transition-colors mb-6"
+      >
+        <ArrowLeft size={14} />
+        <span>Back to Content</span>
+      </Link>
       <div className="mb-12">
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">CMS</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
