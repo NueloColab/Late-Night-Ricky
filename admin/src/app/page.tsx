@@ -173,9 +173,17 @@ export default async function HomePage() {
 
     // Use showreel video for homepage hero if available
     if (dbShowreelSections && dbShowreelSections.length > 0) {
-      const showreelVideoSection = dbShowreelSections.find((s: any) => s.section === 'video');
-      if (showreelVideoSection?.videos?.[0]) {
-        videoSrc = showreelVideoSection.videos[0];
+      // New multi-video section
+      const showreelVideosSection = dbShowreelSections.find((s: any) => s.section === 'videos');
+      if (showreelVideosSection?.content && Array.isArray(showreelVideosSection.content) && showreelVideosSection.content.length > 0) {
+        const firstVideo = showreelVideosSection.content[0];
+        if (firstVideo?.src) videoSrc = firstVideo.src;
+      } else {
+        // Backward compatibility: old single-video section
+        const showreelVideoSection = dbShowreelSections.find((s: any) => s.section === 'video');
+        if (showreelVideoSection?.videos?.[0]) {
+          videoSrc = showreelVideoSection.videos[0];
+        }
       }
     }
 

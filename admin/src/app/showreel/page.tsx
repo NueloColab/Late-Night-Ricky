@@ -6,6 +6,7 @@ import Footer from '../../components/Footer';
 export const dynamic = 'force-dynamic';
 
 interface VideoData {
+  id: string;
   title: string;
   src: string;
   poster: string;
@@ -23,6 +24,7 @@ interface ShowreelCard {
 
 const DEFAULT_VIDEOS: VideoData[] = [
   {
+    id: 'default',
     title: '2025 Showreel',
     src: '/assets/video-desktop.mp4',
     poster: '/assets/ricky-hero-new.jpg',
@@ -42,18 +44,35 @@ export default function ShowreelPage() {
         const data = await res.json();
         const sections = data.sections || [];
 
-        // Video section
-        const videoSection = sections.find((s: any) => s.section === 'video');
-        if (videoSection) {
-          const videoPath = videoSection.videos?.[0] || videoSection.content?.[0];
-          if (videoPath) {
-            setVideos([{
-              title: 'Showreel',
-              src: videoPath,
-              poster: '/assets/ricky-hero-new.jpg',
-              year: new Date().getFullYear().toString(),
-              description: '',
-            }]);
+        // New multi-video section (videos array in content)
+        const videosSection = sections.find((s: any) => s.section === 'videos');
+        if (videosSection?.content && Array.isArray(videosSection.content)) {
+          const parsed = videosSection.content.map((v: any) => ({
+            id: v.id || `video-${Math.random()}`,
+            title: v.title || 'Showreel',
+            src: v.src || '',
+            poster: v.poster || '/assets/ricky-hero-new.jpg',
+            year: v.year || new Date().getFullYear().toString(),
+            description: v.description || '',
+          })).filter((v: VideoData) => v.src);
+          if (parsed.length > 0) {
+            setVideos(parsed);
+          }
+        } else {
+          // Backward compatibility: old single-video section
+          const videoSection = sections.find((s: any) => s.section === 'video');
+          if (videoSection) {
+            const videoPath = videoSection.videos?.[0] || videoSection.content?.[0];
+            if (videoPath) {
+              setVideos([{
+                id: 'legacy',
+                title: 'Showreel',
+                src: videoPath,
+                poster: '/assets/ricky-hero-new.jpg',
+                year: new Date().getFullYear().toString(),
+                description: '',
+              }]);
+            }
           }
         }
 
@@ -91,11 +110,10 @@ export default function ShowreelPage() {
 
         {/* Showreels Grid */}
         <div className="max-w-[1200px] mx-auto px-8 py-16 grid md:grid-cols-2 gap-10">
-          {videos.map((video, i) => (
-            <div key={i} className="bg-white border-2 border-[#111] overflow-hidden hover:-translate-y-1.5 transition duration-400">
-              <div className="relative pb-[56.25%] bg-[#111] cursor-pointer group">
+          {videos.map((video) => (
+            <div key={video.id} className="bg-white border-2 border-[#111] overflow-hidden hover:-translate-y-1.5 transition duration-400">
+              <div className="relative pb-[56.25%] bg-[#111]">
                 <video
-                  key={video.src}
                   src={video.src}
                   poster={video.poster}
                   playsInline
