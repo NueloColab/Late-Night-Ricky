@@ -9,6 +9,92 @@ interface MediaPickerProps {
   filterType?: 'image' | 'video' | 'all';
 }
 
+/** Compress images client-side to stay under Cloudinary's 10MB limit */
+async function compressImage(file: File, maxSizeMB: number = 9): Promise<File> {
+  const maxSizeBytes = maxSizeMB * 1024 * 1024;
+  if (file.size <= maxSizeBytes) return file;
+  if (!file.type.startsWith('image/')) return file;
+
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let { width, height } = img;
+
+      // Scale down very large images
+      const maxDimension = 2500;
+      if (width > maxDimension || height > maxDimension) {
+        const scale = Math.min(maxDimension / width, maxDimension / height);
+        width = Math.floor(width * scale);
+        height = Math.floor(height * scale);
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx?.drawImage(img, 0, 0, width, height);
+
+      // Binary search for best quality under max size
+      const minQuality = 0.1;
+      const maxQuality = 0.95;
+      let bestBlob: Blob | null = null;
+
+      const tryQuality = (q: number, attempts: number = 0) => {
+        if (attempts > 8) {
+          if (bestBlob) {
+            resolve(new File([bestBlob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+          } else {
+            reject(new Error('Could not compress image under size limit'));
+          }
+          return;
+        }
+
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject(new Error('Compression failed'));
+              return;
+            }
+            if (blob.size <= maxSizeBytes) {
+              resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+              return;
+            }
+            // Track best attempt
+            if (!bestBlob || blob.size < bestBlob.size) bestBlob = blob;
+            // Reduce quality and try again
+            const newQuality = q - 0.15;
+            if (newQuality >= minQuality) {
+              tryQuality(newQuality, attempts + 1);
+            } else {
+              // Last resort: scale down dimensions further
+              const scale = 0.7;
+              canvas.width = Math.floor(width * scale);
+              canvas.height = Math.floor(height * scale);
+              const newCtx = canvas.getContext('2d');
+              newCtx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+              tryQuality(maxQuality, attempts + 1);
+            }
+          },
+          'image/jpeg',
+          q
+        );
+      };
+
+      tryQuality(maxQuality);
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('Failed to load image for compression'));
+    };
+
+    img.src = url;
+  });
+}
+
 export default function MediaPicker({ open, onClose, onSelect, filterType = 'all' }: MediaPickerProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -27,9 +113,25 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
     setUploading(true);
 
     try {
+      // Compress images client-side to stay under Cloudinary 10MB limit
+      let uploadFile = file;
+      const MAX_CLOUDINARY_MB = 10;
+      const MAX_BYTES = MAX_CLOUDINARY_MB * 1024 * 1024;
+
+      if (file.size > MAX_BYTES) {
+        if (file.type.startsWith('image/')) {
+          uploadFile = await compressImage(file, 9.5);
+        } else {
+          setError(`File too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum is ${MAX_CLOUDINARY_MB}MB. Please use a smaller file.`);
+          setUploading(false);
+          e.target.value = '';
+          return;
+        }
+      }
+
       // Step 1: Get upload signature from our API
       const sigRes = await fetch('/api/upload-signature?' + new URLSearchParams({
-        filename: file.name,
+        filename: uploadFile.name,
       }));
       const sigData = await sigRes.json();
 
@@ -43,7 +145,7 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
       // Step 2: Upload directly to Cloudinary using signed upload
       const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${sigData.cloudName}/auto/upload`;
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', uploadFile);
       formData.append('api_key', sigData.apiKey);
       formData.append('timestamp', sigData.timestamp);
       formData.append('signature', sigData.signature);
@@ -69,8 +171,8 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
           url: uploadData.secure_url,
           filename: sigData.publicId,
           originalName: file.name,
-          type: file.type.startsWith('image/') ? 'image' : file.type.startsWith('video/') ? 'video' : file.type.startsWith('audio/') ? 'audio' : 'document',
-          size: file.size,
+          type: uploadFile.type.startsWith('image/') ? 'image' : uploadFile.type.startsWith('video/') ? 'video' : uploadFile.type.startsWith('audio/') ? 'audio' : 'document',
+          size: uploadFile.size,
         }),
       });
 

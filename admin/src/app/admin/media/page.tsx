@@ -14,6 +14,79 @@ interface Asset {
   uploadedAt: string;
 }
 
+/** Compress images client-side to stay under upload limits */
+async function compressImage(file: File, maxSizeMB: number = 9): Promise<File> {
+  const maxSizeBytes = maxSizeMB * 1024 * 1024;
+  if (file.size <= maxSizeBytes) return file;
+  if (!file.type.startsWith('image/')) return file;
+
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let { width, height } = img;
+      const maxDimension = 2500;
+      if (width > maxDimension || height > maxDimension) {
+        const scale = Math.min(maxDimension / width, maxDimension / height);
+        width = Math.floor(width * scale);
+        height = Math.floor(height * scale);
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx?.drawImage(img, 0, 0, width, height);
+
+      const minQuality = 0.1;
+      const maxQuality = 0.95;
+      let bestBlob: Blob | null = null;
+
+      const tryQuality = (q: number, attempts: number = 0) => {
+        if (attempts > 8) {
+          if (bestBlob) {
+            resolve(new File([bestBlob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+          } else {
+            reject(new Error('Could not compress image under size limit'));
+          }
+          return;
+        }
+
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) { reject(new Error('Compression failed')); return; }
+            if (blob.size <= maxSizeBytes) {
+              resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+              return;
+            }
+            if (!bestBlob || blob.size < bestBlob.size) bestBlob = blob;
+            const newQuality = q - 0.15;
+            if (newQuality >= minQuality) {
+              tryQuality(newQuality, attempts + 1);
+            } else {
+              const scale = 0.7;
+              canvas.width = Math.floor(width * scale);
+              canvas.height = Math.floor(height * scale);
+              const newCtx = canvas.getContext('2d');
+              newCtx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+              tryQuality(maxQuality, attempts + 1);
+            }
+          },
+          'image/jpeg',
+          q
+        );
+      };
+
+      tryQuality(maxQuality);
+    };
+
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Failed to load image')); };
+    img.src = url;
+  });
+}
+
 export default function MediaPage() {
   const [assets, setAssets] = useState<Asset[]>([]);
   const [search, setSearch] = useState('');
@@ -47,8 +120,10 @@ export default function MediaPage() {
     setUploadError('');
     try {
       for (const file of Array.from(files)) {
+        // Compress images client-side before uploading
+        const uploadFile = await compressImage(file, 9);
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('file', uploadFile);
         const res = await fetch('/api/media', { method: 'POST', body: formData });
         const data = await res.json();
         if (!res.ok || data.error) {
