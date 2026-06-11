@@ -21,69 +21,64 @@ async function compressImage(file: File, maxSizeMB: number = 9): Promise<File> {
 
     img.onload = () => {
       URL.revokeObjectURL(url);
-      let { width, height } = img;
 
-      // Scale down very large images
-      const maxDimension = 2500;
-      if (width > maxDimension || height > maxDimension) {
-        const scale = Math.min(maxDimension / width, maxDimension / height);
-        width = Math.floor(width * scale);
-        height = Math.floor(height * scale);
-      }
+      // Step-down: try progressively smaller sizes until under limit
+      const tryScale = (scale: number) => {
+        const width = Math.floor(img.width * scale);
+        const height = Math.floor(img.height * scale);
 
-      const canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext('2d');
-      ctx?.drawImage(img, 0, 0, width, height);
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
 
-      // Binary search for best quality under max size
-      const minQuality = 0.1;
-      const maxQuality = 0.95;
-      let bestBlob: Blob | null = null;
+        // Try quality 0.85 first, then 0.6, then 0.4
+        const qualities = [0.85, 0.6, 0.4];
+        let qIndex = 0;
 
-      const tryQuality = (q: number, attempts: number = 0) => {
-        if (attempts > 8) {
-          if (bestBlob) {
-            resolve(new File([bestBlob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
-          } else {
-            reject(new Error('Could not compress image under size limit'));
-          }
-          return;
-        }
+        const tryQuality = () => {
+          const q = qualities[qIndex];
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) {
+                if (qIndex < qualities.length - 1) {
+                  qIndex++;
+                  tryQuality();
+                } else if (scale > 0.25) {
+                  // Scale down more and try again
+                  tryScale(scale * 0.7);
+                } else {
+                  reject(new Error('Could not compress image under size limit'));
+                }
+                return;
+              }
+              if (blob.size <= maxSizeBytes) {
+                resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+                return;
+              }
+              if (qIndex < qualities.length - 1) {
+                qIndex++;
+                tryQuality();
+              } else if (scale > 0.25) {
+                tryScale(scale * 0.7);
+              } else {
+                // Last resort: use the smallest blob we got
+                resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+              }
+            },
+            'image/jpeg',
+            q
+          );
+        };
 
-        canvas.toBlob(
-          (blob) => {
-            if (!blob) {
-              reject(new Error('Compression failed'));
-              return;
-            }
-            if (blob.size <= maxSizeBytes) {
-              resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
-              return;
-            }
-            // Track best attempt
-            if (!bestBlob || blob.size < bestBlob.size) bestBlob = blob;
-            // Reduce quality and try again
-            const newQuality = q - 0.15;
-            if (newQuality >= minQuality) {
-              tryQuality(newQuality, attempts + 1);
-            } else {
-              // Last resort: scale down dimensions further
-              const scale = 0.7;
-              canvas.width = Math.floor(width * scale);
-              canvas.height = Math.floor(height * scale);
-              const newCtx = canvas.getContext('2d');
-              newCtx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-              tryQuality(maxQuality, attempts + 1);
-            }
-          },
-          'image/jpeg',
-          q
-        );
+        tryQuality();
       };
 
-      tryQuality(maxQuality);
+      // Start with a scale that should keep most images under 10MB
+      // A 4000x3000 image at 0.5 scale = 2000x1500, which at 0.85 quality is usually ~2-4MB
+      const startScale = Math.min(1, 1800 / Math.max(img.width, img.height));
+      tryScale(startScale);
     };
 
     img.onerror = () => {

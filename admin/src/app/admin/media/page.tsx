@@ -26,60 +26,47 @@ async function compressImage(file: File, maxSizeMB: number = 9): Promise<File> {
 
     img.onload = () => {
       URL.revokeObjectURL(url);
-      let { width, height } = img;
-      const maxDimension = 2500;
-      if (width > maxDimension || height > maxDimension) {
-        const scale = Math.min(maxDimension / width, maxDimension / height);
-        width = Math.floor(width * scale);
-        height = Math.floor(height * scale);
-      }
 
-      const canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext('2d');
-      ctx?.drawImage(img, 0, 0, width, height);
+      const tryScale = (scale: number) => {
+        const width = Math.floor(img.width * scale);
+        const height = Math.floor(img.height * scale);
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
 
-      const minQuality = 0.1;
-      const maxQuality = 0.95;
-      let bestBlob: Blob | null = null;
+        const qualities = [0.85, 0.6, 0.4];
+        let qIndex = 0;
 
-      const tryQuality = (q: number, attempts: number = 0) => {
-        if (attempts > 8) {
-          if (bestBlob) {
-            resolve(new File([bestBlob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
-          } else {
-            reject(new Error('Could not compress image under size limit'));
-          }
-          return;
-        }
+        const tryQuality = () => {
+          const q = qualities[qIndex];
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) {
+                if (qIndex < qualities.length - 1) { qIndex++; tryQuality(); }
+                else if (scale > 0.25) { tryScale(scale * 0.7); }
+                else { reject(new Error('Could not compress image under size limit')); }
+                return;
+              }
+              if (blob.size <= maxSizeBytes) {
+                resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+                return;
+              }
+              if (qIndex < qualities.length - 1) { qIndex++; tryQuality(); }
+              else if (scale > 0.25) { tryScale(scale * 0.7); }
+              else { resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() })); }
+            },
+            'image/jpeg',
+            q
+          );
+        };
 
-        canvas.toBlob(
-          (blob) => {
-            if (!blob) { reject(new Error('Compression failed')); return; }
-            if (blob.size <= maxSizeBytes) {
-              resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
-              return;
-            }
-            if (!bestBlob || blob.size < bestBlob.size) bestBlob = blob;
-            const newQuality = q - 0.15;
-            if (newQuality >= minQuality) {
-              tryQuality(newQuality, attempts + 1);
-            } else {
-              const scale = 0.7;
-              canvas.width = Math.floor(width * scale);
-              canvas.height = Math.floor(height * scale);
-              const newCtx = canvas.getContext('2d');
-              newCtx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-              tryQuality(maxQuality, attempts + 1);
-            }
-          },
-          'image/jpeg',
-          q
-        );
+        tryQuality();
       };
 
-      tryQuality(maxQuality);
+      const startScale = Math.min(1, 1800 / Math.max(img.width, img.height));
+      tryScale(startScale);
     };
 
     img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Failed to load image')); };
