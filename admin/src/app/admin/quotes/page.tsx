@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Plus, Search, Filter, FileText, Send, CheckCircle, XCircle, Clock, Trash2, Eye, ArrowRight, RotateCcw } from 'lucide-react'
+import { Plus, Search, Filter, FileText, Send, CheckCircle, XCircle, Clock, Trash2, Eye, ArrowRight, RotateCcw, Loader2 } from 'lucide-react'
 import Modal from '@/components/Modal'
 import QuoteForm from '@/components/QuoteForm'
 
@@ -31,6 +31,9 @@ interface Quote {
   paymentMethod: string | null
   notes: string | null
   createdAt: string
+  acceptToken: string | null
+  convertedToInvoice: boolean
+  invoiceId: number | null
 }
 
 interface Project {
@@ -76,6 +79,8 @@ export default function QuotesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null)
   const [isViewOpen, setIsViewOpen] = useState(false)
+  const [sendingId, setSendingId] = useState<number | null>(null)
+  const [convertingId, setConvertingId] = useState<number | null>(null)
 
   useEffect(() => {
     fetchQuotes()
@@ -146,6 +151,52 @@ export default function QuotesPage() {
       }
     } catch (err) {
       console.error('Update failed:', err)
+    }
+  }
+
+  async function sendQuote(id: number) {
+    if (!confirm('Send this quote via email to the client?')) return
+    setSendingId(id)
+    try {
+      const res = await fetch(`/api/quotes/${id}/send`, { method: 'POST' })
+      const data = await res.json()
+      if (!res.ok || !data.success) {
+        alert(data.error || 'Failed to send quote')
+      } else {
+        alert('Quote sent successfully')
+      }
+      fetchQuotes()
+      if (selectedQuote && selectedQuote.id === id) {
+        setSelectedQuote({ ...selectedQuote, status: 'sent' })
+      }
+    } catch (err) {
+      console.error('Send failed:', err)
+      alert('Failed to send quote')
+    } finally {
+      setSendingId(null)
+    }
+  }
+
+  async function convertToInvoice(id: number) {
+    if (!confirm('Convert this accepted quote to an invoice?')) return
+    setConvertingId(id)
+    try {
+      const res = await fetch(`/api/quotes/${id}/convert-to-invoice`, { method: 'POST' })
+      const data = await res.json()
+      if (!res.ok || !data.success) {
+        alert(data.error || 'Failed to convert quote')
+      } else {
+        alert(`Invoice ${data.invoiceNumber} created successfully`)
+      }
+      fetchQuotes()
+      if (selectedQuote && selectedQuote.id === id) {
+        setSelectedQuote({ ...selectedQuote, convertedToInvoice: true, invoiceId: data.invoiceId })
+      }
+    } catch (err) {
+      console.error('Convert failed:', err)
+      alert('Failed to convert quote to invoice')
+    } finally {
+      setConvertingId(null)
     }
   }
 
@@ -316,6 +367,15 @@ export default function QuotesPage() {
                           >
                             <Eye size={16} />
                           </button>
+                          {quote.status === 'draft' && (
+                            <button
+                              onClick={() => sendQuote(quote.id)}
+                              disabled={sendingId === quote.id}
+                              className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C] disabled:opacity-50"
+                            >
+                              {sendingId === quote.id ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+                            </button>
+                          )}
                           <button
                             onClick={() => deleteQuote(quote.id)}
                             className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#A3B5C4] hover:text-red-500"
@@ -455,10 +515,11 @@ export default function QuotesPage() {
               <div className="flex flex-wrap gap-2">
                 {selectedQuote.status === 'draft' && (
                   <button
-                    onClick={() => updateQuoteStatus(selectedQuote.id, 'sent')}
-                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#1B3A4C] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition"
+                    onClick={() => sendQuote(selectedQuote.id)}
+                    disabled={sendingId === selectedQuote.id}
+                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#1B3A4C] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition disabled:opacity-50"
                   >
-                    <Send size={14} />
+                    {sendingId === selectedQuote.id ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
                     Send Quote
                   </button>
                 )}
@@ -481,13 +542,26 @@ export default function QuotesPage() {
                   </>
                 )}
                 {selectedQuote.status === 'accepted' && (
-                  <Link
-                    href={`/admin/invoices?projectId=${selectedQuote.projectId || ''}`}
-                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#6B8FAB] hover:bg-[#6B8FAB] hover:text-white transition"
-                  >
-                    <ArrowRight size={14} />
-                    Create Invoice
-                  </Link>
+                  <>
+                    {!selectedQuote.convertedToInvoice ? (
+                      <button
+                        onClick={() => convertToInvoice(selectedQuote.id)}
+                        disabled={convertingId === selectedQuote.id}
+                        className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#6B8FAB] hover:bg-[#6B8FAB] hover:text-white transition disabled:opacity-50"
+                      >
+                        {convertingId === selectedQuote.id ? <Loader2 size={14} className="animate-spin" /> : <ArrowRight size={14} />}
+                        Create Invoice
+                      </button>
+                    ) : (
+                      <Link
+                        href={`/admin/invoices?projectId=${selectedQuote.projectId || ''}`}
+                        className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#6B8FAB] hover:bg-[#6B8FAB] hover:text-white transition"
+                      >
+                        <ArrowRight size={14} />
+                        View Invoices
+                      </Link>
+                    )}
+                  </>
                 )}
                 {selectedQuote.status === 'declined' && (
                   <button

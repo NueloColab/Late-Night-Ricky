@@ -152,7 +152,11 @@ export const quotes = pgTable("quotes", {
   paymentSchedule: jsonb("payment_schedule").default([]),
   pdfUrl: text("pdf_url"),
   sentAt: timestamp("sent_at", { mode: "date" }),
+  emailSentAt: timestamp("email_sent_at", { mode: "date" }),
   expiryDate: text("expiry_date"),
+  acceptToken: text("accept_token"),
+  convertedToInvoice: boolean("converted_to_invoice").default(false),
+  invoiceId: integer("invoice_id"),
 });
 
 export const invoices = pgTable("invoices", {
@@ -178,8 +182,14 @@ export const invoices = pgTable("invoices", {
   paymentSchedule: jsonb("payment_schedule").default([]),
   pdfUrl: text("pdf_url"),
   sentAt: timestamp("sent_at", { mode: "date" }),
+  emailSentAt: timestamp("email_sent_at", { mode: "date" }),
   paidAt: timestamp("paid_at", { mode: "date" }),
   dueDate: text("due_date"),
+  paymentToken: text("payment_token"),
+  paymentConfirmedByClient: boolean("payment_confirmed_by_client").default(false),
+  paymentConfirmedAt: timestamp("payment_confirmed_at", { mode: "date" }),
+  paymentConfirmation: jsonb("payment_confirmation").default({}),
+  quoteId: integer("quote_id"),
 });
 
 export const clients = pgTable("clients", {

@@ -308,7 +308,27 @@ export default async function HomePage() {
           muted
           loop
           preload="auto"
-        />
+          controls={false}
+          disablePictureInPicture
+          disableRemotePlayback
+        >
+        </video>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              const v = document.querySelector('#video video');
+              if (!v) return;
+              const keepPlaying = function() {
+                if (v.paused) { v.play().catch(function(){}); }
+              };
+              v.addEventListener('pause', keepPlaying);
+              document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) keepPlaying();
+              });
+              keepPlaying();
+            })();
+          `
+        }} />
       </section>
 
       {/* Reach */}

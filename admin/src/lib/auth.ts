@@ -50,4 +50,9 @@ export async function logout() {
   cookieStore.delete(SESSION_COOKIE);
 }
 
+export async function isAuthenticated(): Promise<boolean> {
+  const user = await getSessionUser();
+  return !!user;
+}
+
 export { PIN };
