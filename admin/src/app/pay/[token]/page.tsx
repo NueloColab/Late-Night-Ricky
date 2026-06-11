@@ -38,7 +38,7 @@ export default function PaymentPage() {
         const data = await res.json()
         setInvoice(data)
         setAmountPaid(data.total?.toString() || '')
-      } catch (e) {
+      } catch {
         setError('Failed to load invoice details')
       } finally {
         setLoading(false)
@@ -95,7 +95,7 @@ export default function PaymentPage() {
         return
       }
       setSubmitted(true)
-    } catch (e) {
+    } catch {
       alert('Failed to submit payment confirmation')
       setSubmitting(false)
     }

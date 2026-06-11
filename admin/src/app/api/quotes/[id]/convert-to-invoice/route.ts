@@ -55,7 +55,6 @@ export async function POST(request: Request, { params }: { params: { id: string 
       subtotal: quote.subtotal,
       taxRate: quote.taxRate,
       vatEnabled: quote.vatEnabled,
-      tax: quote.tax,
       total: quote.total,
       discount: quote.discount,
       status: 'draft',
@@ -67,14 +66,12 @@ export async function POST(request: Request, { params }: { params: { id: string 
       quoteId: quote.id,
       paymentToken,
       paymentConfirmedByClient: false,
-      createdAt: new Date(),
-      updatedAt: new Date(),
     }).returning()
 
     const newInvoice = inserted[0]
 
     await db.update(quotes)
-      .set({ convertedToInvoice: true, invoiceId: newInvoice.id, updatedAt: new Date() })
+      .set({ convertedToInvoice: true, invoiceId: newInvoice.id })
       .where(eq(quotes.id, quoteId))
 
     return NextResponse.json({
