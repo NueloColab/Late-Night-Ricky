@@ -10,7 +10,7 @@ const navLinks = [
   { href: '/showreel', label: 'Showreel' },
   { href: '/#supporting', label: 'Supporting' },
   { href: '/share-music', label: 'Share Music' },
-  { href: '/#contact-form', label: 'Contact' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export default function Navbar() {

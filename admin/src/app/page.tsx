@@ -3,6 +3,7 @@ import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
 import PartnerLogosSection from '../components/PartnerLogosSection';
+import HomeContactSection from '../components/HomeContactSection';
 import { getShowCards, getClientNames, getVenueTicker, getTracks, getSiteSections, getCarouselImages, getSeoMeta } from '@/lib/cms';
 import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
@@ -130,7 +131,6 @@ export default async function HomePage() {
   let partnersDescription = 'Trusted by A-list artists, global brands, and sold-out crowds worldwide.';
   let pressPack = '/assets/press-pack.pdf';
   let clientsTitle = 'Trusted By The Best';
-  let contactEmail = 'samir@wearemediahive.com';
   let shareMusicHeadline = 'Share Your Music';
   let shareMusicDescription = "I'm always on the lookout for new music to play, so send me your tracks";
   let grammyBadge = '/assets/grammy-gold-v2.png?v=2';
@@ -198,11 +198,6 @@ export default async function HomePage() {
       if (clientsSection?.content) {
         const c = typeof clientsSection.content === 'string' ? JSON.parse(clientsSection.content) : clientsSection.content;
         if (c.title) clientsTitle = c.title;
-      }
-      const contactSection = dbSections.find((s: any) => s.section === 'contact');
-      if (contactSection?.content) {
-        const c = typeof contactSection.content === 'string' ? JSON.parse(contactSection.content) : contactSection.content;
-        if (c.bookingEmail) contactEmail = c.bookingEmail;
       }
       const shareMusicSection = dbSections.find((s: any) => s.section === 'share_music');
       if (shareMusicSection?.content) {
@@ -496,35 +491,7 @@ export default async function HomePage() {
       </section>
 
       {/* Contact Form */}
-      <section id="contact-form" className="relative z-10 bg-white">
-        <div className="grid md:grid-cols-2 gap-0 min-h-[calc(100vh-70px)] items-stretch">
-          <div className="relative overflow-hidden">
-            <img src="/assets/ricky-hero-new.jpg" alt="Late Night Ricky" className="absolute top-0 left-0 w-full h-full object-cover object-top" />
-          </div>
-          <div className="py-20 px-8 md:px-16 max-w-[600px] mx-auto w-full">
-            <div className="flex gap-0 mb-10">
-              <button className="flex-1 py-3.5 px-7 border-2 border-[#111] bg-[#111] text-white text-xs font-semibold uppercase tracking-[1.5px]">Booking</button>
-              <button className="flex-1 py-3.5 px-7 border-2 border-[#111] bg-white text-[#111] text-xs font-semibold uppercase tracking-[1.5px]">Private Message</button>
-            </div>
-            <form action={`mailto:${contactEmail}`} method="post" encType="text/plain">
-              {[
-                { label: 'Name *', name: 'name', type: 'text' },
-                { label: 'Email *', name: 'email', type: 'email' },
-                { label: 'Club Name *', name: 'club', type: 'text' },
-                { label: 'City *', name: 'city', type: 'text' },
-                { label: 'Fee *', name: 'fee', type: 'text' },
-                { label: 'Date *', name: 'date', type: 'date' },
-              ].map((field) => (
-                <div key={field.name} className="mb-5">
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#5B7A8E] mb-2">{field.label}</label>
-                  <input type={field.type} name={field.name} required className="w-full border border-[#E3E8ED] rounded-lg px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
-                </div>
-              ))}
-              <button type="submit" className="w-full py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition">Submit</button>
-            </form>
-          </div>
-        </div>
-      </section>
+      <HomeContactSection />
 
       <Footer />
     </>
