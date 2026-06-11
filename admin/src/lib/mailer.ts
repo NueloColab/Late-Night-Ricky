@@ -129,8 +129,8 @@ const getEmailTemplate = (content: string) => `
       <td style="padding:0;">
         <table cellpadding="0" cellspacing="0" border="0" width="100%" class="container" style="background-color:#ffffff;max-width:640px;margin:0 auto;">
           <tr>
-            <td style="padding:40px 40px 30px 40px;text-align:center;border-bottom:2px solid #0f1923;background-color:#0f1923;" class="mobile-header-padding">
-              <h1 style="margin:0 0 10px 0;font-size:32px;font-weight:300;letter-spacing:6px;color:#ffffff;text-transform:uppercase;" class="mobile-title">LATE NIGHT RICKY</h1>
+            <td style="padding:30px 40px 25px 40px;text-align:center;border-bottom:2px solid #0f1923;background-color:#0f1923;" class="mobile-header-padding">
+              <img src="${SITE_URL}/assets/ricky-logo.png" alt="Late Night Ricky" style="max-width:220px;height:auto;margin:0 auto 8px auto;display:block;" />
               <p style="margin:0;color:#8FA8BE;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:500;">International DJ &amp; Grammy Winning Producer</p>
             </td>
           </tr>
@@ -187,12 +187,7 @@ export async function sendQuoteEmail(
       : undefined
 
     const content = `
-      <div style="padding:40px 40px 0;background-color:#ffffff;" class="mobile-padding">
-        <div style="text-align:center;margin-bottom:30px;">
-          <img src="${SITE_URL}/assets/ricky-logo.png" alt="Late Night Ricky" style="max-width:200px;height:auto;" />
-        </div>
-      </div>
-      <div style="padding:0 40px 45px;background-color:#ffffff;" class="mobile-padding">
+      <div style="padding:40px 40px 45px;background-color:#ffffff;" class="mobile-padding">
         <h2 style="margin:0 0 12px 0;color:#000;font-size:26px;font-weight:300;">Your Quote from Late Night Ricky</h2>
         <div style="width:70px;height:2px;background-color:#0f1923;margin:0 0 35px 0;"></div>
         <p style="margin:0 0 25px 0;color:#666;font-size:15px;line-height:1.8;" class="mobile-text">Dear ${quote.clientName || 'Valued Client'},</p>
@@ -284,12 +279,7 @@ export async function sendInvoiceEmail(
       : undefined
 
     const content = `
-      <div style="padding:40px 40px 0;background-color:#ffffff;" class="mobile-padding">
-        <div style="text-align:center;margin-bottom:30px;">
-          <img src="${SITE_URL}/assets/ricky-logo.png" alt="Late Night Ricky" style="max-width:200px;height:auto;" />
-        </div>
-      </div>
-      <div style="padding:0 40px 45px;background-color:#ffffff;" class="mobile-padding">
+      <div style="padding:40px 40px 45px;background-color:#ffffff;" class="mobile-padding">
         <h2 style="margin:0 0 12px 0;color:#000;font-size:26px;font-weight:300;">Invoice from Late Night Ricky</h2>
         <div style="width:70px;height:2px;background-color:#0f1923;margin:0 0 35px 0;"></div>
         <p style="margin:0 0 25px 0;color:#666;font-size:15px;line-height:1.8;" class="mobile-text">Dear ${invoice.clientName || 'Valued Client'},</p>

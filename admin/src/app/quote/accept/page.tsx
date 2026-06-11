@@ -43,7 +43,7 @@ function QuoteAcceptContent() {
     return (
       <div className="min-h-screen bg-[#0f1923] flex items-center justify-center">
         <div className="text-center">
-          <p className="text-2xl font-light tracking-[6px] text-white mb-4">LATE NIGHT RICKY</p>
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-6" style={{ maxWidth: '200px', filter: 'brightness(0) invert(1)' }} />
           <div className="w-10 h-10 border-[3px] border-white/20 border-t-white rounded-full animate-spin mx-auto" />
         </div>
       </div>
@@ -186,7 +186,7 @@ export default function QuoteAcceptPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-[#0f1923] flex items-center justify-center">
-          <p className="text-2xl font-light tracking-[6px] text-white">LATE NIGHT RICKY</p>
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" style={{ maxWidth: '200px', filter: 'brightness(0) invert(1)' }} />
         </div>
       }
     >
