@@ -80,7 +80,7 @@ function QuoteAcceptContent() {
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <p className="text-2xl font-light tracking-[6px] text-white mb-2">LATE NIGHT RICKY</p>
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-2" style={{ maxWidth: '180px', filter: 'brightness(0) invert(1)' }} />
           <p className="text-[10px] uppercase tracking-[3px] text-[#8FA8BE]">International DJ &amp; Grammy Winning Producer</p>
         </div>
 
@@ -173,7 +173,7 @@ function QuoteAcceptContent() {
         </div>
 
         <div className="text-center pt-6 border-t border-white/10">
-          <p className="text-xs uppercase tracking-widest text-[#8FA8BE] font-semibold mb-1">LATE NIGHT RICKY</p>
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-1" style={{ maxWidth: '100px', opacity: 0.5 }} />
           <p className="text-xs text-[#8FA8BE]/70">International DJ &amp; Grammy Winning Producer</p>
         </div>
       </div>

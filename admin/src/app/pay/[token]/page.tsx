@@ -105,7 +105,7 @@ export default function PaymentPage() {
     return (
       <div className="min-h-screen bg-[#0f1923] flex items-center justify-center">
         <div className="text-center">
-          <p className="text-2xl font-light tracking-[6px] text-white mb-4">LATE NIGHT RICKY</p>
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-4" style={{ maxWidth: '180px' }} />
           <p className="text-sm text-[#8FA8BE]">Loading invoice...</p>
         </div>
       </div>
@@ -116,7 +116,7 @@ export default function PaymentPage() {
     return (
       <div className="min-h-screen bg-[#0f1923] flex items-center justify-center px-4">
         <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center">
-          <p className="text-2xl font-light tracking-[6px] text-[#0f1923] mb-6">LATE NIGHT RICKY</p>
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-6" style={{ maxWidth: '160px', filter: 'invert(1)' }} />
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <span className="text-red-500 text-2xl font-bold">!</span>
           </div>
@@ -137,7 +137,7 @@ export default function PaymentPage() {
     return (
       <div className="min-h-screen bg-[#0f1923] flex items-center justify-center px-4">
         <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center">
-          <p className="text-2xl font-light tracking-[6px] text-[#0f1923] mb-8">LATE NIGHT RICKY</p>
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-8" style={{ maxWidth: '160px', filter: 'invert(1)' }} />
           <div className="w-20 h-20 bg-[#0f1923] rounded-full flex items-center justify-center mx-auto mb-8">
             <span className="text-white text-4xl">✓</span>
           </div>
@@ -176,7 +176,7 @@ export default function PaymentPage() {
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <p className="text-2xl font-light tracking-[6px] text-white mb-2">LATE NIGHT RICKY</p>
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-2" style={{ maxWidth: '180px' }} />
           <p className="text-[10px] uppercase tracking-[3px] text-[#8FA8BE]">International DJ &amp; Grammy Winning Producer</p>
         </div>
 
@@ -334,7 +334,7 @@ export default function PaymentPage() {
 
         {/* Footer */}
         <div className="text-center mt-8 pt-6 border-t border-white/10">
-          <p className="text-xs uppercase tracking-widest text-[#8FA8BE] font-semibold mb-1">LATE NIGHT RICKY</p>
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-1" style={{ maxWidth: '100px', opacity: 0.5 }} />
           <p className="text-xs text-[#8FA8BE]/70">International DJ &amp; Grammy Winning Producer</p>
         </div>
       </div>
