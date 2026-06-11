@@ -94,7 +94,7 @@ export default function ShowreelPage() {
           {videos.map((video, i) => (
             <div key={i} className="bg-white border-2 border-[#111] overflow-hidden hover:-translate-y-1.5 transition duration-400">
               <div className="relative pb-[56.25%] bg-[#111] cursor-pointer group">
-                <video poster={video.poster} playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover"
+                <video key={video.src} poster={video.poster} playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover"
                   onClick={(e) => {
                     const v = e.currentTarget;
                     v.play();
