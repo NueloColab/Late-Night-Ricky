@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Plus, Search, Trash2, Eye, Phone, Mail, Globe, Calendar } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Plus, Search, Trash2, Eye, Phone, Mail, Globe } from 'lucide-react'
 import Modal from '@/components/Modal'
 
 interface Client {
@@ -16,13 +17,11 @@ interface Client {
 }
 
 export default function ClientsPage() {
+  const router = useRouter()
   const [clients, setClients] = useState<Client[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [showForm, setShowForm] = useState(false)
-  const [selectedClient, setSelectedClient] = useState<Client | null>(null)
-  const [isViewOpen, setIsViewOpen] = useState(false)
-
   const [form, setForm] = useState({ name: '', email: '', phone: '', instagram: '', notes: '' })
 
   useEffect(() => {
@@ -135,7 +134,11 @@ export default function ClientsPage() {
               </thead>
               <tbody className="divide-y divide-[#E3E8ED]">
                 {filteredClients.map((client) => (
-                  <tr key={client.id} className="hover:bg-[#F8FAFB] transition-colors">
+                  <tr
+                    key={client.id}
+                    className="hover:bg-[#F8FAFB] transition-colors cursor-pointer"
+                    onClick={() => router.push(`/admin/clients/${client.id}`)}
+                  >
                     <td className="px-4 py-3">
                       <div className="font-semibold text-[#1B3A4C]">{client.name}</div>
                       <div className="text-xs text-[#6B8FAB] mt-0.5">Added {new Date(client.createdAt).toLocaleDateString('en-GB')}</div>
@@ -166,16 +169,19 @@ export default function ClientsPage() {
                     <td className="px-4 py-3">
                       <div className="flex gap-2">
                         <button
-                          onClick={() => {
-                            setSelectedClient(client)
-                            setIsViewOpen(true)
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            router.push(`/admin/clients/${client.id}`)
                           }}
                           className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C]"
                         >
                           <Eye size={16} />
                         </button>
                         <button
-                          onClick={() => deleteClient(client.id)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            deleteClient(client.id)
+                          }}
                           className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#A3B5C4] hover:text-red-500"
                         >
                           <Trash2 size={16} />
@@ -225,51 +231,6 @@ export default function ClientsPage() {
               className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition">Save Client</button>
           </div>
         </form>
-      </Modal>
-
-      {/* View Client Modal */}
-      <Modal isOpen={isViewOpen} onClose={() => setIsViewOpen(false)} title={selectedClient?.name} maxWidth="max-w-lg">
-        {selectedClient && (
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 text-sm text-[#5B7A8E]">
-              <Calendar size={14} />
-              Added {new Date(selectedClient.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-            </div>
-            <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-4 space-y-3">
-              {selectedClient.email && (
-                <div className="flex items-center gap-2 text-sm">
-                  <Mail size={14} className="text-[#6B8FAB]" />
-                  <span className="text-[#1B3A4C]">{selectedClient.email}</span>
-                </div>
-              )}
-              {selectedClient.phone && (
-                <div className="flex items-center gap-2 text-sm">
-                  <Phone size={14} className="text-[#6B8FAB]" />
-                  <span className="text-[#1B3A4C]">{selectedClient.phone}</span>
-                </div>
-              )}
-              {selectedClient.instagram && (
-                <div className="flex items-center gap-2 text-sm">
-                  <Globe size={14} className="text-[#6B8FAB]" />
-                  <span className="text-[#1B3A4C]">{selectedClient.instagram}</span>
-                </div>
-              )}
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-4 text-center">
-                <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{selectedClient.totalBookings || 0}</p>
-                <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Bookings</p>
-              </div>
-              <div className="bg-white border border-[#A3B5C4]/30 rounded-xl p-4 text-center">
-                <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">
-                  {selectedClient.totalRevenue ? `£${Number(selectedClient.totalRevenue).toLocaleString()}` : '—'}
-                </p>
-                <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Revenue</p>
-              </div>
-            </div>
-          </div>
-        )}
       </Modal>
     </div>
   )
