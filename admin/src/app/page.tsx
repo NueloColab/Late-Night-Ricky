@@ -4,6 +4,7 @@ import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
 import PartnerLogosSection from '../components/PartnerLogosSection';
 import HomeContactSection from '../components/HomeContactSection';
+import ShareMusicSection from '../components/ShareMusicSection';
 import { getShowCards, getClientNames, getVenueTicker, getTracks, getSiteSections, getCarouselImages, getSeoMeta } from '@/lib/cms';
 import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
@@ -469,23 +470,7 @@ export default async function HomePage() {
       </section>
 
       {/* Share Music */}
-      <section id="share-music" className="reveal relative z-10 bg-[#E3E8ED] py-28 text-center">
-        <div className="max-w-[700px] mx-auto px-6">
-          <h2 className="text-[clamp(36px,5vw,56px)] font-black tracking-[-2px] uppercase mb-4 text-[#111]">{shareMusicHeadline}</h2>
-          <p className="text-[clamp(22px,3vw,36px)] font-black uppercase leading-tight tracking-[-1px] mb-12 text-[#111]">
-            {shareMusicDescription}
-          </p>
-          <div className="border-[3px] border-dashed border-[#111] p-12 md:p-16 text-center transition-colors hover:border-[#1B3A4C] hover:bg-[rgba(27,58,76,0.02)] cursor-pointer max-w-[600px] mx-auto mb-8">
-            <a href="/share-music" className="inline-block px-10 py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition">
-              Upload your track
-            </a>
-            <p className="mt-4 text-sm text-[#5B7A8E]">Click the button and upload your file in mp3 320 kbps</p>
-          </div>
-          <a href="/share-music" className="inline-block px-10 py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition w-full max-w-[600px]">
-            Submit Track
-          </a>
-        </div>
-      </section>
+      <ShareMusicSection headline={shareMusicHeadline} description={shareMusicDescription} />
 
       {/* Reach Out */}
       <section id="reach-out" className="reveal relative z-10 bg-[#111] text-white py-28">
