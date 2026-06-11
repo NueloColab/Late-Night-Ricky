@@ -36,7 +36,35 @@ export default function ContactEditor() {
   }, []);
 
   useEffect(() => {
-    fetchSections();
+    async function initSections() {
+      // Fetch existing sections
+      const res = await fetch('/api/sections?page=contact');
+      let existing: SectionData[] = [];
+      if (res.ok) {
+        const data = await res.json();
+        existing = data.sections || [];
+      }
+
+      // Create any missing sections so the editor works immediately
+      const missing = CONTACT_SECTIONS.filter((name) => !existing.some((s) => s.section === name));
+      for (const sectionName of missing) {
+        await fetch('/api/sections', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            page: 'contact',
+            section: sectionName,
+            content: sectionName === 'email' ? ['hello@latenightricky.com'] : sectionName === 'instagram' ? ['@latenightricky'] : null,
+            isActive: true,
+            order: CONTACT_SECTIONS.indexOf(sectionName),
+          }),
+        });
+      }
+
+      // Re-fetch after creating
+      await fetchSections();
+    }
+    initSections();
   }, [fetchSections]);
 
   const imageSection = sections.find((s) => s.section === 'image');
