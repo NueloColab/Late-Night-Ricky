@@ -17,7 +17,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         client.email ? ilike(quotes.clientEmail, client.email) : undefined,
         ilike(quotes.clientName, client.name)
       )
-    ).orderBy(quotes.createdAt)
+    ).orderBy(quotes.sentAt)
 
     // Find invoices for this client (by name or email)
     const clientInvoices = await db.select().from(invoices).where(
@@ -25,7 +25,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         client.email ? ilike(invoices.clientEmail, client.email) : undefined,
         ilike(invoices.clientName, client.name)
       )
-    ).orderBy(invoices.createdAt)
+    ).orderBy(invoices.sentAt)
 
     return NextResponse.json({
       client,

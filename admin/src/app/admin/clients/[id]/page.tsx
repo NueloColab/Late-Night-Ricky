@@ -9,11 +9,8 @@ import {
   Save,
   X,
   Mail,
-  Phone,
-  Globe,
   FileText,
   Receipt,
-  Calendar,
   Loader2,
   AlertCircle,
 } from 'lucide-react'
@@ -36,7 +33,7 @@ interface Quote {
   projectTitle: string | null
   total: number
   status: string
-  createdAt: string
+  sentAt: string | null
 }
 
 interface Invoice {
@@ -45,7 +42,7 @@ interface Invoice {
   projectTitle: string | null
   total: number
   status: string
-  createdAt: string
+  sentAt: string | null
 }
 
 function formatCurrency(amount: number) {
@@ -337,7 +334,7 @@ export default function ClientDetailPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-[#5B7A8E]">
-                      {new Date(q.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      {q.sentAt ? new Date(q.sentAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'}
                     </td>
                   </tr>
                 ))}
@@ -390,7 +387,7 @@ export default function ClientDetailPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-[#5B7A8E]">
-                      {new Date(inv.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      {inv.sentAt ? new Date(inv.sentAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'}
                     </td>
                   </tr>
                 ))}
