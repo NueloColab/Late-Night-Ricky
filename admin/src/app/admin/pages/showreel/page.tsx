@@ -157,8 +157,6 @@ export default function ShowreelEditor() {
     setSections((prev) => prev.map((s) => s.section === 'cards' ? { ...s, content: updated } : s));
   }
 
-  const hasData = sections.length > 0;
-
   return (
     <div className="max-w-5xl">
       {/* Header */}
