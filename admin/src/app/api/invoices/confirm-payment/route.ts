@@ -20,6 +20,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invoice not found or link has expired' }, { status: 404 })
     }
 
+    if (invoice.status === 'paid' || invoice.paymentConfirmedByClient) {
+      return NextResponse.json({
+        success: true,
+        alreadyPaid: true,
+        message: 'Payment has already been confirmed for this invoice.',
+        invoiceNumber: invoice.invoiceNumber,
+      })
+    }
+
     const paymentConfirmation = {
       method: paymentMethod || 'Bank Transfer',
       amount: amountPaid || invoice.total,

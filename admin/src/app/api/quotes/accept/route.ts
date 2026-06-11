@@ -49,6 +49,7 @@ export async function POST(request: Request) {
         success: true,
         alreadyAccepted: true,
         quoteId: quote.id,
+        quoteNumber: quote.quoteNumber,
         clientName: quote.clientName,
         projectTitle: quote.projectTitle,
         lineItems: quote.lineItems,

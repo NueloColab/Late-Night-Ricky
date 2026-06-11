@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useParams } from 'next/navigation'
 
 const formatCurrency = (amount: number) =>
@@ -88,10 +88,15 @@ export default function PaymentPage() {
         }),
       })
 
+      const data = await res.json()
       if (!res.ok) {
-        const data = await res.json()
         alert(data.error || 'Failed to confirm payment')
         setSubmitting(false)
+        return
+      }
+      if (data.alreadyPaid) {
+        // Refresh the invoice to show the already-paid state
+        setInvoice((prev: any) => ({ ...prev, status: 'paid', paymentConfirmedByClient: true }))
         return
       }
       setSubmitted(true)
@@ -162,6 +167,29 @@ export default function PaymentPage() {
           <p className="text-gray-500 text-sm mb-6">We&apos;ll review and confirm your payment shortly. You&apos;ll receive a confirmation email once processed.</p>
           <p className="text-xs text-gray-400">
             Questions? Contact{' '}
+            <a href="mailto:samir@wearemediahive.com" className="text-[#0f1923] hover:underline font-medium">
+              samir@wearemediahive.com
+            </a>
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  if (invoice.status === 'paid' || invoice.paymentConfirmedByClient) {
+    return (
+      <div className="min-h-screen bg-[#0f1923] flex items-center justify-center px-4">
+        <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center">
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-8" style={{ maxWidth: '160px', filter: 'invert(1)' }} />
+          <div className="w-20 h-20 bg-[#0f1923] rounded-full flex items-center justify-center mx-auto mb-8">
+            <span className="text-white text-4xl">✓</span>
+          </div>
+          <h1 className="text-2xl font-light text-[#0f1923] mb-4">Payment Already Confirmed</h1>
+          <p className="text-gray-500 text-sm mb-6">
+            Thank you. Payment for invoice {invoice.invoiceNumber} has already been confirmed. If you have any questions, please contact us.
+          </p>
+          <p className="text-xs text-gray-400">
+            Contact{' '}
             <a href="mailto:samir@wearemediahive.com" className="text-[#0f1923] hover:underline font-medium">
               samir@wearemediahive.com
             </a>
