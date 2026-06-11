@@ -2,25 +2,56 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
-import { users } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { users, siteSections } from '@/lib/db/schema';
+import { eq, and } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
 
-const SETTINGS_FILE = '/tmp/lnr-settings.json';
-
-import { readFile, writeFile } from 'fs/promises';
+const DEFAULT_SETTINGS = { taxRate: 0, quoteTemplate: 'standard', currency: 'GBP' };
 
 async function getSettings() {
   try {
-    const data = await readFile(SETTINGS_FILE, 'utf-8');
-    return JSON.parse(data);
-  } catch {
-    return { taxRate: 0, quoteTemplate: 'standard', currency: 'GBP' };
+    const rows = await db
+      .select()
+      .from(siteSections)
+      .where(and(eq(siteSections.page, 'global'), eq(siteSections.section, 'settings')))
+      .limit(1);
+
+    if (rows.length > 0 && rows[0].content) {
+      const parsed = typeof rows[0].content === 'string' ? JSON.parse(rows[0].content) : rows[0].content;
+      return { ...DEFAULT_SETTINGS, ...parsed };
+    }
+  } catch (err) {
+    console.error('[Settings] DB read error:', err);
   }
+  return { ...DEFAULT_SETTINGS };
 }
 
 async function saveSettings(settings: any) {
-  await writeFile(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+  try {
+    const rows = await db
+      .select()
+      .from(siteSections)
+      .where(and(eq(siteSections.page, 'global'), eq(siteSections.section, 'settings')))
+      .limit(1);
+
+    if (rows.length > 0) {
+      await db
+        .update(siteSections)
+        .set({ content: settings, updatedAt: new Date() })
+        .where(eq(siteSections.id, rows[0].id));
+    } else {
+      await db.insert(siteSections).values({
+        page: 'global',
+        section: 'settings',
+        content: settings,
+        isActive: true,
+      });
+    }
+    return true;
+  } catch (err) {
+    console.error('[Settings] DB save error:', err);
+    return false;
+  }
 }
 
 export async function GET() {
@@ -31,9 +62,12 @@ export async function GET() {
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const settings = await getSettings();
-    const updated = { ...settings, ...body };
-    await saveSettings(updated);
+    const current = await getSettings();
+    const updated = { ...current, ...body };
+    const saved = await saveSettings(updated);
+    if (!saved) {
+      return NextResponse.json({ error: 'Save failed' }, { status: 500 });
+    }
     return NextResponse.json({ settings: updated });
   } catch (err) {
     console.error('Settings PUT error:', err);

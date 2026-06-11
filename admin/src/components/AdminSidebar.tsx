@@ -16,6 +16,7 @@ const mainMenuItems = [
 const bottomMenuItems = [
   { label: 'Content', href: '/admin/content' },
   { label: 'Shows', href: '/admin/shows' },
+  { label: 'Show Pages', href: '/admin/show-pages' },
   { label: 'Tracks', href: '/admin/tracks' },
   { label: 'Settings', href: '/admin/settings' },
 ];
@@ -48,8 +49,23 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
           transition: 'transform 0.3s ease',
         }}
       >
+        {/* Mobile close button */}
+        {isMobile && (
+          <div className="flex justify-end px-4 pt-4">
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-[#1B3A4C]/10 rounded transition"
+              aria-label="Close menu"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        )}
+
         {/* Logo */}
-        <Link href="/admin" className="mb-8 pt-8 px-6" onClick={isMobile ? onClose : undefined}>
+        <Link href="/admin" className="mb-8 pt-4 px-6" onClick={isMobile ? onClose : undefined}>
           <div className="text-center">
             <img
               src="/assets/ricky-logo.png"

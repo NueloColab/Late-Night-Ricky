@@ -1,18 +1,22 @@
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import { getClientNames } from '@/lib/cms';
 export const dynamic = 'force-dynamic';
+
+const DEFAULT_ARTISTS = [
+  'Stormzy', 'Dave', 'Burna Boy', 'Central Cee', 'Tion Wayne',
+  'AJ Tracey', 'D-Block Europe', 'J Hus', 'Skepta', 'Headie One'
+];
 
 export const metadata = {
   title: 'Clients — Late Night Ricky',
   description: 'Late Night Ricky has shared the stage with the biggest names in music.',
 };
 
-const artists = [
-  'Stormzy', 'Dave', 'Burna Boy', 'Central Cee', 'Tion Wayne',
-  'AJ Tracey', 'D-Block Europe', 'J Hus', 'Skepta', 'Headie One'
-];
+export default async function SupportingActPage() {
+  const dbNames = await getClientNames();
+  const artists = dbNames.length > 0 ? dbNames.map((n: any) => n.name) : DEFAULT_ARTISTS;
 
-export default function SupportingActPage() {
   return (
     <>
       <Navbar />
@@ -28,7 +32,7 @@ export default function SupportingActPage() {
         <div className="max-w-[900px] mx-auto px-8 py-20 text-center">
           <p className="text-sm text-[#5B7A8E] mb-12 tracking-[2px] uppercase">Late Night Ricky has shared the stage with</p>
           <div className="flex flex-col gap-1">
-            {artists.map((name) => (
+            {artists.map((name: string) => (
               <div key={name} className="text-[clamp(36px,7vw,80px)] font-black uppercase tracking-[-2px] leading-none text-[#111] hover:text-[#1B3A4C] transition cursor-default">
                 {name}
               </div>

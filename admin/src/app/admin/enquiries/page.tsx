@@ -113,7 +113,7 @@ export default function EnquiriesPage() {
   return (
     <div className="min-h-screen bg-[#F5F5F0]">
       {/* Header */}
-      <div className="border-b-2 border-[#111] pt-20 pb-5 px-8">
+      <div className="border-b-2 border-[#111] pt-20 pb-5 px-4 md:px-8">
         <div className="max-w-[1200px] mx-auto flex items-center justify-between">
           <div>
             <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Inbox</p>
@@ -133,7 +133,7 @@ export default function EnquiriesPage() {
       </div>
 
       {/* Filters */}
-      <div className="px-8 py-4 max-w-[1200px] mx-auto">
+      <div className="px-4 md:px-8 py-4 max-w-[1200px] mx-auto">
         <div className="flex flex-wrap gap-2">
           {['all', 'new', 'read', 'replied', 'archived'].map((f) => (
             <button
@@ -152,7 +152,7 @@ export default function EnquiriesPage() {
       </div>
 
       {/* Table */}
-      <div className="px-8 pb-20 max-w-[1200px] mx-auto">
+      <div className="px-4 md:px-8 pb-20 max-w-[1200px] mx-auto">
         {loading ? (
           <div className="text-center py-20 text-[#6B8FAB]">Loading enquiries...</div>
         ) : enquiries.length === 0 ? (

@@ -146,64 +146,73 @@ export default function ContactPage() {
                   Email {contactInfo.email}
                 </a>
               </div>
-            ) : activeTab === 'booking' ? (
-              <form key="booking" onSubmit={handleSubmit}>
-                <div className="mb-7">
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>
-                  <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
-                </div>
-                <div className="mb-7">
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Email *</label>
-                  <input type="email" name="email" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
-                </div>
-                <div className="mb-7">
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Club Name *</label>
-                  <input type="text" name="club" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
-                </div>
-                <div className="mb-7">
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">City *</label>
-                  <input type="text" name="city" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
-                </div>
-                <div className="mb-7">
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Fee *</label>
-                  <input type="text" name="fee" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
-                </div>
-                <div className="mb-7">
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Date *</label>
-                  <input type="date" name="date" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
-                </div>
-                {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="w-full py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
-                >
-                  {submitting ? 'Sending...' : 'Submit'}
-                </button>
-              </form>
             ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="mb-7">
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>
-                  <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
-                </div>
-                <div className="mb-7">
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Email *</label>
-                  <input type="email" name="email" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
-                </div>
-                <div className="mb-7">
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Message *</label>
-                  <textarea name="message" required rows={4} className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition resize-y min-h-[80px]" />
-                </div>
-                {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="w-full py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
+              <>
+                <form
+                  onSubmit={handleSubmit}
+                  className={activeTab === 'booking' ? 'block' : 'hidden'}
+                  data-tab="booking"
                 >
-                  {submitting ? 'Sending...' : 'Submit'}
-                </button>
-              </form>
+                  <div className="mb-7">
+                    <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>
+                    <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                  </div>
+                  <div className="mb-7">
+                    <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Email *</label>
+                    <input type="email" name="email" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                  </div>
+                  <div className="mb-7">
+                    <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Club Name *</label>
+                    <input type="text" name="club" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                  </div>
+                  <div className="mb-7">
+                    <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">City *</label>
+                    <input type="text" name="city" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                  </div>
+                  <div className="mb-7">
+                    <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Fee *</label>
+                    <input type="text" name="fee" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                  </div>
+                  <div className="mb-7">
+                    <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Date *</label>
+                    <input type="date" name="date" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                  </div>
+                  {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
+                  >
+                    {submitting ? 'Sending...' : 'Submit'}
+                  </button>
+                </form>
+                <form
+                  onSubmit={handleSubmit}
+                  className={activeTab === 'private' ? 'block' : 'hidden'}
+                  data-tab="private"
+                >
+                  <div className="mb-7">
+                    <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>
+                    <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                  </div>
+                  <div className="mb-7">
+                    <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Email *</label>
+                    <input type="email" name="email" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                  </div>
+                  <div className="mb-7">
+                    <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Message *</label>
+                    <textarea name="message" required rows={4} className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition resize-y min-h-[80px]" />
+                  </div>
+                  {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
+                  >
+                    {submitting ? 'Sending...' : 'Submit'}
+                  </button>
+                </form>
+              </>
             )}
           </div>
         </div>

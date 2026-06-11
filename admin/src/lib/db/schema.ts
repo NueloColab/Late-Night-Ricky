@@ -248,3 +248,22 @@ export const referrals = pgTable("referrals", {
   notes: text("notes"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
 });
+
+// ─── Show Pages ───
+export const showPages = pgTable("show_pages", {
+  id: serial("id").primaryKey(),
+  slug: text("slug").notNull().unique(),
+  title: text("title").notNull(),
+  venue: text("venue").notNull(),
+  location: text("location").notNull(),
+  season: text("season").notNull(),
+  description: text("description"),
+  heroImage: text("hero_image"),
+  setLength: text("set_length"),
+  galleryImages: jsonb("gallery_images").default([]),
+  testimonials: jsonb("testimonials").default([]),
+  content: jsonb("content").default({}),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
+});

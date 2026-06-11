@@ -24,9 +24,9 @@ interface NavLink {
 
 const DEFAULT_LINKS: NavLink[] = [
   { label: 'Home', href: '/', visible: true },
-  { label: 'About', href: '/about.html', visible: true },
-  { label: 'Showreel', href: '/showreel.html', visible: true },
-  { label: 'Contact', href: '/contact.html', visible: true },
+  { label: 'About', href: '/about', visible: true },
+  { label: 'Showreel', href: '/showreel', visible: true },
+  { label: 'Contact', href: '/contact', visible: true },
 ];
 
 export default function NavEditor() {

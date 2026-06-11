@@ -418,9 +418,9 @@ export default function ProjectDetailPage() {
 
       {/* Progress & Stats Dashboard — LNR style */}
       <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-5">
-        <div className="flex items-start justify-between mb-3">
+        <div className="flex flex-wrap items-start justify-between mb-3 gap-2">
           <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Progress</p>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => setShowTaskInput(!showTaskInput)}
               className="px-4 py-2 bg-[#111] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
@@ -440,7 +440,7 @@ export default function ProjectDetailPage() {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-6 mb-4">
+        <div className="flex flex-wrap items-center gap-4 md:gap-6 mb-4">
           <p className="text-3xl font-black text-[#111]">{progress}%</p>
           <div className="h-10 w-px bg-[#A3B5C4]/30" />
           <div>
@@ -473,12 +473,12 @@ export default function ProjectDetailPage() {
         <div className="lg:col-span-3 space-y-6">
           {/* Tasks & Milestones */}
           <div className="bg-white border border-[#A3B5C4]/20 rounded-xl p-6">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-wrap items-center justify-between mb-4 gap-2">
               <div className="flex items-center gap-2">
                 <CheckSquare size={18} className="text-[#6B8FAB]" />
                 <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Tasks & Milestones</h3>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={() => setShowTaskInput(!showTaskInput)}
                   className="px-4 py-2 border-2 border-[#A3B5C4]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] transition flex items-center gap-1"

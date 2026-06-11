@@ -7,6 +7,7 @@ import {
   siteSections,
   tracks,
   carouselImages,
+  showPages,
 } from './db/schema';
 import { eq, asc } from 'drizzle-orm';
 
@@ -114,6 +115,15 @@ export async function getFavicon() {
     if (!seoSection?.images) return null;
     const images = Array.isArray(seoSection.images) ? seoSection.images : [];
     return images[0] || null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getShowPage(slug: string) {
+  try {
+    const rows = await db.select().from(showPages).where(eq(showPages.slug, slug)).limit(1);
+    return rows[0] || null;
   } catch {
     return null;
   }
