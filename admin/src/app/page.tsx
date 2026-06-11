@@ -171,20 +171,12 @@ export default async function HomePage() {
       }
     }
 
-    // Use showreel video for homepage hero if available
+    // Use showreel main video for homepage hero
     if (dbShowreelSections && dbShowreelSections.length > 0) {
-      // New multi-video section
-      const showreelVideosSection = dbShowreelSections.find((s: any) => s.section === 'videos');
-      if (showreelVideosSection?.content && Array.isArray(showreelVideosSection.content) && showreelVideosSection.content.length > 0) {
-        const firstVideo = showreelVideosSection.content[0];
-        if (firstVideo?.src) videoSrc = firstVideo.src;
-      } else {
-        // Backward compatibility: old single-video section
-        const showreelVideoSection = dbShowreelSections.find((s: any) => s.section === 'video');
-        const legacyVideos = showreelVideoSection?.videos as any;
-        if (Array.isArray(legacyVideos) && legacyVideos[0]) {
-          videoSrc = legacyVideos[0];
-        }
+      const showreelVideoSection = dbShowreelSections.find((s: any) => s.section === 'video');
+      const legacyVideos = showreelVideoSection?.videos as any;
+      if (Array.isArray(legacyVideos) && legacyVideos[0]) {
+        videoSrc = legacyVideos[0];
       }
     }
 

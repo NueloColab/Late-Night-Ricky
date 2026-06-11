@@ -44,10 +44,10 @@ export default function ShowreelPage() {
         const data = await res.json();
         const sections = data.sections || [];
 
-        // New multi-video section (videos array in content)
-        const videosSection = sections.find((s: any) => s.section === 'videos');
-        if (videosSection?.content && Array.isArray(videosSection.content)) {
-          const parsed = videosSection.content.map((v: any) => ({
+        // Gallery videos section (videos in content array)
+        const gallerySection = sections.find((s: any) => s.section === 'videos');
+        if (gallerySection?.content && Array.isArray(gallerySection.content)) {
+          const parsed = gallerySection.content.map((v: any) => ({
             id: v.id || `video-${Math.random()}`,
             title: v.title || 'Showreel',
             src: v.src || '',
@@ -57,22 +57,6 @@ export default function ShowreelPage() {
           })).filter((v: VideoData) => v.src);
           if (parsed.length > 0) {
             setVideos(parsed);
-          }
-        } else {
-          // Backward compatibility: old single-video section
-          const videoSection = sections.find((s: any) => s.section === 'video');
-          if (videoSection) {
-            const videoPath = videoSection.videos?.[0] || videoSection.content?.[0];
-            if (videoPath) {
-              setVideos([{
-                id: 'legacy',
-                title: 'Showreel',
-                src: videoPath,
-                poster: '/assets/ricky-hero-new.jpg',
-                year: new Date().getFullYear().toString(),
-                description: '',
-              }]);
-            }
           }
         }
 
@@ -101,14 +85,12 @@ export default function ShowreelPage() {
     <>
       <Navbar />
       <main className="bg-white min-h-screen">
-        {/* Page Title Bar */}
         <div className="border-b-2 border-[#111] pt-24 pb-5 px-8">
           <div className="max-w-[1200px] mx-auto">
             <h1 className="text-[clamp(48px,10vw,120px)] font-black tracking-[-3px] uppercase leading-[0.9] text-[#111]">Showreels</h1>
           </div>
         </div>
 
-        {/* Showreels Grid */}
         <div className="max-w-[1200px] mx-auto px-8 py-16 grid md:grid-cols-2 gap-10">
           {videos.map((video) => (
             <div key={video.id} className="bg-white border-2 border-[#111] overflow-hidden hover:-translate-y-1.5 transition duration-400">
@@ -130,7 +112,6 @@ export default function ShowreelPage() {
             </div>
           ))}
 
-          {/* Showreel Cards from CMS */}
           {cards.map((card) => (
             <div key={card.id} className="bg-white border-2 border-[#111] overflow-hidden hover:-translate-y-1.5 transition duration-400">
               {card.imagePath && (
@@ -146,11 +127,12 @@ export default function ShowreelPage() {
             </div>
           ))}
 
-          {/* Coming Soon Card */}
-          <div className="bg-[#E3E8ED] border-2 border-[#111] flex flex-col items-center justify-center min-h-[300px] p-10 text-center">
-            <h3 className="text-[clamp(24px,3vw,36px)] font-black uppercase leading-none tracking-[-1px] mb-4 text-[#111]">More coming soon</h3>
-            <p className="text-sm text-[#555] uppercase tracking-[0.5px]">Upload new showreels in the admin panel.</p>
-          </div>
+          {videos.length === 1 && cards.length === 0 && (
+            <div className="bg-[#E3E8ED] border-2 border-[#111] flex flex-col items-center justify-center min-h-[300px] p-10 text-center">
+              <h3 className="text-[clamp(24px,3vw,36px)] font-black uppercase leading-none tracking-[-1px] mb-4 text-[#111]">More coming soon</h3>
+              <p className="text-sm text-[#555] uppercase tracking-[0.5px]">Upload new showreels in the admin panel.</p>
+            </div>
+          )}
         </div>
       </main>
       <Footer />
