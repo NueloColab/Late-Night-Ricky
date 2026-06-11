@@ -353,3 +353,43 @@ export async function sendInvoiceEmail(
     return { success: false, error: error.message }
   }
 }
+
+export async function sendEnquiryReplyEmail(
+  enquiry: {
+    name: string
+    email: string
+    type: string
+    message: string | null
+  },
+  replySubject: string,
+  replyBody: string
+) {
+  try {
+    const content = `
+      <div style="padding:40px 40px 45px;background-color:#ffffff;" class="mobile-padding">
+        <p style="margin:0 0 25px 0;color:#666;font-size:15px;line-height:1.8;" class="mobile-text">Dear ${enquiry.name || 'Valued Client'},</p>
+        <div style="margin:0 0 25px 0;color:#333;font-size:15px;line-height:1.8;background:#f8f9fa;padding:20px;border-left:3px solid #0f1923;" class="mobile-text">
+          ${replyBody.replace(/\n/g, '<br/>')}
+        </div>
+        <div style="margin:30px 0 0 0;padding-top:20px;border-top:1px solid #e5e5e5;">
+          <p style="margin:0 0 8px 0;color:#999;font-size:12px;" class="mobile-text"><strong>Original Message:</strong></p>
+          <p style="margin:0;color:#999;font-size:12px;line-height:1.6;" class="mobile-text">${(enquiry.message || '').substring(0, 200)}${(enquiry.message || '').length > 200 ? '...' : ''}</p>
+        </div>
+        <p style="margin:30px 0 0 0;color:#666;font-size:15px;line-height:1.7;" class="mobile-text">Kind regards,<br/><strong style="color:#000;">The Late Night Ricky Team</strong></p>
+        <p style="margin:15px 0 0 0;color:#999;font-size:12px;" class="mobile-text">Questions? Contact <a href="mailto:samir@wearemediahive.com" style="color:#0f1923;">samir@wearemediahive.com</a></p>
+      </div>`
+
+    const info = await sendEmailWithFallback({
+      from: FROM_ADDRESS,
+      to: enquiry.email,
+      subject: replySubject,
+      html: getEmailTemplate(content),
+    })
+
+    console.log('✅ Enquiry reply sent:', info.messageId)
+    return { success: true, messageId: info.messageId }
+  } catch (error: any) {
+    console.error('❌ Enquiry reply error:', error.message)
+    return { success: false, error: error.message }
+  }
+}
