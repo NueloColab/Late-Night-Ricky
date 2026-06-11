@@ -181,8 +181,9 @@ export default async function HomePage() {
       } else {
         // Backward compatibility: old single-video section
         const showreelVideoSection = dbShowreelSections.find((s: any) => s.section === 'video');
-        if (showreelVideoSection?.videos?.[0]) {
-          videoSrc = showreelVideoSection.videos[0];
+        const legacyVideos = showreelVideoSection?.videos as any;
+        if (Array.isArray(legacyVideos) && legacyVideos[0]) {
+          videoSrc = legacyVideos[0];
         }
       }
     }
