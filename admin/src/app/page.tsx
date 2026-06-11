@@ -322,6 +322,10 @@ export default async function HomePage() {
                 if (v.paused) { v.play().catch(function(){}); }
               };
               v.addEventListener('pause', keepPlaying);
+              v.addEventListener('ended', function() {
+                v.currentTime = 0;
+                v.play().catch(function(){});
+              });
               document.addEventListener('visibilitychange', function() {
                 if (!document.hidden) keepPlaying();
               });
