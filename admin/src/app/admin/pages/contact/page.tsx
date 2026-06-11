@@ -59,8 +59,32 @@ export default function ContactEditor() {
   const formEnabled = formSection?.isActive ?? true;
 
   async function saveField(sectionName: string, value: any, isToggle = false) {
-    const s = sections.find((sec) => sec.section === sectionName);
-    if (!s) return;
+    let s = sections.find((sec) => sec.section === sectionName);
+
+    // Create section if it doesn't exist yet
+    if (!s) {
+      const createRes = await fetch('/api/sections', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          page: 'contact',
+          section: sectionName,
+          content: isToggle ? null : [value],
+          isActive: isToggle ? value : true,
+          order: CONTACT_SECTIONS.indexOf(sectionName),
+        }),
+      });
+      if (!createRes.ok) {
+        console.error('Failed to create section:', sectionName);
+        return;
+      }
+      const createData = await createRes.json();
+      s = createData.section;
+      // Refresh sections so the new ID is available for future saves
+      await fetchSections();
+      if (!s) return;
+    }
+
     setSaving(true);
     const res = await fetch(`/api/sections/${s.id}`, {
       method: 'PUT',

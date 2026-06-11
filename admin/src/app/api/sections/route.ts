@@ -27,6 +27,28 @@ export async function GET(request: Request) {
   }
 }
 
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const [section] = await db.insert(siteSections)
+      .values({
+        page: body.page || 'contact',
+        section: body.section,
+        content: body.content || null,
+        images: body.images || null,
+        videos: body.videos || null,
+        links: body.links || null,
+        order: body.order ?? 0,
+        isActive: body.isActive ?? true,
+      })
+      .returning();
+    return NextResponse.json({ section });
+  } catch (err: any) {
+    console.error('Sections POST error:', err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
+
 export async function PUT(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
