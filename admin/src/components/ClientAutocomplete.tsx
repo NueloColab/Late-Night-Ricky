@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { Search, X } from 'lucide-react'
-import { clients } from '@/lib/db/schema'
 
 interface Client {
   id: number
