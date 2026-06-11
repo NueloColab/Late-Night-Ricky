@@ -33,6 +33,7 @@ if (useResend) {
   })
 }
 
+// Email credentials configured via env vars (RESEND_API_KEY, SMTP_FROM)
 const FROM_ADDRESS = process.env.SMTP_FROM || 'Late Night Ricky <samir@wearemediahive.com>'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://late-night-ricky.vercel.app'
 
