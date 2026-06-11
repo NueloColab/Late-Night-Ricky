@@ -130,7 +130,7 @@ export default function ShowreelPage() {
           {videos.length === 1 && cards.length === 0 && (
             <div className="bg-[#E3E8ED] border-2 border-[#111] flex flex-col items-center justify-center min-h-[300px] p-10 text-center">
               <h3 className="text-[clamp(24px,3vw,36px)] font-black uppercase leading-none tracking-[-1px] mb-4 text-[#111]">More coming soon</h3>
-              <p className="text-sm text-[#555] uppercase tracking-[0.5px]">Upload new showreels in the admin panel.</p>
+              <p className="text-sm text-[#555] uppercase tracking-[0.5px]">Stay tuned for more performances.</p>
             </div>
           )}
         </div>
