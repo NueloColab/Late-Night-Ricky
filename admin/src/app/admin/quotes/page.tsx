@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { Plus, Search, Filter, FileText, Send, CheckCircle, XCircle, Clock, Trash2, Eye, ArrowRight, RotateCcw, Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Plus, Search, Filter, FileText, Send, CheckCircle, XCircle, Clock, Trash2, Eye, Loader2 } from 'lucide-react'
 import Modal from '@/components/Modal'
 import QuoteForm from '@/components/QuoteForm'
 
@@ -31,6 +31,7 @@ interface Quote {
   paymentMethod: string | null
   notes: string | null
   createdAt: string
+  quoteNumber: string | null
   acceptToken: string | null
   convertedToInvoice: boolean
   invoiceId: number | null
@@ -71,6 +72,7 @@ const PAYMENT_TERMS_MAP: Record<string, string> = {
 }
 
 export default function QuotesPage() {
+  const router = useRouter()
   const [quotes, setQuotes] = useState<Quote[]>([])
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
@@ -78,13 +80,12 @@ export default function QuotesPage() {
   const [search, setSearch] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null)
-  const [isViewOpen, setIsViewOpen] = useState(false)
   const [sendingId, setSendingId] = useState<number | null>(null)
-  const [convertingId, setConvertingId] = useState<number | null>(null)
 
   useEffect(() => {
     fetchQuotes()
     fetchProjects()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter, search])
 
   async function fetchQuotes() {
@@ -129,6 +130,7 @@ export default function QuotesPage() {
     if (search) {
       const term = search.toLowerCase()
       return (
+        (q.quoteNumber && q.quoteNumber.toLowerCase().includes(term)) ||
         q.id.toString().includes(term) ||
         (q.clientName && q.clientName.toLowerCase().includes(term)) ||
         (q.projectTitle && q.projectTitle.toLowerCase().includes(term)) ||
@@ -137,22 +139,6 @@ export default function QuotesPage() {
     }
     return true
   })
-
-  async function updateQuoteStatus(id: number, status: string) {
-    try {
-      await fetch(`/api/quotes/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status }),
-      })
-      fetchQuotes()
-      if (selectedQuote && selectedQuote.id === id) {
-        setSelectedQuote({ ...selectedQuote, status })
-      }
-    } catch (err) {
-      console.error('Update failed:', err)
-    }
-  }
 
   async function sendQuote(id: number) {
     if (!confirm('Send this quote via email to the client?')) return
@@ -166,9 +152,6 @@ export default function QuotesPage() {
         alert('Quote sent successfully')
       }
       fetchQuotes()
-      if (selectedQuote && selectedQuote.id === id) {
-        setSelectedQuote({ ...selectedQuote, status: 'sent' })
-      }
     } catch (err) {
       console.error('Send failed:', err)
       alert('Failed to send quote')
@@ -177,38 +160,10 @@ export default function QuotesPage() {
     }
   }
 
-  async function convertToInvoice(id: number) {
-    if (!confirm('Convert this accepted quote to an invoice?')) return
-    setConvertingId(id)
-    try {
-      const res = await fetch(`/api/quotes/${id}/convert-to-invoice`, { method: 'POST' })
-      const data = await res.json()
-      if (!res.ok || !data.success) {
-        alert(data.error || 'Failed to convert quote')
-      } else {
-        alert(`Invoice ${data.invoiceNumber} created successfully`)
-      }
-      fetchQuotes()
-      if (selectedQuote && selectedQuote.id === id) {
-        setSelectedQuote({ ...selectedQuote, convertedToInvoice: true, invoiceId: data.invoiceId })
-      }
-    } catch (err) {
-      console.error('Convert failed:', err)
-      alert('Failed to convert quote to invoice')
-    } finally {
-      setConvertingId(null)
-    }
-  }
-
   async function deleteQuote(id: number) {
     if (!confirm('Delete this quote?')) return
     await fetch(`/api/quotes/${id}`, { method: 'DELETE' })
     fetchQuotes()
-  }
-
-  function openView(quote: Quote) {
-    setSelectedQuote(quote)
-    setIsViewOpen(true)
   }
 
   return (
@@ -339,8 +294,14 @@ export default function QuotesPage() {
                 {filteredQuotes.map((quote) => {
                   const proj = projects.find((p) => p.id === quote.projectId)
                   return (
-                    <tr key={quote.id} className="hover:bg-[#F8FAFB] transition-colors">
-                      <td className="px-4 py-3 font-semibold text-[#1B3A4C]">#{quote.id}</td>
+                    <tr
+                      key={quote.id}
+                      onClick={() => router.push(`/admin/quotes/${quote.id}`)}
+                      className="hover:bg-[#F8FAFB] transition-colors cursor-pointer"
+                    >
+                      <td className="px-4 py-3 font-semibold text-[#1B3A4C]">
+                        {quote.quoteNumber || `QT-${String(quote.id).padStart(3, '0')}`}
+                      </td>
                       <td className="px-4 py-3 text-[#5B7A8E]">
                         {quote.clientName || '—'}
                         {quote.clientCompany && (
@@ -360,9 +321,9 @@ export default function QuotesPage() {
                         {quote.paymentTermsLabel || PAYMENT_TERMS_MAP[quote.paymentTermsType || ''] || quote.paymentTermsType || 'Net 30'}
                       </td>
                       <td className="px-4 py-3">
-                        <div className="flex gap-2">
+                        <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
                           <button
-                            onClick={() => openView(quote)}
+                            onClick={() => router.push(`/admin/quotes/${quote.id}`)}
                             className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C]"
                           >
                             <Eye size={16} />
@@ -397,7 +358,7 @@ export default function QuotesPage() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={selectedQuote ? `Edit Quote #${selectedQuote.id}` : 'New Quote'}
+        title={selectedQuote ? `Edit ${selectedQuote.quoteNumber || `Quote #${selectedQuote.id}`}` : 'New Quote'}
         maxWidth="max-w-4xl"
       >
         <QuoteForm
@@ -409,173 +370,6 @@ export default function QuotesPage() {
             setIsModalOpen(false)
           }}
         />
-      </Modal>
-
-      {/* View Modal with Status Workflow */}
-      <Modal
-        isOpen={isViewOpen}
-        onClose={() => setIsViewOpen(false)}
-        title={`Quote #${selectedQuote?.id}`}
-        maxWidth="max-w-2xl"
-      >
-        {selectedQuote && (
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-[#E3E8ED] text-[#1B3A4C]">
-                {STATUS_ICONS[selectedQuote.status]}
-                {STATUS_LABELS[selectedQuote.status] || selectedQuote.status}
-              </span>
-              {selectedQuote.paymentTermsType && (
-                <span className="text-xs text-[#5B7A8E] bg-white border border-[#A3B5C4]/30 px-2 py-1 rounded">
-                  {selectedQuote.paymentTermsLabel || PAYMENT_TERMS_MAP[selectedQuote.paymentTermsType] || selectedQuote.paymentTermsType}
-                </span>
-              )}
-              {selectedQuote.paymentMethod && (
-                <span className="text-xs text-[#5B7A8E] bg-white border border-[#A3B5C4]/30 px-2 py-1 rounded capitalize">
-                  {selectedQuote.paymentMethod.replace('-', ' ')}
-                </span>
-              )}
-            </div>
-
-            {/* Client info */}
-            {(selectedQuote.clientName || selectedQuote.projectTitle) && (
-              <div className="bg-[#F8FAFB] p-4 rounded-lg border border-[#E3E8ED] space-y-1">
-                {selectedQuote.clientName && (
-                  <div className="text-sm text-[#1B3A4C] font-semibold">{selectedQuote.clientName}</div>
-                )}
-                {selectedQuote.clientCompany && (
-                  <div className="text-xs text-[#5B7A8E]">{selectedQuote.clientCompany}</div>
-                )}
-                {selectedQuote.clientEmail && (
-                  <div className="text-xs text-[#6B8FAB]">{selectedQuote.clientEmail}</div>
-                )}
-                {selectedQuote.projectTitle && (
-                  <div className="text-xs text-[#5B7A8E] pt-1 border-t border-[#E3E8ED] mt-1">{selectedQuote.projectTitle}</div>
-                )}
-              </div>
-            )}
-
-            {/* Line items table */}
-            <div className="bg-white border border-[#A3B5C4]/30 overflow-hidden">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-[#A3B5C4]/30">
-                    <th className="px-4 py-2 text-left font-semibold text-[#1B3A4C]">Service</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">Qty</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">Price</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">Amount</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#E3E8ED]">
-                  {selectedQuote.lineItems.map((item, idx) => {
-                    const isOldFormat = !!item.description
-                    const name = isOldFormat ? item.description : item.serviceName
-                    const category = item.serviceCategory
-                    const qty = isOldFormat ? item.quantity : (item.quantity || 1)
-                    const rate = isOldFormat ? item.rate : item.price
-                    const amount = isOldFormat ? item.amount : ((item.price || 0) * (item.quantity || 1))
-                    return (
-                    <tr key={idx}>
-                      <td className="px-4 py-2 text-[#1B3A4C]">
-                        <div className="font-medium">{name}</div>
-                        {category && (
-                          <div className="text-xs text-[#6B8FAB]">{category}</div>
-                        )}
-                      </td>
-                      <td className="px-4 py-2 text-right text-[#5B7A8E]">{qty}</td>
-                      <td className="px-4 py-2 text-right text-[#5B7A8E]">£{Number(rate).toLocaleString()}</td>
-                      <td className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">
-                        £{Number(amount).toLocaleString()}
-                      </td>
-                    </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="flex justify-between items-center pt-2">
-              <span className="text-[#5B7A8E] text-sm">Tax: {selectedQuote.taxRate}%</span>
-              <span className="text-xl font-black text-[#111] tracking-[-1px]">
-                Total: £{selectedQuote.total.toLocaleString()}
-              </span>
-            </div>
-
-            {/* Notes */}
-            {selectedQuote.notes && (
-              <div className="bg-[#F8FAFB] p-4 rounded-lg border border-[#E3E8ED]">
-                <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Notes</p>
-                <p className="text-sm text-[#5B7A8E] whitespace-pre-wrap">{selectedQuote.notes}</p>
-              </div>
-            )}
-
-            {/* Status Workflow Buttons */}
-            <div className="border-t border-[#A3B5C4]/30 pt-4">
-              <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Actions</p>
-              <div className="flex flex-wrap gap-2">
-                {selectedQuote.status === 'draft' && (
-                  <button
-                    onClick={() => sendQuote(selectedQuote.id)}
-                    disabled={sendingId === selectedQuote.id}
-                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#1B3A4C] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition disabled:opacity-50"
-                  >
-                    {sendingId === selectedQuote.id ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
-                    Send Quote
-                  </button>
-                )}
-                {selectedQuote.status === 'sent' && (
-                  <>
-                    <button
-                      onClick={() => updateQuoteStatus(selectedQuote.id, 'accepted')}
-                      className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#2d6a2d] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2d6a2d] hover:bg-[#2d6a2d] hover:text-white transition"
-                    >
-                      <CheckCircle size={14} />
-                      Mark Accepted
-                    </button>
-                    <button
-                      onClick={() => updateQuoteStatus(selectedQuote.id, 'declined')}
-                      className="inline-flex items-center gap-2 px-4 py-2 border-2 border-red-300 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-red-600 hover:bg-red-50 transition"
-                    >
-                      <XCircle size={14} />
-                      Mark Declined
-                    </button>
-                  </>
-                )}
-                {selectedQuote.status === 'accepted' && (
-                  <>
-                    {!selectedQuote.convertedToInvoice ? (
-                      <button
-                        onClick={() => convertToInvoice(selectedQuote.id)}
-                        disabled={convertingId === selectedQuote.id}
-                        className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#6B8FAB] hover:bg-[#6B8FAB] hover:text-white transition disabled:opacity-50"
-                      >
-                        {convertingId === selectedQuote.id ? <Loader2 size={14} className="animate-spin" /> : <ArrowRight size={14} />}
-                        Create Invoice
-                      </button>
-                    ) : (
-                      <Link
-                        href={`/admin/invoices?projectId=${selectedQuote.projectId || ''}`}
-                        className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#6B8FAB] hover:bg-[#6B8FAB] hover:text-white transition"
-                      >
-                        <ArrowRight size={14} />
-                        View Invoices
-                      </Link>
-                    )}
-                  </>
-                )}
-                {selectedQuote.status === 'declined' && (
-                  <button
-                    onClick={() => updateQuoteStatus(selectedQuote.id, 'draft')}
-                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#A3B5C4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
-                  >
-                    <RotateCcw size={14} />
-                    Reopen as Draft
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </Modal>
     </div>
   )

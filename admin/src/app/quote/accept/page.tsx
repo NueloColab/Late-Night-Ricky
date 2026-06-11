@@ -71,7 +71,7 @@ function QuoteAcceptContent() {
     )
   }
 
-  const { quoteId, clientName, projectTitle, lineItems, total, alreadyAccepted, paymentSchedule, paymentTermsLabel } = state.data
+  const { quoteId, quoteNumber, clientName, projectTitle, lineItems, total, alreadyAccepted, paymentSchedule, paymentTermsLabel } = state.data
 
   const items = Array.isArray(lineItems) ? lineItems : []
 
@@ -104,7 +104,7 @@ function QuoteAcceptContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <p className="text-xs uppercase tracking-widest text-gray-500 mb-2">Quote Number</p>
-                <p className="font-semibold text-[#0f1923]">#{quoteId}</p>
+                <p className="font-semibold text-[#0f1923]">{quoteNumber || '#' + quoteId}</p>
               </div>
               {projectTitle && (
                 <div>

@@ -157,6 +157,7 @@ export const quotes = pgTable("quotes", {
   acceptToken: text("accept_token"),
   convertedToInvoice: boolean("converted_to_invoice").default(false),
   invoiceId: integer("invoice_id"),
+  quoteNumber: text("quote_number"),
 });
 
 export const invoices = pgTable("invoices", {

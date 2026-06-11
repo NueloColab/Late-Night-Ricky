@@ -196,7 +196,7 @@ export async function sendQuoteEmail(
             <td style="padding:25px;" class="mobile-padding">
               <p style="margin:0 0 15px 0;color:#000;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;">Quote Summary</p>
               <table cellpadding="0" cellspacing="0" border="0" width="100%" class="mobile-table">
-                <tr><td style="padding:6px 0;font-size:14px;color:#666;">Quote Number:</td><td style="padding:6px 0;font-size:14px;font-weight:600;color:#000;text-align:right;">#${quote.id}</td></tr>
+                <tr><td style="padding:6px 0;font-size:14px;color:#666;">Quote Number:</td><td style="padding:6px 0;font-size:14px;font-weight:600;color:#000;text-align:right;">${quote.quoteNumber || '#' + quote.id}</td></tr>
                 <tr><td style="padding:6px 0;font-size:14px;color:#666;">Date:</td><td style="padding:6px 0;font-size:14px;font-weight:600;color:#000;text-align:right;">${createdAtStr}</td></tr>
                 <tr><td style="padding:6px 0;font-size:14px;color:#666;">Services:</td><td style="padding:6px 0;font-size:14px;font-weight:600;color:#000;text-align:right;">${serviceCount} service${serviceCount !== 1 ? 's' : ''}</td></tr>
                 <tr><td style="padding:10px 0 0 0;font-size:14px;color:#666;border-top:1px solid #e5e5e5;">Total Investment:</td><td style="padding:10px 0 0 0;font-size:20px;font-weight:700;color:#0f1923;text-align:right;border-top:1px solid #e5e5e5;" class="mobile-amount">${formatCurrency(quote.total)}</td></tr>
@@ -222,7 +222,7 @@ export async function sendQuoteEmail(
     const attachments: any[] = []
     if (pdfBuffer) {
       attachments.push({
-        filename: `LNR-Quote-${quote.id}.pdf`,
+        filename: `LNR-Quote-${quote.quoteNumber || quote.id}.pdf`,
         content: pdfBuffer,
         contentType: 'application/pdf',
       })
@@ -233,7 +233,7 @@ export async function sendQuoteEmail(
     const info = await sendEmailWithFallback({
       from: FROM_ADDRESS,
       to: recipientEmail,
-      subject: `Your Quote from Late Night Ricky - #${quote.id}`,
+      subject: `Your Quote from Late Night Ricky - ${quote.quoteNumber || '#' + quote.id}`,
       html: getEmailTemplate(content),
       attachments,
     })

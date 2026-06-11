@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { quotes } from '@/lib/db/schema';
 
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
 export async function GET() {
   try {
@@ -19,7 +19,13 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const inserted = await db.insert(quotes).values(body).returning();
+    
+    // Auto-generate quote number: count existing quotes + 1
+    const countResult = await db.select({ count: sql<number>`count(*)` }).from(quotes);
+    const count = countResult[0]?.count ?? 0;
+    const quoteNumber = `QT-${String(count + 1).padStart(3, '0')}`;
+    
+    const inserted = await db.insert(quotes).values({ ...body, quoteNumber }).returning();
     return NextResponse.json({ quote: inserted[0] });
   } catch (err) {
     console.error('Quotes POST error:', err);

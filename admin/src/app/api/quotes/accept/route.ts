@@ -70,6 +70,7 @@ export async function POST(request: Request) {
     // Auto-convert to invoice
     let invoiceId: number | undefined
     let invoiceNumber: string | undefined
+    let conversionErrorMsg: string | undefined
     try {
       invoiceNumber = await generateInvoiceNumber()
       const paymentToken = crypto.randomUUID()
@@ -122,7 +123,8 @@ export async function POST(request: Request) {
       } catch (emailError) {
         console.error('❌ Failed to send invoice email:', emailError)
       }
-    } catch (conversionError) {
+    } catch (conversionError: any) {
+      conversionErrorMsg = conversionError?.message || String(conversionError)
       console.error('❌ Failed to convert quote to invoice:', conversionError)
     }
 
@@ -130,6 +132,7 @@ export async function POST(request: Request) {
       success: true,
       alreadyAccepted: false,
       quoteId: quote.id,
+      quoteNumber: quote.quoteNumber,
       clientName: quote.clientName,
       projectTitle: quote.projectTitle,
       lineItems: quote.lineItems,
@@ -138,6 +141,7 @@ export async function POST(request: Request) {
       paymentTermsLabel: quote.paymentTermsLabel,
       invoiceId,
       invoiceNumber,
+      conversionError: conversionErrorMsg,
     })
   } catch (error) {
     console.error('Error accepting quote:', error)
