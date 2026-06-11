@@ -36,7 +36,7 @@ if (useResend) {
 const FROM_ADDRESS = process.env.SMTP_FROM || 'Late Night Ricky <samir@wearemediahive.com>'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://late-night-ricky.vercel.app'
 
-function formatCurrency(amount: number) {
+function formatCurrency(amount: number | null | undefined) {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount || 0)
 }
 
@@ -163,8 +163,8 @@ export async function sendQuoteEmail(
     clientName: string | null
     clientEmail: string | null
     projectTitle: string | null
-    lineItems: any[]
-    total: number
+    lineItems: any
+    total: number | null
     acceptToken: string | null
     createdAt?: Date | string | null
   },
@@ -252,8 +252,8 @@ export async function sendInvoiceEmail(
     clientName: string | null
     clientEmail: string | null
     projectTitle: string | null
-    lineItems: any[]
-    total: number
+    lineItems: any
+    total: number | null
     paymentToken: string | null
     paymentTermsLabel: string | null
     dueDate: string | null

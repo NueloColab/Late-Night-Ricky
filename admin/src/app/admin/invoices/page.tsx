@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Plus, Search, Filter, Receipt, Send, CheckCircle, Clock, Trash2, Eye, Download, RotateCcw, DollarSign } from 'lucide-react'
+import { Plus, Search, Filter, Receipt, Send, CheckCircle, Clock, Trash2, Eye, Download, RotateCcw, DollarSign, Loader2 } from 'lucide-react'
 import Modal from '@/components/Modal'
 import InvoiceForm from '@/components/InvoiceForm'
 
@@ -33,6 +33,7 @@ interface Invoice {
   paymentMethod: string | null
   notes: string | null
   createdAt: string
+  paymentToken: string | null
 }
 
 interface Project {
@@ -66,6 +67,7 @@ export default function InvoicesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null)
   const [isViewOpen, setIsViewOpen] = useState(false)
+  const [sendingId, setSendingId] = useState<number | null>(null)
 
   useEffect(() => {
     fetchInvoices()
@@ -143,6 +145,29 @@ export default function InvoicesPage() {
       if (data.invoice) setSelectedInvoice(data.invoice)
     } catch (err) {
       console.error('Update failed:', err)
+    }
+  }
+
+  async function sendInvoice(id: number) {
+    if (!confirm('Send this invoice via email to the client?')) return
+    setSendingId(id)
+    try {
+      const res = await fetch(`/api/invoices/${id}/send`, { method: 'POST' })
+      const data = await res.json()
+      if (!res.ok || !data.success) {
+        alert(data.error || 'Failed to send invoice')
+      } else {
+        alert('Invoice sent successfully')
+      }
+      fetchInvoices()
+      if (selectedInvoice && selectedInvoice.id === id) {
+        setSelectedInvoice({ ...selectedInvoice, status: 'sent' })
+      }
+    } catch (err) {
+      console.error('Send failed:', err)
+      alert('Failed to send invoice')
+    } finally {
+      setSendingId(null)
     }
   }
 
@@ -320,6 +345,15 @@ export default function InvoicesPage() {
                           >
                             <Eye size={16} />
                           </button>
+                          {inv.status === 'draft' && (
+                            <button
+                              onClick={() => sendInvoice(inv.id)}
+                              disabled={sendingId === inv.id}
+                              className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C] disabled:opacity-50"
+                            >
+                              {sendingId === inv.id ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+                            </button>
+                          )}
                           <a
                             href={`/api/invoices/${inv.id}/pdf`}
                             download
@@ -478,10 +512,11 @@ export default function InvoicesPage() {
               <div className="flex flex-wrap gap-2">
                 {selectedInvoice.status === 'draft' && (
                   <button
-                    onClick={() => updateInvoiceStatus(selectedInvoice.id, 'sent')}
-                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#1B3A4C] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition"
+                    onClick={() => sendInvoice(selectedInvoice.id)}
+                    disabled={sendingId === selectedInvoice.id}
+                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#1B3A4C] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition disabled:opacity-50"
                   >
-                    <Send size={14} />
+                    {sendingId === selectedInvoice.id ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
                     Send Invoice
                   </button>
                 )}
