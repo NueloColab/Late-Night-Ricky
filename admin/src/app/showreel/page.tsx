@@ -94,26 +94,15 @@ export default function ShowreelPage() {
           {videos.map((video, i) => (
             <div key={i} className="bg-white border-2 border-[#111] overflow-hidden hover:-translate-y-1.5 transition duration-400">
               <div className="relative pb-[56.25%] bg-[#111] cursor-pointer group">
-                <video key={video.src} poster={video.poster} playsInline preload="metadata" className="absolute inset-0 w-full h-full object-cover"
-                  onClick={(e) => {
-                    const v = e.currentTarget;
-                    v.play();
-                    (v.nextSibling as HTMLElement)?.classList.add('hidden');
-                  }}
-                >
-                  <source src={video.src} type="video/mp4" />
-                  <source src={video.src.replace('.mp4', '.webm')} type="video/webm" />
-                </video>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/90 flex items-center justify-center z-[2] group-hover:bg-white group-hover:scale-110 transition"
-                  onClick={(e) => {
-                    const btn = e.currentTarget;
-                    const vid = btn.previousSibling as HTMLVideoElement;
-                    vid?.play();
-                    btn.classList.add('hidden');
-                  }}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#111"><path d="M8 5v14l11-7z"/></svg>
-                </div>
+                <video
+                  key={video.src}
+                  src={video.src}
+                  poster={video.poster}
+                  playsInline
+                  preload="metadata"
+                  controls
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
               </div>
               <div className="p-8">
                 <h3 className="text-[clamp(24px,3vw,36px)] font-black uppercase leading-none tracking-[-1px] mb-3 text-[#111]">{video.title}</h3>
