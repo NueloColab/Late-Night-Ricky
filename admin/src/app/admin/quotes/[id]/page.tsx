@@ -22,6 +22,7 @@ import {
 } from 'lucide-react'
 import Modal from '@/components/Modal'
 import QuoteForm from '@/components/QuoteForm'
+import { showToast } from '@/components/Toast'
 
 interface LineItem {
   serviceName?: string
@@ -117,13 +118,13 @@ export default function QuoteDetailPage() {
       const res = await fetch(`/api/quotes/${quote.id}/send`, { method: 'POST' })
       const data = await res.json()
       if (res.ok && data.success) {
-        alert('Quote sent successfully')
+        showToast('success', 'Quote sent successfully')
         fetchQuote()
       } else {
-        alert(data.error || 'Failed to send quote')
+        showToast('error', data.error || 'Failed to send quote')
       }
     } catch {
-      alert('An error occurred while sending the quote')
+      showToast('error', 'An error occurred while sending the quote')
     } finally {
       setSendingEmail(false)
     }
@@ -144,7 +145,7 @@ export default function QuoteDetailPage() {
       window.URL.revokeObjectURL(url)
       document.body.removeChild(a)
     } catch {
-      alert('Failed to download PDF')
+      showToast('error', 'Failed to download PDF')
     }
   }
 
@@ -159,11 +160,12 @@ export default function QuoteDetailPage() {
       })
       if (res.ok) {
         fetchQuote()
+        showToast('success', 'Quote status updated')
       } else {
-        alert('Failed to update quote status')
+        showToast('error', 'Failed to update quote status')
       }
     } catch {
-      alert('An error occurred while updating the status')
+      showToast('error', 'An error occurred while updating the status')
     } finally {
       setUpdatingStatus(false)
     }
@@ -176,13 +178,13 @@ export default function QuoteDetailPage() {
       const res = await fetch(`/api/quotes/${quote.id}/convert-to-invoice`, { method: 'POST' })
       const data = await res.json()
       if (res.ok && data.success) {
-        alert(`Invoice ${data.invoiceNumber} created successfully`)
+        showToast('success', `Invoice ${data.invoiceNumber} created successfully`)
         router.push(`/admin/invoices/${data.invoiceId}`)
       } else {
-        alert(data.error || 'Failed to convert to invoice')
+        showToast('error', data.error || 'Failed to convert to invoice')
       }
     } catch {
-      alert('Failed to convert quote to invoice')
+      showToast('error', 'Failed to convert quote to invoice')
     }
   }
 
@@ -193,7 +195,7 @@ export default function QuoteDetailPage() {
       await fetch(`/api/quotes/${quote.id}`, { method: 'DELETE' })
       router.push('/admin/quotes')
     } catch {
-      alert('Failed to delete quote')
+      showToast('error', 'Failed to delete quote')
     }
   }
 
@@ -202,7 +204,7 @@ export default function QuoteDetailPage() {
     const url = `${window.location.origin}/quote/accept?token=${quote.acceptToken}`
     navigator.clipboard.writeText(url)
     setCopiedLink(true)
-    alert('Accept link copied to clipboard')
+    showToast('success', 'Accept link copied to clipboard')
     setTimeout(() => setCopiedLink(false), 2000)
   }
 
