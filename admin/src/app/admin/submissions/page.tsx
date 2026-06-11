@@ -175,10 +175,10 @@ export default function SubmissionsPage() {
           <button
             key={status}
             onClick={() => setFilter(status)}
-            className={`px-3 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] transition-all border ${
+            className={`px-2 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[1px] transition-all border ${
               filter === status
                 ? 'bg-[#1B3A4C] text-white border-[#1B3A4C]'
-                : 'bg-white text-[#6B8FAB] border-[#A3B5C4]/40 hover:border-[#1B3A4C] hover:text-[#1B3A4C]'
+                : 'bg-white text-[#6B8FAB] border-[#A3B5C4]/30 hover:border-[#1B3A4C] hover:text-[#1B3A4C]'
             }`}
           >
             {status === 'all' ? 'All' : statusLabels[status]}
@@ -192,7 +192,7 @@ export default function SubmissionsPage() {
       ) : submissions.length === 0 ? (
         <div className="text-center py-20 text-[#6B8FAB]">No submissions found.</div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {submissions.map((s) => {
             const isExpanded = expandedId === s.id
             const isPlaying = playingId === s.id
@@ -208,7 +208,7 @@ export default function SubmissionsPage() {
                 {/* Collapsed Row */}
                 <div
                   onClick={() => toggleExpand(s.id)}
-                  className="flex items-center gap-4 px-6 py-4 cursor-pointer"
+                  className="flex items-center gap-3 px-5 py-3 cursor-pointer"
                 >
                   {/* Play Button */}
                   <button
@@ -295,7 +295,7 @@ export default function SubmissionsPage() {
 
                 {/* Expanded Detail */}
                 {isExpanded && (
-                  <div className="border-t border-[#E3E8ED] px-6 py-6">
+                  <div className="border-t border-[#E3E8ED] px-5 py-4">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {/* Left: Audio Player */}
                       <div className="space-y-4">
@@ -347,7 +347,7 @@ export default function SubmissionsPage() {
                             </div>
                           </>
                         ) : (
-                          <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
+                          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center">
                             <Music size={32} className="mx-auto text-gray-300 mb-3" />
                             <p className="text-sm text-gray-400">No audio file attached</p>
                           </div>
@@ -355,10 +355,10 @@ export default function SubmissionsPage() {
                       </div>
 
                       {/* Right: Details & Notes */}
-                      <div className="space-y-4">
+                      <div className="space-y-3">
                         {/* Status */}
-                        <div className="bg-white border border-[#E3E8ED] p-4">
-                          <p className="text-xs text-[#5B7A8E] uppercase tracking-widest mb-3">Update Status</p>
+                        <div className="bg-white border border-[#E3E8ED] p-3">
+                          <p className="text-xs text-[#5B7A8E] uppercase tracking-widest mb-2">Update Status</p>
                           <div className="flex flex-wrap gap-2">
                             {Object.entries(statusLabels).map(([value, label]) => {
                               const sStyle = statusStyles[value]
@@ -381,21 +381,21 @@ export default function SubmissionsPage() {
                         </div>
 
                         {/* Notes */}
-                        <div className="bg-white border border-[#E3E8ED] p-4">
-                          <p className="text-xs text-[#5B7A8E] uppercase tracking-widest mb-3">Notes</p>
+                        <div className="bg-white border border-[#E3E8ED] p-3">
+                          <p className="text-xs text-[#5B7A8E] uppercase tracking-widest mb-2">Notes</p>
                           <textarea
                             value={s.notes || ''}
                             onChange={(e) => updateNotes(s.id, e.target.value)}
                             placeholder="Add your review notes, feedback, or thoughts on this track..."
-                            rows={5}
-                            className="w-full px-4 py-3 bg-[#F8FAFB] border border-[#E3E8ED] text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-none"
+                            rows={3}
+                            className="w-full px-3 py-2 bg-[#F8FAFB] border border-[#E3E8ED] text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-none"
                           />
                         </div>
 
                         {/* Metadata */}
-                        <div className="bg-[#F8FAFB] border border-[#E3E8ED] p-4">
-                          <p className="text-xs text-[#5B7A8E] uppercase tracking-widest mb-3">Submission Details</p>
-                          <div className="space-y-2 text-sm">
+                        <div className="bg-[#F8FAFB] border border-[#E3E8ED] p-3">
+                          <p className="text-xs text-[#5B7A8E] uppercase tracking-widest mb-2">Submission Details</p>
+                          <div className="space-y-1.5 text-sm">
                             <div className="flex justify-between">
                               <span className="text-[#6B8FAB]">Submitted by</span>
                               <span className="text-[#111]">{s.email}</span>
