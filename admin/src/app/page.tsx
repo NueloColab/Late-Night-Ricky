@@ -299,15 +299,14 @@ export default async function HomePage() {
         </div>
         <video
           className="absolute top-0 left-0 w-full h-full object-cover"
+          src={videoSrc}
           poster={videoPoster}
           playsInline
           autoPlay
           muted
           loop
           preload="metadata"
-        >
-          <source src={videoSrc} type="video/mp4" />
-        </video>
+        />
       </section>
 
       {/* Reach */}
