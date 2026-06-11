@@ -141,13 +141,14 @@ export default async function HomePage() {
   let carouselImagesList: { imagePath: string | null; alt: string }[] = [];
 
   try {
-    const [dbCards, dbNames, dbVenues, dbTracks, dbSections, dbCarousel] = await Promise.all([
+    const [dbCards, dbNames, dbVenues, dbTracks, dbSections, dbCarousel, dbShowreelSections] = await Promise.all([
       getShowCards(),
       getClientNames(),
       getVenueTicker(),
       getTracks(),
       getSiteSections('home'),
       getCarouselImages(),
+      getSiteSections('showreel'),
     ]);
 
     if (dbSections.length > 0) {
@@ -168,6 +169,17 @@ export default async function HomePage() {
         if (c.poster) videoPoster = c.poster;
         if (c.src) videoSrc = c.src;
       }
+    }
+
+    // Use showreel video for homepage hero if available
+    if (dbShowreelSections && dbShowreelSections.length > 0) {
+      const showreelVideoSection = dbShowreelSections.find((s: any) => s.section === 'video');
+      if (showreelVideoSection?.videos?.[0]) {
+        videoSrc = showreelVideoSection.videos[0];
+      }
+    }
+
+    if (dbSections.length > 0) {
       const reachSection = dbSections.find((s: any) => s.section === 'reach');
       if (reachSection?.content) {
         const c = typeof reachSection.content === 'string' ? JSON.parse(reachSection.content) : reachSection.content;
