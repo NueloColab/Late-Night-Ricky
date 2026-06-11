@@ -7,11 +7,9 @@ import {
   Receipt,
   Users,
   Mail,
-  Music,
   AlertCircle,
   TrendingUp,
   ArrowRight,
-  Plus,
   Clock,
 } from 'lucide-react'
 
