@@ -167,6 +167,7 @@ export async function sendQuoteEmail(
     lineItems: any
     total: number | null
     acceptToken: string | null
+    quoteNumber?: string | null
     createdAt?: Date | string | null
   },
   recipientEmail: string,
