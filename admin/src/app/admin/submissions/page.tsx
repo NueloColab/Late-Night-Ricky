@@ -205,7 +205,7 @@ export default function SubmissionsPage() {
                   isExpanded ? 'border-[#1B3A4C]' : 'border-[#A3B5C4]/30 hover:border-[#A3B5C4]'
                 }`}
               >
-                {/* Collapsed Row */}
+                {/* Collapsed Row — Single Line */}
                 <div
                   onClick={() => toggleExpand(s.id)}
                   className="flex items-center gap-3 px-5 py-3 cursor-pointer"
@@ -217,7 +217,7 @@ export default function SubmissionsPage() {
                       togglePlay(s)
                     }}
                     disabled={!s.filePath}
-                    className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+                    className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                       isPlaying
                         ? 'bg-[#1B3A4C] text-white'
                         : s.filePath
@@ -225,42 +225,38 @@ export default function SubmissionsPage() {
                         : 'bg-gray-100 text-gray-300 cursor-not-allowed'
                     }`}
                   >
-                    {isPlaying ? <Pause size={18} /> : <Play size={18} />}
+                    {isPlaying ? <Pause size={16} /> : <Play size={16} />}
                   </button>
 
-                  {/* Info */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-1">
-                      <span className="text-sm font-semibold text-[#1B3A4C] truncate">
-                        {s.trackTitle || 'Untitled Track'}
+                  {/* Info — All Inline */}
+                  <div className="flex-1 min-w-0 flex items-center gap-3">
+                    <span className="text-sm font-semibold text-[#1B3A4C] truncate">
+                      {s.trackTitle || 'Untitled Track'}
+                    </span>
+                    <span
+                      className="text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider flex-shrink-0"
+                      style={{
+                        backgroundColor: style.bg,
+                        color: style.text,
+                        border: `1px solid ${style.border}`,
+                      }}
+                    >
+                      {statusLabels[s.status]}
+                    </span>
+                    <span className="hidden md:flex items-center gap-1 text-xs text-[#6B8FAB]">
+                      <User size={11} /> {s.artistName || 'Unknown Artist'}
+                    </span>
+                    <span className="hidden md:flex items-center gap-1 text-xs text-[#6B8FAB]">
+                      <Mail size={11} /> {s.email}
+                    </span>
+                    <span className="hidden lg:flex items-center gap-1 text-xs text-[#6B8FAB]">
+                      <Calendar size={11} /> {formatDate(s.createdAt)}
+                    </span>
+                    {s.fileSize && (
+                      <span className="hidden lg:flex items-center gap-1 text-xs text-[#6B8FAB]">
+                        <FileAudio size={11} /> {formatSize(s.fileSize)}
                       </span>
-                      <span
-                        className="text-[10px] px-2.5 py-0.5 rounded-full font-semibold uppercase tracking-wider"
-                        style={{
-                          backgroundColor: style.bg,
-                          color: style.text,
-                          border: `1px solid ${style.border}`,
-                        }}
-                      >
-                        {statusLabels[s.status]}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-4 text-xs text-[#6B8FAB]">
-                      <span className="flex items-center gap-1">
-                        <User size={12} /> {s.artistName || 'Unknown Artist'}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Mail size={12} /> {s.email}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Calendar size={12} /> {formatDate(s.createdAt)}
-                      </span>
-                      {s.fileSize && (
-                        <span className="flex items-center gap-1">
-                          <FileAudio size={12} /> {formatSize(s.fileSize)}
-                        </span>
-                      )}
-                    </div>
+                    )}
                   </div>
 
                   {/* Actions */}
@@ -270,10 +266,10 @@ export default function SubmissionsPage() {
                         href={s.filePath}
                         download={s.fileName || `${s.artistName || 'track'} - ${s.trackTitle || 'demo'}.mp3`}
                         onClick={(e) => e.stopPropagation()}
-                        className="w-10 h-10 rounded-full border border-[#A3B5C4]/40 flex items-center justify-center text-[#6B8FAB] hover:bg-[#1B3A4C] hover:text-white hover:border-[#1B3A4C] transition"
+                        className="w-9 h-9 rounded-full border border-[#A3B5C4]/40 flex items-center justify-center text-[#6B8FAB] hover:bg-[#1B3A4C] hover:text-white hover:border-[#1B3A4C] transition"
                         title="Download"
                       >
-                        <Download size={16} />
+                        <Download size={14} />
                       </a>
                     )}
                     <button
