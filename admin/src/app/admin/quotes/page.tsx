@@ -39,11 +39,6 @@ interface Project {
   clientId: number | null
 }
 
-interface Client {
-  id: number
-  name: string
-}
-
 const STATUS_OPTIONS = ['all', 'draft', 'sent', 'accepted', 'declined']
 
 const STATUS_LABELS: Record<string, string> = {
@@ -75,7 +70,6 @@ const PAYMENT_TERMS_MAP: Record<string, string> = {
 export default function QuotesPage() {
   const [quotes, setQuotes] = useState<Quote[]>([])
   const [projects, setProjects] = useState<Project[]>([])
-  const [clients, setClients] = useState<Client[]>([])
   const [loading, setLoading] = useState(true)
   const [statusFilter, setStatusFilter] = useState('all')
   const [search, setSearch] = useState('')
@@ -86,7 +80,6 @@ export default function QuotesPage() {
   useEffect(() => {
     fetchQuotes()
     fetchProjects()
-    fetchClients()
   }, [statusFilter, search])
 
   async function fetchQuotes() {
@@ -115,22 +108,6 @@ export default function QuotesPage() {
     } catch (err) {
       console.error('Failed to fetch projects:', err)
     }
-  }
-
-  async function fetchClients() {
-    try {
-      const res = await fetch('/api/clients')
-      const data = await res.json()
-      setClients(data.clients || [])
-    } catch (err) {
-      console.error('Failed to fetch clients:', err)
-    }
-  }
-
-  function getClientName(clientId: number | null): string {
-    if (!clientId) return ''
-    const client = clients.find((c) => c.id === clientId)
-    return client ? client.name : ''
   }
 
   const stats = {

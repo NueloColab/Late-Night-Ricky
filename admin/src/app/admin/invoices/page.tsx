@@ -57,18 +57,6 @@ const STATUS_ICONS: Record<string, React.ReactNode> = {
   overdue: <Clock size={14} />,
 }
 
-const PAYMENT_TERMS_MAP: Record<string, string> = {
-  'due-on-receipt': 'Due on Receipt',
-  'net-7': 'Net 7',
-  'net-14': 'Net 14',
-  'net-30': 'Net 30',
-  'net-60': 'Net 60',
-  '50-50': '50/50 Split',
-  '25-50-25': '25/50/25',
-  'dev-standard': 'Dev Standard',
-  'custom': 'Custom',
-}
-
 export default function InvoicesPage() {
   const [invoices, setInvoices] = useState<Invoice[]>([])
   const [projects, setProjects] = useState<Project[]>([])

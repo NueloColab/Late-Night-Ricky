@@ -50,7 +50,7 @@ export default function AboutEditor() {
   const introSection = sections.find((s) => s.section === 'intro');
   const content = introSection?.content || {};
 
-  const [form, setForm] = useState(EMPTY_CONTENT);
+  const [form, setForm] = useState<Record<string, string>>(EMPTY_CONTENT);
 
   useEffect(() => {
     setForm({
