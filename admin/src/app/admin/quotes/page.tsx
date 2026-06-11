@@ -4,16 +4,32 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Plus, Search, Filter, FileText, Send, CheckCircle, XCircle, Clock, Trash2, Eye, ArrowRight, RotateCcw } from 'lucide-react'
 import Modal from '@/components/Modal'
+import QuoteForm from '@/components/QuoteForm'
 
 interface Quote {
   id: number
   projectId: number | null
-  lineItems: { description: string; quantity: number; rate: number; amount: number }[]
+  clientName: string | null
+  clientEmail: string | null
+  clientCompany: string | null
+  projectTitle: string | null
+  lineItems: { 
+    serviceName?: string
+    serviceCategory?: string
+    price?: number
+    quantity?: number
+    description?: string
+    rate?: number
+    amount?: number
+  }[]
   subtotal: number
   taxRate: number
   total: number
   status: string
-  paymentTerms: string | null
+  paymentTermsType: string | null
+  paymentTermsLabel: string | null
+  paymentMethod: string | null
+  notes: string | null
   createdAt: string
 }
 
@@ -44,11 +60,16 @@ const STATUS_ICONS: Record<string, React.ReactNode> = {
   declined: <XCircle size={14} />,
 }
 
-const PAYMENT_TERMS: Record<string, string> = {
+const PAYMENT_TERMS_MAP: Record<string, string> = {
   'due-on-receipt': 'Due on Receipt',
-  'net-15': 'Net 15',
+  'net-7': 'Net 7',
+  'net-14': 'Net 14',
   'net-30': 'Net 30',
   'net-60': 'Net 60',
+  '50-50': '50/50 Split',
+  '25-50-25': '25/50/25',
+  'dev-standard': 'Dev Standard',
+  'custom': 'Custom',
 }
 
 export default function QuotesPage() {
@@ -61,12 +82,6 @@ export default function QuotesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null)
   const [isViewOpen, setIsViewOpen] = useState(false)
-
-  // Form state
-  const [items, setItems] = useState([{ description: '', quantity: 1, rate: 0 }])
-  const [projectId, setProjectId] = useState<number | null>(null)
-  const [taxRate, setTaxRate] = useState(20)
-  const [paymentTerms, setPaymentTerms] = useState('net-30')
 
   useEffect(() => {
     fetchQuotes()
@@ -114,7 +129,7 @@ export default function QuotesPage() {
 
   function getClientName(clientId: number | null): string {
     if (!clientId) return ''
-    const client = clients.find(c => c.id === clientId)
+    const client = clients.find((c) => c.id === clientId)
     return client ? client.name : ''
   }
 
@@ -133,47 +148,13 @@ export default function QuotesPage() {
       const term = search.toLowerCase()
       return (
         q.id.toString().includes(term) ||
-        (q.lineItems.some((i) => i.description.toLowerCase().includes(term)))
+        (q.clientName && q.clientName.toLowerCase().includes(term)) ||
+        (q.projectTitle && q.projectTitle.toLowerCase().includes(term)) ||
+        q.lineItems.some((i) => (i.serviceName || i.description || '').toLowerCase().includes(term))
       )
     }
     return true
   })
-
-  async function saveQuote(e: React.FormEvent) {
-    e.preventDefault()
-    const lineItems = items.map((i) => ({
-      description: i.description,
-      quantity: Number(i.quantity),
-      rate: Number(i.rate),
-      amount: Number(i.quantity) * Number(i.rate),
-    }))
-    const subtotal = lineItems.reduce((s, i) => s + i.amount, 0)
-    const tax = subtotal * (taxRate / 100)
-
-    try {
-      await fetch('/api/quotes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          lineItems,
-          subtotal,
-          taxRate,
-          total: subtotal + tax,
-          status: 'draft',
-          paymentTerms,
-          projectId: projectId || undefined,
-        }),
-      })
-      setItems([{ description: '', quantity: 1, rate: 0 }])
-      setProjectId(null)
-      setTaxRate(20)
-      setPaymentTerms('net-30')
-      setIsModalOpen(false)
-      fetchQuotes()
-    } catch (err) {
-      console.error('Save failed:', err)
-    }
-  }
 
   async function updateQuoteStatus(id: number, status: string) {
     try {
@@ -183,7 +164,6 @@ export default function QuotesPage() {
         body: JSON.stringify({ status }),
       })
       fetchQuotes()
-      // Also update the selected quote if viewing
       if (selectedQuote && selectedQuote.id === id) {
         setSelectedQuote({ ...selectedQuote, status })
       }
@@ -197,24 +177,6 @@ export default function QuotesPage() {
     await fetch(`/api/quotes/${id}`, { method: 'DELETE' })
     fetchQuotes()
   }
-
-  function addItem() {
-    setItems([...items, { description: '', quantity: 1, rate: 0 }])
-  }
-
-  function updateItem(idx: number, field: string, value: string | number) {
-    const updated = [...items]
-    updated[idx] = { ...updated[idx], [field]: value }
-    setItems(updated)
-  }
-
-  function removeItem(idx: number) {
-    setItems(items.filter((_, i) => i !== idx))
-  }
-
-  const subtotal = items.reduce((s, i) => s + Number(i.quantity) * Number(i.rate), 0)
-  const tax = subtotal * (taxRate / 100)
-  const total = subtotal + tax
 
   function openView(quote: Quote) {
     setSelectedQuote(quote)
@@ -234,10 +196,6 @@ export default function QuotesPage() {
           <button
             onClick={() => {
               setSelectedQuote(null)
-              setItems([{ description: '', quantity: 1, rate: 0 }])
-              setProjectId(null)
-              setTaxRate(20)
-              setPaymentTerms('net-30')
               setIsModalOpen(true)
             }}
             className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition"
@@ -276,7 +234,11 @@ export default function QuotesPage() {
             <div className="p-2 bg-[#6B8FAB] text-white rounded-lg"><Clock size={16} /></div>
           </div>
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#6B8FAB] leading-none tracking-[-1px]">
-            {loading ? '–' : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(stats.totalValue)}
+            {loading
+              ? '–'
+              : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
+                  stats.totalValue
+                )}
           </p>
           <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Value</p>
         </div>
@@ -293,7 +255,7 @@ export default function QuotesPage() {
               </div>
               <input
                 type="text"
-                placeholder="Search by description or ID..."
+                placeholder="Search by client, project, or service..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#A3B5C4]/30 text-[#1B3A4C] placeholder-[#A3B5C4] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors rounded-lg"
@@ -335,21 +297,29 @@ export default function QuotesPage() {
             <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-[#A3B5C4]/30">
-                  {['Quote #', 'Project', 'Status', 'Items', 'Total', 'Terms', 'Actions'].map((h) => (
-                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#6B8FAB]">{h}</th>
+                  {['Quote #', 'Client', 'Project', 'Status', 'Items', 'Total', 'Terms', 'Actions'].map((h) => (
+                    <th
+                      key={h}
+                      className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#6B8FAB]"
+                    >
+                      {h}
+                    </th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E3E8ED]">
                 {filteredQuotes.map((quote) => {
-                  const proj = projects.find(p => p.id === quote.projectId)
-                  const clientName = proj?.clientId ? getClientName(proj.clientId) : ''
+                  const proj = projects.find((p) => p.id === quote.projectId)
                   return (
                     <tr key={quote.id} className="hover:bg-[#F8FAFB] transition-colors">
                       <td className="px-4 py-3 font-semibold text-[#1B3A4C]">#{quote.id}</td>
                       <td className="px-4 py-3 text-[#5B7A8E]">
-                        {proj ? (clientName ? `${proj.title} — ${clientName}` : proj.title) : '—'}
+                        {quote.clientName || '—'}
+                        {quote.clientCompany && (
+                          <div className="text-xs text-[#A3B5C4]">{quote.clientCompany}</div>
+                        )}
                       </td>
+                      <td className="px-4 py-3 text-[#5B7A8E]">{quote.projectTitle || proj?.title || '—'}</td>
                       <td className="px-4 py-3">
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-[#E3E8ED] text-[#1B3A4C]">
                           {STATUS_ICONS[quote.status] || <Clock size={14} />}
@@ -358,7 +328,9 @@ export default function QuotesPage() {
                       </td>
                       <td className="px-4 py-3 text-[#5B7A8E]">{quote.lineItems.length} items</td>
                       <td className="px-4 py-3 text-[#1B3A4C] font-semibold">£{quote.total.toLocaleString()}</td>
-                      <td className="px-4 py-3 text-[#5B7A8E] text-xs">{PAYMENT_TERMS[quote.paymentTerms || 'net-30'] || quote.paymentTerms || 'Net 30'}</td>
+                      <td className="px-4 py-3 text-[#5B7A8E] text-xs">
+                        {quote.paymentTermsLabel || PAYMENT_TERMS_MAP[quote.paymentTermsType || ''] || quote.paymentTermsType || 'Net 30'}
+                      </td>
                       <td className="px-4 py-3">
                         <div className="flex gap-2">
                           <button
@@ -384,135 +356,22 @@ export default function QuotesPage() {
         </div>
       )}
 
-      {/* Create Modal */}
+      {/* Create/Edit Modal */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="New Quote"
+        title={selectedQuote ? `Edit Quote #${selectedQuote.id}` : 'New Quote'}
         maxWidth="max-w-4xl"
       >
-        <form onSubmit={saveQuote} className="space-y-6">
-          {/* Project Link */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Project (Optional)</label>
-              <select
-                value={projectId ?? ''}
-                onChange={(e) => setProjectId(e.target.value ? Number(e.target.value) : null)}
-                className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
-              >
-                <option value="">No project</option>
-                {projects.map((p) => {
-                  const cn = p.clientId ? getClientName(p.clientId) : ''
-                  return (
-                    <option key={p.id} value={p.id}>{cn ? `${p.title} — ${cn}` : p.title}</option>
-                  )
-                })}
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Payment Terms</label>
-              <select
-                value={paymentTerms}
-                onChange={(e) => setPaymentTerms(e.target.value)}
-                className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
-              >
-                {Object.entries(PAYMENT_TERMS).map(([value, label]) => (
-                  <option key={value} value={value}>{label}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Tax Rate */}
-          <div>
-            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Tax Rate (%)</label>
-            <input
-              type="number"
-              value={taxRate}
-              onChange={(e) => setTaxRate(Number(e.target.value))}
-              className="w-24 px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
-            />
-          </div>
-
-          {/* Line Items */}
-          <div className="space-y-3">
-            <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Line Items</p>
-            {items.map((item, idx) => (
-              <div key={idx} className="flex gap-3 items-start">
-                <div className="flex-1">
-                  <input
-                    placeholder="Description"
-                    value={item.description}
-                    onChange={(e) => updateItem(idx, 'description', e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
-                  />
-                </div>
-                <div className="w-20">
-                  <input
-                    type="number"
-                    placeholder="Qty"
-                    value={item.quantity}
-                    onChange={(e) => updateItem(idx, 'quantity', e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] text-center"
-                  />
-                </div>
-                <div className="w-28">
-                  <input
-                    type="number"
-                    placeholder="Rate £"
-                    value={item.rate}
-                    onChange={(e) => updateItem(idx, 'rate', e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
-                  />
-                </div>
-                <div className="w-20 text-sm text-[#5B7A8E] pt-2.5 text-right">
-                  £{(Number(item.quantity) * Number(item.rate)).toLocaleString()}
-                </div>
-                <button
-                  type="button"
-                  onClick={() => removeItem(idx)}
-                  className="text-[#A3B5C4] hover:text-red-500 text-sm pt-2.5 px-2"
-                >
-                  ×
-                </button>
-              </div>
-            ))}
-          </div>
-
-          <button
-            type="button"
-            onClick={addItem}
-            className="text-sm text-[#1B3A4C] hover:underline underline-offset-2 font-semibold"
-          >
-            + Add line item
-          </button>
-
-          {/* Totals */}
-          <div className="border-t border-[#A3B5C4]/30 pt-4 space-y-1">
-            <div className="flex justify-between text-sm">
-              <span className="text-[#5B7A8E]">Subtotal</span>
-              <span className="text-[#1B3A4C] font-semibold">£{subtotal.toLocaleString()}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-[#5B7A8E]">Tax ({taxRate}%)</span>
-              <span className="text-[#1B3A4C] font-semibold">£{tax.toLocaleString()}</span>
-            </div>
-            <div className="flex justify-between text-lg font-semibold pt-2 border-t border-[#A3B5C4]/30">
-              <span className="text-[#111]">Total</span>
-              <span className="text-[#111]">£{total.toLocaleString()}</span>
-            </div>
-          </div>
-
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition"
-            >
-              Save Quote
-            </button>
-          </div>
-        </form>
+        <QuoteForm
+          quote={selectedQuote}
+          projects={projects}
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={() => {
+            fetchQuotes()
+            setIsModalOpen(false)
+          }}
+        />
       </Modal>
 
       {/* View Modal with Status Workflow */}
@@ -529,33 +388,71 @@ export default function QuotesPage() {
                 {STATUS_ICONS[selectedQuote.status]}
                 {STATUS_LABELS[selectedQuote.status] || selectedQuote.status}
               </span>
-              {selectedQuote.paymentTerms && (
+              {selectedQuote.paymentTermsType && (
                 <span className="text-xs text-[#5B7A8E] bg-white border border-[#A3B5C4]/30 px-2 py-1 rounded">
-                  {PAYMENT_TERMS[selectedQuote.paymentTerms] || selectedQuote.paymentTerms}
+                  {selectedQuote.paymentTermsLabel || PAYMENT_TERMS_MAP[selectedQuote.paymentTermsType] || selectedQuote.paymentTermsType}
+                </span>
+              )}
+              {selectedQuote.paymentMethod && (
+                <span className="text-xs text-[#5B7A8E] bg-white border border-[#A3B5C4]/30 px-2 py-1 rounded capitalize">
+                  {selectedQuote.paymentMethod.replace('-', ' ')}
                 </span>
               )}
             </div>
+
+            {/* Client info */}
+            {(selectedQuote.clientName || selectedQuote.projectTitle) && (
+              <div className="bg-[#F8FAFB] p-4 rounded-lg border border-[#E3E8ED] space-y-1">
+                {selectedQuote.clientName && (
+                  <div className="text-sm text-[#1B3A4C] font-semibold">{selectedQuote.clientName}</div>
+                )}
+                {selectedQuote.clientCompany && (
+                  <div className="text-xs text-[#5B7A8E]">{selectedQuote.clientCompany}</div>
+                )}
+                {selectedQuote.clientEmail && (
+                  <div className="text-xs text-[#6B8FAB]">{selectedQuote.clientEmail}</div>
+                )}
+                {selectedQuote.projectTitle && (
+                  <div className="text-xs text-[#5B7A8E] pt-1 border-t border-[#E3E8ED] mt-1">{selectedQuote.projectTitle}</div>
+                )}
+              </div>
+            )}
 
             {/* Line items table */}
             <div className="bg-white border border-[#A3B5C4]/30 overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-[#A3B5C4]/30">
-                    <th className="px-4 py-2 text-left font-semibold text-[#1B3A4C]">Description</th>
+                    <th className="px-4 py-2 text-left font-semibold text-[#1B3A4C]">Service</th>
                     <th className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">Qty</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">Rate</th>
+                    <th className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">Price</th>
                     <th className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">Amount</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#E3E8ED]">
-                  {selectedQuote.lineItems.map((item, idx) => (
+                  {selectedQuote.lineItems.map((item, idx) => {
+                    const isOldFormat = !!item.description
+                    const name = isOldFormat ? item.description : item.serviceName
+                    const category = item.serviceCategory
+                    const qty = isOldFormat ? item.quantity : (item.quantity || 1)
+                    const rate = isOldFormat ? item.rate : item.price
+                    const amount = isOldFormat ? item.amount : ((item.price || 0) * (item.quantity || 1))
+                    return (
                     <tr key={idx}>
-                      <td className="px-4 py-2 text-[#1B3A4C]">{item.description}</td>
-                      <td className="px-4 py-2 text-right text-[#5B7A8E]">{item.quantity}</td>
-                      <td className="px-4 py-2 text-right text-[#5B7A8E]">£{item.rate.toLocaleString()}</td>
-                      <td className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">£{item.amount.toLocaleString()}</td>
+                      <td className="px-4 py-2 text-[#1B3A4C]">
+                        <div className="font-medium">{name}</div>
+                        {category && (
+                          <div className="text-xs text-[#6B8FAB]">{category}</div>
+                        )}
+                      </td>
+                      <td className="px-4 py-2 text-right text-[#5B7A8E]">{qty}</td>
+                      <td className="px-4 py-2 text-right text-[#5B7A8E]">£{Number(rate).toLocaleString()}</td>
+                      <td className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">
+                        £{Number(amount).toLocaleString()}
+                      </td>
                     </tr>
-                  ))}
+                    )
+                  })}
                 </tbody>
               </table>
             </div>
@@ -566,6 +463,14 @@ export default function QuotesPage() {
                 Total: £{selectedQuote.total.toLocaleString()}
               </span>
             </div>
+
+            {/* Notes */}
+            {selectedQuote.notes && (
+              <div className="bg-[#F8FAFB] p-4 rounded-lg border border-[#E3E8ED]">
+                <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Notes</p>
+                <p className="text-sm text-[#5B7A8E] whitespace-pre-wrap">{selectedQuote.notes}</p>
+              </div>
+            )}
 
             {/* Status Workflow Buttons */}
             <div className="border-t border-[#A3B5C4]/30 pt-4">
