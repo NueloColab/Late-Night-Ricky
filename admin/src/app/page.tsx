@@ -358,7 +358,7 @@ export default async function HomePage() {
       </section>
 
       {/* Shows */}
-      <section id="shows" className="relative z-10 bg-white pt-28 pb-10">
+      <section id="shows" className="relative z-10 bg-white pt-36 md:pt-28 pb-10">
         <div className="max-w-[1200px] mx-auto px-6">
           <h2 className="reveal text-[clamp(36px,5.5vw,64px)] font-black text-center mb-5 text-[#111] tracking-[-2px] uppercase leading-[0.95]">
             RECENT SHOWS &amp; STORIES
@@ -380,7 +380,7 @@ export default async function HomePage() {
                     </h4>
                     <span className="text-xs tracking-[3px] uppercase text-white/85 font-semibold">{show.location}</span>
                   </div>
-                  <div className="absolute bottom-[30px] right-[30px] z-[3] w-14 h-14 rounded-full border-2 border-white/70 flex items-center justify-center text-white bg-white/10 backdrop-blur-sm transition-all group-hover:bg-white group-hover:border-white group-hover:text-[#111]">
+                  <div className="absolute bottom-4 right-4 md:bottom-[30px] md:right-[30px] z-[3] w-11 h-11 md:w-14 md:h-14 rounded-full border-2 border-white/70 flex items-center justify-center text-white bg-white/10 backdrop-blur-sm transition-all group-hover:bg-white group-hover:border-white group-hover:text-[#111]">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                   </div>
                 </div>
@@ -408,7 +408,7 @@ export default async function HomePage() {
       />
 
       {/* Radio */}
-      <section id="radio" className="reveal relative z-10 bg-white py-28">
+      <section id="radio" className="reveal relative z-10 bg-white pt-32 pb-28 md:py-28">
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative overflow-hidden rounded-2xl">
@@ -467,7 +467,7 @@ export default async function HomePage() {
       </section>
 
       {/* Clients */}
-      <section id="supporting" className="reveal relative z-10 bg-white pt-10 pb-28">
+      <section id="supporting" className="reveal relative z-10 bg-white pt-24 md:pt-10 pb-28">
         <div className="max-w-[1200px] mx-auto px-6">
           <p className="text-sm text-[#5B7A8E] mb-10 tracking-[2px] uppercase text-center">Acts &amp; Private Clients</p>
           <h2 className="text-[clamp(36px,6vw,72px)] font-black tracking-[-2px] uppercase mb-10 text-[#111] text-center">{clientsTitle}</h2>

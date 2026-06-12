@@ -70,7 +70,7 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
 
   if (status === 'success') {
     return (
-      <section id="share-music" className="reveal relative z-10 bg-[#E3E8ED] py-28 text-center">
+      <section id="share-music" className="reveal relative z-10 bg-[#E3E8ED] pt-32 pb-28 md:py-28 text-center">
         <div className="max-w-[700px] mx-auto px-6">
           <h2 className="text-[clamp(36px,5vw,56px)] font-black tracking-[-2px] uppercase mb-4 text-[#111]">{headline}</h2>
           <div className="max-w-[600px] mx-auto border-2 border-[#1B3A4C] p-12 text-center">
@@ -89,7 +89,7 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
   }
 
   return (
-    <section id="share-music" className="reveal relative z-10 bg-[#E3E8ED] py-28 text-center">
+    <section id="share-music" className="reveal relative z-10 bg-[#E3E8ED] pt-32 pb-28 md:py-28 text-center">
       <div className="max-w-[700px] mx-auto px-6">
         <h2 className="text-[clamp(36px,5vw,56px)] font-black tracking-[-2px] uppercase mb-4 text-[#111]">{headline}</h2>
         <p className="text-[clamp(22px,3vw,36px)] font-black uppercase leading-tight tracking-[-1px] mb-12 text-[#111]">{description}</p>

@@ -80,7 +80,7 @@ export default function HomeContactSection() {
   }
 
   return (
-    <section id="contact-form" className="relative z-10 bg-white">
+    <section id="contact-form" className="relative z-10 bg-white pt-16 md:pt-0">
       <div className="grid md:grid-cols-2 gap-0 min-h-[calc(100vh-70px)] items-stretch">
         {/* Left Image */}
         <div className="relative overflow-hidden">
