@@ -1,13 +1,14 @@
-Subject: Your Late Night Ricky Admin Platform — Ready to Explore
+Subject: Late Night Ricky — Your Platform Preview is Ready for Review
 
-Hi Samir,
+Hi Naveen,
 
-Your admin platform is live and ready.
+Your Late Night Ricky platform is ready for you to review.
 
-Login here: https://late-night-ricky.vercel.app/admin
+Preview link: https://late-night-ricky.vercel.app
+Admin login: https://late-night-ricky.vercel.app/admin
 Your PIN: 7291
 
-Just enter your 4-digit PIN on the login screen — no username needed.
+This is your staging preview — once you've reviewed everything and you're happy with it, the next step is to take it live on your domain.
 
 I've attached a full user guide (same navy branding as your site) that walks you through every section — what's on the front end, what's on the back end, and how to manage your business from one place.
 
