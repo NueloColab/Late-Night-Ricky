@@ -22,10 +22,16 @@
   --bk: #111111;
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 body {
   font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   color: var(--gd);
   background: var(--cr);
+  position: relative;
 }
 
 .serif {
