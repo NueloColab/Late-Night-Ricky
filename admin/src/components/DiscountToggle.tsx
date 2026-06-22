@@ -17,7 +17,7 @@ interface DiscountToggleProps {
 export default function DiscountToggle({ discount, onChange }: DiscountToggleProps) {
   return (
     <div className="space-y-3">
-      <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px]">
+      <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px]">
         Friends & Family Discount
       </label>
       <div className="flex items-center gap-3">
@@ -25,7 +25,7 @@ export default function DiscountToggle({ discount, onChange }: DiscountTogglePro
           type="button"
           onClick={() => onChange({ ...discount, enabled: !discount.enabled })}
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ${
-            discount.enabled ? 'bg-[#2d1b4e]' : 'bg-[#8b7ab4]/50'
+            discount.enabled ? 'bg-[#7a7a7a]' : 'bg-[#b0b0b0]/50'
           }`}
         >
           <span
@@ -34,12 +34,12 @@ export default function DiscountToggle({ discount, onChange }: DiscountTogglePro
             }`}
           />
         </button>
-        <Heart size={14} className={discount.enabled ? 'text-[#2d1b4e]' : 'text-[#8b7ab4]'} />
-        <span className="text-sm text-[#7a6a9e]">{discount.enabled ? 'On' : 'Off'}</span>
+        <Heart size={14} className={discount.enabled ? 'text-[#7a7a7a]' : 'text-[#b0b0b0]'} />
+        <span className="text-sm text-[#a0a0a0]">{discount.enabled ? 'On' : 'Off'}</span>
       </div>
       {discount.enabled && (
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">
             Discount (%)
           </label>
           <input
@@ -48,7 +48,7 @@ export default function DiscountToggle({ discount, onChange }: DiscountTogglePro
             onChange={(e) =>
               onChange({ ...discount, percent: parseFloat(e.target.value) || 0 })
             }
-            className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-[#2d1b4e] text-sm focus:outline-none focus:border-[#2d1b4e]"
+            className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a]"
             min="0"
             max="100"
             step="0.5"

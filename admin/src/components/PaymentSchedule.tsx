@@ -35,20 +35,20 @@ export default function PaymentSchedule({ schedule, termsType, total, onChange }
 
   if (schedule.length === 0 && !isCustom) {
     return (
-      <div className="mt-4 p-6 bg-[#F8FAFB] rounded-lg border border-[#8b7ab4]/20 text-center">
-        <p className="text-sm text-[#8b7ab4]">No payment schedule for this term</p>
+      <div className="mt-4 p-6 bg-[#F8FAFB] rounded-lg border border-[#b0b0b0]/20 text-center">
+        <p className="text-sm text-[#b0b0b0]">No payment schedule for this term</p>
       </div>
     )
   }
 
   if (schedule.length === 0 && isCustom) {
     return (
-      <div className="mt-4 p-6 bg-[#F8FAFB] rounded-lg border border-[#8b7ab4]/20 text-center">
-        <p className="text-sm text-[#8b7ab4] mb-3">No installments added yet</p>
+      <div className="mt-4 p-6 bg-[#F8FAFB] rounded-lg border border-[#b0b0b0]/20 text-center">
+        <p className="text-sm text-[#b0b0b0] mb-3">No installments added yet</p>
         <button
           type="button"
           onClick={addItem}
-          className="text-sm text-[#2d1b4e] hover:text-[#7a6a9e] flex items-center gap-1 mx-auto transition-colors font-semibold"
+          className="text-sm text-[#7a7a7a] hover:text-[#a0a0a0] flex items-center gap-1 mx-auto transition-colors font-semibold"
         >
           <Plus size={14} /> Add First Installment
         </button>
@@ -59,21 +59,21 @@ export default function PaymentSchedule({ schedule, termsType, total, onChange }
   return (
     <div className="mt-4">
       <div className="flex items-center justify-between mb-3">
-        <p className="text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px]">Payment Schedule</p>
+        <p className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px]">Payment Schedule</p>
         {isCustom && (
           <button
             type="button"
             onClick={addItem}
-            className="text-xs text-[#2d1b4e] hover:text-[#7a6a9e] flex items-center gap-1 transition-colors font-semibold"
+            className="text-xs text-[#7a7a7a] hover:text-[#a0a0a0] flex items-center gap-1 transition-colors font-semibold"
           >
             <Plus size={12} /> Add Installment
           </button>
         )}
       </div>
 
-      <div className="border border-[#8b7ab4]/30 rounded-lg overflow-hidden">
+      <div className="border border-[#b0b0b0]/30 rounded-lg overflow-hidden">
         {/* Header */}
-        <div className="grid grid-cols-12 gap-2 px-4 py-3 bg-[#F8FAFB] text-xs font-semibold uppercase tracking-wide text-[#8b7ab4] border-b border-[#8b7ab4]/30">
+        <div className="grid grid-cols-12 gap-2 px-4 py-3 bg-[#F8FAFB] text-xs font-semibold uppercase tracking-wide text-[#b0b0b0] border-b border-[#b0b0b0]/30">
           <div className="col-span-3">Label</div>
           <div className="col-span-2">Percent</div>
           <div className="col-span-4">Due</div>
@@ -85,7 +85,7 @@ export default function PaymentSchedule({ schedule, termsType, total, onChange }
         {schedule.map((item, idx) => (
           <div
             key={idx}
-            className="grid grid-cols-12 gap-2 px-4 py-3 items-center border-b border-[#1a0a2e] last:border-b-0"
+            className="grid grid-cols-12 gap-2 px-4 py-3 items-center border-b border-[#8a8a8a] last:border-b-0"
           >
             {isCustom ? (
               <>
@@ -94,7 +94,7 @@ export default function PaymentSchedule({ schedule, termsType, total, onChange }
                     type="text"
                     value={item.label}
                     onChange={(e) => handleItemChange(idx, 'label', e.target.value)}
-                    className="w-full px-2.5 py-1.5 bg-white border border-[#8b7ab4]/30 rounded text-sm focus:outline-none focus:border-[#2d1b4e]"
+                    className="w-full px-2.5 py-1.5 bg-white border border-[#b0b0b0]/30 rounded text-sm focus:outline-none focus:border-[#7a7a7a]"
                     placeholder="e.g., Deposit"
                   />
                 </div>
@@ -104,11 +104,11 @@ export default function PaymentSchedule({ schedule, termsType, total, onChange }
                       type="number"
                       value={item.percent}
                       onChange={(e) => handleItemChange(idx, 'percent', parseFloat(e.target.value) || 0)}
-                      className="w-full px-2.5 py-1.5 bg-white border border-[#8b7ab4]/30 rounded text-sm focus:outline-none focus:border-[#2d1b4e]"
+                      className="w-full px-2.5 py-1.5 bg-white border border-[#b0b0b0]/30 rounded text-sm focus:outline-none focus:border-[#7a7a7a]"
                       min="0"
                       max="100"
                     />
-                    <span className="text-[#8b7ab4] text-sm">%</span>
+                    <span className="text-[#b0b0b0] text-sm">%</span>
                   </div>
                 </div>
                 <div className="col-span-4">
@@ -116,18 +116,18 @@ export default function PaymentSchedule({ schedule, termsType, total, onChange }
                     type="text"
                     value={item.due}
                     onChange={(e) => handleItemChange(idx, 'due', e.target.value)}
-                    className="w-full px-2.5 py-1.5 bg-white border border-[#8b7ab4]/30 rounded text-sm focus:outline-none focus:border-[#2d1b4e]"
+                    className="w-full px-2.5 py-1.5 bg-white border border-[#b0b0b0]/30 rounded text-sm focus:outline-none focus:border-[#7a7a7a]"
                     placeholder="e.g., Due on completion"
                   />
                 </div>
-                <div className="col-span-2 text-right font-semibold text-sm text-[#2d1b4e]">
+                <div className="col-span-2 text-right font-semibold text-sm text-[#7a7a7a]">
                   £{item.amount.toFixed(2)}
                 </div>
                 <div className="col-span-1 flex justify-end">
                   <button
                     type="button"
                     onClick={() => removeItem(idx)}
-                    className="p-1.5 text-[#8b7ab4] hover:text-red-500 hover:bg-red-50 rounded transition-colors"
+                    className="p-1.5 text-[#b0b0b0] hover:text-red-500 hover:bg-red-50 rounded transition-colors"
                   >
                     <Trash2 size={14} />
                   </button>
@@ -135,10 +135,10 @@ export default function PaymentSchedule({ schedule, termsType, total, onChange }
               </>
             ) : (
               <>
-                <div className="col-span-3 text-sm font-medium text-[#2d1b4e]">{item.label}</div>
-                <div className="col-span-2 text-sm text-[#7a6a9e]">{item.percent}%</div>
-                <div className="col-span-4 text-sm text-[#7a6a9e]">{item.due}</div>
-                <div className="col-span-2 text-right font-semibold text-sm text-[#2d1b4e]">
+                <div className="col-span-3 text-sm font-medium text-[#7a7a7a]">{item.label}</div>
+                <div className="col-span-2 text-sm text-[#a0a0a0]">{item.percent}%</div>
+                <div className="col-span-4 text-sm text-[#a0a0a0]">{item.due}</div>
+                <div className="col-span-2 text-right font-semibold text-sm text-[#7a7a7a]">
                   £{item.amount.toFixed(2)}
                 </div>
               </>
@@ -147,11 +147,11 @@ export default function PaymentSchedule({ schedule, termsType, total, onChange }
         ))}
 
         {/* Total row */}
-        <div className="grid grid-cols-12 gap-2 px-4 py-3 bg-[#F8FAFB] border-t border-[#8b7ab4]/30">
-          <div className="col-span-3 text-xs font-semibold text-[#2d1b4e] uppercase">Total</div>
-          <div className="col-span-2 text-sm font-semibold text-[#2d1b4e]">{totalPercent}%</div>
+        <div className="grid grid-cols-12 gap-2 px-4 py-3 bg-[#F8FAFB] border-t border-[#b0b0b0]/30">
+          <div className="col-span-3 text-xs font-semibold text-[#7a7a7a] uppercase">Total</div>
+          <div className="col-span-2 text-sm font-semibold text-[#7a7a7a]">{totalPercent}%</div>
           <div className="col-span-4"></div>
-          <div className="col-span-2 text-right font-bold text-sm text-[#2d1b4e]">
+          <div className="col-span-2 text-right font-bold text-sm text-[#7a7a7a]">
             £{totalAmount.toFixed(2)}
           </div>
           {isCustom && <div className="col-span-1"></div>}

@@ -677,24 +677,24 @@ export default function HomeEditor() {
       {/* Header */}
       <Link
         href="/admin/content"
-        className="inline-flex items-center gap-2 text-sm text-[#2d1b4e] hover:text-[#111] transition-colors mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#7a7a7a] hover:text-[#111] transition-colors mb-6"
       >
         <ArrowLeft size={14} />
         <span>Back to Content</span>
       </Link>
       <div className="flex items-center justify-between mb-12">
         <div>
-          <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-4">Page Editor</p>
+          <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-4">Page Editor</p>
           <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">
             Home Page
           </h1>
-          <p className="text-sm text-[#7a6a9e] mt-4 font-semibold uppercase tracking-[0.5px]">Edit sections and show cards</p>
+          <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Edit sections and show cards</p>
         </div>
         <a
           href="/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+          className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
         >
           View on Site →
         </a>
@@ -703,19 +703,19 @@ export default function HomeEditor() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Section list */}
         <div className="lg:w-64 flex-shrink-0">
-          <div className="bg-white border border-[#8b7ab4]/30 overflow-hidden">
-            <div className="px-5 py-4 border-b border-[#8b7ab4]/30">
-              <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold">Sections</p>
+          <div className="bg-white border border-[#b0b0b0]/30 overflow-hidden">
+            <div className="px-5 py-4 border-b border-[#b0b0b0]/30">
+              <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold">Sections</p>
             </div>
-            <div className="divide-y divide-[#8b7ab4]/20">
+            <div className="divide-y divide-[#b0b0b0]/20">
               {sectionList.map((item) => (
                 <button
                   key={item.name}
                   onClick={() => setSelectedSection(item.name)}
                   className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${
                     selectedSection === item.name
-                      ? 'bg-[#2d1b4e] text-white'
-                      : 'text-[#2d1b4e] hover:bg-[#1a0a2e]'
+                      ? 'bg-[#7a7a7a] text-white'
+                      : 'text-[#7a7a7a] hover:bg-[#8a8a8a]'
                   }`}
                 >
                   <span>{item.label}</span>
@@ -731,17 +731,17 @@ export default function HomeEditor() {
           </div>
 
           {/* Show Cards quick nav */}
-          <div className="mt-4 bg-white border border-[#8b7ab4]/30 overflow-hidden">
+          <div className="mt-4 bg-white border border-[#b0b0b0]/30 overflow-hidden">
             <button
               onClick={() => setSelectedSection('showcards')}
               className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${
                 selectedSection === 'showcards'
-                  ? 'bg-[#2d1b4e] text-white'
-                  : 'text-[#2d1b4e] hover:bg-[#1a0a2e]'
+                  ? 'bg-[#7a7a7a] text-white'
+                  : 'text-[#7a7a7a] hover:bg-[#8a8a8a]'
               }`}
             >
               <span>Show Cards</span>
-              <span className="text-xs text-[#8b7ab4]">{showCards.length}</span>
+              <span className="text-xs text-[#b0b0b0]">{showCards.length}</span>
             </button>
           </div>
         </div>
@@ -749,7 +749,7 @@ export default function HomeEditor() {
         {/* Editor panel */}
         <div className="flex-1 min-w-0">
           {loading || cardsLoading ? (
-            <p className="text-[#8b7ab4] text-sm">Loading...</p>
+            <p className="text-[#b0b0b0] text-sm">Loading...</p>
           ) : selectedSection === 'showcards' ? (
             <ShowCardsEditor
               cards={showCards}
@@ -859,7 +859,7 @@ export default function HomeEditor() {
               saving={savingSection === 'contact'}
             />
           ) : (
-            <p className="text-[#8b7ab4] text-sm">Select a section to edit.</p>
+            <p className="text-[#b0b0b0] text-sm">Select a section to edit.</p>
           )}
         </div>
       </div>
@@ -889,72 +889,72 @@ function HeroEditor({
 }) {
   if (!section) {
     return (
-      <div className="bg-white border border-[#8b7ab4]/30 p-8">
-        <p className="text-[#8b7ab4] text-sm">Hero section not found in database.</p>
+      <div className="bg-white border border-[#b0b0b0]/30 p-8">
+        <p className="text-[#b0b0b0] text-sm">Hero section not found in database.</p>
       </div>
     );
   }
   const content = parseContent(section.content);
   return (
-    <div className="bg-white border border-[#8b7ab4]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#b0b0b0]/30 p-6 space-y-6">
       <div>
-        <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-2">Hero</p>
-        <p className="text-sm text-[#7a6a9e] font-semibold uppercase tracking-[0.5px]">Edit the hero headline and background image</p>
+        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-2">Hero</p>
+        <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit the hero headline and background image</p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Title</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Title</label>
           <input
             type="text"
             value={content.title || ''}
             onChange={(e) => onChange('title', e.target.value)}
-            className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+            className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Subtitle</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Subtitle</label>
           <input
             type="text"
             value={content.subtitle || ''}
             onChange={(e) => onChange('subtitle', e.target.value)}
-            className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+            className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Background Image</label>
-            <div className="relative w-full aspect-video bg-[#1a0a2e] rounded-xl overflow-hidden mb-2 border border-[#8b7ab4]/30">
+            <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Background Image</label>
+            <div className="relative w-full aspect-video bg-[#8a8a8a] rounded-xl overflow-hidden mb-2 border border-[#b0b0b0]/30">
               {content.image ? (
                 <img src={content.image} alt="Hero background" className="object-cover w-full h-full" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <ImageIcon className="w-8 h-8 text-[#8b7ab4]" />
+                  <ImageIcon className="w-8 h-8 text-[#b0b0b0]" />
                 </div>
               )}
             </div>
             <button
               onClick={() => onOpenMedia('image')}
-              className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+              className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
             >
               Replace Image
             </button>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Logo</label>
-            <div className="relative w-full aspect-video bg-[#1a0a2e] rounded-xl overflow-hidden mb-2 border border-[#8b7ab4]/30">
+            <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Logo</label>
+            <div className="relative w-full aspect-video bg-[#8a8a8a] rounded-xl overflow-hidden mb-2 border border-[#b0b0b0]/30">
               {content.logo ? (
                 <img src={content.logo} alt="Hero logo" className="object-contain p-4 w-full h-full" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <ImageIcon className="w-8 h-8 text-[#8b7ab4]" />
+                  <ImageIcon className="w-8 h-8 text-[#b0b0b0]" />
                 </div>
               )}
             </div>
             <button
               onClick={() => onOpenMedia('logo')}
-              className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+              className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
             >
               Replace Logo
             </button>
@@ -968,28 +968,28 @@ function HeroEditor({
             type="checkbox"
             checked={content.overlay !== false}
             onChange={(e) => onChange('overlay', e.target.checked)}
-            className="w-4 h-4 accent-[#2d1b4e]"
+            className="w-4 h-4 accent-[#7a7a7a]"
           />
-          <span className="text-sm font-semibold text-[#2d1b4e]">Steel blue overlay</span>
+          <span className="text-sm font-semibold text-[#7a7a7a]">Steel blue overlay</span>
         </label>
         <label className="inline-flex items-center gap-2 cursor-pointer">
           <input
             type="checkbox"
             checked={content.grayscale !== false}
             onChange={(e) => onChange('grayscale', e.target.checked)}
-            className="w-4 h-4 accent-[#2d1b4e]"
+            className="w-4 h-4 accent-[#7a7a7a]"
           />
-          <span className="text-sm font-semibold text-[#2d1b4e]">Black & white filter</span>
+          <span className="text-sm font-semibold text-[#7a7a7a]">Black & white filter</span>
         </label>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Zoom (Background Size)</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Zoom (Background Size)</label>
           <select
             value={content.backgroundSize || 'cover'}
             onChange={(e) => onChange('backgroundSize', e.target.value)}
-            className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+            className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
           >
             <option value="cover">Cover (fill screen, may crop)</option>
             <option value="contain">Contain (show full image, white bars)</option>
@@ -1005,11 +1005,11 @@ function HeroEditor({
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Position (Focus Point)</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Position (Focus Point)</label>
           <select
             value={content.backgroundPosition || 'center'}
             onChange={(e) => onChange('backgroundPosition', e.target.value)}
-            className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+            className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
           >
             <option value="center">Center</option>
             <option value="top">Top</option>
@@ -1027,22 +1027,22 @@ function HeroEditor({
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Background Color (for gaps)</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Background Color (for gaps)</label>
           <div className="flex items-center gap-2">
             <input
               type="color"
               value={content.backgroundColor || '#c8cdd2'}
               onChange={(e) => onChange('backgroundColor', e.target.value)}
-              className="w-10 h-10 rounded-lg border border-[#8b7ab4]/30 cursor-pointer"
+              className="w-10 h-10 rounded-lg border border-[#b0b0b0]/30 cursor-pointer"
             />
             <input
               type="text"
               value={content.backgroundColor || '#c8cdd2'}
               onChange={(e) => onChange('backgroundColor', e.target.value)}
-              className="flex-1 px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+              className="flex-1 px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
             />
           </div>
-          <p className="text-xs text-[#8b7ab4] mt-1">Pick a color that matches the photo background for seamless edges</p>
+          <p className="text-xs text-[#b0b0b0] mt-1">Pick a color that matches the photo background for seamless edges</p>
         </div>
       </div>
 
@@ -1050,7 +1050,7 @@ function HeroEditor({
         <button
           onClick={onSave}
           disabled={saving}
-          className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition disabled:opacity-50"
+          className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition disabled:opacity-50"
         >
           {saving ? 'Saving...' : 'Save Hero'}
         </button>
@@ -1074,45 +1074,45 @@ function VideoEditor({
 }) {
   if (!section) {
     return (
-      <div className="bg-white border border-[#8b7ab4]/30 p-8">
-        <p className="text-[#8b7ab4] text-sm">Video section not found in database.</p>
+      <div className="bg-white border border-[#b0b0b0]/30 p-8">
+        <p className="text-[#b0b0b0] text-sm">Video section not found in database.</p>
       </div>
     );
   }
   const content = parseContent(section.content);
   return (
-    <div className="bg-white border border-[#8b7ab4]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#b0b0b0]/30 p-6 space-y-6">
       <div>
-        <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-2">Video</p>
-        <p className="text-sm text-[#7a6a9e] font-semibold uppercase tracking-[0.5px]">Edit the video poster and source URL</p>
+        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-2">Video</p>
+        <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit the video poster and source URL</p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Video Source URL</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Video Source URL</label>
           <input
             type="url"
             value={content.src || ''}
             onChange={(e) => onChange('src', e.target.value)}
             placeholder="https://..."
-            className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+            className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Poster Image</label>
-          <div className="relative w-full aspect-video bg-[#1a0a2e] rounded-xl overflow-hidden mb-2 max-w-md border border-[#8b7ab4]/30">
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Poster Image</label>
+          <div className="relative w-full aspect-video bg-[#8a8a8a] rounded-xl overflow-hidden mb-2 max-w-md border border-[#b0b0b0]/30">
             {content.poster ? (
               <img src={content.poster} alt="Video poster" className="object-cover w-full h-full" />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <ImageIcon className="w-8 h-8 text-[#8b7ab4]" />
+                <ImageIcon className="w-8 h-8 text-[#b0b0b0]" />
               </div>
             )}
           </div>
           <button
             onClick={onOpenMedia}
-            className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+            className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
           >
             Replace Poster
           </button>
@@ -1123,7 +1123,7 @@ function VideoEditor({
         <button
           onClick={onSave}
           disabled={saving}
-          className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition disabled:opacity-50"
+          className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition disabled:opacity-50"
         >
           {saving ? 'Saving...' : 'Save Video'}
         </button>
@@ -1147,51 +1147,51 @@ function ReachEditor({
 }) {
   if (!section) {
     return (
-      <div className="bg-white border border-[#8b7ab4]/30 p-8">
-        <p className="text-[#8b7ab4] text-sm">Reach section not found in database.</p>
+      <div className="bg-white border border-[#b0b0b0]/30 p-8">
+        <p className="text-[#b0b0b0] text-sm">Reach section not found in database.</p>
       </div>
     );
   }
   const content = parseContent(section.content);
   return (
-    <div className="bg-white border border-[#8b7ab4]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#b0b0b0]/30 p-6 space-y-6">
       <div>
-        <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-2">Reach</p>
-        <p className="text-sm text-[#7a6a9e] font-semibold uppercase tracking-[0.5px]">Edit the reach headline and subtext</p>
+        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-2">Reach</p>
+        <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit the reach headline and subtext</p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Headline</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Headline</label>
           <textarea
             value={content.headline || ''}
             onChange={(e) => onChange('headline', e.target.value)}
             rows={3}
-            className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e] resize-y"
+            className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a] resize-y"
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Subtext</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Subtext</label>
           <textarea
             value={content.subtext || ''}
             onChange={(e) => onChange('subtext', e.target.value)}
             rows={4}
-            className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e] resize-y"
+            className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a] resize-y"
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Grammy Badge</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Grammy Badge</label>
           <div className="flex items-center gap-2">
             <input
               type="text"
               value={content.grammyBadge || ''}
               onChange={(e) => onChange('grammyBadge', e.target.value)}
-              className="flex-1 px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+              className="flex-1 px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
             />
             {onOpenMedia && (
               <button
                 onClick={onOpenMedia}
-                className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+                className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
               >
                 Replace Badge
               </button>
@@ -1204,7 +1204,7 @@ function ReachEditor({
         <button
           onClick={onSave}
           disabled={saving}
-          className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition disabled:opacity-50"
+          className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition disabled:opacity-50"
         >
           {saving ? 'Saving...' : 'Save Reach'}
         </button>
@@ -1235,42 +1235,42 @@ function PartnersEditor({
   onOpenMedia: (id: number) => void;
 }) {
   return (
-    <div className="bg-white border border-[#8b7ab4]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#b0b0b0]/30 p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-1">Partners</p>
-          <p className="text-sm text-[#7a6a9e] font-semibold uppercase tracking-[0.5px]">Edit partner logos — {logos.length} total</p>
+          <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-1">Partners</p>
+          <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit partner logos — {logos.length} total</p>
         </div>
         <button
           onClick={onAdd}
-          className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+          className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
         >
           + Add Logo
         </button>
       </div>
 
       {loading ? (
-        <p className="text-[#8b7ab4] text-sm">Loading...</p>
+        <p className="text-[#b0b0b0] text-sm">Loading...</p>
       ) : logos.length === 0 ? (
-        <p className="text-[#8b7ab4] text-sm">No partner logos yet.</p>
+        <p className="text-[#b0b0b0] text-sm">No partner logos yet.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {logos.map((logo, idx) => (
-            <div key={logo.id} className="border border-[#8b7ab4]/30 p-4 space-y-3 bg-white">
+            <div key={logo.id} className="border border-[#b0b0b0]/30 p-4 space-y-3 bg-white">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-[#8b7ab4] uppercase tracking-[2px]">#{idx + 1}</span>
+                <span className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[2px]">#{idx + 1}</span>
                 <div className="flex items-center gap-1 ml-auto">
                   <button
                     onClick={() => onMove(logo.id, 'up')}
                     disabled={idx === 0}
-                    className="p-1.5 text-[#8b7ab4] hover:text-[#2d1b4e] hover:bg-[#1a0a2e] rounded-lg transition-colors disabled:opacity-30"
+                    className="p-1.5 text-[#b0b0b0] hover:text-[#7a7a7a] hover:bg-[#8a8a8a] rounded-lg transition-colors disabled:opacity-30"
                   >
                     <UpIcon className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => onMove(logo.id, 'down')}
                     disabled={idx === logos.length - 1}
-                    className="p-1.5 text-[#8b7ab4] hover:text-[#2d1b4e] hover:bg-[#1a0a2e] rounded-lg transition-colors disabled:opacity-30"
+                    className="p-1.5 text-[#b0b0b0] hover:text-[#7a7a7a] hover:bg-[#8a8a8a] rounded-lg transition-colors disabled:opacity-30"
                   >
                     <DownIcon className="w-4 h-4" />
                   </button>
@@ -1283,37 +1283,37 @@ function PartnersEditor({
                 </div>
               </div>
 
-              <div className="relative w-full aspect-[3/2] bg-[#1a0a2e] rounded-xl overflow-hidden border border-[#8b7ab4]/30">
+              <div className="relative w-full aspect-[3/2] bg-[#8a8a8a] rounded-xl overflow-hidden border border-[#b0b0b0]/30">
                 {logo.imagePath ? (
                   <img src={logo.imagePath} alt={logo.name} className="object-contain p-2 w-full h-full" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
-                    <ImageIcon className="w-8 h-8 text-[#8b7ab4]" />
+                    <ImageIcon className="w-8 h-8 text-[#b0b0b0]" />
                   </div>
                 )}
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Name</label>
+                <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Name</label>
                 <input
                   type="text"
                   value={logo.name}
                   onChange={(e) => onUpdate(logo.id, 'name', e.target.value)}
-                  className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                  className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
                 />
               </div>
 
               <div className="flex gap-2">
                 <button
                   onClick={() => onOpenMedia(logo.id)}
-                  className="flex-1 px-3 py-1.5 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+                  className="flex-1 px-3 py-1.5 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
                 >
                   Replace Image
                 </button>
                 <button
                   onClick={() => onSave(logo.id)}
                   disabled={savingLogo === logo.id}
-                  className="px-3 py-1.5 border border-[#8b7ab4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2d1b4e] hover:border-[#111] hover:text-[#111] transition disabled:opacity-50"
+                  className="px-3 py-1.5 border border-[#b0b0b0]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#7a7a7a] hover:border-[#111] hover:text-[#111] transition disabled:opacity-50"
                 >
                   {savingLogo === logo.id ? 'Saving...' : 'Save'}
                 </button>
@@ -1363,27 +1363,27 @@ function RadioEditor({
 }) {
   const content = section ? parseContent(section.content) : {};
   return (
-    <div className="bg-white border border-[#8b7ab4]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#b0b0b0]/30 p-6 space-y-6">
       {section && (
-        <div className="space-y-4 pb-4 border-b border-[#8b7ab4]/20">
-          <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-1">Radio Section</p>
-          <p className="text-sm text-[#7a6a9e] mb-4 font-semibold uppercase tracking-[0.5px]">Edit the radio section content and image</p>
+        <div className="space-y-4 pb-4 border-b border-[#b0b0b0]/20">
+          <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-1">Radio Section</p>
+          <p className="text-sm text-[#a0a0a0] mb-4 font-semibold uppercase tracking-[0.5px]">Edit the radio section content and image</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Portrait Image</label>
-              <div className="relative w-full aspect-video bg-[#1a0a2e] rounded-xl overflow-hidden mb-2 border border-[#8b7ab4]/30">
+              <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Portrait Image</label>
+              <div className="relative w-full aspect-video bg-[#8a8a8a] rounded-xl overflow-hidden mb-2 border border-[#b0b0b0]/30">
                 {content.image ? (
                   <img src={content.image} alt="Radio portrait" className="object-cover w-full h-full" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
-                    <ImageIcon className="w-8 h-8 text-[#8b7ab4]" />
+                    <ImageIcon className="w-8 h-8 text-[#b0b0b0]" />
                   </div>
                 )}
               </div>
               {onOpenMedia && (
                 <button
                   onClick={onOpenMedia}
-                  className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+                  className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
                 >
                   Replace Image
                 </button>
@@ -1391,60 +1391,60 @@ function RadioEditor({
             </div>
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Label</label>
+                <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Label</label>
                 <input
                   type="text"
                   value={content.label || ''}
                   onChange={(e) => onSectionChange?.('label', e.target.value)}
-                  className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                  className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Headline</label>
+                <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Headline</label>
                 <input
                   type="text"
                   value={content.headline || ''}
                   onChange={(e) => onSectionChange?.('headline', e.target.value)}
-                  className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                  className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Description</label>
+                <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Description</label>
                 <textarea
                   value={content.description || ''}
                   onChange={(e) => onSectionChange?.('description', e.target.value)}
                   rows={3}
-                  className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e] resize-y"
+                  className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a] resize-y"
                 />
               </div>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Spotify URL</label>
+              <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Spotify URL</label>
               <input
                 type="text"
                 value={content.spotifyUrl || ''}
                 onChange={(e) => onSectionChange?.('spotifyUrl', e.target.value)}
-                className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Apple Music URL</label>
+              <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Apple Music URL</label>
               <input
                 type="text"
                 value={content.appleMusicUrl || ''}
                 onChange={(e) => onSectionChange?.('appleMusicUrl', e.target.value)}
-                className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">YouTube URL</label>
+              <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">YouTube URL</label>
               <input
                 type="text"
                 value={content.youtubeUrl || ''}
                 onChange={(e) => onSectionChange?.('youtubeUrl', e.target.value)}
-                className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
               />
             </div>
           </div>
@@ -1453,7 +1453,7 @@ function RadioEditor({
               <button
                 onClick={onSectionSave}
                 disabled={savingSection}
-                className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition disabled:opacity-50"
+                className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition disabled:opacity-50"
               >
                 {savingSection ? 'Saving...' : 'Save Section'}
               </button>
@@ -1464,39 +1464,39 @@ function RadioEditor({
 
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-1">Tracks</p>
-          <p className="text-sm text-[#7a6a9e] font-semibold uppercase tracking-[0.5px]">Edit audio tracks — {tracks.length} total</p>
+          <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-1">Tracks</p>
+          <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit audio tracks — {tracks.length} total</p>
         </div>
         <button
           onClick={onAdd}
-          className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+          className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
         >
           + Add Track
         </button>
       </div>
 
       {loading ? (
-        <p className="text-[#8b7ab4] text-sm">Loading...</p>
+        <p className="text-[#b0b0b0] text-sm">Loading...</p>
       ) : tracks.length === 0 ? (
-        <p className="text-[#8b7ab4] text-sm">No tracks yet.</p>
+        <p className="text-[#b0b0b0] text-sm">No tracks yet.</p>
       ) : (
         <div className="space-y-3">
           {tracks.map((track, idx) => (
-            <div key={track.id} className="border border-[#8b7ab4]/30 rounded-xl p-4 bg-white">
+            <div key={track.id} className="border border-[#b0b0b0]/30 rounded-xl p-4 bg-white">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-xs font-semibold text-[#8b7ab4] uppercase tracking-[2px]">#{idx + 1}</span>
+                <span className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[2px]">#{idx + 1}</span>
                 <div className="flex items-center gap-1 ml-auto">
                   <button
                     onClick={() => onMove(track.id, 'up')}
                     disabled={idx === 0}
-                    className="p-1.5 text-[#8b7ab4] hover:text-[#2d1b4e] hover:bg-[#1a0a2e] rounded-lg transition-colors disabled:opacity-30"
+                    className="p-1.5 text-[#b0b0b0] hover:text-[#7a7a7a] hover:bg-[#8a8a8a] rounded-lg transition-colors disabled:opacity-30"
                   >
                     <UpIcon className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => onMove(track.id, 'down')}
                     disabled={idx === tracks.length - 1}
-                    className="p-1.5 text-[#8b7ab4] hover:text-[#2d1b4e] hover:bg-[#1a0a2e] rounded-lg transition-colors disabled:opacity-30"
+                    className="p-1.5 text-[#b0b0b0] hover:text-[#7a7a7a] hover:bg-[#8a8a8a] rounded-lg transition-colors disabled:opacity-30"
                   >
                     <DownIcon className="w-4 h-4" />
                   </button>
@@ -1511,35 +1511,35 @@ function RadioEditor({
 
               <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
                 <div className="md:col-span-2">
-                  <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Title</label>
+                  <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Title</label>
                   <input
                     type="text"
                     value={track.title}
                     onChange={(e) => onUpdate(track.id, 'title', e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                    className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Duration</label>
+                  <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Duration</label>
                   <input
                     type="text"
                     value={track.duration || ''}
                     onChange={(e) => onUpdate(track.id, 'duration', e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                    className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
                   />
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => onTogglePlay(track.id, track.filePath)}
                     disabled={!track.filePath}
-                    className="p-2 border-2 border-[#111] rounded-full text-[#111] hover:bg-[#0f0518] hover:text-white transition disabled:opacity-30"
+                    className="p-2 border-2 border-[#111] rounded-full text-[#111] hover:bg-[#3a3a3a] hover:text-white transition disabled:opacity-30"
                   >
                     {playingTrack === track.id ? <PauseIcon className="w-4 h-4" /> : <PlayIcon className="w-4 h-4" />}
                   </button>
                   <button
                     onClick={() => onSave(track.id)}
                     disabled={savingTrack === track.id}
-                    className="flex-1 px-3 py-2 border border-[#8b7ab4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2d1b4e] hover:border-[#111] hover:text-[#111] transition disabled:opacity-50"
+                    className="flex-1 px-3 py-2 border border-[#b0b0b0]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#7a7a7a] hover:border-[#111] hover:text-[#111] transition disabled:opacity-50"
                   >
                     {savingTrack === track.id ? 'Saving...' : 'Save'}
                   </button>
@@ -1547,17 +1547,17 @@ function RadioEditor({
               </div>
 
               <div className="mt-2">
-                <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Audio File</label>
+                <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Audio File</label>
                 <div className="flex items-center gap-2">
                   <input
                     type="text"
                     value={track.filePath || ''}
                     onChange={(e) => onUpdate(track.id, 'filePath', e.target.value)}
                     placeholder="/assets/snippet.mp3"
-                    className="flex-1 px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                    className="flex-1 px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
                   />
                   <label className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold cursor-pointer transition-colors ${
-                    savingTrack === track.id ? 'bg-[#8b7ab4] text-white' : 'bg-[#2d1b4e] text-white hover:bg-[#2a4f66]'
+                    savingTrack === track.id ? 'bg-[#b0b0b0] text-white' : 'bg-[#7a7a7a] text-white hover:bg-[#2a4f66]'
                   }`}>
                     <UploadIcon className="w-3.5 h-3.5" />
                     {savingTrack === track.id ? 'Uploading...' : 'Upload MP3'}
@@ -1603,54 +1603,54 @@ function ClientsEditor({
   onAdd: () => void;
 }) {
   return (
-    <div className="bg-white border border-[#8b7ab4]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#b0b0b0]/30 p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-1">Clients</p>
-          <p className="text-sm text-[#7a6a9e] font-semibold uppercase tracking-[0.5px]">Edit client names — {clients.length} total</p>
+          <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-1">Clients</p>
+          <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit client names — {clients.length} total</p>
         </div>
         <button
           onClick={onAdd}
-          className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+          className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
         >
           + Add Client
         </button>
       </div>
 
       {loading ? (
-        <p className="text-[#8b7ab4] text-sm">Loading...</p>
+        <p className="text-[#b0b0b0] text-sm">Loading...</p>
       ) : clients.length === 0 ? (
-        <p className="text-[#8b7ab4] text-sm">No clients yet.</p>
+        <p className="text-[#b0b0b0] text-sm">No clients yet.</p>
       ) : (
         <div className="space-y-2">
           {clients.map((client, idx) => (
-            <div key={client.id} className="flex items-center gap-3 border border-[#8b7ab4]/30 px-4 py-3 bg-white">
-              <span className="text-xs font-semibold text-[#8b7ab4] uppercase tracking-[2px] w-8">{idx + 1}</span>
+            <div key={client.id} className="flex items-center gap-3 border border-[#b0b0b0]/30 px-4 py-3 bg-white">
+              <span className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[2px] w-8">{idx + 1}</span>
               <input
                 type="text"
                 value={client.name}
                 onChange={(e) => onUpdate(client.id, 'name', e.target.value)}
-                className="flex-1 px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                className="flex-1 px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
               />
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => onMove(client.id, 'up')}
                   disabled={idx === 0}
-                  className="p-1.5 text-[#8b7ab4] hover:text-[#2d1b4e] hover:bg-[#1a0a2e] rounded-lg transition-colors disabled:opacity-30"
+                  className="p-1.5 text-[#b0b0b0] hover:text-[#7a7a7a] hover:bg-[#8a8a8a] rounded-lg transition-colors disabled:opacity-30"
                 >
                   <UpIcon className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => onMove(client.id, 'down')}
                   disabled={idx === clients.length - 1}
-                  className="p-1.5 text-[#8b7ab4] hover:text-[#2d1b4e] hover:bg-[#1a0a2e] rounded-lg transition-colors disabled:opacity-30"
+                  className="p-1.5 text-[#b0b0b0] hover:text-[#7a7a7a] hover:bg-[#8a8a8a] rounded-lg transition-colors disabled:opacity-30"
                 >
                   <DownIcon className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => onSave(client.id)}
                   disabled={savingClient === client.id}
-                  className="px-3 py-1.5 border border-[#8b7ab4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2d1b4e] hover:border-[#111] hover:text-[#111] transition disabled:opacity-50"
+                  className="px-3 py-1.5 border border-[#b0b0b0]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#7a7a7a] hover:border-[#111] hover:text-[#111] transition disabled:opacity-50"
                 >
                   {savingClient === client.id ? 'Saving...' : 'Save'}
                 </button>
@@ -1682,36 +1682,36 @@ function ShareEditor({
 }) {
   if (!section) {
     return (
-      <div className="bg-white border border-[#8b7ab4]/30 p-8">
-        <p className="text-[#8b7ab4] text-sm">Share Music section not found in database.</p>
+      <div className="bg-white border border-[#b0b0b0]/30 p-8">
+        <p className="text-[#b0b0b0] text-sm">Share Music section not found in database.</p>
       </div>
     );
   }
   const content = parseContent(section.content);
   return (
-    <div className="bg-white border border-[#8b7ab4]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#b0b0b0]/30 p-6 space-y-6">
       <div>
-        <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-2">Share Music</p>
-        <p className="text-sm text-[#7a6a9e] font-semibold uppercase tracking-[0.5px]">Edit the share music headline and description</p>
+        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-2">Share Music</p>
+        <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit the share music headline and description</p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Headline</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Headline</label>
           <input
             type="text"
             value={content.headline || ''}
             onChange={(e) => onChange('headline', e.target.value)}
-            className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+            className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Description</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Description</label>
           <textarea
             value={content.description || ''}
             onChange={(e) => onChange('description', e.target.value)}
             rows={4}
-            className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e] resize-y"
+            className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a] resize-y"
           />
         </div>
       </div>
@@ -1720,7 +1720,7 @@ function ShareEditor({
         <button
           onClick={onSave}
           disabled={saving}
-          className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition disabled:opacity-50"
+          className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition disabled:opacity-50"
         >
           {saving ? 'Saving...' : 'Save Share Music'}
         </button>
@@ -1742,36 +1742,36 @@ function ContactEditor({
 }) {
   if (!section) {
     return (
-      <div className="bg-white border border-[#8b7ab4]/30 p-8">
-        <p className="text-[#8b7ab4] text-sm">Contact section not found in database.</p>
+      <div className="bg-white border border-[#b0b0b0]/30 p-8">
+        <p className="text-[#b0b0b0] text-sm">Contact section not found in database.</p>
       </div>
     );
   }
   const content = parseContent(section.content);
   return (
-    <div className="bg-white border border-[#8b7ab4]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#b0b0b0]/30 p-6 space-y-6">
       <div>
-        <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-2">Reach Out</p>
-        <p className="text-sm text-[#7a6a9e] font-semibold uppercase tracking-[0.5px]">Edit contact details</p>
+        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-2">Reach Out</p>
+        <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit contact details</p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Booking Email</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Booking Email</label>
           <input
             type="email"
             value={content.bookingEmail || ''}
             onChange={(e) => onChange('bookingEmail', e.target.value)}
-            className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+            className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Instagram</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Instagram</label>
           <input
             type="text"
             value={content.instagram || ''}
             onChange={(e) => onChange('instagram', e.target.value)}
-            className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+            className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
           />
         </div>
       </div>
@@ -1780,7 +1780,7 @@ function ContactEditor({
         <button
           onClick={onSave}
           disabled={saving}
-          className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition disabled:opacity-50"
+          className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition disabled:opacity-50"
         >
           {saving ? 'Saving...' : 'Save Contact'}
         </button>
@@ -1806,27 +1806,27 @@ function ShowCardsEditor({
 }) {
   return (
     <div className="space-y-4">
-      <div className="bg-white border border-[#8b7ab4]/30 p-6">
-        <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-1">Show Cards</p>
-        <p className="text-sm text-[#7a6a9e] font-semibold uppercase tracking-[0.5px] mb-6">Reorder and edit each show card</p>
+      <div className="bg-white border border-[#b0b0b0]/30 p-6">
+        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-1">Show Cards</p>
+        <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px] mb-6">Reorder and edit each show card</p>
 
         <div className="space-y-4">
           {cards.map((card, idx) => (
-            <div key={card.id} className="border border-[#8b7ab4]/30 p-4 bg-white">
+            <div key={card.id} className="border border-[#b0b0b0]/30 p-4 bg-white">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-xs font-semibold text-[#8b7ab4] uppercase tracking-[2px]">#{idx + 1}</span>
+                <span className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[2px]">#{idx + 1}</span>
                 <div className="flex items-center gap-1 ml-auto">
                   <button
                     onClick={() => onMove(card.id, 'up')}
                     disabled={idx === 0}
-                    className="p-1.5 text-[#8b7ab4] hover:text-[#2d1b4e] hover:bg-[#1a0a2e] rounded-lg transition-colors disabled:opacity-30"
+                    className="p-1.5 text-[#b0b0b0] hover:text-[#7a7a7a] hover:bg-[#8a8a8a] rounded-lg transition-colors disabled:opacity-30"
                   >
                     <UpIcon className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => onMove(card.id, 'down')}
                     disabled={idx === cards.length - 1}
-                    className="p-1.5 text-[#8b7ab4] hover:text-[#2d1b4e] hover:bg-[#1a0a2e] rounded-lg transition-colors disabled:opacity-30"
+                    className="p-1.5 text-[#b0b0b0] hover:text-[#7a7a7a] hover:bg-[#8a8a8a] rounded-lg transition-colors disabled:opacity-30"
                   >
                     <DownIcon className="w-4 h-4" />
                   </button>
@@ -1835,19 +1835,19 @@ function ShowCardsEditor({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Image</label>
-                  <div className="relative w-full aspect-video bg-[#1a0a2e] rounded-xl overflow-hidden mb-2 border border-[#8b7ab4]/30">
+                  <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Image</label>
+                  <div className="relative w-full aspect-video bg-[#8a8a8a] rounded-xl overflow-hidden mb-2 border border-[#b0b0b0]/30">
                     {card.imagePath ? (
                       <img src={card.imagePath} alt={card.title} className="object-cover w-full h-full" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <ImageIcon className="w-8 h-8 text-[#8b7ab4]" />
+                        <ImageIcon className="w-8 h-8 text-[#b0b0b0]" />
                       </div>
                     )}
                   </div>
                   <button
                     onClick={() => onOpenMedia(card.id)}
-                    className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+                    className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
                   >
                     Replace Image
                   </button>
@@ -1855,50 +1855,50 @@ function ShowCardsEditor({
 
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Title</label>
+                    <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Title</label>
                     <input
                       type="text"
                       value={card.title}
                       onChange={(e) => onUpdate(card.id, 'title', e.target.value)}
-                      className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                      className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Venue</label>
+                      <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Venue</label>
                       <input
                         type="text"
                         value={card.venue}
                         onChange={(e) => onUpdate(card.id, 'venue', e.target.value)}
-                        className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                        className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Location</label>
+                      <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Location</label>
                       <input
                         type="text"
                         value={card.location}
                         onChange={(e) => onUpdate(card.id, 'location', e.target.value)}
-                        className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                        className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Season</label>
+                    <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Season</label>
                     <input
                       type="text"
                       value={card.season}
                       onChange={(e) => onUpdate(card.id, 'season', e.target.value)}
-                      className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                      className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Description</label>
+                    <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Description</label>
                     <textarea
                       value={card.description}
                       onChange={(e) => onUpdate(card.id, 'description', e.target.value)}
                       rows={3}
-                      className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e] resize-y"
+                      className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a] resize-y"
                     />
                   </div>
                 </div>
@@ -1908,7 +1908,7 @@ function ShowCardsEditor({
                 <button
                   onClick={() => onSave(card.id)}
                   disabled={savingCard === card.id}
-                  className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition disabled:opacity-50"
+                  className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition disabled:opacity-50"
                 >
                   {savingCard === card.id ? 'Saving...' : 'Save Card'}
                 </button>
@@ -2005,41 +2005,41 @@ function CarouselEditor({
   onOpenMedia: (id: number) => void;
 }) {
   return (
-    <div className="bg-white border border-[#8b7ab4]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#b0b0b0]/30 p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-1">Carousel</p>
-          <p className="text-sm text-[#7a6a9e] font-semibold uppercase tracking-[0.5px]">Edit carousel images — {images.length} total</p>
+          <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-1">Carousel</p>
+          <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit carousel images — {images.length} total</p>
         </div>
         <button
           onClick={onAdd}
-          className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+          className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
         >
           + Add Image
         </button>
       </div>
       {loading ? (
-        <p className="text-[#8b7ab4] text-sm">Loading...</p>
+        <p className="text-[#b0b0b0] text-sm">Loading...</p>
       ) : images.length === 0 ? (
-        <p className="text-[#8b7ab4] text-sm">No images yet.</p>
+        <p className="text-[#b0b0b0] text-sm">No images yet.</p>
       ) : (
         <div className="space-y-3">
           {images.map((img, idx) => (
-            <div key={img.id} className="border border-[#8b7ab4]/30 rounded-xl p-4 bg-white">
+            <div key={img.id} className="border border-[#b0b0b0]/30 rounded-xl p-4 bg-white">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-xs font-semibold text-[#8b7ab4] uppercase tracking-[2px]">#{idx + 1}</span>
+                <span className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[2px]">#{idx + 1}</span>
                 <div className="flex items-center gap-1 ml-auto">
                   <button
                     onClick={() => onMove(img.id, 'up')}
                     disabled={idx === 0}
-                    className="p-1.5 text-[#8b7ab4] hover:text-[#2d1b4e] hover:bg-[#1a0a2e] rounded-lg transition-colors disabled:opacity-30"
+                    className="p-1.5 text-[#b0b0b0] hover:text-[#7a7a7a] hover:bg-[#8a8a8a] rounded-lg transition-colors disabled:opacity-30"
                   >
                     <UpIcon className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => onMove(img.id, 'down')}
                     disabled={idx === images.length - 1}
-                    className="p-1.5 text-[#8b7ab4] hover:text-[#2d1b4e] hover:bg-[#1a0a2e] rounded-lg transition-colors disabled:opacity-30"
+                    className="p-1.5 text-[#b0b0b0] hover:text-[#7a7a7a] hover:bg-[#8a8a8a] rounded-lg transition-colors disabled:opacity-30"
                   >
                     <DownIcon className="w-4 h-4" />
                   </button>
@@ -2053,32 +2053,32 @@ function CarouselEditor({
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
                 <div className="md:col-span-2">
-                  <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Alt Text</label>
+                  <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Alt Text</label>
                   <input
                     type="text"
                     value={img.alt}
                     onChange={(e) => onUpdate(img.id, 'alt', e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+                    className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
                   />
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => onOpenMedia(img.id)}
-                    className="px-3 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+                    className="px-3 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
                   >
                     Replace Image
                   </button>
                   <button
                     onClick={() => onSave(img.id)}
                     disabled={saving === img.id}
-                    className="flex-1 px-3 py-2 border border-[#8b7ab4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2d1b4e] hover:border-[#111] hover:text-[#111] transition disabled:opacity-50"
+                    className="flex-1 px-3 py-2 border border-[#b0b0b0]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#7a7a7a] hover:border-[#111] hover:text-[#111] transition disabled:opacity-50"
                   >
                     {saving === img.id ? 'Saving...' : 'Save'}
                   </button>
                 </div>
               </div>
               {img.imagePath && (
-                <div className="mt-2 aspect-video bg-[#1a0a2e] rounded-lg overflow-hidden">
+                <div className="mt-2 aspect-video bg-[#8a8a8a] rounded-lg overflow-hidden">
                   <img src={img.imagePath} alt={img.alt} className="w-full h-full object-cover" />
                 </div>
               )}
@@ -2103,52 +2103,52 @@ function ReachOutEditor({
   saving: boolean;
   onOpenMedia: () => void;
 }) {
-  if (!section) return <p className="text-[#8b7ab4] text-sm">Section not found.</p>;
+  if (!section) return <p className="text-[#b0b0b0] text-sm">Section not found.</p>;
   const content = parseContent(section.content);
   return (
-    <div className="bg-white border border-[#8b7ab4]/30 p-6 space-y-6">
-      <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-1">Reach Out</p>
-      <p className="text-sm text-[#7a6a9e] mb-6 font-semibold uppercase tracking-[0.5px]">Edit the reach out section.</p>
+    <div className="bg-white border border-[#b0b0b0]/30 p-6 space-y-6">
+      <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-1">Reach Out</p>
+      <p className="text-sm text-[#a0a0a0] mb-6 font-semibold uppercase tracking-[0.5px]">Edit the reach out section.</p>
       <div className="space-y-4">
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Headline</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Headline</label>
           <input
             type="text"
             value={content.headline || ''}
             onChange={(e) => onChange('headline', e.target.value)}
-            className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+            className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Signature</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Signature</label>
           <input
             type="text"
             value={content.signature || ''}
             onChange={(e) => onChange('signature', e.target.value)}
-            className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+            className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">CTA Text</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">CTA Text</label>
           <input
             type="text"
             value={content.cta || ''}
             onChange={(e) => onChange('cta', e.target.value)}
-            className="w-full px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+            className="w-full px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Image</label>
+          <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Image</label>
           <div className="flex items-center gap-2">
             <input
               type="text"
               value={content.image || ''}
               onChange={(e) => onChange('image', e.target.value)}
-              className="flex-1 px-3 py-2 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]"
+              className="flex-1 px-3 py-2 bg-white border border-[#b0b0b0]/30 rounded-lg text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a]"
             />
             <button
               onClick={onOpenMedia}
-              className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
+              className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
             >
               Replace Image
             </button>
@@ -2157,7 +2157,7 @@ function ReachOutEditor({
         <button
           onClick={onSave}
           disabled={saving}
-          className="px-6 py-2.5 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition disabled:opacity-50"
+          className="px-6 py-2.5 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition disabled:opacity-50"
         >
           {saving ? 'Saving...' : 'Save Changes'}
         </button>

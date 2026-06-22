@@ -20,11 +20,11 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-40 w-64 bg-[#2d1b4e] text-white flex flex-col">
+    <aside className="fixed inset-y-0 left-0 z-40 w-64 bg-[#7a7a7a] text-white flex flex-col">
       <div className="p-6 border-b border-white/10">
         <Link href="/admin" className="block">
           <h1 className="font-display text-xl font-semibold tracking-tight">Late Night Ricky</h1>
-          <p className="text-[#a890c0] text-xs uppercase tracking-widest mt-1 font-medium">CMS Admin</p>
+          <p className="text-[#d0d0d0] text-xs uppercase tracking-widest mt-1 font-medium">CMS Admin</p>
         </Link>
       </div>
 
@@ -39,7 +39,7 @@ export default function Sidebar() {
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     active
                       ? 'bg-white/10 text-white'
-                      : 'text-[#8b7ab4] hover:bg-white/5 hover:text-white'
+                      : 'text-[#b0b0b0] hover:bg-white/5 hover:text-white'
                   }`}
                 >
                   <item.icon className="w-5 h-5" />
@@ -57,7 +57,7 @@ export default function Sidebar() {
             await fetch('/api/auth/logout', { method: 'POST' });
             window.location.href = '/admin/login';
           }}
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-[#8b7ab4] hover:bg-white/5 hover:text-white transition-colors w-full"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-[#b0b0b0] hover:bg-white/5 hover:text-white transition-colors w-full"
         >
           <LogoutIcon className="w-5 h-5" />
           Log out

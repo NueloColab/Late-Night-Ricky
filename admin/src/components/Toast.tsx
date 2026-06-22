@@ -46,18 +46,18 @@ export default function ToastContainer() {
       {toasts.map((toast) => {
         const styles =
           toast.type === 'success'
-            ? 'bg-[#0f0518] text-white border-[#2d1b4e]'
+            ? 'bg-[#3a3a3a] text-white border-[#7a7a7a]'
             : toast.type === 'error'
             ? 'bg-white text-red-600 border-red-200'
-            : 'bg-white text-[#2d1b4e] border-[#1a0a2e]'
+            : 'bg-white text-[#7a7a7a] border-[#8a8a8a]'
 
         const icon =
           toast.type === 'success' ? (
-            <CheckCircle size={18} className="text-[#a890c0]" />
+            <CheckCircle size={18} className="text-[#d0d0d0]" />
           ) : toast.type === 'error' ? (
             <XCircle size={18} className="text-red-400" />
           ) : (
-            <AlertCircle size={18} className="text-[#a890c0]" />
+            <AlertCircle size={18} className="text-[#d0d0d0]" />
           )
 
         return (

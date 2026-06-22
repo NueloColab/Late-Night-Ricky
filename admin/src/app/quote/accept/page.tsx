@@ -41,7 +41,7 @@ function QuoteAcceptContent() {
 
   if (state.loading) {
     return (
-      <div className="min-h-screen bg-[#0f0518] flex items-center justify-center">
+      <div className="min-h-screen bg-[#3a3a3a] flex items-center justify-center">
         <div className="text-center">
           <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-6" style={{ maxWidth: '200px', filter: 'brightness(0) invert(1)' }} />
           <div className="w-10 h-10 border-[3px] border-white/20 border-t-white rounded-full animate-spin mx-auto" />
@@ -52,9 +52,9 @@ function QuoteAcceptContent() {
 
   if (state.error) {
     return (
-      <div className="min-h-screen bg-[#0f0518] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[#3a3a3a] flex items-center justify-center px-4">
         <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center">
-          <p className="text-2xl font-light tracking-[6px] text-[#0f0518] mb-6">LATE NIGHT RICKY</p>
+          <p className="text-2xl font-light tracking-[6px] text-[#3a3a3a] mb-6">LATE NIGHT RICKY</p>
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <span className="text-red-500 text-2xl font-bold">!</span>
           </div>
@@ -62,7 +62,7 @@ function QuoteAcceptContent() {
           <p className="text-gray-500 mb-6">{state.error}</p>
           <p className="text-sm text-gray-400">
             Contact us at{' '}
-            <a href="mailto:samir@wearemediahive.com" className="text-[#0f0518] hover:underline font-medium">
+            <a href="mailto:samir@wearemediahive.com" className="text-[#3a3a3a] hover:underline font-medium">
               samir@wearemediahive.com
             </a>
           </p>
@@ -76,21 +76,21 @@ function QuoteAcceptContent() {
   const items = Array.isArray(lineItems) ? lineItems : []
 
   return (
-    <div className="min-h-screen bg-[#0f0518] py-8 px-4">
+    <div className="min-h-screen bg-[#3a3a3a] py-8 px-4">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
           <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-2" style={{ maxWidth: '180px', filter: 'brightness(0) invert(1)' }} />
-          <p className="text-[10px] uppercase tracking-[3px] text-[#a890c0]">International DJ &amp; Grammy Winning Producer</p>
+          <p className="text-[10px] uppercase tracking-[3px] text-[#d0d0d0]">International DJ &amp; Grammy Winning Producer</p>
         </div>
 
         {/* Success Card */}
         <div className="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
-          <div className="border-b-2 border-[#0f0518] p-6 sm:p-8 text-center">
-            <div className="w-20 h-20 bg-[#0f0518] rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="border-b-2 border-[#3a3a3a] p-6 sm:p-8 text-center">
+            <div className="w-20 h-20 bg-[#3a3a3a] rounded-full flex items-center justify-center mx-auto mb-6">
               <span className="text-white text-4xl">✓</span>
             </div>
-            <h1 className="text-2xl font-light text-[#0f0518] mb-3">
+            <h1 className="text-2xl font-light text-[#3a3a3a] mb-3">
               {alreadyAccepted ? 'Quote Already Accepted' : 'Quote Accepted'}
             </h1>
             <p className="text-gray-500 max-w-md mx-auto">
@@ -104,7 +104,7 @@ function QuoteAcceptContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <p className="text-xs uppercase tracking-widest text-gray-500 mb-2">Quote Number</p>
-                <p className="font-semibold text-[#0f0518]">{quoteNumber || '#' + quoteId}</p>
+                <p className="font-semibold text-[#3a3a3a]">{quoteNumber || '#' + quoteId}</p>
               </div>
               {projectTitle && (
                 <div>
@@ -128,16 +128,16 @@ function QuoteAcceptContent() {
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-between items-center mt-3 pt-3 border-t-2 border-[#0f0518]">
-                  <span className="text-sm font-medium text-[#0f0518]">Total</span>
-                  <span className="text-lg font-bold text-[#0f0518]">{formatCurrency(total)}</span>
+                <div className="flex justify-between items-center mt-3 pt-3 border-t-2 border-[#3a3a3a]">
+                  <span className="text-sm font-medium text-[#3a3a3a]">Total</span>
+                  <span className="text-lg font-bold text-[#3a3a3a]">{formatCurrency(total)}</span>
                 </div>
               </div>
             )}
 
             {Array.isArray(paymentSchedule) && paymentSchedule.length > 1 && (
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-5">
-                <p className="text-xs uppercase tracking-widest font-medium text-[#0f0518] mb-3">
+                <p className="text-xs uppercase tracking-widest font-medium text-[#3a3a3a] mb-3">
                   Payment Schedule {paymentTermsLabel && <span className="normal-case tracking-normal text-gray-500 font-normal">— {paymentTermsLabel}</span>}
                 </p>
                 <div className="space-y-0">
@@ -155,7 +155,7 @@ function QuoteAcceptContent() {
             {paymentTermsLabel && (!paymentSchedule || paymentSchedule.length <= 1) && (
               <div className="bg-[#f0f4f8] border border-[#d0dce6] rounded-lg p-4">
                 <p className="text-sm text-gray-600">
-                  <span className="text-xs uppercase tracking-widest text-[#0f0518] font-semibold">Payment Terms:</span>{' '}
+                  <span className="text-xs uppercase tracking-widest text-[#3a3a3a] font-semibold">Payment Terms:</span>{' '}
                   {paymentTermsLabel}
                 </p>
               </div>
@@ -164,7 +164,7 @@ function QuoteAcceptContent() {
         </div>
 
         <div className="text-center mb-8">
-          <p className="text-sm text-[#a890c0]">
+          <p className="text-sm text-[#d0d0d0]">
             If you have any questions, please contact us at{' '}
             <a href="mailto:samir@wearemediahive.com" className="text-white hover:underline">
               samir@wearemediahive.com
@@ -174,7 +174,7 @@ function QuoteAcceptContent() {
 
         <div className="text-center pt-6 border-t border-white/10">
           <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-1" style={{ maxWidth: '100px', opacity: 0.5 }} />
-          <p className="text-xs text-[#a890c0]/70">International DJ &amp; Grammy Winning Producer</p>
+          <p className="text-xs text-[#d0d0d0]/70">International DJ &amp; Grammy Winning Producer</p>
         </div>
       </div>
     </div>
@@ -185,7 +185,7 @@ export default function QuoteAcceptPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#0f0518] flex items-center justify-center">
+        <div className="min-h-screen bg-[#3a3a3a] flex items-center justify-center">
           <img src="/assets/ricky-logo.png" alt="Late Night Ricky" style={{ maxWidth: '200px', filter: 'brightness(0) invert(1)' }} />
         </div>
       }
