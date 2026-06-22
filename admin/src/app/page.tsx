@@ -371,7 +371,7 @@ export default async function HomePage() {
 
         {/* 3 vertical columns */}
         <div className="grid md:grid-cols-3 min-h-[70vh] md:min-h-[80vh]">
-          {shows.slice(0, 3).map((show, i) => (
+          {shows.slice(0, 3).map((show) => (
             <a
               key={show.title}
               href={show.href}
