@@ -134,25 +134,6 @@ export default function Navbar() {
         .menu-panel.open {
           transform: translateX(0);
         }
-        .menu-panel .close-btn {
-          align-self: flex-end;
-          width: 40px;
-          height: 40px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: none;
-          border: none;
-          cursor: pointer;
-          padding: 0;
-          margin-bottom: 40px;
-        }
-        .menu-panel .close-btn svg {
-          width: 24px;
-          height: 24px;
-          stroke: #fff;
-          stroke-width: 2;
-        }
         .menu-panel nav {
           display: flex;
           flex-direction: column;
@@ -250,17 +231,6 @@ export default function Navbar() {
 
       {/* Slide-out panel from left */}
       <div className={`menu-panel ${menuOpen ? 'open' : ''}`}>
-        <button
-          className="close-btn"
-          onClick={() => setMenuOpen(false)}
-          aria-label="Close menu"
-        >
-          <svg viewBox="0 0 24 24" fill="none">
-            <line x1="4" y1="4" x2="20" y2="20" />
-            <line x1="20" y1="4" x2="4" y2="20" />
-          </svg>
-        </button>
-
         <nav>
           {navLinks.map((link) => (
             <Link
