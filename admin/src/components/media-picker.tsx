@@ -200,11 +200,11 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-[#7a7a7a]/60" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#152a47]/60" onClick={onClose} />
       <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-md flex flex-col overflow-hidden">
-        <div className="p-6 border-b border-[#8a8a8a] flex items-center justify-between">
-          <h2 className="font-serif text-xl font-semibold text-[#7a7a7a]">Upload Media</h2>
-          <button onClick={onClose} className="text-[#d0d0d0] hover:text-[#7a7a7a] transition-colors">
+        <div className="p-6 border-b border-[#0d1f3d] flex items-center justify-between">
+          <h2 className="font-serif text-xl font-semibold text-[#152a47]">Upload Media</h2>
+          <button onClick={onClose} className="text-[#C5E5F8] hover:text-[#152a47] transition-colors">
             <CloseIcon className="w-5 h-5" />
           </button>
         </div>
@@ -219,17 +219,17 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
               )}
             </div>
           ) : (
-            <div className="w-full aspect-video bg-[#8a8a8a] rounded-xl flex flex-col items-center justify-center gap-2">
-              <UploadIcon className="w-10 h-10 text-[#d0d0d0]" />
-              <p className="text-sm text-[#d0d0d0]">Choose a file to upload</p>
-              <p className="text-xs text-[#d0d0d0]">Images, video, and audio supported</p>
+            <div className="w-full aspect-video bg-[#0d1f3d] rounded-xl flex flex-col items-center justify-center gap-2">
+              <UploadIcon className="w-10 h-10 text-[#C5E5F8]" />
+              <p className="text-sm text-[#C5E5F8]">Choose a file to upload</p>
+              <p className="text-xs text-[#C5E5F8]">Images, video, and audio supported</p>
             </div>
           )}
 
           <label className={`w-full text-center inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold cursor-pointer transition-colors ${
             uploading
-              ? 'bg-[#b0b0b0] text-white'
-              : 'bg-[#7a7a7a] text-white hover:bg-[#2a4f66]'
+              ? 'bg-[#A8D5F0] text-white'
+              : 'bg-[#152a47] text-white hover:bg-[#2a4f66]'
           }`}>
             {uploading ? 'Uploading...' : 'Choose File'}
             <input

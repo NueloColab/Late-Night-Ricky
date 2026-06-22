@@ -278,7 +278,7 @@ export default async function HomePage() {
               filter: heroGrayscale ? 'grayscale(100%) brightness(1.05)' : 'none',
             }}
           />
-          {heroOverlay && <div className="absolute inset-0 bg-[rgba(122,122,122,0.35)]" />}
+          {heroOverlay && <div className="absolute inset-0 bg-[rgba(21,42,71,0.35)]" />}
         </div>
         <img src={heroLogo} alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] mx-auto mb-14 drop-shadow-[0_6px_30px_rgba(0,0,0,0.3)] brightness-0 invert" />
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white opacity-70">
@@ -288,7 +288,7 @@ export default async function HomePage() {
       </section>
 
       {/* Video / Showreel */}
-      <section id="video" className="relative w-full min-h-screen overflow-hidden bg-[#3a3a3a] flex items-center justify-center z-[1]">
+      <section id="video" className="relative w-full min-h-screen overflow-hidden bg-[#0d1f3d] flex items-center justify-center z-[1]">
         <div className="absolute inset-0 bg-gradient-to-b from-[rgba(17,17,17,0.3)] via-transparent to-[rgba(17,17,17,0.3)] z-[2] pointer-events-none" />
         <div className="relative z-[3] text-center flex flex-col items-center gap-8">
           <a href="/showreel" className="inline-block px-12 py-4 border-2 border-white rounded-full bg-transparent text-white text-sm font-semibold uppercase tracking-[2.5px] hover:bg-white hover:text-[#111] transition">
@@ -338,7 +338,7 @@ export default async function HomePage() {
             {reachHeadline}
           </h1>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mt-6">
-            <p className="reveal reveal-d1 text-sm leading-relaxed max-w-[560px] text-[#b0b0b0] font-semibold uppercase tracking-[0.5px]">
+            <p className="reveal reveal-d1 text-sm leading-relaxed max-w-[560px] text-[#A8D5F0] font-semibold uppercase tracking-[0.5px]">
               {reachSubtext}
             </p>
             <div className="grammy-float grammy-glow relative w-[120px] md:w-[160px] flex-shrink-0">
@@ -349,7 +349,7 @@ export default async function HomePage() {
               />
             </div>
           </div>
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-[#b0b0b0] to-transparent my-20" />
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-[#A8D5F0] to-transparent my-20" />
         </div>
       </section>
 
@@ -361,7 +361,7 @@ export default async function HomePage() {
             <h2 className="reveal heading text-[clamp(36px,5.5vw,64px)] mb-5 text-white leading-[0.95]">
               RECENT SHOWS &amp; STORIES
             </h2>
-            <p className="reveal reveal-d1 text-sm text-[#b0b0b0] max-w-[600px] mx-auto leading-relaxed font-semibold uppercase tracking-[0.5px]">
+            <p className="reveal reveal-d1 text-sm text-[#A8D5F0] max-w-[600px] mx-auto leading-relaxed font-semibold uppercase tracking-[0.5px]">
               A career built on unforgettable nights, iconic venues, and sold-out crowds.
             </p>
           </div>
@@ -381,7 +381,7 @@ export default async function HomePage() {
               }}
             >
               {/* Dark overlay */}
-              <div className="absolute inset-0 bg-[#3a3a3a]/60 group-hover:bg-[#3a3a3a]/45 transition-colors duration-500" />
+              <div className="absolute inset-0 bg-[#0d1f3d]/60 group-hover:bg-[#0d1f3d]/45 transition-colors duration-500" />
 
               {/* Content vertically centered */}
               <div className="relative z-10 text-center px-6">
@@ -427,16 +427,16 @@ export default async function HomePage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative overflow-hidden rounded-2xl">
               <img src={radioImage} alt="Late Night Ricky" className="w-full h-auto object-cover" />
-              <div className="absolute bottom-5 right-5 flex items-end gap-[3px] z-10 p-3 rounded-lg bg-[#7a7a7a]/70 backdrop-blur-sm">
+              <div className="absolute bottom-5 right-5 flex items-end gap-[3px] z-10 p-3 rounded-lg bg-[#152a47]/70 backdrop-blur-sm">
                 {[12, 20, 16, 24, 14].map((h, i) => (
                   <span key={i} className="eq-bar" style={{ height: `${h}px`, animationDelay: `${[0, 0.2, 0.4, 0.1, 0.3][i]}s` }} />
                 ))}
               </div>
             </div>
             <div>
-              <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-4">{radioLabel}</p>
+              <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">{radioLabel}</p>
               <h2 className="heading text-[clamp(40px,6vw,80px)] text-white mb-5 leading-[0.95]">{radioHeadline}</h2>
-              <p className="text-sm text-[#b0b0b0] leading-relaxed mb-10 max-w-[420px] font-semibold uppercase tracking-[0.5px]">
+              <p className="text-sm text-[#A8D5F0] leading-relaxed mb-10 max-w-[420px] font-semibold uppercase tracking-[0.5px]">
                 {radioDescription}
               </p>
               <div className="flex gap-4 flex-wrap mb-10">
@@ -483,7 +483,7 @@ export default async function HomePage() {
       {/* Clients — Marquee */}
       <section id="supporting" className="reveal textured-bg relative z-10 pt-24 md:pt-10 pb-28 overflow-hidden">
         <div className="relative z-10 max-w-[1200px] mx-auto px-6 mb-12">
-          <p className="text-sm text-[#b0b0b0] mb-6 tracking-[2px] uppercase text-center">Acts &amp; Private Clients</p>
+          <p className="text-sm text-[#A8D5F0] mb-6 tracking-[2px] uppercase text-center">Acts &amp; Private Clients</p>
           <h2 className="heading text-[clamp(36px,6vw,72px)] mb-4 text-white text-center">{clientsTitle}</h2>
         </div>
         <div className="overflow-hidden">
@@ -495,16 +495,16 @@ export default async function HomePage() {
             ))}
           </div>
         </div>
-        <p className="text-sm text-[#b0b0b0] mt-10 tracking-[2px] uppercase text-center">And many more...</p>
+        <p className="text-sm text-[#A8D5F0] mt-10 tracking-[2px] uppercase text-center">And many more...</p>
       </section>
 
       {/* Venue Marquee */}
       <section className="relative z-10">
-        <div className="overflow-hidden bg-[#3a3a3a] py-4">
+        <div className="overflow-hidden bg-[#0d1f3d] py-4">
           <div className="marquee-track">
             {[...venues, ...venues].map((venue, i) => (
-              <span key={i} className="text-[#b0b0b0] text-[13px] font-semibold tracking-[1.5px] uppercase flex-shrink-0">
-                {venue}<span className="ml-10 text-[#7a7a7a]">&bull;</span>
+              <span key={i} className="text-[#A8D5F0] text-[13px] font-semibold tracking-[1.5px] uppercase flex-shrink-0">
+                {venue}<span className="ml-10 text-[#152a47]">&bull;</span>
               </span>
             ))}
           </div>
@@ -518,7 +518,7 @@ export default async function HomePage() {
       <section
         id="reach-out"
         className="reveal relative z-10 overflow-hidden"
-        style={{ background: 'linear-gradient(160deg, #8a8a8a 0%, #7a7a7a 35%, #5a5a5a 65%, #5a5a5a 100%)' }}
+        style={{ background: 'linear-gradient(160deg, #0d1f3d 0%, #152a47 35%, #152a47 65%, #152a47 100%)' }}
       >
         {/* Left image — natural portrait, not stretched */}
         <div className="absolute inset-y-0 left-0 w-[50%] hidden md:block overflow-hidden">
@@ -533,7 +533,7 @@ export default async function HomePage() {
         <div
           className="absolute inset-0 hidden md:block"
           style={{
-            background: 'linear-gradient(90deg, rgba(138,138,138,0.05) 0%, rgba(138,138,138,0.6) 40%, rgba(138,138,138,0.95) 55%, #8a8a8a 60%, #7a7a7a 100%)',
+            background: 'linear-gradient(90deg, rgba(13,31,61,0.05) 0%, rgba(13,31,61,0.6) 40%, rgba(13,31,61,0.95) 55%, #0d1f3d 60%, #152a47 100%)',
           }}
         />
 
@@ -547,7 +547,7 @@ export default async function HomePage() {
             opacity: 0.15,
           }}
         />
-        <div className="absolute inset-0 md:hidden bg-[#8a8a8a]/80" />
+        <div className="absolute inset-0 md:hidden bg-[#0d1f3d]/80" />
 
         {/* Content */}
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-20 md:py-28">

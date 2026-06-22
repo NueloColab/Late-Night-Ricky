@@ -218,18 +218,18 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
   }
 
   const inputClass =
-    'w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a] transition-colors'
+    'w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-[#152a47] text-sm focus:outline-none focus:border-[#152a47] transition-colors'
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Client Information */}
-      <div className="bg-white border border-[#b0b0b0]/30 p-6 rounded-lg">
-        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#8a8a8a]">
-          <h3 className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px]">Client Information</h3>
+      <div className="bg-white border border-[#A8D5F0]/30 p-6 rounded-lg">
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#0d1f3d]">
+          <h3 className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">Client Information</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">
+            <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
               Client Name <span className="text-red-400">*</span>
             </label>
             <ClientAutocomplete
@@ -241,7 +241,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">
+            <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
               Company
             </label>
             <input
@@ -253,7 +253,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">
+            <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
               Email Address <span className="text-red-400">*</span>
             </label>
             <input
@@ -266,7 +266,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">
+            <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
               Project Title <span className="text-red-400">*</span>
             </label>
             <input
@@ -281,7 +281,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
         </div>
         {projects.length > 0 && (
           <div className="mt-4">
-            <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">
+            <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
               Link to Project
             </label>
             <select
@@ -301,13 +301,13 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
       </div>
 
       {/* Services */}
-      <div className="bg-white border border-[#b0b0b0]/30 p-6 rounded-lg">
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#8a8a8a]">
-          <h3 className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px]">Services</h3>
+      <div className="bg-white border border-[#A8D5F0]/30 p-6 rounded-lg">
+        <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#0d1f3d]">
+          <h3 className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">Services</h3>
           <button
             type="button"
             onClick={addService}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#7a7a7a] border border-[#7a7a7a] rounded-lg hover:bg-[#7a7a7a] hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#152a47] border border-[#152a47] rounded-lg hover:bg-[#152a47] hover:text-white transition-colors"
           >
             <Plus size={14} />
             Add Service
@@ -318,7 +318,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
           {items.map((service, index) => (
             <div
               key={index}
-              className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-[#F8FAFB] rounded-lg border border-[#8a8a8a] items-end"
+              className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-[#F8FAFB] rounded-lg border border-[#0d1f3d] items-end"
             >
               <ServiceSelector
                 service={service}
@@ -327,7 +327,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
                 inputClassName={inputClass}
               />
               <div className="md:col-span-2">
-                <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">
+                <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
                   Price (£)
                 </label>
                 <input
@@ -358,7 +358,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
                 <button
                   type="button"
                   onClick={() => removeService(index)}
-                  className="w-full p-2.5 rounded-lg hover:bg-red-50 border border-[#b0b0b0]/30 text-[#b0b0b0] hover:text-red-500 hover:border-red-300 transition-colors"
+                  className="w-full p-2.5 rounded-lg hover:bg-red-50 border border-[#A8D5F0]/30 text-[#A8D5F0] hover:text-red-500 hover:border-red-300 transition-colors"
                   title="Remove Service"
                 >
                   <Trash2 size={16} className="mx-auto" />
@@ -370,9 +370,9 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
       </div>
 
       {/* Pricing Summary */}
-      <div className="bg-white border border-[#b0b0b0]/30 p-6 rounded-lg">
-        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#8a8a8a]">
-          <h3 className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px]">Pricing Summary</h3>
+      <div className="bg-white border border-[#A8D5F0]/30 p-6 rounded-lg">
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#0d1f3d]">
+          <h3 className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">Pricing Summary</h3>
         </div>
         <div className="space-y-6">
           {/* Toggles Row */}
@@ -390,7 +390,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
           {/* Payment Terms & Due Date */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
             <div className="space-y-3">
-              <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px]">
+              <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">
                 Payment Terms
               </label>
               <select
@@ -406,8 +406,8 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
               </select>
             </div>
             <div className="space-y-3">
-              <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px]">
-                Due Date {isNetTerms(paymentTermsType) && <span className="text-[#7a7a7a]">(auto-calculated)</span>}
+              <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">
+                Due Date {isNetTerms(paymentTermsType) && <span className="text-[#152a47]">(auto-calculated)</span>}
               </label>
               <input
                 type="date"
@@ -428,31 +428,31 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
           />
 
           {/* Totals Box */}
-          <div className="ml-auto max-w-sm w-full space-y-2.5 p-5 bg-[#F8FAFB] rounded-lg border border-[#8a8a8a]">
+          <div className="ml-auto max-w-sm w-full space-y-2.5 p-5 bg-[#F8FAFB] rounded-lg border border-[#0d1f3d]">
             <div className="flex justify-between text-sm">
               <span className="text-[#a0a0a0]">Subtotal</span>
-              <span className="font-semibold text-[#7a7a7a]">£{subtotal.toFixed(2)}</span>
+              <span className="font-semibold text-[#152a47]">£{subtotal.toFixed(2)}</span>
             </div>
             {discount.enabled && (
               <div className="flex justify-between text-sm">
-                <span className="text-[#7a7a7a] flex items-center gap-1">
+                <span className="text-[#152a47] flex items-center gap-1">
                   <Heart size={11} /> Discount ({discount.percent}%)
                 </span>
-                <span className="font-semibold text-[#7a7a7a]">-£{discountAmount.toFixed(2)}</span>
+                <span className="font-semibold text-[#152a47]">-£{discountAmount.toFixed(2)}</span>
               </div>
             )}
             {vatEnabled ? (
               <div className="flex justify-between text-sm">
                 <span className="text-[#a0a0a0]">VAT ({taxRate}%)</span>
-                <span className="font-semibold text-[#7a7a7a]">£{tax.toFixed(2)}</span>
+                <span className="font-semibold text-[#152a47]">£{tax.toFixed(2)}</span>
               </div>
             ) : (
               <div className="flex justify-between text-sm">
                 <span className="text-[#a0a0a0]">VAT</span>
-                <span className="text-[#b0b0b0]">N/A</span>
+                <span className="text-[#A8D5F0]">N/A</span>
               </div>
             )}
-            <div className="flex justify-between pt-3 border-t border-[#8a8a8a]">
+            <div className="flex justify-between pt-3 border-t border-[#0d1f3d]">
               <span className="text-base font-black text-[#111] tracking-[-1px]">Total</span>
               <span className="text-base font-black text-[#111] tracking-[-1px]">£{total.toFixed(2)}</span>
             </div>
@@ -461,9 +461,9 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
       </div>
 
       {/* Notes */}
-      <div className="bg-white border border-[#b0b0b0]/30 p-6 rounded-lg">
-        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#8a8a8a]">
-          <h3 className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px]">Notes & Terms</h3>
+      <div className="bg-white border border-[#A8D5F0]/30 p-6 rounded-lg">
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#0d1f3d]">
+          <h3 className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">Notes & Terms</h3>
         </div>
         <NotesField value={notes} onChange={setNotes} />
       </div>
@@ -473,7 +473,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#7a7a7a] text-white text-sm font-semibold rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity"
+          className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#152a47] text-white text-sm font-semibold rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity"
         >
           {loading ? (
             <>
@@ -490,7 +490,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
         <button
           type="button"
           onClick={onClose}
-          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#b0b0b0]/50 text-[#7a7a7a] text-sm font-semibold rounded-lg hover:bg-[#F8FAFB] transition-colors"
+          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#A8D5F0]/50 text-[#152a47] text-sm font-semibold rounded-lg hover:bg-[#F8FAFB] transition-colors"
         >
           <X size={16} />
           Cancel

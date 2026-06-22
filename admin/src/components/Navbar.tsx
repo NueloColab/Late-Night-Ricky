@@ -74,7 +74,7 @@ export default function Navbar() {
           display: block;
           width: 20px;
           height: 2px;
-          background: #7a7a7a;
+          background: #152a47;
           border-radius: 1px;
           transition: all 400ms cubic-bezier(.4,0,.2,1);
           transform-origin: center;
@@ -123,7 +123,7 @@ export default function Navbar() {
           bottom: 0;
           width: 320px;
           max-width: 85vw;
-          background: #7a7a7a;
+          background: #152a47;
           z-index: 350;
           display: flex;
           flex-direction: column;

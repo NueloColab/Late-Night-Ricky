@@ -15,13 +15,13 @@ export default function NotesField({
 }: NotesFieldProps) {
   return (
     <div className="space-y-3">
-      <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px]">
+      <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">
         Notes & Terms
       </label>
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a] resize-none"
+        className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-[#152a47] text-sm focus:outline-none focus:border-[#152a47] resize-none"
         rows={rows}
         placeholder={placeholder}
       />

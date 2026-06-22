@@ -143,7 +143,7 @@ export default function MediaPage() {
           <h1 className="font-display text-3xl font-semibold text-white">Media Library</h1>
           <p className="text-[#8FA3B3] mt-1 text-sm">Manage images, videos, and documents</p>
         </div>
-        <label className="inline-flex items-center gap-2 px-5 py-3 bg-[#7a7a7a] text-white rounded-xl font-semibold text-sm uppercase tracking-widest cursor-pointer hover:bg-[#2a4f66] transition-colors">
+        <label className="inline-flex items-center gap-2 px-5 py-3 bg-[#152a47] text-white rounded-xl font-semibold text-sm uppercase tracking-widest cursor-pointer hover:bg-[#2a4f66] transition-colors">
           <UploadIcon className="w-4 h-4" />
           {uploading ? 'Uploading...' : 'Upload'}
           <input type="file" multiple className="hidden" onChange={handleUpload} disabled={uploading} />
@@ -156,12 +156,12 @@ export default function MediaPage() {
           placeholder="Search files..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 px-4 py-3 bg-white rounded-xl border border-[#d0d0d0]/30 text-sm focus:outline-none focus:border-[#7a7a7a] text-white"
+          className="flex-1 px-4 py-3 bg-white rounded-xl border border-[#C5E5F8]/30 text-sm focus:outline-none focus:border-[#152a47] text-white"
         />
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="px-4 py-3 bg-white rounded-xl border border-[#d0d0d0]/30 text-sm focus:outline-none focus:border-[#7a7a7a] text-white"
+          className="px-4 py-3 bg-white rounded-xl border border-[#C5E5F8]/30 text-sm focus:outline-none focus:border-[#152a47] text-white"
         >
           {types.map((t) => (
             <option key={t} value={t}>
@@ -180,7 +180,7 @@ export default function MediaPage() {
       {loading ? (
         <p className="text-[#8FA3B3] text-sm">Loading...</p>
       ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-2xl p-12 text-center border border-[#d0d0d0]/20">
+        <div className="bg-white rounded-2xl p-12 text-center border border-[#C5E5F8]/20">
           <p className="text-[#8FA3B3] text-sm">No files found. Upload your first asset above.</p>
         </div>
       ) : (
@@ -188,7 +188,7 @@ export default function MediaPage() {
           {filtered.map((asset) => (
             <div
               key={asset.id}
-              className="group bg-white rounded-2xl overflow-hidden border border-[#d0d0d0]/20 hover:border-[#7a7a7a] transition-shadow"
+              className="group bg-white rounded-2xl overflow-hidden border border-[#C5E5F8]/20 hover:border-[#152a47] transition-shadow"
             >
               <div className="aspect-square bg-[#0A0A0A] flex items-center justify-center relative">
                 {asset.type === 'image' ? (
@@ -206,7 +206,7 @@ export default function MediaPage() {
                 ) : (
                   <FileIcon className="w-10 h-10 text-[#8FA3B3]" />
                 )}
-                <div className="absolute inset-0 bg-[#7a7a7a]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                <div className="absolute inset-0 bg-[#152a47]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <a
                     href={asset.path}
                     target="_blank"
@@ -225,7 +225,7 @@ export default function MediaPage() {
                 {asset.usedIn && asset.usedIn.length > 0 && (
                   <div className="flex flex-wrap gap-1 mt-1.5">
                     {asset.usedIn.slice(0, 2).map((ref: string, i: number) => (
-                      <span key={i} className="text-[10px] px-1.5 py-0.5 bg-[#7a7a7a] text-white rounded font-semibold uppercase tracking-wider">
+                      <span key={i} className="text-[10px] px-1.5 py-0.5 bg-[#152a47] text-white rounded font-semibold uppercase tracking-wider">
                         {ref}
                       </span>
                     ))}

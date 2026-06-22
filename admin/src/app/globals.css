@@ -13,13 +13,13 @@
 }
 
 :root {
-  --gd: #6b6b6b;
-  --gs: #b0b0b0;
-  --gm: #9a9a9a;
-  --gl: #d0d0d0;
-  --cr: #e0e0e0;
-  --wh: #ffffff;
-  --bk: #3a3a3a;
+  --gd: #7EB8E6;
+  --gs: #A8D5F0;
+  --gm: #90C5E8;
+  --gl: #C5E5F8;
+  --cr: #0a1628;
+  --wh: #E8F4FF;
+  --bk: #152a47;
 }
 
 html, body {
@@ -132,16 +132,16 @@ body {
   50% { filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.55)); opacity: 1; }
 }
 
-/* Brushed metal background — steel/silver with warm studio undertones */
+/* Baby blue atmospheric background — deep navy to soft sky tones */
 .textured-bg {
   position: relative;
-  background: linear-gradient(160deg, #8a8a8a 0%, #7a7a7a 35%, #6b6b6b 65%, #5a5a5a 100%);
+  background: linear-gradient(160deg, #0d1f3d 0%, #152a47 35%, #1e3a5c 65%, #152a47 100%);
 }
 .textured-bg::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(212, 200, 184, 0.12) 0%, transparent 60%);
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(126, 184, 230, 0.12) 0%, transparent 60%);
   pointer-events: none;
   z-index: 1;
 }

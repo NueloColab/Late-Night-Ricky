@@ -186,7 +186,7 @@ export default function InvoicesPage() {
     <div className="max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-12">
-        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-4">Invoice Management</p>
+        <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">Invoice Management</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Invoices</h1>
@@ -197,7 +197,7 @@ export default function InvoicesPage() {
               setSelectedInvoice(null)
               setIsModalOpen(true)
             }}
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition"
           >
             <Plus size={16} />
             New Invoice
@@ -207,70 +207,70 @@ export default function InvoicesPage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-        <div className="bg-white border border-[#b0b0b0]/30 p-5">
+        <div className="bg-white border border-[#A8D5F0]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#7a7a7a] text-white rounded-lg"><Receipt size={16} /></div>
+            <div className="p-2 bg-[#152a47] text-white rounded-lg"><Receipt size={16} /></div>
           </div>
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#b0b0b0] font-medium mt-2">Total Invoices</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#A8D5F0] font-medium mt-2">Total Invoices</p>
         </div>
-        <div className="bg-white border border-[#b0b0b0]/30 p-5">
+        <div className="bg-white border border-[#A8D5F0]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#7a7a7a] text-white rounded-lg"><Send size={16} /></div>
+            <div className="p-2 bg-[#152a47] text-white rounded-lg"><Send size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#7a7a7a] leading-none tracking-[-1px]">{loading ? '–' : stats.sent}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#b0b0b0] font-medium mt-2">Sent</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#152a47] leading-none tracking-[-1px]">{loading ? '–' : stats.sent}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#A8D5F0] font-medium mt-2">Sent</p>
         </div>
-        <div className="bg-white border border-[#b0b0b0]/30 p-5">
+        <div className="bg-white border border-[#A8D5F0]/30 p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#2d6a2d] text-white rounded-lg"><CheckCircle size={16} /></div>
           </div>
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#2d6a2d] leading-none tracking-[-1px]">{loading ? '–' : stats.paid}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#b0b0b0] font-medium mt-2">Paid</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#A8D5F0] font-medium mt-2">Paid</p>
         </div>
-        <div className="bg-white border border-[#b0b0b0]/30 p-5">
+        <div className="bg-white border border-[#A8D5F0]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#b0b0b0] text-white rounded-lg"><DollarSign size={16} /></div>
+            <div className="p-2 bg-[#A8D5F0] text-white rounded-lg"><DollarSign size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#b0b0b0] leading-none tracking-[-1px]">
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#A8D5F0] leading-none tracking-[-1px]">
             {loading
               ? '–'
               : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
                   stats.outstanding
                 )}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#b0b0b0] font-medium mt-2">Outstanding</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#A8D5F0] font-medium mt-2">Outstanding</p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white border border-[#b0b0b0]/30 p-6 mb-6">
+      <div className="bg-white border border-[#A8D5F0]/30 p-6 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#b0b0b0] mb-3">Search Invoices</label>
+            <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#A8D5F0] mb-3">Search Invoices</label>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#b0b0b0]/30">
-                <Search className="w-4 h-4 text-[#b0b0b0]" />
+              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A8D5F0]/30">
+                <Search className="w-4 h-4 text-[#A8D5F0]" />
               </div>
               <input
                 type="text"
                 placeholder="Search by number, client, or service..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#b0b0b0]/30 text-[#7a7a7a] placeholder-[#b0b0b0] text-sm focus:outline-none focus:border-[#7a7a7a] transition-colors rounded-lg"
+                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#A8D5F0]/30 text-[#152a47] placeholder-[#A8D5F0] text-sm focus:outline-none focus:border-[#152a47] transition-colors rounded-lg"
               />
             </div>
           </div>
           <div>
-            <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#b0b0b0] mb-3">Filter by Status</label>
+            <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#A8D5F0] mb-3">Filter by Status</label>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#b0b0b0]/30">
-                <Filter className="w-4 h-4 text-[#b0b0b0]" />
+              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A8D5F0]/30">
+                <Filter className="w-4 h-4 text-[#A8D5F0]" />
               </div>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#b0b0b0]/30 text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a] transition-colors rounded-lg appearance-none"
+                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#A8D5F0]/30 text-[#152a47] text-sm focus:outline-none focus:border-[#152a47] transition-colors rounded-lg appearance-none"
               >
                 {STATUS_OPTIONS.map((s) => (
                   <option key={s} value={s}>
@@ -285,37 +285,37 @@ export default function InvoicesPage() {
 
       {/* Table */}
       {loading ? (
-        <p className="text-[#b0b0b0] text-center py-8">Loading...</p>
+        <p className="text-[#A8D5F0] text-center py-8">Loading...</p>
       ) : filteredInvoices.length === 0 ? (
-        <div className="bg-white border border-[#b0b0b0]/30 p-8 text-center">
-          <p className="text-[#b0b0b0]">No invoices found. Create your first invoice above.</p>
+        <div className="bg-white border border-[#A8D5F0]/30 p-8 text-center">
+          <p className="text-[#A8D5F0]">No invoices found. Create your first invoice above.</p>
         </div>
       ) : (
-        <div className="bg-white border border-[#b0b0b0]/30 overflow-hidden">
+        <div className="bg-white border border-[#A8D5F0]/30 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-[#b0b0b0]/30">
+                <tr className="border-b border-[#A8D5F0]/30">
                   {['Invoice #', 'Client', 'Project', 'Status', 'Due Date', 'Total', 'Actions'].map((h) => (
                     <th
                       key={h}
-                      className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#b0b0b0]"
+                      className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#A8D5F0]"
                     >
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#8a8a8a]">
+              <tbody className="divide-y divide-[#0d1f3d]">
                 {filteredInvoices.map((inv) => {
                   const proj = projects.find((p) => p.id === inv.projectId)
                   return (
                     <tr key={inv.id} className="hover:bg-[#F8FAFB] transition-colors">
-                      <td className="px-4 py-3 font-semibold text-[#7a7a7a]">{inv.invoiceNumber}</td>
+                      <td className="px-4 py-3 font-semibold text-[#152a47]">{inv.invoiceNumber}</td>
                       <td className="px-4 py-3 text-[#a0a0a0]">
                         {inv.clientName || '—'}
                         {inv.clientCompany && (
-                          <div className="text-xs text-[#b0b0b0]">{inv.clientCompany}</div>
+                          <div className="text-xs text-[#A8D5F0]">{inv.clientCompany}</div>
                         )}
                       </td>
                       <td className="px-4 py-3 text-[#a0a0a0]">{inv.projectTitle || proj?.title || '—'}</td>
@@ -327,8 +327,8 @@ export default function InvoicesPage() {
                               : inv.status === 'overdue'
                                 ? 'bg-red-50 text-red-600'
                                 : inv.status === 'sent'
-                                  ? 'bg-[#7a7a7a]/10 text-[#7a7a7a]'
-                                  : 'bg-[#8a8a8a] text-[#a0a0a0]'
+                                  ? 'bg-[#152a47]/10 text-[#152a47]'
+                                  : 'bg-[#0d1f3d] text-[#a0a0a0]'
                           }`}
                         >
                           {STATUS_ICONS[inv.status]}
@@ -336,12 +336,12 @@ export default function InvoicesPage() {
                         </span>
                       </td>
                       <td className="px-4 py-3 text-[#a0a0a0]">{inv.dueDate || '—'}</td>
-                      <td className="px-4 py-3 text-[#7a7a7a] font-semibold">£{inv.total.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-[#152a47] font-semibold">£{inv.total.toLocaleString()}</td>
                       <td className="px-4 py-3">
                         <div className="flex gap-2">
                           <button
                             onClick={() => openView(inv)}
-                            className="p-1.5 hover:bg-[#8a8a8a] rounded-lg transition-colors text-[#b0b0b0] hover:text-[#7a7a7a]"
+                            className="p-1.5 hover:bg-[#0d1f3d] rounded-lg transition-colors text-[#A8D5F0] hover:text-[#152a47]"
                           >
                             <Eye size={16} />
                           </button>
@@ -349,7 +349,7 @@ export default function InvoicesPage() {
                             <button
                               onClick={() => sendInvoice(inv.id)}
                               disabled={sendingId === inv.id}
-                              className="p-1.5 hover:bg-[#8a8a8a] rounded-lg transition-colors text-[#b0b0b0] hover:text-[#7a7a7a] disabled:opacity-50"
+                              className="p-1.5 hover:bg-[#0d1f3d] rounded-lg transition-colors text-[#A8D5F0] hover:text-[#152a47] disabled:opacity-50"
                             >
                               {sendingId === inv.id ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                             </button>
@@ -357,13 +357,13 @@ export default function InvoicesPage() {
                           <a
                             href={`/api/invoices/${inv.id}/pdf`}
                             download
-                            className="p-1.5 hover:bg-[#8a8a8a] rounded-lg transition-colors text-[#b0b0b0] hover:text-[#7a7a7a] inline-flex"
+                            className="p-1.5 hover:bg-[#0d1f3d] rounded-lg transition-colors text-[#A8D5F0] hover:text-[#152a47] inline-flex"
                           >
                             <Download size={16} />
                           </a>
                           <button
                             onClick={() => deleteInvoice(inv.id)}
-                            className="p-1.5 hover:bg-[#8a8a8a] rounded-lg transition-colors text-[#b0b0b0] hover:text-red-500"
+                            className="p-1.5 hover:bg-[#0d1f3d] rounded-lg transition-colors text-[#A8D5F0] hover:text-red-500"
                           >
                             <Trash2 size={16} />
                           </button>
@@ -414,8 +414,8 @@ export default function InvoicesPage() {
                       : selectedInvoice.status === 'overdue'
                         ? 'bg-red-50 text-red-600'
                         : selectedInvoice.status === 'sent'
-                          ? 'bg-[#7a7a7a]/10 text-[#7a7a7a]'
-                          : 'bg-[#8a8a8a] text-[#a0a0a0]'
+                          ? 'bg-[#152a47]/10 text-[#152a47]'
+                          : 'bg-[#0d1f3d] text-[#a0a0a0]'
                   }`}
                 >
                   {STATUS_ICONS[selectedInvoice.status]}
@@ -437,33 +437,33 @@ export default function InvoicesPage() {
 
             {/* Client info */}
             {(selectedInvoice.clientName || selectedInvoice.projectTitle) && (
-              <div className="bg-[#F8FAFB] p-4 rounded-lg border border-[#8a8a8a] space-y-1">
+              <div className="bg-[#F8FAFB] p-4 rounded-lg border border-[#0d1f3d] space-y-1">
                 {selectedInvoice.clientName && (
-                  <div className="text-sm text-[#7a7a7a] font-semibold">{selectedInvoice.clientName}</div>
+                  <div className="text-sm text-[#152a47] font-semibold">{selectedInvoice.clientName}</div>
                 )}
                 {selectedInvoice.clientCompany && (
                   <div className="text-xs text-[#a0a0a0]">{selectedInvoice.clientCompany}</div>
                 )}
                 {selectedInvoice.clientEmail && (
-                  <div className="text-xs text-[#b0b0b0]">{selectedInvoice.clientEmail}</div>
+                  <div className="text-xs text-[#A8D5F0]">{selectedInvoice.clientEmail}</div>
                 )}
                 {selectedInvoice.projectTitle && (
-                  <div className="text-xs text-[#a0a0a0] pt-1 border-t border-[#8a8a8a] mt-1">{selectedInvoice.projectTitle}</div>
+                  <div className="text-xs text-[#a0a0a0] pt-1 border-t border-[#0d1f3d] mt-1">{selectedInvoice.projectTitle}</div>
                 )}
               </div>
             )}
 
-            <div className="bg-white border border-[#b0b0b0]/30 overflow-hidden">
+            <div className="bg-white border border-[#A8D5F0]/30 overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-[#b0b0b0]/30">
-                    <th className="px-4 py-2 text-left font-semibold text-[#7a7a7a]">Service</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#7a7a7a]">Qty</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#7a7a7a]">Price</th>
-                    <th className="px-4 py-2 text-right font-semibold text-[#7a7a7a]">Amount</th>
+                  <tr className="border-b border-[#A8D5F0]/30">
+                    <th className="px-4 py-2 text-left font-semibold text-[#152a47]">Service</th>
+                    <th className="px-4 py-2 text-right font-semibold text-[#152a47]">Qty</th>
+                    <th className="px-4 py-2 text-right font-semibold text-[#152a47]">Price</th>
+                    <th className="px-4 py-2 text-right font-semibold text-[#152a47]">Amount</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#8a8a8a]">
+                <tbody className="divide-y divide-[#0d1f3d]">
                   {selectedInvoice.lineItems.map((item, idx) => {
                     const isOldFormat = !!item.description
                     const name = isOldFormat ? item.description : item.serviceName
@@ -473,15 +473,15 @@ export default function InvoicesPage() {
                     const amount = isOldFormat ? item.amount : ((item.price || 0) * (item.quantity || 1))
                     return (
                     <tr key={idx}>
-                      <td className="px-4 py-2 text-[#7a7a7a]">
+                      <td className="px-4 py-2 text-[#152a47]">
                         <div className="font-medium">{name}</div>
                         {category && (
-                          <div className="text-xs text-[#b0b0b0]">{category}</div>
+                          <div className="text-xs text-[#A8D5F0]">{category}</div>
                         )}
                       </td>
                       <td className="px-4 py-2 text-right text-[#a0a0a0]">{qty}</td>
                       <td className="px-4 py-2 text-right text-[#a0a0a0]">£{Number(rate).toLocaleString()}</td>
-                      <td className="px-4 py-2 text-right font-semibold text-[#7a7a7a]">
+                      <td className="px-4 py-2 text-right font-semibold text-[#152a47]">
                         £{Number(amount).toLocaleString()}
                       </td>
                     </tr>
@@ -500,21 +500,21 @@ export default function InvoicesPage() {
 
             {/* Notes */}
             {selectedInvoice.notes && (
-              <div className="bg-[#F8FAFB] p-4 rounded-lg border border-[#8a8a8a]">
-                <p className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Notes</p>
+              <div className="bg-[#F8FAFB] p-4 rounded-lg border border-[#0d1f3d]">
+                <p className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Notes</p>
                 <p className="text-sm text-[#a0a0a0] whitespace-pre-wrap">{selectedInvoice.notes}</p>
               </div>
             )}
 
             {/* Status Workflow Buttons */}
-            <div className="border-t border-[#b0b0b0]/30 pt-4">
-              <p className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-3">Actions</p>
+            <div className="border-t border-[#A8D5F0]/30 pt-4">
+              <p className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-3">Actions</p>
               <div className="flex flex-wrap gap-2">
                 {selectedInvoice.status === 'draft' && (
                   <button
                     onClick={() => sendInvoice(selectedInvoice.id)}
                     disabled={sendingId === selectedInvoice.id}
-                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#7a7a7a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#7a7a7a] hover:bg-[#7a7a7a] hover:text-white transition disabled:opacity-50"
+                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#152a47] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#152a47] hover:bg-[#152a47] hover:text-white transition disabled:opacity-50"
                   >
                     {sendingId === selectedInvoice.id ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
                     Send Invoice
@@ -541,7 +541,7 @@ export default function InvoicesPage() {
                 {selectedInvoice.status === 'paid' && (
                   <button
                     onClick={() => updateInvoiceStatus(selectedInvoice.id, 'sent')}
-                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#b0b0b0]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#7a7a7a] hover:border-[#111] hover:text-[#111] transition"
+                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#A8D5F0]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#152a47] hover:border-[#111] hover:text-[#111] transition"
                   >
                     <RotateCcw size={14} />
                     Mark Unpaid
@@ -558,7 +558,7 @@ export default function InvoicesPage() {
                     </button>
                     <button
                       onClick={() => updateInvoiceStatus(selectedInvoice.id, 'draft')}
-                      className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#b0b0b0]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#7a7a7a] hover:border-[#111] hover:text-[#111] transition"
+                      className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#A8D5F0]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#152a47] hover:border-[#111] hover:text-[#111] transition"
                     >
                       <RotateCcw size={14} />
                       Reopen as Draft
@@ -568,7 +568,7 @@ export default function InvoicesPage() {
                 <a
                   href={`/api/invoices/${selectedInvoice.id}/pdf`}
                   download
-                  className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#b0b0b0]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#7a7a7a] hover:border-[#111] hover:text-[#111] transition"
+                  className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#A8D5F0]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#152a47] hover:border-[#111] hover:text-[#111] transition"
                 >
                   <Download size={14} />
                   Download PDF

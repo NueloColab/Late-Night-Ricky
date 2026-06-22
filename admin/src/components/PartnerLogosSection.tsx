@@ -44,7 +44,7 @@ export default function PartnerLogosSection({ defaultLogos, quote, attribution, 
     <section id="partnerships" className="textured-bg relative z-10 py-28 md:py-32 text-center pb-36 md:pb-28">
       <div className="relative z-10 max-w-[1200px] mx-auto px-6">
         <h2 className="font-serif text-[clamp(28px,4vw,48px)] italic text-white mb-4">&ldquo;{quote}&rdquo;</h2>
-        <p className="text-sm text-[#b0b0b0] mb-16 max-w-[500px] mx-auto">
+        <p className="text-sm text-[#A8D5F0] mb-16 max-w-[500px] mx-auto">
           — {attribution}{description ? `. ${description}` : ''}
         </p>
         <div className="grid grid-cols-3 gap-8 md:gap-12 max-w-[900px] mx-auto">
@@ -80,7 +80,7 @@ export default function PartnerLogosSection({ defaultLogos, quote, attribution, 
               href={pressPack}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-[#d0d0d0] hover:text-white transition"
+              className="text-sm text-[#C5E5F8] hover:text-white transition"
             >
               Download Press Pack
             </a>

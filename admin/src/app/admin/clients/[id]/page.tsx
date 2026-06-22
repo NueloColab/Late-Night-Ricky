@@ -109,8 +109,8 @@ export default function ClientDetailPage() {
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto py-12 text-center">
-        <Loader2 size={32} className="animate-spin mx-auto text-[#b0b0b0] mb-4" />
-        <p className="text-[#b0b0b0] text-sm">Loading client...</p>
+        <Loader2 size={32} className="animate-spin mx-auto text-[#A8D5F0] mb-4" />
+        <p className="text-[#A8D5F0] text-sm">Loading client...</p>
       </div>
     )
   }
@@ -138,7 +138,7 @@ export default function ClientDetailPage() {
       {/* Back Link */}
       <Link
         href="/admin/clients"
-        className="inline-flex items-center gap-2 text-sm text-[#7a7a7a] hover:text-[#111] transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-[#152a47] hover:text-[#111] transition-colors"
       >
         <ArrowLeft size={14} />
         <span>Back to Clients</span>
@@ -148,7 +148,7 @@ export default function ClientDetailPage() {
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-px bg-[#b0b0b0]" />
+            <div className="w-10 h-px bg-[#A8D5F0]" />
             <p className="text-xs uppercase tracking-widest text-[#a0a0a0]">Client Details</p>
           </div>
           <h1 className="text-3xl md:text-4xl font-light text-[#111] mb-2">{client.name}</h1>
@@ -163,7 +163,7 @@ export default function ClientDetailPage() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-[#7a7a7a] text-white hover:bg-[#3a3a3a]"
+                className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-[#152a47] text-white hover:bg-[#0d1f3d]"
               >
                 <Save size={14} />
                 <span>{saving ? 'Saving...' : 'Save'}</span>
@@ -173,7 +173,7 @@ export default function ClientDetailPage() {
                   setForm(client)
                   setIsEditing(false)
                 }}
-                className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#b0b0b0] text-[#111] hover:border-[#7a7a7a]"
+                className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#A8D5F0] text-[#111] hover:border-[#152a47]"
               >
                 <X size={14} />
                 <span>Cancel</span>
@@ -182,7 +182,7 @@ export default function ClientDetailPage() {
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#b0b0b0] text-[#111] hover:border-[#7a7a7a]"
+              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#A8D5F0] text-[#111] hover:border-[#152a47]"
             >
               <Edit2 size={14} />
               <span>Edit</span>
@@ -193,30 +193,30 @@ export default function ClientDetailPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-white border border-[#8a8a8a] p-6 text-center">
+        <div className="bg-white border border-[#0d1f3d] p-6 text-center">
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">
             {quotes.length}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#b0b0b0] font-medium mt-2">Quotes</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#A8D5F0] font-medium mt-2">Quotes</p>
         </div>
-        <div className="bg-white border border-[#8a8a8a] p-6 text-center">
+        <div className="bg-white border border-[#0d1f3d] p-6 text-center">
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">
             {invoices.length}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#b0b0b0] font-medium mt-2">Invoices</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#A8D5F0] font-medium mt-2">Invoices</p>
         </div>
-        <div className="bg-white border border-[#8a8a8a] p-6 text-center">
+        <div className="bg-white border border-[#0d1f3d] p-6 text-center">
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">
             {client.totalRevenue ? formatCurrency(client.totalRevenue) : '—'}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#b0b0b0] font-medium mt-2">Revenue</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#A8D5F0] font-medium mt-2">Revenue</p>
         </div>
       </div>
 
       {/* Client Info */}
-      <div className="bg-white border border-[#8a8a8a] p-6">
+      <div className="bg-white border border-[#0d1f3d] p-6">
         <div className="flex items-center gap-2 mb-5">
-          <div className="p-2 bg-[#7a7a7a] text-white">
+          <div className="p-2 bg-[#152a47] text-white">
             <Mail size={16} />
           </div>
           <h3 className="text-lg font-light text-[#111]">Contact Information</h3>
@@ -229,7 +229,7 @@ export default function ClientDetailPage() {
               <input
                 value={form.name || ''}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border border-[#8a8a8a] text-[#111] text-sm focus:outline-none focus:border-[#7a7a7a]"
+                className="w-full px-4 py-2.5 bg-white border border-[#0d1f3d] text-[#111] text-sm focus:outline-none focus:border-[#152a47]"
               />
             </div>
             <div>
@@ -238,7 +238,7 @@ export default function ClientDetailPage() {
                 type="email"
                 value={form.email || ''}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border border-[#8a8a8a] text-[#111] text-sm focus:outline-none focus:border-[#7a7a7a]"
+                className="w-full px-4 py-2.5 bg-white border border-[#0d1f3d] text-[#111] text-sm focus:outline-none focus:border-[#152a47]"
               />
             </div>
             <div>
@@ -246,7 +246,7 @@ export default function ClientDetailPage() {
               <input
                 value={form.phone || ''}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border border-[#8a8a8a] text-[#111] text-sm focus:outline-none focus:border-[#7a7a7a]"
+                className="w-full px-4 py-2.5 bg-white border border-[#0d1f3d] text-[#111] text-sm focus:outline-none focus:border-[#152a47]"
               />
             </div>
             <div>
@@ -254,7 +254,7 @@ export default function ClientDetailPage() {
               <input
                 value={form.instagram || ''}
                 onChange={(e) => setForm({ ...form, instagram: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border border-[#8a8a8a] text-[#111] text-sm focus:outline-none focus:border-[#7a7a7a]"
+                className="w-full px-4 py-2.5 bg-white border border-[#0d1f3d] text-[#111] text-sm focus:outline-none focus:border-[#152a47]"
               />
             </div>
             <div className="md:col-span-2">
@@ -263,7 +263,7 @@ export default function ClientDetailPage() {
                 value={form.notes || ''}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
                 rows={3}
-                className="w-full px-4 py-2.5 bg-white border border-[#8a8a8a] text-[#111] text-sm focus:outline-none focus:border-[#7a7a7a] resize-none"
+                className="w-full px-4 py-2.5 bg-white border border-[#0d1f3d] text-[#111] text-sm focus:outline-none focus:border-[#152a47] resize-none"
               />
             </div>
           </div>
@@ -292,24 +292,24 @@ export default function ClientDetailPage() {
       </div>
 
       {/* Quotes */}
-      <div className="bg-white border border-[#8a8a8a] overflow-hidden">
-        <div className="p-6 border-b border-[#8a8a8a]">
+      <div className="bg-white border border-[#0d1f3d] overflow-hidden">
+        <div className="p-6 border-b border-[#0d1f3d]">
           <div className="flex items-center gap-2">
-            <div className="p-2 bg-[#7a7a7a] text-white">
+            <div className="p-2 bg-[#152a47] text-white">
               <FileText size={16} />
             </div>
             <h3 className="text-lg font-light text-[#111]">Quotes</h3>
-            <span className="ml-2 text-xs px-2.5 py-1 rounded-full bg-[#7a7a7a1a] text-[#7a7a7a] font-medium">
+            <span className="ml-2 text-xs px-2.5 py-1 rounded-full bg-[#152a471a] text-[#152a47] font-medium">
               {quotes.length}
             </span>
           </div>
         </div>
         <div className="overflow-x-auto">
           {quotes.length === 0 ? (
-            <p className="p-6 text-sm text-[#b0b0b0]">No quotes yet.</p>
+            <p className="p-6 text-sm text-[#A8D5F0]">No quotes yet.</p>
           ) : (
             <table className="w-full">
-              <thead className="bg-[#F8FAFB] border-b border-[#8a8a8a]">
+              <thead className="bg-[#F8FAFB] border-b border-[#0d1f3d]">
                 <tr>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-[#111] uppercase tracking-widest">Quote</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-[#111] uppercase tracking-widest">Project</th>
@@ -318,11 +318,11 @@ export default function ClientDetailPage() {
                   <th className="px-6 py-4 text-left text-xs font-semibold text-[#111] uppercase tracking-widest">Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#8a8a8a]">
+              <tbody className="divide-y divide-[#0d1f3d]">
                 {quotes.map((q) => (
                   <tr key={q.id} className="hover:bg-[#F8FAFB] transition-colors">
                     <td className="px-6 py-4">
-                      <Link href={`/admin/quotes/${q.id}`} className="text-sm font-medium text-[#7a7a7a] hover:underline">
+                      <Link href={`/admin/quotes/${q.id}`} className="text-sm font-medium text-[#152a47] hover:underline">
                         {q.quoteNumber || `QT-${String(q.id).padStart(3, '0')}`}
                       </Link>
                     </td>
@@ -345,24 +345,24 @@ export default function ClientDetailPage() {
       </div>
 
       {/* Invoices */}
-      <div className="bg-white border border-[#8a8a8a] overflow-hidden">
-        <div className="p-6 border-b border-[#8a8a8a]">
+      <div className="bg-white border border-[#0d1f3d] overflow-hidden">
+        <div className="p-6 border-b border-[#0d1f3d]">
           <div className="flex items-center gap-2">
-            <div className="p-2 bg-[#7a7a7a] text-white">
+            <div className="p-2 bg-[#152a47] text-white">
               <Receipt size={16} />
             </div>
             <h3 className="text-lg font-light text-[#111]">Invoices</h3>
-            <span className="ml-2 text-xs px-2.5 py-1 rounded-full bg-[#7a7a7a1a] text-[#7a7a7a] font-medium">
+            <span className="ml-2 text-xs px-2.5 py-1 rounded-full bg-[#152a471a] text-[#152a47] font-medium">
               {invoices.length}
             </span>
           </div>
         </div>
         <div className="overflow-x-auto">
           {invoices.length === 0 ? (
-            <p className="p-6 text-sm text-[#b0b0b0]">No invoices yet.</p>
+            <p className="p-6 text-sm text-[#A8D5F0]">No invoices yet.</p>
           ) : (
             <table className="w-full">
-              <thead className="bg-[#F8FAFB] border-b border-[#8a8a8a]">
+              <thead className="bg-[#F8FAFB] border-b border-[#0d1f3d]">
                 <tr>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-[#111] uppercase tracking-widest">Invoice</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-[#111] uppercase tracking-widest">Project</th>
@@ -371,11 +371,11 @@ export default function ClientDetailPage() {
                   <th className="px-6 py-4 text-left text-xs font-semibold text-[#111] uppercase tracking-widest">Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#8a8a8a]">
+              <tbody className="divide-y divide-[#0d1f3d]">
                 {invoices.map((inv) => (
                   <tr key={inv.id} className="hover:bg-[#F8FAFB] transition-colors">
                     <td className="px-6 py-4">
-                      <Link href={`/admin/invoices/${inv.id}`} className="text-sm font-medium text-[#7a7a7a] hover:underline">
+                      <Link href={`/admin/invoices/${inv.id}`} className="text-sm font-medium text-[#152a47] hover:underline">
                         {inv.invoiceNumber || `INV-${String(inv.id).padStart(3, '0')}`}
                       </Link>
                     </td>

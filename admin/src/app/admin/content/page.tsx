@@ -23,7 +23,7 @@ const contentPages = [
     href: '/admin/pages/home',
     description: 'Hero, video, reach, shows, partners, radio, clients, share music, contact',
     icon: Home,
-    color: '#7a7a7a',
+    color: '#152a47',
     sections: ['Hero', 'Video', 'Reach', 'Shows', 'Partners', 'Radio', 'Clients', 'Contact'],
   },
   {
@@ -31,7 +31,7 @@ const contentPages = [
     href: '/admin/pages/about',
     description: 'Portrait, bio, stats',
     icon: User,
-    color: '#b0b0b0',
+    color: '#A8D5F0',
     sections: ['Portrait', 'Bio', 'Stats'],
   },
   {
@@ -39,7 +39,7 @@ const contentPages = [
     href: '/admin/pages/showreel',
     description: 'Video showreels and highlights',
     icon: Video,
-    color: '#7a7a7a',
+    color: '#152a47',
     sections: ['Videos', 'Highlights'],
   },
   {
@@ -47,7 +47,7 @@ const contentPages = [
     href: '/admin/pages/contact',
     description: 'Contact form, social links, booking info',
     icon: Mail,
-    color: '#b0b0b0',
+    color: '#A8D5F0',
     sections: ['Contact Info', 'Social Links', 'Booking'],
   },
 ]
@@ -58,7 +58,7 @@ const globalPages = [
     href: '/admin/global/nav',
     description: 'Site navigation links and logo',
     icon: Navigation,
-    color: '#7a7a7a',
+    color: '#152a47',
     sections: ['Nav Items', 'Logo'],
   },
   {
@@ -66,7 +66,7 @@ const globalPages = [
     href: '/admin/global/seo',
     description: 'Page titles, descriptions, favicon',
     icon: Search,
-    color: '#b0b0b0',
+    color: '#A8D5F0',
     sections: ['Meta Tags', 'Favicon', 'Open Graph'],
   },
 ]
@@ -77,7 +77,7 @@ const mediaPages = [
     href: '/admin/media',
     description: 'Images, videos and files',
     icon: Image,
-    color: '#7a7a7a',
+    color: '#152a47',
     sections: ['Uploads', 'Organise'],
   },
   {
@@ -85,7 +85,7 @@ const mediaPages = [
     href: '/admin/submissions',
     description: 'Music submissions inbox',
     icon: FileText,
-    color: '#b0b0b0',
+    color: '#A8D5F0',
     sections: ['Inbox', 'Reviewed'],
   },
 ]
@@ -121,7 +121,7 @@ export default function ContentPage() {
     <div className="max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-12">
-        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-4">Content Management</p>
+        <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">Content Management</p>
         <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">
           Content
         </h1>
@@ -129,14 +129,14 @@ export default function ContentPage() {
       </div>
 
       {/* Database Setup */}
-      <div className="bg-white border border-[#b0b0b0]/30 p-8 mb-10">
+      <div className="bg-white border border-[#A8D5F0]/30 p-8 mb-10">
         <div className="flex items-center gap-3 mb-4">
-          <Database size={18} className="text-[#7a7a7a]" />
-          <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold">Database Setup</p>
+          <Database size={18} className="text-[#152a47]" />
+          <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold">Database Setup</p>
         </div>
         <p className="text-sm text-[#a0a0a0] mb-6 font-semibold uppercase tracking-[0.5px]">
           First time? Seed the database with default content from your existing pages.
-          <span className="block mt-1 text-xs text-[#b0b0b0] font-normal normal-case tracking-normal">
+          <span className="block mt-1 text-xs text-[#A8D5F0] font-normal normal-case tracking-normal">
             “Seed Missing Content” only fills empty tables — it will NOT overwrite anything you’ve already set up.
           </span>
         </p>
@@ -144,7 +144,7 @@ export default function ContentPage() {
           <button
             onClick={() => handleSeed(false)}
             disabled={seeding}
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition disabled:opacity-50"
           >
             {seeding ? <RefreshCw size={14} className="animate-spin" /> : <Database size={14} />}
             {seeding ? 'Seeding...' : 'Seed Missing Content Only'}
@@ -167,7 +167,7 @@ export default function ContentPage() {
 
       {/* Pages */}
       <div className="mb-10">
-        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-6">Pages</p>
+        <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-6">Pages</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {contentPages.map((page) => {
             const Icon = page.icon
@@ -175,14 +175,14 @@ export default function ContentPage() {
               <Link
                 key={page.href}
                 href={page.href}
-                className="group bg-white border border-[#b0b0b0]/30 p-6 hover:border-[#7a7a7a] transition h-full flex flex-col"
+                className="group bg-white border border-[#A8D5F0]/30 p-6 hover:border-[#152a47] transition h-full flex flex-col"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="p-3 text-white" style={{ backgroundColor: page.color }}>
                     <Icon size={18} />
                   </div>
                 </div>
-                <h3 className="text-lg font-black text-[#111] group-hover:text-[#7a7a7a] transition-colors mb-1 uppercase tracking-[-0.5px]">
+                <h3 className="text-lg font-black text-[#111] group-hover:text-[#152a47] transition-colors mb-1 uppercase tracking-[-0.5px]">
                   {page.label}
                 </h3>
                 <p className="text-sm text-[#a0a0a0] mb-4 font-semibold uppercase tracking-[0.5px]">{page.description}</p>
@@ -190,7 +190,7 @@ export default function ContentPage() {
                   {page.sections.map((section) => (
                     <span
                       key={section}
-                      className="text-[10px] uppercase tracking-[2px] text-[#b0b0b0] border border-[#b0b0b0]/30 px-2 py-0.5 rounded"
+                      className="text-[10px] uppercase tracking-[2px] text-[#A8D5F0] border border-[#A8D5F0]/30 px-2 py-0.5 rounded"
                     >
                       {section}
                     </span>
@@ -204,7 +204,7 @@ export default function ContentPage() {
 
       {/* Global Settings */}
       <div className="mb-10">
-        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-6">Global Settings</p>
+        <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-6">Global Settings</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {globalPages.map((page) => {
             const Icon = page.icon
@@ -212,14 +212,14 @@ export default function ContentPage() {
               <Link
                 key={page.href}
                 href={page.href}
-                className="group bg-white border border-[#b0b0b0]/30 p-6 hover:border-[#b0b0b0] transition h-full flex flex-col"
+                className="group bg-white border border-[#A8D5F0]/30 p-6 hover:border-[#A8D5F0] transition h-full flex flex-col"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="p-3 text-white" style={{ backgroundColor: page.color }}>
                     <Icon size={18} />
                   </div>
                 </div>
-                <h3 className="text-lg font-black text-[#111] group-hover:text-[#b0b0b0] transition-colors mb-1 uppercase tracking-[-0.5px]">
+                <h3 className="text-lg font-black text-[#111] group-hover:text-[#A8D5F0] transition-colors mb-1 uppercase tracking-[-0.5px]">
                   {page.label}
                 </h3>
                 <p className="text-sm text-[#a0a0a0] mb-4 font-semibold uppercase tracking-[0.5px]">{page.description}</p>
@@ -227,7 +227,7 @@ export default function ContentPage() {
                   {page.sections.map((section) => (
                     <span
                       key={section}
-                      className="text-[10px] uppercase tracking-[2px] text-[#b0b0b0] border border-[#b0b0b0]/30 px-2 py-0.5 rounded"
+                      className="text-[10px] uppercase tracking-[2px] text-[#A8D5F0] border border-[#A8D5F0]/30 px-2 py-0.5 rounded"
                     >
                       {section}
                     </span>
@@ -241,7 +241,7 @@ export default function ContentPage() {
 
       {/* Media */}
       <div>
-        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-6">Media & Data</p>
+        <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-6">Media & Data</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {mediaPages.map((page) => {
             const Icon = page.icon
@@ -249,14 +249,14 @@ export default function ContentPage() {
               <Link
                 key={page.href}
                 href={page.href}
-                className="group bg-white border border-[#b0b0b0]/30 p-6 hover:border-[#7a7a7a] transition h-full flex flex-col"
+                className="group bg-white border border-[#A8D5F0]/30 p-6 hover:border-[#152a47] transition h-full flex flex-col"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="p-3 text-white" style={{ backgroundColor: page.color }}>
                     <Icon size={18} />
                   </div>
                 </div>
-                <h3 className="text-lg font-black text-[#111] group-hover:text-[#7a7a7a] transition-colors mb-1 uppercase tracking-[-0.5px]">
+                <h3 className="text-lg font-black text-[#111] group-hover:text-[#152a47] transition-colors mb-1 uppercase tracking-[-0.5px]">
                   {page.label}
                 </h3>
                 <p className="text-sm text-[#a0a0a0] mb-4 font-semibold uppercase tracking-[0.5px]">{page.description}</p>
@@ -264,7 +264,7 @@ export default function ContentPage() {
                   {page.sections.map((section) => (
                     <span
                       key={section}
-                      className="text-[10px] uppercase tracking-[2px] text-[#b0b0b0] border border-[#b0b0b0]/30 px-2 py-0.5 rounded"
+                      className="text-[10px] uppercase tracking-[2px] text-[#A8D5F0] border border-[#A8D5F0]/30 px-2 py-0.5 rounded"
                     >
                       {section}
                     </span>

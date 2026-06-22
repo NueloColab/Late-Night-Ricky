@@ -61,8 +61,8 @@ export default function ClientAutocomplete({
   return (
     <div ref={containerRef} className={`relative ${className}`}>
       <div className="relative">
-        <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#b0b0b0]/30">
-          <Search className="w-4 h-4 text-[#b0b0b0]" />
+        <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A8D5F0]/30">
+          <Search className="w-4 h-4 text-[#A8D5F0]" />
         </div>
         <input
           type="text"
@@ -73,7 +73,7 @@ export default function ClientAutocomplete({
           }}
           onFocus={() => setIsOpen(true)}
           placeholder={placeholder}
-          className="w-full pl-14 pr-10 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a] transition-colors"
+          className="w-full pl-14 pr-10 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-[#152a47] text-sm focus:outline-none focus:border-[#152a47] transition-colors"
         />
         {value && (
           <button
@@ -82,7 +82,7 @@ export default function ClientAutocomplete({
               onChange('')
               setIsOpen(false)
             }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#b0b0b0] hover:text-[#7a7a7a]"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A8D5F0] hover:text-[#152a47]"
           >
             <X size={14} />
           </button>
@@ -90,11 +90,11 @@ export default function ClientAutocomplete({
       </div>
 
       {isOpen && (
-        <div className="absolute z-50 mt-1 w-full bg-white border border-[#b0b0b0]/30 rounded-lg shadow-lg max-h-60 overflow-auto">
+        <div className="absolute z-50 mt-1 w-full bg-white border border-[#A8D5F0]/30 rounded-lg shadow-lg max-h-60 overflow-auto">
           {loading ? (
-            <div className="px-4 py-3 text-sm text-[#b0b0b0]">Loading...</div>
+            <div className="px-4 py-3 text-sm text-[#A8D5F0]">Loading...</div>
           ) : filtered.length === 0 ? (
-            <div className="px-4 py-3 text-sm text-[#b0b0b0]">
+            <div className="px-4 py-3 text-sm text-[#A8D5F0]">
               {value ? 'No matching clients' : 'Type to search clients'}
             </div>
           ) : (
@@ -109,9 +109,9 @@ export default function ClientAutocomplete({
                 }}
                 className="w-full text-left px-4 py-2.5 hover:bg-[#F8FAFB] transition-colors text-sm"
               >
-                <div className="font-medium text-[#7a7a7a]">{client.name}</div>
+                <div className="font-medium text-[#152a47]">{client.name}</div>
                 {client.email && (
-                  <div className="text-xs text-[#b0b0b0]">{client.email}</div>
+                  <div className="text-xs text-[#A8D5F0]">{client.email}</div>
                 )}
               </button>
             ))

@@ -75,7 +75,7 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
           <h2 className="heading text-[clamp(36px,5vw,56px)] mb-4 text-white">{headline}</h2>
           <div className="max-w-[600px] mx-auto border-2 border-white p-12 text-center">
             <p className="text-2xl font-black uppercase tracking-[-1px] text-white mb-2">Track Sent!</p>
-            <p className="text-sm text-[#b0b0b0]">Thanks for sharing. Your music has been uploaded successfully.</p>
+            <p className="text-sm text-[#A8D5F0]">Thanks for sharing. Your music has been uploaded successfully.</p>
             <button
               onClick={() => { setStatus('idle'); setShowForm(false); }}
               className="mt-6 px-8 py-3 border-2 border-white text-white text-sm font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition"
@@ -116,11 +116,11 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
               className="hidden"
               onChange={(e) => handleFile(e.target.files?.[0] || null)}
             />
-            <button type="button" className="inline-block px-10 py-4 bg-white text-[#111] text-sm font-semibold uppercase tracking-[2px] hover:bg-[#b0b0b0] transition">
+            <button type="button" className="inline-block px-10 py-4 bg-white text-[#111] text-sm font-semibold uppercase tracking-[2px] hover:bg-[#A8D5F0] transition">
               {file ? 'Change track' : 'Upload your track'}
             </button>
-            <p className="mt-4 text-sm text-[#b0b0b0]">Click the button and upload your file in mp3 320 kbps</p>
-            <p className="mt-2 text-xs text-[#d0d0d0]">Max 20MB — MP3 or WAV only</p>
+            <p className="mt-4 text-sm text-[#A8D5F0]">Click the button and upload your file in mp3 320 kbps</p>
+            <p className="mt-2 text-xs text-[#C5E5F8]">Max 20MB — MP3 or WAV only</p>
             {file && (
               <p className="mt-4 text-sm text-white font-medium">Selected: {file.name}</p>
             )}
@@ -135,21 +135,21 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email *"
                 required
-                className="w-full px-5 py-3 border-2 border-white/50 text-white placeholder-[#b0b0b0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-white bg-transparent"
+                className="w-full px-5 py-3 border-2 border-white/50 text-white placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-white bg-transparent"
               />
               <input
                 type="text"
                 value={artistName}
                 onChange={(e) => setArtistName(e.target.value)}
                 placeholder="Artist name"
-                className="w-full px-5 py-3 border-2 border-white/50 text-white placeholder-[#b0b0b0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-white bg-transparent"
+                className="w-full px-5 py-3 border-2 border-white/50 text-white placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-white bg-transparent"
               />
               <input
                 type="text"
                 value={trackTitle}
                 onChange={(e) => setTrackTitle(e.target.value)}
                 placeholder="Track title"
-                className="w-full px-5 py-3 border-2 border-white/50 text-white placeholder-[#b0b0b0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-white bg-transparent"
+                className="w-full px-5 py-3 border-2 border-white/50 text-white placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-white bg-transparent"
               />
             </div>
           </div>
@@ -161,7 +161,7 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
           <button
             type="submit"
             disabled={submitting || !file}
-            className="inline-block px-10 py-4 bg-white text-[#111] text-sm font-semibold uppercase tracking-[2px] hover:bg-[#b0b0b0] transition w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-block px-10 py-4 bg-white text-[#111] text-sm font-semibold uppercase tracking-[2px] hover:bg-[#A8D5F0] transition w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? 'Uploading...' : 'Submit Track'}
           </button>

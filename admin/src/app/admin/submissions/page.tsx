@@ -25,11 +25,11 @@ const statusLabels: Record<string, string> = {
 }
 
 const statusStyles: Record<string, { bg: string; text: string; border: string }> = {
-  new:        { bg: '#d0d0d020', text: '#7a7a7a', border: '#d0d0d040' },
-  reviewed:   { bg: '#b0b0b020', text: '#7a7a7a', border: '#b0b0b040' },
-  shortlisted:{ bg: '#7a7a7a',   text: '#fff',    border: '#7a7a7a' },
+  new:        { bg: '#C5E5F820', text: '#152a47', border: '#C5E5F840' },
+  reviewed:   { bg: '#A8D5F020', text: '#152a47', border: '#A8D5F040' },
+  shortlisted:{ bg: '#152a47',   text: '#fff',    border: '#152a47' },
   accepted:   { bg: '#2d6a2d20', text: '#2d6a2d', border: '#2d6a2d40' },
-  rejected:   { bg: '#b0b0b020', text: '#a0a0a0', border: '#b0b0b040' },
+  rejected:   { bg: '#A8D5F020', text: '#a0a0a0', border: '#A8D5F040' },
 }
 
 export default function SubmissionsPage() {
@@ -162,7 +162,7 @@ export default function SubmissionsPage() {
     <div className="max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-12">
-        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-4">Music Submissions</p>
+        <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">Music Submissions</p>
         <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">
           Submissions
         </h1>
@@ -177,8 +177,8 @@ export default function SubmissionsPage() {
             onClick={() => setFilter(status)}
             className={`px-2 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[1px] transition-all border ${
               filter === status
-                ? 'bg-[#7a7a7a] text-white border-[#7a7a7a]'
-                : 'bg-white text-[#b0b0b0] border-[#b0b0b0]/30 hover:border-[#7a7a7a] hover:text-[#7a7a7a]'
+                ? 'bg-[#152a47] text-white border-[#152a47]'
+                : 'bg-white text-[#A8D5F0] border-[#A8D5F0]/30 hover:border-[#152a47] hover:text-[#152a47]'
             }`}
           >
             {status === 'all' ? 'All' : statusLabels[status]}
@@ -188,9 +188,9 @@ export default function SubmissionsPage() {
 
       {/* Submissions */}
       {loading ? (
-        <div className="text-center py-20 text-[#b0b0b0]">Loading submissions...</div>
+        <div className="text-center py-20 text-[#A8D5F0]">Loading submissions...</div>
       ) : submissions.length === 0 ? (
-        <div className="text-center py-20 text-[#b0b0b0]">No submissions found.</div>
+        <div className="text-center py-20 text-[#A8D5F0]">No submissions found.</div>
       ) : (
         <div className="space-y-3">
           {submissions.map((s) => {
@@ -202,7 +202,7 @@ export default function SubmissionsPage() {
               <div
                 key={s.id}
                 className={`bg-white border transition-all duration-200 ${
-                  isExpanded ? 'border-[#7a7a7a]' : 'border-[#b0b0b0]/30 hover:border-[#b0b0b0]'
+                  isExpanded ? 'border-[#152a47]' : 'border-[#A8D5F0]/30 hover:border-[#A8D5F0]'
                 }`}
               >
                 {/* Collapsed Row — Single Line */}
@@ -219,9 +219,9 @@ export default function SubmissionsPage() {
                     disabled={!s.filePath}
                     className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                       isPlaying
-                        ? 'bg-[#7a7a7a] text-white'
+                        ? 'bg-[#152a47] text-white'
                         : s.filePath
-                        ? 'bg-[#8a8a8a] text-[#7a7a7a] hover:bg-[#7a7a7a] hover:text-white'
+                        ? 'bg-[#0d1f3d] text-[#152a47] hover:bg-[#152a47] hover:text-white'
                         : 'bg-gray-100 text-gray-300 cursor-not-allowed'
                     }`}
                   >
@@ -230,7 +230,7 @@ export default function SubmissionsPage() {
 
                   {/* Info — All Inline */}
                   <div className="flex-1 min-w-0 flex items-center gap-3">
-                    <span className="text-sm font-semibold text-[#7a7a7a] truncate">
+                    <span className="text-sm font-semibold text-[#152a47] truncate">
                       {s.trackTitle || 'Untitled Track'}
                     </span>
                     <span
@@ -243,17 +243,17 @@ export default function SubmissionsPage() {
                     >
                       {statusLabels[s.status]}
                     </span>
-                    <span className="hidden md:flex items-center gap-1 text-xs text-[#b0b0b0]">
+                    <span className="hidden md:flex items-center gap-1 text-xs text-[#A8D5F0]">
                       <User size={11} /> {s.artistName || 'Unknown Artist'}
                     </span>
-                    <span className="hidden md:flex items-center gap-1 text-xs text-[#b0b0b0]">
+                    <span className="hidden md:flex items-center gap-1 text-xs text-[#A8D5F0]">
                       <Mail size={11} /> {s.email}
                     </span>
-                    <span className="hidden lg:flex items-center gap-1 text-xs text-[#b0b0b0]">
+                    <span className="hidden lg:flex items-center gap-1 text-xs text-[#A8D5F0]">
                       <Calendar size={11} /> {formatDate(s.createdAt)}
                     </span>
                     {s.fileSize && (
-                      <span className="hidden lg:flex items-center gap-1 text-xs text-[#b0b0b0]">
+                      <span className="hidden lg:flex items-center gap-1 text-xs text-[#A8D5F0]">
                         <FileAudio size={11} /> {formatSize(s.fileSize)}
                       </span>
                     )}
@@ -266,7 +266,7 @@ export default function SubmissionsPage() {
                         href={s.filePath}
                         download={s.fileName || `${s.artistName || 'track'} - ${s.trackTitle || 'demo'}.mp3`}
                         onClick={(e) => e.stopPropagation()}
-                        className="w-9 h-9 rounded-full border border-[#b0b0b0]/40 flex items-center justify-center text-[#b0b0b0] hover:bg-[#7a7a7a] hover:text-white hover:border-[#7a7a7a] transition"
+                        className="w-9 h-9 rounded-full border border-[#A8D5F0]/40 flex items-center justify-center text-[#A8D5F0] hover:bg-[#152a47] hover:text-white hover:border-[#152a47] transition"
                         title="Download"
                       >
                         <Download size={14} />
@@ -277,38 +277,38 @@ export default function SubmissionsPage() {
                         e.stopPropagation()
                         deleteSubmission(s.id)
                       }}
-                      className="w-10 h-10 rounded-full border border-red-200 flex items-center justify-center text-[#b0b0b0] hover:bg-red-50 hover:text-red-500 hover:border-red-300 transition"
+                      className="w-10 h-10 rounded-full border border-red-200 flex items-center justify-center text-[#A8D5F0] hover:bg-red-50 hover:text-red-500 hover:border-red-300 transition"
                       title="Delete"
                     >
                       <Trash2 size={16} />
                     </button>
 
                     <div className="w-6 flex items-center justify-center">
-                      {isExpanded ? <ChevronUp size={16} className="text-[#b0b0b0]" /> : <ChevronDown size={16} className="text-[#b0b0b0]" />}
+                      {isExpanded ? <ChevronUp size={16} className="text-[#A8D5F0]" /> : <ChevronDown size={16} className="text-[#A8D5F0]" />}
                     </div>
                   </div>
                 </div>
 
                 {/* Expanded Detail */}
                 {isExpanded && (
-                  <div className="border-t border-[#8a8a8a] px-5 py-4">
+                  <div className="border-t border-[#0d1f3d] px-5 py-4">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {/* Left: Audio Player */}
                       <div className="space-y-4">
                         {s.filePath ? (
                           <>
-                            <div className="bg-[#3a3a3a] rounded-lg p-5 text-white">
+                            <div className="bg-[#0d1f3d] rounded-lg p-5 text-white">
                               <div className="flex items-center gap-4 mb-4">
                                 <div className="w-14 h-14 bg-white/10 rounded-lg flex items-center justify-center">
-                                  <Music size={24} className="text-[#d0d0d0]" />
+                                  <Music size={24} className="text-[#C5E5F8]" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <p className="text-sm font-semibold truncate">{s.trackTitle || 'Untitled Track'}</p>
-                                  <p className="text-xs text-[#d0d0d0]">{s.artistName || 'Unknown Artist'}</p>
+                                  <p className="text-xs text-[#C5E5F8]">{s.artistName || 'Unknown Artist'}</p>
                                 </div>
                                 <button
                                   onClick={() => togglePlay(s)}
-                                  className="w-12 h-12 rounded-full bg-white text-[#3a3a3a] flex items-center justify-center hover:bg-[#d0d0d0] transition"
+                                  className="w-12 h-12 rounded-full bg-white text-[#0d1f3d] flex items-center justify-center hover:bg-[#C5E5F8] transition"
                                 >
                                   {isPlaying ? <Pause size={20} /> : <Play size={20} />}
                                 </button>
@@ -316,7 +316,7 @@ export default function SubmissionsPage() {
 
                               {/* Progress Bar */}
                               <div className="flex items-center gap-3">
-                                <span className="text-xs text-[#d0d0d0] w-10 text-right">
+                                <span className="text-xs text-[#C5E5F8] w-10 text-right">
                                   {formatTime(audioProgress)}
                                 </span>
                                 <div className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
@@ -325,7 +325,7 @@ export default function SubmissionsPage() {
                                     style={{ width: `${audioDuration ? (audioProgress / audioDuration) * 100 : 0}%` }}
                                   />
                                 </div>
-                                <span className="text-xs text-[#d0d0d0] w-10">
+                                <span className="text-xs text-[#C5E5F8] w-10">
                                   {formatTime(audioDuration)}
                                 </span>
                               </div>
@@ -335,7 +335,7 @@ export default function SubmissionsPage() {
                               <a
                                 href={s.filePath}
                                 download={s.fileName || `${s.artistName || 'track'} - ${s.trackTitle || 'demo'}.mp3`}
-                                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#7a7a7a] text-white text-sm font-semibold uppercase tracking-[1.5px] hover:bg-[#3a3a3a] transition"
+                                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#152a47] text-white text-sm font-semibold uppercase tracking-[1.5px] hover:bg-[#0d1f3d] transition"
                               >
                                 <Download size={16} />
                                 Download Track
@@ -353,7 +353,7 @@ export default function SubmissionsPage() {
                       {/* Right: Details & Notes */}
                       <div className="space-y-3">
                         {/* Status */}
-                        <div className="bg-white border border-[#8a8a8a] p-3">
+                        <div className="bg-white border border-[#0d1f3d] p-3">
                           <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-2">Update Status</p>
                           <div className="flex flex-wrap gap-2">
                             {Object.entries(statusLabels).map(([value, label]) => {
@@ -377,44 +377,44 @@ export default function SubmissionsPage() {
                         </div>
 
                         {/* Notes */}
-                        <div className="bg-white border border-[#8a8a8a] p-3">
+                        <div className="bg-white border border-[#0d1f3d] p-3">
                           <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-2">Notes</p>
                           <textarea
                             value={s.notes || ''}
                             onChange={(e) => updateNotes(s.id, e.target.value)}
                             placeholder="Add your review notes, feedback, or thoughts on this track..."
                             rows={3}
-                            className="w-full px-3 py-2 bg-[#F8FAFB] border border-[#8a8a8a] text-sm text-[#7a7a7a] focus:outline-none focus:border-[#7a7a7a] resize-none"
+                            className="w-full px-3 py-2 bg-[#F8FAFB] border border-[#0d1f3d] text-sm text-[#152a47] focus:outline-none focus:border-[#152a47] resize-none"
                           />
                         </div>
 
                         {/* Metadata */}
-                        <div className="bg-[#F8FAFB] border border-[#8a8a8a] p-3">
+                        <div className="bg-[#F8FAFB] border border-[#0d1f3d] p-3">
                           <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-2">Submission Details</p>
                           <div className="space-y-1.5 text-sm">
                             <div className="flex justify-between">
-                              <span className="text-[#b0b0b0]">Submitted by</span>
+                              <span className="text-[#A8D5F0]">Submitted by</span>
                               <span className="text-[#111]">{s.email}</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-[#b0b0b0]">Artist</span>
+                              <span className="text-[#A8D5F0]">Artist</span>
                               <span className="text-[#111]">{s.artistName || '—'}</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-[#b0b0b0]">Track</span>
+                              <span className="text-[#A8D5F0]">Track</span>
                               <span className="text-[#111]">{s.trackTitle || '—'}</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-[#b0b0b0]">Date</span>
+                              <span className="text-[#A8D5F0]">Date</span>
                               <span className="text-[#111]">{formatDate(s.createdAt)}</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-[#b0b0b0]">File Size</span>
+                              <span className="text-[#A8D5F0]">File Size</span>
                               <span className="text-[#111]">{formatSize(s.fileSize)}</span>
                             </div>
                             {s.fileName && (
                               <div className="flex justify-between">
-                                <span className="text-[#b0b0b0]">File Name</span>
+                                <span className="text-[#A8D5F0]">File Name</span>
                                 <span className="text-[#111] truncate max-w-[200px]">{s.fileName}</span>
                               </div>
                             )}

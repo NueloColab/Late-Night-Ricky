@@ -170,7 +170,7 @@ export default function QuotesPage() {
     <div className="max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-12">
-        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-4">Quote Management</p>
+        <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">Quote Management</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Quotes</h1>
@@ -181,7 +181,7 @@ export default function QuotesPage() {
               setSelectedQuote(null)
               setIsModalOpen(true)
             }}
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition"
           >
             <Plus size={16} />
             New Quote
@@ -191,70 +191,70 @@ export default function QuotesPage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-        <div className="bg-white border border-[#b0b0b0]/30 p-5">
+        <div className="bg-white border border-[#A8D5F0]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#7a7a7a] text-white rounded-lg"><FileText size={16} /></div>
+            <div className="p-2 bg-[#152a47] text-white rounded-lg"><FileText size={16} /></div>
           </div>
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#b0b0b0] font-medium mt-2">Total Quotes</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#A8D5F0] font-medium mt-2">Total Quotes</p>
         </div>
-        <div className="bg-white border border-[#b0b0b0]/30 p-5">
+        <div className="bg-white border border-[#A8D5F0]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#7a7a7a] text-white rounded-lg"><Send size={16} /></div>
+            <div className="p-2 bg-[#152a47] text-white rounded-lg"><Send size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#7a7a7a] leading-none tracking-[-1px]">{loading ? '–' : stats.sent}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#b0b0b0] font-medium mt-2">Sent</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#152a47] leading-none tracking-[-1px]">{loading ? '–' : stats.sent}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#A8D5F0] font-medium mt-2">Sent</p>
         </div>
-        <div className="bg-white border border-[#b0b0b0]/30 p-5">
+        <div className="bg-white border border-[#A8D5F0]/30 p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#2d6a2d] text-white rounded-lg"><CheckCircle size={16} /></div>
           </div>
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#2d6a2d] leading-none tracking-[-1px]">{loading ? '–' : stats.accepted}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#b0b0b0] font-medium mt-2">Accepted</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#A8D5F0] font-medium mt-2">Accepted</p>
         </div>
-        <div className="bg-white border border-[#b0b0b0]/30 p-5">
+        <div className="bg-white border border-[#A8D5F0]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#b0b0b0] text-white rounded-lg"><Clock size={16} /></div>
+            <div className="p-2 bg-[#A8D5F0] text-white rounded-lg"><Clock size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#b0b0b0] leading-none tracking-[-1px]">
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#A8D5F0] leading-none tracking-[-1px]">
             {loading
               ? '–'
               : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
                   stats.totalValue
                 )}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#b0b0b0] font-medium mt-2">Total Value</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#A8D5F0] font-medium mt-2">Total Value</p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white border border-[#b0b0b0]/30 p-6 mb-6">
+      <div className="bg-white border border-[#A8D5F0]/30 p-6 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#b0b0b0] mb-3">Search Quotes</label>
+            <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#A8D5F0] mb-3">Search Quotes</label>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#b0b0b0]/30">
-                <Search className="w-4 h-4 text-[#b0b0b0]" />
+              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A8D5F0]/30">
+                <Search className="w-4 h-4 text-[#A8D5F0]" />
               </div>
               <input
                 type="text"
                 placeholder="Search by client, project, or service..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#b0b0b0]/30 text-[#7a7a7a] placeholder-[#b0b0b0] text-sm focus:outline-none focus:border-[#7a7a7a] transition-colors rounded-lg"
+                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#A8D5F0]/30 text-[#152a47] placeholder-[#A8D5F0] text-sm focus:outline-none focus:border-[#152a47] transition-colors rounded-lg"
               />
             </div>
           </div>
           <div>
-            <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#b0b0b0] mb-3">Filter by Status</label>
+            <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#A8D5F0] mb-3">Filter by Status</label>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#b0b0b0]/30">
-                <Filter className="w-4 h-4 text-[#b0b0b0]" />
+              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A8D5F0]/30">
+                <Filter className="w-4 h-4 text-[#A8D5F0]" />
               </div>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#b0b0b0]/30 text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a] transition-colors rounded-lg appearance-none"
+                className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#A8D5F0]/30 text-[#152a47] text-sm focus:outline-none focus:border-[#152a47] transition-colors rounded-lg appearance-none"
               >
                 {STATUS_OPTIONS.map((s) => (
                   <option key={s} value={s}>
@@ -269,28 +269,28 @@ export default function QuotesPage() {
 
       {/* Table */}
       {loading ? (
-        <p className="text-[#b0b0b0] text-center py-8">Loading...</p>
+        <p className="text-[#A8D5F0] text-center py-8">Loading...</p>
       ) : filteredQuotes.length === 0 ? (
-        <div className="bg-white border border-[#b0b0b0]/30 p-8 text-center">
-          <p className="text-[#b0b0b0]">No quotes found. Create your first quote above.</p>
+        <div className="bg-white border border-[#A8D5F0]/30 p-8 text-center">
+          <p className="text-[#A8D5F0]">No quotes found. Create your first quote above.</p>
         </div>
       ) : (
-        <div className="bg-white border border-[#b0b0b0]/30 overflow-hidden">
+        <div className="bg-white border border-[#A8D5F0]/30 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-[#b0b0b0]/30">
+                <tr className="border-b border-[#A8D5F0]/30">
                   {['Quote #', 'Client', 'Project', 'Status', 'Items', 'Total', 'Terms', 'Actions'].map((h) => (
                     <th
                       key={h}
-                      className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#b0b0b0]"
+                      className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#A8D5F0]"
                     >
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#8a8a8a]">
+              <tbody className="divide-y divide-[#0d1f3d]">
                 {filteredQuotes.map((quote) => {
                   const proj = projects.find((p) => p.id === quote.projectId)
                   return (
@@ -299,24 +299,24 @@ export default function QuotesPage() {
                       onClick={() => router.push(`/admin/quotes/${quote.id}`)}
                       className="hover:bg-[#F8FAFB] transition-colors cursor-pointer"
                     >
-                      <td className="px-4 py-3 font-semibold text-[#7a7a7a]">
+                      <td className="px-4 py-3 font-semibold text-[#152a47]">
                         {quote.quoteNumber || `QT-${String(quote.id).padStart(3, '0')}`}
                       </td>
                       <td className="px-4 py-3 text-[#a0a0a0]">
                         {quote.clientName || '—'}
                         {quote.clientCompany && (
-                          <div className="text-xs text-[#b0b0b0]">{quote.clientCompany}</div>
+                          <div className="text-xs text-[#A8D5F0]">{quote.clientCompany}</div>
                         )}
                       </td>
                       <td className="px-4 py-3 text-[#a0a0a0]">{quote.projectTitle || proj?.title || '—'}</td>
                       <td className="px-4 py-3">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-[#8a8a8a] text-[#7a7a7a]">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-[#0d1f3d] text-[#152a47]">
                           {STATUS_ICONS[quote.status] || <Clock size={14} />}
                           {STATUS_LABELS[quote.status] || quote.status}
                         </span>
                       </td>
                       <td className="px-4 py-3 text-[#a0a0a0]">{quote.lineItems.length} items</td>
-                      <td className="px-4 py-3 text-[#7a7a7a] font-semibold">£{quote.total.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-[#152a47] font-semibold">£{quote.total.toLocaleString()}</td>
                       <td className="px-4 py-3 text-[#a0a0a0] text-xs">
                         {quote.paymentTermsLabel || PAYMENT_TERMS_MAP[quote.paymentTermsType || ''] || quote.paymentTermsType || 'Net 30'}
                       </td>
@@ -324,7 +324,7 @@ export default function QuotesPage() {
                         <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
                           <button
                             onClick={() => router.push(`/admin/quotes/${quote.id}`)}
-                            className="p-1.5 hover:bg-[#8a8a8a] rounded-lg transition-colors text-[#b0b0b0] hover:text-[#7a7a7a]"
+                            className="p-1.5 hover:bg-[#0d1f3d] rounded-lg transition-colors text-[#A8D5F0] hover:text-[#152a47]"
                           >
                             <Eye size={16} />
                           </button>
@@ -332,14 +332,14 @@ export default function QuotesPage() {
                             <button
                               onClick={() => sendQuote(quote.id)}
                               disabled={sendingId === quote.id}
-                              className="p-1.5 hover:bg-[#8a8a8a] rounded-lg transition-colors text-[#b0b0b0] hover:text-[#7a7a7a] disabled:opacity-50"
+                              className="p-1.5 hover:bg-[#0d1f3d] rounded-lg transition-colors text-[#A8D5F0] hover:text-[#152a47] disabled:opacity-50"
                             >
                               {sendingId === quote.id ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                             </button>
                           )}
                           <button
                             onClick={() => deleteQuote(quote.id)}
-                            className="p-1.5 hover:bg-[#8a8a8a] rounded-lg transition-colors text-[#b0b0b0] hover:text-red-500"
+                            className="p-1.5 hover:bg-[#0d1f3d] rounded-lg transition-colors text-[#A8D5F0] hover:text-red-500"
                           >
                             <Trash2 size={16} />
                           </button>

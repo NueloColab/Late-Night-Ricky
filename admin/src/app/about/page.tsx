@@ -40,7 +40,7 @@ export default async function AboutPage() {
           <div className="max-w-[1200px] mx-auto">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm text-[#b0b0b0] hover:text-[#111] transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-[#A8D5F0] hover:text-[#111] transition-colors"
             >
               <ArrowLeft size={14} />
               <span>Home</span>
@@ -50,7 +50,7 @@ export default async function AboutPage() {
         <div className="border-b-2 border-[#111] pt-4 pb-5 px-6">
           <div className="max-w-[1200px] mx-auto flex items-baseline gap-5 flex-wrap">
             <h1 className="text-[clamp(48px,10vw,120px)] font-black tracking-[-3px] uppercase leading-[0.9] text-[#111]">About</h1>
-            <span className="font-['Rockybilly',cursive] text-[clamp(24px,3vw,40px)] text-[#b0b0b0] -rotate-1 inline-block opacity-85 whitespace-nowrap">Late Night Ricky</span>
+            <span className="font-['Rockybilly',cursive] text-[clamp(24px,3vw,40px)] text-[#A8D5F0] -rotate-1 inline-block opacity-85 whitespace-nowrap">Late Night Ricky</span>
           </div>
         </div>
         <div className="grid md:grid-cols-2 min-h-[calc(100vh-200px)]">
@@ -77,9 +77,9 @@ export default async function AboutPage() {
         </div>
 
         {/* Production Credits */}
-        <section className="bg-[#3a3a3a] py-20 px-6">
+        <section className="bg-[#0d1f3d] py-20 px-6">
           <div className="max-w-[1200px] mx-auto">
-            <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-8 text-center">Production Credits</p>
+            <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-8 text-center">Production Credits</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {[
                 'Chris Brown', 'Kendrick Lamar', 'NAV', 'Divine',
@@ -88,7 +88,7 @@ export default async function AboutPage() {
                 'Apache Indian', 'MC Altaf', 'H33RA', 'Stefflon Don',
                 'Lil Keed', 'Ivorian Doll', 'Safe', 'Plus Many More'
               ].map((name) => (
-                <div key={name} className="text-[clamp(14px,1.8vw,20px)] font-black uppercase tracking-[-0.5px] text-white text-center py-3 px-2 hover:text-[#d0d0d0] transition cursor-default">
+                <div key={name} className="text-[clamp(14px,1.8vw,20px)] font-black uppercase tracking-[-0.5px] text-white text-center py-3 px-2 hover:text-[#C5E5F8] transition cursor-default">
                   {name}
                 </div>
               ))}

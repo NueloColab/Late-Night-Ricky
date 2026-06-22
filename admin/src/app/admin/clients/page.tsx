@@ -78,7 +78,7 @@ export default function ClientsPage() {
     <div className="max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-12">
-        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-4">Client Management</p>
+        <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">Client Management</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Clients</h1>
@@ -89,7 +89,7 @@ export default function ClientsPage() {
               setForm({ name: '', email: '', phone: '', instagram: '', notes: '' })
               setShowForm(true)
             }}
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition"
           >
             <Plus size={16} />
             Add Client
@@ -98,41 +98,41 @@ export default function ClientsPage() {
       </div>
 
       {/* Search */}
-      <div className="bg-white border border-[#b0b0b0]/30 p-6 mb-6">
-        <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#b0b0b0] mb-3">Search Clients</label>
+      <div className="bg-white border border-[#A8D5F0]/30 p-6 mb-6">
+        <label className="block text-xs uppercase tracking-[3px] font-semibold text-[#A8D5F0] mb-3">Search Clients</label>
         <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#b0b0b0]/30">
-            <Search className="w-4 h-4 text-[#b0b0b0]" />
+          <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#A8D5F0]/30">
+            <Search className="w-4 h-4 text-[#A8D5F0]" />
           </div>
           <input
             type="text"
             placeholder="Search by name, email, or Instagram..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#b0b0b0]/30 text-[#7a7a7a] placeholder-[#b0b0b0] text-sm focus:outline-none focus:border-[#7a7a7a] transition-colors rounded-lg"
+            className="w-full pl-14 pr-4 py-3 bg-white border-2 border-[#A8D5F0]/30 text-[#152a47] placeholder-[#A8D5F0] text-sm focus:outline-none focus:border-[#152a47] transition-colors rounded-lg"
           />
         </div>
       </div>
 
       {/* Table */}
       {loading ? (
-        <p className="text-[#b0b0b0] text-center py-8">Loading...</p>
+        <p className="text-[#A8D5F0] text-center py-8">Loading...</p>
       ) : filteredClients.length === 0 ? (
-        <div className="bg-white border border-[#b0b0b0]/30 p-8 text-center">
-          <p className="text-[#b0b0b0]">No clients found. Add your first client above.</p>
+        <div className="bg-white border border-[#A8D5F0]/30 p-8 text-center">
+          <p className="text-[#A8D5F0]">No clients found. Add your first client above.</p>
         </div>
       ) : (
-        <div className="bg-white border border-[#b0b0b0]/30 overflow-hidden">
+        <div className="bg-white border border-[#A8D5F0]/30 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-[#b0b0b0]/30">
+                <tr className="border-b border-[#A8D5F0]/30">
                   {['Name', 'Contact', 'Bookings', 'Revenue', 'Actions'].map((h) => (
-                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#b0b0b0]">{h}</th>
+                    <th key={h} className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#A8D5F0]">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#8a8a8a]">
+              <tbody className="divide-y divide-[#0d1f3d]">
                 {filteredClients.map((client) => (
                   <tr
                     key={client.id}
@@ -140,8 +140,8 @@ export default function ClientsPage() {
                     onClick={() => router.push(`/admin/clients/${client.id}`)}
                   >
                     <td className="px-4 py-3">
-                      <div className="font-semibold text-[#7a7a7a]">{client.name}</div>
-                      <div className="text-xs text-[#b0b0b0] mt-0.5">Added {new Date(client.createdAt).toLocaleDateString('en-GB')}</div>
+                      <div className="font-semibold text-[#152a47]">{client.name}</div>
+                      <div className="text-xs text-[#A8D5F0] mt-0.5">Added {new Date(client.createdAt).toLocaleDateString('en-GB')}</div>
                     </td>
                     <td className="px-4 py-3">
                       <div className="space-y-1">
@@ -162,8 +162,8 @@ export default function ClientsPage() {
                         )}
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-[#7a7a7a] font-semibold">{client.totalBookings || 0}</td>
-                    <td className="px-4 py-3 text-[#7a7a7a] font-semibold">
+                    <td className="px-4 py-3 text-[#152a47] font-semibold">{client.totalBookings || 0}</td>
+                    <td className="px-4 py-3 text-[#152a47] font-semibold">
                       {client.totalRevenue ? `£${Number(client.totalRevenue).toLocaleString()}` : '—'}
                     </td>
                     <td className="px-4 py-3">
@@ -173,7 +173,7 @@ export default function ClientsPage() {
                             e.stopPropagation()
                             router.push(`/admin/clients/${client.id}`)
                           }}
-                          className="p-1.5 hover:bg-[#8a8a8a] rounded-lg transition-colors text-[#b0b0b0] hover:text-[#7a7a7a]"
+                          className="p-1.5 hover:bg-[#0d1f3d] rounded-lg transition-colors text-[#A8D5F0] hover:text-[#152a47]"
                         >
                           <Eye size={16} />
                         </button>
@@ -182,7 +182,7 @@ export default function ClientsPage() {
                             e.stopPropagation()
                             deleteClient(client.id)
                           }}
-                          className="p-1.5 hover:bg-[#8a8a8a] rounded-lg transition-colors text-[#b0b0b0] hover:text-red-500"
+                          className="p-1.5 hover:bg-[#0d1f3d] rounded-lg transition-colors text-[#A8D5F0] hover:text-red-500"
                         >
                           <Trash2 size={16} />
                         </button>
@@ -200,35 +200,35 @@ export default function ClientsPage() {
       <Modal isOpen={showForm} onClose={() => setShowForm(false)} title="Add Client" maxWidth="max-w-lg">
         <form onSubmit={saveClient} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Name *</label>
+            <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Name *</label>
             <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a]" />
+              className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-[#152a47] text-sm focus:outline-none focus:border-[#152a47]" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Email</label>
+              <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Email</label>
               <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a]" />
+                className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-[#152a47] text-sm focus:outline-none focus:border-[#152a47]" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Phone</label>
+              <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Phone</label>
               <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a]" />
+                className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-[#152a47] text-sm focus:outline-none focus:border-[#152a47]" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Instagram</label>
+            <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Instagram</label>
             <input value={form.instagram} onChange={(e) => setForm({ ...form, instagram: e.target.value })}
-              className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a]" />
+              className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-[#152a47] text-sm focus:outline-none focus:border-[#152a47]" />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Notes</label>
+            <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Notes</label>
             <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3}
-              className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a] resize-none" />
+              className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-[#152a47] text-sm focus:outline-none focus:border-[#152a47] resize-none" />
           </div>
           <div className="flex justify-end">
             <button type="submit"
-              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition">Save Client</button>
+              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition">Save Client</button>
           </div>
         </form>
       </Modal>

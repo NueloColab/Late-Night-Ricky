@@ -136,13 +136,13 @@ export default function AboutEditor() {
     <div className="max-w-5xl">
       <Link
         href="/admin/content"
-        className="inline-flex items-center gap-2 text-sm text-[#7a7a7a] hover:text-[#111] transition-colors mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#152a47] hover:text-[#111] transition-colors mb-6"
       >
         <ArrowLeft size={14} />
         <span>Back to Content</span>
       </Link>
       <div className="mb-12">
-        <p className="text-xs text-[#b0b0b0] tracking-[3px] uppercase font-semibold mb-4">CMS</p>
+        <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">CMS</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">About Page Editor</h1>
@@ -152,7 +152,7 @@ export default function AboutEditor() {
             href="/about"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#3a3a3a] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition"
           >
             View on Site
           </a>
@@ -161,11 +161,11 @@ export default function AboutEditor() {
 
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="lg:w-64 flex-shrink-0">
-          <div className="bg-white border border-[#b0b0b0]/30 rounded-xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-[#8a8a8a]">
-              <p className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px]">Sections</p>
+          <div className="bg-white border border-[#A8D5F0]/30 rounded-xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-[#0d1f3d]">
+              <p className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">Sections</p>
             </div>
-            <div className="divide-y divide-[#8a8a8a]">
+            <div className="divide-y divide-[#0d1f3d]">
               {ABOUT_SECTIONS.map((name) => {
                 const label = name === 'portrait' ? 'Portrait' : 'Biography';
                 return (
@@ -174,8 +174,8 @@ export default function AboutEditor() {
                     onClick={() => setSelectedSection(name)}
                     className={`w-full text-left px-5 py-3 text-sm font-semibold transition-colors flex items-center justify-between ${
                       selectedSection === name
-                        ? 'bg-[#7a7a7a] text-white'
-                        : 'text-[#7a7a7a] hover:bg-[#F8FAFB]'
+                        ? 'bg-[#152a47] text-white'
+                        : 'text-[#152a47] hover:bg-[#F8FAFB]'
                     }`}
                   >
                     <span>{label}</span>
@@ -189,8 +189,8 @@ export default function AboutEditor() {
           </div>
 
           {hasData && (
-            <div className="mt-4 bg-white border border-[#b0b0b0]/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-3">Current Data</p>
+            <div className="mt-4 bg-white border border-[#A8D5F0]/30 rounded-xl p-4">
+              <p className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-3">Current Data</p>
               <div className="space-y-1.5 text-xs">
                 {[
                   { label: 'Headline', key: 'headline' },
@@ -202,7 +202,7 @@ export default function AboutEditor() {
                 ].map(({ label, key }) => (
                   <div key={key} className="flex justify-between">
                     <span className="text-[#a0a0a0]">{label}</span>
-                    <span className={content[key] ? 'text-[#2d6a2d] font-semibold' : 'text-[#b0b0b0]'}>
+                    <span className={content[key] ? 'text-[#2d6a2d] font-semibold' : 'text-[#A8D5F0]'}>
                       {content[key] ? 'Set' : '—'}
                     </span>
                   </div>
@@ -214,19 +214,19 @@ export default function AboutEditor() {
 
         <div className="flex-1 min-w-0">
           {loading ? (
-            <p className="text-[#b0b0b0] text-sm">Loading...</p>
+            <p className="text-[#A8D5F0] text-sm">Loading...</p>
           ) : selectedSection === 'portrait' ? (
-            <div className="bg-white border border-[#b0b0b0]/30 rounded-xl p-6 md:p-8">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#8a8a8a]">
-                <div className="w-10 h-px bg-[#7a7a7a]"></div>
-                <p className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px]">Portrait</p>
+            <div className="bg-white border border-[#A8D5F0]/30 rounded-xl p-6 md:p-8">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#0d1f3d]">
+                <div className="w-10 h-px bg-[#152a47]"></div>
+                <p className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">Portrait</p>
               </div>
 
-              <div className="relative w-full max-w-sm aspect-[3/4] bg-[#F8FAFB] rounded-xl border border-[#8a8a8a] overflow-hidden mb-4 flex items-center justify-center">
+              <div className="relative w-full max-w-sm aspect-[3/4] bg-[#F8FAFB] rounded-xl border border-[#0d1f3d] overflow-hidden mb-4 flex items-center justify-center">
                 {portraitPath ? (
                   <Image src={portraitPath} alt="Portrait" fill className="object-cover" sizes="400px" />
                 ) : (
-                  <svg className="w-12 h-12 text-[#b0b0b0]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-12 h-12 text-[#A8D5F0]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="3" y="3" width="18" height="18" rx="2" />
                     <circle cx="8.5" cy="8.5" r="1.5" />
                     <path d="M21 15l-5-5L5 21" />
@@ -236,7 +236,7 @@ export default function AboutEditor() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setMediaOpen(true)}
-                  className="px-5 py-2.5 bg-[#7a7a7a] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+                  className="px-5 py-2.5 bg-[#152a47] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
                 >
                   {portraitPath ? 'Replace Portrait' : 'Upload Portrait'}
                 </button>
@@ -253,25 +253,25 @@ export default function AboutEditor() {
                   </button>
                 )}
               </div>
-              {portraitPath && <p className="text-xs text-[#b0b0b0] mt-3">{portraitPath}</p>}
+              {portraitPath && <p className="text-xs text-[#A8D5F0] mt-3">{portraitPath}</p>}
             </div>
           ) : (
-            <div className="bg-white border border-[#b0b0b0]/30 rounded-xl p-6 md:p-8">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#8a8a8a]">
-                <div className="w-10 h-px bg-[#7a7a7a]"></div>
-                <p className="text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px]">Biography</p>
+            <div className="bg-white border border-[#A8D5F0]/30 rounded-xl p-6 md:p-8">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#0d1f3d]">
+                <div className="w-10 h-px bg-[#152a47]"></div>
+                <p className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">Biography</p>
               </div>
-              <p className="text-xs text-[#b0b0b0] mb-6">Edit the headline and bio paragraphs</p>
+              <p className="text-xs text-[#A8D5F0] mb-6">Edit the headline and bio paragraphs</p>
 
               <div className="space-y-5">
                 <div>
-                  <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">Headline</label>
+                  <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Headline</label>
                   <input
                     type="text"
                     value={form.headline}
                     onChange={(e) => setForm({ ...form, headline: e.target.value })}
                     placeholder="e.g. International DJ & Grammy Winning Producer"
-                    className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a] transition-colors"
+                    className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-[#152a47] text-sm focus:outline-none focus:border-[#152a47] transition-colors"
                   />
                 </div>
 
@@ -279,7 +279,7 @@ export default function AboutEditor() {
                   const key = `bio${n}` as const;
                   return (
                     <div key={key}>
-                      <label className="block text-xs font-semibold text-[#b0b0b0] uppercase tracking-[3px] mb-2">
+                      <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
                         Bio Paragraph {n}
                       </label>
                       <textarea
@@ -287,7 +287,7 @@ export default function AboutEditor() {
                         onChange={(e) => setForm({ ...form, [key]: e.target.value })}
                         placeholder={`Bio paragraph ${n}...`}
                         rows={4}
-                        className="w-full px-4 py-2.5 bg-white border border-[#b0b0b0]/30 rounded-lg text-[#7a7a7a] text-sm focus:outline-none focus:border-[#7a7a7a] transition-colors resize-y"
+                        className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-[#152a47] text-sm focus:outline-none focus:border-[#152a47] transition-colors resize-y"
                       />
                     </div>
                   );
@@ -298,7 +298,7 @@ export default function AboutEditor() {
                 <button
                   onClick={saveBiography}
                   disabled={saving}
-                  className="inline-flex items-center gap-2 px-7 py-3 bg-[#3a3a3a] text-white rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#7a7a7a] transition disabled:opacity-50"
+                  className="inline-flex items-center gap-2 px-7 py-3 bg-[#0d1f3d] text-white rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#152a47] transition disabled:opacity-50"
                 >
                   {saving ? 'Saving...' : 'Save Biography'}
                 </button>

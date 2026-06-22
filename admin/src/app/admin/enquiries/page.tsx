@@ -40,9 +40,9 @@ interface Enquiry {
 }
 
 const statusStyles: Record<string, string> = {
-  new: 'bg-[#7a7a7a] text-white border-[#7a7a7a]',
-  read: 'bg-[#b0b0b0] text-white border-[#b0b0b0]',
-  replied: 'bg-[#7a7a7a] text-white border-[#7a7a7a]',
+  new: 'bg-[#152a47] text-white border-[#152a47]',
+  read: 'bg-[#A8D5F0] text-white border-[#A8D5F0]',
+  replied: 'bg-[#152a47] text-white border-[#152a47]',
   archived: 'bg-gray-400 text-white border-gray-400',
 }
 
@@ -207,7 +207,7 @@ export default function EnquiriesPage() {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-px bg-[#b0b0b0]" />
+          <div className="w-10 h-px bg-[#A8D5F0]" />
           <p className="text-xs uppercase tracking-widest text-[#a0a0a0]">Inbox</p>
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -223,51 +223,51 @@ export default function EnquiriesPage() {
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {[
-          { label: 'Total', value: stats.total, icon: Mail, color: '#7a7a7a' },
-          { label: 'Unread', value: stats.unread, icon: MailOpen, color: '#b0b0b0' },
-          { label: 'Replied', value: stats.replied, icon: Reply, color: '#7a7a7a' },
-          { label: 'Archived', value: stats.archived, icon: Archive, color: '#b0b0b0' },
+          { label: 'Total', value: stats.total, icon: Mail, color: '#152a47' },
+          { label: 'Unread', value: stats.unread, icon: MailOpen, color: '#A8D5F0' },
+          { label: 'Replied', value: stats.replied, icon: Reply, color: '#152a47' },
+          { label: 'Archived', value: stats.archived, icon: Archive, color: '#A8D5F0' },
         ].map((stat) => (
-          <div key={stat.label} className="bg-white border border-[#8a8a8a] p-5">
+          <div key={stat.label} className="bg-white border border-[#0d1f3d] p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="p-2 text-white" style={{ backgroundColor: stat.color }}>
                 <stat.icon size={16} />
               </div>
             </div>
             <p className="text-2xl font-black text-[#111] mb-1">{loading ? '—' : stat.value}</p>
-            <p className="text-xs uppercase tracking-widest text-[#b0b0b0]">{stat.label}</p>
+            <p className="text-xs uppercase tracking-widest text-[#A8D5F0]">{stat.label}</p>
           </div>
         ))}
       </div>
 
       {/* Filters */}
-      <div className="bg-white border border-[#8a8a8a] p-6 mb-6">
+      <div className="bg-white border border-[#0d1f3d] p-6 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs uppercase tracking-widest font-semibold text-[#b0b0b0] mb-3">Search Enquiries</label>
+            <label className="block text-xs uppercase tracking-widest font-semibold text-[#A8D5F0] mb-3">Search Enquiries</label>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#8a8a8a]">
-                <Search className="w-4 h-4 text-[#b0b0b0]" />
+              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#0d1f3d]">
+                <Search className="w-4 h-4 text-[#A8D5F0]" />
               </div>
               <input
                 type="text"
                 placeholder="Search by name, email, or club..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 bg-white border border-[#8a8a8a] text-[#111] placeholder-[#b0b0b0] text-sm focus:outline-none focus:border-[#7a7a7a] transition-colors"
+                className="w-full pl-14 pr-4 py-3 bg-white border border-[#0d1f3d] text-[#111] placeholder-[#A8D5F0] text-sm focus:outline-none focus:border-[#152a47] transition-colors"
               />
             </div>
           </div>
           <div>
-            <label className="block text-xs uppercase tracking-widest font-semibold text-[#b0b0b0] mb-3">Filter by Status</label>
+            <label className="block text-xs uppercase tracking-widest font-semibold text-[#A8D5F0] mb-3">Filter by Status</label>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#8a8a8a]">
-                <Filter className="w-4 h-4 text-[#b0b0b0]" />
+              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#0d1f3d]">
+                <Filter className="w-4 h-4 text-[#A8D5F0]" />
               </div>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 bg-white border border-[#8a8a8a] text-[#111] text-sm focus:outline-none focus:border-[#7a7a7a] transition-colors appearance-none"
+                className="w-full pl-14 pr-4 py-3 bg-white border border-[#0d1f3d] text-[#111] text-sm focus:outline-none focus:border-[#152a47] transition-colors appearance-none"
               >
                 <option value="all">All Enquiries</option>
                 <option value="new">Unread</option>
@@ -281,22 +281,22 @@ export default function EnquiriesPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white border border-[#8a8a8a] overflow-hidden">
+      <div className="bg-white border border-[#0d1f3d] overflow-hidden">
         {loading ? (
-          <div className="text-center py-12 text-[#b0b0b0]">Loading enquiries...</div>
+          <div className="text-center py-12 text-[#A8D5F0]">Loading enquiries...</div>
         ) : filteredEnquiries.length === 0 ? (
-          <div className="text-center py-12 text-[#b0b0b0]">No enquiries found.</div>
+          <div className="text-center py-12 text-[#A8D5F0]">No enquiries found.</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-[#F8FAFB] border-b border-[#8a8a8a]">
+                <tr className="bg-[#F8FAFB] border-b border-[#0d1f3d]">
                   {['Name', 'Type', 'Preview', 'Status', 'Date', 'Actions'].map((h) => (
-                    <th key={h} className="px-6 py-4 text-left text-xs font-semibold text-[#b0b0b0] uppercase tracking-widest">{h}</th>
+                    <th key={h} className="px-6 py-4 text-left text-xs font-semibold text-[#A8D5F0] uppercase tracking-widest">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#8a8a8a]">
+              <tbody className="divide-y divide-[#0d1f3d]">
                 {filteredEnquiries.map((e) => (
                   <tr
                     key={e.id}
@@ -307,15 +307,15 @@ export default function EnquiriesPage() {
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        {e.status === 'new' && <div className="w-2 h-2 bg-[#7a7a7a] rounded-full flex-shrink-0" />}
-                        <span className={`text-sm ${e.status === 'new' ? 'font-semibold text-[#111]' : 'text-[#7a7a7a]'}`}>
+                        {e.status === 'new' && <div className="w-2 h-2 bg-[#152a47] rounded-full flex-shrink-0" />}
+                        <span className={`text-sm ${e.status === 'new' ? 'font-semibold text-[#111]' : 'text-[#152a47]'}`}>
                           {e.name}
                         </span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider ${
-                        e.type === 'booking' ? 'bg-[#7a7a7a] text-white' : 'bg-[#b0b0b0] text-white'
+                        e.type === 'booking' ? 'bg-[#152a47] text-white' : 'bg-[#A8D5F0] text-white'
                       }`}>
                         {e.type === 'booking' ? 'Booking' : 'Message'}
                       </span>
@@ -330,20 +330,20 @@ export default function EnquiriesPage() {
                         {e.status === 'new' ? 'unread' : e.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-[#b0b0b0]">
+                    <td className="px-6 py-4 text-sm text-[#A8D5F0]">
                       {formatDate(e.createdAt)}
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-end gap-2" onClick={(ev) => ev.stopPropagation()}>
                         <button
                           onClick={() => handleViewEnquiry(e)}
-                          className="p-2 hover:bg-[#8a8a8a] transition-colors text-[#b0b0b0] hover:text-[#7a7a7a]"
+                          className="p-2 hover:bg-[#0d1f3d] transition-colors text-[#A8D5F0] hover:text-[#152a47]"
                         >
                           <Eye size={14} />
                         </button>
                         <button
                           onClick={() => confirmDelete(e.id)}
-                          className="p-2 hover:bg-red-50 transition-colors text-[#b0b0b0] hover:text-red-500"
+                          className="p-2 hover:bg-red-50 transition-colors text-[#A8D5F0] hover:text-red-500"
                         >
                           <Trash2 size={14} />
                         </button>
@@ -365,7 +365,7 @@ export default function EnquiriesPage() {
             className="fixed inset-0 bg-black/50 z-50"
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white border border-[#8a8a8a] max-w-md w-full p-6">
+            <div className="bg-white border border-[#0d1f3d] max-w-md w-full p-6">
               <div className="flex items-start gap-4 mb-4">
                 <div className="bg-red-100 p-3">
                   <AlertTriangle className="w-6 h-6 text-red-600" />
@@ -379,7 +379,7 @@ export default function EnquiriesPage() {
                 <button
                   onClick={() => setShowDeleteModal(false)}
                   disabled={isDeleting}
-                  className="px-6 py-3 border border-[#8a8a8a] text-xs uppercase tracking-wider text-[#7a7a7a] hover:bg-[#F8FAFB] transition-colors"
+                  className="px-6 py-3 border border-[#0d1f3d] text-xs uppercase tracking-wider text-[#152a47] hover:bg-[#F8FAFB] transition-colors"
                 >
                   Cancel
                 </button>
@@ -404,15 +404,15 @@ export default function EnquiriesPage() {
             className="fixed inset-0 bg-black/50 z-40"
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
-            <div className="bg-white border border-[#8a8a8a] max-w-2xl w-full my-8 max-h-[90vh] overflow-y-auto"
+            <div className="bg-white border border-[#0d1f3d] max-w-2xl w-full my-8 max-h-[90vh] overflow-y-auto"
             >
               {/* Header */}
-              <div className="sticky top-0 bg-white border-b border-[#8a8a8a] p-6 flex items-start justify-between">
+              <div className="sticky top-0 bg-white border-b border-[#0d1f3d] p-6 flex items-start justify-between">
                 <div className="flex-1">
                   <h3 className="text-2xl font-light text-[#111] mb-2">{selectedEnquiry.name}</h3>
                   <a
                     href={`mailto:${selectedEnquiry.email}`}
-                    className="text-sm text-[#7a7a7a] hover:text-[#111] transition-colors"
+                    className="text-sm text-[#152a47] hover:text-[#111] transition-colors"
                   >
                     {selectedEnquiry.email}
                   </a>
@@ -422,7 +422,7 @@ export default function EnquiriesPage() {
                     {selectedEnquiry.status === 'new' ? 'unread' : selectedEnquiry.status}
                   </span>
                   <button onClick={() => setShowModal(false)} className="p-2 hover:bg-[#F8FAFB] transition-colors">
-                    <X className="w-5 h-5 text-[#b0b0b0]" />
+                    <X className="w-5 h-5 text-[#A8D5F0]" />
                   </button>
                 </div>
               </div>
@@ -433,67 +433,67 @@ export default function EnquiriesPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {selectedEnquiry.clubName && (
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-[#b0b0b0] mb-1">Club/Venue</p>
+                      <p className="text-xs uppercase tracking-widest text-[#A8D5F0] mb-1">Club/Venue</p>
                       <div className="flex items-center gap-2">
-                        <Building2 className="w-4 h-4 text-[#b0b0b0]" />
+                        <Building2 className="w-4 h-4 text-[#A8D5F0]" />
                         <p className="text-sm text-[#111]">{selectedEnquiry.clubName}</p>
                       </div>
                     </div>
                   )}
                   {selectedEnquiry.city && (
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-[#b0b0b0] mb-1">City</p>
+                      <p className="text-xs uppercase tracking-widest text-[#A8D5F0] mb-1">City</p>
                       <div className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-[#b0b0b0]" />
+                        <MapPin className="w-4 h-4 text-[#A8D5F0]" />
                         <p className="text-sm text-[#111]">{selectedEnquiry.city}</p>
                       </div>
                     </div>
                   )}
                   {selectedEnquiry.fee && (
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-[#b0b0b0] mb-1">Fee</p>
+                      <p className="text-xs uppercase tracking-widest text-[#A8D5F0] mb-1">Fee</p>
                       <div className="flex items-center gap-2">
-                        <DollarSign className="w-4 h-4 text-[#b0b0b0]" />
+                        <DollarSign className="w-4 h-4 text-[#A8D5F0]" />
                         <p className="text-sm text-[#111]">{selectedEnquiry.fee}</p>
                       </div>
                     </div>
                   )}
                   {selectedEnquiry.eventDate && (
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-[#b0b0b0] mb-1">Event Date</p>
+                      <p className="text-xs uppercase tracking-widest text-[#A8D5F0] mb-1">Event Date</p>
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-[#b0b0b0]" />
+                        <Calendar className="w-4 h-4 text-[#A8D5F0]" />
                         <p className="text-sm text-[#111]">{selectedEnquiry.eventDate}</p>
                       </div>
                     </div>
                   )}
                   <div>
-                    <p className="text-xs uppercase tracking-widest text-[#b0b0b0] mb-1">Received</p>
+                    <p className="text-xs uppercase tracking-widest text-[#A8D5F0] mb-1">Received</p>
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-[#b0b0b0]" />
+                      <Calendar className="w-4 h-4 text-[#A8D5F0]" />
                       <p className="text-sm text-[#111]">{formatDateTime(selectedEnquiry.createdAt)}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Message */}
-                <div className="pt-4 border-t border-[#8a8a8a]">
-                  <p className="text-xs uppercase tracking-widest text-[#b0b0b0] mb-3">Message</p>
-                  <div className="bg-[#F8FAFB] border border-[#8a8a8a] p-4">
+                <div className="pt-4 border-t border-[#0d1f3d]">
+                  <p className="text-xs uppercase tracking-widest text-[#A8D5F0] mb-3">Message</p>
+                  <div className="bg-[#F8FAFB] border border-[#0d1f3d] p-4">
                     <p className="text-sm text-[#111] leading-relaxed whitespace-pre-wrap">{selectedEnquiry.message || 'No message provided.'}</p>
                   </div>
                 </div>
 
                 {/* Replies */}
                 {Array.isArray(selectedEnquiry.replies) && selectedEnquiry.replies.length > 0 && (
-                  <div className="pt-4 border-t border-[#8a8a8a]">
-                    <p className="text-xs uppercase tracking-widest text-[#b0b0b0] mb-3">Replies ({selectedEnquiry.replies.length})</p>
+                  <div className="pt-4 border-t border-[#0d1f3d]">
+                    <p className="text-xs uppercase tracking-widest text-[#A8D5F0] mb-3">Replies ({selectedEnquiry.replies.length})</p>
                     <div className="space-y-3">
                       {selectedEnquiry.replies.map((reply: any, i: number) => (
                         <div key={i} className="bg-blue-50/50 border border-blue-100 p-4">
                           <div className="flex items-center justify-between mb-2">
-                            <p className="text-xs font-medium text-[#7a7a7a]">{reply.sentBy || 'Late Night Ricky'}</p>
-                            <p className="text-xs text-[#b0b0b0]">
+                            <p className="text-xs font-medium text-[#152a47]">{reply.sentBy || 'Late Night Ricky'}</p>
+                            <p className="text-xs text-[#A8D5F0]">
                               {new Date(reply.sentAt).toLocaleDateString('en-GB', {
                                 day: 'numeric',
                                 month: 'short',
@@ -502,7 +502,7 @@ export default function EnquiriesPage() {
                               })}
                             </p>
                           </div>
-                          <p className="text-xs text-[#b0b0b0] mb-1">Subject: {reply.subject}</p>
+                          <p className="text-xs text-[#A8D5F0] mb-1">Subject: {reply.subject}</p>
                           <p className="text-sm text-[#111] leading-relaxed whitespace-pre-wrap">{reply.message}</p>
                         </div>
                       ))}
@@ -511,25 +511,25 @@ export default function EnquiriesPage() {
                 )}
 
                 {/* Reply Box */}
-                <div className="pt-4 border-t border-[#8a8a8a]">
-                  <p className="text-xs uppercase tracking-widest text-[#b0b0b0] mb-3">Reply via Email</p>
+                <div className="pt-4 border-t border-[#0d1f3d]">
+                  <p className="text-xs uppercase tracking-widest text-[#A8D5F0] mb-3">Reply via Email</p>
                   <input
                     value={replySubject}
                     onChange={(e) => setReplySubject(e.target.value)}
                     placeholder="Subject"
-                    className="w-full px-4 py-2 bg-white border border-[#8a8a8a] text-sm text-[#111] focus:outline-none focus:border-[#7a7a7a] mb-2"
+                    className="w-full px-4 py-2 bg-white border border-[#0d1f3d] text-sm text-[#111] focus:outline-none focus:border-[#152a47] mb-2"
                   />
                   <textarea
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
                     rows={4}
                     placeholder="Type your reply..."
-                    className="w-full px-4 py-3 bg-white border border-[#8a8a8a] text-sm text-[#111] placeholder-[#b0b0b0] focus:outline-none focus:border-[#7a7a7a] resize-none mb-3"
+                    className="w-full px-4 py-3 bg-white border border-[#0d1f3d] text-sm text-[#111] placeholder-[#A8D5F0] focus:outline-none focus:border-[#152a47] resize-none mb-3"
                   />
                   <button
                     onClick={handleSendReply}
                     disabled={!replyText.trim() || sendingReply}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#7a7a7a] text-white text-xs uppercase tracking-wider hover:bg-[#3a3a3a] transition-colors disabled:opacity-50"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#152a47] text-white text-xs uppercase tracking-wider hover:bg-[#0d1f3d] transition-colors disabled:opacity-50"
                   >
                     <Send size={14} />
                     <span>{sendingReply ? 'Sending...' : 'Send Reply'}</span>
@@ -538,13 +538,13 @@ export default function EnquiriesPage() {
               </div>
 
               {/* Footer Actions */}
-              <div className="sticky bottom-0 bg-white border-t border-[#8a8a8a] p-6 space-y-4">
+              <div className="sticky bottom-0 bg-white border-t border-[#0d1f3d] p-6 space-y-4">
                 {/* Status Actions */}
                 <div className="grid grid-cols-3 gap-3">
                   {selectedEnquiry.status === 'new' ? (
                     <button
                       onClick={() => updateStatus(selectedEnquiry.id, 'read')}
-                      className="px-4 py-2.5 border border-[#8a8a8a] text-xs uppercase tracking-wider text-[#7a7a7a] hover:bg-[#F8FAFB] transition-colors flex items-center justify-center gap-2"
+                      className="px-4 py-2.5 border border-[#0d1f3d] text-xs uppercase tracking-wider text-[#152a47] hover:bg-[#F8FAFB] transition-colors flex items-center justify-center gap-2"
                     >
                       <Eye size={14} />
                       <span>Mark Read</span>
@@ -552,7 +552,7 @@ export default function EnquiriesPage() {
                   ) : (
                     <button
                       onClick={() => updateStatus(selectedEnquiry.id, 'new')}
-                      className="px-4 py-2.5 border border-[#8a8a8a] text-xs uppercase tracking-wider text-[#7a7a7a] hover:bg-[#F8FAFB] transition-colors flex items-center justify-center gap-2"
+                      className="px-4 py-2.5 border border-[#0d1f3d] text-xs uppercase tracking-wider text-[#152a47] hover:bg-[#F8FAFB] transition-colors flex items-center justify-center gap-2"
                     >
                       <Mail size={14} />
                       <span>Mark Unread</span>
@@ -560,14 +560,14 @@ export default function EnquiriesPage() {
                   )}
                   <button
                     onClick={() => updateStatus(selectedEnquiry.id, 'replied')}
-                    className="px-4 py-2.5 border border-[#8a8a8a] text-xs uppercase tracking-wider text-[#7a7a7a] hover:bg-[#F8FAFB] transition-colors flex items-center justify-center gap-2"
+                    className="px-4 py-2.5 border border-[#0d1f3d] text-xs uppercase tracking-wider text-[#152a47] hover:bg-[#F8FAFB] transition-colors flex items-center justify-center gap-2"
                   >
                     <Reply size={14} />
                     <span>Replied</span>
                   </button>
                   <button
                     onClick={() => updateStatus(selectedEnquiry.id, 'archived')}
-                    className="px-4 py-2.5 border border-[#8a8a8a] text-xs uppercase tracking-wider text-[#7a7a7a] hover:bg-[#F8FAFB] transition-colors flex items-center justify-center gap-2"
+                    className="px-4 py-2.5 border border-[#0d1f3d] text-xs uppercase tracking-wider text-[#152a47] hover:bg-[#F8FAFB] transition-colors flex items-center justify-center gap-2"
                   >
                     <Archive size={14} />
                     <span>Archive</span>
@@ -576,7 +576,7 @@ export default function EnquiriesPage() {
 
                 {/* Pipeline */}
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-[#b0b0b0] mb-2">Pipeline</p>
+                  <p className="text-xs uppercase tracking-widest text-[#A8D5F0] mb-2">Pipeline</p>
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       disabled={pipelineLoading === 'quote'}
@@ -598,7 +598,7 @@ export default function EnquiriesPage() {
                           setPipelineLoading('')
                         }
                       }}
-                      className="px-4 py-2.5 bg-[#7a7a7a] text-white text-xs uppercase tracking-wider hover:bg-[#3a3a3a] transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                      className="px-4 py-2.5 bg-[#152a47] text-white text-xs uppercase tracking-wider hover:bg-[#0d1f3d] transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                       <FileText size={14} />
                       <span>{pipelineLoading === 'quote' ? 'Creating...' : 'Create Quote'}</span>
@@ -623,7 +623,7 @@ export default function EnquiriesPage() {
                           setPipelineLoading('')
                         }
                       }}
-                      className="px-4 py-2.5 bg-[#3a3a3a] text-white text-xs uppercase tracking-wider hover:bg-[#7a7a7a] transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                      className="px-4 py-2.5 bg-[#0d1f3d] text-white text-xs uppercase tracking-wider hover:bg-[#152a47] transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                       <Receipt size={14} />
                       <span>{pipelineLoading === 'invoice' ? 'Creating...' : 'Create Invoice'}</span>
@@ -637,7 +637,7 @@ export default function EnquiriesPage() {
                     setShowModal(false)
                     confirmDelete(selectedEnquiry.id)
                   }}
-                  className="w-full text-xs uppercase tracking-wider text-[#b0b0b0] hover:text-red-600 transition-colors flex items-center justify-center gap-2 py-2"
+                  className="w-full text-xs uppercase tracking-wider text-[#A8D5F0] hover:text-red-600 transition-colors flex items-center justify-center gap-2 py-2"
                 >
                   <Trash2 size={12} />
                   <span>Delete Enquiry</span>

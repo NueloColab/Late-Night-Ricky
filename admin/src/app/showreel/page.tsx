@@ -94,7 +94,7 @@ export default function ShowreelPage() {
         <div className="max-w-[1200px] mx-auto px-8 py-16 grid md:grid-cols-2 gap-10">
           {videos.map((video) => (
             <div key={video.id} className="bg-white border-2 border-[#111] overflow-hidden hover:-translate-y-1.5 transition duration-400">
-              <div className="relative pb-[56.25%] bg-[#3a3a3a]">
+              <div className="relative pb-[56.25%] bg-[#0d1f3d]">
                 <video
                   src={video.src}
                   poster={video.poster}
@@ -107,7 +107,7 @@ export default function ShowreelPage() {
               <div className="p-8">
                 <h3 className="text-[clamp(24px,3vw,36px)] font-black uppercase leading-none tracking-[-1px] mb-3 text-[#111]">{video.title}</h3>
                 <p className="text-sm text-[#555] leading-relaxed uppercase tracking-[0.5px]">{video.description}</p>
-                <p className="text-xs text-[#b0b0b0] uppercase tracking-[1.5px] mt-4 font-semibold">{video.year ? `Dec ${video.year}` : ''}</p>
+                <p className="text-xs text-[#A8D5F0] uppercase tracking-[1.5px] mt-4 font-semibold">{video.year ? `Dec ${video.year}` : ''}</p>
               </div>
             </div>
           ))}
@@ -115,20 +115,20 @@ export default function ShowreelPage() {
           {cards.map((card) => (
             <div key={card.id} className="bg-white border-2 border-[#111] overflow-hidden hover:-translate-y-1.5 transition duration-400">
               {card.imagePath && (
-                <div className="relative pb-[56.25%] bg-[#3a3a3a]">
+                <div className="relative pb-[56.25%] bg-[#0d1f3d]">
                   <img src={card.imagePath} alt={card.title} className="absolute inset-0 w-full h-full object-cover" />
                 </div>
               )}
               <div className="p-8">
                 <h3 className="text-[clamp(24px,3vw,36px)] font-black uppercase leading-none tracking-[-1px] mb-3 text-[#111]">{card.title}</h3>
-                {card.subtitle && <p className="text-xs text-[#b0b0b0] uppercase tracking-[1.5px] mb-2 font-semibold">{card.subtitle}</p>}
+                {card.subtitle && <p className="text-xs text-[#A8D5F0] uppercase tracking-[1.5px] mb-2 font-semibold">{card.subtitle}</p>}
                 <p className="text-sm text-[#555] leading-relaxed uppercase tracking-[0.5px]">{card.description}</p>
               </div>
             </div>
           ))}
 
           {videos.length === 1 && cards.length === 0 && (
-            <div className="bg-[#8a8a8a] border-2 border-[#111] flex flex-col items-center justify-center min-h-[300px] p-10 text-center">
+            <div className="bg-[#0d1f3d] border-2 border-[#111] flex flex-col items-center justify-center min-h-[300px] p-10 text-center">
               <h3 className="text-[clamp(24px,3vw,36px)] font-black uppercase leading-none tracking-[-1px] mb-4 text-[#111]">More coming soon</h3>
               <p className="text-sm text-[#555] uppercase tracking-[0.5px]">Stay tuned for more performances.</p>
             </div>
