@@ -136,7 +136,6 @@ export default async function HomePage() {
   let shareMusicDescription = "I'm always on the lookout for new music to play, so send me your tracks";
   let grammyBadge = '/assets/grammy-gold-v2.png?v=2';
   let reachOutImage = '/assets/ricky-hero-new.jpg';
-  let reachOutSignature = 'Late Night Ricky';
   let reachOutCta = 'Get in touch';
   let carouselImagesList: { imagePath: string | null; alt: string }[] = [];
 
@@ -223,7 +222,6 @@ export default async function HomePage() {
       if (reachOutSection?.content) {
         const c = typeof reachOutSection.content === 'string' ? JSON.parse(reachOutSection.content) : reachOutSection.content;
         if (c.image) reachOutImage = c.image;
-        if (c.signature) reachOutSignature = c.signature;
         if (c.cta) reachOutCta = c.cta;
       }
     }
