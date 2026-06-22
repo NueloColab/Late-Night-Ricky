@@ -80,14 +80,11 @@ export default function HomeContactSection() {
   }
 
   return (
-    <section id="contact-form" className="relative z-10 pt-16 md:pt-0"
-      style={{ background: 'linear-gradient(180deg, #2E5C8A 0%, #0D4A4A 100%)' }}
-    >
+    <section id="contact-form" className="relative z-10 bg-white pt-16 md:pt-0">
       <div className="grid md:grid-cols-2 gap-0 min-h-[calc(100vh-70px)] items-stretch">
         {/* Left Image */}
         <div className="relative overflow-hidden">
-          <img src={contactInfo.image} alt="Late Night Ricky" className="absolute top-0 left-0 w-full h-full object-cover object-top warm-photo" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0D4A4A]/40" />
+          <img src={contactInfo.image} alt="Late Night Ricky" className="absolute top-0 left-0 w-full h-full object-cover object-top" />
         </div>
 
         {/* Right Form */}
@@ -96,16 +93,16 @@ export default function HomeContactSection() {
           <div className="flex gap-0 mb-10">
             <button
               onClick={() => { setActiveTab('booking'); setSubmitted(false); setError(''); }}
-              className={`flex-1 py-3.5 px-7 border text-xs font-medium uppercase tracking-[1.5px] transition ${
-                activeTab === 'booking' ? 'bg-[#0A1628] text-[#F0EDE6] border-[#0A1628]' : 'bg-transparent text-[#F0EDE6] border-[#F0EDE6]/30 hover:bg-[#2E5C8A]/30'
+              className={`flex-1 py-3.5 px-7 border-2 border-[#111] text-xs font-semibold uppercase tracking-[1.5px] transition ${
+                activeTab === 'booking' ? 'bg-[#111] text-white' : 'bg-white text-[#111] hover:bg-[#E3E8ED]'
               }`}
             >
               Booking
             </button>
             <button
               onClick={() => { setActiveTab('private'); setSubmitted(false); setError(''); }}
-              className={`flex-1 py-3.5 px-7 border text-xs font-medium uppercase tracking-[1.5px] transition ${
-                activeTab === 'private' ? 'bg-[#0A1628] text-[#F0EDE6] border-[#0A1628]' : 'bg-transparent text-[#F0EDE6] border-[#F0EDE6]/30 hover:bg-[#2E5C8A]/30'
+              className={`flex-1 py-3.5 px-7 border-2 border-[#111] text-xs font-semibold uppercase tracking-[1.5px] transition ${
+                activeTab === 'private' ? 'bg-[#111] text-white' : 'bg-white text-[#111] hover:bg-[#E3E8ED]'
               }`}
             >
               Private Message
@@ -114,20 +111,20 @@ export default function HomeContactSection() {
 
           {submitted ? (
             <div className="text-center py-10">
-              <p className="text-lg font-semibold text-[#64C8A8] mb-2">✓ Message sent successfully</p>
-              <p className="text-sm text-[#A3B5C4]">We&apos;ll be in touch soon.</p>
+              <p className="text-lg font-semibold text-[#2d6a2d] mb-2">✓ Message sent successfully</p>
+              <p className="text-sm text-[#6B8FAB]">We&apos;ll be in touch soon.</p>
               <button
                 onClick={() => setSubmitted(false)}
-                className="mt-6 px-6 py-2 border border-[#F0EDE6]/30 rounded-full text-xs font-medium uppercase tracking-[1px] text-[#F0EDE6] hover:bg-[#2E5C8A]/30 hover:border-[#64C8A8]/50 transition"
+                className="mt-6 px-6 py-2 border-2 border-[#111] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#111] hover:text-white transition"
               >
                 Send another
               </button>
             </div>
           ) : !contactInfo.formEnabled ? (
             <div className="text-center py-10">
-              <p className="text-lg font-semibold text-[#F0EDE6] mb-2">Contact form is currently disabled</p>
-              <p className="text-sm text-[#A3B5C4]">Please reach out directly via email.</p>
-              <a href={`mailto:${contactInfo.email}`} className="mt-4 inline-block px-6 py-2 border border-[#F0EDE6]/30 rounded-full text-xs font-medium uppercase tracking-[1px] text-[#F0EDE6] hover:bg-[#2E5C8A]/30 hover:border-[#64C8A8]/50 transition">
+              <p className="text-lg font-semibold text-[#111] mb-2">Contact form is currently disabled</p>
+              <p className="text-sm text-[#6B8FAB]">Please reach out directly via email.</p>
+              <a href={`mailto:${contactInfo.email}`} className="mt-4 inline-block px-6 py-2 border-2 border-[#111] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#111] hover:text-white transition">
                 Email {contactInfo.email}
               </a>
             </div>
@@ -143,12 +140,12 @@ export default function HomeContactSection() {
                   { label: 'Date *', name: 'date', type: 'date' },
                 ].map((field) => (
                   <div key={field.name} className="mb-5">
-                    <label className="block text-xs font-medium uppercase tracking-[1.5px] text-[#A3B5C4] mb-2">{field.label}</label>
-                    <input type={field.type} name={field.name} required className="w-full bg-[#0A1628]/60 border border-[#2E5C8A]/30 rounded-lg px-4 py-3 text-sm text-[#F0EDE6] placeholder-[#6B8E9B] focus:outline-none focus:border-[#64C8A8]/50 transition" />
+                    <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#5B7A8E] mb-2">{field.label}</label>
+                    <input type={field.type} name={field.name} required className="w-full border border-[#E3E8ED] rounded-lg px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
                   </div>
                 ))}
-                {error && <p className="text-red-400 text-sm mb-4">{error}</p>}
-                <button type="submit" disabled={submitting} className="w-full py-4 bg-[#0A1628] text-[#F0EDE6] text-sm font-medium uppercase tracking-[2px] hover:bg-[#2E5C8A]/40 transition disabled:opacity-50">
+                {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
+                <button type="submit" disabled={submitting} className="w-full py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition disabled:opacity-50">
                   {submitting ? 'Sending...' : 'Submit'}
                 </button>
               </form>
@@ -159,16 +156,16 @@ export default function HomeContactSection() {
                   { label: 'Email *', name: 'email', type: 'email' },
                 ].map((field) => (
                   <div key={field.name} className="mb-5">
-                    <label className="block text-xs font-medium uppercase tracking-[1.5px] text-[#A3B5C4] mb-2">{field.label}</label>
-                    <input type={field.type} name={field.name} required className="w-full bg-[#0A1628]/60 border border-[#2E5C8A]/30 rounded-lg px-4 py-3 text-sm text-[#F0EDE6] placeholder-[#6B8E9B] focus:outline-none focus:border-[#64C8A8]/50 transition" />
+                    <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#5B7A8E] mb-2">{field.label}</label>
+                    <input type={field.type} name={field.name} required className="w-full border border-[#E3E8ED] rounded-lg px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
                   </div>
                 ))}
                 <div className="mb-5">
-                  <label className="block text-xs font-medium uppercase tracking-[1.5px] text-[#A3B5C4] mb-2">Message *</label>
-                  <textarea name="message" required rows={4} className="w-full bg-[#0A1628]/60 border border-[#2E5C8A]/30 rounded-lg px-4 py-3 text-sm text-[#F0EDE6] placeholder-[#6B8E9B] focus:outline-none focus:border-[#64C8A8]/50 resize-y min-h-[80px] transition" />
+                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#5B7A8E] mb-2">Message *</label>
+                  <textarea name="message" required rows={4} className="w-full border border-[#E3E8ED] rounded-lg px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C] resize-y min-h-[80px]" />
                 </div>
-                {error && <p className="text-red-400 text-sm mb-4">{error}</p>}
-                <button type="submit" disabled={submitting} className="w-full py-4 bg-[#0A1628] text-[#F0EDE6] text-sm font-medium uppercase tracking-[2px] hover:bg-[#2E5C8A]/40 transition disabled:opacity-50">
+                {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
+                <button type="submit" disabled={submitting} className="w-full py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition disabled:opacity-50">
                   {submitting ? 'Sending...' : 'Submit'}
                 </button>
               </form>
