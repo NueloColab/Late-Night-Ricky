@@ -510,7 +510,10 @@ export default async function HomePage() {
               alt="Late Night Ricky"
               className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-l from-[#0d1f2d] via-[#0d1f2d]/60 to-transparent md:bg-gradient-to-l md:from-[#0d1f2d] md:via-[#0d1f2d]/50 md:to-transparent" />
+            <div
+              className="absolute inset-0"
+              style={{ background: 'linear-gradient(to right, transparent 20%, rgba(13,31,45,0.92) 55%, #0d1f2d 100%)' }}
+            />
           </div>
 
           {/* Text side — right */}
