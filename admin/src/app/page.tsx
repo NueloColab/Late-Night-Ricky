@@ -552,34 +552,22 @@ export default async function HomePage() {
         />
 
         {/* Content */}
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-20 md:py-28">
+        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-20 md:py-28 flex items-center min-h-[60vh] md:min-h-0">
           <div className="max-w-xl md:ml-auto">
-            <div className="mb-8">
-              <span className="block text-[11px] font-semibold tracking-[0.3em] uppercase text-[#64c8a8] mb-6">
-                Bookings &amp; Enquiries
-              </span>
-              <h2 className="heading text-[clamp(36px,6vw,72px)] leading-[0.95] text-white">
-                Let&apos;s
+            <div className="mb-10">
+              <h2 className="heading text-[clamp(48px,8vw,96px)] leading-[0.9] text-white">
+                LET&apos;S
               </h2>
-              <div className="w-16 h-[1px] bg-[#2a7f7f] my-4 md:my-5" />
-              <h2 className="heading text-[clamp(36px,6vw,72px)] leading-[0.95] text-white italic">
-                collaborate
+              <h2 className="heading text-[clamp(48px,8vw,96px)] leading-[0.9] text-white">
+                COLLABORATE
               </h2>
             </div>
-            <div className="mt-4">
-              <p className="font-['Rockybilly',cursive] text-[clamp(24px,4vw,40px)] font-normal text-[#8fb8c9] mb-6 rotate-[-2deg] opacity-90">
-                {reachOutSignature}
-              </p>
-              <a
-                href="#contact-form"
-                className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#2a7f7f] text-white rounded-full text-[12px] font-semibold uppercase tracking-[0.15em] hover:bg-[#64c8a8] transition-colors duration-300"
-              >
-                {reachOutCta}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </a>
-            </div>
+            <a
+              href="#contact-form"
+              className="inline-flex items-center justify-center px-12 py-3 border border-white text-white text-[11px] font-semibold uppercase tracking-[0.2em] hover:bg-white hover:text-[#111] transition-all duration-300"
+            >
+              {reachOutCta}
+            </a>
           </div>
         </div>
       </section>
