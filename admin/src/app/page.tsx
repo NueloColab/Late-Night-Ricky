@@ -502,9 +502,19 @@ export default async function HomePage() {
       <section id="reach-out" className="reveal relative z-10 overflow-hidden"
         style={{ background: 'linear-gradient(135deg, #0d1f2d 0%, #1b3a4c 50%, #0f2a3a 100%)' }}
       >
-        <div className="max-w-[1400px] mx-auto grid md:grid-cols-[1.3fr_1fr] items-stretch">
-          {/* Text side */}
-          <div className="relative z-10 flex flex-col justify-center px-6 md:px-16 lg:px-24 py-20 md:py-28">
+        <div className="max-w-[1400px] mx-auto grid md:grid-cols-[1fr_1.3fr] items-stretch">
+          {/* Image side — left */}
+          <div className="relative overflow-hidden min-h-[300px] md:min-h-0 order-2 md:order-1">
+            <img
+              src={reachOutImage}
+              alt="Late Night Ricky"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-l from-[#0d1f2d] via-[#0d1f2d]/60 to-transparent md:bg-gradient-to-l md:from-[#0d1f2d] md:via-[#0d1f2d]/50 md:to-transparent" />
+          </div>
+
+          {/* Text side — right */}
+          <div className="relative z-10 flex flex-col justify-center px-6 md:px-16 lg:px-24 py-20 md:py-28 order-1 md:order-2">
             <div className="mb-8">
               <span className="block text-[11px] font-semibold tracking-[0.3em] uppercase text-[#64c8a8] mb-6">
                 Bookings &amp; Enquiries
@@ -531,16 +541,6 @@ export default async function HomePage() {
                 </svg>
               </a>
             </div>
-          </div>
-
-          {/* Image side */}
-          <div className="relative overflow-hidden min-h-[300px] md:min-h-0">
-            <img
-              src={reachOutImage}
-              alt="Late Night Ricky"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0d1f2d] via-[#0d1f2d]/70 to-transparent md:bg-gradient-to-r md:from-[#0d1f2d] md:via-[#0d1f2d]/60 md:to-transparent" />
           </div>
         </div>
       </section>
