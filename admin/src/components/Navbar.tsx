@@ -44,25 +44,6 @@ export default function Navbar() {
   return (
     <>
       <style>{`
-        @keyframes wave-pulse {
-          0%, 100% { width: 22px; transform: translateX(0); }
-          25% { width: 16px; transform: translateX(2px); }
-          50% { width: 26px; transform: translateX(-2px); }
-          75% { width: 18px; transform: translateX(1px); }
-        }
-        @keyframes glow-pulse {
-          0%, 100% { opacity: 0.6; }
-          50% { opacity: 1; }
-        }
-        .menu-overlay::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(ellipse 90% 70% at 50% 40%, rgba(27, 58, 76, 0.5) 0%, transparent 70%);
-          animation: glow-pulse 4s ease-in-out infinite;
-          pointer-events: none;
-        }
-
         .menu-toggle {
           position: fixed;
           top: 20px;
@@ -99,8 +80,7 @@ export default function Navbar() {
           transform-origin: center;
         }
         .menu-toggle .hamburger span:nth-child(2) {
-          animation: wave-pulse 1.4s ease-in-out infinite;
-          animation-delay: .25s;
+          transition: opacity 300ms ease;
         }
         .menu-toggle.active .hamburger span:nth-child(1) {
           transform: translateY(7px) rotate(45deg);
@@ -113,72 +93,120 @@ export default function Navbar() {
           transform: translateY(-7px) rotate(-45deg);
         }
 
-        .menu-overlay {
+        /* Backdrop overlay */
+        .menu-backdrop {
           position: fixed;
           inset: 0;
-          background:
-            radial-gradient(ellipse 120% 80% at 50% 35%, rgba(27, 58, 76, 0.85) 0%, rgba(15, 25, 35, 0.4) 50%, transparent 80%),
-            radial-gradient(ellipse 100% 60% at 50% 45%, rgba(143, 168, 190, 0.25) 0%, transparent 55%),
-            radial-gradient(ellipse 140% 100% at 50% 50%, rgba(27, 58, 76, 0.35) 0%, transparent 60%),
-            linear-gradient(180deg, #0f1a24 0%, #0a1218 30%, #060a0e 70%, #030508 100%);
-          -webkit-backdrop-filter: blur(40px) saturate(1.5);
-          backdrop-filter: blur(40px) saturate(1.5);
-          z-index: 350;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
+          background: rgba(0,0,0,0.6);
+          z-index: 340;
           opacity: 0;
           pointer-events: none;
-          transition: opacity 400ms cubic-bezier(.22,1,.36,1);
+          transition: opacity 400ms ease;
         }
-        .menu-overlay.open {
+        .menu-backdrop.open {
           opacity: 1;
           pointer-events: auto;
         }
-        .menu-overlay a {
-          position: relative;
-          z-index: 2;
+
+        /* Slide-out panel from left */
+        .menu-panel {
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 320px;
+          max-width: 85vw;
+          background: #000;
+          z-index: 350;
+          display: flex;
+          flex-direction: column;
+          padding: 24px 32px;
+          transform: translateX(-100%);
+          transition: transform 500ms cubic-bezier(.22,1,.36,1);
+        }
+        .menu-panel.open {
+          transform: translateX(0);
+        }
+        .menu-panel .close-btn {
+          align-self: flex-end;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          margin-bottom: 40px;
+        }
+        .menu-panel .close-btn svg {
+          width: 24px;
+          height: 24px;
+          stroke: #fff;
+          stroke-width: 2;
+        }
+        .menu-panel nav {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .menu-panel nav a {
           display: block;
           color: #fff;
           text-decoration: none;
-          font-family: 'Georgia', serif;
-          font-size: clamp(32px, 8vw, 56px);
-          font-weight: 500;
-          padding: 10px 0;
-          letter-spacing: 2px;
+          font-size: 15px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
+          padding: 14px 0;
+          border-bottom: 1px solid rgba(255,255,255,0.12);
+          transition: color 200ms ease;
           opacity: 0;
-          transform: translateY(30px);
-          transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1);
+          transform: translateX(-20px);
+          transition: opacity 400ms ease, transform 400ms ease, color 200ms ease;
         }
-        .menu-overlay.open a {
+        .menu-panel.open nav a {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateX(0);
         }
-        .menu-overlay.open a:nth-child(1) { transition-delay: .06s; }
-        .menu-overlay.open a:nth-child(2) { transition-delay: .12s; }
-        .menu-overlay.open a:nth-child(3) { transition-delay: .18s; }
-        .menu-overlay.open a:nth-child(4) { transition-delay: .24s; }
-        .menu-overlay.open a:nth-child(5) { transition-delay: .3s; }
-        .menu-overlay.open a:nth-child(6) { transition-delay: .36s; }
-        .menu-overlay.open a:nth-child(7) { transition-delay: .42s; }
-        .menu-overlay .menu-label {
-          position: absolute;
-          bottom: 40px;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 2;
-          color: rgba(143, 168, 190, 0.5);
+        .menu-panel.open nav a:nth-child(1) { transition-delay: .08s; }
+        .menu-panel.open nav a:nth-child(2) { transition-delay: .14s; }
+        .menu-panel.open nav a:nth-child(3) { transition-delay: .20s; }
+        .menu-panel.open nav a:nth-child(4) { transition-delay: .26s; }
+        .menu-panel.open nav a:nth-child(5) { transition-delay: .32s; }
+        .menu-panel.open nav a:nth-child(6) { transition-delay: .38s; }
+        .menu-panel.open nav a:nth-child(7) { transition-delay: .44s; }
+        .menu-panel nav a:hover {
+          color: #64c8a8;
+        }
+        .menu-panel .menu-footer {
+          margin-top: auto;
+          padding-top: 32px;
+          border-top: 1px solid rgba(255,255,255,0.12);
+          opacity: 0;
+          transition: opacity 400ms ease .5s;
+        }
+        .menu-panel.open .menu-footer {
+          opacity: 1;
+        }
+        .menu-panel .menu-footer p {
+          color: rgba(255,255,255,0.4);
           font-size: 10px;
-          letter-spacing: 4px;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
           font-weight: 600;
-          opacity: 0;
-          transition: opacity .4s .5s ease;
         }
-        .menu-overlay.open .menu-label {
-          opacity: 1;
+
+        @media (min-width: 768px) {
+          .menu-panel {
+            width: 380px;
+            padding: 32px 40px;
+          }
+          .menu-panel nav a {
+            font-size: 18px;
+            padding: 16px 0;
+          }
         }
       `}</style>
 
@@ -207,18 +235,40 @@ export default function Navbar() {
         </span>
       </button>
 
-      {/* Full-Screen Overlay - all screens */}
-      <div className={`menu-overlay ${menuOpen ? 'open' : ''}`}>
-        {navLinks.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            onClick={() => setMenuOpen(false)}
-          >
-            {link.label}
-          </Link>
-        ))}
-        <div className="menu-label">Late Night Ricky</div>
+      {/* Backdrop overlay */}
+      <div
+        className={`menu-backdrop ${menuOpen ? 'open' : ''}`}
+        onClick={() => setMenuOpen(false)}
+      />
+
+      {/* Slide-out panel from left */}
+      <div className={`menu-panel ${menuOpen ? 'open' : ''}`}>
+        <button
+          className="close-btn"
+          onClick={() => setMenuOpen(false)}
+          aria-label="Close menu"
+        >
+          <svg viewBox="0 0 24 24" fill="none">
+            <line x1="4" y1="4" x2="20" y2="20" />
+            <line x1="20" y1="4" x2="4" y2="20" />
+          </svg>
+        </button>
+
+        <nav>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="menu-footer">
+          <p>Late Night Ricky</p>
+        </div>
       </div>
     </>
   );
