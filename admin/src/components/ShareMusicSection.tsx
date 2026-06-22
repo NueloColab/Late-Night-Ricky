@@ -70,15 +70,15 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
 
   if (status === 'success') {
     return (
-      <section id="share-music" className="reveal relative z-10 bg-[#E3E8ED] pt-32 pb-28 md:py-28 text-center">
-        <div className="max-w-[700px] mx-auto px-6">
-          <h2 className="text-[clamp(36px,5vw,56px)] font-black tracking-[-2px] uppercase mb-4 text-[#111]">{headline}</h2>
-          <div className="max-w-[600px] mx-auto border-2 border-[#1B3A4C] p-12 text-center">
-            <p className="text-2xl font-black uppercase tracking-[-1px] text-[#1B3A4C] mb-2">Track Sent!</p>
-            <p className="text-sm text-[#5B7A8E]">Thanks for sharing. Your music has been uploaded successfully.</p>
+      <section id="share-music" className="reveal textured-bg relative z-10 pt-32 pb-28 md:py-28 text-center">
+        <div className="relative z-10 max-w-[700px] mx-auto px-6">
+          <h2 className="heading text-[clamp(36px,5vw,56px)] mb-4 text-white">{headline}</h2>
+          <div className="max-w-[600px] mx-auto border-2 border-white p-12 text-center">
+            <p className="text-2xl font-black uppercase tracking-[-1px] text-white mb-2">Track Sent!</p>
+            <p className="text-sm text-[#A3B5C4]">Thanks for sharing. Your music has been uploaded successfully.</p>
             <button
               onClick={() => { setStatus('idle'); setShowForm(false); }}
-              className="mt-6 px-8 py-3 border-2 border-[#111] text-[#111] text-sm font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition"
+              className="mt-6 px-8 py-3 border-2 border-white text-white text-sm font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition"
             >
               Send Another
             </button>
@@ -89,16 +89,16 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
   }
 
   return (
-    <section id="share-music" className="reveal relative z-10 bg-[#E3E8ED] pt-32 pb-28 md:py-28 text-center">
-      <div className="max-w-[700px] mx-auto px-6">
-        <h2 className="text-[clamp(36px,5vw,56px)] font-black tracking-[-2px] uppercase mb-4 text-[#111]">{headline}</h2>
-        <p className="text-[clamp(22px,3vw,36px)] font-black uppercase leading-tight tracking-[-1px] mb-12 text-[#111]">{description}</p>
+    <section id="share-music" className="reveal textured-bg relative z-10 pt-32 pb-28 md:py-28 text-center">
+      <div className="relative z-10 max-w-[700px] mx-auto px-6">
+        <h2 className="heading text-[clamp(36px,5vw,56px)] mb-4 text-white">{headline}</h2>
+        <p className="text-[clamp(22px,3vw,36px)] font-black uppercase leading-tight tracking-[-1px] mb-12 text-white">{description}</p>
 
         <form onSubmit={handleSubmit} className="max-w-[600px] mx-auto">
           {/* File drop zone */}
           <div
             className={`border-[3px] border-dashed p-12 md:p-16 text-center transition-colors cursor-pointer mb-8 ${
-              dragOver ? 'border-[#1B3A4C] bg-[rgba(27,58,76,0.04)]' : 'border-[#111] hover:border-[#1B3A4C] hover:bg-[rgba(27,58,76,0.02)]'
+              dragOver ? 'border-white bg-white/10' : 'border-white/50 hover:border-white hover:bg-white/5'
             }`}
             onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
             onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
@@ -116,13 +116,13 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
               className="hidden"
               onChange={(e) => handleFile(e.target.files?.[0] || null)}
             />
-            <button type="button" className="inline-block px-10 py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition">
+            <button type="button" className="inline-block px-10 py-4 bg-white text-[#111] text-sm font-semibold uppercase tracking-[2px] hover:bg-[#A3B5C4] transition">
               {file ? 'Change track' : 'Upload your track'}
             </button>
-            <p className="mt-4 text-sm text-[#5B7A8E]">Click the button and upload your file in mp3 320 kbps</p>
+            <p className="mt-4 text-sm text-[#A3B5C4]">Click the button and upload your file in mp3 320 kbps</p>
             <p className="mt-2 text-xs text-[#8FA8BE]">Max 20MB — MP3 or WAV only</p>
             {file && (
-              <p className="mt-4 text-sm text-[#1B3A4C] font-medium">Selected: {file.name}</p>
+              <p className="mt-4 text-sm text-white font-medium">Selected: {file.name}</p>
             )}
           </div>
 
@@ -135,33 +135,33 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email *"
                 required
-                className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#6B8FAB] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#1B3A4C]"
+                className="w-full px-5 py-3 border-2 border-white/50 text-white placeholder-[#A3B5C4] text-sm uppercase tracking-[1px] focus:outline-none focus:border-white bg-transparent"
               />
               <input
                 type="text"
                 value={artistName}
                 onChange={(e) => setArtistName(e.target.value)}
                 placeholder="Artist name"
-                className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#6B8FAB] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#1B3A4C]"
+                className="w-full px-5 py-3 border-2 border-white/50 text-white placeholder-[#A3B5C4] text-sm uppercase tracking-[1px] focus:outline-none focus:border-white bg-transparent"
               />
               <input
                 type="text"
                 value={trackTitle}
                 onChange={(e) => setTrackTitle(e.target.value)}
                 placeholder="Track title"
-                className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#6B8FAB] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#1B3A4C]"
+                className="w-full px-5 py-3 border-2 border-white/50 text-white placeholder-[#A3B5C4] text-sm uppercase tracking-[1px] focus:outline-none focus:border-white bg-transparent"
               />
             </div>
           </div>
 
           {errorMsg && (
-            <p className="text-red-600 text-sm text-center mb-4">{errorMsg}</p>
+            <p className="text-red-400 text-sm text-center mb-4">{errorMsg}</p>
           )}
 
           <button
             type="submit"
             disabled={submitting || !file}
-            className="inline-block px-10 py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-block px-10 py-4 bg-white text-[#111] text-sm font-semibold uppercase tracking-[2px] hover:bg-[#A3B5C4] transition w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? 'Uploading...' : 'Submit Track'}
           </button>

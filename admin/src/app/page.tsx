@@ -334,13 +334,13 @@ export default async function HomePage() {
       </section>
 
       {/* Reach */}
-      <section id="reach" className="relative z-10 bg-[#1B3A4C] py-28">
-        <div className="max-w-[1200px] mx-auto px-6">
+      <section id="reach" className="textured-bg relative z-10 py-28">
+        <div className="relative z-10 max-w-[1200px] mx-auto px-6">
           <h1 className="reveal heading text-[clamp(36px,5.5vw,64px)] leading-[0.95] max-w-[960px] text-white">
             {reachHeadline}
           </h1>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mt-6">
-            <p className="reveal reveal-d1 text-sm leading-relaxed max-w-[560px] text-[#8FA8BE] font-semibold uppercase tracking-[0.5px]">
+            <p className="reveal reveal-d1 text-sm leading-relaxed max-w-[560px] text-[#A3B5C4] font-semibold uppercase tracking-[0.5px]">
               {reachSubtext}
             </p>
             <div className="grammy-float grammy-glow relative w-[120px] md:w-[160px] flex-shrink-0">
@@ -358,12 +358,12 @@ export default async function HomePage() {
       {/* Shows — 3 column vertical panels (N.E.R.D. style) */}
       <section id="shows" className="relative z-10">
         {/* Section header */}
-        <div className="bg-white py-20 md:py-24">
-          <div className="max-w-[1200px] mx-auto px-6 text-center">
-            <h2 className="reveal heading text-[clamp(36px,5.5vw,64px)] mb-5 text-[#111] leading-[0.95]">
+        <div className="textured-bg relative z-10 py-20 md:py-24">
+          <div className="relative z-10 max-w-[1200px] mx-auto px-6 text-center">
+            <h2 className="reveal heading text-[clamp(36px,5.5vw,64px)] mb-5 text-white leading-[0.95]">
               RECENT SHOWS &amp; STORIES
             </h2>
-            <p className="reveal reveal-d1 text-sm text-[#5B7A8E] max-w-[600px] mx-auto leading-relaxed font-semibold uppercase tracking-[0.5px]">
+            <p className="reveal reveal-d1 text-sm text-[#A3B5C4] max-w-[600px] mx-auto leading-relaxed font-semibold uppercase tracking-[0.5px]">
               A career built on unforgettable nights, iconic venues, and sold-out crowds.
             </p>
           </div>
@@ -404,10 +404,10 @@ export default async function HomePage() {
         </div>
 
         {/* All Shows link */}
-        <div className="bg-white py-16 text-center">
+        <div className="textured-bg relative z-10 py-16 text-center">
           <a
             href="#shows"
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-[#1B3A4C] rounded-full text-[#1B3A4C] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#1B3A4C] hover:text-white transition"
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-white rounded-full text-white text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition"
           >
             All Shows &amp; Stories
           </a>
@@ -424,8 +424,8 @@ export default async function HomePage() {
       />
 
       {/* Radio */}
-      <section id="radio" className="reveal relative z-10 bg-white pt-32 pb-28 md:py-28">
-        <div className="max-w-[1200px] mx-auto px-6">
+      <section id="radio" className="reveal textured-bg relative z-10 pt-32 pb-28 md:py-28">
+        <div className="relative z-10 max-w-[1200px] mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative overflow-hidden rounded-2xl">
               <img src={radioImage} alt="Late Night Ricky" className="w-full h-auto object-cover" />
@@ -436,26 +436,26 @@ export default async function HomePage() {
               </div>
             </div>
             <div>
-              <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">{radioLabel}</p>
-              <h2 className="heading text-[clamp(40px,6vw,80px)] text-[#111] mb-5 leading-[0.95]">{radioHeadline}</h2>
-              <p className="text-sm text-[#111] leading-relaxed mb-10 max-w-[420px] font-semibold uppercase tracking-[0.5px]">
+              <p className="text-xs text-[#A3B5C4] tracking-[3px] uppercase font-semibold mb-4">{radioLabel}</p>
+              <h2 className="heading text-[clamp(40px,6vw,80px)] text-white mb-5 leading-[0.95]">{radioHeadline}</h2>
+              <p className="text-sm text-[#A3B5C4] leading-relaxed mb-10 max-w-[420px] font-semibold uppercase tracking-[0.5px]">
                 {radioDescription}
               </p>
               <div className="flex gap-4 flex-wrap mb-10">
-                <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
+                <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-white rounded-full text-white text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.521 17.31a.746.746 0 01-1.03.24c-2.66-1.62-6.008-1.98-9.95-1.083a.746.746 0 11-.413-1.433c4.308-1.244 8.007-.706 10.953 1.075a.746.746 0 01.44 1.201zm1.47-3.27a.934.934 0 01-1.288.308c-3.044-1.86-7.683-2.398-11.282-1.312a.934.934 0 11-.558-1.783c4.125-1.29 9.218-.663 12.637 1.421.443.27.562.856.29 1.366zm.126-3.403c-3.652-2.167-9.674-2.374-13.158-1.31a1.121 1.121 0 11-.662-2.142c3.977-1.239 10.56-.998 14.703 1.463a1.121 1.121 0 11-.883 1.989z" fill="currentColor"/></svg>
                   Spotify
                 </a>
-                <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
+                <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 px-7 py-3 border-2 border-white rounded-full text-white text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18.7 5.3c-.4-.4-1.1-.6-2-.5-.9.1-1.8.6-2.6 1.3-.8.7-1.3 1.6-1.3 2.4 0 .2 0 .4.1.6-.5-.1-1-.2-1.6-.2-1.6 0-3.2.6-4.4 1.7-1.2 1.1-1.9 2.6-2 4.2-.1 1.6.4 3.2 1.5 4.4 1.1 1.2 2.6 1.9 4.2 2 1.6.1 3.2-.4 4.4-1.5 1.2-1.1 1.9-2.6 2-4.2v-9.2c0-.3-.1-.5-.3-.8zm-6.5 11.5c-.4.4-.9.6-1.5.6-.6 0-1.1-.2-1.5-.6-.4-.4-.6-.9-.6-1.5 0-.6.2-1.1.6-1.5.4-.4.9-.6 1.5-.6.6 0 1.1.2 1.5.6.4.4.6.9.6 1.5 0 .6-.2 1.1-.6 1.5z" fill="currentColor"/></svg>
                   Apple
                 </a>
-                <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[#111] text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
+                <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-white rounded-full text-white text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition">
                   <svg width="20" height="16" viewBox="0 0 24 24" fill="none"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"/></svg>
                   YouTube
                 </a>
               </div>
-              <div className="border-t border-[#E3E8ED] pt-6">
+              <div className="border-t border-white/20 pt-6">
                 <AudioTrackList tracks={tracks} />
               </div>
             </div>
@@ -464,7 +464,7 @@ export default async function HomePage() {
       </section>
 
       {/* Carousel */}
-      <section className="relative z-10 bg-white py-16 overflow-hidden">
+      <section className="textured-bg relative z-10 py-16 overflow-hidden">
         <div className="carousel-track">
           {carouselImagesList.length > 0 ? (
             carouselImagesList.map((img, i) => (
@@ -483,21 +483,21 @@ export default async function HomePage() {
       </section>
 
       {/* Clients — Marquee */}
-      <section id="supporting" className="reveal relative z-10 bg-white pt-24 md:pt-10 pb-28 overflow-hidden">
-        <div className="max-w-[1200px] mx-auto px-6 mb-12">
-          <p className="text-sm text-[#5B7A8E] mb-6 tracking-[2px] uppercase text-center">Acts &amp; Private Clients</p>
-          <h2 className="heading text-[clamp(36px,6vw,72px)] mb-4 text-[#111] text-center">{clientsTitle}</h2>
+      <section id="supporting" className="reveal textured-bg relative z-10 pt-24 md:pt-10 pb-28 overflow-hidden">
+        <div className="relative z-10 max-w-[1200px] mx-auto px-6 mb-12">
+          <p className="text-sm text-[#A3B5C4] mb-6 tracking-[2px] uppercase text-center">Acts &amp; Private Clients</p>
+          <h2 className="heading text-[clamp(36px,6vw,72px)] mb-4 text-white text-center">{clientsTitle}</h2>
         </div>
         <div className="overflow-hidden">
           <div className="clients-marquee-track">
             {[...clients, ...clients].map((name, i) => (
-              <span key={i} className="font-serif text-[clamp(32px,5vw,56px)] font-light tracking-[-0.02em] text-[#111]/80 hover:text-[#111] transition-colors cursor-default">
+              <span key={i} className="font-serif text-[clamp(32px,5vw,56px)] font-light tracking-[-0.02em] text-white/80 hover:text-white transition-colors cursor-default">
                 {name}
               </span>
             ))}
           </div>
         </div>
-        <p className="text-sm text-[#5B7A8E] mt-10 tracking-[2px] uppercase text-center">And many more...</p>
+        <p className="text-sm text-[#A3B5C4] mt-10 tracking-[2px] uppercase text-center">And many more...</p>
       </section>
 
       {/* Venue Marquee */}

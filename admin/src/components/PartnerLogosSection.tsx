@@ -41,10 +41,10 @@ export default function PartnerLogosSection({ defaultLogos, quote, attribution, 
     : defaultLogos;
 
   return (
-    <section id="partnerships" className="relative z-10 py-28 md:py-32 text-center pb-36 md:pb-28" style={{ background: 'linear-gradient(180deg,#111 0%,#1a1b20 100%)' }}>
-      <div className="max-w-[1200px] mx-auto px-6">
-        <h2 className="font-serif text-[clamp(28px,4vw,48px)] italic text-white mb-4">“{quote}”</h2>
-        <p className="text-sm text-[#8FA8BE] mb-16 max-w-[500px] mx-auto">
+    <section id="partnerships" className="textured-bg relative z-10 py-28 md:py-32 text-center pb-36 md:pb-28">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-6">
+        <h2 className="font-serif text-[clamp(28px,4vw,48px)] italic text-white mb-4">&ldquo;{quote}&rdquo;</h2>
+        <p className="text-sm text-[#A3B5C4] mb-16 max-w-[500px] mx-auto">
           — {attribution}{description ? `. ${description}` : ''}
         </p>
         <div className="grid grid-cols-3 gap-8 md:gap-12 max-w-[900px] mx-auto">

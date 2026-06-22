@@ -160,11 +160,6 @@ body {
   pointer-events: none;
   z-index: 2;
 }
-.textured-bg > * {
-  position: relative;
-  z-index: 3;
-}
-
 /* Clients marquee */
 .clients-marquee-track {
   display: flex;
