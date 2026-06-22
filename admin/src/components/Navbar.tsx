@@ -292,10 +292,10 @@ export default function Navbar() {
         }
       `}</style>
 
-      {/* Logo - top left */}
+      {/* Logo - centered */}
       <Link
         href="/"
-        className="fixed top-5 left-6 z-[600] block transition-all"
+        className="fixed top-5 left-1/2 -translate-x-1/2 z-[600] block transition-all"
       >
         <img
           src="/assets/ricky-logo.png"

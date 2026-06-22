@@ -271,7 +271,7 @@ export default async function HomePage() {
       <ScrollReveal />
 
       {/* Hero */}
-      <section className="relative min-h-[100dvh] flex flex-col items-start justify-center px-8 md:px-14 pb-14 pt-20">
+      <section className="relative min-h-[100dvh] flex flex-col items-center justify-center px-8 md:px-14 pb-14 pt-20">
         <div className="fixed inset-0 -z-10" style={{ backgroundColor: heroBackgroundColor }}>
           <div
             className="absolute inset-0 bg-cover bg-no-repeat"
@@ -284,7 +284,7 @@ export default async function HomePage() {
           />
           {heroOverlay && <div className="absolute inset-0 bg-[rgba(27,58,76,0.35)]" />}
         </div>
-        <img src={heroLogo} alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] ml-[4%] mb-14 drop-shadow-[0_6px_30px_rgba(0,0,0,0.3)] brightness-0 invert" />
+        <img src={heroLogo} alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] mx-auto mb-14 drop-shadow-[0_6px_30px_rgba(0,0,0,0.3)] brightness-0 invert" />
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white opacity-70">
           <span className="text-[11px] tracking-[2.5px] uppercase font-medium">Scroll</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>

@@ -1,5 +1,100 @@
 # LNR Admin vs Nuelo Admin — Full Audit (5 June 2026)
 
+---
+
+# LNR Technical Health Audit (15 June 2026)
+**Status:** Audit only — no changes made. Pending client feedback before fixes.
+
+## Deployment Health
+- **Preview URL:** https://late-night-ricky.vercel.app — live, returning 200 ✅
+- **Build:** TypeScript clean (no errors) ✅
+- **Lint:** Only warnings, no errors ✅
+- **Git:** Clean working tree, latest commit `v187-mobile` ✅
+
+## Critical Issues
+
+**1. `next.config.mjs` hardcodes absolute local path**
+The webpack alias override points to `/home/node/.openclaw/workspace/late-night-ricky/admin/src`. Next.js already resolves `@` via `tsconfig.json` — this override is unnecessary and will break on Vercel (path won't exist).
+
+**2. Cloudinary credentials exposed in source**
+`src/lib/storage.ts` lines 8-10 contain hardcoded `cloud_name`, `api_key`, and `api_secret` in plaintext.
+
+**3. Migration system is untracked / broken**
+`drizzle/meta/_journal.json` only knows about migration `0000_fat_shaman`. Migrations `0024` through `0029` exist as raw SQL files but are not registered in the journal. Two files are both numbered `0028`. If you run `drizzle-kit migrate` on a fresh DB, none of the quote/invoice/enquiry/show-page columns get created.
+
+**4. Show Pages feature is half-wired**
+- Admin CRUD exists, DB table exists, API routes exist.
+- BUT: only 4 hardcoded static pages exist (`/show-sidemen`, `/show-abu-dhabi`, `/show-gin-juice`, `/show-royal-wedding`). There is no dynamic `[slug]` route. Creating a new show page in admin won't create a public-facing page unless a developer manually adds a new `.tsx` file.
+
+## High Issues
+
+**5. Dual auth system (one is dead code)**
+- Active: `src/lib/auth.ts` — uses `lnr_session`, DB-backed users, hardcoded seed PIN `7291`
+- Dead code: `src/lib/auth/index.ts` — uses `lnr_admin_session`, defaults `ADMIN_PIN` to `"0000"`, never imported anywhere
+- Some API routes try reading both cookies as a fallback workaround. The dead file should be removed.
+
+**6. Hardcoded initial PIN in active auth**
+`src/lib/auth.ts` hardcodes `PIN = '7291'` for auto-creating the admin user. Visible in source.
+
+## Medium Issues
+
+**7. Missing local env variables**
+`.env.local` only has `DATABASE_URL`, `POSTGRES_URL`, `BLOB_READ_WRITE_TOKEN`. Missing for local dev: `RESEND_API_KEY`, `SMTP_FROM`, `NEXT_PUBLIC_SITE_URL`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`.
+
+**8. No error boundaries**
+No custom `not-found.tsx` or `error.tsx` in the app.
+
+**9. `src/lib/api.ts` fragile on local dev**
+Falls back to empty string if `ADMIN_API_URL` and `VERCEL_URL` are missing. Server-side `fetch` with relative URLs can be unreliable in Next.js server components.
+
+**10. Console noise in client bundles**
+Multiple `console.log` / `console.error` statements in client components (track upload flow, submissions, settings, etc.).
+
+## Low / Polish Issues
+
+**11. Image optimization warnings**
+ESLint flags 20+ uses of raw `<img>` instead of Next.js `<Image />` across show pages, showreel, navbar, components.
+
+**12. `HomeContactSection.tsx` — `useEffect` missing dependency**
+Missing dependencies on `contactInfo.email` and `contactInfo.image`.
+
+**13. Show pages use generic fallback images**
+The static show pages pull `heroImage` from the DB, but the photo grid sections all use hardcoded generic images instead of the `galleryImages` field that exists in the schema.
+
+**14. `showPages.galleryImages` and `testimonials` in schema are unused**
+Defined in DB schema but never rendered anywhere.
+
+## Summary Table
+
+| Area | Status | Notes |
+|---|---|---|
+| Build / TS / Lint | ✅ Clean | Warnings only, no fatal errors |
+| Preview deployment | ✅ Live | 200 OK |
+| Auth | ⚠️ Messy | Dead code file, hardcoded seed PIN |
+| Database migrations | 🔴 Broken | Journal out of sync with SQL files |
+| Show Pages (public) | 🔴 Half-built | No dynamic route — admin creates orphaned records |
+| Show Pages (admin) | ✅ Works | CRUD + API functional |
+| Cloudinary | 🔴 Exposed | Hardcoded credentials in `storage.ts` |
+| next.config | 🔴 Fragile | Hardcoded absolute path alias |
+| Email (Resend) | ✅ Configured | Memory confirms Vercel env set |
+| Quotes / Invoices | ✅ Functional | Accept, convert, payment tokens |
+| Enquiries | ✅ Functional | Modal, reply thread, convert |
+| Dashboard | ✅ Functional | Stats, revenue, recent activity |
+| Mobile responsiveness | ✅ Fixed | v187 addressed hamburger + padding |
+| SEO / Nav editors | ✅ Functional | Global nav + meta editable |
+
+## Recommended Fix Priority Order
+1. Remove or fix webpack alias in `next.config.mjs` — highest deployment risk
+2. Rotate Cloudinary credentials and move them to env vars — security
+3. Fix migration journal — regenerate Drizzle migrations or switch to tracked workflow
+4. Add dynamic show page route (`/show/[slug]/page.tsx`) or remove the admin feature until it's wired
+5. Delete dead auth file (`src/lib/auth/index.ts`)
+6. Add `not-found.tsx` and `error.tsx` — polish
+7. Clean up console statements — polish
+
+---
+
+
 ## Structure Comparison
 
 | Feature | Nuelo Admin | LNR Admin | Gap |
