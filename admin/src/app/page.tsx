@@ -336,7 +336,7 @@ export default async function HomePage() {
       {/* Reach */}
       <section id="reach" className="relative z-10 bg-[#1B3A4C] py-28">
         <div className="max-w-[1200px] mx-auto px-6">
-          <h1 className="reveal font-black text-[clamp(36px,5.5vw,64px)] leading-[0.95] max-w-[960px] text-white tracking-[-2px] uppercase">
+          <h1 className="reveal heading text-[clamp(36px,5.5vw,64px)] leading-[0.95] max-w-[960px] text-white">
             {reachHeadline}
           </h1>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mt-6">
@@ -360,7 +360,7 @@ export default async function HomePage() {
         {/* Section header */}
         <div className="bg-white py-20 md:py-24">
           <div className="max-w-[1200px] mx-auto px-6 text-center">
-            <h2 className="reveal text-[clamp(36px,5.5vw,64px)] font-black mb-5 text-[#111] tracking-[-2px] uppercase leading-[0.95]">
+            <h2 className="reveal heading text-[clamp(36px,5.5vw,64px)] mb-5 text-[#111] leading-[0.95]">
               RECENT SHOWS &amp; STORIES
             </h2>
             <p className="reveal reveal-d1 text-sm text-[#5B7A8E] max-w-[600px] mx-auto leading-relaxed font-semibold uppercase tracking-[0.5px]">
@@ -387,7 +387,7 @@ export default async function HomePage() {
 
               {/* Content vertically centered */}
               <div className="relative z-10 text-center px-6">
-                <h3 className="text-[clamp(32px,5vw,64px)] font-black text-white leading-none tracking-[-1px] uppercase mb-3 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
+                <h3 className="heading text-[clamp(32px,5vw,64px)] text-white leading-none mb-3 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
                   {show.venue}
                 </h3>
                 <p className="text-[11px] tracking-[3px] uppercase text-white/70 font-semibold mb-8">
@@ -437,7 +437,7 @@ export default async function HomePage() {
             </div>
             <div>
               <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">{radioLabel}</p>
-              <h2 className="text-[clamp(40px,6vw,80px)] font-black text-[#111] mb-5 leading-[0.95] tracking-[-2px] uppercase">{radioHeadline}</h2>
+              <h2 className="heading text-[clamp(40px,6vw,80px)] text-[#111] mb-5 leading-[0.95]">{radioHeadline}</h2>
               <p className="text-sm text-[#111] leading-relaxed mb-10 max-w-[420px] font-semibold uppercase tracking-[0.5px]">
                 {radioDescription}
               </p>
@@ -486,7 +486,7 @@ export default async function HomePage() {
       <section id="supporting" className="reveal relative z-10 bg-white pt-24 md:pt-10 pb-28 overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-6 mb-12">
           <p className="text-sm text-[#5B7A8E] mb-6 tracking-[2px] uppercase text-center">Acts &amp; Private Clients</p>
-          <h2 className="text-[clamp(36px,6vw,72px)] font-black tracking-[-2px] uppercase mb-4 text-[#111] text-center">{clientsTitle}</h2>
+          <h2 className="heading text-[clamp(36px,6vw,72px)] mb-4 text-[#111] text-center">{clientsTitle}</h2>
         </div>
         <div className="overflow-hidden">
           <div className="clients-marquee-track">
@@ -558,11 +558,11 @@ export default async function HomePage() {
               <span className="block text-[11px] font-semibold tracking-[0.3em] uppercase text-[#64c8a8] mb-6">
                 Bookings &amp; Enquiries
               </span>
-              <h2 className="font-serif text-[clamp(36px,6vw,72px)] font-light leading-[0.95] tracking-[-0.02em] text-white">
+              <h2 className="heading text-[clamp(36px,6vw,72px)] leading-[0.95] text-white">
                 Let&apos;s
               </h2>
               <div className="w-16 h-[1px] bg-[#2a7f7f] my-4 md:my-5" />
-              <h2 className="font-serif text-[clamp(36px,6vw,72px)] font-light leading-[0.95] tracking-[-0.02em] text-white italic">
+              <h2 className="heading text-[clamp(36px,6vw,72px)] leading-[0.95] text-white italic">
                 collaborate
               </h2>
             </div>

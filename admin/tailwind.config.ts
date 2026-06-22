@@ -11,6 +11,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "Inter", "Helvetica Neue", "Arial", "sans-serif"],
         serif: ["var(--font-playfair)", "Playfair Display", "Georgia", "serif"],
+        montserrat: ["var(--font-montserrat)", "Montserrat", "Helvetica Neue", "Arial", "sans-serif"],
       },
       colors: {
         steel: {
