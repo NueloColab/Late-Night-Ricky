@@ -516,14 +516,13 @@ export default async function HomePage() {
       {/* Share Music */}
       <ShareMusicSection headline={shareMusicHeadline} description={shareMusicDescription} />
 
-      {/* Reach Out — unified section, image cropped to left, blended into page */}
+      {/* Reach Out — textured background, image blended into page */}
       <section
         id="reach-out"
-        className="reveal relative z-10 overflow-hidden"
-        style={{ background: '#0d1f2d' }}
+        className="reveal textured-bg relative z-10 overflow-hidden"
       >
         {/* Image cropped to left half, fills height */}
-        <div className="absolute inset-y-0 left-0 w-[55%] overflow-hidden hidden md:block">
+        <div className="absolute inset-y-0 left-0 w-[55%] overflow-hidden hidden md:block z-[4]">
           <img
             src={reachOutImage}
             alt="Late Night Ricky"
@@ -534,7 +533,7 @@ export default async function HomePage() {
 
         {/* Mobile: image as background */}
         <div
-          className="absolute inset-0 md:hidden"
+          className="absolute inset-0 md:hidden z-[4]"
           style={{
             backgroundImage: `url(${reachOutImage})`,
             backgroundSize: 'cover',
@@ -545,7 +544,7 @@ export default async function HomePage() {
 
         {/* Gradient overlay — blends image into solid background */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 z-[5]"
           style={{
             background: 'linear-gradient(90deg, rgba(13,31,45,0.05) 0%, rgba(13,31,45,0.5) 25%, rgba(13,31,45,0.92) 45%, #0d1f2d 50%, #1b3a4c 100%)',
           }}
