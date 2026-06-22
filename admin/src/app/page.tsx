@@ -514,42 +514,43 @@ export default async function HomePage() {
       {/* Share Music */}
       <ShareMusicSection headline={shareMusicHeadline} description={shareMusicDescription} />
 
-      {/* Reach Out — textured background, image blended into page */}
+      {/* Reach Out — unified section, image blended into page */}
       <section
         id="reach-out"
-        className="reveal textured-bg relative z-10 overflow-hidden"
+        className="reveal relative z-10 overflow-hidden"
+        style={{ background: 'linear-gradient(160deg, #0d1f2d 0%, #1a3a4c 35%, #142a3a 65%, #0f2535 100%)' }}
       >
-        {/* Image cropped to left half, fills height */}
-        <div className="absolute inset-y-0 left-0 w-[55%] overflow-hidden hidden md:block z-[4]">
-          <img
-            src={reachOutImage}
-            alt="Late Night Ricky"
-            className="w-full h-full object-cover"
-            style={{ objectPosition: 'center top' }}
-          />
-        </div>
-
-        {/* Mobile: image as background */}
+        {/* Full-bleed background image on left, fading into gradient */}
         <div
-          className="absolute inset-0 md:hidden z-[4]"
+          className="absolute inset-0 hidden md:block"
+          style={{
+            backgroundImage: `url(${reachOutImage})`,
+            backgroundSize: '55% 100%',
+            backgroundPosition: 'left center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
+        <div
+          className="absolute inset-0 hidden md:block"
+          style={{
+            background: 'linear-gradient(90deg, rgba(13,31,45,0.1) 0%, rgba(13,31,45,0.7) 35%, rgba(13,31,45,0.95) 50%, #0d1f2d 55%, #1b3a4c 100%)',
+          }}
+        />
+
+        {/* Mobile: subtle background image */}
+        <div
+          className="absolute inset-0 md:hidden"
           style={{
             backgroundImage: `url(${reachOutImage})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center top',
-            opacity: 0.25,
+            opacity: 0.15,
           }}
         />
-
-        {/* Gradient overlay — blends image into solid background */}
-        <div
-          className="absolute inset-0 z-[5]"
-          style={{
-            background: 'linear-gradient(90deg, rgba(13,31,45,0.05) 0%, rgba(13,31,45,0.5) 25%, rgba(13,31,45,0.92) 45%, #0d1f2d 50%, #1b3a4c 100%)',
-          }}
-        />
+        <div className="absolute inset-0 md:hidden bg-[#0d1f2d]/80" />
 
         {/* Content */}
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-20 md:py-28 flex items-center min-h-[60vh] md:min-h-0">
+        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-20 md:py-28 flex items-center min-h-[50vh] md:min-h-0">
           <div className="max-w-xl md:ml-auto">
             <div className="mb-10">
               <h2 className="heading text-[clamp(48px,8vw,96px)] leading-[0.9] text-white">

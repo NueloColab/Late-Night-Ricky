@@ -104,11 +104,11 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
   };
 
   return (
-    <div className="border-t border-[#E3E8ED] pt-6">
+    <div className="border-t border-white/20 pt-6">
       {tracks.map((track, i) => (
         <div
           key={i}
-          className="flex items-center gap-4 py-3.5 border-b border-[#E3E8ED] hover:bg-[rgba(227,232,237,0.4)] hover:mx-[-12px] hover:px-3 hover:rounded-lg transition cursor-pointer group"
+          className="flex items-center gap-4 py-3.5 border-b border-white/20 hover:bg-white/10 hover:mx-[-12px] hover:px-3 hover:rounded-lg transition cursor-pointer group"
           onClick={() => togglePlay(i, track.src)}
         >
           <button
@@ -117,7 +117,7 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
               togglePlay(i, track.src);
             }}
             disabled={!track.src}
-            className="w-10 h-10 rounded-full border-[1.5px] border-[#111] bg-transparent flex items-center justify-center text-[#111] group-hover:bg-[#111] group-hover:text-white transition flex-shrink-0 disabled:opacity-30"
+            className="w-10 h-10 rounded-full border-[1.5px] border-white/60 bg-transparent flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#111] transition flex-shrink-0 disabled:opacity-30"
           >
             {playingId === i ? (
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -131,8 +131,8 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
             )}
           </button>
           <div className="flex-1 flex justify-between items-center gap-4">
-            <span className="font-serif text-[16px] font-medium text-[#1B3A4C]">{track.title}</span>
-            <span className="text-[13px] text-[#6B8FAB] font-variant-numeric-tabular">
+            <span className="font-serif text-[16px] font-medium text-white">{track.title}</span>
+            <span className="text-[13px] text-white/60 font-variant-numeric-tabular">
               {playingId === i ? formatTime(remaining) : track.time}
             </span>
           </div>
