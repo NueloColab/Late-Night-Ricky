@@ -136,7 +136,6 @@ export default async function HomePage() {
   let shareMusicDescription = "I'm always on the lookout for new music to play, so send me your tracks";
   let grammyBadge = '/assets/grammy-gold-v2.png?v=2';
   let reachOutImage = '/assets/ricky-hero-new.jpg';
-  let reachOutHeadline = "Let's collaborate";
   let reachOutSignature = 'Late Night Ricky';
   let reachOutCta = 'Get in touch';
   let carouselImagesList: { imagePath: string | null; alt: string }[] = [];
@@ -224,7 +223,6 @@ export default async function HomePage() {
       if (reachOutSection?.content) {
         const c = typeof reachOutSection.content === 'string' ? JSON.parse(reachOutSection.content) : reachOutSection.content;
         if (c.image) reachOutImage = c.image;
-        if (c.headline) reachOutHeadline = c.headline;
         if (c.signature) reachOutSignature = c.signature;
         if (c.cta) reachOutCta = c.cta;
       }
@@ -501,17 +499,48 @@ export default async function HomePage() {
       <ShareMusicSection headline={shareMusicHeadline} description={shareMusicDescription} />
 
       {/* Reach Out */}
-      <section id="reach-out" className="reveal relative z-10 bg-[#111] text-white py-28">
-        <div className="max-w-[1200px] mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="font-serif text-[clamp(42px,6vw,72px)] font-normal leading-tight mb-6 max-w-[500px]">{reachOutHeadline}</h2>
-            <p className="font-['Rockybilly',cursive] text-[clamp(28px,4vw,48px)] font-normal text-[#8FA8BE] mb-8 rotate-[-1deg] opacity-85 whitespace-nowrap">{reachOutSignature}</p>
-            <a href="#contact-form" className="inline-block px-9 py-3.5 border-2 border-white rounded-full text-white text-[13px] font-semibold uppercase tracking-[2px] hover:bg-white hover:text-[#111] transition">
-              {reachOutCta}
-            </a>
+      <section id="reach-out" className="reveal relative z-10 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #141414 0%, #1a1a1c 50%, #181818 100%)' }}
+      >
+        <div className="max-w-[1400px] mx-auto grid md:grid-cols-[1.3fr_1fr] items-stretch min-h-[80vh]">
+          {/* Text side */}
+          <div className="relative z-10 flex flex-col justify-center px-6 md:px-16 lg:px-24 py-28 md:py-0">
+            <div className="mb-10">
+              <span className="block text-[11px] font-semibold tracking-[0.3em] uppercase text-[#c9a96e] mb-8">
+                Bookings &amp; Enquiries
+              </span>
+              <h2 className="font-serif text-[clamp(40px,6vw,80px)] font-light leading-[0.9] tracking-[-0.02em] text-white">
+                Let&apos;s
+              </h2>
+              <div className="w-20 h-[1px] bg-[#c9a96e] my-6" />
+              <h2 className="font-serif text-[clamp(40px,6vw,80px)] font-light leading-[0.9] tracking-[-0.02em] text-white italic">
+                collaborate
+              </h2>
+            </div>
+            <div className="mt-auto">
+              <p className="font-['Rockybilly',cursive] text-[clamp(28px,4vw,48px)] font-normal text-[#c9a96e] mb-10 rotate-[-2deg] opacity-90">
+                {reachOutSignature}
+              </p>
+              <a
+                href="#contact-form"
+                className="inline-flex items-center gap-3 px-10 py-4 bg-[#c9a96e] text-[#141414] rounded-full text-[12px] font-semibold uppercase tracking-[0.15em] hover:bg-white transition-colors duration-300"
+              >
+                {reachOutCta}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
           </div>
-          <div className="relative overflow-hidden rounded-xl">
-            <img src={reachOutImage} alt="Late Night Ricky" className="w-full h-auto object-cover grayscale" />
+
+          {/* Image side */}
+          <div className="relative overflow-hidden min-h-[400px] md:min-h-0">
+            <img
+              src={reachOutImage}
+              alt="Late Night Ricky"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/70 to-transparent" />
           </div>
         </div>
       </section>
