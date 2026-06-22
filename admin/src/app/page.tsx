@@ -498,26 +498,34 @@ export default async function HomePage() {
       {/* Share Music */}
       <ShareMusicSection headline={shareMusicHeadline} description={shareMusicDescription} />
 
-      {/* Reach Out */}
-      <section id="reach-out" className="reveal relative z-10 overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #0d1f2d 0%, #1b3a4c 50%, #0f2a3a 100%)' }}
+      {/* Reach Out — one unified section, image blended into background */}
+      <section
+        id="reach-out"
+        className="reveal relative z-10 overflow-hidden"
+        style={{ background: '#0d1f2d' }}
       >
-        <div className="max-w-[1400px] mx-auto grid md:grid-cols-[1fr_1.3fr] items-stretch">
-          {/* Image side — left */}
-          <div className="relative overflow-hidden min-h-[300px] md:min-h-0 order-2 md:order-1">
-            <img
-              src={reachOutImage}
-              alt="Late Night Ricky"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div
-              className="absolute inset-0"
-              style={{ background: 'linear-gradient(to right, transparent 20%, rgba(13,31,45,0.92) 55%, #0d1f2d 100%)' }}
-            />
-          </div>
+        {/* Background image spanning the whole section, anchored left */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${reachOutImage})`,
+            backgroundSize: 'contain',
+            backgroundPosition: 'left center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
 
-          {/* Text side — right */}
-          <div className="relative z-10 flex flex-col justify-center px-6 md:px-16 lg:px-24 py-20 md:py-28 order-1 md:order-2">
+        {/* Gradient overlay that blends image into solid color — no seam */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(90deg, rgba(13,31,45,0.3) 0%, rgba(13,31,45,0.85) 35%, #0d1f2d 55%, #1b3a4c 100%)',
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-20 md:py-28">
+          <div className="max-w-xl md:ml-auto">
             <div className="mb-8">
               <span className="block text-[11px] font-semibold tracking-[0.3em] uppercase text-[#64c8a8] mb-6">
                 Bookings &amp; Enquiries
