@@ -369,13 +369,13 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* 3 vertical columns */}
-        <div className="grid md:grid-cols-3 min-h-[70vh] md:min-h-[80vh]">
+        {/* 3 vertical columns — N.E.R.D. style */}
+        <div className="grid md:grid-cols-3 h-[85vh] md:h-[90vh]">
           {shows.slice(0, 3).map((show) => (
             <a
               key={show.title}
               href={show.href}
-              className="group relative overflow-hidden flex flex-col justify-end p-8 md:p-10"
+              className="group relative overflow-hidden flex items-center justify-center"
               style={{
                 backgroundImage: `url('${show.image}')`,
                 backgroundSize: 'cover',
@@ -383,31 +383,21 @@ export default async function HomePage() {
               }}
             >
               {/* Dark overlay */}
-              <div className="absolute inset-0 bg-[#111]/55 group-hover:bg-[#111]/40 transition-colors duration-500" />
+              <div className="absolute inset-0 bg-[#111]/60 group-hover:bg-[#111]/45 transition-colors duration-500" />
 
-              {/* Content at bottom */}
-              <div className="relative z-10">
-                <h3 className="text-[clamp(24px,3.5vw,40px)] font-black text-white leading-[0.95] tracking-[-1px] uppercase mb-2 drop-shadow-[0_2px_14px_rgba(0,0,0,0.4)]">
+              {/* Content vertically centered */}
+              <div className="relative z-10 text-center px-6">
+                <h3 className="text-[clamp(32px,5vw,64px)] font-black text-white leading-none tracking-[-1px] uppercase mb-3 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
                   {show.venue}
                 </h3>
-                <p className="text-[11px] tracking-[3px] uppercase text-white/70 font-semibold mb-6">
+                <p className="text-[11px] tracking-[3px] uppercase text-white/70 font-semibold mb-8">
                   {show.location}
                 </p>
 
-                {/* Button */}
-                <div className="inline-flex items-center gap-2 px-6 py-2.5 border border-white/60 text-white text-[11px] font-semibold uppercase tracking-[0.15em] group-hover:bg-white group-hover:text-[#111] group-hover:border-white transition-all duration-300">
+                {/* Rectangular button */}
+                <div className="inline-flex items-center justify-center px-12 py-3 border border-white text-white text-[11px] font-semibold uppercase tracking-[0.2em] group-hover:bg-white group-hover:text-[#111] group-hover:border-white transition-all duration-300">
                   View
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
                 </div>
-              </div>
-
-              {/* Arrow circle */}
-              <div className="absolute top-6 right-6 md:top-8 md:right-8 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/40 flex items-center justify-center text-white bg-white/10 backdrop-blur-sm transition-all duration-300 group-hover:bg-white group-hover:border-white group-hover:text-[#111]">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
               </div>
             </a>
           ))}
