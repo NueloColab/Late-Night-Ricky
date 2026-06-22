@@ -559,6 +559,9 @@ export default async function HomePage() {
               <h2 className="heading text-[clamp(48px,8vw,96px)] leading-[0.9] text-white">
                 COLLABORATE
               </h2>
+              <p className="font-['Rockybilly',cursive] text-[clamp(24px,4vw,40px)] font-normal text-[#8fb8c9] mt-4 rotate-[-2deg] opacity-90">
+                Late Night Ricky
+              </p>
             </div>
             <a
               href="#contact-form"
