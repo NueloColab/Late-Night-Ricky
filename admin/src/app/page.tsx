@@ -500,30 +500,30 @@ export default async function HomePage() {
 
       {/* Reach Out */}
       <section id="reach-out" className="reveal relative z-10 overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #141414 0%, #1a1a1c 50%, #181818 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #0d1f2d 0%, #1b3a4c 50%, #0f2a3a 100%)' }}
       >
-        <div className="max-w-[1400px] mx-auto grid md:grid-cols-[1.3fr_1fr] items-stretch min-h-[80vh]">
+        <div className="max-w-[1400px] mx-auto grid md:grid-cols-[1.3fr_1fr] items-stretch">
           {/* Text side */}
-          <div className="relative z-10 flex flex-col justify-center px-6 md:px-16 lg:px-24 py-28 md:py-0">
-            <div className="mb-10">
-              <span className="block text-[11px] font-semibold tracking-[0.3em] uppercase text-[#c9a96e] mb-8">
+          <div className="relative z-10 flex flex-col justify-center px-6 md:px-16 lg:px-24 py-20 md:py-28">
+            <div className="mb-8">
+              <span className="block text-[11px] font-semibold tracking-[0.3em] uppercase text-[#64c8a8] mb-6">
                 Bookings &amp; Enquiries
               </span>
-              <h2 className="font-serif text-[clamp(40px,6vw,80px)] font-light leading-[0.9] tracking-[-0.02em] text-white">
+              <h2 className="font-serif text-[clamp(36px,6vw,72px)] font-light leading-[0.95] tracking-[-0.02em] text-white">
                 Let&apos;s
               </h2>
-              <div className="w-20 h-[1px] bg-[#c9a96e] my-6" />
-              <h2 className="font-serif text-[clamp(40px,6vw,80px)] font-light leading-[0.9] tracking-[-0.02em] text-white italic">
+              <div className="w-16 h-[1px] bg-[#2a7f7f] my-4 md:my-5" />
+              <h2 className="font-serif text-[clamp(36px,6vw,72px)] font-light leading-[0.95] tracking-[-0.02em] text-white italic">
                 collaborate
               </h2>
             </div>
-            <div className="mt-auto">
-              <p className="font-['Rockybilly',cursive] text-[clamp(28px,4vw,48px)] font-normal text-[#c9a96e] mb-10 rotate-[-2deg] opacity-90">
+            <div className="mt-4">
+              <p className="font-['Rockybilly',cursive] text-[clamp(24px,4vw,40px)] font-normal text-[#8fb8c9] mb-6 rotate-[-2deg] opacity-90">
                 {reachOutSignature}
               </p>
               <a
                 href="#contact-form"
-                className="inline-flex items-center gap-3 px-10 py-4 bg-[#c9a96e] text-[#141414] rounded-full text-[12px] font-semibold uppercase tracking-[0.15em] hover:bg-white transition-colors duration-300"
+                className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#2a7f7f] text-white rounded-full text-[12px] font-semibold uppercase tracking-[0.15em] hover:bg-[#64c8a8] transition-colors duration-300"
               >
                 {reachOutCta}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -534,13 +534,13 @@ export default async function HomePage() {
           </div>
 
           {/* Image side */}
-          <div className="relative overflow-hidden min-h-[400px] md:min-h-0">
+          <div className="relative overflow-hidden min-h-[300px] md:min-h-0">
             <img
               src={reachOutImage}
               alt="Late Night Ricky"
               className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0d1f2d] via-[#0d1f2d]/70 to-transparent md:bg-gradient-to-r md:from-[#0d1f2d] md:via-[#0d1f2d]/60 md:to-transparent" />
           </div>
         </div>
       </section>
