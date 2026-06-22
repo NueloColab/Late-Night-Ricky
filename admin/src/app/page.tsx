@@ -520,20 +520,20 @@ export default async function HomePage() {
         className="reveal relative z-10 overflow-hidden"
         style={{ background: 'linear-gradient(160deg, #1a0a2e 0%, #2d1b4e 35%, #1e0f30 65%, #1e0f30 100%)' }}
       >
-        {/* Full-bleed background image on left, fading into gradient */}
+        {/* Left image — natural portrait, not stretched */}
+        <div className="absolute inset-y-0 left-0 w-[50%] hidden md:block overflow-hidden">
+          <img
+            src={reachOutImage}
+            alt="Late Night Ricky"
+            className="w-full h-full object-cover object-center"
+          />
+        </div>
+
+        {/* Gradient overlay */}
         <div
           className="absolute inset-0 hidden md:block"
           style={{
-            backgroundImage: `url(${reachOutImage})`,
-            backgroundSize: '55% 100%',
-            backgroundPosition: 'left center',
-            backgroundRepeat: 'no-repeat',
-          }}
-        />
-        <div
-          className="absolute inset-0 hidden md:block"
-          style={{
-            background: 'linear-gradient(90deg, rgba(26,10,46,0.1) 0%, rgba(26,10,46,0.7) 35%, rgba(26,10,46,0.95) 50%, #1a0a2e 55%, #1b3a4c 100%)',
+            background: 'linear-gradient(90deg, rgba(26,10,46,0.05) 0%, rgba(26,10,46,0.6) 40%, rgba(26,10,46,0.95) 55%, #1a0a2e 60%, #2d1b4e 100%)',
           }}
         />
 
@@ -550,7 +550,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 md:hidden bg-[#1a0a2e]/80" />
 
         {/* Content */}
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-20 md:py-28 flex items-center min-h-[50vh] md:min-h-0">
+        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-20 md:py-28">
           <div className="max-w-xl md:ml-auto">
             <div className="mb-10">
               <h2 className="heading text-[clamp(48px,8vw,96px)] leading-[0.9] text-white">
