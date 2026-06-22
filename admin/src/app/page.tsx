@@ -498,28 +498,38 @@ export default async function HomePage() {
       {/* Share Music */}
       <ShareMusicSection headline={shareMusicHeadline} description={shareMusicDescription} />
 
-      {/* Reach Out — one unified section, image blended into background */}
+      {/* Reach Out — unified section, image cropped to left, blended into page */}
       <section
         id="reach-out"
         className="reveal relative z-10 overflow-hidden"
         style={{ background: '#0d1f2d' }}
       >
-        {/* Background image spanning the whole section, anchored left */}
+        {/* Image cropped to left half, fills height */}
+        <div className="absolute inset-y-0 left-0 w-[55%] overflow-hidden hidden md:block">
+          <img
+            src={reachOutImage}
+            alt="Late Night Ricky"
+            className="w-full h-full object-cover"
+            style={{ objectPosition: 'center top' }}
+          />
+        </div>
+
+        {/* Mobile: image as background */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 md:hidden"
           style={{
             backgroundImage: `url(${reachOutImage})`,
-            backgroundSize: 'contain',
-            backgroundPosition: 'left center',
-            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center top',
+            opacity: 0.25,
           }}
         />
 
-        {/* Gradient overlay that blends image into solid color — no seam */}
+        {/* Gradient overlay — blends image into solid background */}
         <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(90deg, rgba(13,31,45,0.3) 0%, rgba(13,31,45,0.85) 35%, #0d1f2d 55%, #1b3a4c 100%)',
+            background: 'linear-gradient(90deg, rgba(13,31,45,0.05) 0%, rgba(13,31,45,0.5) 25%, rgba(13,31,45,0.92) 45%, #0d1f2d 50%, #1b3a4c 100%)',
           }}
         />
 
