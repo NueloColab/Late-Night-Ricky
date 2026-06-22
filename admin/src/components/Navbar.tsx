@@ -104,9 +104,12 @@ export default function Navbar() {
         .menu-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(15, 25, 35, 0.92);
-          -webkit-backdrop-filter: blur(24px) saturate(1.2);
-          backdrop-filter: blur(24px) saturate(1.2);
+          background:
+            radial-gradient(ellipse 80% 50% at 50% 40%, rgba(27, 58, 76, 0.55) 0%, transparent 70%),
+            radial-gradient(ellipse 60% 40% at 50% 50%, rgba(143, 168, 190, 0.12) 0%, transparent 60%),
+            linear-gradient(180deg, #0c1218 0%, #0a0f14 40%, #080c10 100%);
+          -webkit-backdrop-filter: blur(32px) saturate(1.3);
+          backdrop-filter: blur(32px) saturate(1.3);
           z-index: 350;
           display: flex;
           flex-direction: column;
@@ -150,7 +153,7 @@ export default function Navbar() {
           bottom: 40px;
           left: 50%;
           transform: translateX(-50%);
-          color: rgba(255,255,255,0.4);
+          color: rgba(143, 168, 190, 0.5);
           font-size: 10px;
           letter-spacing: 4px;
           text-transform: uppercase;
