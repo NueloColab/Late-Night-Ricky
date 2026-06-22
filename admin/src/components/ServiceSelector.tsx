@@ -65,7 +65,7 @@ export default function ServiceSelector({
       <div className="md:col-span-9">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">
+            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">
               Custom Category
             </label>
             <input
@@ -77,7 +77,7 @@ export default function ServiceSelector({
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">
+            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">
               Custom Service
             </label>
             <input
@@ -95,7 +95,7 @@ export default function ServiceSelector({
           onClick={() => {
             applyUpdates({ _custom: false, serviceCategory: '', serviceName: '' })
           }}
-          className="mt-2 text-xs text-[#1B3A4C] hover:text-[#5B7A8E] transition-colors font-semibold"
+          className="mt-2 text-xs text-[#2d1b4e] hover:text-[#7a6a9e] transition-colors font-semibold"
         >
           ← Back to dropdown
         </button>
@@ -107,7 +107,7 @@ export default function ServiceSelector({
     <>
       {/* Category Dropdown */}
       <div className={service.serviceCategory ? 'md:col-span-4' : 'md:col-span-9'}>
-        <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">
+        <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">
           Category
         </label>
         <select
@@ -127,7 +127,7 @@ export default function ServiceSelector({
       {/* Service Dropdown */}
       {service.serviceCategory && (
         <div className={showQuantity ? 'md:col-span-4' : 'md:col-span-5'}>
-          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">
+          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">
             Service
           </label>
           <select
@@ -150,7 +150,7 @@ export default function ServiceSelector({
       {/* Quantity */}
       {showQuantity && service.serviceCategory && (
         <div className="md:col-span-1">
-          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">
+          <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">
             Qty
           </label>
           <input

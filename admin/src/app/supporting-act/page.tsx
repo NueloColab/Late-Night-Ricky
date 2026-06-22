@@ -30,16 +30,16 @@ export default async function SupportingActPage() {
 
         {/* Artists List */}
         <div className="max-w-[900px] mx-auto px-8 py-20 text-center">
-          <p className="text-sm text-[#5B7A8E] mb-12 tracking-[2px] uppercase">Late Night Ricky has shared the stage with</p>
+          <p className="text-sm text-[#7a6a9e] mb-12 tracking-[2px] uppercase">Late Night Ricky has shared the stage with</p>
           <div className="flex flex-col gap-1">
             {artists.map((name: string) => (
-              <div key={name} className="text-[clamp(36px,7vw,80px)] font-black uppercase tracking-[-2px] leading-none text-[#111] hover:text-[#1B3A4C] transition cursor-default">
+              <div key={name} className="text-[clamp(36px,7vw,80px)] font-black uppercase tracking-[-2px] leading-none text-[#111] hover:text-[#2d1b4e] transition cursor-default">
                 {name}
               </div>
             ))}
           </div>
-          <div className="w-[60px] h-0.5 bg-[#111] mx-auto my-8 opacity-15" />
-          <p className="text-sm text-[#5B7A8E] tracking-[2px] uppercase">And many more</p>
+          <div className="w-[60px] h-0.5 bg-[#0f0518] mx-auto my-8 opacity-15" />
+          <p className="text-sm text-[#7a6a9e] tracking-[2px] uppercase">And many more</p>
         </div>
       </main>
       <Footer />

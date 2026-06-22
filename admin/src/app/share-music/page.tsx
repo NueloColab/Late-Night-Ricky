@@ -79,10 +79,10 @@ export default function ShareMusicPage() {
           </p>
 
           {status === 'success' ? (
-            <div className="max-w-[600px] mx-auto border-2 border-[#1B3A4C] p-12 text-center">
-              <p className="text-2xl font-black uppercase tracking-[-1px] text-[#1B3A4C] mb-2">Track Sent!</p>
-              <p className="text-sm text-[#5B7A8E]">Thanks for sharing. Your music has been uploaded successfully.</p>
-              <button onClick={() => setStatus('idle')} className="mt-6 px-8 py-3 border-2 border-[#111] text-[#111] text-sm font-semibold uppercase tracking-[1.5px] hover:bg-[#111] hover:text-white transition">
+            <div className="max-w-[600px] mx-auto border-2 border-[#2d1b4e] p-12 text-center">
+              <p className="text-2xl font-black uppercase tracking-[-1px] text-[#2d1b4e] mb-2">Track Sent!</p>
+              <p className="text-sm text-[#7a6a9e]">Thanks for sharing. Your music has been uploaded successfully.</p>
+              <button onClick={() => setStatus('idle')} className="mt-6 px-8 py-3 border-2 border-[#111] text-[#111] text-sm font-semibold uppercase tracking-[1.5px] hover:bg-[#0f0518] hover:text-white transition">
                 Send Another
               </button>
             </div>
@@ -95,27 +95,27 @@ export default function ShareMusicPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email *"
                   required
-                  className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#6B8FAB] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#1B3A4C]"
+                  className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#8b7ab4] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#2d1b4e]"
                 />
                 <input
                   type="text"
                   value={artistName}
                   onChange={(e) => setArtistName(e.target.value)}
                   placeholder="Artist name"
-                  className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#6B8FAB] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#1B3A4C]"
+                  className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#8b7ab4] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#2d1b4e]"
                 />
                 <input
                   type="text"
                   value={trackTitle}
                   onChange={(e) => setTrackTitle(e.target.value)}
                   placeholder="Track title"
-                  className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#6B8FAB] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#1B3A4C]"
+                  className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#8b7ab4] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#2d1b4e]"
                 />
               </div>
 
               <div
                 className={`border-[3px] border-dashed p-12 md:p-16 text-center transition-colors cursor-pointer max-w-[600px] mx-auto mb-8 ${
-                  dragOver ? 'border-[#1B3A4C] bg-[rgba(27,58,76,0.04)]' : 'border-[#111] hover:border-[#1B3A4C] hover:bg-[rgba(27,58,76,0.02)]'
+                  dragOver ? 'border-[#2d1b4e] bg-[rgba(45,27,78,0.04)]' : 'border-[#111] hover:border-[#2d1b4e] hover:bg-[rgba(45,27,78,0.02)]'
                 }`}
                 onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
                 onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
@@ -133,13 +133,13 @@ export default function ShareMusicPage() {
                   className="hidden"
                   onChange={(e) => handleFile(e.target.files?.[0] || null)}
                 />
-                <button type="button" className="inline-block px-10 py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition">
+                <button type="button" className="inline-block px-10 py-4 bg-[#0f0518] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#2d1b4e] transition">
                   Upload your track
                 </button>
-                <p className="mt-4 text-sm text-[#5B7A8E]">Click the button and upload your file in mp3 320 kbps</p>
-                <p className="mt-2 text-xs text-[#8FA8BE]">Max 20MB — MP3 or WAV only</p>
+                <p className="mt-4 text-sm text-[#7a6a9e]">Click the button and upload your file in mp3 320 kbps</p>
+                <p className="mt-2 text-xs text-[#a890c0]">Max 20MB — MP3 or WAV only</p>
                 {file && (
-                  <p className="mt-4 text-sm text-[#1B3A4C] font-medium">Selected: {file.name}</p>
+                  <p className="mt-4 text-sm text-[#2d1b4e] font-medium">Selected: {file.name}</p>
                 )}
               </div>
 
@@ -150,7 +150,7 @@ export default function ShareMusicPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="inline-block px-10 py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition w-full max-w-[600px] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-block px-10 py-4 bg-[#0f0518] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#2d1b4e] transition w-full max-w-[600px] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {submitting ? 'Uploading...' : 'Submit Track'}
               </button>

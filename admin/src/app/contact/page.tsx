@@ -112,7 +112,7 @@ export default function ContactPage() {
               <button
                 onClick={() => { setActiveTab('booking'); setSubmitted(false); setError(''); }}
                 className={`flex-1 py-3.5 px-7 border-2 border-[#111] text-xs font-semibold uppercase tracking-[1.5px] transition ${
-                  activeTab === 'booking' ? 'bg-[#111] text-white' : 'bg-white text-[#111] hover:bg-[#E3E8ED]'
+                  activeTab === 'booking' ? 'bg-[#0f0518] text-white' : 'bg-white text-[#111] hover:bg-[#1a0a2e]'
                 }`}
               >
                 Booking
@@ -120,7 +120,7 @@ export default function ContactPage() {
               <button
                 onClick={() => { setActiveTab('private'); setSubmitted(false); setError(''); }}
                 className={`flex-1 py-3.5 px-7 border-2 border-[#111] text-xs font-semibold uppercase tracking-[1.5px] transition ${
-                  activeTab === 'private' ? 'bg-[#111] text-white' : 'bg-white text-[#111] hover:bg-[#E3E8ED]'
+                  activeTab === 'private' ? 'bg-[#0f0518] text-white' : 'bg-white text-[#111] hover:bg-[#1a0a2e]'
                 }`}
               >
                 Private Message
@@ -130,10 +130,10 @@ export default function ContactPage() {
             {submitted ? (
               <div className="text-center py-10">
                 <p className="text-lg font-semibold text-[#2d6a2d] mb-2">✓ Message sent successfully</p>
-                <p className="text-sm text-[#6B8FAB]">We&apos;ll be in touch soon.</p>
+                <p className="text-sm text-[#8b7ab4]">We&apos;ll be in touch soon.</p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="mt-6 px-6 py-2 border-2 border-[#111] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#111] hover:text-white transition"
+                  className="mt-6 px-6 py-2 border-2 border-[#111] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#0f0518] hover:text-white transition"
                 >
                   Send another
                 </button>
@@ -141,8 +141,8 @@ export default function ContactPage() {
             ) : !contactInfo.formEnabled ? (
               <div className="text-center py-10">
                 <p className="text-lg font-semibold text-[#111] mb-2">Contact form is currently disabled</p>
-                <p className="text-sm text-[#6B8FAB]">Please reach out directly via email.</p>
-                <a href={`mailto:${contactInfo.email}`} className="mt-4 inline-block px-6 py-2 border-2 border-[#111] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#111] hover:text-white transition">
+                <p className="text-sm text-[#8b7ab4]">Please reach out directly via email.</p>
+                <a href={`mailto:${contactInfo.email}`} className="mt-4 inline-block px-6 py-2 border-2 border-[#111] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#0f0518] hover:text-white transition">
                   Email {contactInfo.email}
                 </a>
               </div>
@@ -155,33 +155,33 @@ export default function ContactPage() {
                 >
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>
-                    <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                    <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#2d1b4e] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Email *</label>
-                    <input type="email" name="email" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                    <input type="email" name="email" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#2d1b4e] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Club Name *</label>
-                    <input type="text" name="club" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                    <input type="text" name="club" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#2d1b4e] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">City *</label>
-                    <input type="text" name="city" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                    <input type="text" name="city" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#2d1b4e] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Fee *</label>
-                    <input type="text" name="fee" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                    <input type="text" name="fee" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#2d1b4e] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Date *</label>
-                    <input type="date" name="date" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                    <input type="date" name="date" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#2d1b4e] transition" />
                   </div>
                   {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
+                    className="w-full py-4 bg-[#0f0518] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#2d1b4e] transition disabled:opacity-50"
                   >
                     {submitting ? 'Sending...' : 'Submit'}
                   </button>
@@ -193,21 +193,21 @@ export default function ContactPage() {
                 >
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>
-                    <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                    <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#2d1b4e] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Email *</label>
-                    <input type="email" name="email" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition" />
+                    <input type="email" name="email" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#2d1b4e] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Message *</label>
-                    <textarea name="message" required rows={4} className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition resize-y min-h-[80px]" />
+                    <textarea name="message" required rows={4} className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#2d1b4e] transition resize-y min-h-[80px]" />
                   </div>
                   {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full py-4 bg-[#111] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
+                    className="w-full py-4 bg-[#0f0518] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#2d1b4e] transition disabled:opacity-50"
                   >
                     {submitting ? 'Sending...' : 'Submit'}
                   </button>

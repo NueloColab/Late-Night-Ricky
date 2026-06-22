@@ -74,7 +74,7 @@ export default function Navbar() {
           display: block;
           width: 20px;
           height: 2px;
-          background: #1B3A4C;
+          background: #2d1b4e;
           border-radius: 1px;
           transition: all 400ms cubic-bezier(.4,0,.2,1);
           transform-origin: center;
@@ -123,7 +123,7 @@ export default function Navbar() {
           bottom: 0;
           width: 320px;
           max-width: 85vw;
-          background: #1B3A4C;
+          background: #2d1b4e;
           z-index: 350;
           display: flex;
           flex-direction: column;
@@ -166,7 +166,7 @@ export default function Navbar() {
         .menu-panel.open nav a:nth-child(6) { transition-delay: .38s; }
         .menu-panel.open nav a:nth-child(7) { transition-delay: .44s; }
         .menu-panel nav a:hover {
-          color: #64c8a8;
+          color: #d490a8;
         }
         .menu-panel .menu-footer {
           margin-top: auto;

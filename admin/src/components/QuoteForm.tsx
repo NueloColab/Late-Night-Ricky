@@ -208,18 +208,18 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
   }
 
   const inputClass =
-    'w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors'
+    'w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-[#2d1b4e] text-sm focus:outline-none focus:border-[#2d1b4e] transition-colors'
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Client Information */}
-      <div className="bg-white border border-[#A3B5C4]/30 p-6 rounded-lg">
-        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E3E8ED]">
-          <h3 className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Client Information</h3>
+      <div className="bg-white border border-[#8b7ab4]/30 p-6 rounded-lg">
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#1a0a2e]">
+          <h3 className="text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px]">Client Information</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">
+            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">
               Client Name <span className="text-red-400">*</span>
             </label>
             <ClientAutocomplete
@@ -231,7 +231,7 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">
+            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">
               Company
             </label>
             <input
@@ -243,7 +243,7 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">
+            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">
               Email Address <span className="text-red-400">*</span>
             </label>
             <input
@@ -256,7 +256,7 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">
+            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">
               Project Title <span className="text-red-400">*</span>
             </label>
             <input
@@ -271,7 +271,7 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
         </div>
         {projects.length > 0 && (
           <div className="mt-4">
-            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">
+            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">
               Link to Project
             </label>
             <select
@@ -291,13 +291,13 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
       </div>
 
       {/* Services */}
-      <div className="bg-white border border-[#A3B5C4]/30 p-6 rounded-lg">
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#E3E8ED]">
-          <h3 className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Services</h3>
+      <div className="bg-white border border-[#8b7ab4]/30 p-6 rounded-lg">
+        <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#1a0a2e]">
+          <h3 className="text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px]">Services</h3>
           <button
             type="button"
             onClick={addService}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#1B3A4C] border border-[#1B3A4C] rounded-lg hover:bg-[#1B3A4C] hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#2d1b4e] border border-[#2d1b4e] rounded-lg hover:bg-[#2d1b4e] hover:text-white transition-colors"
           >
             <Plus size={14} />
             Add Service
@@ -308,7 +308,7 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
           {items.map((service, index) => (
             <div
               key={index}
-              className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-[#F8FAFB] rounded-lg border border-[#E3E8ED] items-end"
+              className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-[#F8FAFB] rounded-lg border border-[#1a0a2e] items-end"
             >
               <ServiceSelector
                 service={service}
@@ -317,7 +317,7 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
                 inputClassName={inputClass}
               />
               <div className="md:col-span-2">
-                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">
+                <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">
                   Price (£)
                 </label>
                 <input
@@ -348,7 +348,7 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
                 <button
                   type="button"
                   onClick={() => removeService(index)}
-                  className="w-full p-2.5 rounded-lg hover:bg-red-50 border border-[#A3B5C4]/30 text-[#A3B5C4] hover:text-red-500 hover:border-red-300 transition-colors"
+                  className="w-full p-2.5 rounded-lg hover:bg-red-50 border border-[#8b7ab4]/30 text-[#8b7ab4] hover:text-red-500 hover:border-red-300 transition-colors"
                   title="Remove Service"
                 >
                   <Trash2 size={16} className="mx-auto" />
@@ -360,9 +360,9 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
       </div>
 
       {/* Pricing Summary */}
-      <div className="bg-white border border-[#A3B5C4]/30 p-6 rounded-lg">
-        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E3E8ED]">
-          <h3 className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Pricing Summary</h3>
+      <div className="bg-white border border-[#8b7ab4]/30 p-6 rounded-lg">
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#1a0a2e]">
+          <h3 className="text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px]">Pricing Summary</h3>
         </div>
         <div className="space-y-6">
           {/* Toggles Row */}
@@ -380,7 +380,7 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
           {/* Payment Terms */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">
+              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px]">
                 Payment Terms
               </label>
               <select
@@ -396,7 +396,7 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
               </select>
             </div>
             <div className="space-y-3">
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">
+              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px]">
                 Expiry Date
               </label>
               <input
@@ -428,31 +428,31 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
           )}
 
           {/* Totals Box */}
-          <div className="ml-auto max-w-sm w-full space-y-2.5 p-5 bg-[#F8FAFB] rounded-lg border border-[#E3E8ED]">
+          <div className="ml-auto max-w-sm w-full space-y-2.5 p-5 bg-[#F8FAFB] rounded-lg border border-[#1a0a2e]">
             <div className="flex justify-between text-sm">
-              <span className="text-[#5B7A8E]">Subtotal</span>
-              <span className="font-semibold text-[#1B3A4C]">£{subtotal.toFixed(2)}</span>
+              <span className="text-[#7a6a9e]">Subtotal</span>
+              <span className="font-semibold text-[#2d1b4e]">£{subtotal.toFixed(2)}</span>
             </div>
             {discount.enabled && (
               <div className="flex justify-between text-sm">
-                <span className="text-[#1B3A4C] flex items-center gap-1">
+                <span className="text-[#2d1b4e] flex items-center gap-1">
                   <Heart size={11} /> Discount ({discount.percent}%)
                 </span>
-                <span className="font-semibold text-[#1B3A4C]">-£{discountAmount.toFixed(2)}</span>
+                <span className="font-semibold text-[#2d1b4e]">-£{discountAmount.toFixed(2)}</span>
               </div>
             )}
             {vatEnabled ? (
               <div className="flex justify-between text-sm">
-                <span className="text-[#5B7A8E]">VAT ({taxRate}%)</span>
-                <span className="font-semibold text-[#1B3A4C]">£{tax.toFixed(2)}</span>
+                <span className="text-[#7a6a9e]">VAT ({taxRate}%)</span>
+                <span className="font-semibold text-[#2d1b4e]">£{tax.toFixed(2)}</span>
               </div>
             ) : (
               <div className="flex justify-between text-sm">
-                <span className="text-[#5B7A8E]">VAT</span>
-                <span className="text-[#A3B5C4]">N/A</span>
+                <span className="text-[#7a6a9e]">VAT</span>
+                <span className="text-[#8b7ab4]">N/A</span>
               </div>
             )}
-            <div className="flex justify-between pt-3 border-t border-[#E3E8ED]">
+            <div className="flex justify-between pt-3 border-t border-[#1a0a2e]">
               <span className="text-base font-black text-[#111] tracking-[-1px]">Total</span>
               <span className="text-base font-black text-[#111] tracking-[-1px]">£{total.toFixed(2)}</span>
             </div>
@@ -461,9 +461,9 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
       </div>
 
       {/* Notes */}
-      <div className="bg-white border border-[#A3B5C4]/30 p-6 rounded-lg">
-        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E3E8ED]">
-          <h3 className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Notes & Terms</h3>
+      <div className="bg-white border border-[#8b7ab4]/30 p-6 rounded-lg">
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#1a0a2e]">
+          <h3 className="text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px]">Notes & Terms</h3>
         </div>
         <NotesField value={notes} onChange={setNotes} />
       </div>
@@ -473,7 +473,7 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#1B3A4C] text-white text-sm font-semibold rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity"
+          className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#2d1b4e] text-white text-sm font-semibold rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity"
         >
           {loading ? (
             <>
@@ -490,7 +490,7 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
         <button
           type="button"
           onClick={onClose}
-          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#A3B5C4]/50 text-[#1B3A4C] text-sm font-semibold rounded-lg hover:bg-[#F8FAFB] transition-colors"
+          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#8b7ab4]/50 text-[#2d1b4e] text-sm font-semibold rounded-lg hover:bg-[#F8FAFB] transition-colors"
         >
           <X size={16} />
           Cancel

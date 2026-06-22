@@ -118,12 +118,12 @@ export default function TracksPage() {
     <div className="max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-12">
         <div>
-          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Audio Library</p>
+          <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-4">Audio Library</p>
           <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Tracks</h1>
         </div>
         <button
           onClick={() => { setEditTrack(null); setForm(emptyTrack); setIsModalOpen(true) }}
-          className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition"
+          className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
         >
           <Plus size={18} />
           Add Track
@@ -131,51 +131,51 @@ export default function TracksPage() {
       </div>
 
       {loading ? (
-        <p className="text-sm text-[#6B8FAB]">Loading...</p>
+        <p className="text-sm text-[#8b7ab4]">Loading...</p>
       ) : trackList.length === 0 ? (
-        <p className="text-sm text-[#6B8FAB]">No tracks yet. Add your first track.</p>
+        <p className="text-sm text-[#8b7ab4]">No tracks yet. Add your first track.</p>
       ) : (
-        <div className="bg-white border border-[#A3B5C4]/30 overflow-hidden">
+        <div className="bg-white border border-[#8b7ab4]/30 overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-[#E3E8ED]/50">
-              <tr className="border-b border-[#A3B5C4]/30">
-                <th className="px-4 py-3 text-left font-semibold text-[#6B8FAB] w-12">#</th>
-                <th className="px-4 py-3 text-left font-semibold text-[#6B8FAB]">Title</th>
-                <th className="px-4 py-3 text-left font-semibold text-[#6B8FAB]">Duration</th>
-                <th className="px-4 py-3 text-left font-semibold text-[#6B8FAB]">Audio</th>
-                <th className="px-4 py-3 text-left font-semibold text-[#6B8FAB]">Active</th>
-                <th className="px-4 py-3 text-right font-semibold text-[#6B8FAB]">Actions</th>
+            <thead className="bg-[#1a0a2e]/50">
+              <tr className="border-b border-[#8b7ab4]/30">
+                <th className="px-4 py-3 text-left font-semibold text-[#8b7ab4] w-12">#</th>
+                <th className="px-4 py-3 text-left font-semibold text-[#8b7ab4]">Title</th>
+                <th className="px-4 py-3 text-left font-semibold text-[#8b7ab4]">Duration</th>
+                <th className="px-4 py-3 text-left font-semibold text-[#8b7ab4]">Audio</th>
+                <th className="px-4 py-3 text-left font-semibold text-[#8b7ab4]">Active</th>
+                <th className="px-4 py-3 text-right font-semibold text-[#8b7ab4]">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E3E8ED]">
+            <tbody className="divide-y divide-[#1a0a2e]">
               {trackList.map((track, i) => (
                 <tr key={track.id} className="hover:bg-[#F8FAFB]">
-                  <td className="px-4 py-3 text-[#6B8FAB]">
+                  <td className="px-4 py-3 text-[#8b7ab4]">
                     <div className="flex items-center gap-1">
-                      <button onClick={() => moveOrder(track.id, 'up')} className="p-1 hover:bg-[#E3E8ED] rounded text-[#1B3A4C]" disabled={i === 0}>
+                      <button onClick={() => moveOrder(track.id, 'up')} className="p-1 hover:bg-[#1a0a2e] rounded text-[#2d1b4e]" disabled={i === 0}>
                         <ArrowUp size={14} />
                       </button>
-                      <button onClick={() => moveOrder(track.id, 'down')} className="p-1 hover:bg-[#E3E8ED] rounded text-[#1B3A4C]" disabled={i === trackList.length - 1}>
+                      <button onClick={() => moveOrder(track.id, 'down')} className="p-1 hover:bg-[#1a0a2e] rounded text-[#2d1b4e]" disabled={i === trackList.length - 1}>
                         <ArrowDown size={14} />
                       </button>
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <div className="font-semibold text-[#1B3A4C]">{track.title}</div>
-                    <div className="text-xs text-[#6B8FAB]">{track.filePath ? 'Audio uploaded' : 'No audio'}</div>
+                    <div className="font-semibold text-[#2d1b4e]">{track.title}</div>
+                    <div className="text-xs text-[#8b7ab4]">{track.filePath ? 'Audio uploaded' : 'No audio'}</div>
                   </td>
-                  <td className="px-4 py-3 text-[#5B7A8E]">{track.duration}</td>
+                  <td className="px-4 py-3 text-[#7a6a9e]">{track.duration}</td>
                   <td className="px-4 py-3">
                     {track.filePath ? (
                       <button
                         onClick={() => setPlayingId(playingId === track.id ? null : track.id)}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 border border-[#A3B5C4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 border border-[#8b7ab4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2d1b4e] hover:border-[#111] hover:text-[#111] transition"
                       >
                           {playingId === track.id ? <Pause size={14} /> : <Play size={14} />}
                           {playingId === track.id ? 'Pause' : 'Play'}
                         </button>
                     ) : (
-                      <span className="text-xs text-[#A3B5C4]">—</span>
+                      <span className="text-xs text-[#8b7ab4]">—</span>
                     )}
                     {playingId === track.id && track.filePath && (
                       <audio src={track.filePath} autoPlay controls className="mt-1 w-48" />
@@ -184,7 +184,7 @@ export default function TracksPage() {
                   <td className="px-4 py-3">
                     <button
                       onClick={() => toggleActive(track.id, track.isActive)}
-                      className={`px-2 py-1 rounded-full text-[11px] font-semibold uppercase tracking-[1px] transition ${track.isActive ? 'bg-[#2d6a2d]/10 text-[#2d6a2d]' : 'bg-[#E3E8ED] text-[#A3B5C4]'}`}
+                      className={`px-2 py-1 rounded-full text-[11px] font-semibold uppercase tracking-[1px] transition ${track.isActive ? 'bg-[#2d6a2d]/10 text-[#2d6a2d]' : 'bg-[#1a0a2e] text-[#8b7ab4]'}`}
                     >
                       {track.isActive ? 'Active' : 'Inactive'}
                     </button>
@@ -193,13 +193,13 @@ export default function TracksPage() {
                     <div className="flex items-center justify-end gap-1">
                       <button
                         onClick={() => { setEditTrack(track); setForm({ ...track }); setIsModalOpen(true) }}
-                        className="p-2 hover:bg-[#E3E8ED] rounded text-[#6B8FAB] hover:text-[#1B3A4C]"
+                        className="p-2 hover:bg-[#1a0a2e] rounded text-[#8b7ab4] hover:text-[#2d1b4e]"
                       >
                         <Pencil size={14} />
                       </button>
                       <button
                         onClick={() => deleteTrack(track.id)}
-                        className="p-2 hover:bg-red-50 text-[#A3B5C4] hover:text-red-500 rounded"
+                        className="p-2 hover:bg-red-50 text-[#8b7ab4] hover:text-red-500 rounded"
                       >
                         <Trash2 size={14} />
                       </button>
@@ -215,41 +215,41 @@ export default function TracksPage() {
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={editTrack ? 'Edit Track' : 'Add Track'}>
         <form onSubmit={saveTrack} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Title *</label>
+            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Title *</label>
             <input
               type="text"
               value={form.title}
               onChange={e => setForm({ ...form, title: e.target.value })}
               required
-              className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
+              className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-[#2d1b4e] text-sm focus:outline-none focus:border-[#2d1b4e]"
               placeholder="Late Night Ricky — Midnight in London"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Duration</label>
+              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Duration</label>
               <input
                 type="text"
                 value={form.duration}
                 onChange={e => setForm({ ...form, duration: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
+                className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-[#2d1b4e] text-sm focus:outline-none focus:border-[#2d1b4e]"
                 placeholder="0:30"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Order</label>
+              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Order</label>
               <input
                 type="number"
                 value={form.order}
                 onChange={e => setForm({ ...form, order: Number(e.target.value) })}
-                className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
+                className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-[#2d1b4e] text-sm focus:outline-none focus:border-[#2d1b4e]"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Audio File</label>
+            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Audio File</label>
             <div className="flex items-center gap-3">
               <input
                 ref={fileInputRef}
@@ -262,7 +262,7 @@ export default function TracksPage() {
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading}
-                className="inline-flex items-center gap-2 px-4 py-2 border border-[#A3B5C4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-[#8b7ab4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2d1b4e] hover:border-[#111] hover:text-[#111] transition"
               >
                 <Upload size={14} />
                 {uploading ? 'Uploading...' : form.filePath ? 'Replace Audio' : 'Upload Audio'}
@@ -272,23 +272,23 @@ export default function TracksPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Spotify URL</label>
+            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Spotify URL</label>
             <input
               type="url"
               value={form.spotifyUrl || ''}
               onChange={e => setForm({ ...form, spotifyUrl: e.target.value || null })}
-              className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
+              className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-[#2d1b4e] text-sm focus:outline-none focus:border-[#2d1b4e]"
               placeholder="https://open.spotify.com/..."
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Apple Music URL</label>
+            <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Apple Music URL</label>
             <input
               type="url"
               value={form.appleMusicUrl || ''}
               onChange={e => setForm({ ...form, appleMusicUrl: e.target.value || null })}
-              className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
+              className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-[#2d1b4e] text-sm focus:outline-none focus:border-[#2d1b4e]"
               placeholder="https://music.apple.com/..."
             />
           </div>
@@ -299,19 +299,19 @@ export default function TracksPage() {
               checked={form.isActive}
               onChange={e => setForm({ ...form, isActive: e.target.checked })}
               id="trackActive"
-              className="accent-[#1B3A4C]"
+              className="accent-[#2d1b4e]"
             />
-            <label htmlFor="trackActive" className="text-sm text-[#1B3A4C]">Active (visible on site)</label>
+            <label htmlFor="trackActive" className="text-sm text-[#2d1b4e]">Active (visible on site)</label>
           </div>
 
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={() => setIsModalOpen(false)}
-              className="flex-1 px-4 py-2 border border-[#A3B5C4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
+              className="flex-1 px-4 py-2 border border-[#8b7ab4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2d1b4e] hover:border-[#111] hover:text-[#111] transition"
             >
               Cancel
             </button>
             <button type="submit"
-              className="flex-1 px-4 py-2 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition"
+              className="flex-1 px-4 py-2 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
             >
               {editTrack ? 'Save Changes' : 'Add Track'}
             </button>

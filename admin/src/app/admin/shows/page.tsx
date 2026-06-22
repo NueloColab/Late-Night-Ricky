@@ -98,14 +98,14 @@ export default function ShowsPage() {
     <div className="max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-12">
-        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Show Cards</p>
+        <p className="text-xs text-[#8b7ab4] tracking-[3px] uppercase font-semibold mb-4">Show Cards</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Shows</h1>
-            <p className="text-sm text-[#5B7A8E] mt-4 font-semibold uppercase tracking-[0.5px]">Manage show cards displayed on the front end.</p>
+            <p className="text-sm text-[#7a6a9e] mt-4 font-semibold uppercase tracking-[0.5px]">Manage show cards displayed on the front end.</p>
           </div>
           <button onClick={openNew}
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
           >
             <Plus size={16} />
             Add Show
@@ -115,63 +115,63 @@ export default function ShowsPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
-        <div className="bg-white border border-[#A3B5C4]/30 p-5">
+        <div className="bg-white border border-[#8b7ab4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#111] text-white rounded-lg"><Music size={16} /></div>
+            <div className="p-2 bg-[#0f0518] text-white rounded-lg"><Music size={16} /></div>
           </div>
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{loading ? '–' : cards.length}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Shows</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#8b7ab4] font-medium mt-2">Total Shows</p>
         </div>
-        <div className="bg-white border border-[#A3B5C4]/30 p-5">
+        <div className="bg-white border border-[#8b7ab4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#2d6a2d] text-white rounded-lg"><Eye size={16} /></div>
           </div>
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#2d6a2d] leading-none tracking-[-1px]">{loading ? '–' : cards.filter(c => c.isActive).length}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Active</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#8b7ab4] font-medium mt-2">Active</p>
         </div>
-        <div className="bg-white border border-[#A3B5C4]/30 p-5">
+        <div className="bg-white border border-[#8b7ab4]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#A3B5C4] text-white rounded-lg"><GripVertical size={16} /></div>
+            <div className="p-2 bg-[#8b7ab4] text-white rounded-lg"><GripVertical size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#A3B5C4] leading-none tracking-[-1px]">{loading ? '–' : cards.filter(c => !c.isActive).length}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Hidden</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#8b7ab4] leading-none tracking-[-1px]">{loading ? '–' : cards.filter(c => !c.isActive).length}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#8b7ab4] font-medium mt-2">Hidden</p>
         </div>
       </div>
 
       {/* Cards Grid */}
       {loading ? (
-        <p className="text-[#6B8FAB] text-center py-8">Loading...</p>
+        <p className="text-[#8b7ab4] text-center py-8">Loading...</p>
       ) : cards.length === 0 ? (
-        <div className="bg-white border border-[#A3B5C4]/30 p-8 text-center">
-          <p className="text-[#6B8FAB]">No show cards yet. Add your first show above.</p>
+        <div className="bg-white border border-[#8b7ab4]/30 p-8 text-center">
+          <p className="text-[#8b7ab4]">No show cards yet. Add your first show above.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {cards.map((card) => (
-            <div key={card.id} className={`bg-white border overflow-hidden transition-opacity ${card.isActive ? 'border-[#A3B5C4]/30' : 'border-[#A3B5C4]/20 opacity-60'}`}>
+            <div key={card.id} className={`bg-white border overflow-hidden transition-opacity ${card.isActive ? 'border-[#8b7ab4]/30' : 'border-[#8b7ab4]/20 opacity-60'}`}>
               {card.imagePath && (
-                <div className="aspect-video bg-[#E3E8ED] overflow-hidden">
+                <div className="aspect-video bg-[#1a0a2e] overflow-hidden">
                   <img src={card.imagePath} alt={card.title} className="w-full h-full object-cover" />
                 </div>
               )}
               <div className="p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h3 className="text-sm font-semibold text-[#1B3A4C]">{card.title || 'Untitled'}</h3>
-                    <p className="text-xs text-[#5B7A8E] mt-0.5">{card.venue}{card.location ? ` · ${card.location}` : ''}</p>
+                    <h3 className="text-sm font-semibold text-[#2d1b4e]">{card.title || 'Untitled'}</h3>
+                    <p className="text-xs text-[#7a6a9e] mt-0.5">{card.venue}{card.location ? ` · ${card.location}` : ''}</p>
                   </div>
                   <button
                     onClick={() => toggleActive(card.id, !card.isActive)}
-                    className={`text-xs px-2 py-1 rounded-full font-medium uppercase tracking-wide ${card.isActive ? 'bg-[#2d6a2d]/10 text-[#2d6a2d]' : 'bg-[#E3E8ED] text-[#A3B5C4]'}`}
+                    className={`text-xs px-2 py-1 rounded-full font-medium uppercase tracking-wide ${card.isActive ? 'bg-[#2d6a2d]/10 text-[#2d6a2d]' : 'bg-[#1a0a2e] text-[#8b7ab4]'}`}
                   >
                     {card.isActive ? 'Active' : 'Hidden'}
                   </button>
                 </div>
-                {card.season && <p className="text-xs text-[#6B8FAB] mt-1">{card.season}</p>}
-                {card.description && <p className="text-xs text-[#5B7A8E] mt-2 line-clamp-2">{card.description}</p>}
-                <div className="flex gap-2 mt-3 pt-3 border-t border-[#A3B5C4]/20">
-                  <button onClick={() => openEdit(card)} className="text-xs text-[#1B3A4C] hover:underline font-semibold">Edit</button>
-                  <button onClick={() => deleteCard(card.id)} className="text-xs text-[#A3B5C4] hover:text-red-500">Delete</button>
+                {card.season && <p className="text-xs text-[#8b7ab4] mt-1">{card.season}</p>}
+                {card.description && <p className="text-xs text-[#7a6a9e] mt-2 line-clamp-2">{card.description}</p>}
+                <div className="flex gap-2 mt-3 pt-3 border-t border-[#8b7ab4]/20">
+                  <button onClick={() => openEdit(card)} className="text-xs text-[#2d1b4e] hover:underline font-semibold">Edit</button>
+                  <button onClick={() => deleteCard(card.id)} className="text-xs text-[#8b7ab4] hover:text-red-500">Delete</button>
                 </div>
               </div>
             </div>
@@ -184,42 +184,42 @@ export default function ShowsPage() {
         <form onSubmit={saveCard} className="space-y-5">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-12 h-px bg-[#91715c]"></div>
-            <p className="text-xs uppercase tracking-[3px] text-[#6B8FAB] font-semibold">Show Details</p>
+            <p className="text-xs uppercase tracking-[3px] text-[#8b7ab4] font-semibold">Show Details</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Title <span className="text-red-400">*</span></label>
-              <input type="text" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" placeholder="Show name" />
+              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Title <span className="text-red-400">*</span></label>
+              <input type="text" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]" placeholder="Show name" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Venue</label>
-              <input type="text" value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" placeholder="Venue name" />
+              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Venue</label>
+              <input type="text" value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]" placeholder="Venue name" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Location</label>
-              <input type="text" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" placeholder="City, Country" />
+              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Location</label>
+              <input type="text" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]" placeholder="City, Country" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Season</label>
-              <input type="text" value={form.season} onChange={(e) => setForm({ ...form, season: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" placeholder="e.g. Summer 2026" />
+              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Season</label>
+              <input type="text" value={form.season} onChange={(e) => setForm({ ...form, season: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]" placeholder="e.g. Summer 2026" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Link URL</label>
-              <input type="text" value={form.href} onChange={(e) => setForm({ ...form, href: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" placeholder="https://" />
+              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Link URL</label>
+              <input type="text" value={form.href} onChange={(e) => setForm({ ...form, href: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e]" placeholder="https://" />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Description</label>
-              <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} className="w-full px-4 py-2.5 bg-white border border-[#A3B5C4]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-none" placeholder="Brief description of the show..." />
+              <label className="block text-xs font-semibold text-[#8b7ab4] uppercase tracking-[3px] mb-2">Description</label>
+              <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} className="w-full px-4 py-2.5 bg-white border border-[#8b7ab4]/30 rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:border-[#2d1b4e] resize-none" placeholder="Brief description of the show..." />
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <button type="submit"
-              className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#111] hover:text-white transition"
+              className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0f0518] hover:text-white transition"
             >
               {editCard ? 'Update Show' : 'Add Show'}
             </button>
             <button type="button" onClick={() => { setIsModalOpen(false); setEditCard(null) }}
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#A3B5C4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#8b7ab4]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2d1b4e] hover:border-[#111] hover:text-[#111] transition"
             >
               Cancel
             </button>

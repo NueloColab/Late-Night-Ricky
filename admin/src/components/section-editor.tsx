@@ -31,8 +31,8 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
 
   if (!section) {
     return (
-      <div className="bg-white rounded-2xl p-12 text-center border border-[#8FA8BE]/20">
-        <p className="text-[#8FA8BE] text-sm">Select a section to edit.</p>
+      <div className="bg-white rounded-2xl p-12 text-center border border-[#a890c0]/20">
+        <p className="text-[#a890c0] text-sm">Select a section to edit.</p>
       </div>
     );
   }
@@ -102,12 +102,12 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
     <div className="space-y-6">
       {/* Content Fields */}
       {Array.isArray(content) && content.length > 0 && (
-        <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-          <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-4">Content</h3>
+        <div className="bg-white rounded-2xl p-6 border border-[#a890c0]/20">
+          <h3 className="font-serif text-lg font-semibold text-[#2d1b4e] mb-4">Content</h3>
           <div className="space-y-4">
             {content.map((text: string, i: number) => (
               <div key={i}>
-                <label className="block text-xs font-semibold text-[#8FA8BE] uppercase tracking-widest mb-1.5">
+                <label className="block text-xs font-semibold text-[#a890c0] uppercase tracking-widest mb-1.5">
                   Text Block {i + 1}
                 </label>
                 <textarea
@@ -118,7 +118,7 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
                     updateField('content', newContent);
                   }}
                   rows={4}
-                  className="w-full px-4 py-3 bg-[#E3E8ED] rounded-xl text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20 resize-y"
+                  className="w-full px-4 py-3 bg-[#1a0a2e] rounded-xl text-sm text-[#2d1b4e] focus:outline-none focus:ring-2 focus:ring-[#2d1b4e]/20 resize-y"
                 />
               </div>
             ))}
@@ -128,15 +128,15 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
 
       {/* Images */}
       {Array.isArray(images) && (
-        <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-          <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-4">Images</h3>
+        <div className="bg-white rounded-2xl p-6 border border-[#a890c0]/20">
+          <h3 className="font-serif text-lg font-semibold text-[#2d1b4e] mb-4">Images</h3>
           <div className="space-y-4">
             {images.length === 0 ? (
               <div className="flex items-center gap-3">
-                <p className="text-sm text-[#8FA8BE]">No images</p>
+                <p className="text-sm text-[#a890c0]">No images</p>
                 <button
                   onClick={() => openMediaPicker('image-0', 'image')}
-                  className="px-3 py-1.5 bg-[#1B3A4C] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
+                  className="px-3 py-1.5 bg-[#2d1b4e] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
                 >
                   Add Image
                 </button>
@@ -144,21 +144,21 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
             ) : (
               images.map((img: string, i: number) => (
                 <div key={i} className="flex items-start gap-4">
-                  <div className="relative w-24 h-24 bg-[#E3E8ED] rounded-xl overflow-hidden flex-shrink-0">
+                  <div className="relative w-24 h-24 bg-[#1a0a2e] rounded-xl overflow-hidden flex-shrink-0">
                     {img ? (
                       <Image src={img} alt="" fill className="object-cover" sizes="96px" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <ImageIcon className="w-6 h-6 text-[#8FA8BE]" />
+                        <ImageIcon className="w-6 h-6 text-[#a890c0]" />
                       </div>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-[#8FA8BE] mb-1.5 uppercase tracking-widest font-semibold">Image {i + 1}</p>
+                    <p className="text-xs text-[#a890c0] mb-1.5 uppercase tracking-widest font-semibold">Image {i + 1}</p>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => openMediaPicker(`image-${i}`, 'image')}
-                        className="px-3 py-1.5 bg-[#1B3A4C] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
+                        className="px-3 py-1.5 bg-[#2d1b4e] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
                       >
                         Replace
                       </button>
@@ -167,7 +167,7 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
                           const newImages = images.filter((_: string, idx: number) => idx !== i);
                           updateField('images', newImages);
                         }}
-                        className="px-3 py-1.5 bg-[#E3E8ED] text-[#1B3A4C] rounded-lg text-xs font-semibold hover:bg-[#d1d9e0] transition-colors"
+                        className="px-3 py-1.5 bg-[#1a0a2e] text-[#2d1b4e] rounded-lg text-xs font-semibold hover:bg-[#d1d9e0] transition-colors"
                       >
                         Remove
                       </button>
@@ -179,7 +179,7 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
             {images.length > 0 && (
               <button
                 onClick={() => openMediaPicker(`image-${images.length}`, 'image')}
-                className="px-3 py-1.5 border border-[#1B3A4C] text-[#1B3A4C] rounded-lg text-xs font-semibold hover:bg-[#1B3A4C] hover:text-white transition-colors"
+                className="px-3 py-1.5 border border-[#2d1b4e] text-[#2d1b4e] rounded-lg text-xs font-semibold hover:bg-[#2d1b4e] hover:text-white transition-colors"
               >
                 + Add Another Image
               </button>
@@ -190,15 +190,15 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
 
       {/* Videos */}
       {Array.isArray(videos) && (
-        <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-          <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-4">Videos</h3>
+        <div className="bg-white rounded-2xl p-6 border border-[#a890c0]/20">
+          <h3 className="font-serif text-lg font-semibold text-[#2d1b4e] mb-4">Videos</h3>
           <div className="space-y-4">
             {videos.length === 0 ? (
               <div className="flex items-center gap-3">
-                <p className="text-sm text-[#8FA8BE]">No videos</p>
+                <p className="text-sm text-[#a890c0]">No videos</p>
                 <button
                   onClick={() => openMediaPicker('video-0', 'video')}
-                  className="px-3 py-1.5 bg-[#1B3A4C] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
+                  className="px-3 py-1.5 bg-[#2d1b4e] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
                 >
                   Add Video
                 </button>
@@ -206,21 +206,21 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
             ) : (
               videos.map((vid: string, i: number) => (
                 <div key={i} className="flex items-start gap-4">
-                  <div className="relative w-24 h-24 bg-[#E3E8ED] rounded-xl overflow-hidden flex-shrink-0">
+                  <div className="relative w-24 h-24 bg-[#1a0a2e] rounded-xl overflow-hidden flex-shrink-0">
                     {vid ? (
                       <video src={vid} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <VideoIcon className="w-6 h-6 text-[#8FA8BE]" />
+                        <VideoIcon className="w-6 h-6 text-[#a890c0]" />
                       </div>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-[#8FA8BE] mb-1.5 uppercase tracking-widest font-semibold">Video {i + 1}</p>
+                    <p className="text-xs text-[#a890c0] mb-1.5 uppercase tracking-widest font-semibold">Video {i + 1}</p>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => openMediaPicker(`video-${i}`, 'video')}
-                        className="px-3 py-1.5 bg-[#1B3A4C] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
+                        className="px-3 py-1.5 bg-[#2d1b4e] text-white rounded-lg text-xs font-semibold hover:bg-[#2a4f66] transition-colors"
                       >
                         Replace
                       </button>
@@ -229,7 +229,7 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
                           const newVideos = videos.filter((_: string, idx: number) => idx !== i);
                           updateField('videos', newVideos);
                         }}
-                        className="px-3 py-1.5 bg-[#E3E8ED] text-[#1B3A4C] rounded-lg text-xs font-semibold hover:bg-[#d1d9e0] transition-colors"
+                        className="px-3 py-1.5 bg-[#1a0a2e] text-[#2d1b4e] rounded-lg text-xs font-semibold hover:bg-[#d1d9e0] transition-colors"
                       >
                         Remove
                       </button>
@@ -241,7 +241,7 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
             {videos.length > 0 && (
               <button
                 onClick={() => openMediaPicker(`video-${videos.length}`, 'video')}
-                className="px-3 py-1.5 border border-[#1B3A4C] text-[#1B3A4C] rounded-lg text-xs font-semibold hover:bg-[#1B3A4C] hover:text-white transition-colors"
+                className="px-3 py-1.5 border border-[#2d1b4e] text-[#2d1b4e] rounded-lg text-xs font-semibold hover:bg-[#2d1b4e] hover:text-white transition-colors"
               >
                 + Add Another Video
               </button>
@@ -252,8 +252,8 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
 
       {/* Links */}
       {Array.isArray(links) && (
-        <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20">
-          <h3 className="font-serif text-lg font-semibold text-[#1B3A4C] mb-4">Links</h3>
+        <div className="bg-white rounded-2xl p-6 border border-[#a890c0]/20">
+          <h3 className="font-serif text-lg font-semibold text-[#2d1b4e] mb-4">Links</h3>
           <div className="space-y-3">
             {links.map((link: string, i: number) => (
               <div key={i} className="flex items-center gap-2">
@@ -266,14 +266,14 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
                     updateField('links', newLinks);
                   }}
                   placeholder="https://..."
-                  className="flex-1 px-4 py-2.5 bg-[#E3E8ED] rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:ring-2 focus:ring-[#1B3A4C]/20"
+                  className="flex-1 px-4 py-2.5 bg-[#1a0a2e] rounded-lg text-sm text-[#2d1b4e] focus:outline-none focus:ring-2 focus:ring-[#2d1b4e]/20"
                 />
                 <button
                   onClick={() => {
                     const newLinks = links.filter((_: string, idx: number) => idx !== i);
                     updateField('links', newLinks);
                   }}
-                  className="px-3 py-2.5 bg-[#E3E8ED] text-[#1B3A4C] rounded-lg text-xs font-semibold hover:bg-[#d1d9e0] transition-colors"
+                  className="px-3 py-2.5 bg-[#1a0a2e] text-[#2d1b4e] rounded-lg text-xs font-semibold hover:bg-[#d1d9e0] transition-colors"
                 >
                   Remove
                 </button>
@@ -281,7 +281,7 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
             ))}
             <button
               onClick={() => updateField('links', [...links, ''])}
-              className="px-3 py-1.5 border border-[#1B3A4C] text-[#1B3A4C] rounded-lg text-xs font-semibold hover:bg-[#1B3A4C] hover:text-white transition-colors"
+              className="px-3 py-1.5 border border-[#2d1b4e] text-[#2d1b4e] rounded-lg text-xs font-semibold hover:bg-[#2d1b4e] hover:text-white transition-colors"
             >
               + Add Link
             </button>
@@ -290,14 +290,14 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
       )}
 
       {/* Active Toggle */}
-      <div className="bg-white rounded-2xl p-6 border border-[#8FA8BE]/20 flex items-center justify-between">
+      <div className="bg-white rounded-2xl p-6 border border-[#a890c0]/20 flex items-center justify-between">
         <div>
-          <h3 className="font-serif text-lg font-semibold text-[#1B3A4C]">Section Active</h3>
-          <p className="text-xs text-[#8FA8BE] mt-1">Show or hide this section on the site</p>
+          <h3 className="font-serif text-lg font-semibold text-[#2d1b4e]">Section Active</h3>
+          <p className="text-xs text-[#a890c0] mt-1">Show or hide this section on the site</p>
         </div>
         <button
           onClick={() => updateField('isActive', !data?.isActive)}
-          className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${data?.isActive ? 'bg-[#1B3A4C]' : 'bg-[#8FA8BE]'}`}
+          className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${data?.isActive ? 'bg-[#2d1b4e]' : 'bg-[#a890c0]'}`}
         >
           <span
             className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${data?.isActive ? 'translate-x-6' : 'translate-x-1'}`}
@@ -310,14 +310,14 @@ export default function SectionEditor({ section, onSaved }: SectionEditorProps) 
         <button
           onClick={handleSave}
           disabled={saving}
-          className="px-6 py-3 bg-[#1B3A4C] text-white rounded-xl font-semibold text-sm uppercase tracking-widest hover:bg-[#2a4f66] transition-colors disabled:opacity-50"
+          className="px-6 py-3 bg-[#2d1b4e] text-white rounded-xl font-semibold text-sm uppercase tracking-widest hover:bg-[#2a4f66] transition-colors disabled:opacity-50"
         >
           {saving ? 'Saving...' : 'Save'}
         </button>
         <button
           onClick={handlePublish}
           disabled={publishing}
-          className="px-6 py-3 bg-white border-2 border-[#1B3A4C] text-[#1B3A4C] rounded-xl font-semibold text-sm uppercase tracking-widest hover:bg-[#1B3A4C] hover:text-white transition-colors disabled:opacity-50"
+          className="px-6 py-3 bg-white border-2 border-[#2d1b4e] text-[#2d1b4e] rounded-xl font-semibold text-sm uppercase tracking-widest hover:bg-[#2d1b4e] hover:text-white transition-colors disabled:opacity-50"
         >
           {publishing ? 'Publishing...' : 'Publish'}
         </button>

@@ -122,7 +122,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                 onClick={isMobile ? () => setSidebarOpen(false) : undefined}
                 className={`block px-4 py-3 text-sm uppercase tracking-wide transition-all ${
                   pathname === '/admin'
-                    ? 'bg-[#1B3A4C] text-white font-medium'
+                    ? 'bg-[#2d1b4e] text-white font-medium'
                     : 'text-[#8FA3B3] hover:text-white hover:bg-[#1A1D24]'
                 }`}
               >
@@ -142,7 +142,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                         onClick={isMobile ? () => setSidebarOpen(false) : undefined}
                         className={`block px-4 py-2.5 text-sm uppercase tracking-wide transition-all ${
                           pathname === item.href
-                            ? 'bg-[#1B3A4C] text-white font-medium'
+                            ? 'bg-[#2d1b4e] text-white font-medium'
                             : 'text-[#8FA3B3] hover:text-white hover:bg-[#1A1D24]'
                         }`}
                       >
@@ -193,7 +193,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                 <p className="text-sm font-medium text-white">Late Night Ricky</p>
                 <p className="text-xs text-[#5A6A7A]">Admin Panel</p>
               </div>
-              <div className="w-10 h-10 bg-[#1B3A4C] flex items-center justify-center text-white font-medium text-sm">
+              <div className="w-10 h-10 bg-[#2d1b4e] flex items-center justify-center text-white font-medium text-sm">
                 LR
               </div>
             </div>

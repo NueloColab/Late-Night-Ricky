@@ -69,7 +69,7 @@ function normaliseStatus(raw: string) {
 }
 
 const statusStyles: Record<string, { bg: string; text: string; border: string }> = {
-  sent:     { bg: '#1B3A4C1a', text: '#1B3A4C', border: '#1B3A4C33' },
+  sent:     { bg: '#2d1b4e1a', text: '#2d1b4e', border: '#2d1b4e33' },
   accepted: { bg: '#2d6a2d1a', text: '#2d6a2d', border: '#2d6a2d33' },
   declined: { bg: '#c4632e1a', text: '#c4632e', border: '#c4632e33' },
   draft:    { bg: '#f8f7f6',   text: '#666666', border: '#e5e5e5' },
@@ -211,8 +211,8 @@ export default function QuoteDetailPage() {
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto py-12 text-center">
-        <Loader2 size={32} className="animate-spin mx-auto text-[#6B8FAB] mb-4" />
-        <p className="text-[#6B8FAB] text-sm">Loading quote...</p>
+        <Loader2 size={32} className="animate-spin mx-auto text-[#8b7ab4] mb-4" />
+        <p className="text-[#8b7ab4] text-sm">Loading quote...</p>
       </div>
     )
   }
@@ -221,7 +221,7 @@ export default function QuoteDetailPage() {
     return (
       <div className="max-w-6xl mx-auto py-12 text-center">
         <AlertCircle size={32} className="mx-auto text-red-400 mb-4" />
-        <p className="text-[#5B7A8E] text-sm">Quote not found.</p>
+        <p className="text-[#7a6a9e] text-sm">Quote not found.</p>
       </div>
     )
   }
@@ -249,7 +249,7 @@ export default function QuoteDetailPage() {
       {/* Back Link */}
       <Link
         href="/admin/quotes"
-        className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#111] transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-[#2d1b4e] hover:text-[#111] transition-colors"
       >
         <ArrowLeft size={14} />
         <span>Back to Quotes</span>
@@ -260,8 +260,8 @@ export default function QuoteDetailPage() {
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-px bg-[#A3B5C4]" />
-              <p className="text-xs uppercase tracking-widest text-[#5B7A8E]">Quote Details</p>
+              <div className="w-10 h-px bg-[#8b7ab4]" />
+              <p className="text-xs uppercase tracking-widest text-[#7a6a9e]">Quote Details</p>
             </div>
             <h1 className="text-3xl md:text-4xl font-light text-[#111] mb-2">
               {quote.quoteNumber || `QT-${String(quote.id).padStart(3, '0')}`}
@@ -275,7 +275,7 @@ export default function QuoteDetailPage() {
                 {currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1)}
               </span>
               {quote.emailSentAt && (
-                <span className="text-sm text-[#5B7A8E]">
+                <span className="text-sm text-[#7a6a9e]">
                   Email sent on {new Date(quote.emailSentAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                 </span>
               )}
@@ -286,7 +286,7 @@ export default function QuoteDetailPage() {
           <div className="flex items-center gap-3 flex-wrap">
             <button
               onClick={() => setIsEditOpen(true)}
-              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#A3B5C4] text-[#111] hover:border-[#1B3A4C]"
+              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#8b7ab4] text-[#111] hover:border-[#2d1b4e]"
             >
               <Edit2 size={14} />
               <span>Edit</span>
@@ -294,7 +294,7 @@ export default function QuoteDetailPage() {
             <button
               onClick={handleSendEmail}
               disabled={sendingEmail}
-              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-[#1B3A4C] text-white hover:bg-[#0f1923]"
+              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-[#2d1b4e] text-white hover:bg-[#0f0518]"
             >
               {sendingEmail ? (
                 <>
@@ -310,7 +310,7 @@ export default function QuoteDetailPage() {
             </button>
             <button
               onClick={handleDownloadPDF}
-              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#A3B5C4] text-[#111] hover:border-[#1B3A4C]"
+              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#8b7ab4] text-[#111] hover:border-[#2d1b4e]"
             >
               <Download size={14} />
               <span>PDF</span>
@@ -319,7 +319,7 @@ export default function QuoteDetailPage() {
             {currentStatus === 'accepted' && !quote.convertedToInvoice && (
               <button
                 onClick={handleConvertToInvoice}
-                className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-[#0f1923] text-white hover:bg-[#1B3A4C]"
+                className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-[#0f0518] text-white hover:bg-[#2d1b4e]"
               >
                 <FileText size={14} />
                 <span>Convert to Invoice</span>
@@ -329,7 +329,7 @@ export default function QuoteDetailPage() {
             {quote.convertedToInvoice && quote.invoiceId && (
               <Link
                 href={`/admin/invoices/${quote.invoiceId}`}
-                className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#1B3A4C] text-[#1B3A4C]"
+                className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#2d1b4e] text-[#2d1b4e]"
               >
                 <FileText size={14} />
                 <span>View Invoice</span>
@@ -348,51 +348,51 @@ export default function QuoteDetailPage() {
 
       {/* Client & Project Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white border border-[#E3E8ED] p-6">
+        <div className="bg-white border border-[#1a0a2e] p-6">
           <div className="flex items-center gap-2 mb-5">
-            <div className="p-2 bg-[#1B3A4C] text-white">
+            <div className="p-2 bg-[#2d1b4e] text-white">
               <Users size={16} />
             </div>
             <h3 className="text-lg font-light text-[#111]">Client Information</h3>
           </div>
           <div className="space-y-3">
             <div>
-              <p className="text-xs text-[#5B7A8E] uppercase tracking-widest mb-1">Name</p>
+              <p className="text-xs text-[#7a6a9e] uppercase tracking-widest mb-1">Name</p>
               <p className="text-base font-medium text-[#111]">{quote.clientName || '—'}</p>
             </div>
             {quote.clientCompany && (
               <div>
-                <p className="text-xs text-[#5B7A8E] uppercase tracking-widest mb-1">Company</p>
+                <p className="text-xs text-[#7a6a9e] uppercase tracking-widest mb-1">Company</p>
                 <p className="text-base text-[#111]">{quote.clientCompany}</p>
               </div>
             )}
             <div>
-              <p className="text-xs text-[#5B7A8E] uppercase tracking-widest mb-1">Email</p>
+              <p className="text-xs text-[#7a6a9e] uppercase tracking-widest mb-1">Email</p>
               <p className="text-base text-[#111]">{quote.clientEmail || '—'}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white border border-[#E3E8ED] p-6">
+        <div className="bg-white border border-[#1a0a2e] p-6">
           <div className="flex items-center gap-2 mb-5">
-            <div className="p-2 bg-[#1B3A4C] text-white">
+            <div className="p-2 bg-[#2d1b4e] text-white">
               <FolderOpen size={16} />
             </div>
             <h3 className="text-lg font-light text-[#111]">Project Details</h3>
           </div>
           <div className="space-y-3">
             <div>
-              <p className="text-xs text-[#5B7A8E] uppercase tracking-widest mb-1">Project Title</p>
+              <p className="text-xs text-[#7a6a9e] uppercase tracking-widest mb-1">Project Title</p>
               <p className="text-base font-medium text-[#111]">{quote.projectTitle || '—'}</p>
             </div>
             <div>
-              <p className="text-xs text-[#5B7A8E] uppercase tracking-widest mb-1">Date Created</p>
+              <p className="text-xs text-[#7a6a9e] uppercase tracking-widest mb-1">Date Created</p>
               <p className="text-base text-[#111]">
                 {new Date(quote.createdAt).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
             </div>
             <div>
-              <p className="text-xs text-[#5B7A8E] uppercase tracking-widest mb-1">Valid Until</p>
+              <p className="text-xs text-[#7a6a9e] uppercase tracking-widest mb-1">Valid Until</p>
               <p className={`text-base ${isExpired ? 'text-red-600 font-medium' : 'text-[#111]'}`}>
                 {validUntil.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
                 {isExpired && <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-red-50 text-red-600">Expired</span>}
@@ -403,10 +403,10 @@ export default function QuoteDetailPage() {
       </div>
 
       {/* Services */}
-      <div className="bg-white border border-[#E3E8ED] overflow-hidden">
-        <div className="p-6 border-b border-[#E3E8ED]">
+      <div className="bg-white border border-[#1a0a2e] overflow-hidden">
+        <div className="p-6 border-b border-[#1a0a2e]">
           <div className="flex items-center gap-2">
-            <div className="p-2 bg-[#1B3A4C] text-white">
+            <div className="p-2 bg-[#2d1b4e] text-white">
               <FileText size={16} />
             </div>
             <h3 className="text-lg font-light text-[#111]">Services</h3>
@@ -414,25 +414,25 @@ export default function QuoteDetailPage() {
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-[#F8FAFB] border-b border-[#E3E8ED]">
+            <thead className="bg-[#F8FAFB] border-b border-[#1a0a2e]">
               <tr>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-[#111] uppercase tracking-widest">Service</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-[#111] uppercase tracking-widest">Category</th>
                 <th className="px-6 py-4 text-right text-xs font-semibold text-[#111] uppercase tracking-widest">Price</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E3E8ED]">
+            <tbody className="divide-y divide-[#1a0a2e]">
               {lineItems.map((item, index) => (
                 <tr key={index} className="hover:bg-[#F8FAFB] transition-colors">
                   <td className="px-6 py-4">
                     <p className="text-sm font-medium text-[#111]">{item.serviceName || item.description || 'Service'}</p>
                     {item.description && item.serviceName && (
-                      <p className="text-xs text-[#5B7A8E] mt-1 leading-relaxed">{item.description}</p>
+                      <p className="text-xs text-[#7a6a9e] mt-1 leading-relaxed">{item.description}</p>
                     )}
                   </td>
                   <td className="px-6 py-4">
                     {item.serviceCategory && (
-                      <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-[#1B3A4C1a] text-[#1B3A4C]">
+                      <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-[#2d1b4e1a] text-[#2d1b4e]">
                         {item.serviceCategory}
                       </span>
                     )}
@@ -448,35 +448,35 @@ export default function QuoteDetailPage() {
       </div>
 
       {/* Pricing Summary */}
-      <div className="bg-white border border-[#E3E8ED] p-6">
+      <div className="bg-white border border-[#1a0a2e] p-6">
         <div className="flex items-center gap-2 mb-5">
-          <div className="p-2 bg-[#1B3A4C] text-white">
+          <div className="p-2 bg-[#2d1b4e] text-white">
             <Receipt size={16} />
           </div>
           <h3 className="text-lg font-light text-[#111]">Pricing Summary</h3>
         </div>
         <div className="max-w-md ml-auto space-y-3">
           <div className="flex justify-between items-center text-sm">
-            <span className="text-[#5B7A8E]">Subtotal:</span>
+            <span className="text-[#7a6a9e]">Subtotal:</span>
             <span className="font-semibold text-[#111]">{formatCurrency(quote.subtotal)}</span>
           </div>
           <div className="flex justify-between items-center text-sm">
-            <span className="text-[#5B7A8E]">VAT ({quote.taxRate}%):</span>
+            <span className="text-[#7a6a9e]">VAT ({quote.taxRate}%):</span>
             <span className="font-semibold text-[#111]">{formatCurrency((quote.subtotal * quote.taxRate) / 100)}</span>
           </div>
           <div className="flex justify-between items-center text-lg font-bold pt-3 border-t-2 border-[#111]">
-            <span className="text-[#0f1923]">Total:</span>
-            <span className="text-[#0f1923]">{formatCurrency(quote.total)}</span>
+            <span className="text-[#0f0518]">Total:</span>
+            <span className="text-[#0f0518]">{formatCurrency(quote.total)}</span>
           </div>
           {quote.paymentMethod && (
-            <div className="flex justify-between items-center text-sm pt-3 border-t border-[#E3E8ED]">
-              <span className="text-[#5B7A8E]">Payment Method:</span>
+            <div className="flex justify-between items-center text-sm pt-3 border-t border-[#1a0a2e]">
+              <span className="text-[#7a6a9e]">Payment Method:</span>
               <span className="font-medium text-[#111] capitalize">{(quote.paymentMethod || '').replace(/-/g, ' ')}</span>
             </div>
           )}
           {quote.paymentTermsLabel && (
-            <div className="flex justify-between items-center text-sm pt-3 border-t border-[#E3E8ED]">
-              <span className="text-[#5B7A8E]">Payment Terms:</span>
+            <div className="flex justify-between items-center text-sm pt-3 border-t border-[#1a0a2e]">
+              <span className="text-[#7a6a9e]">Payment Terms:</span>
               <span className="font-semibold text-[#111]">{quote.paymentTermsLabel}</span>
             </div>
           )}
@@ -485,21 +485,21 @@ export default function QuoteDetailPage() {
 
       {/* Notes */}
       {quote.notes && (
-        <div className="bg-[#F8FAFB] border border-[#E3E8ED] p-6">
+        <div className="bg-[#F8FAFB] border border-[#1a0a2e] p-6">
           <div className="flex items-center gap-2 mb-5">
-            <div className="p-2 bg-[#1B3A4C] text-white">
+            <div className="p-2 bg-[#2d1b4e] text-white">
               <FileText size={16} />
             </div>
             <h3 className="text-lg font-light text-[#111]">Notes & Terms</h3>
           </div>
-          <p className="text-sm text-[#5B7A8E] whitespace-pre-wrap leading-relaxed">{quote.notes}</p>
+          <p className="text-sm text-[#7a6a9e] whitespace-pre-wrap leading-relaxed">{quote.notes}</p>
         </div>
       )}
 
       {/* Status Update */}
-      <div className="bg-white border border-[#E3E8ED] p-6">
+      <div className="bg-white border border-[#1a0a2e] p-6">
         <div className="flex items-center gap-2 mb-5">
-          <div className="p-2 bg-[#1B3A4C] text-white">
+          <div className="p-2 bg-[#2d1b4e] text-white">
             <Clock size={16} />
           </div>
           <h3 className="text-lg font-light text-[#111]">Update Status</h3>
@@ -528,9 +528,9 @@ export default function QuoteDetailPage() {
 
       {/* Accept Link */}
       {quote.acceptToken && (
-        <div className="bg-white border border-[#E3E8ED] p-6">
+        <div className="bg-white border border-[#1a0a2e] p-6">
           <div className="flex items-center gap-2 mb-5">
-            <div className="p-2 bg-[#1B3A4C] text-white">
+            <div className="p-2 bg-[#2d1b4e] text-white">
               <CheckCircle size={16} />
             </div>
             <h3 className="text-lg font-light text-[#111]">Client Accept Link</h3>
@@ -540,11 +540,11 @@ export default function QuoteDetailPage() {
               type="text"
               readOnly
               value={`${typeof window !== 'undefined' ? window.location.origin : ''}/quote/accept?token=${quote.acceptToken}`}
-              className="flex-1 px-4 py-2 text-sm border border-[#E3E8ED] bg-[#F8FAFB] text-[#5B7A8E] focus:outline-none"
+              className="flex-1 px-4 py-2 text-sm border border-[#1a0a2e] bg-[#F8FAFB] text-[#7a6a9e] focus:outline-none"
             />
             <button
               onClick={handleCopyAcceptLink}
-              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#E3E8ED] text-[#111] hover:border-[#1B3A4C]"
+              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#1a0a2e] text-[#111] hover:border-[#2d1b4e]"
             >
               <Copy size={14} />
               <span>{copiedLink ? 'Copied!' : 'Copy'}</span>

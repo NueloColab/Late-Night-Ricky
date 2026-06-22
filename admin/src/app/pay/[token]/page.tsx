@@ -108,10 +108,10 @@ export default function PaymentPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0f1923] flex items-center justify-center">
+      <div className="min-h-screen bg-[#0f0518] flex items-center justify-center">
         <div className="text-center">
           <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-4" style={{ maxWidth: '180px' }} />
-          <p className="text-sm text-[#8FA8BE]">Loading invoice...</p>
+          <p className="text-sm text-[#a890c0]">Loading invoice...</p>
         </div>
       </div>
     )
@@ -119,7 +119,7 @@ export default function PaymentPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#0f1923] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[#0f0518] flex items-center justify-center px-4">
         <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center">
           <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-6" style={{ maxWidth: '160px', filter: 'invert(1)' }} />
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -129,7 +129,7 @@ export default function PaymentPage() {
           <p className="text-gray-500 mb-6">{error}</p>
           <p className="text-sm text-gray-400">
             Contact us at{' '}
-            <a href="mailto:samir@wearemediahive.com" className="text-[#0f1923] hover:underline font-medium">
+            <a href="mailto:samir@wearemediahive.com" className="text-[#0f0518] hover:underline font-medium">
               samir@wearemediahive.com
             </a>
           </p>
@@ -140,13 +140,13 @@ export default function PaymentPage() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#0f1923] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[#0f0518] flex items-center justify-center px-4">
         <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center">
           <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-8" style={{ maxWidth: '160px', filter: 'invert(1)' }} />
-          <div className="w-20 h-20 bg-[#0f1923] rounded-full flex items-center justify-center mx-auto mb-8">
+          <div className="w-20 h-20 bg-[#0f0518] rounded-full flex items-center justify-center mx-auto mb-8">
             <span className="text-white text-4xl">✓</span>
           </div>
-          <h1 className="text-2xl font-light text-[#0f1923] mb-4">Thank You for Your Payment</h1>
+          <h1 className="text-2xl font-light text-[#0f0518] mb-4">Thank You for Your Payment</h1>
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6 text-left">
             <p className="text-xs uppercase tracking-widest text-gray-500 mb-3">Payment Summary</p>
             <div className="space-y-2 text-sm">
@@ -156,7 +156,7 @@ export default function PaymentPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500">Amount</span>
-                <span className="font-semibold text-[#0f1923]">{formatCurrency(parseFloat(amountPaid))}</span>
+                <span className="font-semibold text-[#0f0518]">{formatCurrency(parseFloat(amountPaid))}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500">Method</span>
@@ -167,7 +167,7 @@ export default function PaymentPage() {
           <p className="text-gray-500 text-sm mb-6">We&apos;ll review and confirm your payment shortly. You&apos;ll receive a confirmation email once processed.</p>
           <p className="text-xs text-gray-400">
             Questions? Contact{' '}
-            <a href="mailto:samir@wearemediahive.com" className="text-[#0f1923] hover:underline font-medium">
+            <a href="mailto:samir@wearemediahive.com" className="text-[#0f0518] hover:underline font-medium">
               samir@wearemediahive.com
             </a>
           </p>
@@ -178,19 +178,19 @@ export default function PaymentPage() {
 
   if (invoice.status === 'paid' || invoice.paymentConfirmedByClient) {
     return (
-      <div className="min-h-screen bg-[#0f1923] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[#0f0518] flex items-center justify-center px-4">
         <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center">
           <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-8" style={{ maxWidth: '160px', filter: 'invert(1)' }} />
-          <div className="w-20 h-20 bg-[#0f1923] rounded-full flex items-center justify-center mx-auto mb-8">
+          <div className="w-20 h-20 bg-[#0f0518] rounded-full flex items-center justify-center mx-auto mb-8">
             <span className="text-white text-4xl">✓</span>
           </div>
-          <h1 className="text-2xl font-light text-[#0f1923] mb-4">Payment Already Confirmed</h1>
+          <h1 className="text-2xl font-light text-[#0f0518] mb-4">Payment Already Confirmed</h1>
           <p className="text-gray-500 text-sm mb-6">
             Thank you. Payment for invoice {invoice.invoiceNumber} has already been confirmed. If you have any questions, please contact us.
           </p>
           <p className="text-xs text-gray-400">
             Contact{' '}
-            <a href="mailto:samir@wearemediahive.com" className="text-[#0f1923] hover:underline font-medium">
+            <a href="mailto:samir@wearemediahive.com" className="text-[#0f0518] hover:underline font-medium">
               samir@wearemediahive.com
             </a>
           </p>
@@ -200,17 +200,17 @@ export default function PaymentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f1923] py-8 px-4">
+    <div className="min-h-screen bg-[#0f0518] py-8 px-4">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
           <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-2" style={{ maxWidth: '180px' }} />
-          <p className="text-[10px] uppercase tracking-[3px] text-[#8FA8BE]">International DJ &amp; Grammy Winning Producer</p>
+          <p className="text-[10px] uppercase tracking-[3px] text-[#a890c0]">International DJ &amp; Grammy Winning Producer</p>
         </div>
 
         {/* Invoice Card */}
         <div className="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
-          <div className="border-b-2 border-[#0f1923] p-6 sm:p-8">
+          <div className="border-b-2 border-[#0f0518] p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
               <div>
                 <p className="text-xs uppercase tracking-widest text-gray-500 mb-1">Invoice</p>
@@ -218,7 +218,7 @@ export default function PaymentPage() {
               </div>
               <div className="text-left sm:text-right">
                 <p className="text-xs uppercase tracking-widest text-gray-500 mb-1">Amount Due</p>
-                <p className="text-3xl font-light text-[#0f1923]">{formatCurrency(invoice.total)}</p>
+                <p className="text-3xl font-light text-[#0f0518]">{formatCurrency(invoice.total)}</p>
               </div>
             </div>
           </div>
@@ -247,22 +247,22 @@ export default function PaymentPage() {
                     <div key={i} className={`flex justify-between items-center px-4 py-3 text-sm ${i % 2 === 1 ? 'bg-gray-50' : ''} ${i < invoice.lineItems.length - 1 ? 'border-b border-gray-100' : ''}`}>
                       <div>
                         <span className="font-medium text-gray-900">{s.serviceName || s.description || 'Service'}</span>
-                        {s.serviceCategory && <span className="ml-2 text-xs uppercase text-[#8FA8BE]">{s.serviceCategory}</span>}
+                        {s.serviceCategory && <span className="ml-2 text-xs uppercase text-[#a890c0]">{s.serviceCategory}</span>}
                       </div>
                       <span className="font-semibold text-gray-900">{formatCurrency(s.price || s.amount || 0)}</span>
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-between items-center mt-3 pt-3 border-t-2 border-[#0f1923]">
-                  <span className="text-sm font-medium text-[#0f1923]">Total</span>
-                  <span className="text-lg font-bold text-[#0f1923]">{formatCurrency(invoice.total)}</span>
+                <div className="flex justify-between items-center mt-3 pt-3 border-t-2 border-[#0f0518]">
+                  <span className="text-sm font-medium text-[#0f0518]">Total</span>
+                  <span className="text-lg font-bold text-[#0f0518]">{formatCurrency(invoice.total)}</span>
                 </div>
               </div>
             )}
 
             {/* Bank Details */}
             <div className="bg-[#f0f4f8] border border-[#d0dce6] rounded-lg p-5">
-              <p className="text-xs uppercase tracking-widest text-[#0f1923] font-semibold mb-3">Bank Details for Payment</p>
+              <p className="text-xs uppercase tracking-widest text-[#0f0518] font-semibold mb-3">Bank Details for Payment</p>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <span className="text-gray-500">Bank:</span><span className="font-medium text-gray-900">Tide</span>
                 <span className="text-gray-500">Account Name:</span><span className="font-medium text-gray-900">Late Night Ricky Ltd</span>
@@ -278,22 +278,22 @@ export default function PaymentPage() {
           <div className="text-center">
             <button
               onClick={() => setShowForm(true)}
-              className="inline-block bg-[#0f1923] text-white px-10 py-4 text-sm font-semibold uppercase tracking-widest rounded hover:bg-[#1B3A4C] transition-colors"
+              className="inline-block bg-[#0f0518] text-white px-10 py-4 text-sm font-semibold uppercase tracking-widest rounded hover:bg-[#2d1b4e] transition-colors"
             >
               Confirm Payment
             </button>
-            <p className="text-xs text-[#8FA8BE] mt-3">Click above after you&apos;ve made your payment</p>
+            <p className="text-xs text-[#a890c0] mt-3">Click above after you&apos;ve made your payment</p>
           </div>
         ) : (
           <div className="bg-white rounded-lg shadow-sm p-6 sm:p-8">
-            <h2 className="text-lg font-light text-[#0f1923] mb-6">Confirm Your Payment</h2>
+            <h2 className="text-lg font-light text-[#0f0518] mb-6">Confirm Your Payment</h2>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-xs uppercase tracking-widest font-medium text-gray-700 mb-2">Payment Method</label>
                 <select
                   value={paymentMethod}
                   onChange={(e) => setPaymentMethod(e.target.value)}
-                  className="w-full border border-gray-200 rounded px-4 py-3 text-sm focus:outline-none focus:border-[#0f1923] transition-colors bg-white"
+                  className="w-full border border-gray-200 rounded px-4 py-3 text-sm focus:outline-none focus:border-[#0f0518] transition-colors bg-white"
                 >
                   <option>Bank Transfer</option>
                   <option>Cash</option>
@@ -310,7 +310,7 @@ export default function PaymentPage() {
                   value={amountPaid}
                   onChange={(e) => setAmountPaid(e.target.value)}
                   required
-                  className="w-full border border-gray-200 rounded px-4 py-3 text-sm focus:outline-none focus:border-[#0f1923] transition-colors"
+                  className="w-full border border-gray-200 rounded px-4 py-3 text-sm focus:outline-none focus:border-[#0f0518] transition-colors"
                 />
               </div>
 
@@ -322,7 +322,7 @@ export default function PaymentPage() {
                   type="file"
                   accept="image/*,.pdf"
                   onChange={handleFileChange}
-                  className="w-full border border-gray-200 rounded px-4 py-3 text-sm file:mr-4 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-gray-100 file:text-[#0f1923] hover:file:bg-gray-200"
+                  className="w-full border border-gray-200 rounded px-4 py-3 text-sm file:mr-4 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-gray-100 file:text-[#0f0518] hover:file:bg-gray-200"
                 />
                 {receiptFile && <p className="text-xs text-gray-500 mt-1">Selected: {receiptFile.name}</p>}
               </div>
@@ -336,7 +336,7 @@ export default function PaymentPage() {
                   onChange={(e) => setReference(e.target.value)}
                   rows={3}
                   placeholder="Bank transfer reference, any additional notes..."
-                  className="w-full border border-gray-200 rounded px-4 py-3 text-sm focus:outline-none focus:border-[#0f1923] transition-colors resize-none"
+                  className="w-full border border-gray-200 rounded px-4 py-3 text-sm focus:outline-none focus:border-[#0f0518] transition-colors resize-none"
                 />
               </div>
 
@@ -344,7 +344,7 @@ export default function PaymentPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 bg-[#0f1923] text-white px-6 py-3 text-sm font-semibold uppercase tracking-widest rounded hover:bg-[#1B3A4C] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 bg-[#0f0518] text-white px-6 py-3 text-sm font-semibold uppercase tracking-widest rounded hover:bg-[#2d1b4e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {submitting ? 'Submitting...' : 'Submit Payment Confirmation'}
                 </button>
@@ -363,7 +363,7 @@ export default function PaymentPage() {
         {/* Footer */}
         <div className="text-center mt-8 pt-6 border-t border-white/10">
           <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-1" style={{ maxWidth: '100px', opacity: 0.5 }} />
-          <p className="text-xs text-[#8FA8BE]/70">International DJ &amp; Grammy Winning Producer</p>
+          <p className="text-xs text-[#a890c0]/70">International DJ &amp; Grammy Winning Producer</p>
         </div>
       </div>
     </div>

@@ -47,7 +47,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   return (
-    <div className="min-h-screen bg-[#E3E8ED] text-[#1B3A4C] flex">
+    <div className="min-h-screen bg-[#1a0a2e] text-[#2d1b4e] flex">
       {/* Desktop sidebar — hidden on mobile via CSS, never flashes on hydration */}
       <div
         className="hidden lg:block h-screen flex-shrink-0 overflow-hidden transition-all duration-300"
@@ -75,10 +75,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="h-auto min-h-[4.5rem] md:h-20 border-b border-[#A3B5C4]/30 flex items-center px-4 md:px-6 py-3 md:py-0 sticky top-0 z-30 bg-[#E3E8ED]/95 backdrop-blur-sm overflow-visible">
+        <header className="h-auto min-h-[4.5rem] md:h-20 border-b border-[#8b7ab4]/30 flex items-center px-4 md:px-6 py-3 md:py-0 sticky top-0 z-30 bg-[#1a0a2e]/95 backdrop-blur-sm overflow-visible">
           <button
             onClick={toggleSidebar}
-            className="mr-3 md:mr-4 p-2 hover:bg-[#1B3A4C]/10 rounded transition"
+            className="mr-3 md:mr-4 p-2 hover:bg-[#2d1b4e]/10 rounded transition"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M3 12h18M3 6h18M3 18h18" />
@@ -86,9 +86,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </button>
 
           <div className="flex items-center gap-2 md:gap-3 min-w-0">
-            <span className="font-['Rockybilly'] text-lg md:text-xl text-[#1B3A4C] leading-normal">Late Night Ricky</span>
-            <div className="hidden md:block w-px h-4 bg-[#A3B5C4]" />
-            <span className="hidden md:block text-[10px] uppercase tracking-[3px] text-[#6B8FAB] font-semibold">Admin</span>
+            <span className="font-['Rockybilly'] text-lg md:text-xl text-[#2d1b4e] leading-normal">Late Night Ricky</span>
+            <div className="hidden md:block w-px h-4 bg-[#8b7ab4]" />
+            <span className="hidden md:block text-[10px] uppercase tracking-[3px] text-[#8b7ab4] font-semibold">Admin</span>
           </div>
 
           <div className="ml-auto">
@@ -96,7 +96,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               href="/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 md:gap-2 px-3 md:px-7 py-2 md:py-3 border-2 border-[#1B3A4C] rounded-full text-[#1B3A4C] text-[11px] md:text-[13px] font-semibold uppercase tracking-[1px] md:tracking-[1.5px] hover:bg-[#1B3A4C] hover:text-white transition whitespace-nowrap"
+              className="inline-flex items-center gap-1 md:gap-2 px-3 md:px-7 py-2 md:py-3 border-2 border-[#2d1b4e] rounded-full text-[#2d1b4e] text-[11px] md:text-[13px] font-semibold uppercase tracking-[1px] md:tracking-[1.5px] hover:bg-[#2d1b4e] hover:text-white transition whitespace-nowrap"
             >
               <span className="hidden md:inline">View Site</span>
               <span className="md:hidden">Site</span>
