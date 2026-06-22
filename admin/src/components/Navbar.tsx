@@ -50,6 +50,18 @@ export default function Navbar() {
           50% { width: 26px; transform: translateX(-2px); }
           75% { width: 18px; transform: translateX(1px); }
         }
+        @keyframes glow-pulse {
+          0%, 100% { opacity: 0.6; }
+          50% { opacity: 1; }
+        }
+        .menu-overlay::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse 90% 70% at 50% 40%, rgba(27, 58, 76, 0.5) 0%, transparent 70%);
+          animation: glow-pulse 4s ease-in-out infinite;
+          pointer-events: none;
+        }
 
         .menu-toggle {
           position: fixed;
@@ -105,11 +117,12 @@ export default function Navbar() {
           position: fixed;
           inset: 0;
           background:
-            radial-gradient(ellipse 80% 50% at 50% 40%, rgba(27, 58, 76, 0.55) 0%, transparent 70%),
-            radial-gradient(ellipse 60% 40% at 50% 50%, rgba(143, 168, 190, 0.12) 0%, transparent 60%),
-            linear-gradient(180deg, #0c1218 0%, #0a0f14 40%, #080c10 100%);
-          -webkit-backdrop-filter: blur(32px) saturate(1.3);
-          backdrop-filter: blur(32px) saturate(1.3);
+            radial-gradient(ellipse 120% 80% at 50% 35%, rgba(27, 58, 76, 0.85) 0%, rgba(15, 25, 35, 0.4) 50%, transparent 80%),
+            radial-gradient(ellipse 100% 60% at 50% 45%, rgba(143, 168, 190, 0.25) 0%, transparent 55%),
+            radial-gradient(ellipse 140% 100% at 50% 50%, rgba(27, 58, 76, 0.35) 0%, transparent 60%),
+            linear-gradient(180deg, #0f1a24 0%, #0a1218 30%, #060a0e 70%, #030508 100%);
+          -webkit-backdrop-filter: blur(40px) saturate(1.5);
+          backdrop-filter: blur(40px) saturate(1.5);
           z-index: 350;
           display: flex;
           flex-direction: column;
@@ -124,6 +137,8 @@ export default function Navbar() {
           pointer-events: auto;
         }
         .menu-overlay a {
+          position: relative;
+          z-index: 2;
           display: block;
           color: #fff;
           text-decoration: none;
@@ -153,6 +168,7 @@ export default function Navbar() {
           bottom: 40px;
           left: 50%;
           transform: translateX(-50%);
+          z-index: 2;
           color: rgba(143, 168, 190, 0.5);
           font-size: 10px;
           letter-spacing: 4px;
