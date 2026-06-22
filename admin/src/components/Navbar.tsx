@@ -79,8 +79,15 @@ export default function Navbar() {
           transition: all 400ms cubic-bezier(.4,0,.2,1);
           transform-origin: center;
         }
+        @keyframes wave-pulse {
+          0%, 100% { width: 22px; transform: translateX(0); }
+          25% { width: 16px; transform: translateX(2px); }
+          50% { width: 26px; transform: translateX(-2px); }
+          75% { width: 18px; transform: translateX(1px); }
+        }
         .menu-toggle .hamburger span:nth-child(2) {
-          transition: opacity 300ms ease;
+          animation: wave-pulse 1.4s ease-in-out infinite;
+          animation-delay: .25s;
         }
         .menu-toggle.active .hamburger span:nth-child(1) {
           transform: translateY(7px) rotate(45deg);
@@ -116,7 +123,7 @@ export default function Navbar() {
           bottom: 0;
           width: 320px;
           max-width: 85vw;
-          background: #000;
+          background: #1B3A4C;
           z-index: 350;
           display: flex;
           flex-direction: column;
