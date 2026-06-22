@@ -20,6 +20,15 @@
   --cr: #E3E8ED;
   --wh: #ffffff;
   --bk: #111111;
+  /* Coastal Steel palette */
+  --deep-steel: #0A1628;
+  --steel-blue: #2E5C8A;
+  --ocean-blue: #3A7CA5;
+  --deep-teal: #0D4A4A;
+  --teal: #1A6B5E;
+  --mint: #64C8A8;
+  --cream: #F0EDE6;
+  --warm-muted: #6B8E9B;
 }
 
 html, body {
@@ -29,13 +38,67 @@ html, body {
 
 body {
   font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-  color: var(--gd);
-  background: var(--cr);
+  color: var(--cream);
+  background: var(--deep-steel);
   position: relative;
 }
 
 .serif {
   font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Gradient backgrounds */
+.gradient-hero {
+  background: linear-gradient(180deg, rgba(10,22,40,0.85) 0%, rgba(10,22,40,0.4) 40%, rgba(13,74,74,0.6) 100%);
+}
+.gradient-reach {
+  background: linear-gradient(180deg, #0D4A4A 0%, #2E5C8A 50%, #0A1628 100%);
+}
+.gradient-shows {
+  background: linear-gradient(180deg, #0A1628 0%, #1A3A5C 50%, #0A1628 100%);
+}
+.gradient-partners {
+  background: linear-gradient(180deg, #0A1628 0%, #0D2A3A 50%, #0A1628 100%);
+}
+.gradient-music {
+  background: linear-gradient(180deg, #2E5C8A 0%, #1A6B5E 50%, #0A1628 100%);
+}
+.gradient-clients {
+  background: linear-gradient(180deg, #0A1628 0%, #0D2A3A 50%, #0A1628 100%);
+}
+.gradient-reach-out {
+  background: linear-gradient(180deg, #0A1628 0%, #1A3A5C 50%, #0D4A4A 100%);
+}
+.gradient-contact {
+  background: linear-gradient(180deg, #2E5C8A 0%, #0D4A4A 100%);
+}
+
+/* Glass morphism cards */
+.glass-card {
+  background: rgba(10, 22, 40, 0.45);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid rgba(46, 92, 138, 0.25);
+  border-radius: 1rem;
+}
+
+/* Warm photo filter */
+.warm-photo {
+  filter: saturate(1.2) contrast(1.05) brightness(0.95);
+}
+
+/* Text utilities */
+.text-cream { color: #F0EDE6; }
+.text-steel { color: #2E5C8A; }
+.text-steel-muted { color: #6B8E9B; }
+.text-mint { color: #64C8A8; }
+
+/* Glow effects */
+.glow-mint {
+  filter: drop-shadow(0 0 20px rgba(100, 200, 168, 0.4));
+}
+.glow-steel {
+  filter: drop-shadow(0 0 30px rgba(46, 92, 138, 0.5));
 }
 
 /* Marquee */
