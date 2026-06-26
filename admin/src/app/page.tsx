@@ -264,7 +264,7 @@ export default async function HomePage() {
 
       {/* Hero */}
       <section className="relative min-h-[100dvh] flex flex-col items-center justify-center px-8 md:px-14 pb-14 pt-20">
-        <div className="fixed inset-0 -z-10" style={{ backgroundColor: '#152a47' }}>
+        <div className="fixed inset-0 -z-10" style={{ backgroundColor: '#1e3a5c' }}>
           <div
             className="absolute inset-0 bg-cover bg-no-repeat"
             style={{
