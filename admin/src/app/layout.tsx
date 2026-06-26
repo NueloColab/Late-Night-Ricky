@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inter.variable} ${playfair.variable} ${montserrat.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <meta name="version" content="v225" />
+        <meta name="version" content="v223" />
       </head>
       <body className="font-sans">{children}</body>
     </html>
