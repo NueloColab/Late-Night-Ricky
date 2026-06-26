@@ -43,7 +43,7 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
           isMobile
             ? 'fixed left-0 top-0 bottom-0 z-50 w-[280px] h-screen overflow-y-auto'
             : 'h-screen overflow-y-auto w-[280px] flex-shrink-0'
-        } bg-[#0d1f3d] border-r border-[#A8D5F0]/30 flex flex-col`}
+        } bg-[#E3E8ED] border-r border-[#6B8FAB]/30 flex flex-col`}
         style={{
           transform: isMobile && !isOpen ? 'translateX(-100%)' : 'translateX(0)',
           transition: 'transform 0.3s ease',
@@ -54,7 +54,7 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
           <div className="flex justify-end px-4 pt-4">
             <button
               onClick={onClose}
-              className="p-2 hover:bg-[#152a47]/10 rounded transition"
+              className="p-2 hover:bg-[#1B3A4C]/10 rounded transition"
               aria-label="Close menu"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -70,13 +70,13 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
             <img
               src="/assets/ricky-logo.png"
               alt="Late Night Ricky"
-              className="h-12 w-auto mx-auto brightness-0 invert-[#152a47]"
+              className="h-12 w-auto mx-auto opacity-80"
               style={{ filter: 'brightness(0) saturate(100%) invert(23%) sepia(18%) saturate(1620%) hue-rotate(163deg)' }}
             />
             <div className="flex items-center justify-center gap-3 mt-3">
-              <div className="w-6 h-px bg-[#A8D5F0]" />
-              <p className="text-[10px] uppercase tracking-[3px] text-[#A8D5F0] font-semibold">Admin Portal</p>
-              <div className="w-6 h-px bg-[#A8D5F0]" />
+              <div className="w-6 h-px bg-[#6B8FAB]" />
+              <p className="text-[10px] uppercase tracking-[3px] text-[#6B8FAB] font-semibold">Admin Portal</p>
+              <div className="w-6 h-px bg-[#6B8FAB]" />
             </div>
           </div>
         </Link>
@@ -93,8 +93,8 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
                   onClick={isMobile ? onClose : undefined}
                   className={`flex items-center gap-3 px-4 py-3 text-[13px] transition-all duration-300 tracking-[1.5px] uppercase font-semibold ${
                     isActive
-                      ? 'bg-[#152a47] text-white'
-                      : 'text-[#152a47] hover:bg-[#152a47]/10'
+                      ? 'bg-[#1B3A4C] text-white'
+                      : 'text-[#1B3A4C] hover:bg-[#1B3A4C]/10'
                   }`}
                 >
                   <span>{item.label}</span>
@@ -104,7 +104,7 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
           </div>
 
           {/* Bottom section */}
-          <div className="bg-white border border-[#A8D5F0]/30 p-3 space-y-1">
+          <div className="bg-white border border-[#6B8FAB]/30 p-3 space-y-1">
             {bottomMenuItems.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
               return (
@@ -114,8 +114,8 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
                   onClick={isMobile ? onClose : undefined}
                   className={`flex items-center gap-3 px-3 py-2 text-[13px] transition-all duration-300 tracking-[1.5px] uppercase font-semibold ${
                     isActive
-                      ? 'bg-[#152a47] text-white'
-                      : 'text-[#152a47] hover:bg-[#152a47]/10'
+                      ? 'bg-[#1B3A4C] text-white'
+                      : 'text-[#1B3A4C] hover:bg-[#1B3A4C]/10'
                   }`}
                 >
                   <span>{item.label}</span>
@@ -126,7 +126,7 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
         </nav>
 
         {/* Divider */}
-        <div className="px-6 my-4 border-t border-[#A8D5F0]/30" />
+        <div className="px-6 my-4 border-t border-[#6B8FAB]/30" />
 
         {/* Logout */}
         <div className="px-4 mb-4">
@@ -135,7 +135,7 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
               await fetch('/api/auth/logout', { method: 'POST' });
               window.location.href = '/admin/login';
             }}
-            className="flex items-center gap-3 w-full px-4 py-3 text-[13px] font-semibold uppercase tracking-[1.5px] border-2 border-[#152a47] text-[#152a47] hover:bg-[#152a47] hover:text-white transition-all duration-300"
+            className="flex items-center gap-3 w-full px-4 py-3 text-[13px] font-semibold uppercase tracking-[1.5px] border-2 border-[#1B3A4C] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition-all duration-300"
           >
             <span>Logout</span>
           </button>

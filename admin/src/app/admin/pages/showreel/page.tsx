@@ -36,7 +36,7 @@ interface ShowreelCard {
 
 const SHOWREEL_SECTIONS = ['video', 'videos', 'cards'];
 
-const inputClass = 'w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-[#152a47] text-sm focus:outline-none focus:border-[#152a47] transition-colors';
+const inputClass = 'w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors';
 
 export default function ShowreelEditor() {
   const [sections, setSections] = useState<SectionData[]>([]);
@@ -146,26 +146,26 @@ export default function ShowreelEditor() {
   // --- Main Video Section ---
   function renderMainVideo() {
     return (
-      <div className="bg-white border border-[#A8D5F0]/30 rounded-xl p-6 md:p-8">
-        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#0d1f3d]">
-          <div className="w-10 h-px bg-[#152a47]"></div>
-          <p className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">Main Video</p>
+      <div className="bg-white border border-[#6B8FAB]/30 rounded-xl p-6 md:p-8">
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E3E8ED]">
+          <div className="w-10 h-px bg-[#1B3A4C]"></div>
+          <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Main Video</p>
         </div>
 
-        <p className="text-sm text-[#A8D5F0] mb-4">This video appears as the background on the homepage hero section.</p>
+        <p className="text-sm text-[#6B8FAB] mb-4">This video appears as the background on the homepage hero section.</p>
 
-        <div className="relative w-full max-w-lg aspect-video bg-[#F8FAFB] rounded-xl overflow-hidden mb-4 border border-[#0d1f3d] flex items-center justify-center">
+        <div className="relative w-full max-w-lg aspect-video bg-[#F8FAFB] rounded-xl overflow-hidden mb-4 border border-[#E3E8ED] flex items-center justify-center">
           {mainVideoPath ? (
             <video src={mainVideoPath} className="w-full h-full object-cover" controls />
           ) : (
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#A8D5F0" strokeWidth="2">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#6B8FAB" strokeWidth="2">
               <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
           )}
         </div>
 
         <div className="space-y-3">
-          <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">Video URL</label>
+          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Video URL</label>
           <div className="flex items-center gap-3">
             <input
               type="text"
@@ -179,16 +179,16 @@ export default function ShowreelEditor() {
             <button
               onClick={() => mainVideoPath && saveSection('video', { videos: [mainVideoPath] })}
               disabled={saving || !mainVideoPath}
-              className="px-5 py-2.5 bg-[#152a47] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+              className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save'}
             </button>
           </div>
 
-          <p className="text-xs text-[#A8D5F0]">Or upload a video file:</p>
+          <p className="text-xs text-[#6B8FAB]">Or upload a video file:</p>
           <button
             onClick={() => openMedia({ section: 'video' })}
-            className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
           >
             Upload Video
           </button>
@@ -234,32 +234,32 @@ export default function ShowreelEditor() {
   function renderGalleryVideos() {
     return (
       <div className="space-y-4">
-        <div className="bg-white border border-[#A8D5F0]/30 rounded-xl p-6 md:p-8">
+        <div className="bg-white border border-[#6B8FAB]/30 rounded-xl p-6 md:p-8">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-px bg-[#152a47]"></div>
-              <p className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">Showreel Videos</p>
+              <div className="w-10 h-px bg-[#1B3A4C]"></div>
+              <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Showreel Videos</p>
             </div>
             <button
               onClick={addGalleryVideo}
-              className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition"
+              className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
             >
               + Add Video
             </button>
           </div>
 
-          <p className="text-sm text-[#A8D5F0] mb-4">These videos appear in the gallery on the /showreel page.</p>
+          <p className="text-sm text-[#6B8FAB] mb-4">These videos appear in the gallery on the /showreel page.</p>
 
           <div className="space-y-4">
             {galleryVideos.map((video, idx) => (
-              <div key={video.id} className="border border-[#A8D5F0]/30 rounded-xl p-4 bg-[#F8FAFB]">
+              <div key={video.id} className="border border-[#6B8FAB]/30 rounded-xl p-4 bg-[#F8FAFB]">
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[2px]">#{idx + 1}</span>
+                  <span className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px]">#{idx + 1}</span>
                   <div className="flex items-center gap-1 ml-auto">
                     <button onClick={() => moveGalleryVideo(video.id, 'up')} disabled={idx === 0}
-                      className="p-1.5 text-[#A8D5F0] hover:text-[#152a47] hover:bg-[#0d1f3d] rounded-lg transition-colors disabled:opacity-30"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="18 15 12 9 6 15" /></svg></button>
+                      className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="18 15 12 9 6 15" /></svg></button>
                     <button onClick={() => moveGalleryVideo(video.id, 'down')} disabled={idx === galleryVideos.length - 1}
-                      className="p-1.5 text-[#A8D5F0] hover:text-[#152a47] hover:bg-[#0d1f3d] rounded-lg transition-colors disabled:opacity-30"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg></button>
+                      className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg></button>
                     <button onClick={() => removeGalleryVideo(video.id)}
                       className="p-1.5 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg></button>
                   </div>
@@ -268,29 +268,29 @@ export default function ShowreelEditor() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-3">
                     <div>
-                      <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Video URL</label>
+                      <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Video URL</label>
                       <div className="flex items-center gap-2">
                         <input type="text" value={video.src} onChange={(e) => updateGalleryVideo(video.id, 'src', e.target.value)}
                           placeholder="https://... or /assets/video.mp4" className={`${inputClass} flex-1`} />
                         <button onClick={() => openMedia({ section: 'videos', index: idx, field: 'src' })}
-                          className="px-3 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition shrink-0">Upload</button>
+                          className="px-3 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition shrink-0">Upload</button>
                       </div>
                     </div>
-                    <div><label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Title</label>
+                    <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Title</label>
                       <input type="text" value={video.title} onChange={(e) => updateGalleryVideo(video.id, 'title', e.target.value)} className={inputClass} /></div>
-                    <div><label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Year</label>
+                    <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Year</label>
                       <input type="text" value={video.year} onChange={(e) => updateGalleryVideo(video.id, 'year', e.target.value)} className={inputClass} /></div>
-                    <div><label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Description</label>
+                    <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Description</label>
                       <textarea value={video.description} onChange={(e) => updateGalleryVideo(video.id, 'description', e.target.value)} rows={3} className={`${inputClass} resize-y`} /></div>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Preview</label>
-                    <div className="relative w-full aspect-video bg-[#F8FAFB] rounded-xl overflow-hidden border border-[#0d1f3d]">
+                    <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Preview</label>
+                    <div className="relative w-full aspect-video bg-[#F8FAFB] rounded-xl overflow-hidden border border-[#E3E8ED]">
                       {video.src ? (
                         <video src={video.src} className="w-full h-full object-cover" controls />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#A8D5F0" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#6B8FAB" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3" /></svg>
                         </div>
                       )}
                     </div>
@@ -304,7 +304,7 @@ export default function ShowreelEditor() {
             <div className="mt-6 flex justify-end">
               <button onClick={() => saveSection('videos', { content: galleryVideos })}
                 disabled={saving}
-                className="inline-flex items-center gap-2 px-7 py-3 bg-[#0d1f3d] text-white rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#152a47] transition disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-7 py-3 bg-[#E3E8ED] text-white rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
               >
                 {saving ? 'Saving...' : 'Save Videos'}
               </button>
@@ -351,14 +351,14 @@ export default function ShowreelEditor() {
   function renderCards() {
     return (
       <div className="space-y-4">
-        <div className="bg-white border border-[#A8D5F0]/30 rounded-xl p-6 md:p-8">
+        <div className="bg-white border border-[#6B8FAB]/30 rounded-xl p-6 md:p-8">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-px bg-[#152a47]"></div>
-              <p className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">Showreel Cards</p>
+              <div className="w-10 h-px bg-[#1B3A4C]"></div>
+              <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Showreel Cards</p>
             </div>
             <button onClick={addCard}
-              className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition"
+              className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
             >
               + Add Card
             </button>
@@ -366,14 +366,14 @@ export default function ShowreelEditor() {
 
           <div className="space-y-4">
             {showreelCards.map((card, idx) => (
-              <div key={card.id} className="border border-[#A8D5F0]/30 rounded-xl p-4 bg-[#F8FAFB]">
+              <div key={card.id} className="border border-[#6B8FAB]/30 rounded-xl p-4 bg-[#F8FAFB]">
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[2px]">#{idx + 1}</span>
+                  <span className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px]">#{idx + 1}</span>
                   <div className="flex items-center gap-1 ml-auto">
                     <button onClick={() => moveCard(card.id, 'up')} disabled={idx === 0}
-                      className="p-1.5 text-[#A8D5F0] hover:text-[#152a47] hover:bg-[#0d1f3d] rounded-lg transition-colors disabled:opacity-30"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="18 15 12 9 6 15" /></svg></button>
+                      className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="18 15 12 9 6 15" /></svg></button>
                     <button onClick={() => moveCard(card.id, 'down')} disabled={idx === showreelCards.length - 1}
-                      className="p-1.5 text-[#A8D5F0] hover:text-[#152a47] hover:bg-[#0d1f3d] rounded-lg transition-colors disabled:opacity-30"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg></button>
+                      className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg></button>
                     <button onClick={() => removeCard(card.id)}
                       className="p-1.5 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg></button>
                   </div>
@@ -381,22 +381,22 @@ export default function ShowreelEditor() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-3">
-                    <div><label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Image URL</label>
+                    <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Image URL</label>
                       <input type="text" value={card.imagePath} onChange={(e) => updateCard(card.id, 'imagePath', e.target.value)} className={inputClass} /></div>
-                    <div><label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Title</label>
+                    <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Title</label>
                       <input type="text" value={card.title} onChange={(e) => updateCard(card.id, 'title', e.target.value)} className={inputClass} /></div>
-                    <div><label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Subtitle</label>
+                    <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Subtitle</label>
                       <input type="text" value={card.subtitle} onChange={(e) => updateCard(card.id, 'subtitle', e.target.value)} className={inputClass} /></div>
-                    <div><label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Description</label>
+                    <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Description</label>
                       <textarea value={card.description} onChange={(e) => updateCard(card.id, 'description', e.target.value)} rows={3} className={`${inputClass} resize-y`} /></div>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">Preview</label>
-                    <div className="relative w-full aspect-video bg-[#F8FAFB] rounded-xl overflow-hidden border border-[#0d1f3d] flex items-center justify-center">
+                    <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Preview</label>
+                    <div className="relative w-full aspect-video bg-[#F8FAFB] rounded-xl overflow-hidden border border-[#E3E8ED] flex items-center justify-center">
                       {card.imagePath ? (
                         <img src={card.imagePath} alt={card.title} className="object-cover w-full h-full" />
                       ) : (
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A8D5F0" strokeWidth="2">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6B8FAB" strokeWidth="2">
                           <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" />
                         </svg>
                       )}
@@ -411,7 +411,7 @@ export default function ShowreelEditor() {
             <div className="mt-6 flex justify-end">
               <button onClick={() => saveSection('cards', { content: showreelCards })}
                 disabled={saving}
-                className="inline-flex items-center gap-2 px-7 py-3 bg-[#0d1f3d] text-white rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#152a47] transition disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-7 py-3 bg-[#E3E8ED] text-white rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
               >
                 {saving ? 'Saving...' : 'Save Cards'}
               </button>
@@ -430,7 +430,7 @@ export default function ShowreelEditor() {
 
       <Link
         href="/admin/content"
-        className="inline-flex items-center gap-2 text-sm text-[#152a47] hover:text-[#111] transition-colors mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#111] transition-colors mb-6"
       >
         <ArrowLeft size={14} />
         <span>Back to Content</span>
@@ -438,14 +438,14 @@ export default function ShowreelEditor() {
   return (
     <div className="max-w-5xl">
       <div className="mb-12">
-        <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">Page Editor</p>
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Page Editor</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Showreel Page</h1>
             <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Edit main video, gallery videos and cards</p>
           </div>
           <a href="/showreel" target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
           >
             View on Site
           </a>
@@ -454,17 +454,17 @@ export default function ShowreelEditor() {
 
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="lg:w-64 flex-shrink-0">
-          <div className="bg-white border border-[#A8D5F0]/30 rounded-xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-[#0d1f3d]">
-              <p className="text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">Sections</p>
+          <div className="bg-white border border-[#6B8FAB]/30 rounded-xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-[#E3E8ED]">
+              <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Sections</p>
             </div>
-            <div className="divide-y divide-[#0d1f3d]">
+            <div className="divide-y divide-[#E3E8ED]">
               {SHOWREEL_SECTIONS.map((name) => (
                 <button
                   key={name}
                   onClick={() => setSelectedSection(name)}
                   className={`w-full text-left px-5 py-3 text-sm font-semibold transition-colors flex items-center justify-between ${
-                    selectedSection === name ? 'bg-[#152a47] text-white' : 'text-[#152a47] hover:bg-[#F8FAFB]'
+                    selectedSection === name ? 'bg-[#1B3A4C] text-white' : 'text-[#1B3A4C] hover:bg-[#F8FAFB]'
                   }`}
                 >
                   <span>{sectionLabels[name]}</span>
@@ -476,7 +476,7 @@ export default function ShowreelEditor() {
 
         <div className="flex-1 min-w-0">
           {loading ? (
-            <p className="text-[#A8D5F0] text-sm">Loading...</p>
+            <p className="text-[#6B8FAB] text-sm">Loading...</p>
           ) : selectedSection === 'video' ? (
             renderMainVideo()
           ) : selectedSection === 'videos' ? (

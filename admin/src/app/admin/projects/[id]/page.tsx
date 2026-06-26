@@ -118,8 +118,8 @@ const PIPELINE_LABELS: Record<string, string> = {
 const SERVICE_STATUSES = ["Pending", "In Progress", "Delivered"];
 
 const SERVICE_STATUS_STYLES: Record<string, string> = {
-  Pending: "bg-[#0d1f3d]/50 text-gray-600",
-  "In Progress": "bg-[#152a47]/10 text-[#152a47]",
+  Pending: "bg-[#E3E8ED]/50 text-gray-600",
+  "In Progress": "bg-[#1B3A4C]/10 text-[#1B3A4C]",
   Delivered: "bg-[#2d6a2d]/10 text-[#2d6a2d]",
 };
 
@@ -393,13 +393,13 @@ export default function ProjectDetailPage() {
     <div className="space-y-6">
       {/* Header — LNR Admin style */}
       <div>
-        <Link href="/admin/projects" className="text-xs font-semibold text-[#152a47] uppercase tracking-widest hover:underline flex items-center gap-1 mb-4">
+        <Link href="/admin/projects" className="text-xs font-semibold text-[#1B3A4C] uppercase tracking-widest hover:underline flex items-center gap-1 mb-4">
           <ArrowLeft size={12} /> Back to Pipeline
         </Link>
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-8 h-px bg-[#A8D5F0]" />
+              <div className="w-8 h-px bg-[#6B8FAB]" />
               <span className="text-xs text-[#999] uppercase tracking-wider">PRJ-{String(project.id).padStart(3, "0")}</span>
             </div>
             <h1 className="font-black text-[clamp(24px,3.5vw,36px)] text-[#111] tracking-[-0.5px] uppercase">{project.title}</h1>
@@ -407,9 +407,9 @@ export default function ProjectDetailPage() {
           </div>
           <span className={`text-xs font-bold uppercase tracking-wide px-3 py-1.5 rounded ${
             project.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" :
-            project.status === "in-progress" || project.status === "approved" ? "bg-[#152a47]/10 text-[#152a47]" :
-            project.status === "completed" || project.status === "invoiced" ? "bg-[#A8D5F0]/10 text-[#A8D5F0]" :
-            "bg-[#0d1f3d]/50 text-[#a0a0a0]"
+            project.status === "in-progress" || project.status === "approved" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" :
+            project.status === "completed" || project.status === "invoiced" ? "bg-[#6B8FAB]/10 text-[#6B8FAB]" :
+            "bg-[#E3E8ED]/50 text-[#a0a0a0]"
           }`}>
             {PIPELINE_LABELS[project.status] || project.status}
           </span>
@@ -417,24 +417,24 @@ export default function ProjectDetailPage() {
       </div>
 
       {/* Progress & Stats Dashboard — LNR style */}
-      <div className="bg-white border border-[#A8D5F0]/20 rounded-xl p-5">
+      <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-5">
         <div className="flex flex-wrap items-start justify-between mb-3 gap-2">
           <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Progress</p>
           <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => setShowTaskInput(!showTaskInput)}
-              className="px-4 py-2 bg-[#0d1f3d] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
+              className="px-4 py-2 bg-[#E3E8ED] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
             >
               <Plus size={14} /> Task
             </button>
             <button
               onClick={() => setShowFileUpload(!showFileUpload)}
-              className="px-4 py-2 border-2 border-[#A8D5F0]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#152a47] transition flex items-center gap-1"
+              className="px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] transition flex items-center gap-1"
             >
               <Paperclip size={14} /> File
             </button>
             <div className="relative">
-              <button className="px-4 py-2 border-2 border-[#A8D5F0]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#152a47] transition flex items-center gap-1">
+              <button className="px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] transition flex items-center gap-1">
                 {PIPELINE_LABELS[project.status] || project.status} <ChevronDown size={14} />
               </button>
             </div>
@@ -442,26 +442,26 @@ export default function ProjectDetailPage() {
         </div>
         <div className="flex flex-wrap items-center gap-4 md:gap-6 mb-4">
           <p className="text-3xl font-black text-[#111]">{progress}%</p>
-          <div className="h-10 w-px bg-[#A8D5F0]/30" />
+          <div className="h-10 w-px bg-[#6B8FAB]/30" />
           <div>
             <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-0.5">Tasks</p>
             <p className="text-sm font-bold text-[#111]">{(project?.tasks || []).filter((t) => t.completed).length}/{(project?.tasks || []).length} done</p>
           </div>
-          <div className="h-10 w-px bg-[#A8D5F0]/30 hidden sm:block" />
+          <div className="h-10 w-px bg-[#6B8FAB]/30 hidden sm:block" />
           <div className="hidden sm:block">
             <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-0.5">Milestones</p>
             <p className="text-sm font-bold text-[#111]">0/0 hit</p>
           </div>
-          <div className="h-10 w-px bg-[#A8D5F0]/30 hidden sm:block" />
+          <div className="h-10 w-px bg-[#6B8FAB]/30 hidden sm:block" />
           <div>
             <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-0.5">Services</p>
             <p className="text-sm font-bold text-[#111]">{(project?.services || []).filter((s) => s.status === "Delivered").length}/{(project?.services || []).length} delivered</p>
           </div>
         </div>
-        <div className="w-full bg-[#0d1f3d]/50 rounded-full h-2 overflow-hidden mb-2">
+        <div className="w-full bg-[#E3E8ED]/50 rounded-full h-2 overflow-hidden mb-2">
           <div
             className="h-full rounded-full transition-all duration-500"
-            style={{ width: `${progress}%`, backgroundColor: progress >= 100 ? "#2d6a2d" : "#152a47" }}
+            style={{ width: `${progress}%`, backgroundColor: progress >= 100 ? "#2d6a2d" : "#1B3A4C" }}
           />
         </div>
         <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Overall Completion</p>
@@ -472,22 +472,22 @@ export default function ProjectDetailPage() {
         {/* LEFT COLUMN */}
         <div className="lg:col-span-3 space-y-6">
           {/* Tasks & Milestones */}
-          <div className="bg-white border border-[#A8D5F0]/20 rounded-xl p-6">
+          <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-6">
             <div className="flex flex-wrap items-center justify-between mb-4 gap-2">
               <div className="flex items-center gap-2">
-                <CheckSquare size={18} className="text-[#A8D5F0]" />
+                <CheckSquare size={18} className="text-[#6B8FAB]" />
                 <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Tasks & Milestones</h3>
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={() => setShowTaskInput(!showTaskInput)}
-                  className="px-4 py-2 border-2 border-[#A8D5F0]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#152a47] transition flex items-center gap-1"
+                  className="px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] transition flex items-center gap-1"
                 >
                   <Plus size={14} /> Milestone
                 </button>
                 <button
                   onClick={() => setShowTaskInput(!showTaskInput)}
-                  className="px-4 py-2 bg-[#0d1f3d] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
+                  className="px-4 py-2 bg-[#E3E8ED] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
                 >
                   <Plus size={14} /> Task
                 </button>
@@ -502,8 +502,8 @@ export default function ProjectDetailPage() {
                   onClick={() => setTaskFilter(phase)}
                   className={`px-3 py-1.5 rounded text-[11px] font-semibold uppercase tracking-[1.5px] transition-colors ${
                     taskFilter === phase
-                      ? "bg-[#0d1f3d] text-white"
-                      : "bg-white border border-[#A8D5F0]/30 text-[#a0a0a0] hover:bg-[#0d1f3d]/50"
+                      ? "bg-[#E3E8ED] text-white"
+                      : "bg-white border border-[#6B8FAB]/30 text-[#a0a0a0] hover:bg-[#E3E8ED]/50"
                   }`}
                 >
                   {phase}
@@ -512,18 +512,18 @@ export default function ProjectDetailPage() {
             </div>
 
             {showTaskInput && (
-              <div className="bg-[#0d1f3d]/50 rounded-lg p-4 mb-4 space-y-3">
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
-                  <input placeholder="Task description" value={newTask.text} onChange={(e) => setNewTask({ ...newTask, text: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <select value={newTask.phase} onChange={(e) => setNewTask({ ...newTask, phase: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]">
+                  <input placeholder="Task description" value={newTask.text} onChange={(e) => setNewTask({ ...newTask, text: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <select value={newTask.phase} onChange={(e) => setNewTask({ ...newTask, phase: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
                     {TASK_PHASES.filter((p) => p !== "ALL").map((p) => <option key={p} value={p}>{p}</option>)}
                   </select>
-                  <input placeholder="Assignee" value={newTask.assignee} onChange={(e) => setNewTask({ ...newTask, assignee: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input type="date" value={newTask.dueDate} onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
+                  <input placeholder="Assignee" value={newTask.assignee} onChange={(e) => setNewTask({ ...newTask, assignee: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="date" value={newTask.dueDate} onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={addTask} className="px-4 py-2 bg-[#152a47] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
-                  <button onClick={() => setShowTaskInput(false)} className="px-4 py-2 border border-[#A8D5F0]/30 text-xs font-semibold rounded-lg hover:bg-[#0d1f3d]/50">Cancel</button>
+                  <button onClick={addTask} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => setShowTaskInput(false)} className="px-4 py-2 border border-[#6B8FAB]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
                 </div>
               </div>
             )}
@@ -533,16 +533,16 @@ export default function ProjectDetailPage() {
             ) : (
               <div className="space-y-2">
                 {filteredTasks.map((task) => (
-                  <div key={task.id} className={`flex items-center gap-3 p-3 rounded-lg ${task.completed ? "bg-[#2d6a2d]/5" : "bg-[#0d1f3d]/50"}`}>
+                  <div key={task.id} className={`flex items-center gap-3 p-3 rounded-lg ${task.completed ? "bg-[#2d6a2d]/5" : "bg-[#E3E8ED]/50"}`}>
                     <button onClick={() => toggleTask(task.id)} className="flex-shrink-0">
                       {task.completed ? <CheckCircle size={18} className="text-[#2d6a2d]" /> : <Circle size={18} className="text-[#999]" />}
                     </button>
                     <div className="flex-1">
                       <span className={`text-sm ${task.completed ? "line-through text-[#999]" : "text-[#111]"}`}>{task.text}</span>
                       <div className="flex items-center gap-2 mt-1">
-                        {task.phase && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#0d1f3d]/80 text-[#a0a0a0] font-medium">{task.phase}</span>}
+                        {task.phase && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#E3E8ED]/80 text-[#a0a0a0] font-medium">{task.phase}</span>}
                         {task.dueDate && <span className="text-[10px] text-[#999]">{new Date(task.dueDate + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>}
-                        {task.assignee && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#152a47]/10 text-[#152a47] font-medium">{task.assignee}</span>}
+                        {task.assignee && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1B3A4C]/10 text-[#1B3A4C] font-medium">{task.assignee}</span>}
                       </div>
                     </div>
                     <button onClick={() => removeTask(task.id)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
@@ -553,32 +553,32 @@ export default function ProjectDetailPage() {
           </div>
 
           {/* Services */}
-          <div className="bg-white border border-[#A8D5F0]/20 rounded-xl p-6">
+          <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <PoundSterling size={18} className="text-[#A8D5F0]" />
+                <PoundSterling size={18} className="text-[#6B8FAB]" />
                 <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Services</h3>
               </div>
               <button
                 onClick={() => setShowServiceForm(!showServiceForm)}
-                className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition flex items-center gap-1"
+                className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add Service
               </button>
             </div>
 
             {showServiceForm && (
-              <div className="bg-[#0d1f3d]/50 rounded-lg p-4 mb-4 space-y-3">
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <input placeholder="Service name" value={newService.name} onChange={(e) => setNewService({ ...newService, name: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <select value={newService.status} onChange={(e) => setNewService({ ...newService, status: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]">
+                  <input placeholder="Service name" value={newService.name} onChange={(e) => setNewService({ ...newService, name: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <select value={newService.status} onChange={(e) => setNewService({ ...newService, status: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
                     {SERVICE_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
                   </select>
-                  <input type="number" placeholder="Fee (£)" value={newService.fee ?? ""} onChange={(e) => setNewService({ ...newService, fee: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
+                  <input type="number" placeholder="Fee (£)" value={newService.fee ?? ""} onChange={(e) => setNewService({ ...newService, fee: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={addService} className="px-4 py-2 bg-[#152a47] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
-                  <button onClick={() => setShowServiceForm(false)} className="px-4 py-2 border border-[#A8D5F0]/30 text-xs font-semibold rounded-lg hover:bg-[#0d1f3d]/50">Cancel</button>
+                  <button onClick={addService} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => setShowServiceForm(false)} className="px-4 py-2 border border-[#6B8FAB]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
                 </div>
               </div>
             )}
@@ -588,13 +588,13 @@ export default function ProjectDetailPage() {
             ) : (
               <div className="space-y-2">
                 {(project.services || []).map((service, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 bg-[#0d1f3d]/50 rounded-lg">
+                  <div key={idx} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
                     <div className="flex items-center gap-3 flex-1">
                       <span className="text-sm font-medium text-[#111]">{service.name}</span>
-                      {service.fee && <span className="text-sm text-[#A8D5F0] font-semibold">{gbp.format(service.fee)}</span>}
+                      {service.fee && <span className="text-sm text-[#6B8FAB] font-semibold">{gbp.format(service.fee)}</span>}
                     </div>
                     <div className="flex items-center gap-3">
-                      <select value={service.status} onChange={(e) => updateServiceStatus(idx, e.target.value)} className={`text-xs font-medium px-2 py-1 rounded-full ${SERVICE_STATUS_STYLES[service.status] || "bg-[#0d1f3d]/50 text-gray-600"}`}>
+                      <select value={service.status} onChange={(e) => updateServiceStatus(idx, e.target.value)} className={`text-xs font-medium px-2 py-1 rounded-full ${SERVICE_STATUS_STYLES[service.status] || "bg-[#E3E8ED]/50 text-gray-600"}`}>
                         {SERVICE_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
                       </select>
                       <button onClick={() => removeService(idx)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
@@ -609,25 +609,25 @@ export default function ProjectDetailPage() {
           <MoodBoardSection projectId={project.id} />
 
           {/* Contracts */}
-          <div className="bg-white border border-[#A8D5F0]/20 rounded-xl p-6">
+          <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <FileText size={18} className="text-[#A8D5F0]" />
+                <FileText size={18} className="text-[#6B8FAB]" />
                 <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Contracts</h3>
               </div>
               <button
                 onClick={() => setShowContractForm(!showContractForm)}
-                className="px-4 py-2 bg-[#0d1f3d] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
+                className="px-4 py-2 bg-[#E3E8ED] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add Contract
               </button>
             </div>
 
             {showContractForm && (
-              <div className="bg-[#0d1f3d]/50 rounded-lg p-4 mb-4 space-y-3">
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <input placeholder="Contract title" value={newContract.title} onChange={(e) => setNewContract({ ...newContract, title: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <select value={newContract.contractType} onChange={(e) => setNewContract({ ...newContract, contractType: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]">
+                  <input placeholder="Contract title" value={newContract.title} onChange={(e) => setNewContract({ ...newContract, title: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <select value={newContract.contractType} onChange={(e) => setNewContract({ ...newContract, contractType: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
                     <option value="dj_booking">DJ Booking</option>
                     <option value="production">Production</option>
                     <option value="remix">Remix</option>
@@ -635,15 +635,15 @@ export default function ProjectDetailPage() {
                     <option value="management">Management</option>
                     <option value="general">General</option>
                   </select>
-                  <input placeholder="Counterparty name" value={newContract.counterpartyName} onChange={(e) => setNewContract({ ...newContract, counterpartyName: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input placeholder="Counterparty email" value={newContract.counterpartyEmail} onChange={(e) => setNewContract({ ...newContract, counterpartyEmail: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input placeholder="File URL" value={newContract.fileUrl} onChange={(e) => setNewContract({ ...newContract, fileUrl: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input type="date" placeholder="Expiry date" value={newContract.expiryDate} onChange={(e) => setNewContract({ ...newContract, expiryDate: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <textarea placeholder="Terms / notes" value={newContract.terms} onChange={(e) => setNewContract({ ...newContract, terms: e.target.value })} rows={2} className="sm:col-span-2 px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47] resize-y" />
+                  <input placeholder="Counterparty name" value={newContract.counterpartyName} onChange={(e) => setNewContract({ ...newContract, counterpartyName: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="Counterparty email" value={newContract.counterpartyEmail} onChange={(e) => setNewContract({ ...newContract, counterpartyEmail: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="File URL" value={newContract.fileUrl} onChange={(e) => setNewContract({ ...newContract, fileUrl: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="date" placeholder="Expiry date" value={newContract.expiryDate} onChange={(e) => setNewContract({ ...newContract, expiryDate: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <textarea placeholder="Terms / notes" value={newContract.terms} onChange={(e) => setNewContract({ ...newContract, terms: e.target.value })} rows={2} className="sm:col-span-2 px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C] resize-y" />
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={addContract} className="px-4 py-2 bg-[#152a47] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
-                  <button onClick={() => setShowContractForm(false)} className="px-4 py-2 border border-[#A8D5F0]/30 text-xs font-semibold rounded-lg hover:bg-[#0d1f3d]/50">Cancel</button>
+                  <button onClick={addContract} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => setShowContractForm(false)} className="px-4 py-2 border border-[#6B8FAB]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
                 </div>
               </div>
             )}
@@ -653,22 +653,22 @@ export default function ProjectDetailPage() {
             ) : (
               <div className="space-y-2">
                 {contracts.map((c: any) => (
-                  <div key={c.id} className="flex items-center justify-between p-3 bg-[#0d1f3d]/50 rounded-lg">
+                  <div key={c.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-medium text-[#111]">{c.title}</span>
                         <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded font-medium ${
                           c.status === "signed" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" :
-                          c.status === "sent" ? "bg-[#152a47]/10 text-[#152a47]" :
+                          c.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" :
                           c.status === "expired" ? "bg-red-50 text-red-600" :
-                          "bg-[#0d1f3d]/80 text-[#a0a0a0]"
+                          "bg-[#E3E8ED]/80 text-[#a0a0a0]"
                         }`}>{c.status}</span>
                       </div>
                       <p className="text-xs text-[#a0a0a0] mt-0.5">{c.contractType.replace(/_/g, " ")} · {c.counterpartyName || "No counterparty"}</p>
                       {c.expiryDate && <p className="text-xs text-[#999] mt-0.5">Expires {new Date(c.expiryDate + "T00:00:00").toLocaleDateString("en-GB")}</p>}
                     </div>
                     <div className="flex items-center gap-2">
-                      {c.fileUrl && <a href={c.fileUrl} target="_blank" rel="noopener noreferrer" className="text-[#A8D5F0] hover:text-[#152a47]"><ExternalLink size={14} /></a>}
+                      {c.fileUrl && <a href={c.fileUrl} target="_blank" rel="noopener noreferrer" className="text-[#6B8FAB] hover:text-[#1B3A4C]"><ExternalLink size={14} /></a>}
                       <button onClick={() => removeContract(c.id)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
                     </div>
                   </div>
@@ -678,34 +678,34 @@ export default function ProjectDetailPage() {
           </div>
 
           {/* Team & Assignments */}
-          <div className="bg-white border border-[#A8D5F0]/20 rounded-xl p-6">
+          <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <Users size={18} className="text-[#A8D5F0]" />
+                <Users size={18} className="text-[#6B8FAB]" />
                 <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Team & Assignments</h3>
               </div>
               <button
                 onClick={() => setShowTeamForm(!showTeamForm)}
-                className="px-4 py-2 bg-[#0d1f3d] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
+                className="px-4 py-2 bg-[#E3E8ED] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add Member
               </button>
             </div>
 
             {showTeamForm && (
-              <div className="bg-[#0d1f3d]/50 rounded-lg p-4 mb-4 space-y-3">
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <input placeholder="Name" value={newTeam.name} onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <select value={newTeam.role} onChange={(e) => setNewTeam({ ...newTeam, role: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]">
+                  <input placeholder="Name" value={newTeam.name} onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <select value={newTeam.role} onChange={(e) => setNewTeam({ ...newTeam, role: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
                     {TEAM_ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
                   </select>
-                  <input placeholder="Email" value={newTeam.email} onChange={(e) => setNewTeam({ ...newTeam, email: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input type="number" placeholder="Fee (£)" value={newTeam.fee ?? ""} onChange={(e) => setNewTeam({ ...newTeam, fee: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input placeholder="Notes" value={newTeam.notes} onChange={(e) => setNewTeam({ ...newTeam, notes: e.target.value })} className="sm:col-span-2 px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
+                  <input placeholder="Email" value={newTeam.email} onChange={(e) => setNewTeam({ ...newTeam, email: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="number" placeholder="Fee (£)" value={newTeam.fee ?? ""} onChange={(e) => setNewTeam({ ...newTeam, fee: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="Notes" value={newTeam.notes} onChange={(e) => setNewTeam({ ...newTeam, notes: e.target.value })} className="sm:col-span-2 px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={addTeamMember} className="px-4 py-2 bg-[#152a47] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
-                  <button onClick={() => setShowTeamForm(false)} className="px-4 py-2 border border-[#A8D5F0]/30 text-xs font-semibold rounded-lg hover:bg-[#0d1f3d]/50">Cancel</button>
+                  <button onClick={addTeamMember} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => setShowTeamForm(false)} className="px-4 py-2 border border-[#6B8FAB]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
                 </div>
               </div>
             )}
@@ -715,11 +715,11 @@ export default function ProjectDetailPage() {
             ) : (
               <div className="space-y-2">
                 {(project.team || []).map((member, idx) => (
-                  <div key={member.id || idx} className="flex items-center justify-between p-3 bg-[#0d1f3d]/50 rounded-lg"
+                  <div key={member.id || idx} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg"
                   >
                     <div className="flex items-center gap-3 flex-1"
                     >
-                      <div className="w-10 h-10 rounded bg-[#A8D5F0] flex items-center justify-center flex-shrink-0"
+                      <div className="w-10 h-10 rounded bg-[#6B8FAB] flex items-center justify-center flex-shrink-0"
                       >
                         <span className="text-white text-sm font-bold"
                         >{member.name.charAt(0).toUpperCase()}</span>
@@ -733,7 +733,7 @@ export default function ProjectDetailPage() {
                     </div>
                     <div className="flex items-center gap-2"
                     >
-                      <button className="text-[#999] hover:text-[#152a47] transition-colors"
+                      <button className="text-[#999] hover:text-[#1B3A4C] transition-colors"
                       >
                         <Edit size={14} />
                       </button>
@@ -749,30 +749,30 @@ export default function ProjectDetailPage() {
           </div>
 
           {/* Referrals & Commissions */}
-          <div className="bg-white border border-[#A8D5F0]/20 rounded-xl p-6">
+          <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <DollarSign size={18} className="text-[#A8D5F0]" />
+                <DollarSign size={18} className="text-[#6B8FAB]" />
                 <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Referrals & Commissions</h3>
               </div>
               <button
                 onClick={() => setShowReferralForm(!showReferralForm)}
-                className="px-4 py-2 bg-[#0d1f3d] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
+                className="px-4 py-2 bg-[#E3E8ED] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add Referral
               </button>
             </div>
 
             {showReferralForm && (
-              <div className="bg-[#0d1f3d]/50 rounded-lg p-4 mb-4 space-y-3">
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <input placeholder="Referral name" value={newReferral.name} onChange={(e) => setNewReferral({ ...newReferral, name: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input placeholder="Email" value={newReferral.email} onChange={(e) => setNewReferral({ ...newReferral, email: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input type="number" placeholder="Commission (£)" value={newReferral.commission ?? ""} onChange={(e) => setNewReferral({ ...newReferral, commission: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
+                  <input placeholder="Referral name" value={newReferral.name} onChange={(e) => setNewReferral({ ...newReferral, name: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="Email" value={newReferral.email} onChange={(e) => setNewReferral({ ...newReferral, email: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="number" placeholder="Commission (£)" value={newReferral.commission ?? ""} onChange={(e) => setNewReferral({ ...newReferral, commission: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={addReferral} className="px-4 py-2 bg-[#152a47] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
-                  <button onClick={() => { setShowReferralForm(false); setNewReferral({ name: "", email: "", commission: null, commissionPercent: null }); }} className="px-4 py-2 border border-[#A8D5F0]/30 text-xs font-semibold rounded-lg hover:bg-[#0d1f3d]/50">Cancel</button>
+                  <button onClick={addReferral} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => { setShowReferralForm(false); setNewReferral({ name: "", email: "", commission: null, commissionPercent: null }); }} className="px-4 py-2 border border-[#6B8FAB]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
                 </div>
               </div>
             )}
@@ -782,18 +782,18 @@ export default function ProjectDetailPage() {
             ) : (
               <div className="space-y-2">
                 {referrals.map((r: any) => (
-                  <div key={r.id} className="flex items-center justify-between p-3 bg-[#0d1f3d]/50 rounded-lg">
+                  <div key={r.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-medium text-[#111]">{r.name}</span>
                         <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded font-medium ${
-                          r.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : "bg-[#152a47]/10 text-[#152a47]"
+                          r.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : "bg-[#1B3A4C]/10 text-[#1B3A4C]"
                         }`}>{r.status}</span>
                       </div>
                       {r.email && <p className="text-xs text-[#a0a0a0] mt-0.5">{r.email}</p>}
                     </div>
                     <div className="flex items-center gap-3">
-                      {r.commission > 0 && <span className="text-sm font-semibold text-[#A8D5F0]">{gbp.format(r.commission)}</span>}
+                      {r.commission > 0 && <span className="text-sm font-semibold text-[#6B8FAB]">{gbp.format(r.commission)}</span>}
                       <button onClick={() => removeReferral(r.id)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
                     </div>
                   </div>
@@ -803,36 +803,36 @@ export default function ProjectDetailPage() {
           </div>
 
           {/* Files & Deliverables */}
-          <div className="bg-white border border-[#A8D5F0]/20 rounded-xl p-6">
+          <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <Upload size={18} className="text-[#A8D5F0]" />
+                <Upload size={18} className="text-[#6B8FAB]" />
                 <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Files & Deliverables</h3>
               </div>
               <button
                 onClick={() => setShowFileUpload(!showFileUpload)}
-                className="px-4 py-2 bg-[#0d1f3d] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
+                className="px-4 py-2 bg-[#E3E8ED] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add File
               </button>
             </div>
 
             {showFileUpload && (
-              <div className="bg-[#0d1f3d]/50 rounded-lg p-4 mb-4 space-y-3">
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <input placeholder="File name" value={fileName} onChange={(e) => setFileName(e.target.value)} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input placeholder="URL (paste link)" value={fileUrl} onChange={(e) => setFileUrl(e.target.value)} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input placeholder="Phase (e.g. Brief, Draft, Final)" value={filePhase} onChange={(e) => setFilePhase(e.target.value)} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
+                  <input placeholder="File name" value={fileName} onChange={(e) => setFileName(e.target.value)} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="URL (paste link)" value={fileUrl} onChange={(e) => setFileUrl(e.target.value)} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input placeholder="Phase (e.g. Brief, Draft, Final)" value={filePhase} onChange={(e) => setFilePhase(e.target.value)} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={addFile} className="px-4 py-2 bg-[#152a47] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add Link</button>
-                  <button onClick={() => setShowFileUpload(false)} className="px-4 py-2 border border-[#A8D5F0]/30 text-xs font-semibold rounded-lg hover:bg-[#0d1f3d]/50">Cancel</button>
+                  <button onClick={addFile} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add Link</button>
+                  <button onClick={() => setShowFileUpload(false)} className="px-4 py-2 border border-[#6B8FAB]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
                 </div>
               </div>
             )}
 
             {(project.files || []).length === 0 ? (
-              <div className="border border-dashed border-[#A8D5F0]/30 rounded-lg p-8 text-center">
+              <div className="border border-dashed border-[#6B8FAB]/30 rounded-lg p-8 text-center">
                 <Upload size={28} className="mx-auto text-gray-300 mb-3" />
                 <p className="text-sm text-[#999]">No files uploaded yet.</p>
                 <p className="text-xs text-[#999] mt-1">Add links to contracts, MP3s, briefs, and other documents.</p>
@@ -840,12 +840,12 @@ export default function ProjectDetailPage() {
             ) : (
               <div className="space-y-2">
                 {(project.files || []).map((file, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 bg-[#0d1f3d]/50 rounded-lg">
+                  <div key={idx} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
                     <div className="flex items-center gap-3 flex-1">
-                      <FileText size={16} className="text-[#152a47]" />
+                      <FileText size={16} className="text-[#1B3A4C]" />
                       <div>
-                        <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-[#111] hover:text-[#152a47]">{file.name}</a>
-                        {file.phase && <span className="text-[10px] ml-2 uppercase tracking-wider px-2 py-0.5 rounded bg-[#A8D5F0]/10 text-[#A8D5F0] font-medium">{file.phase}</span>}
+                        <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-[#111] hover:text-[#1B3A4C]">{file.name}</a>
+                        {file.phase && <span className="text-[10px] ml-2 uppercase tracking-wider px-2 py-0.5 rounded bg-[#6B8FAB]/10 text-[#6B8FAB] font-medium">{file.phase}</span>}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -860,7 +860,7 @@ export default function ProjectDetailPage() {
 
           {/* Notes */}
           {project.notes && (
-            <div className="bg-white border border-[#A8D5F0]/20 rounded-xl p-6">
+            <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-6">
               <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase mb-3">Notes</h3>
               <p className="text-sm text-[#a0a0a0] whitespace-pre-wrap">{project.notes}</p>
             </div>
@@ -870,13 +870,13 @@ export default function ProjectDetailPage() {
         {/* RIGHT COLUMN — Sidebar */}
         <div className="lg:col-span-2 space-y-6">
           {/* Details Card */}
-          <div className="bg-white border border-[#A8D5F0]/20 rounded-xl p-5">
+          <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <Briefcase size={16} className="text-[#A8D5F0]" />
+                <Briefcase size={16} className="text-[#6B8FAB]" />
                 <h3 className="text-sm font-bold text-[#111] uppercase tracking-wider">Details</h3>
               </div>
-              <button onClick={() => setEditing(!editing)} className="text-xs text-[#a0a0a0] hover:text-[#152a47] flex items-center gap-1">
+              <button onClick={() => setEditing(!editing)} className="text-xs text-[#a0a0a0] hover:text-[#1B3A4C] flex items-center gap-1">
                 <Edit size={12} /> Edit
               </button>
             </div>
@@ -885,7 +885,7 @@ export default function ProjectDetailPage() {
               <div className="mb-4">
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Client</p>
                 <div className="flex items-center gap-2">
-                  <Mail size={12} className="text-[#A8D5F0]" />
+                  <Mail size={12} className="text-[#6B8FAB]" />
                   <span className="text-sm text-[#111]">{client.email || client.name}</span>
                 </div>
               </div>
@@ -925,9 +925,9 @@ export default function ProjectDetailPage() {
           </div>
 
           {/* Financials Card */}
-          <div className="bg-white border border-[#A8D5F0]/20 rounded-xl p-5">
+          <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-5">
             <div className="flex items-center gap-2 mb-4">
-              <PoundSterling size={16} className="text-[#A8D5F0]" />
+              <PoundSterling size={16} className="text-[#6B8FAB]" />
               <h3 className="text-sm font-bold text-[#111] uppercase tracking-wider">Financials</h3>
             </div>
 
@@ -946,9 +946,9 @@ export default function ProjectDetailPage() {
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-2">
                           <span className="text-sm font-semibold text-[#111]">{inv.invoiceNumber}</span>
-                          <ExternalLink size={12} className="text-[#A8D5F0]" />
+                          <ExternalLink size={12} className="text-[#6B8FAB]" />
                         </div>
-                        <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${isFullyPaid ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : inv.status === "sent" ? "bg-[#152a47]/10 text-[#152a47]" : "bg-amber-50 text-amber-600"}`}>
+                        <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${isFullyPaid ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : inv.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : "bg-amber-50 text-amber-600"}`}>
                           {isFullyPaid ? "PAID" : inv.status === "sent" ? "DEPOSIT PAID" : inv.status}
                         </span>
                       </div>
@@ -970,7 +970,7 @@ export default function ProjectDetailPage() {
                             <span>{gbpFull.format(invPaid)} paid</span>
                             <span>{gbpFull.format(invTotal)} total</span>
                           </div>
-                          <div className="w-full bg-[#0d1f3d]/50 rounded-full h-1.5 overflow-hidden">
+                          <div className="w-full bg-[#E3E8ED]/50 rounded-full h-1.5 overflow-hidden">
                             <div className="h-full rounded-full bg-[#8B7355]" style={{ width: `${invTotal > 0 ? (invPaid / invTotal) * 100 : 0}%` }} />
                           </div>
                           <p className="text-[10px] text-[#999] text-right mt-1">{invTotal > 0 ? Math.round((invPaid / invTotal) * 100) : 0}% paid</p>
@@ -997,7 +997,7 @@ export default function ProjectDetailPage() {
                             <span className="text-sm font-bold text-[#111]">{gbpFull.format(Math.min(invDeposit, invPaid))}</span>
                             <span className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded bg-[#2d6a2d]/10 text-[#2d6a2d]">PAID ✓</span>
                           </div>
-                          <div className="flex items-center gap-3 p-2 bg-white border border-[#A8D5F0]/20 rounded">
+                          <div className="flex items-center gap-3 p-2 bg-white border border-[#6B8FAB]/20 rounded">
                             <Circle size={16} className="text-[#999] flex-shrink-0" />
                             <div className="flex-1">
                               <p className="text-sm font-medium text-[#111]">Final Payment</p>
@@ -1014,7 +1014,7 @@ export default function ProjectDetailPage() {
                                   });
                                   fetchAll();
                                 }}
-                                className="px-3 py-1.5 bg-[#0d1f3d] text-white text-[10px] font-semibold uppercase tracking-wide rounded hover:opacity-90"
+                                className="px-3 py-1.5 bg-[#E3E8ED] text-white text-[10px] font-semibold uppercase tracking-wide rounded hover:opacity-90"
                               >
                                 Mark Paid
                               </button>
@@ -1026,10 +1026,10 @@ export default function ProjectDetailPage() {
                   );
                 })}
                 {quotes.map((q) => (
-                  <div key={q.id} className="flex items-center justify-between p-3 bg-[#0d1f3d]/50 rounded-lg">
+                  <div key={q.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
                     <span className="text-sm font-semibold text-[#111]">Quote #{q.id}</span>
                     <div className="flex items-center gap-2">
-                      <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${q.status === "accepted" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : q.status === "sent" ? "bg-[#152a47]/10 text-[#152a47]" : "bg-[#0d1f3d]/50 text-[#a0a0a0]"}`}>
+                      <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${q.status === "accepted" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : q.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : "bg-[#E3E8ED]/50 text-[#a0a0a0]"}`}>
                         {q.status}
                       </span>
                       <span className="text-sm font-semibold text-[#111]">{gbp.format(q.total)}</span>
@@ -1040,7 +1040,7 @@ export default function ProjectDetailPage() {
             )}
 
             {invoices.length > 0 && (
-              <button className="w-full mt-4 px-4 py-3 border-2 border-[#A8D5F0]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-amber-600 hover:bg-amber-50 transition flex items-center justify-center gap-2">
+              <button className="w-full mt-4 px-4 py-3 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-amber-600 hover:bg-amber-50 transition flex items-center justify-center gap-2">
                 <Mail size={14} /> Send Payment Reminder
               </button>
             )}
@@ -1048,13 +1048,13 @@ export default function ProjectDetailPage() {
             <div className="flex gap-2 mt-4">
               <Link
                 href={`/admin/quotes?projectId=${project.id}`}
-                className="flex-1 px-4 py-2 border-2 border-[#A8D5F0]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#152a47] text-center"
+                className="flex-1 px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] text-center"
               >
                 + Quote
               </Link>
               <Link
                 href={`/admin/invoices?projectId=${project.id}`}
-                className="flex-1 px-4 py-2 border-2 border-[#A8D5F0]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#152a47] text-center"
+                className="flex-1 px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] text-center"
               >
                 + Invoice
               </Link>
@@ -1062,24 +1062,24 @@ export default function ProjectDetailPage() {
           </div>
 
           {/* Royalties Card */}
-          <div className="bg-white border border-[#A8D5F0]/20 rounded-xl p-5">
+          <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <PoundSterling size={16} className="text-[#A8D5F0]" />
+                <PoundSterling size={16} className="text-[#6B8FAB]" />
                 <h3 className="text-sm font-bold text-[#111] uppercase tracking-wider">Royalties</h3>
               </div>
               <button
                 onClick={() => setShowRoyaltyForm(!showRoyaltyForm)}
-                className="px-4 py-2 bg-[#0d1f3d] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
+                className="px-4 py-2 bg-[#E3E8ED] text-white rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] hover:opacity-90 transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add
               </button>
             </div>
 
             {showRoyaltyForm && (
-              <div className="bg-[#0d1f3d]/50 rounded-lg p-4 mb-4 space-y-3">
+              <div className="bg-[#E3E8ED]/50 rounded-lg p-4 mb-4 space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <select value={newRoyalty.source} onChange={(e) => setNewRoyalty({ ...newRoyalty, source: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]">
+                  <select value={newRoyalty.source} onChange={(e) => setNewRoyalty({ ...newRoyalty, source: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
                     <option value="spotify">Spotify</option>
                     <option value="apple_music">Apple Music</option>
                     <option value="sync">Sync License</option>
@@ -1087,19 +1087,19 @@ export default function ProjectDetailPage() {
                     <option value="publishing">Publishing</option>
                     <option value="other">Other</option>
                   </select>
-                  <input type="number" placeholder="Amount (£)" value={newRoyalty.amount ?? ""} onChange={(e) => setNewRoyalty({ ...newRoyalty, amount: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input type="date" placeholder="Period start" value={newRoyalty.periodStart} onChange={(e) => setNewRoyalty({ ...newRoyalty, periodStart: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input type="date" placeholder="Period end" value={newRoyalty.periodEnd} onChange={(e) => setNewRoyalty({ ...newRoyalty, periodEnd: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <input type="number" placeholder="Streams" value={newRoyalty.streams ?? ""} onChange={(e) => setNewRoyalty({ ...newRoyalty, streams: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]" />
-                  <select value={newRoyalty.status} onChange={(e) => setNewRoyalty({ ...newRoyalty, status: e.target.value })} className="px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm focus:outline-none focus:border-[#152a47]">
+                  <input type="number" placeholder="Amount (£)" value={newRoyalty.amount ?? ""} onChange={(e) => setNewRoyalty({ ...newRoyalty, amount: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="date" placeholder="Period start" value={newRoyalty.periodStart} onChange={(e) => setNewRoyalty({ ...newRoyalty, periodStart: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="date" placeholder="Period end" value={newRoyalty.periodEnd} onChange={(e) => setNewRoyalty({ ...newRoyalty, periodEnd: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <input type="number" placeholder="Streams" value={newRoyalty.streams ?? ""} onChange={(e) => setNewRoyalty({ ...newRoyalty, streams: e.target.value ? Number(e.target.value) : null })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                  <select value={newRoyalty.status} onChange={(e) => setNewRoyalty({ ...newRoyalty, status: e.target.value })} className="px-3 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm focus:outline-none focus:border-[#1B3A4C]">
                     <option value="pending">Pending</option>
                     <option value="received">Received</option>
                     <option value="forecast">Forecast</option>
                   </select>
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={addRoyalty} className="px-4 py-2 bg-[#152a47] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
-                  <button onClick={() => { setShowRoyaltyForm(false); setNewRoyalty({ source: "spotify", amount: null, periodStart: "", periodEnd: "", streams: null, status: "pending", notes: "" }); }} className="px-4 py-2 border border-[#A8D5F0]/30 text-xs font-semibold rounded-lg hover:bg-[#0d1f3d]/50">Cancel</button>
+                  <button onClick={addRoyalty} className="px-4 py-2 bg-[#1B3A4C] text-white text-xs font-semibold rounded-lg hover:opacity-90">Add</button>
+                  <button onClick={() => { setShowRoyaltyForm(false); setNewRoyalty({ source: "spotify", amount: null, periodStart: "", periodEnd: "", streams: null, status: "pending", notes: "" }); }} className="px-4 py-2 border border-[#6B8FAB]/30 text-xs font-semibold rounded-lg hover:bg-[#E3E8ED]/50">Cancel</button>
                 </div>
               </div>
             )}
@@ -1108,19 +1108,19 @@ export default function ProjectDetailPage() {
               <p className="text-sm text-[#999] italic text-center py-4">No royalties tracked yet.</p>
             ) : (
               <div className="space-y-3">
-                <div className="flex justify-between items-center mb-2 pb-2 border-b border-[#A8D5F0]/20">
+                <div className="flex justify-between items-center mb-2 pb-2 border-b border-[#6B8FAB]/20">
                   <span className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium">Total Royalties</span>
                   <span className="text-sm font-bold text-[#2d6a2d]">{gbpFull.format(royalties.reduce((s, r) => s + Number(r.amount || 0), 0))}</span>
                 </div>
                 {royalties.map((r: any) => (
-                  <div key={r.id} className="flex items-center justify-between p-2 bg-[#0d1f3d]/50 rounded-lg">
+                  <div key={r.id} className="flex items-center justify-between p-2 bg-[#E3E8ED]/50 rounded-lg">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-medium text-[#111] capitalize">{r.source.replace(/_/g, " ")}</span>
                         <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded font-medium ${
                           r.status === "received" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" :
                           r.status === "pending" ? "bg-amber-50 text-amber-600" :
-                          "bg-[#152a47]/10 text-[#152a47]"
+                          "bg-[#1B3A4C]/10 text-[#1B3A4C]"
                         }`}>{r.status}</span>
                       </div>
                       {r.streams && <p className="text-xs text-[#a0a0a0]">{r.streams.toLocaleString()} streams</p>}
@@ -1149,11 +1149,11 @@ export default function ProjectDetailPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Title</label>
-                <input value={form.title || ""} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47]" />
+                <input value={form.title || ""} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Type</label>
-                <select value={form.type || ""} onChange={(e) => setForm({ ...form, type: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47]">
+                <select value={form.type || ""} onChange={(e) => setForm({ ...form, type: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]">
                   <option value="dj-booking">DJ Booking</option>
                   <option value="production">Production</option>
                   <option value="remix">Remix</option>
@@ -1165,7 +1165,7 @@ export default function ProjectDetailPage() {
               </div>
               <div>
                 <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Priority</label>
-                <select value={form.priority || "medium"} onChange={(e) => setForm({ ...form, priority: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47]">
+                <select value={form.priority || "medium"} onChange={(e) => setForm({ ...form, priority: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]">
                   <option value="high">High</option>
                   <option value="medium">Medium</option>
                   <option value="low">Low</option>
@@ -1173,32 +1173,32 @@ export default function ProjectDetailPage() {
               </div>
               <div>
                 <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Venue</label>
-                <input value={form.venue || ""} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47]" />
+                <input value={form.venue || ""} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Event Date</label>
-                <input type="date" value={form.eventDate || ""} onChange={(e) => setForm({ ...form, eventDate: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47]" />
+                <input type="date" value={form.eventDate || ""} onChange={(e) => setForm({ ...form, eventDate: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Deadline</label>
-                <input type="date" value={form.deadline || ""} onChange={(e) => setForm({ ...form, deadline: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47]" />
+                <input type="date" value={form.deadline || ""} onChange={(e) => setForm({ ...form, deadline: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Fee (£)</label>
-                <input type="number" value={form.fee ?? ""} onChange={(e) => setForm({ ...form, fee: e.target.value ? Number(e.target.value) : null })} className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47]" />
+                <input type="number" value={form.fee ?? ""} onChange={(e) => setForm({ ...form, fee: e.target.value ? Number(e.target.value) : null })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div className="sm:col-span-2">
                 <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Description</label>
-                <textarea value={form.description || ""} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47] resize-y" placeholder="Project description..." />
+                <textarea value={form.description || ""} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C] resize-y" placeholder="Project description..." />
               </div>
               <div className="sm:col-span-2">
                 <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Notes</label>
-                <textarea value={form.notes || ""} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3} className="w-full px-4 py-2.5 bg-white border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47] resize-y" />
+                <textarea value={form.notes || ""} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C] resize-y" />
               </div>
             </div>
             <div className="flex justify-end gap-3 pt-2">
-              <button type="button" onClick={() => setEditing(false)} className="px-4 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm font-medium text-[#111] hover:bg-[#0d1f3d]/50">Cancel</button>
-              <button type="submit" className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition">Save Changes</button>
+              <button type="button" onClick={() => setEditing(false)} className="px-4 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm font-medium text-[#111] hover:bg-[#E3E8ED]/50">Cancel</button>
+              <button type="submit" className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition">Save Changes</button>
             </div>
           </form>
         </div>

@@ -56,14 +56,14 @@ export default function Dashboard() {
     return (
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
-          <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">Overview</p>
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Overview</p>
           <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Dashboard</h1>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="bg-white border border-[#A8D5F0]/30 p-6 animate-pulse">
-              <div className="h-10 bg-[#0d1f3d] rounded mb-2" />
-              <div className="h-3 bg-[#0d1f3d] rounded w-20" />
+            <div key={i} className="bg-white border border-[#6B8FAB]/30 p-6 animate-pulse">
+              <div className="h-10 bg-[#E3E8ED] rounded mb-2" />
+              <div className="h-3 bg-[#E3E8ED] rounded w-20" />
             </div>
           ))}
         </div>
@@ -81,7 +81,7 @@ export default function Dashboard() {
     <div className="max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-12">
-        <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">Overview</p>
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Overview</p>
         <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Dashboard</h1>
         <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Welcome back bro. Here&apos;s what&apos;s happening.</p>
       </div>
@@ -93,28 +93,28 @@ export default function Dashboard() {
           value={s.quotes}
           href="/admin/quotes"
           icon={FileText}
-          color="#152a47"
+          color="#1B3A4C"
         />
         <StatCard
           label="Invoices"
           value={s.invoices}
           href="/admin/invoices"
           icon={Receipt}
-          color="#0d1f3d"
+          color="#E3E8ED"
         />
         <StatCard
           label="Clients"
           value={s.clients}
           href="/admin/clients"
           icon={Users}
-          color="#A8D5F0"
+          color="#6B8FAB"
         />
         <StatCard
           label="Enquiries"
           value={s.enquiries}
           href="/admin/enquiries"
           icon={Mail}
-          color="#152a47"
+          color="#1B3A4C"
           badge={s.pendingEnquiries > 0 ? s.pendingEnquiries : undefined}
         />
       </div>
@@ -124,7 +124,7 @@ export default function Dashboard() {
         {/* Revenue Card */}
         <Link
           href="/admin/invoices"
-          className="bg-[#0d1f3d] p-6 text-white hover:bg-[#152a47] transition group"
+          className="bg-[#E3E8ED] p-6 text-white hover:bg-[#1B3A4C] transition group"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 bg-white/10">
@@ -140,11 +140,11 @@ export default function Dashboard() {
         <Link
           href="/admin/enquiries?status=new"
           className={`p-6 border transition group ${
-            s.pendingEnquiries > 0 ? 'bg-white border-[#152a47]' : 'bg-white border-[#0d1f3d]'
+            s.pendingEnquiries > 0 ? 'bg-white border-[#1B3A4C]' : 'bg-white border-[#E3E8ED]'
           }`}
         >
           <div className="flex items-center justify-between mb-4">
-            <div className={`p-2 ${s.pendingEnquiries > 0 ? 'bg-[#152a47] text-white' : 'bg-[#0d1f3d] text-[#A8D5F0]'}`}>
+            <div className={`p-2 ${s.pendingEnquiries > 0 ? 'bg-[#1B3A4C] text-white' : 'bg-[#E3E8ED] text-[#6B8FAB]'}`}>
               <AlertCircle size={18} />
             </div>
             {s.pendingEnquiries > 0 && (
@@ -154,30 +154,30 @@ export default function Dashboard() {
             )}
           </div>
           <p className="text-[clamp(24px,3vw,36px)] font-black text-[#111] leading-none mb-2">{s.pendingEnquiries}</p>
-          <p className="text-xs uppercase tracking-widest text-[#A8D5F0]">Pending Enquiries</p>
+          <p className="text-xs uppercase tracking-widest text-[#6B8FAB]">Pending Enquiries</p>
         </Link>
 
         {/* Draft Quotes */}
         <Link
           href="/admin/quotes"
-          className="bg-white border border-[#0d1f3d] p-6 hover:border-[#152a47] transition group"
+          className="bg-white border border-[#E3E8ED] p-6 hover:border-[#1B3A4C] transition group"
         >
           <div className="flex items-center justify-between mb-4">
-            <div className="p-2 bg-[#0d1f3d] text-[#A8D5F0] group-hover:bg-[#152a47] group-hover:text-white transition">
+            <div className="p-2 bg-[#E3E8ED] text-[#6B8FAB] group-hover:bg-[#1B3A4C] group-hover:text-white transition">
               <Clock size={18} />
             </div>
-            <ArrowRight size={16} className="text-[#A8D5F0] group-hover:text-[#152a47] transition" />
+            <ArrowRight size={16} className="text-[#6B8FAB] group-hover:text-[#1B3A4C] transition" />
           </div>
           <p className="text-[clamp(24px,3vw,36px)] font-black text-[#111] leading-none mb-2">{s.draftQuotes}</p>
-          <p className="text-xs uppercase tracking-widest text-[#A8D5F0]">Draft Quotes</p>
+          <p className="text-xs uppercase tracking-widest text-[#6B8FAB]">Draft Quotes</p>
         </Link>
       </div>
 
       {/* Bottom Row */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Quick Actions */}
-        <div className="bg-white border border-[#0d1f3d] p-6">
-          <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">Quick Actions</p>
+        <div className="bg-white border border-[#E3E8ED] p-6">
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Quick Actions</p>
           <div className="space-y-3">
             <QuickAction href="/admin/quotes/new" label="New Quote" icon={FileText} />
             <QuickAction href="/admin/invoices/new" label="New Invoice" icon={Receipt} />
@@ -186,13 +186,13 @@ export default function Dashboard() {
         </div>
 
         {/* Recent Enquiries */}
-        <div className="bg-white border border-[#0d1f3d] p-6">
+        <div className="bg-white border border-[#E3E8ED] p-6">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold">Recent Enquiries</p>
-            <Link href="/admin/enquiries" className="text-xs text-[#152a47] hover:underline">View all →</Link>
+            <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold">Recent Enquiries</p>
+            <Link href="/admin/enquiries" className="text-xs text-[#1B3A4C] hover:underline">View all →</Link>
           </div>
           {s.recentEnquiries.length === 0 ? (
-            <p className="text-sm text-[#A8D5F0] py-4">No enquiries yet.</p>
+            <p className="text-sm text-[#6B8FAB] py-4">No enquiries yet.</p>
           ) : (
             <div className="space-y-3">
               {s.recentEnquiries.map((e) => (
@@ -201,12 +201,12 @@ export default function Dashboard() {
                   href={`/admin/enquiries`}
                   className="flex items-center gap-3 p-3 hover:bg-[#F8FAFB] transition group"
                 >
-                  <div className={`w-2 h-2 rounded-full flex-shrink-0 ${e.status === 'new' ? 'bg-[#152a47]' : 'bg-[#A8D5F0]'}`} />
+                  <div className={`w-2 h-2 rounded-full flex-shrink-0 ${e.status === 'new' ? 'bg-[#1B3A4C]' : 'bg-[#6B8FAB]'}`} />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-[#111] truncate">{e.name}</p>
-                    <p className="text-xs text-[#A8D5F0] truncate">{e.message?.substring(0, 50) || 'No message'}</p>
+                    <p className="text-xs text-[#6B8FAB] truncate">{e.message?.substring(0, 50) || 'No message'}</p>
                   </div>
-                  <span className="text-xs text-[#A8D5F0] flex-shrink-0">{formatDate(e.createdAt)}</span>
+                  <span className="text-xs text-[#6B8FAB] flex-shrink-0">{formatDate(e.createdAt)}</span>
                 </Link>
               ))}
             </div>
@@ -216,26 +216,26 @@ export default function Dashboard() {
 
       {/* Recent Quotes */}
       {s.recentQuotes.length > 0 && (
-        <div className="mt-6 bg-white border border-[#0d1f3d] p-6">
+        <div className="mt-6 bg-white border border-[#E3E8ED] p-6">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold">Recent Quotes</p>
-            <Link href="/admin/quotes" className="text-xs text-[#152a47] hover:underline">View all →</Link>
+            <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold">Recent Quotes</p>
+            <Link href="/admin/quotes" className="text-xs text-[#1B3A4C] hover:underline">View all →</Link>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[#0d1f3d]">
-                  <th className="px-4 py-2 text-left text-xs font-semibold text-[#A8D5F0] uppercase tracking-widest">Quote</th>
-                  <th className="px-4 py-2 text-left text-xs font-semibold text-[#A8D5F0] uppercase tracking-widest">Client</th>
-                  <th className="px-4 py-2 text-right text-xs font-semibold text-[#A8D5F0] uppercase tracking-widest">Total</th>
-                  <th className="px-4 py-2 text-left text-xs font-semibold text-[#A8D5F0] uppercase tracking-widest">Status</th>
+                <tr className="border-b border-[#E3E8ED]">
+                  <th className="px-4 py-2 text-left text-xs font-semibold text-[#6B8FAB] uppercase tracking-widest">Quote</th>
+                  <th className="px-4 py-2 text-left text-xs font-semibold text-[#6B8FAB] uppercase tracking-widest">Client</th>
+                  <th className="px-4 py-2 text-right text-xs font-semibold text-[#6B8FAB] uppercase tracking-widest">Total</th>
+                  <th className="px-4 py-2 text-left text-xs font-semibold text-[#6B8FAB] uppercase tracking-widest">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#0d1f3d]">
+              <tbody className="divide-y divide-[#E3E8ED]">
                 {s.recentQuotes.map((q) => (
                   <tr key={q.id} className="hover:bg-[#F8FAFB]">
                     <td className="px-4 py-3">
-                      <Link href={`/admin/quotes/${q.id}`} className="font-medium text-[#152a47] hover:underline">
+                      <Link href={`/admin/quotes/${q.id}`} className="font-medium text-[#1B3A4C] hover:underline">
                         {q.quoteNumber || `QT-${String(q.id).padStart(3, '0')}`}
                       </Link>
                     </td>
@@ -244,7 +244,7 @@ export default function Dashboard() {
                     <td className="px-4 py-3">
                       <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider ${
                         q.status === 'draft' ? 'bg-gray-100 text-gray-600' :
-                        q.status === 'sent' ? 'bg-[#152a471a] text-[#152a47]' :
+                        q.status === 'sent' ? 'bg-[#1B3A4C1a] text-[#1B3A4C]' :
                         q.status === 'accepted' ? 'bg-green-50 text-green-700' :
                         'bg-red-50 text-red-700'
                       }`}>
@@ -273,7 +273,7 @@ function StatCard({ label, value, href, icon: Icon, color, badge }: {
   return (
     <Link
       href={href}
-      className="bg-white border border-[#0d1f3d] p-6 hover:border-[#152a47] transition group relative"
+      className="bg-white border border-[#E3E8ED] p-6 hover:border-[#1B3A4C] transition group relative"
     >
       <div className="flex items-center justify-between mb-4">
         <div className="p-2 text-white" style={{ backgroundColor: color }}>
@@ -286,7 +286,7 @@ function StatCard({ label, value, href, icon: Icon, color, badge }: {
         )}
       </div>
       <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{value}</p>
-      <p className="text-xs text-[#A8D5F0] mt-2 tracking-[2px] uppercase font-semibold">{label}</p>
+      <p className="text-xs text-[#6B8FAB] mt-2 tracking-[2px] uppercase font-semibold">{label}</p>
     </Link>
   )
 }
@@ -295,13 +295,13 @@ function QuickAction({ href, label, icon: Icon }: { href: string; label: string;
   return (
     <Link
       href={href}
-      className="flex items-center justify-between px-6 py-4 border-2 border-[#152a47]/20 rounded-full text-[13px] text-[#152a47] font-semibold uppercase tracking-[1.5px] hover:border-[#152a47] hover:bg-[#152a47] hover:text-white transition group"
+      className="flex items-center justify-between px-6 py-4 border-2 border-[#1B3A4C]/20 rounded-full text-[13px] text-[#1B3A4C] font-semibold uppercase tracking-[1.5px] hover:border-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition group"
     >
       <span className="flex items-center gap-2">
         <Icon size={16} />
         {label}
       </span>
-      <ArrowRight size={16} className="text-[#A8D5F0] group-hover:text-white transition" />
+      <ArrowRight size={16} className="text-[#6B8FAB] group-hover:text-white transition" />
     </Link>
   )
 }

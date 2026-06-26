@@ -123,7 +123,7 @@ export default function ShowPagesAdmin() {
   return (
     <div className="max-w-[1200px] mx-auto">
       <div className="mb-10">
-        <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">CMS</p>
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">CMS</p>
         <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Show Pages</h1>
         <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Manage individual show detail pages</p>
       </div>
@@ -134,14 +134,14 @@ export default function ShowPagesAdmin() {
           <div className="bg-white border-2 border-[#111] p-6">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-sm font-semibold tracking-[1.5px] uppercase text-[#111]">Pages</h2>
-              <button onClick={startCreate} className="text-xs font-semibold tracking-[1px] uppercase px-4 py-2 bg-[#0d1f3d] text-white hover:bg-[#152a47] transition">
+              <button onClick={startCreate} className="text-xs font-semibold tracking-[1px] uppercase px-4 py-2 bg-[#E3E8ED] text-white hover:bg-[#1B3A4C] transition">
                 + New
               </button>
             </div>
             {loading ? (
-              <p className="text-sm text-[#A8D5F0]">Loading...</p>
+              <p className="text-sm text-[#6B8FAB]">Loading...</p>
             ) : showPages.length === 0 ? (
-              <p className="text-sm text-[#A8D5F0]">No show pages yet.</p>
+              <p className="text-sm text-[#6B8FAB]">No show pages yet.</p>
             ) : (
               <div className="space-y-2">
                 {showPages.map((page) => (
@@ -149,16 +149,16 @@ export default function ShowPagesAdmin() {
                     key={page.id}
                     onClick={() => startEdit(page)}
                     className={`p-4 border-2 cursor-pointer transition ${
-                      editing?.id === page.id ? 'border-[#111] bg-[#0d1f3d]' : 'border-[#0d1f3d] hover:border-[#A8D5F0]'
+                      editing?.id === page.id ? 'border-[#111] bg-[#E3E8ED]' : 'border-[#E3E8ED] hover:border-[#6B8FAB]'
                     }`}
                   >
                     <div className="flex justify-between items-start">
                       <div>
                         <p className="font-semibold text-[15px] text-[#111]">{page.title}</p>
-                        <p className="text-xs text-[#A8D5F0] mt-1">/{page.slug}</p>
+                        <p className="text-xs text-[#6B8FAB] mt-1">/{page.slug}</p>
                       </div>
                       {!page.isActive && (
-                        <span className="text-[10px] font-semibold uppercase tracking-[1px] px-2 py-1 bg-[#A8D5F0] text-white rounded-full">Draft</span>
+                        <span className="text-[10px] font-semibold uppercase tracking-[1px] px-2 py-1 bg-[#6B8FAB] text-white rounded-full">Draft</span>
                       )}
                     </div>
                   </div>
@@ -177,89 +177,89 @@ export default function ShowPagesAdmin() {
 
             <div className="space-y-5">
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#A8D5F0] mb-2">Slug *</label>
+                <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#6B8FAB] mb-2">Slug *</label>
                 <input
                   type="text"
                   value={form.slug}
                   onChange={(e) => setForm({ ...form, slug: e.target.value })}
                   placeholder="e.g. sidemen"
-                  className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition"
+                  className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                 />
-                <p className="text-xs text-[#A8D5F0] mt-1">Used in URL: /show-{'{slug}'}</p>
+                <p className="text-xs text-[#6B8FAB] mt-1">Used in URL: /show-{'{slug}'}</p>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#A8D5F0] mb-2">Title *</label>
+                <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#6B8FAB] mb-2">Title *</label>
                 <input
                   type="text"
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
-                  className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition"
+                  className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#A8D5F0] mb-2">Venue *</label>
+                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#6B8FAB] mb-2">Venue *</label>
                   <input
                     type="text"
                     value={form.venue}
                     onChange={(e) => setForm({ ...form, venue: e.target.value })}
-                    className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition"
+                    className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#A8D5F0] mb-2">Location *</label>
+                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#6B8FAB] mb-2">Location *</label>
                   <input
                     type="text"
                     value={form.location}
                     onChange={(e) => setForm({ ...form, location: e.target.value })}
-                    className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition"
+                    className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#A8D5F0] mb-2">Season *</label>
+                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#6B8FAB] mb-2">Season *</label>
                   <input
                     type="text"
                     value={form.season}
                     onChange={(e) => setForm({ ...form, season: e.target.value })}
                     placeholder="e.g. Spring / Summer 2025"
-                    className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition"
+                    className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#A8D5F0] mb-2">Set Length</label>
+                  <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#6B8FAB] mb-2">Set Length</label>
                   <input
                     type="text"
                     value={form.setLength}
                     onChange={(e) => setForm({ ...form, setLength: e.target.value })}
                     placeholder="e.g. 4 Hour Set"
-                    className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition"
+                    className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#A8D5F0] mb-2">Hero Image URL</label>
+                <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#6B8FAB] mb-2">Hero Image URL</label>
                 <input
                   type="text"
                   value={form.heroImage}
                   onChange={(e) => setForm({ ...form, heroImage: e.target.value })}
                   placeholder="/assets/ricky-hero-new.jpg"
-                  className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition"
+                  className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#A8D5F0] mb-2">Description</label>
+                <label className="block text-xs font-semibold uppercase tracking-[1.5px] text-[#6B8FAB] mb-2">Description</label>
                 <textarea
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   rows={4}
-                  className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition resize-y"
+                  className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition resize-y"
                 />
               </div>
             </div>
@@ -268,7 +268,7 @@ export default function ShowPagesAdmin() {
               <button
                 onClick={save}
                 disabled={saving}
-                className="flex-1 py-3.5 bg-[#0d1f3d] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#152a47] transition disabled:opacity-50"
+                className="flex-1 py-3.5 bg-[#E3E8ED] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
               >
                 {saving ? 'Saving...' : editing ? 'Update' : 'Create'}
               </button>

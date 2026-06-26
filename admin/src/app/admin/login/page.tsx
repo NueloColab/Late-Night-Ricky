@@ -33,7 +33,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#152a47] flex">
+    <div className="min-h-screen bg-[#1B3A4C] flex">
       {/* Left side — branding (desktop only) */}
       <div className="hidden lg:flex lg:w-1/2 relative items-center justify-center">
         <div className="absolute inset-0 opacity-10">
