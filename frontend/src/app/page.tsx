@@ -31,14 +31,13 @@ export default async function HomePage() {
 
       {/* Hero */}
       <section className="relative min-h-[100dvh] flex flex-col items-start justify-center px-8 md:px-14 pb-14 pt-20">
-        <div className="fixed inset-0 -z-10">
+        <div className="fixed inset-0 -z-10" style={{ backgroundColor: '#1e3a5c' }}>
           <div
             className="absolute inset-0 bg-cover bg-no-repeat bg-[70%_center]"
-            style={{ backgroundImage: "url('/assets/ricky-hero-v2.jpg')", filter: 'grayscale(100%) brightness(1.05)' }}
+            style={{ backgroundImage: "url('/assets/ricky-hero-v2.jpg')", filter: 'grayscale(100%) brightness(1.2)', mixBlendMode: 'multiply' }}
           />
-          <div className="absolute inset-0 bg-[rgba(27,58,76,0.35)]" />
         </div>
-        <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] ml-[4%] mb-14 drop-shadow-[0_6px_30px_rgba(0,0,0,0.3)] brightness-0 invert" />
+        <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] ml-[4%] mb-14 drop-shadow-[0_6px_30px_rgba(0,0,0,0.3)]" style={{ mixBlendMode: 'screen' }} />
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white opacity-70">
           <span className="text-[11px] tracking-[2.5px] uppercase font-medium">Scroll</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
@@ -58,7 +57,7 @@ export default async function HomePage() {
             {showCards.map((card: any) => (
               <a key={card.id} href={card.href || '#'} className="group block transition-transform duration-500 hover:-translate-y-1.5">
                 <div className="relative w-full min-h-[520px] rounded-2xl overflow-hidden mb-6 flex items-end justify-start"
-                  style={{ backgroundImage: `url('${assetPath(card.imagePath)}')`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'grayscale(100%) brightness(1.05)' }}>
+                  style={{ backgroundImage: `url('${assetPath(card.imagePath)}')`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'grayscale(100%) brightness(1.1)', mixBlendMode: 'multiply' }}>
                   <div className="absolute inset-0 bg-[rgba(27,58,76,0.35)] pointer-events-none" />
                   <div className="relative z-10 p-10">
                     <h4 className="text-[clamp(28px,4vw,42px)] font-black text-white leading-none tracking-[-1px] uppercase mb-1.5 drop-shadow-[0_2px_14px_rgba(0,0,0,0.25)]">{card.title}</h4>
