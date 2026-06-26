@@ -132,6 +132,40 @@ body {
   50% { filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.55)); opacity: 1; }
 }
 
+/* Hero - duotone fixed background + scrolling foreground */
+.lnr-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #0F1A2E;
+}
+.lnr-bg__photo {
+  position: absolute;
+  inset: 0;
+  background: url('/assets/ricky-hero-v2.jpg') center/cover no-repeat;
+  filter: grayscale(1) contrast(1.05) brightness(0.95);
+}
+.lnr-bg__tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #1C3A5E 0%, #4A7FB5 100%);
+  mix-blend-mode: color;
+  opacity: 0.85;
+}
+.lnr-hero {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+.lnr-hero__logo {
+  width: min(82vw, 1100px);
+  height: auto;
+  opacity: 0.88;
+  pointer-events: none;
+}
+
 /* Baby blue atmospheric background — deep navy to soft sky tones */
 .textured-bg {
   position: relative;

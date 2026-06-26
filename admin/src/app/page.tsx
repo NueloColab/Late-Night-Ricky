@@ -262,21 +262,13 @@ export default async function HomePage() {
       <Navbar />
       <ScrollReveal />
 
-      {/* Hero */}
-      <section className="relative min-h-[100dvh] flex flex-col items-center justify-center px-8 md:px-14 pb-14 pt-20">
-        <div className="fixed inset-0 -z-10" style={{ backgroundColor: '#8db8d8' }}>
-          <div
-            className="absolute inset-0 bg-cover bg-no-repeat"
-            style={{
-              backgroundImage: `url('${heroImage}')`,
-              backgroundSize: heroBackgroundSize,
-              backgroundPosition: heroBackgroundPosition,
-              filter: heroGrayscale ? 'grayscale(100%) brightness(1.3)' : 'none',
-              mixBlendMode: 'multiply',
-            }}
-          />
-        </div>
-        <img src={heroLogo} alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] mx-auto mb-14 drop-shadow-[0_6px_30px_rgba(0,0,0,0.3)] brightness-0 invert" />
+      {/* Hero - static background + scrolling foreground */}
+      <div className="lnr-bg" aria-hidden="true">
+        <div className="lnr-bg__photo" />
+        <div className="lnr-bg__tint" />
+      </div>
+      <section className="lnr-hero">
+        <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="lnr-hero__logo" />
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white opacity-70">
           <span className="text-[11px] tracking-[2.5px] uppercase font-medium">Scroll</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
@@ -284,7 +276,7 @@ export default async function HomePage() {
       </section>
 
       {/* Video / Showreel */}
-      <section id="video" className="relative w-full min-h-screen overflow-hidden bg-[#0d1f3d] flex items-center justify-center z-[1]">
+      <section id="video" className="relative z-[1] bg-[#0d1f3d] w-full min-h-screen overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-b from-[rgba(17,17,17,0.3)] via-transparent to-[rgba(17,17,17,0.3)] z-[2] pointer-events-none" />
         <div className="relative z-[3] text-center flex flex-col items-center gap-8">
           <a href="/showreel" className="inline-block px-12 py-4 border-2 border-white rounded-full bg-transparent text-white text-sm font-semibold uppercase tracking-[2.5px] hover:bg-white hover:text-[#111] transition">
