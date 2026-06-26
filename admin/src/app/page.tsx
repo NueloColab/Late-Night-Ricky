@@ -264,14 +264,14 @@ export default async function HomePage() {
 
       {/* Hero */}
       <section className="relative min-h-[100dvh] flex flex-col items-center justify-center px-8 md:px-14 pb-14 pt-20">
-        <div className="fixed inset-0 -z-10" style={{ backgroundColor: '#2a5080' }}>
+        <div className="fixed inset-0 -z-10" style={{ backgroundColor: '#8db8d8' }}>
           <div
             className="absolute inset-0 bg-cover bg-no-repeat"
             style={{
               backgroundImage: `url('${heroImage}')`,
               backgroundSize: heroBackgroundSize,
               backgroundPosition: heroBackgroundPosition,
-              filter: heroGrayscale ? 'grayscale(100%) brightness(1.15)' : 'none',
+              filter: heroGrayscale ? 'grayscale(100%) brightness(1.3)' : 'none',
               mixBlendMode: 'multiply',
             }}
           />
