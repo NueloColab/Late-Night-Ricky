@@ -30,7 +30,7 @@ const DEFAULT_SHOWS = [
   },
   {
     href: '/show-gin-juice',
-    image: '/assets/ricky-radio-new.jpg',
+    image: '/assets/press-bg2.jpg',
     venue: 'Ibiza Rocks',
     location: 'Ibiza',
     season: 'Spring / Summer 2024',
@@ -39,7 +39,7 @@ const DEFAULT_SHOWS = [
   },
   {
     href: '/show-abu-dhabi',
-    image: '/assets/press-bg2.jpg',
+    image: '/assets/ricky-hero-v2.jpg',
     venue: 'Skyline Festival',
     location: 'International',
     season: 'Autumn / Winter 2024',
@@ -290,7 +290,7 @@ export default async function HomePage() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          SHOW CARDS — Stacking on scroll (replaces carousel + collage)
+          SHOW CARDS — Editorial vertical layout with scroll reveal
           ══════════════════════════════════════════════════════════════ */}
       {shows.length > 0 && (
         <section className="reveal relative z-10 lnr-cream-bg pb-32 md:pb-44">
@@ -300,43 +300,48 @@ export default async function HomePage() {
             </h2>
           </div>
 
-          <div className="lnr-card-stack">
-            {shows.slice(0, 6).map((card: any) => (
-              <a
+          <div className="max-w-[900px] mx-auto px-6 flex flex-col gap-28 md:gap-36">
+            {shows.slice(0, 6).map((card: any, idx: number) => (
+              <div
                 key={card.id || card.title}
-                href={card.href || '#'}
-                className="lnr-card group"
+                className="reveal"
+                style={{ transitionDelay: `${idx * 100}ms` }}
               >
-                <div className="relative w-full" style={{ aspectRatio: '4/5' }}>
-                  <img
-                    src={assetPath(card.image)}
-                    alt={card.title}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    style={{ filter: 'grayscale(100%)' }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e17]/80 via-[#0a0e17]/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
-                    <span className="text-[10px] tracking-[3px] uppercase font-semibold text-white/70 mb-3 block">
-                      {card.season}
-                    </span>
-                    <h3 className="font-serif italic text-[clamp(28px,4vw,48px)] font-normal text-white leading-[1.1] mb-2">
-                      {card.title}
-                    </h3>
-                    <p className="text-[12px] tracking-[1.5px] uppercase font-semibold text-white/60">
-                      {card.venue}{card.location ? ` — ${card.location}` : ''}
-                    </p>
+                <a
+                  href={card.href || '#'}
+                  className="lnr-show-card group"
+                >
+                  <div className="relative w-full" style={{ aspectRatio: '4/5' }}>
+                    <img
+                      src={assetPath(card.image)}
+                      alt={card.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      style={{ filter: 'grayscale(100%)' }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e17]/80 via-[#0a0e17]/20 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
+                      <span className="text-[10px] tracking-[3px] uppercase font-semibold text-white/70 mb-3 block">
+                        {card.season}
+                      </span>
+                      <h3 className="font-serif italic text-[clamp(28px,4vw,48px)] font-normal text-white leading-[1.1] mb-2">
+                        {card.title}
+                      </h3>
+                      <p className="text-[12px] tracking-[1.5px] uppercase font-semibold text-white/60">
+                        {card.venue}{card.location ? ` — ${card.location}` : ''}
+                      </p>
+                    </div>
+                    <div className="absolute top-6 right-6 w-12 h-12 rounded-full border-2 border-white/30 flex items-center justify-center group-hover:border-white group-hover:bg-white transition-all duration-300">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="group-hover:stroke-[#0a0e17] transition-colors">
+                        <path d="M7 17L17 7M17 7H7M17 7v10" />
+                      </svg>
+                    </div>
                   </div>
-                  <div className="absolute top-6 right-6 w-12 h-12 rounded-full border-2 border-white/30 flex items-center justify-center group-hover:border-white group-hover:bg-white transition-all duration-300">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="group-hover:stroke-[#0a0e17] transition-colors">
-                      <path d="M7 17L17 7M17 7H7M17 7v10" />
-                    </svg>
-                  </div>
-                </div>
-              </a>
+                </a>
+              </div>
             ))}
           </div>
 
-          <div className="text-center mt-16">
+          <div className="text-center mt-20 md:mt-28">
             <a href="/shows" className="lnr-pill-btn lnr-pill-btn-outline text-[#0a0e17] border-[#0a0e17] hover:bg-[#0a0e17] hover:text-white">
               View All Shows
             </a>
@@ -347,7 +352,7 @@ export default async function HomePage() {
       {/* ══════════════════════════════════════════════════════════════
           QUOTE / TESTIMONIAL — Deep navy, serif italic (replaces collage)
           ══════════════════════════════════════════════════════════════ */}
-      <section className="reveal textured-bg relative z-10 py-32 md:py-44">
+      <section className="reveal textured-bg lnr-section-divider relative z-10 py-32 md:py-44">
         <div className="relative z-10 max-w-[800px] mx-auto px-6 text-center">
           <p className="font-serif italic text-[clamp(28px,4vw,48px)] font-normal text-white leading-[1.2] mb-8">
             &ldquo;{partnersQuote}&rdquo;
@@ -375,7 +380,7 @@ export default async function HomePage() {
       {/* ══════════════════════════════════════════════════════════════
           CLIENTS GRID — Static editorial grid (replaces client marquee)
           ══════════════════════════════════════════════════════════════ */}
-      <section className="reveal relative z-10 lnr-cream-bg py-32 md:py-44">
+      <section className="reveal relative z-10 lnr-cream-bg lnr-section-divider py-32 md:py-44">
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="text-center mb-16 md:mb-20">
             <h2 className="font-serif italic text-[clamp(36px,5vw,56px)] font-normal text-[#0a0e17] leading-tight mb-4">
@@ -402,7 +407,7 @@ export default async function HomePage() {
       {/* ══════════════════════════════════════════════════════════════
           RADIO — CMS-driven, kept from v231 (heading tweaked to serif)
           ══════════════════════════════════════════════════════════════ */}
-      <section id="radio" className="reveal textured-bg relative z-10 pt-32 pb-28 md:py-28">
+      <section id="radio" className="reveal textured-bg lnr-section-divider relative z-10 pt-32 pb-28 md:py-28">
         <div className="relative z-10 max-w-[1200px] mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative overflow-hidden rounded-2xl">
