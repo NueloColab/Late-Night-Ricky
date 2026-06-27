@@ -118,6 +118,8 @@ export default async function HomePage() {
   let heroGrayscale = true;
   let heroBackgroundSize = 'cover';
   let heroBackgroundPosition = '70% center';
+  let videoPoster = '/assets/video-poster-desktop.jpg';
+  let videoSrc = '/assets/video-desktop.mp4';
   let radioImage = '/assets/ricky-radio-new.jpg';
   let radioHeadline = 'As Heard On';
   let radioLabel = 'Music & Radio';
@@ -135,7 +137,7 @@ export default async function HomePage() {
   let reachOutImage = '/assets/ricky-hero-new.jpg';
   let reachOutCta = 'Get in touch';
   // Suppress unused-variable warnings for CMS values not yet used in new layout
-  void heroLogo; void heroGrayscale; void heroBackgroundSize; void heroBackgroundPosition; void reachOutImage; void reachOutCta;
+  void heroGrayscale; void heroBackgroundSize; void heroBackgroundPosition; void reachOutImage; void reachOutCta;
   try {
     const [dbCards, dbNames, dbVenues, dbTracks, dbSections] = await Promise.all([
       getShowCards(), getClientNames(), getVenueTicker(), getTracks(), getSiteSections('home'),
@@ -149,6 +151,12 @@ export default async function HomePage() {
         if (c.grayscale !== undefined) heroGrayscale = c.grayscale;
         if (c.backgroundSize) heroBackgroundSize = c.backgroundSize;
         if (c.backgroundPosition) heroBackgroundPosition = c.backgroundPosition;
+      }
+      const videoSection = dbSections.find((s: any) => s.section === 'video');
+      if (videoSection?.content) {
+        const c = typeof videoSection.content === 'string' ? JSON.parse(videoSection.content) : videoSection.content;
+        if (c.poster) videoPoster = c.poster;
+        if (c.src) videoSrc = c.src;
       }
       const radioSection = dbSections.find((s: any) => s.section === 'radio');
       if (radioSection?.content) {
@@ -215,12 +223,22 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ SHOWREEL — outlined text over video ═══ */}
+      {/* ═══ SHOWREEL — outlined text over video (bright, visible) ═══ */}
       <section className="garrix-showreel">
-        <video className="garrix-showreel-video" autoPlay loop muted playsInline poster="/assets/video-poster-desktop.jpg">
-          <source src="/assets/video-desktop.mp4" type="video/mp4" />
-        </video>
-        <div className="garrix-showreel-overlay" />
+        <video
+          className="garrix-showreel-video"
+          src={videoSrc}
+          poster={videoPoster}
+          playsInline
+          autoPlay
+          muted
+          loop
+          preload="auto"
+          controls={false}
+          disablePictureInPicture
+          disableRemotePlayback
+        />
+        <div className="garrix-showreel-gradient" />
         <div className="garrix-showreel-content">
           <h2 className="garrix-hero-title">LATE<br/>NIGHT<br/>RICKY</h2>
           <a href="/showreel" className="garrix-btn garrix-btn-outline">WATCH SHOWREEL</a>
