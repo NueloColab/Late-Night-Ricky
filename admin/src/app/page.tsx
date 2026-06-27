@@ -224,9 +224,8 @@ export default async function HomePage() {
     // DB unreachable — use hardcoded defaults, site works fine
   }
 
-  // Triplicate for seamless marquee loops
-  const venueRows = venues.length > 0 ? [...venues, ...venues, ...venues] : ['NO UPCOMING SHOWS'];
-  const clientRows = clients.length > 0 ? [...clients, ...clients, ...clients] : ['STAY TUNED'];
+  // venues data is fetched for future use (tour intro, etc.)
+  void venues;
 
   return (
     <>
@@ -257,147 +256,107 @@ export default async function HomePage() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          SHOWS / TOUR MARQUEE — Garrix-style outlined scrolling text
+          TOUR INTRO — Editorial serif statement (replaces venue marquee)
           ══════════════════════════════════════════════════════════════ */}
-      <section className="relative z-10 bg-[#0a0e17] py-24 md:py-32 overflow-hidden">
-        <div className="max-w-[1200px] mx-auto px-6 mb-14 md:mb-20">
-          <h2 className="text-[clamp(36px,5.5vw,64px)] font-black text-center mb-5 text-white tracking-[-2px] uppercase leading-[0.95]">
-            Selected Shows
+      <section className="reveal relative z-10 lnr-cream-bg py-32 md:py-44">
+        <div className="max-w-[900px] mx-auto px-6 text-center">
+          <h2
+            className="font-serif italic text-[clamp(32px,5vw,56px)] font-normal text-[#0a0e17] leading-[1.15] mb-8"
+            style={{ transitionDelay: '0ms' }}
+          >
+            From London to New York / Dubai to Ibiza / Las Vegas to Monaco and beyond
           </h2>
-          <p className="text-center text-sm text-[#6B8FAB] max-w-[600px] mx-auto leading-relaxed font-semibold uppercase tracking-[0.5px]">
-            From stadium tours to private celebrations — every set tells a story.
+          <p
+            className="text-[13px] tracking-[2px] uppercase font-semibold text-[#6B8FAB] mb-10"
+            style={{ transitionDelay: '150ms' }}
+          >
+            150+ shows worldwide. The UK&apos;s most in-demand DJ.
           </p>
-        </div>
-
-        {/* Row 1 */}
-        <div className="marquee-row mb-4 md:mb-6">
-          <div className="marquee-row-inner" style={{ animationDuration: '30s' }}>
-            {venueRows.map((venue: any, i: number) => (
-              <span key={i} className="marquee-venue-text">
-                {typeof venue === 'string' ? venue : venue.name}
-              </span>
-            ))}
+          <div
+            className="w-16 h-px bg-[#0a0e17]/20 mx-auto mb-6"
+            style={{ transitionDelay: '300ms' }}
+          />
+          <div
+            className="flex justify-center"
+            style={{ transitionDelay: '450ms' }}
+          >
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0a0e17" strokeWidth="1.5" className="opacity-40">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 8v8M8 12l4-4 4 4" />
+            </svg>
           </div>
-        </div>
-
-        {/* Row 2 — reverse */}
-        <div className="marquee-row mb-4 md:mb-6">
-          <div className="marquee-row-inner marquee-reverse" style={{ animationDuration: '35s' }}>
-            {venueRows.map((venue: any, i: number) => (
-              <span key={i} className="marquee-venue-text">
-                {typeof venue === 'string' ? venue : venue.name}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Row 3 */}
-        <div className="marquee-row mb-14 md:mb-20">
-          <div className="marquee-row-inner" style={{ animationDuration: '28s' }}>
-            {venueRows.map((venue: any, i: number) => (
-              <span key={i} className="marquee-venue-text">
-                {typeof venue === 'string' ? venue : venue.name}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="text-center">
-          <a href="/shows" className="btn-sharp-white">
-            View All Shows
-          </a>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          SHOW CARDS — Horizontal scrolling carousel (CMS-driven)
+          SHOW CARDS — Stacking on scroll (replaces carousel + collage)
           ══════════════════════════════════════════════════════════════ */}
       {shows.length > 0 && (
-        <section className="relative z-10 bg-white py-24 md:py-32 overflow-hidden">
-          <div className="max-w-[1200px] mx-auto px-6 mb-10 md:mb-14">
-            <h2 className="text-[clamp(28px,4vw,48px)] font-black text-[#111] tracking-[-1.5px] uppercase">
-              Recent Highlights
+        <section className="reveal relative z-10 lnr-cream-bg pb-32 md:pb-44">
+          <div className="max-w-[900px] mx-auto px-6 mb-16 md:mb-20 text-center">
+            <h2 className="font-serif italic text-[clamp(36px,5vw,56px)] font-normal text-[#0a0e17] leading-tight">
+              Selected Shows
             </h2>
           </div>
-          <div className="show-cards-scroll">
-            {shows.map((card: any) => (
-              <a key={card.id || card.title} href={card.href || '#'} className="show-card-item group">
-                <div
-                  className="show-card-image"
-                  style={{ backgroundImage: `url('${assetPath(card.image)}')` }}
-                >
-                  <div className="show-card-overlay" />
-                  <div className="show-card-info">
-                    <h4 className="text-[clamp(24px,3vw,36px)] font-black text-white leading-none tracking-[-1px] uppercase mb-1 drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)]">
-                      {card.title}
-                    </h4>
-                    <span className="text-[11px] tracking-[3px] uppercase text-white/80 font-semibold">
-                      {card.venue}{card.location ? ` — ${card.location}` : ''}
+
+          <div className="lnr-card-stack">
+            {shows.slice(0, 6).map((card: any) => (
+              <a
+                key={card.id || card.title}
+                href={card.href || '#'}
+                className="lnr-card group"
+              >
+                <div className="relative w-full" style={{ aspectRatio: '4/5' }}>
+                  <img
+                    src={assetPath(card.image)}
+                    alt={card.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ filter: 'grayscale(100%)' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e17]/80 via-[#0a0e17]/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
+                    <span className="text-[10px] tracking-[3px] uppercase font-semibold text-white/70 mb-3 block">
+                      {card.season}
                     </span>
+                    <h3 className="font-serif italic text-[clamp(28px,4vw,48px)] font-normal text-white leading-[1.1] mb-2">
+                      {card.title}
+                    </h3>
+                    <p className="text-[12px] tracking-[1.5px] uppercase font-semibold text-white/60">
+                      {card.venue}{card.location ? ` — ${card.location}` : ''}
+                    </p>
+                  </div>
+                  <div className="absolute top-6 right-6 w-12 h-12 rounded-full border-2 border-white/30 flex items-center justify-center group-hover:border-white group-hover:bg-white transition-all duration-300">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="group-hover:stroke-[#0a0e17] transition-colors">
+                      <path d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
                   </div>
                 </div>
-                <p className="text-[11px] text-[#6B8FAB] mt-4 mb-1 tracking-[2px] uppercase font-semibold">
-                  {card.season}
-                </p>
-                <h3 className="text-[clamp(16px,2vw,22px)] font-black leading-tight text-[#111] tracking-[-0.5px] uppercase">
-                  {card.title}
-                </h3>
               </a>
             ))}
+          </div>
+
+          <div className="text-center mt-16">
+            <a href="/shows" className="lnr-pill-btn lnr-pill-btn-outline text-[#0a0e17] border-[#0a0e17] hover:bg-[#0a0e17] hover:text-white">
+              View All Shows
+            </a>
           </div>
         </section>
       )}
 
       {/* ══════════════════════════════════════════════════════════════
-          PHOTO COLLAGE — Asymmetric editorial scatter
+          QUOTE / TESTIMONIAL — Deep navy, serif italic (replaces collage)
           ══════════════════════════════════════════════════════════════ */}
-      <section className="relative z-10 bg-[#0a0e17] py-24 md:py-36 overflow-hidden">
-        {/* Ghost watermark */}
-        <div className="collage-watermark" aria-hidden="true">
-          LATE NIGHT RICKY
-        </div>
-
-        <div className="collage-container">
-          {/* 1 — Portrait (large, top-left) */}
-          <div className="collage-photo collage-photo-1">
-            <img src="/assets/ricky-hero-new.jpg" alt="Late Night Ricky" />
-            <div className="collage-quote">
-              <p>&ldquo;Music is the only thing that makes sense&rdquo;</p>
-            </div>
-          </div>
-
-          {/* 2 — DJing (right, medium) */}
-          <div className="collage-photo collage-photo-2">
-            <img src="/assets/ricky-fricktion.jpg" alt="Ricky DJing" />
-          </div>
-
-          {/* 3 — Performance (center, wide) */}
-          <div className="collage-photo collage-photo-3">
-            <img src="/assets/press-bg2.jpg" alt="Ricky performing" />
-          </div>
-
-          {/* 4 — Carousel 1 (far right, tall) */}
-          <div className="collage-photo collage-photo-4">
-            <img src="/assets/carousel-1.jpg" alt="" />
-          </div>
-
-          {/* 5 — Radio (bottom-left, medium) */}
-          <div className="collage-photo collage-photo-5">
-            <img src="/assets/ricky-radio-new.jpg" alt="Ricky on radio" />
-            <div className="collage-quote">
-              <p>&ldquo;Every set tells a story&rdquo;</p>
-            </div>
-          </div>
-
-          {/* 6 — Carousel 2 (right, small) */}
-          <div className="collage-photo collage-photo-6">
-            <img src="/assets/carousel-2.jpg" alt="" />
-          </div>
-
-          {/* 7 — Carousel 3 (bottom-center, wide) */}
-          <div className="collage-photo collage-photo-7">
-            <img src="/assets/carousel-3.jpg" alt="" />
-          </div>
+      <section className="reveal textured-bg relative z-10 py-32 md:py-44">
+        <div className="relative z-10 max-w-[800px] mx-auto px-6 text-center">
+          <p className="font-serif italic text-[clamp(28px,4vw,48px)] font-normal text-white leading-[1.2] mb-8">
+            &ldquo;{partnersQuote}&rdquo;
+          </p>
+          <p className="text-[14px] tracking-[2px] uppercase font-semibold text-[#A8D5F0] mb-4">
+            {partnersAttribution}
+          </p>
+          <p className="text-[13px] tracking-[1px] uppercase font-semibold text-[#6B8FAB] max-w-[500px] mx-auto">
+            {partnersDescription}
+          </p>
         </div>
       </section>
 
@@ -413,50 +372,34 @@ export default async function HomePage() {
       />
 
       {/* ══════════════════════════════════════════════════════════════
-          CLIENTS / NAMES MARQUEE — Outlined scrolling text (CMS-driven)
+          CLIENTS GRID — Static editorial grid (replaces client marquee)
           ══════════════════════════════════════════════════════════════ */}
-      <section className="relative z-10 bg-[#0a0e17] py-24 md:py-32 overflow-hidden">
-        <div className="max-w-[1200px] mx-auto px-6 mb-12 md:mb-16">
-          <h2 className="text-[clamp(36px,6vw,72px)] font-black tracking-[-2px] uppercase text-white text-center">
-            {clientsTitle}
-          </h2>
-          <p className="text-sm text-[#6B8FAB] mt-4 tracking-[2px] uppercase text-center">
-            A few names we&apos;ve shared the stage with
-          </p>
-        </div>
-
-        {/* Row 1 */}
-        <div className="marquee-row mb-4 md:mb-6">
-          <div className="marquee-row-inner" style={{ animationDuration: '40s' }}>
-            {clientRows.map((c: any, i: number) => (
-              <span key={i} className="marquee-client-text">{typeof c === 'string' ? c : c.name}</span>
-            ))}
+      <section className="reveal relative z-10 lnr-cream-bg py-32 md:py-44">
+        <div className="max-w-[1200px] mx-auto px-6">
+          <div className="text-center mb-16 md:mb-20">
+            <h2 className="font-serif italic text-[clamp(36px,5vw,56px)] font-normal text-[#0a0e17] leading-tight mb-4">
+              {clientsTitle}
+            </h2>
+            <p className="text-[12px] tracking-[2px] uppercase font-semibold text-[#6B8FAB]">
+              A few names we&apos;ve shared the stage with
+            </p>
           </div>
-        </div>
-
-        {/* Row 2 — reverse */}
-        <div className="marquee-row">
-          <div className="marquee-row-inner marquee-reverse" style={{ animationDuration: '45s' }}>
-            {clientRows.map((c: any, i: number) => (
-              <span key={i} className="marquee-client-text">{typeof c === 'string' ? c : c.name}</span>
+          <div className="lnr-client-grid">
+            {clients.map((name: string, idx: number) => (
+              <div
+                key={idx}
+                className="text-[13px] tracking-[2px] uppercase font-semibold text-[#0a0e17]/70 py-3 border-b border-[#0a0e17]/10"
+                style={{ transitionDelay: `${idx * 50}ms` }}
+              >
+                {name}
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          VENUE MARQUEE — Outlined stroke text (CMS-driven)
-          ══════════════════════════════════════════════════════════════ */}
-      <section className="relative z-10 overflow-hidden bg-[#0d1f3d] py-6 md:py-8">
-        <div className="marquee-venue-track">
-          {venueRows.map((venue: any, i: number) => (
-            <span key={i} className="marquee-venue-text">{typeof venue === 'string' ? venue : venue.name}</span>
-          ))}
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          RADIO — CMS-driven, kept from v231
+          RADIO — CMS-driven, kept from v231 (heading tweaked to serif)
           ══════════════════════════════════════════════════════════════ */}
       <section id="radio" className="reveal textured-bg relative z-10 pt-32 pb-28 md:py-28">
         <div className="relative z-10 max-w-[1200px] mx-auto px-6">
@@ -471,7 +414,7 @@ export default async function HomePage() {
             </div>
             <div>
               <p className="text-xs text-[#A8D5F0] tracking-[3px] uppercase font-semibold mb-4">{radioLabel}</p>
-              <h2 className="heading text-[clamp(40px,6vw,80px)] text-white mb-5 leading-[0.95]">{radioHeadline}</h2>
+              <h2 className="font-serif italic text-[clamp(40px,6vw,80px)] font-normal text-white mb-5 leading-[0.95]">{radioHeadline}</h2>
               <p className="text-sm text-[#A8D5F0] leading-relaxed mb-10 max-w-[420px] font-semibold uppercase tracking-[0.5px]">
                 {radioDescription}
               </p>
@@ -498,9 +441,9 @@ export default async function HomePage() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          SHARE MUSIC CTA — Editorial serif over moody photo (CMS-driven)
+          SHARE MUSIC CTA — Simplified editorial serif over moody photo
           ══════════════════════════════════════════════════════════════ */}
-      <section className="relative z-10 py-36 md:py-48 overflow-hidden" style={{ backgroundColor: '#0a0e17' }}>
+      <section className="reveal relative z-10 py-36 md:py-48 overflow-hidden" style={{ backgroundColor: '#0a0e17' }}>
         <div
           className="absolute inset-0 opacity-25"
           style={{
@@ -518,22 +461,22 @@ export default async function HomePage() {
           <p className="text-[clamp(18px,2.5vw,28px)] text-[#A3B5C4] mb-12 max-w-[600px] mx-auto leading-relaxed">
             {shareMusicDescription}
           </p>
-          <a href="/share-music" className="btn-sharp-white">
+          <a href="/share-music" className="lnr-pill-btn lnr-pill-btn-white">
             Submit Your Track
           </a>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          CONTACT CTA — Editorial serif heading, sharp button (CMS-driven)
+          CONTACT CTA — Editorial serif heading, pill button
           ══════════════════════════════════════════════════════════════ */}
-      <section className="relative z-10 bg-[#0a0e17] text-white py-28 md:py-36">
+      <section className="reveal relative z-10 bg-[#0a0e17] text-white py-28 md:py-36">
         <div className="max-w-[1200px] mx-auto px-6 grid md:grid-cols-2 gap-12 md:gap-16 items-center">
           <div>
             <h2 className="font-serif italic text-[clamp(42px,6vw,72px)] font-normal leading-tight mb-10 max-w-[500px]">
               Let&apos;s create something unforgettable
             </h2>
-            <a href="/contact" className="btn-sharp-outline">
+            <a href="/contact" className="lnr-pill-btn lnr-pill-btn-outline">
               {reachOutCta}
             </a>
           </div>
