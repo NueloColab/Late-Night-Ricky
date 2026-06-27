@@ -205,19 +205,25 @@ export default async function HomePage() {
       <Navbar />
       <ScrollReveal />
 
-      {/* ═══ HERO — outlined text over faded photo ═══ */}
-      <section className="garrix-hero">
-        <div className="garrix-hero-bg">
-          <img src={heroImage} alt="" />
+      {/* ═══ HERO — original LNR hero with logo ═══ */}
+      <section className="lnr-hero">
+        <div className="lnr-hero-bg" style={{ backgroundImage: `url('${heroImage}')`, backgroundSize: heroBackgroundSize, backgroundPosition: heroBackgroundPosition, filter: heroGrayscale ? 'grayscale(100%) brightness(1.3)' : 'none', mixBlendMode: 'multiply' }} />
+        <img src={heroLogo} alt="Late Night Ricky" className="lnr-hero-logo" />
+        <div className="lnr-hero-scroll">
+          <span>Scroll</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
         </div>
-        <div className="garrix-hero-overlay" />
-        <div className="garrix-hero-content">
-          <h1 className="garrix-hero-title">LATE<br/>NIGHT<br/>RICKY</h1>
-          <a href="#shows" className="garrix-btn garrix-btn-white">VIEW SHOWS</a>
-        </div>
-        <div className="garrix-hero-scroll">
-          <span className="garrix-hero-x">+✕</span>
-          <p>Scroll down</p>
+      </section>
+
+      {/* ═══ SHOWREEL — outlined text over video ═══ */}
+      <section className="garrix-showreel">
+        <video className="garrix-showreel-video" autoPlay loop muted playsInline poster="/assets/video-poster-desktop.jpg">
+          <source src="/assets/video-desktop.mp4" type="video/mp4" />
+        </video>
+        <div className="garrix-showreel-overlay" />
+        <div className="garrix-showreel-content">
+          <h2 className="garrix-hero-title">LATE<br/>NIGHT<br/>RICKY</h2>
+          <a href="/showreel" className="garrix-btn garrix-btn-outline">WATCH SHOWREEL</a>
         </div>
       </section>
 
