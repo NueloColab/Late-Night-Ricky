@@ -210,6 +210,17 @@ export default async function HomePage() {
 
   return (
     <>
+      {/* ═══ LOADING ANIMATION ═══ */}
+      <div className="lnr-loader" id="lnr-loader">
+        <div className="lnr-loader-text">
+          {'LATE NIGHT RICKY'.split('').map((char, i) => (
+            <span key={i} className="lnr-loader-char" style={{ animationDelay: `${i * 0.05 + 0.3}s` }}>
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
+        </div>
+      </div>
+
       <Navbar />
       <ScrollReveal />
 
