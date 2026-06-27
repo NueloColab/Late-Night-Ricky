@@ -226,6 +226,7 @@ export default async function HomePage() {
 
   // venues data is fetched for future use (tour intro, etc.)
   void venues;
+  void reachOutImage;
 
   return (
     <>
@@ -441,58 +442,41 @@ export default async function HomePage() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          SHARE MUSIC CTA — Simplified editorial serif over moody photo
+          CONTACT — Unified section: heading, form, music submission
           ══════════════════════════════════════════════════════════════ */}
-      <section className="reveal relative z-10 py-36 md:py-48 overflow-hidden" style={{ backgroundColor: '#0a0e17' }}>
-        <div
-          className="absolute inset-0 opacity-25"
-          style={{
-            backgroundImage: "url('/assets/press-bg2.jpg')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'grayscale(100%)',
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e17]/60 via-transparent to-[#0a0e17]/60" />
-        <div className="relative z-10 max-w-[800px] mx-auto px-6 text-center">
-          <h2 className="font-serif italic text-[clamp(36px,5vw,64px)] font-normal text-white leading-tight mb-6">
-            {shareMusicHeadline}
-          </h2>
-          <p className="text-[clamp(18px,2.5vw,28px)] text-[#A3B5C4] mb-12 max-w-[600px] mx-auto leading-relaxed">
-            {shareMusicDescription}
-          </p>
-          <a href="/share-music" className="lnr-pill-btn lnr-pill-btn-white">
-            Submit Your Track
-          </a>
-        </div>
-      </section>
-
       {/* ══════════════════════════════════════════════════════════════
-          CONTACT CTA — Editorial serif heading, pill button
+          CONTACT — Unified: CTA heading + music submission + form
           ══════════════════════════════════════════════════════════════ */}
-      <section className="reveal relative z-10 bg-[#0a0e17] text-white py-28 md:py-36">
-        <div className="max-w-[1200px] mx-auto px-6 grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-          <div>
-            <h2 className="font-serif italic text-[clamp(42px,6vw,72px)] font-normal leading-tight mb-10 max-w-[500px]">
-              Let&apos;s create something unforgettable
-            </h2>
-            <a href="/contact" className="lnr-pill-btn lnr-pill-btn-outline">
-              {reachOutCta}
-            </a>
-          </div>
-          <div className="relative overflow-hidden">
-            <img
-              src={reachOutImage}
-              alt="Late Night Ricky"
-              className="w-full h-auto object-cover grayscale"
-            />
+      <section className="reveal relative z-10 bg-[#0a0e17] text-white">
+        <div className="max-w-[1200px] mx-auto px-6 py-28 md:py-36">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center mb-16 md:mb-20">
+            <div>
+              <h2 className="font-serif italic text-[clamp(42px,6vw,72px)] font-normal leading-tight mb-6 max-w-[500px]">
+                Let&apos;s create something unforgettable
+              </h2>
+              <p className="text-[15px] text-white/60 mb-10 max-w-[420px] leading-relaxed">
+                {shareMusicDescription}
+              </p>
+              <div className="flex gap-4 flex-wrap">
+                <a href="/contact" className="lnr-pill-btn lnr-pill-btn-outline">
+                  {reachOutCta}
+                </a>
+                <a href="/share-music" className="lnr-pill-btn lnr-pill-btn-outline text-white/70 border-white/30 hover:border-white hover:text-white">
+                  Submit Your Music
+                </a>
+              </div>
+            </div>
+            <div className="relative overflow-hidden">
+              <img
+                src={reachOutImage}
+                alt="Late Night Ricky"
+                className="w-full h-auto object-cover grayscale"
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════
-          CONTACT FORM — CMS-driven, kept from v231
-          ══════════════════════════════════════════════════════════════ */}
       <HomeContactSection />
 
       <Footer />
