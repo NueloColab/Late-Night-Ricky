@@ -462,7 +462,7 @@ export default async function HomePage() {
                   {reachOutCta}
                 </a>
                 <a href="/share-music" className="lnr-pill-btn lnr-pill-btn-outline text-white/70 border-white/30 hover:border-white hover:text-white">
-                  Submit Your Music
+                  {shareMusicHeadline}
                 </a>
               </div>
             </div>
