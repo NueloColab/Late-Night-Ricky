@@ -269,7 +269,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .garrix-showreel-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(17, 17, 17, 0.3) 0%, transparent 30%, transparent 70%, rgba(17, 17, 17, 0.3) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.15) 25%, rgba(0, 0, 0, 0.15) 75%, rgba(0, 0, 0, 0.4) 100%);
   z-index: 1;
   pointer-events: none;
 }
@@ -330,11 +330,12 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   letter-spacing: -0.02em;
   text-transform: uppercase;
   line-height: 0.85;
-  -webkit-text-stroke: var(--stroke) rgba(255, 255, 255, 0.9);
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.9);
   -webkit-text-fill-color: transparent;
   color: transparent;
   margin-bottom: 0;
   margin-top: -5vh;
+  filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 60px rgba(0, 0, 0, 0.3));
 }
 
 .garrix-hero-scroll {
