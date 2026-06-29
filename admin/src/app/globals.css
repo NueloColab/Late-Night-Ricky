@@ -322,7 +322,6 @@ html {
 }
 
 .lnr-page-wrapper {
-  overflow-x: clip;
 }
 
 body {
@@ -751,19 +750,25 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   text-decoration: none;
   color: #fff;
   display: block;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
   position: sticky;
   top: 20px;
   z-index: 10;
   margin-bottom: 40px;
+  will-change: transform;
 }
 
 .lnr-highlights-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
 }
+
+/* Stacking z-index: later cards stack on top */
+.lnr-highlights-card:nth-child(1) { z-index: 1; }
+.lnr-highlights-card:nth-child(2) { z-index: 2; }
+.lnr-highlights-card:nth-child(3) { z-index: 3; }
+.lnr-highlights-card:nth-child(4) { z-index: 4; }
 
 .lnr-highlights-card-img {
   position: relative;
