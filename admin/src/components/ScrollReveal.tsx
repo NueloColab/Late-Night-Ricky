@@ -93,8 +93,26 @@ export default function ScrollReveal() {
       });
     }
 
+    // Venue highlight rotation
+    const venueRows = document.querySelectorAll('.garrix-venues-row');
+    const highlightInterval = setInterval(() => {
+      venueRows.forEach((row) => {
+        const spans = row.querySelectorAll('span:not(.garrix-venues-dot)');
+        // Remove existing highlights
+        spans.forEach((s) => s.classList.remove('garrix-venues-highlight'));
+        // Pick 2-3 random venues to highlight
+        const count = Math.floor(Math.random() * 2) + 2; // 2 or 3
+        const indices = new Set<number>();
+        while (indices.size < count && indices.size < spans.length) {
+          indices.add(Math.floor(Math.random() * spans.length));
+        }
+        indices.forEach((i) => spans[i]?.classList.add('garrix-venues-highlight'));
+      });
+    }, 2500);
+
     return () => {
       window.removeEventListener('scroll', onScroll);
+      clearInterval(highlightInterval);
     };
   }, []);
 
