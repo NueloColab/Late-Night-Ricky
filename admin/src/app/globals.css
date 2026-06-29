@@ -968,10 +968,17 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   justify-content: center;
 }
 
-.lnr-trusted-bg-wrapper {
+/* Contained image — sits behind text, not full bleed (like Garrix reference) */
+.lnr-trusted-bg-container {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 55%;
+  height: 65%;
   z-index: 1;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .lnr-trusted-bg {
@@ -979,19 +986,13 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   inset: 0;
   background-size: cover;
   background-position: center;
-  filter: grayscale(100%) brightness(0.5) contrast(1.2);
-}
-
-.lnr-trusted-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: linear-gradient(180deg, rgba(10,14,23,0.7) 0%, rgba(10,14,23,0.5) 50%, rgba(10,14,23,0.8) 100%);
+  filter: grayscale(60%) brightness(0.65) contrast(1.15);
+  transition: opacity 0.5s ease;
 }
 
 .lnr-trusted-content {
   position: relative;
-  z-index: 3;
+  z-index: 2;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
@@ -1057,12 +1058,24 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   border: none;
   white-space: nowrap;
   position: relative;
+  /* Default: outlined stroke text */
+  color: transparent;
+  -webkit-text-stroke: clamp(1px, 0.2vw, 2px) rgba(255, 255, 255, 0.3);
+  transition: color 0.3s ease, -webkit-text-stroke 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .lnr-client-name:hover {
-  color: #fff !important;
-  -webkit-text-stroke: 0px #fff !important;
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+  -webkit-text-stroke: 0px transparent;
+  transform: scale(1.03);
+}
+
+/* Active state: BOLD, solid white fill, thick stroke outline */
+.lnr-client-name-active {
+  color: #fff;
+  -webkit-text-stroke: clamp(1px, 0.15vw, 2px) #fff;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.2), 0 0 80px rgba(255, 255, 255, 0.08);
+  transform: scale(1.08);
 }
 
 .lnr-client-name:focus-visible {
@@ -1075,6 +1088,11 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .lnr-trusted-section {
     min-height: auto;
     padding: 60px 0 80px;
+  }
+  .lnr-trusted-bg-container {
+    width: 80%;
+    height: 40%;
+    top: 35%;
   }
   .lnr-trusted-row {
     overflow-x: auto;

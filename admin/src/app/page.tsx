@@ -255,6 +255,14 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ═══ TRUSTED BY THE BEST — interactive names with background ═══ */}
+      <TrustedBySection
+        quote={partnersQuote}
+        attribution={partnersAttribution}
+        description={partnersDescription}
+        clients={clients}
+      />
+
       {/* ═══ HIGHLIGHTS — stacking cards with vertical label ═══ */}
       {shows.length > 0 && (
         <section className="garrix-section garrix-highlights-section">
@@ -313,14 +321,6 @@ export default async function HomePage() {
       <div className="garrix-life-banner">
         <h2>LATE NIGHT RICKY</h2>
       </div>
-
-      {/* ═══ TRUSTED BY THE BEST — interactive names with background ═══ */}
-      <TrustedBySection
-        quote={partnersQuote}
-        attribution={partnersAttribution}
-        description={partnersDescription}
-        clients={clients}
-      />
 
       {/* ═══ RADIO ═══ */}
       <section id="radio" className="garrix-section garrix-radio-section">

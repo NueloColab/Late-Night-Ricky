@@ -46,15 +46,15 @@ export default function TrustedBySection({
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
-  void _clients;
   const items = DEFAULT_CLIENTS_WITH_IMAGES;
+  void _clients;
   const displayIndex = hoverIndex !== null ? hoverIndex : activeIndex;
 
   const handleSelect = useCallback((index: number) => {
     setActiveIndex(index);
   }, []);
 
-  // Auto-rotate every 3 seconds
+  // Auto-rotate every 3.5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % items.length);
@@ -62,7 +62,7 @@ export default function TrustedBySection({
     return () => clearInterval(timer);
   }, [items.length]);
 
-  // Split into 3 rows for the Garrix-style layout
+  // Split into 3 rows
   const row1 = items.slice(0, Math.ceil(items.length / 3));
   const row2 = items.slice(Math.ceil(items.length / 3), Math.ceil(items.length / 3) + Math.ceil(items.length / 3));
   const row3 = items.slice(Math.ceil(items.length / 3) + Math.ceil(items.length / 3));
@@ -72,18 +72,7 @@ export default function TrustedBySection({
     return (
       <button
         key={`${item.name}-${globalIndex}`}
-        className="lnr-client-name"
-        style={{
-          color: isActive ? '#fff' : 'transparent',
-          WebkitTextStroke: isActive ? '0px #fff' : 'clamp(1px, 0.15vw, 2px) rgba(255,255,255,0.35)',
-          transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
-          cursor: 'pointer',
-          background: 'none',
-          border: 'none',
-          padding: '0 clamp(8px, 1.5vw, 24px)',
-          font: 'inherit',
-          whiteSpace: 'nowrap' as const,
-        }}
+        className={`lnr-client-name ${isActive ? 'lnr-client-name-active' : ''}`}
         onMouseEnter={() => setHoverIndex(globalIndex)}
         onMouseLeave={() => setHoverIndex(null)}
         onClick={() => handleSelect(globalIndex)}
@@ -95,23 +84,19 @@ export default function TrustedBySection({
 
   return (
     <section id="trusted" className="lnr-trusted-section">
-      {/* Background image — crossfades on selection */}
-      <div className="lnr-trusted-bg-wrapper">
+      {/* Contained background image — sits behind text like Garrix reference */}
+      <div className="lnr-trusted-bg-container">
         {items.map((item, i) => (
           <div
             key={`bg-${item.name}`}
             className="lnr-trusted-bg"
             style={{
               backgroundImage: `url('${item.image}')`,
-              opacity: displayIndex === i ? 0.25 : 0,
-              transition: 'opacity 0.6s ease',
+              opacity: displayIndex === i ? 1 : 0,
             }}
           />
         ))}
       </div>
-
-      {/* Dark overlay */}
-      <div className="lnr-trusted-overlay" />
 
       {/* Content */}
       <div className="lnr-trusted-content">
@@ -121,7 +106,7 @@ export default function TrustedBySection({
           <p className="lnr-trusted-attribution">&mdash; {attribution}. {description}</p>
         </div>
 
-        {/* Client name rows — Garrix-style interactive carousel */}
+        {/* Client name rows */}
         <div className="lnr-trusted-names">
           <div className="lnr-trusted-row">
             {row1.map((item, i) => renderItem(item, i))}
