@@ -175,7 +175,6 @@ export default function TrustedBySection({
           <div className="lnr-partner-logo"><img src="/assets/logo-mf-boxing.png" alt="MF Boxing" /></div>
           <div className="lnr-partner-logo"><img src="/assets/logo-cannes.png" alt="Festival de Cannes" /></div>
           <div className="lnr-partner-logo"><img src="/assets/logo-cartier.png" alt="Cartier" /></div>
-          <div className="lnr-partner-logo"><img src="/assets/apple-logo.png" alt="Apple Music" /></div>
         </div>
       </div>
     </section>
