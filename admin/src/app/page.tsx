@@ -179,7 +179,7 @@ export default async function HomePage() {
   return (
     <>
       {/* ═══ LOADING ANIMATION ═══ */}
-      <Loader />
+      {/* Loader disabled temporarily */}
 
       <Navbar />
       <ScrollReveal />
