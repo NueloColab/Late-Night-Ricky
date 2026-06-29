@@ -383,6 +383,8 @@ export default async function HomePage() {
 
       {/* ═══ LIFE IS CRAZY — outlined text banner ═══ */}
       <div className="garrix-life-banner">
+        <p className="garrix-life-quote">&ldquo;{partnersQuote}&rdquo;</p>
+        <p className="garrix-life-attribution">&mdash; {partnersAttribution}</p>
         <h2>LATE NIGHT RICKY</h2>
       </div>
 

@@ -92,18 +92,6 @@ export default function TrustedBySection({
       <div className="lnr-trusted-label">ARTISTS</div>
       <div className="lnr-trusted-line" />
 
-      {/* TOP: header + quote in black space above image */}
-      <div className="lnr-trusted-top">
-        <p className="lnr-trusted-header">{description}</p>
-        <div className="lnr-trusted-quote">
-          <h2 className="lnr-trusted-quote-text">&ldquo;{quote}&rdquo;</h2>
-          <p className="lnr-trusted-attribution">
-            <span className="lnr-trusted-attribution-dash">&mdash;</span>
-            <span className="lnr-trusted-attribution-name">{attribution}</span>
-          </p>
-        </div>
-      </div>
-
       {/* MIDDLE: image behind carousel names */}
       <div className="lnr-trusted-middle">
         <div className="lnr-trusted-bg-container">

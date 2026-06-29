@@ -1017,6 +1017,30 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   z-index: 0;
 }
 
+.garrix-life-quote {
+  position: relative;
+  z-index: 1;
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: clamp(20px, 3vw, 40px);
+  font-weight: 700;
+  font-style: italic;
+  color: #fff;
+  line-height: 1.3;
+  margin: 0 0 8px 0;
+}
+
+.garrix-life-attribution {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: clamp(12px, 1.2vw, 16px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 clamp(30px, 5vh, 60px) 0;
+}
+
 .garrix-life-banner h2 {
   position: relative;
   z-index: 1;
@@ -1364,56 +1388,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   height: 30vh;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), transparent);
   z-index: 10;
-}
-
-/* TOP: header + quote in black space */
-.lnr-trusted-top {
-  position: relative;
-  z-index: 5;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto clamp(30px, 5vh, 60px) auto;
-}
-
-.lnr-trusted-header {
-  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
-  font-size: clamp(10px, 1.1vw, 13px);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.45);
-  margin: 0 0 clamp(16px, 3vh, 32px) 0;
-}
-
-.lnr-trusted-quote-text {
-  font-family: 'Playfair Display', 'Georgia', serif;
-  font-size: clamp(28px, 4vw, 56px);
-  font-weight: 700;
-  font-style: italic;
-  color: #fff;
-  line-height: 1.2;
-  margin: 0 0 16px 0;
-}
-
-.lnr-trusted-attribution {
-  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
-  font-size: clamp(11px, 1.2vw, 14px);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0;
-}
-
-.lnr-trusted-attribution-dash {
-  margin-right: 6px;
-}
-
-.lnr-trusted-attribution-name {
-  color: #D4AF37;
-  font-size: clamp(14px, 1.8vw, 22px);
-  font-weight: 700;
-  letter-spacing: 0.08em;
 }
 
 /* MIDDLE: image behind carousel names */
