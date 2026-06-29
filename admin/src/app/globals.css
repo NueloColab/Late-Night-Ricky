@@ -659,7 +659,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* ── HIGHLIGHTS — Garrix-style 2-column release grid ──── */
 .lnr-highlights {
   background: #fff;
-  padding: clamp(80px, 12vw, 160px) clamp(40px, 8vw, 120px) clamp(80px, 20vw, 300px);
+  padding: clamp(80px, 12vw, 160px) clamp(40px, 8vw, 120px);
 }
 
 .lnr-highlights-header {
@@ -708,9 +708,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   gap: 0;
 }
 
-.lnr-highlights-col > .lnr-highlights-card + .lnr-highlights-card {
-  margin-top: 24px;
-}
+/* card spacing handled by margin-bottom on .lnr-highlights-card */
 
 .lnr-highlights-divider {
   width: 1px;
@@ -746,6 +744,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 20px;
+  z-index: 10;
+  margin-bottom: 40px;
 }
 
 .lnr-highlights-card:hover {
