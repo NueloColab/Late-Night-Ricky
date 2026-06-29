@@ -360,45 +360,6 @@ export default async function HomePage() {
         </section>
 
 
-      {/* ═══ COLLAGE — asymmetric scatter with ghost watermark ═══ */}
-      <section className="garrix-collage-section">
-        <div className="garrix-collage-ghost" aria-hidden="true">RICKY</div>
-        <div className="garrix-collage-ghost garrix-collage-ghost-outline" aria-hidden="true">LATE<br/>NIGHT</div>
-        <div className="garrix-collage-grid">
-          <div className="garrix-collage-photo garrix-cp-1" data-layer="layer4">
-            <img src="/assets/ricky-hero-new.jpg" alt="Late Night Ricky" />
-            <div className="garrix-collage-quote">
-              <p>&ldquo;Living life to the fullest!&rdquo;</p>
-            </div>
-          </div>
-          <div className="garrix-collage-photo garrix-cp-2" data-layer="layer3">
-            <img src="/assets/ricky-hero-v2.jpg" alt="Ricky performing" />
-          </div>
-          <div className="garrix-collage-photo garrix-cp-3" data-layer="layer2">
-            <img src="/assets/ricky-seated.jpg" alt="Ricky seated" />
-            <div className="garrix-collage-outline">LATE<br/>NIGHT</div>
-          </div>
-          <div className="garrix-collage-photo garrix-cp-4" data-layer="layer2">
-            <img src="/assets/ricky-portrait-standing.jpg" alt="" style={{ filter: 'grayscale(1) contrast(1.1)' }} />
-            <div className="garrix-collage-play">
-              <button className="garrix-play-circle" id="collage-play-btn" aria-label="Play video">
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="30" stroke="currentColor" strokeWidth="2" /><polygon points="26,18 50,32 26,46" fill="currentColor" /></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        {/* Video overlay that expands over the collage */}
-        <div className="garrix-collage-video-overlay" id="collage-video-overlay">
-          <video id="collage-video" className="garrix-collage-video" src="/assets/video-desktop.mp4" poster="/assets/ricky-portrait-standing.jpg" muted playsInline loop />
-          <button className="garrix-video-close" id="collage-video-close" aria-label="Close video">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
-          </button>
-        </div>
-        <div className="garrix-collage-caption">
-          <span className="garrix-serif">Music is the only thing that makes sense.</span>
-        </div>
-      </section>
-
       {/* ═══ VENUES — scrolling marquee ═══ */}
       <section className="garrix-venues-section">
         <div className="garrix-venues-label">WORLDWIDE PERFORMANCES</div>
@@ -498,6 +459,45 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      {/* ═══ COLLAGE — asymmetric scatter with ghost watermark ═══ */}
+      <section className="garrix-collage-section">
+        <div className="garrix-collage-ghost" aria-hidden="true">RICKY</div>
+        <div className="garrix-collage-ghost garrix-collage-ghost-outline" aria-hidden="true">LATE<br/>NIGHT</div>
+        <div className="garrix-collage-grid">
+          <div className="garrix-collage-photo garrix-cp-1" data-layer="layer4">
+            <img src="/assets/ricky-hero-new.jpg" alt="Late Night Ricky" />
+            <div className="garrix-collage-quote">
+              <p>&ldquo;Living life to the fullest!&rdquo;</p>
+            </div>
+          </div>
+          <div className="garrix-collage-photo garrix-cp-2" data-layer="layer3">
+            <img src="/assets/ricky-hero-v2.jpg" alt="Ricky performing" />
+          </div>
+          <div className="garrix-collage-photo garrix-cp-3" data-layer="layer2">
+            <img src="/assets/ricky-seated.jpg" alt="Ricky seated" />
+            <div className="garrix-collage-outline">LATE<br/>NIGHT</div>
+          </div>
+          <div className="garrix-collage-photo garrix-cp-4" data-layer="layer2">
+            <img src="/assets/ricky-portrait-standing.jpg" alt="" style={{ filter: 'grayscale(1) contrast(1.1)' }} />
+            <div className="garrix-collage-play">
+              <button className="garrix-play-circle" id="collage-play-btn" aria-label="Play video">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="30" stroke="currentColor" strokeWidth="2" /><polygon points="26,18 50,32 26,46" fill="currentColor" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        {/* Video overlay that expands over the collage */}
+        <div className="garrix-collage-video-overlay" id="collage-video-overlay">
+          <video id="collage-video" className="garrix-collage-video" src="/assets/video-desktop.mp4" poster="/assets/ricky-portrait-standing.jpg" muted playsInline loop />
+          <button className="garrix-video-close" id="collage-video-close" aria-label="Close video">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+          </button>
+        </div>
+        <div className="garrix-collage-caption">
+          <span className="garrix-serif">Music is the only thing that makes sense.</span>
+        </div>
+      </section>
+
       {/* ═══ LIFE IS CRAZY — outlined text banner ═══ */}
       <div className="garrix-life-banner">
         <p className="garrix-life-quote">&ldquo;{partnersQuote}&rdquo;</p>
