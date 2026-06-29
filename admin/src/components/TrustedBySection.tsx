@@ -56,7 +56,6 @@ export default function TrustedBySection({
     setActiveIndex(index);
   }, []);
 
-  // Auto-rotate every 3 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % items.length);
@@ -64,12 +63,10 @@ export default function TrustedBySection({
     return () => clearInterval(timer);
   }, [items.length]);
 
-  // Split 20 names across 3 rows (7 + 7 + 6)
   const row1 = items.slice(0, 7);
   const row2 = items.slice(7, 14);
   const row3 = items.slice(14, 20);
 
-  // Duplicate each row for seamless marquee loop
   const makeRow = (rowItems: ClientItem[], rowIndex: number) => {
     const doubled = [...rowItems, ...rowItems, ...rowItems];
     return doubled.map((item, i) => {
@@ -91,27 +88,13 @@ export default function TrustedBySection({
 
   return (
     <section id="trusted" className={`lnr-trusted-section ${revealClass || ''}`}>
-      {/* Background image — centred, feathered edges, frost overlay */}
-      <div className="lnr-trusted-bg-container">
-        <div className="lnr-trusted-frost" />
-        {items.map((item, i) => (
-          <div
-            key={`bg-${item.name}`}
-            className="lnr-trusted-bg"
-            style={{
-              backgroundImage: `url('${item.image}')`,
-              opacity: displayIndex === i ? 1 : 0,
-            }}
-          />
-        ))}
-      </div>
+      {/* Vertical label */}
+      <div className="lnr-trusted-label">ARTISTS</div>
+      <div className="lnr-trusted-line" />
 
-      {/* Content */}
-      <div className="lnr-trusted-content">
-        {/* Header line — sits above the image in the black space */}
+      {/* TOP: header + quote in black space above image */}
+      <div className="lnr-trusted-top">
         <p className="lnr-trusted-header">{description}</p>
-
-        {/* Quote with attribution — Ronaldo's name in gold */}
         <div className="lnr-trusted-quote">
           <h2 className="lnr-trusted-quote-text">&ldquo;{quote}&rdquo;</h2>
           <p className="lnr-trusted-attribution">
@@ -119,8 +102,24 @@ export default function TrustedBySection({
             <span className="lnr-trusted-attribution-name">{attribution}</span>
           </p>
         </div>
+      </div>
 
-        {/* Scrolling name rows — split across 3 rows, alternating direction */}
+      {/* MIDDLE: image behind carousel names */}
+      <div className="lnr-trusted-middle">
+        <div className="lnr-trusted-bg-container">
+          <div className="lnr-trusted-frost" />
+          {items.map((item, i) => (
+            <div
+              key={`bg-${item.name}`}
+              className="lnr-trusted-bg"
+              style={{
+                backgroundImage: `url('${item.image}')`,
+                opacity: displayIndex === i ? 1 : 0,
+              }}
+            />
+          ))}
+        </div>
+
         <div className="lnr-trusted-names">
           <div className="lnr-trusted-row lnr-trusted-row-forward">
             {makeRow(row1, 0)}
@@ -132,8 +131,10 @@ export default function TrustedBySection({
             {makeRow(row3, 2)}
           </div>
         </div>
+      </div>
 
-        {/* Artist Gallery pill button */}
+      {/* BOTTOM: pill in black space below image */}
+      <div className="lnr-trusted-bottom">
         <a href="/shows" className="lnr-trusted-gallery-pill">Artist Gallery</a>
       </div>
     </section>

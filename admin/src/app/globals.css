@@ -462,7 +462,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   margin: 0 auto 3.5rem;
   opacity: 0.8;
   mix-blend-mode: screen;
-  filter: brightness(0) invert(1) drop-shadow(0 4px 30px rgba(255, 255, 255, 0.3));
+  filter: brightness(0) invert(1) drop-shadow(0 4px 30px rgba(168, 213, 240, 0.4));
 }
 
 .lnr-hero-scroll {
@@ -957,6 +957,14 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   line-height: 0.85;
 }
 
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 clamp(16px, 3vh, 32px) 0;
+}
+
+  font-family: '"Playfair
 /* ── RADIO section ────────────────────────────────────────────── */
 .garrix-radio-section {
   padding: 100px 0;
@@ -1249,18 +1257,17 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* Sharp buttons (legacy) */
 .btn-sharp-white { display:inline-block; padding:16px 48px; background:#fff; color:#000; font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; text-decoration:none; transition:all 0.3s ease; }
-.lnr-trusted-section {
   position: relative;
-  min-height: 100vh;
   overflow: hidden;
   background: #0a0e17;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  min-height: 100vh;
+  padding: clamp(60px, 8vh, 100px) clamp(20px, 4vw, 60px) clamp(40px, 6vh, 80px);
 }
 
-/* Vertical section label — top left, not hidden */
-.lnr-trusted-section::before {
+/* Vertical label top-left */
   content: 'ARTISTS';
   position: absolute;
   top: clamp(20px, 4vh, 60px);
@@ -1272,13 +1279,11 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.2);
   z-index: 10;
-  white-space: nowrap;
   writing-mode: vertical-rl;
   text-orientation: mixed;
   transform: rotate(180deg);
 }
 
-.lnr-trusted-section::after {
   content: '';
   position: absolute;
   top: clamp(50px, 7vh, 100px);
@@ -1289,21 +1294,19 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   z-index: 10;
 }
 
-/* Contained image — centred, feathered edges, frost overlay */
-.lnr-trusted-bg-container {
-  position: absolute;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+/* Image container — now relative, takes up space in the flow */
+  position: relative;
   width: 60%;
-  height: 45%;
+  height: 45vh;
+  min-height: 250px;
+  margin: 0 auto;
   z-index: 1;
   overflow: hidden;
+  flex-shrink: 0;
   -webkit-mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 30%, transparent 100%);
   mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 30%, transparent 100%);
 }
 
-.lnr-trusted-bg {
   position: absolute;
   inset: 0;
   background-size: cover;
@@ -1312,36 +1315,32 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   transition: opacity 0.5s ease;
 }
 
-/* Frost overlay — subtle tint so text stands out */
-.lnr-trusted-frost {
+/* Frost overlay */
   position: absolute;
   inset: 0;
   z-index: 2;
   background: linear-gradient(
     180deg,
-    rgba(10, 14, 23, 0.6) 0%,
-    rgba(10, 14, 23, 0.3) 40%,
-    rgba(10, 14, 23, 0.35) 60%,
-    rgba(10, 14, 23, 0.65) 100%
+    rgba(10, 14, 23, 0.55) 0%,
+    rgba(10, 14, 23, 0.25) 40%,
+    rgba(10, 14, 23, 0.3) 60%,
+    rgba(10, 14, 23, 0.6) 100%
   );
   pointer-events: none;
 }
 
-.lnr-trusted-content {
+/* Content — all in flow, above/below the image */
   position: relative;
   z-index: 3;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: clamp(60px, 10vh, 120px) clamp(20px, 4vw, 60px) clamp(40px, 6vh, 80px);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0;
 }
 
-/* Header line — sits above image in black space */
-.lnr-trusted-header {
   font-family: var(--font-montserrat), 'Montserrat', sans-serif;
   font-size: clamp(10px, 1.1vw, 13px);
   font-weight: 600;
@@ -1349,16 +1348,14 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   letter-spacing: 0.2em;
   color: rgba(255, 255, 255, 0.45);
   text-align: center;
-  margin: 0 0 clamp(12px, 2vh, 24px) 0;
+  margin: 0 0 clamp(16px, 3vh, 32px) 0;
 }
 
-.lnr-trusted-quote {
   text-align: center;
   max-width: 800px;
-  margin: 0 0 clamp(20px, 3vh, 40px) 0;
+  margin: 0 0 clamp(16px, 2vh, 32px) 0;
 }
 
-.lnr-trusted-quote-text {
   font-family: 'Playfair Display', 'Georgia', serif;
   font-size: clamp(28px, 4vw, 56px);
   font-weight: 700;
@@ -1368,7 +1365,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   margin: 0 0 16px 0;
 }
 
-.lnr-trusted-attribution {
   font-family: var(--font-montserrat), 'Montserrat', sans-serif;
   font-size: clamp(11px, 1.2vw, 14px);
   font-weight: 500;
@@ -1378,18 +1374,15 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   margin: 0;
 }
 
-.lnr-trusted-attribution-dash {
   margin-right: 6px;
 }
 
-.lnr-trusted-attribution-name {
   color: #D4AF37;
   font-size: clamp(14px, 1.8vw, 22px);
   font-weight: 700;
   letter-spacing: 0.08em;
 }
 
-.lnr-trusted-names {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   display: flex;
@@ -1399,8 +1392,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   margin-top: clamp(16px, 3vh, 40px);
 }
 
-/* Scrolling rows */
-.lnr-trusted-row {
   display: flex;
   align-items: center;
   gap: 0;
@@ -1408,19 +1399,15 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   will-change: transform;
 }
 
-.lnr-trusted-row-forward {
   animation: lnr-marquee-forward 25s linear infinite;
 }
 
-.lnr-trusted-row-reverse {
   animation: lnr-marquee-reverse 20s linear infinite;
 }
 
-.lnr-trusted-row-forward-slow {
   animation: lnr-marquee-forward 30s linear infinite;
 }
 
-.lnr-trusted-row:hover {
   animation-play-state: paused;
 }
 
@@ -1434,7 +1421,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   100% { transform: translateX(0); }
 }
 
-.lnr-client-name {
   font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
   font-size: clamp(28px, 5.5vw, 72px);
   font-weight: 700;
@@ -1453,34 +1439,28 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   flex-shrink: 0;
 }
 
-.lnr-client-dot {
   display: inline-block;
   margin: 0 clamp(8px, 1.2vw, 20px);
   -webkit-text-stroke: 0;
   color: transparent;
 }
 
-.lnr-client-name:hover {
   color: rgba(255, 255, 255, 0.6);
   -webkit-text-stroke: 0px transparent;
   transform: scale(1.03);
 }
 
-/* Active state: BOLD solid white fill + stroke outline */
-.lnr-client-name-active {
   color: #fff !important;
   -webkit-text-stroke: clamp(1px, 0.15vw, 2px) #fff !important;
   text-shadow: 0 0 40px rgba(255, 255, 255, 0.2), 0 0 80px rgba(255, 255, 255, 0.08) !important;
   transform: scale(1.08) !important;
 }
 
-.lnr-client-name:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 4px;
 }
 
 /* Artist Gallery pill button */
-.lnr-trusted-gallery-pill {
   display: inline-block;
   margin-top: clamp(24px, 4vh, 48px);
   padding: 12px 32px;
@@ -1497,7 +1477,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   background: transparent;
 }
 
-.lnr-trusted-gallery-pill:hover {
   background: #fff;
   color: #0a0e17;
   border-color: #fff;
@@ -1505,30 +1484,22 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .lnr-trusted-section {
     min-height: auto;
     padding: 60px 0 80px;
   }
-  .lnr-trusted-bg-container {
     width: 85%;
-    height: 35%;
-    top: 35%;
+    height: 30vh;
   }
-  .lnr-client-name {
     font-size: clamp(16px, 5vw, 28px);
   }
-  .lnr-trusted-row-forward {
     animation-duration: 18s;
   }
-  .lnr-trusted-row-reverse {
     animation-duration: 15s;
   }
-  .lnr-trusted-row-forward-slow {
     animation-duration: 22s;
   }
 }
-
-/* ═══ TRUSTED BY section — restructured layout ═════════ */
+/* ═══ TRUSTED BY section — top/middle/bottom layout ═════════ */
 .lnr-trusted-section {
   position: relative;
   overflow: hidden;
@@ -1541,8 +1512,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 /* Vertical label top-left */
-.lnr-trusted-section::before {
-  content: 'ARTISTS';
+.lnr-trusted-label {
   position: absolute;
   top: clamp(20px, 4vh, 60px);
   left: clamp(12px, 2vw, 32px);
@@ -1558,8 +1528,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   transform: rotate(180deg);
 }
 
-.lnr-trusted-section::after {
-  content: '';
+.lnr-trusted-line {
   position: absolute;
   top: clamp(50px, 7vh, 100px);
   left: clamp(20px, 2.5vw, 40px);
@@ -1569,55 +1538,13 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   z-index: 10;
 }
 
-/* Image container — now relative, takes up space in the flow */
-.lnr-trusted-bg-container {
+/* TOP: header + quote in black space */
+.lnr-trusted-top {
   position: relative;
-  width: 60%;
-  height: 45vh;
-  min-height: 250px;
-  margin: 0 auto;
-  z-index: 1;
-  overflow: hidden;
-  flex-shrink: 0;
-  -webkit-mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 30%, transparent 100%);
-  mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 30%, transparent 100%);
-}
-
-.lnr-trusted-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: grayscale(40%) brightness(0.65) contrast(1.1);
-  transition: opacity 0.5s ease;
-}
-
-/* Frost overlay */
-.lnr-trusted-frost {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 14, 23, 0.55) 0%,
-    rgba(10, 14, 23, 0.25) 40%,
-    rgba(10, 14, 23, 0.3) 60%,
-    rgba(10, 14, 23, 0.6) 100%
-  );
-  pointer-events: none;
-}
-
-/* Content — all in flow, above/below the image */
-.lnr-trusted-content {
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
+  z-index: 5;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto clamp(30px, 5vh, 60px) auto;
 }
 
 .lnr-trusted-header {
@@ -1627,14 +1554,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: rgba(255, 255, 255, 0.45);
-  text-align: center;
   margin: 0 0 clamp(16px, 3vh, 32px) 0;
-}
-
-.lnr-trusted-quote {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 0 clamp(16px, 2vh, 32px) 0;
 }
 
 .lnr-trusted-quote-text {
@@ -1668,14 +1588,57 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   letter-spacing: 0.08em;
 }
 
+/* MIDDLE: image behind carousel names */
+.lnr-trusted-middle {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 45vh;
+}
+
+.lnr-trusted-bg-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  -webkit-mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 30%, transparent 100%);
+}
+
+.lnr-trusted-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(40%) brightness(0.65) contrast(1.1);
+  transition: opacity 0.5s ease;
+}
+
+.lnr-trusted-frost {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(10,14,23,0.55) 0%, rgba(10,14,23,0.25) 40%, rgba(10,14,23,0.3) 60%, rgba(10,14,23,0.6) 100%);
+  pointer-events: none;
+}
+
 .lnr-trusted-names {
+  position: relative;
+  z-index: 3;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   display: flex;
   flex-direction: column;
   gap: clamp(8px, 1.5vh, 20px);
   overflow: hidden;
-  margin-top: clamp(16px, 3vh, 40px);
+  padding: clamp(20px, 3vh, 40px) 0;
 }
 
 .lnr-trusted-row {
@@ -1756,10 +1719,15 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   outline-offset: 4px;
 }
 
-/* Artist Gallery pill button */
+/* BOTTOM: pill in black space below image */
+.lnr-trusted-bottom {
+  position: relative;
+  z-index: 5;
+  margin-top: clamp(20px, 3vh, 40px);
+}
+
 .lnr-trusted-gallery-pill {
   display: inline-block;
-  margin-top: clamp(24px, 4vh, 48px);
   padding: 12px 32px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 999px;
