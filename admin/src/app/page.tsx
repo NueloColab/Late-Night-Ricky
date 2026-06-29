@@ -230,29 +230,6 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ REACH — Garrix-style editorial collage ═══ */}
-      <section id="reach" className="lnr-reach-collage reveal-left">
-        {/* Ghost watermark behind photos */}
-        <div className="lnr-reach-ghost" aria-hidden="true">RICKY</div>
-        {/* Primary portrait photo — left side */}
-        <div className="lnr-reach-photo-primary reveal-left" data-delay="0">
-          <img src="/assets/ricky-portrait-standing.jpg" alt="Late Night Ricky" />
-        </div>
-        {/* Dark text card — overlaps photo, center-right */}
-        <a href="/about" className="lnr-reach-card reveal-right" data-delay="200">
-          <h2 className="lnr-reach-quote">
-            International DJ &amp; Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.
-          </h2>
-          <p className="lnr-reach-sub">
-            150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
-          </p>
-          <span className="lnr-reach-sig">— Late Night Ricky</span>
-        </a>
-        {/* Secondary texture strip — bottom right */}
-        <div className="lnr-reach-photo-secondary reveal-bottom-right" data-delay="400">
-          <img src="/assets/ricky-seated.jpg" alt="" />
-        </div>
-      </section>
-
       {/* ═══ VENUES — scrolling marquee ═══ */}
       <section className="garrix-venues-section">
         <div className="garrix-venues-label">VENUES</div>
@@ -323,6 +300,28 @@ export default async function HomePage() {
             <span>DC10</span>
             <span className="garrix-venues-dot">✦</span>
           </div>
+        </div>
+      </section>
+      <section id="reach" className="lnr-reach-collage reveal-left">
+        {/* Ghost watermark behind photos */}
+        <div className="lnr-reach-ghost" aria-hidden="true">RICKY</div>
+        {/* Primary portrait photo — left side */}
+        <div className="lnr-reach-photo-primary reveal-left" data-delay="0">
+          <img src="/assets/ricky-portrait-standing.jpg" alt="Late Night Ricky" />
+        </div>
+        {/* Dark text card — overlaps photo, center-right */}
+        <a href="/about" className="lnr-reach-card reveal-right" data-delay="200">
+          <h2 className="lnr-reach-quote">
+            International DJ &amp; Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.
+          </h2>
+          <p className="lnr-reach-sub">
+            150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
+          </p>
+          <span className="lnr-reach-sig">— Late Night Ricky</span>
+        </a>
+        {/* Secondary texture strip — bottom right */}
+        <div className="lnr-reach-photo-secondary reveal-bottom-right" data-delay="400">
+          <img src="/assets/ricky-seated.jpg" alt="" />
         </div>
       </section>
 
@@ -431,6 +430,7 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
 
       {/* ═══ COLLAGE — asymmetric scatter with ghost watermark ═══ */}
       <section className="garrix-collage-section">
