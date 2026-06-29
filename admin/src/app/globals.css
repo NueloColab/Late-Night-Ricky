@@ -659,7 +659,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* ── HIGHLIGHTS — Garrix-style 2-column release grid ──── */
 .lnr-highlights {
   background: #fff;
-  padding: clamp(80px, 12vw, 160px) clamp(40px, 8vw, 120px);
+  padding: clamp(80px, 12vw, 160px) clamp(40px, 8vw, 120px) clamp(80px, 15vw, 200px);
 }
 
 .lnr-highlights-header {
@@ -706,8 +706,12 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   display: flex;
   flex-direction: column;
   gap: clamp(20px, 2.5vw, 36px);
-  align-self: flex-start;
 }
+
+.lnr-highlights-col > :nth-child(1) { margin-top: 0; }
+.lnr-highlights-col > :nth-child(2) { margin-top: 15vh; }
+.lnr-highlights-col > :nth-child(3) { margin-top: 15vh; }
+.lnr-highlights-col > :nth-child(4) { margin-top: 15vh; }
 
 .lnr-highlights-divider {
   width: 1px;
@@ -744,12 +748,13 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.08);
   position: sticky;
+  top: 80px;
+  z-index: 1;
 }
 
-.lnr-highlights-card:nth-child(1) { top: 80px; }
-.lnr-highlights-card:nth-child(2) { top: 100px; }
-.lnr-highlights-card:nth-child(3) { top: 120px; }
-.lnr-highlights-card:nth-child(4) { top: 140px; }
+.lnr-highlights-card:nth-child(2) { z-index: 2; }
+.lnr-highlights-card:nth-child(3) { z-index: 3; }
+.lnr-highlights-card:nth-child(4) { z-index: 4; }
 
 .lnr-highlights-card:hover {
   transform: translateY(-3px);
