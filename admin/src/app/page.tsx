@@ -82,8 +82,7 @@ function assetPath(p?: string | null) {
 }
 
 export default async function HomePage() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let shows: any[] = DEFAULT_SHOWS;
+  let shows: any[] = DEFAULT_SHOWS; // used by CMS fallback, kept for future dynamic rendering
   let clients: string[] = DEFAULT_CLIENTS;
   let tracks = DEFAULT_TRACKS;
   let heroImage = '/assets/ricky-hero-v2.jpg';
