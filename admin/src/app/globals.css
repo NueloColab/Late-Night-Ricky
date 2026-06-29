@@ -658,24 +658,79 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* ── HIGHLIGHTS — stacking cards ─────────────────────────────── */
 /* ── HIGHLIGHTS — Garrix-style 2-column release grid ──── */
 .lnr-highlights {
-  background: #f5f5f0;
+  background: #fff;
   padding: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 80px);
+}
+
+.lnr-highlights-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: clamp(40px, 6vw, 80px);
+  padding: 0 clamp(20px, 3vw, 60px);
 }
 
 .lnr-highlights-heading {
   font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
-  font-size: clamp(28px, 4vw, 48px);
+  font-size: clamp(36px, 5vw, 72px);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   color: #111;
-  margin-bottom: clamp(32px, 5vw, 64px);
+  line-height: 1;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.lnr-highlights-subtitle {
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: clamp(13px, 1.4vw, 16px);
+  color: #666;
+  line-height: 1.6;
+  max-width: 380px;
+  margin: 0;
 }
 
 .lnr-highlights-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  padding: 0 clamp(20px, 3vw, 60px);
+}
+
+.lnr-highlights-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   gap: clamp(16px, 2vw, 24px);
+}
+
+.lnr-highlights-divider {
+  width: 1px;
+  background: #ddd;
+  position: relative;
+  align-self: stretch;
+  margin: 0 clamp(16px, 2vw, 24px);
+  flex-shrink: 0;
+}
+
+.lnr-highmarks-cross {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  color: #111;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.lnr-highlights-line {
+  width: 1px;
+  background: #ddd;
+  min-height: 200px;
+  height: 100%;
 }
 
 .lnr-highlights-card {
@@ -702,7 +757,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .lnr-highlights-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.15) 40%, transparent 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.1) 40%, transparent 100%);
   pointer-events: none;
 }
 
@@ -740,19 +795,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   bottom: 0;
   left: 0;
   right: 0;
-  padding: clamp(12px, 2vw, 20px);
+  padding: clamp(14px, 2vw, 20px);
+  padding-left: clamp(40px, 4vw, 70px);
   z-index: 2;
-}
-
-.lnr-highlights-card-label {
-  display: block;
-  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 4px;
 }
 
 .lnr-highlights-card-title {
@@ -774,12 +819,43 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   margin-top: 2px;
 }
 
+.lnr-highlights-cta {
+  display: inline-block;
+  margin: clamp(40px, 6vw, 64px) auto 0;
+  padding: 14px 40px;
+  background: #111;
+  color: #fff;
+  font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.lnr-highlights-cta:hover {
+  background: #333;
+}
+
 @media (max-width: 639px) {
+  .lnr-highlights-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
   .lnr-highlights-grid {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+  .lnr-highlights-divider {
+    display: none;
   }
   .lnr-highlights-card-img {
     aspect-ratio: 4 / 3;
+  }
+  .lnr-highlights-card-text {
+    padding-left: clamp(14px, 2vw, 20px);
   }
 }
 
