@@ -228,26 +228,26 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ REACH — Garrix-style editorial collage ═══ */}
-      <section id="reach" className="lnr-reach-collage reveal-left">
+      <section id="reach" className="lnr-reach-collage">
         {/* Ghost watermark behind photos */}
         <div className="lnr-reach-ghost" aria-hidden="true">RICKY</div>
-        {/* Primary portrait photo — left side */}
-        <div className="lnr-reach-photo-primary">
-          <img src="/assets/ricky-portrait-new.jpg" alt="Late Night Ricky" />
+        {/* Primary portrait photo — left side, slides in from left */}
+        <div className="lnr-reach-photo-primary reveal-slide-left">
+          <img src="/assets/ricky-portrait-v2.jpg" alt="Late Night Ricky" />
         </div>
-        {/* Dark text card — overlaps photo, center-right */}
-        <div className="lnr-reach-card">
-          <h2 className="lnr-reach-quote">
+        {/* Dark text card — overlaps photo, center-right, slides in from right */}
+        <div className="lnr-reach-card reveal-slide-right">
+          <h2 className="lnr-reach-quote reveal-slide-up">
             International DJ &amp; Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.
           </h2>
-          <p className="lnr-reach-sub">
+          <p className="lnr-reach-sub reveal-slide-up">
             150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
           </p>
-          <span className="lnr-reach-sig">— Late Night Ricky</span>
+          <span className="lnr-reach-sig reveal-slide-up">— Late Night Ricky</span>
         </div>
-        {/* Secondary texture strip — bottom right */}
-        <div className="lnr-reach-photo-secondary">
-          <img src="/assets/press-bg2.jpg" alt="" />
+        {/* Secondary texture strip — bottom right, slides in from bottom */}
+        <div className="lnr-reach-photo-secondary reveal-slide-up">
+          <img src="/assets/ricky-stool.jpg" alt="" />
         </div>
       </section>
 
