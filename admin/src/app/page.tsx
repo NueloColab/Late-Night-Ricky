@@ -261,49 +261,61 @@ export default async function HomePage() {
       />
 
       {/* ═══ HIGHLIGHTS — Garrix-style 2-column release grid ═══ */}
-      {shows.length > 0 && (
-        <section className="lnr-highlights">
+      <section className="lnr-highlights">
           <div className="lnr-highlights-header">
             <h2 className="lnr-highlights-heading">RECENT HIGHLIGHTS</h2>
             <p className="lnr-highlights-subtitle">A selection of standout shows and performances from across the globe.</p>
           </div>
           <div className="lnr-highlights-grid">
             <div className="lnr-highlights-col">
-              {shows.filter((_: any, i: number) => i % 2 === 0).map((card: any) => (
-                <a key={card.id || card.title} href={card.href || '#'} className="lnr-highlights-card">
-                  <div className="lnr-highlights-card-img" style={{ backgroundImage: `url('${assetPath(card.image)}')` }}>
-                    <div className="lnr-highlights-card-overlay" />
-                    <div className="lnr-highlights-card-text">
-                      <h3 className="lnr-highlights-card-title">{card.title}</h3>
-                      <span className="lnr-highlights-card-venue">— {card.venue}{card.location ? `, ${card.location}` : ''}</span>
-                    </div>
+              <a href="/show-misfits-boxing" className="lnr-highlights-card">
+                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/highlight-studio.jpg')" }}>
+                  <div className="lnr-highlights-card-overlay" />
+                  <div className="lnr-highlights-card-text">
+                    <h3 className="lnr-highlights-card-title">MISFITS BOXING</h3>
+                    <span className="lnr-highlights-card-venue">— Ministry of Sound, London</span>
                   </div>
-                </a>
-              ))}
+                </div>
+              </a>
+              <a href="/show-arena" className="lnr-highlights-card">
+                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/highlight-arena.jpg')" }}>
+                  <div className="lnr-highlights-card-overlay" />
+                  <div className="lnr-highlights-card-text">
+                    <h3 className="lnr-highlights-card-title">O2 ARENA</h3>
+                    <span className="lnr-highlights-card-venue">— O2 Arena, London</span>
+                  </div>
+                </div>
+              </a>
             </div>
             <div className="lnr-highlights-divider">
               <span className="lnr-highmarks-cross">×</span>
               <div className="lnr-highlights-line" />
             </div>
             <div className="lnr-highlights-col">
-              {shows.filter((_: any, i: number) => i % 2 !== 0).map((card: any) => (
-                <a key={card.id || card.title} href={card.href || '#'} className="lnr-highlights-card">
-                  <div className="lnr-highlights-card-img" style={{ backgroundImage: `url('${assetPath(card.image)}')` }}>
-                    <div className="lnr-highlights-card-overlay" />
-                    <div className="lnr-highlights-card-text">
-                      <h3 className="lnr-highlights-card-title">{card.title}</h3>
-                      <span className="lnr-highlights-card-venue">— {card.venue}{card.location ? `, ${card.location}` : ''}</span>
-                    </div>
+              <a href="/show-club" className="lnr-highlights-card">
+                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/highlight-club.jpg')" }}>
+                  <div className="lnr-highlights-card-overlay" />
+                  <div className="lnr-highlights-card-text">
+                    <h3 className="lnr-highlights-card-title">BACK TO BACK</h3>
+                    <span className="lnr-highlights-card-venue">— Private Events, London</span>
                   </div>
-                </a>
-              ))}
+                </div>
+              </a>
+              <a href="/show-ibiza" className="lnr-highlights-card">
+                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/highlight-misfits.jpg')" }}>
+                  <div className="lnr-highlights-card-overlay" />
+                  <div className="lnr-highlights-card-text">
+                    <h3 className="lnr-highlights-card-title">IBIZA ROCKS</h3>
+                    <span className="lnr-highlights-card-venue">— Ibiza Rocks, Ibiza</span>
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
           <div className="lnr-highlights-cta-wrap">
             <a href="/shows" className="lnr-highlights-cta">VIEW ALL SHOWS</a>
           </div>
         </section>
-      )}
 
       {/* ═══ COLLAGE — asymmetric scatter with ghost watermark ═══ */}
       <section className="garrix-collage-section">
