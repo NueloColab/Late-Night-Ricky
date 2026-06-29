@@ -1446,6 +1446,79 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   margin-bottom: 20px !important;
 }
 
+.garrix-cta-dropzone {
+  border: 2px dashed rgba(255, 255, 255, 0.12);
+  padding: 40px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease;
+  margin-bottom: 0;
+}
+
+.garrix-cta-dropzone:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.garrix-cta-upload-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.garrix-cta-upload-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.garrix-cta-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.garrix-cta-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.garrix-cta-input:focus {
+  border-color: rgba(42, 196, 182, 0.5);
+}
+
+.garrix-cta-submit {
+  width: 100%;
+  padding: 16px;
+  margin-top: 16px;
+  border: none;
+  font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #0a0e17;
+  transition: all 0.4s ease;
+}
+
 /* ── FOOTER — tight 4-column grid ───────────────────────────── */
 .garrix-footer {
   border-top: 1px solid rgba(255, 255, 255, 0.06);

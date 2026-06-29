@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar';
 import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
+import ShareMusicCTA from '../components/ShareMusicCTA';
 import TrustedBySection from '../components/TrustedBySection';
 import HomeContactSection from '../components/HomeContactSection';
 // import Loader from '../components/Loader'; // disabled temporarily
@@ -540,15 +541,7 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ SHARE MUSIC CTA ═══ */}
-      <section className="garrix-cta-section">
-        <div className="garrix-cta-bg" style={{ backgroundImage: `url('/assets/press-bg2.jpg')` }} />
-        <div className="garrix-cta-overlay" />
-        <div className="garrix-cta-content">
-          <h2 className="garrix-serif garrix-cta-heading">{shareMusicHeadline}</h2>
-          <p className="garrix-body-text">{shareMusicDescription}</p>
-          <a href="/share-music" className="garrix-btn garrix-btn-white">Submit Your Track</a>
-        </div>
-      </section>
+      <ShareMusicCTA />
 
       {/* ═══ CONTACT ═══ */}
       <HomeContactSection />
