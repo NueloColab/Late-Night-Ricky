@@ -76,7 +76,8 @@ export default function ScrollReveal() {
     if (playBtn && videoOverlay && video) {
       playBtn.addEventListener('click', () => {
         video.play();
-        videoOverlay.style.opacity = '1';
+        videoOverlay.classList.add('active');
+        videoOverlay.style.pointerEvents = 'auto';
         playBtn.style.opacity = '0';
         playBtn.style.pointerEvents = 'none';
       });
@@ -85,7 +86,8 @@ export default function ScrollReveal() {
     if (closeBtn && videoOverlay && video && playBtn) {
       closeBtn.addEventListener('click', () => {
         video.pause();
-        videoOverlay.style.opacity = '0';
+        videoOverlay.classList.remove('active');
+        videoOverlay.style.pointerEvents = 'none';
         playBtn.style.opacity = '0.9';
         playBtn.style.pointerEvents = 'auto';
       });
