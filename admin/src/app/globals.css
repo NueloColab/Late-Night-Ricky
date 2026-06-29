@@ -916,15 +916,26 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   z-index: 1;
   pointer-events: none;
   font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
-  font-size: clamp(120px, 25vw, 400px);
+  font-size: clamp(150px, 28vw, 450px);
   font-weight: 700;
   text-transform: uppercase;
-  color: transparent;
-  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.04);
   letter-spacing: 0.02em;
   line-height: 0.85;
   text-align: center;
   mix-blend-mode: screen;
+}
+
+/* Second ghost watermark - outlined "LATE NIGHT" filling dark spaces */
+.garrix-collage-ghost-outline {
+  top: auto;
+  bottom: 5%;
+  font-size: clamp(80px, 15vw, 240px);
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.12);
+  -webkit-text-fill-color: transparent;
+  opacity: 1;
+  mix-blend-mode: normal;
 }
 
 .garrix-collage-grid {
@@ -968,35 +979,35 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   top: 0;
   left: 0;
   width: 48%;
-  height: 55%;
+  height: 52%;
+  z-index: 2;
+}
+
+/* Photo 2: wide shot, top-right, overlapping photo 1 */
+.garrix-cp-2 {
+  top: 18%;
+  left: 38%;
+  width: 58%;
+  height: 45%;
   z-index: 3;
 }
 
-/* Photo 2: tall shot, overlapping photo 1, right side */
-.garrix-cp-2 {
-  top: 20%;
-  left: 45%;
-  width: 52%;
-  height: 50%;
-  z-index: 4;
-}
-
-/* Photo 3: bottom-left with outlined text */
+/* Photo 3: bottom-left with outlined text, overlapping photo 2 */
 .garrix-cp-3 {
   bottom: 0;
   left: 0;
-  width: 45%;
-  height: 35%;
-  z-index: 5;
+  width: 52%;
+  height: 38%;
+  z-index: 4;
 }
 
 /* Photo 4: bottom-right, B&W */
 .garrix-cp-4 {
-  bottom: 0;
+  bottom: 2%;
   right: 0;
-  width: 48%;
-  height: 40%;
-  z-index: 2;
+  width: 44%;
+  height: 35%;
+  z-index: 1;
 }
 
 .garrix-collage-quote {

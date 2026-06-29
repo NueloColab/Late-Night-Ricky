@@ -362,6 +362,7 @@ export default async function HomePage() {
       {/* ═══ COLLAGE — asymmetric scatter with ghost watermark ═══ */}
       <section className="garrix-collage-section">
         <div className="garrix-collage-ghost" aria-hidden="true">RICKY</div>
+        <div className="garrix-collage-ghost garrix-collage-ghost-outline" aria-hidden="true">LATE<br/>NIGHT</div>
         <div className="garrix-collage-grid">
           <div className="garrix-collage-photo garrix-cp-1" data-layer="layer4">
             <img src="/assets/ricky-hero-new.jpg" alt="Late Night Ricky" />
