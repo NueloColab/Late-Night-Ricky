@@ -269,18 +269,16 @@ export default async function HomePage() {
           </div>
           <div className="lnr-highlights-grid">
             <div className="lnr-highlights-col">
-              {shows.filter((_: any, i: number) => i % 2 === 0).map((card: any, idx: number) => (
-                <div key={card.id || card.title} className="lnr-highlights-slot" style={{ minHeight: idx === 0 ? '0' : '40vh' }}>
-                  <a href={card.href || '#'} className="lnr-highlights-card" style={{ zIndex: 10 + idx }}>
-                    <div className="lnr-highlights-card-img" style={{ backgroundImage: `url('${assetPath(card.image)}')` }}>
-                      <div className="lnr-highlights-card-overlay" />
-                      <div className="lnr-highlights-card-text">
-                        <h3 className="lnr-highlights-card-title">{card.title}</h3>
-                        <span className="lnr-highlights-card-venue">— {card.venue}{card.location ? `, ${card.location}` : ''}</span>
-                      </div>
+              {shows.filter((_: any, i: number) => i % 2 === 0).map((card: any) => (
+                <a key={card.id || card.title} href={card.href || '#'} className="lnr-highlights-card">
+                  <div className="lnr-highlights-card-img" style={{ backgroundImage: `url('${assetPath(card.image)}')` }}>
+                    <div className="lnr-highlights-card-overlay" />
+                    <div className="lnr-highlights-card-text">
+                      <h3 className="lnr-highlights-card-title">{card.title}</h3>
+                      <span className="lnr-highlights-card-venue">— {card.venue}{card.location ? `, ${card.location}` : ''}</span>
                     </div>
-                  </a>
-                </div>
+                  </div>
+                </a>
               ))}
             </div>
             <div className="lnr-highlights-divider">
@@ -288,22 +286,22 @@ export default async function HomePage() {
               <div className="lnr-highlights-line" />
             </div>
             <div className="lnr-highlights-col">
-              {shows.filter((_: any, i: number) => i % 2 !== 0).map((card: any, idx: number) => (
-                <div key={card.id || card.title} className="lnr-highlights-slot" style={{ minHeight: idx === 0 ? '0' : '40vh' }}>
-                  <a href={card.href || '#'} className="lnr-highlights-card" style={{ zIndex: 10 + idx }}>
-                    <div className="lnr-highlights-card-img" style={{ backgroundImage: `url('${assetPath(card.image)}')` }}>
-                      <div className="lnr-highlights-card-overlay" />
-                      <div className="lnr-highlights-card-text">
-                        <h3 className="lnr-highlights-card-title">{card.title}</h3>
-                        <span className="lnr-highlights-card-venue">— {card.venue}{card.location ? `, ${card.location}` : ''}</span>
-                      </div>
+              {shows.filter((_: any, i: number) => i % 2 !== 0).map((card: any) => (
+                <a key={card.id || card.title} href={card.href || '#'} className="lnr-highlights-card">
+                  <div className="lnr-highlights-card-img" style={{ backgroundImage: `url('${assetPath(card.image)}')` }}>
+                    <div className="lnr-highlights-card-overlay" />
+                    <div className="lnr-highlights-card-text">
+                      <h3 className="lnr-highlights-card-title">{card.title}</h3>
+                      <span className="lnr-highlights-card-venue">— {card.venue}{card.location ? `, ${card.location}` : ''}</span>
                     </div>
-                  </a>
-                </div>
+                  </div>
+                </a>
               ))}
             </div>
           </div>
-          <a href="/shows" className="lnr-highlights-cta">VIEW ALL SHOWS</a>
+          <div className="lnr-highlights-cta-wrap">
+            <a href="/shows" className="lnr-highlights-cta">VIEW ALL SHOWS</a>
+          </div>
         </section>
       )}
 

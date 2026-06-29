@@ -659,7 +659,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* ── HIGHLIGHTS — Garrix-style 2-column release grid ──── */
 .lnr-highlights {
   background: #fff;
-  padding: clamp(80px, 12vw, 160px) clamp(40px, 8vw, 120px) clamp(80px, 15vw, 200px);
+  padding: clamp(80px, 12vw, 160px) clamp(40px, 8vw, 120px) clamp(60px, 8vw, 100px);
 }
 
 .lnr-highlights-header {
@@ -668,7 +668,11 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   justify-content: space-between;
   gap: 40px;
   margin-bottom: clamp(40px, 6vw, 80px);
-  padding: 0 clamp(20px, 3vw, 60px);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: clamp(40px, 6vw, 80px);
+  padding: 0;
 }
 
 .lnr-highlights-heading {
@@ -696,7 +700,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   display: flex;
   align-items: flex-start;
   gap: 0;
-  padding: 0;
   max-width: 900px;
   margin: 0 auto;
 }
@@ -705,10 +708,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   flex: 1;
   display: flex;
   flex-direction: column;
-}
-
-.lnr-highlights-slot {
-  position: relative;
+  gap: clamp(20px, 3vw, 32px);
 }
 
 .lnr-highlights-divider {
@@ -745,8 +745,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
-  position: sticky;
-  top: 80px;
 }
 
 .lnr-highlights-card:hover {
@@ -766,7 +764,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .lnr-highlights-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 50%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -781,7 +779,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 .lnr-highlights-card-title {
   font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
-  font-size: clamp(16px, 2vw, 22px);
+  font-size: clamp(15px, 1.8vw, 20px);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -792,16 +790,20 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 .lnr-highlights-card-venue {
   font-family: var(--font-montserrat), 'Montserrat', sans-serif;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.65);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
   display: block;
-  margin-top: 2px;
+  margin-top: 3px;
+}
+
+.lnr-highlights-cta-wrap {
+  text-align: center;
+  margin-top: clamp(40px, 6vw, 64px);
 }
 
 .lnr-highlights-cta {
   display: inline-block;
-  margin: clamp(40px, 6vw, 64px) auto 0;
-  padding: 14px 40px;
+  padding: 14px 48px;
   background: #111;
   color: #fff;
   font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
@@ -810,7 +812,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   letter-spacing: 0.15em;
   text-transform: uppercase;
   text-decoration: none;
-  text-align: center;
   transition: background 0.3s ease;
 }
 
@@ -832,9 +833,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   }
   .lnr-highlights-card-img {
     aspect-ratio: 4 / 3;
-  }
-  .lnr-highlights-card-text {
-    padding-left: clamp(14px, 2vw, 20px);
   }
 }
 
