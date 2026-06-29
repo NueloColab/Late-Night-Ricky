@@ -164,16 +164,16 @@ export default function TrustedBySection({
       {/* PARTNERSHIPS — brand logo grid */}
       <div className="lnr-partners-section">
         <div className="lnr-partners-grid">
-          <div className="lnr-partner-logo">F1</div>
-          <div className="lnr-partner-logo">Coca-Cola</div>
-          <div className="lnr-partner-logo">Dior</div>
-          <div className="lnr-partner-logo">Patek Philippe</div>
-          <div className="lnr-partner-logo">CÎROC</div>
-          <div className="lnr-partner-logo">Louis Vuitton</div>
-          <div className="lnr-partner-logo">PRIME</div>
-          <div className="lnr-partner-logo">Boxing</div>
-          <div className="lnr-partner-logo">Festival de Cannes</div>
-          <div className="lnr-partner-logo">Cartier</div>
+          <div className="lnr-partner-logo"><img src="/assets/logo-f1.png" alt="F1" /></div>
+          <div className="lnr-partner-logo"><img src="/assets/logo-coca-cola.png" alt="Coca-Cola" /></div>
+          <div className="lnr-partner-logo"><img src="/assets/logo-dior.png" alt="Dior" /></div>
+          <div className="lnr-partner-logo"><img src="/assets/logo-patek.png" alt="Patek Philippe" /></div>
+          <div className="lnr-partner-logo"><img src="/assets/logo-ciroc.png" alt="CÎROC" /></div>
+          <div className="lnr-partner-logo"><img src="/assets/logo-louis-vuitton.png" alt="Louis Vuitton" /></div>
+          <div className="lnr-partner-logo"><img src="/assets/logo-prime.png" alt="PRIME" /></div>
+          <div className="lnr-partner-logo"><img src="/assets/logo-mf-boxing.png" alt="MF Boxing" /></div>
+          <div className="lnr-partner-logo"><img src="/assets/logo-cannes.png" alt="Festival de Cannes" /></div>
+          <div className="lnr-partner-logo"><img src="/assets/logo-cartier.png" alt="Cartier" /></div>
         </div>
         <a href="/#partnerships" className="lnr-partners-pill">ALL PARTNERSHIPS</a>
       </div>
