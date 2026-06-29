@@ -264,39 +264,30 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ SHOWS — vertical label + slow marquees over faded image ═══ */}
-      <section id="shows" className="garrix-section garrix-shows-section">
-        <div className="garrix-section-label">SHOWS<span className="garrix-section-line" /></div>
-        <div className="garrix-shows-bg" style={{ backgroundImage: `url('/assets/ricky-hero-new.jpg')` }} />
-        <div className="garrix-section-inner">
-          <div className="garrix-shows-header">
-            <h2 className="garrix-heading">SELECTED SHOWS</h2>
-            <p className="garrix-subtitle">From stadium tours to private celebrations — every set tells a story.</p>
-          </div>
-          <div className="garrix-marquee-wrapper">
-            <div className="garrix-marquee-track" style={{ animationDuration: '60s' }}>
-              {venueRows.map((venue: any, i: number) => (
-                <span key={i} className="garrix-marquee-item">{typeof venue === 'string' ? venue : venue.name}<span className="garrix-marquee-dot">·</span></span>
-              ))}
-            </div>
-          </div>
-          <div className="garrix-marquee-wrapper">
-            <div className="garrix-marquee-track garrix-marquee-reverse" style={{ animationDuration: '50s' }}>
-              {venueRows.map((venue: any, i: number) => (
-                <span key={i} className="garrix-marquee-item">{typeof venue === 'string' ? venue : venue.name}<span className="garrix-marquee-dot">·</span></span>
-              ))}
-            </div>
-          </div>
-          <div className="garrix-marquee-wrapper">
-            <div className="garrix-marquee-track" style={{ animationDuration: '70s' }}>
-              {venueRows.map((venue: any, i: number) => (
-                <span key={i} className="garrix-marquee-item">{typeof venue === 'string' ? venue : venue.name}<span className="garrix-marquee-dot">·</span></span>
-              ))}
-            </div>
-          </div>
-          <div className="garrix-section-cta">
-            <a href="/shows" className="garrix-btn garrix-btn-white">VIEW ALL SHOWS</a>
-          </div>
+      {/* ═══ REACH — Garrix-style editorial collage ═══ */}
+      <section id="reach" className="lnr-reach-collage">
+        {/* White X diagonal wedges */}
+        <div className="lnr-reach-wedge lnr-reach-wedge-left" aria-hidden="true" />
+        <div className="lnr-reach-wedge lnr-reach-wedge-right" aria-hidden="true" />
+        {/* Ghost watermark behind photos */}
+        <div className="lnr-reach-ghost" aria-hidden="true">RICKY</div>
+        {/* Primary portrait photo — left side */}
+        <div className="lnr-reach-photo-primary">
+          <img src="/assets/ricky-portrait-new.jpg" alt="Late Night Ricky" />
+        </div>
+        {/* Dark text card — overlaps photo, center-right */}
+        <div className="lnr-reach-card">
+          <h2 className="lnr-reach-quote">
+            International DJ &amp; Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.
+          </h2>
+          <p className="lnr-reach-sub">
+            150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
+          </p>
+          <span className="lnr-reach-sig">— Late Night Ricky</span>
+        </div>
+        {/* Secondary texture strip — bottom right */}
+        <div className="lnr-reach-photo-secondary">
+          <img src="/assets/press-bg2.jpg" alt="" />
         </div>
       </section>
 
