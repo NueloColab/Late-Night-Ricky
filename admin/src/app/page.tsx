@@ -269,9 +269,11 @@ export default async function HomePage() {
           <div className="lnr-highlights-header">
             <div className="lnr-highlights-header-left">
               <h2 className="lnr-highlights-heading">HIGHLIGHTS</h2>
-              <a href="/shows" className="lnr-highlights-cta">VIEW ALL SHOWS</a>
+              <div className="lnr-highlights-header-row">
+                <a href="/shows" className="lnr-highlights-cta">VIEW ALL SHOWS</a>
+                <p className="lnr-highlights-subtitle">Standout shows and performances from across the globe.</p>
+              </div>
             </div>
-            <p className="lnr-highlights-subtitle">Standout shows and performances from across the globe.</p>
           </div>
           <div className="lnr-highlights-grid">
             <div className="lnr-highlights-col">

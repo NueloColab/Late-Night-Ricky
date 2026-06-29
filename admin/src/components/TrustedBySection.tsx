@@ -148,14 +148,14 @@ export default function TrustedBySection({
       {/* BOTTOM: pill + gallery snippets in black space below image */}
       <div className="lnr-trusted-bottom">
         <a href="/shows" className="lnr-trusted-gallery-pill">Artist Gallery</a>
-        <div className="lnr-trusted-snippets">
-          <a href="/shows" className="lnr-trusted-snippet">
+        <div className="lnr-trusted-snippets reveal">
+          <a href="/shows" className="lnr-trusted-snippet lnr-snippet-left">
             <img src="/assets/ricky-portrait-standing.jpg" alt="Artist gallery" />
           </a>
-          <a href="/shows" className="lnr-trusted-snippet">
+          <a href="/shows" className="lnr-trusted-snippet lnr-snippet-center">
             <img src="/assets/ricky-hero-new.jpg" alt="Artist gallery" />
           </a>
-          <a href="/shows" className="lnr-trusted-snippet">
+          <a href="/shows" className="lnr-trusted-snippet lnr-snippet-right">
             <img src="/assets/press-bg2.jpg" alt="Artist gallery" />
           </a>
         </div>
