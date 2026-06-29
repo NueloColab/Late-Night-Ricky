@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 interface ClientItem {
   name: string;
@@ -47,6 +47,7 @@ export default function TrustedBySection({
 }: TrustedBySectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   void _clients;
 
   const items = DEFAULT_CLIENTS_WITH_IMAGES;
@@ -56,17 +57,34 @@ export default function TrustedBySection({
     setActiveIndex(index);
   }, []);
 
-  // Random highlight: jumps to a random different name every 2.5s
+  // Cycle through names every 2.5s, picking a random visible one
   useEffect(() => {
     const timer = setInterval(() => {
+      if (hoverIndex !== null) return;
+      const section = sectionRef.current;
+      if (!section) return;
+
+      // Get all name buttons currently in the viewport
+      const buttons = section.querySelectorAll('.lnr-client-name');
+      const visibleIndices: number[] = [];
+      buttons.forEach((btn) => {
+        const rect = btn.getBoundingClientRect();
+        // Check if button is at least partially visible
+        if (rect.top < window.innerHeight && rect.bottom > 0 && rect.left < window.innerWidth && rect.right > 0) {
+          const idx = parseInt(btn.getAttribute('data-index') || '0', 10);
+          if (!visibleIndices.includes(idx)) visibleIndices.push(idx);
+        }
+      });
+
+      if (visibleIndices.length === 0) return;
       let next: number;
       do {
-        next = Math.floor(Math.random() * items.length);
-      } while (next === activeIndex && items.length > 1);
+        next = visibleIndices[Math.floor(Math.random() * visibleIndices.length)];
+      } while (next === activeIndex && visibleIndices.length > 1);
       setActiveIndex(next);
     }, 2500);
     return () => clearInterval(timer);
-  }, [activeIndex, items.length]);
+  }, [activeIndex, hoverIndex]);
 
   const row1 = items.slice(0, 7);
   const row2 = items.slice(7, 14);
@@ -80,6 +98,7 @@ export default function TrustedBySection({
       return (
         <button
           key={`${item.name}-${rowIndex}-${i}`}
+          data-index={originalIndex}
           className={`lnr-client-name ${isActive ? 'lnr-client-name-active' : ''}`}
           onMouseEnter={() => setHoverIndex(originalIndex)}
           onMouseLeave={() => setHoverIndex(null)}
@@ -92,7 +111,7 @@ export default function TrustedBySection({
   };
 
   return (
-    <section id="trusted" className={`lnr-trusted-section ${revealClass || ''}`}>
+    <section id="trusted" ref={sectionRef} className={`lnr-trusted-section ${revealClass || ''}`}>
       {/* Vertical label */}
       <div className="lnr-trusted-label">ARTISTS</div>
       <div className="lnr-trusted-line" />
