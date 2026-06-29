@@ -524,7 +524,7 @@ export default async function HomePage() {
             </div>
             <div className="garrix-radio-text">
               <span className="garrix-label-tag">{radioLabel}</span>
-              <h2 className="garrix-heading garrix-heading-serif">{radioHeadline}</h2>
+              <h2 className="garrix-heading">{radioHeadline}</h2>
               <p className="garrix-body-text">{radioDescription}</p>
               <div className="garrix-stream-links">
                 <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">Spotify</a>
