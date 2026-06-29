@@ -361,20 +361,20 @@ export default async function HomePage() {
       <section className="garrix-collage-section">
         <div className="garrix-collage-ghost" aria-hidden="true">RICKY</div>
         <div className="garrix-collage-photos">
-          <div className="garrix-collage-photo garrix-cp-1">
+          <div className="garrix-collage-photo garrix-cp-1 reveal-left">
             <img src="/assets/ricky-hero-new.jpg" alt="Late Night Ricky" />
             <div className="garrix-collage-quote">
               <p>&ldquo;Music is the only thing that makes sense&rdquo;</p>
             </div>
           </div>
-          <div className="garrix-collage-photo garrix-cp-2">
+          <div className="garrix-collage-photo garrix-cp-2 reveal-right">
             <img src="/assets/ricky-fricktion.jpg" alt="Ricky DJing" />
             <div className="garrix-collage-outline">LATE<br/>NIGHT</div>
           </div>
-          <div className="garrix-collage-photo garrix-cp-3">
+          <div className="garrix-collage-photo garrix-cp-3 reveal-left" data-delay="200">
             <img src="/assets/press-bg2.jpg" alt="Ricky performing" />
           </div>
-          <div className="garrix-collage-photo garrix-cp-4">
+          <div className="garrix-collage-photo garrix-cp-4 reveal-right" data-delay="200">
             <img src="/assets/ricky-hero-v2.jpg" alt="" style={{ filter: 'grayscale(1) contrast(1.1)' }} />
           </div>
         </div>
@@ -383,10 +383,17 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ LIFE IS CRAZY — outlined text banner ═══ */}
-      <div className="garrix-life-banner">
+      {/* ═══ LIFE IS CRAZY — outlined text banner with play button ═══ */}
+      <div className="garrix-life-banner" id="life-banner">
+        <video id="life-video" className="garrix-life-video" src="/assets/video-desktop.mp4" poster="/assets/ricky-hero-v2.jpg" muted loop playsInline preload="none" />
+        <div className="garrix-life-banner-overlay" />
         <p className="garrix-life-quote">&ldquo;{partnersQuote}&rdquo;</p>
         <p className="garrix-life-attribution">&mdash; {partnersAttribution}</p>
+        <div className="garrix-life-play-wrap">
+          <button className="garrix-life-play-btn" id="life-play-btn" aria-label="Play video">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="23" stroke="currentColor" strokeWidth="2" /><polygon points="20,16 34,24 20,32" fill="currentColor" /></svg>
+          </button>
+        </div>
         <h2>LATE NIGHT RICKY</h2>
       </div>
 
@@ -476,6 +483,23 @@ export default async function HomePage() {
         </div>
       </footer>
       </div>
+
+      {/* ═══ Play button interaction ═══ */}
+      <script dangerouslySetInnerHTML={{ __html: `
+        document.addEventListener('DOMContentLoaded', function() {
+          var btn = document.getElementById('life-play-btn');
+          var video = document.getElementById('life-video');
+          var overlay = document.querySelector('.garrix-life-banner-overlay');
+          if (btn && video) {
+            btn.addEventListener('click', function() {
+              video.classList.add('playing');
+              if (overlay) overlay.classList.add('hidden');
+              btn.classList.add('playing');
+              video.play();
+            });
+          }
+        });
+      `}} />
     </>
   );
 }
