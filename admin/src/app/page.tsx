@@ -266,9 +266,6 @@ export default async function HomePage() {
 
       {/* ═══ REACH — Garrix-style editorial collage ═══ */}
       <section id="reach" className="lnr-reach-collage">
-        {/* White X diagonal wedges */}
-        <div className="lnr-reach-wedge lnr-reach-wedge-left" aria-hidden="true" />
-        <div className="lnr-reach-wedge lnr-reach-wedge-right" aria-hidden="true" />
         {/* Ghost watermark behind photos */}
         <div className="lnr-reach-ghost" aria-hidden="true">RICKY</div>
         {/* Primary portrait photo — left side */}

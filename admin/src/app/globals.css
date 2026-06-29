@@ -124,27 +124,6 @@
   grid-template-rows: 1fr 1fr;
 }
 
-/* White X diagonal wedges */
-.lnr-reach-wedge {
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
-}
-.lnr-reach-wedge-left {
-  top: 0;
-  left: 0;
-  width: 55%;
-  height: 100%;
-  background: linear-gradient(135deg, #fff 0%, #fff 42%, transparent 42.5%);
-}
-.lnr-reach-wedge-right {
-  top: 0;
-  right: 0;
-  width: 55%;
-  height: 100%;
-  background: linear-gradient(225deg, #fff 0%, #fff 42%, transparent 42.5%);
-}
-
 /* Ghost watermark */
 .lnr-reach-ghost {
   position: absolute;
