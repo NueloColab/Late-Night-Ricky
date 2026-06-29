@@ -32,12 +32,14 @@
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  opacity: 0.35;
 }
 
 .lnr-loader-inner {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
+  background: #000;
+  mix-blend-mode: multiply;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,9 +65,9 @@
   font-size: clamp(48px, 14vw, 160px);
   font-weight: 700;
   text-transform: uppercase;
-  /* Outlined/stroke text — hollow inside, thin white outline */
-  color: transparent;
-  -webkit-text-stroke: clamp(1px, 0.25vw, 2px) #fff;
+  /* Black fill hides video inside letters, white stroke shows video through thin lines */
+  color: #000;
+  -webkit-text-stroke: clamp(1.5px, 0.3vw, 3px) #fff;
   paint-order: stroke fill;
   display: inline-block;
   opacity: 0;
