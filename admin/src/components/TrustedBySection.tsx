@@ -62,29 +62,37 @@ export default function TrustedBySection({
     return () => clearInterval(timer);
   }, [items.length]);
 
-  // Duplicate once for seamless loop (2x, not 3x)
-  const doubled = [...items, ...items];
+  // Split 20 names across 3 rows (7 + 7 + 6)
+  const row1 = items.slice(0, 7);
+  const row2 = items.slice(7, 14);
+  const row3 = items.slice(14, 20);
 
-  const renderItem = (item: ClientItem, i: number) => {
-    const originalIndex = i % items.length;
-    const isActive = displayIndex === originalIndex;
-    return (
-      <button
-        key={`${item.name}-${i}`}
-        className={`lnr-client-name ${isActive ? 'lnr-client-name-active' : ''}`}
-        onMouseEnter={() => setHoverIndex(originalIndex)}
-        onMouseLeave={() => setHoverIndex(null)}
-        onClick={() => handleSelect(originalIndex)}
-      >
-        {item.name.toUpperCase()}<span className="lnr-client-dot">&middot;</span>
-      </button>
-    );
+  // Duplicate each row for seamless marquee loop
+  const makeRow = (rowItems: ClientItem[], rowIndex: number) => {
+    const doubled = [...rowItems, ...rowItems, ...rowItems];
+    return doubled.map((item, i) => {
+      const originalIndex = items.indexOf(item);
+      const isActive = displayIndex === originalIndex;
+      const isRonaldo = item.name === 'Ronaldo';
+      return (
+        <button
+          key={`${item.name}-${rowIndex}-${i}`}
+          className={`lnr-client-name ${isActive ? 'lnr-client-name-active' : ''} ${isRonaldo ? 'lnr-client-name-ronaldo' : ''}`}
+          onMouseEnter={() => setHoverIndex(originalIndex)}
+          onMouseLeave={() => setHoverIndex(null)}
+          onClick={() => handleSelect(originalIndex)}
+        >
+          {item.name.toUpperCase()}<span className="lnr-client-dot">&middot;</span>
+        </button>
+      );
+    });
   };
 
   return (
     <section id="trusted" className="lnr-trusted-section">
-      {/* Background image — centred, feathered edges */}
+      {/* Background image — centred, feathered edges, frost overlay */}
       <div className="lnr-trusted-bg-container">
+        <div className="lnr-trusted-frost" />
         {items.map((item, i) => (
           <div
             key={`bg-${item.name}`}
@@ -99,22 +107,25 @@ export default function TrustedBySection({
 
       {/* Content */}
       <div className="lnr-trusted-content">
+        {/* Header line */}
+        <p className="lnr-trusted-header">{description}</p>
+
         {/* Quote */}
         <div className="lnr-trusted-quote">
           <h2 className="lnr-trusted-quote-text">&ldquo;{quote}&rdquo;</h2>
-          <p className="lnr-trusted-attribution">&mdash; {attribution}. {description}</p>
+          <p className="lnr-trusted-attribution">&mdash; {attribution}</p>
         </div>
 
-        {/* Scrolling name rows — alternating direction */}
+        {/* Scrolling name rows — split across 3 rows, alternating direction */}
         <div className="lnr-trusted-names">
           <div className="lnr-trusted-row lnr-trusted-row-forward">
-            {doubled.map((item, i) => renderItem(item, i))}
+            {makeRow(row1, 0)}
           </div>
           <div className="lnr-trusted-row lnr-trusted-row-reverse">
-            {doubled.map((item, i) => renderItem(item, i + items.length))}
+            {makeRow(row2, 1)}
           </div>
           <div className="lnr-trusted-row lnr-trusted-row-forward-slow">
-            {doubled.map((item, i) => renderItem(item, i + items.length * 2))}
+            {makeRow(row3, 2)}
           </div>
         </div>
       </div>
