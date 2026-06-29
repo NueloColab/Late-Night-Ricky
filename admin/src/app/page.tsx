@@ -3,7 +3,7 @@ import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
 import TrustedBySection from '../components/TrustedBySection';
 import HomeContactSection from '../components/HomeContactSection';
-// import Loader from '../components/Loader';
+import Loader from '../components/Loader';
 import { getShowCards, getClientNames, getTracks, getSiteSections, getSeoMeta } from '@/lib/cms';
 import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
@@ -178,29 +178,18 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ═══ LOADING ANIMATION — DISABLED FOR TESTING ═══ */}
-      {/* <Loader /> */}
+      {/* ═══ LOADING ANIMATION ═══ */}
+      <Loader />
 
       <Navbar />
       <ScrollReveal />
 
-      {/* Hero */}
-      <section className="relative min-h-[100dvh] flex flex-col items-center justify-center px-8 md:px-14 pb-14 pt-20">
-        <div className="fixed inset-0 -z-10" style={{ backgroundColor: '#8db8d8' }}>
-          <div
-            className="absolute inset-0 bg-cover bg-no-repeat"
-            style={{
-              backgroundImage: `url('${heroImage}')`,
-              backgroundSize: heroBackgroundSize,
-              backgroundPosition: heroBackgroundPosition,
-              filter: heroGrayscale ? 'grayscale(100%) brightness(1.3)' : 'none',
-              mixBlendMode: 'multiply',
-            }}
-          />
-        </div>
-        <img src={heroLogo} alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] mx-auto mb-14 opacity-90" style={{ filter: 'none' }} />
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white opacity-70">
-          <span className="text-[11px] tracking-[2.5px] uppercase font-medium">Scroll</span>
+      {/* ═══ HERO — original LNR hero with logo ═══ */}
+      <section className="lnr-hero reveal-fade">
+        <div className="lnr-hero-bg" style={{ backgroundImage: `url('${heroImage}')`, backgroundSize: heroBackgroundSize, backgroundPosition: heroBackgroundPosition, filter: heroGrayscale ? 'grayscale(100%) brightness(1.3)' : 'none', mixBlendMode: 'multiply' }} />
+        <img src={heroLogo} alt="Late Night Ricky" className="lnr-hero-logo reveal-scale" data-delay="200" />
+        <div className="lnr-hero-scroll">
+          <span>Scroll</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
         </div>
       </section>
@@ -228,29 +217,26 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ REACH — Garrix-style editorial collage ═══ */}
-      <section id="reach" className="reach-v2-section">
+      <section id="reach" className="lnr-reach-collage reveal-left">
         {/* Ghost watermark behind photos */}
-        <div className="reach-v2-ghost" aria-hidden="true">RICKY</div>
-        
+        <div className="lnr-reach-ghost" aria-hidden="true">RICKY</div>
         {/* Primary portrait photo — left side */}
-        <div className="reach-v2-photo-primary" data-reach-animate="left">
-          <img src="/assets/ricky-portrait-v2.jpg?v=2" alt="Late Night Ricky" />
+        <div className="lnr-reach-photo-primary">
+          <img src="/assets/ricky-portrait-new.jpg" alt="Late Night Ricky" />
         </div>
-        
         {/* Dark text card — overlaps photo, center-right */}
-        <div className="reach-v2-card" data-reach-animate="right">
-          <h2 className="reach-v2-quote" data-reach-animate="up">
+        <div className="lnr-reach-card">
+          <h2 className="lnr-reach-quote">
             International DJ &amp; Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.
           </h2>
-          <p className="reach-v2-sub" data-reach-animate="up">
+          <p className="lnr-reach-sub">
             150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
           </p>
-          <span className="reach-v2-sig" data-reach-animate="up">— Late Night Ricky</span>
+          <span className="lnr-reach-sig">— Late Night Ricky</span>
         </div>
-        
-        {/* Secondary photo — bottom right */}
-        <div className="reach-v2-photo-secondary" data-reach-animate="up">
-          <img src="/assets/ricky-stool.jpg?v=2" alt="" />
+        {/* Secondary texture strip — bottom right */}
+        <div className="lnr-reach-photo-secondary">
+          <img src="/assets/press-bg2.jpg" alt="" />
         </div>
       </section>
 

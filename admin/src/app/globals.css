@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
-
 @font-face {
   font-family: 'Rockybilly';
   src: url('/assets/Rockybilly.woff2') format('woff2'),
@@ -115,23 +113,19 @@
   }
 }
 
-/* Ghost watermark */
-
-/* Primary portrait — upper left, overlaps wedge */
-
-/* Dark text card — center right, overlaps photo */
-
-/* Secondary texture strip — bottom right */
-
-/* ── Reach Section v2 — Clean rebuild with isolated animation ────────── */
-.reach-v2-section {
+/* ── Reach Section — Garrix-style editorial collage ────────── */
+.lnr-reach-collage {
   position: relative;
   min-height: 100vh;
   background: #141414;
   overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
-.reach-v2-ghost {
+/* Ghost watermark */
+.lnr-reach-ghost {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -148,7 +142,8 @@
   letter-spacing: 0.05em;
 }
 
-.reach-v2-photo-primary {
+/* Primary portrait — upper left, overlaps wedge */
+.lnr-reach-photo-primary {
   position: absolute;
   top: 8%;
   left: 4%;
@@ -156,23 +151,16 @@
   aspect-ratio: 3/4;
   z-index: 3;
   overflow: hidden;
-  /* Animation initial state */
-  opacity: 0;
-  margin-left: -80px;
-  transition: opacity 1s cubic-bezier(.22, 1, .36, 1), margin-left 1s cubic-bezier(.22, 1, .36, 1);
 }
-.reach-v2-photo-primary.reach-visible {
-  opacity: 1;
-  margin-left: 0;
-}
-.reach-v2-photo-primary img {
+.lnr-reach-photo-primary img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   filter: grayscale(100%) contrast(1.1) brightness(0.9);
 }
 
-.reach-v2-card {
+/* Dark text card — center right, overlaps photo */
+.lnr-reach-card {
   position: absolute;
   top: 22%;
   right: 4%;
@@ -183,17 +171,9 @@
   display: flex;
   flex-direction: column;
   gap: clamp(12px, 2vw, 24px);
-  /* Animation initial state */
-  opacity: 0;
-  margin-right: -80px;
-  transition: opacity 1s cubic-bezier(.22, 1, .36, 1), margin-right 1s cubic-bezier(.22, 1, .36, 1);
-}
-.reach-v2-card.reach-visible {
-  opacity: 1;
-  margin-right: 0;
 }
 
-.reach-v2-quote {
+.lnr-reach-quote {
   font-family: 'Playfair Display', 'Georgia', serif;
   font-size: clamp(22px, 3.2vw, 48px);
   font-weight: 700;
@@ -201,17 +181,9 @@
   color: #fff;
   line-height: 1.15;
   letter-spacing: -0.01em;
-  /* Stagger animation */
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(.22, 1, .36, 1) 0.2s, transform 0.8s cubic-bezier(.22, 1, .36, 1) 0.2s;
-}
-.reach-v2-card.reach-visible .reach-v2-quote {
-  opacity: 1;
-  transform: translateY(0);
 }
 
-.reach-v2-sub {
+.lnr-reach-sub {
   font-family: var(--font-montserrat), 'Montserrat', sans-serif;
   font-size: clamp(10px, 1.2vw, 14px);
   font-weight: 600;
@@ -219,32 +191,17 @@
   letter-spacing: 0.1em;
   color: rgba(255, 255, 255, 0.5);
   line-height: 1.6;
-  /* Stagger animation */
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(.22, 1, .36, 1) 0.35s, transform 0.8s cubic-bezier(.22, 1, .36, 1) 0.35s;
-}
-.reach-v2-card.reach-visible .reach-v2-sub {
-  opacity: 1;
-  transform: translateY(0);
 }
 
-.reach-v2-sig {
+.lnr-reach-sig {
   font-family: 'Rockybilly', cursive, sans-serif;
   font-size: clamp(14px, 2vw, 24px);
   color: rgba(255, 255, 255, 0.6);
   letter-spacing: 0.02em;
-  /* Stagger animation */
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(.22, 1, .36, 1) 0.5s, transform 0.8s cubic-bezier(.22, 1, .36, 1) 0.5s;
-}
-.reach-v2-card.reach-visible .reach-v2-sig {
-  opacity: 1;
-  transform: translateY(0);
 }
 
-.reach-v2-photo-secondary {
+/* Secondary texture strip — bottom right */
+.lnr-reach-photo-secondary {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -252,16 +209,8 @@
   height: 32%;
   z-index: 4;
   overflow: hidden;
-  /* Animation initial state */
-  opacity: 0;
-  margin-bottom: -60px;
-  transition: opacity 1s cubic-bezier(.22, 1, .36, 1) 0.3s, margin-bottom 1s cubic-bezier(.22, 1, .36, 1) 0.3s;
 }
-.reach-v2-photo-secondary.reach-visible {
-  opacity: 1;
-  margin-bottom: 0;
-}
-.reach-v2-photo-secondary img {
+.lnr-reach-photo-secondary img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -270,55 +219,47 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .reach-v2-section {
+  .lnr-reach-collage {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
     min-height: auto;
-    padding: 60px 0;
+    padding: 0;
   }
-  .reach-v2-photo-primary {
+  .lnr-reach-wedge-left,
+  .lnr-reach-wedge-right {
+    display: none;
+  }
+  .lnr-reach-ghost {
+    font-size: clamp(80px, 25vw, 160px);
+    opacity: 0.03;
+  }
+  .lnr-reach-photo-primary {
     position: relative;
     top: auto;
     left: auto;
     width: 100%;
     aspect-ratio: 4/3;
-    margin-left: 0;
   }
-  .reach-v2-photo-primary.reach-visible {
-    margin-left: 0;
-  }
-  .reach-v2-card {
+  .lnr-reach-card {
     position: relative;
     top: auto;
     right: auto;
     width: 100%;
-    margin-right: 0;
+    padding: clamp(20px, 6vw, 40px);
+    background: #141414;
   }
-  .reach-v2-card.reach-visible {
-    margin-right: 0;
-  }
-  .reach-v2-photo-secondary {
+  .lnr-reach-photo-secondary {
     position: relative;
     bottom: auto;
     right: auto;
     width: 100%;
-    height: 250px;
-    margin-bottom: 0;
+    height: 200px;
   }
-  .reach-v2-photo-secondary.reach-visible {
-    margin-bottom: 0;
-  }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  
-  
-  
-  
-  
-  
 }
 
 /* Import Oswald for Garrix-style headings */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
+
 :root {
   --gd: #7EB8E6;
   --gs: #A8D5F0;
@@ -1216,13 +1157,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 .reveal-fade { opacity: 0; transition: opacity 0.8s cubic-bezier(.22,1,.36,1); }
 .reveal-fade.visible { opacity: 1; }
-
-/* Reach section — 3-box scroll animation */
-
-
-
-
-/* Staggered delays for Reach text children */
 
 /* Staggered children */
 .reveal-stagger > * { opacity: 0; transform: translateY(30px); transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1); }
