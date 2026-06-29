@@ -1,7 +1,7 @@
 import Navbar from '../components/Navbar';
 import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
-import PartnerLogosSection from '../components/PartnerLogosSection';
+import TrustedBySection from '../components/TrustedBySection';
 import HomeContactSection from '../components/HomeContactSection';
 import { getShowCards, getClientNames, getTracks, getSiteSections, getSeoMeta } from '@/lib/cms';
 import type { Metadata } from 'next';
@@ -56,18 +56,6 @@ const DEFAULT_SHOWS = [
   },
 ];
 
-const DEFAULT_LOGOS = [
-  { src: '/assets/logo-f1.png?v=13', alt: 'Formula 1' },
-  { src: '/assets/logo-coca-cola.png?v=13', alt: 'Coca-Cola' },
-  { src: '/assets/logo-dior.png?v=13', alt: 'Dior' },
-  { src: '/assets/logo-patek.png?v=13', alt: 'Patek Philippe' },
-  { src: '/assets/logo-ciroc.png?v=13', alt: 'Cîroc' },
-  { src: '/assets/logo-louis-vuitton.png?v=13', alt: 'Louis Vuitton' },
-  { src: '/assets/logo-prime.png?v=13', alt: 'Prime' },
-  { src: '/assets/logo-prime-boxing.png?v=13', alt: 'MF Boxing' },
-  { src: '/assets/logo-cannes.png?v=13', alt: 'Festival de Cannes' },
-  { src: '/assets/logo-cartier.png?v=13', alt: 'Cartier' },
-];
 
 const DEFAULT_CLIENTS = [
   '50 Cent', 'Bruno Mars', 'Chris Brown', 'Dr. Dre & Jimmy Iovine', 'Drake',
@@ -119,7 +107,7 @@ export default async function HomePage() {
   let reachOutImage = '/assets/ricky-hero-new.jpg';
   let reachOutCta = 'Get in touch';
   // Suppress unused-variable warnings for CMS values not yet used in new layout
-  void heroGrayscale; void heroBackgroundSize; void heroBackgroundPosition; void reachOutImage; void reachOutCta;
+  void heroGrayscale; void heroBackgroundSize; void heroBackgroundPosition; void reachOutImage; void reachOutCta; void pressPack; void clientsTitle; void clients;
   try {
     const [dbCards, dbNames, dbTracks, dbSections] = await Promise.all([
       getShowCards(), getClientNames(), getTracks(), getSiteSections('home'),
@@ -186,7 +174,6 @@ export default async function HomePage() {
     if (dbNames.length > 0) { clients = dbNames.map((n: any) => n.name); }
   } catch { /* DB unreachable — use hardcoded defaults */ }
 
-  const clientRows = clients.length > 0 ? [...clients, ...clients, ...clients] : ['STAY TUNED'];
 
   return (
     <>
@@ -327,33 +314,13 @@ export default async function HomePage() {
         <h2>LATE NIGHT RICKY</h2>
       </div>
 
-      {/* ═══ PARTNERSHIPS ═══ */}
-      <PartnerLogosSection defaultLogos={DEFAULT_LOGOS} quote={partnersQuote} attribution={partnersAttribution} description={partnersDescription} pressPack={pressPack} />
-
-      {/* ═══ CLIENTS — slow marquee with vertical label ═══ */}
-      <section className="garrix-section garrix-clients-section">
-        <div className="garrix-section-label">CLIENTS<span className="garrix-section-line" /></div>
-        <div className="garrix-section-inner">
-          <div className="garrix-clients-header">
-            <h2 className="garrix-heading">{clientsTitle}</h2>
-            <p className="garrix-subtitle">A few names we&apos;ve shared the stage with</p>
-          </div>
-          <div className="garrix-marquee-wrapper">
-            <div className="garrix-marquee-track garrix-marquee-clients" style={{ animationDuration: '55s' }}>
-              {clientRows.map((c: any, i: number) => (
-                <span key={i} className="garrix-marquee-item garrix-marquee-item-sm">{typeof c === 'string' ? c : c.name}<span className="garrix-marquee-dot">·</span></span>
-              ))}
-            </div>
-          </div>
-          <div className="garrix-marquee-wrapper">
-            <div className="garrix-marquee-track garrix-marquee-reverse garrix-marquee-clients" style={{ animationDuration: '65s' }}>
-              {clientRows.map((c: any, i: number) => (
-                <span key={i} className="garrix-marquee-item garrix-marquee-item-sm">{typeof c === 'string' ? c : c.name}<span className="garrix-marquee-dot">·</span></span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ═══ TRUSTED BY THE BEST — interactive names with background ═══ */}
+      <TrustedBySection
+        quote={partnersQuote}
+        attribution={partnersAttribution}
+        description={partnersDescription}
+        clients={clients}
+      />
 
       {/* ═══ RADIO ═══ */}
       <section id="radio" className="garrix-section garrix-radio-section">

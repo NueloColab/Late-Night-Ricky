@@ -957,20 +957,139 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   line-height: 0.85;
 }
 
-/* ── CLIENTS section ──────────────────────────────────────────── */
-.garrix-clients-section {
-  padding: 80px 0 100px;
+/* ── TRUSTED BY section — Garrix-style interactive names ═════════ */
+.lnr-trusted-section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #0a0e17;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lnr-trusted-bg-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.lnr-trusted-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(100%) brightness(0.5) contrast(1.2);
+}
+
+.lnr-trusted-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(10,14,23,0.7) 0%, rgba(10,14,23,0.5) 50%, rgba(10,14,23,0.8) 100%);
+}
+
+.lnr-trusted-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: clamp(60px, 10vh, 120px) clamp(20px, 4vw, 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(40px, 6vh, 80px);
+}
+
+.lnr-trusted-quote {
+  text-align: center;
+  max-width: 800px;
+}
+
+.lnr-trusted-quote-text {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 700;
+  font-style: italic;
+  color: #fff;
+  line-height: 1.2;
+  margin: 0 0 16px 0;
+}
+
+.lnr-trusted-attribution {
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: clamp(11px, 1.2vw, 14px);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+.lnr-trusted-names {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 1vh, 16px);
   overflow: hidden;
 }
 
-.garrix-clients-header {
-  margin-bottom: 48px;
-  text-align: center;
+.lnr-trusted-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.garrix-clients-header .garrix-subtitle {
-  margin: 16px auto 0;
-  text-align: center;
+.lnr-client-name {
+  font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: clamp(18px, 3.5vw, 48px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  padding: 0 clamp(8px, 1.5vw, 24px);
+  cursor: pointer;
+  background: none;
+  border: none;
+  white-space: nowrap;
+  position: relative;
+}
+
+.lnr-client-name:hover {
+  color: #fff !important;
+  -webkit-text-stroke: 0px #fff !important;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+}
+
+.lnr-client-name:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .lnr-trusted-section {
+    min-height: auto;
+    padding: 60px 0 80px;
+  }
+  .lnr-trusted-row {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 8px 0;
+  }
+  .lnr-trusted-row::-webkit-scrollbar {
+    display: none;
+  }
+  .lnr-client-name {
+    font-size: clamp(16px, 5vw, 28px);
+    padding: 0 clamp(6px, 2vw, 16px);
+  }
 }
 
 /* ── RADIO section ────────────────────────────────────────────── */
