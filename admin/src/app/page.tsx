@@ -370,14 +370,14 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="garrix-collage-photo garrix-cp-2 reveal-right" data-speed="-0.05">
-            <img src="/assets/ricky-fricktion.jpg" alt="Ricky DJing" />
-            <div className="garrix-collage-outline">LATE<br/>NIGHT</div>
+            <img src="/assets/ricky-hero-v2.jpg" alt="Ricky DJing" />
           </div>
           <div className="garrix-collage-photo garrix-cp-3 reveal-left" data-delay="200" data-speed="-0.02">
-            <img src="/assets/press-bg2.jpg" alt="Ricky performing" />
+            <img src="/assets/ricky-seated.jpg" alt="Ricky seated" />
+            <div className="garrix-collage-outline">LATE<br/>NIGHT</div>
           </div>
           <div className="garrix-collage-photo garrix-cp-4 reveal-right" data-delay="200" data-speed="-0.04">
-            <img src="/assets/ricky-hero-v2.jpg" alt="" style={{ filter: 'grayscale(1) contrast(1.1)' }} />
+            <img src="/assets/ricky-portrait-standing.jpg" alt="" />
           </div>
         </div>
         <div className="garrix-collage-caption">
