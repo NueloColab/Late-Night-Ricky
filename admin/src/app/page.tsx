@@ -232,11 +232,11 @@ export default async function HomePage() {
         {/* Ghost watermark behind photos */}
         <div className="lnr-reach-ghost" aria-hidden="true">RICKY</div>
         {/* Primary portrait photo — left side */}
-        <div className="lnr-reach-photo-primary">
+        <div className="lnr-reach-photo-primary reveal-left" data-delay="0">
           <img src="/assets/ricky-portrait-standing.jpg" alt="Late Night Ricky" />
         </div>
         {/* Dark text card — overlaps photo, center-right */}
-        <a href="/about" className="lnr-reach-card">
+        <a href="/about" className="lnr-reach-card reveal-right" data-delay="200">
           <h2 className="lnr-reach-quote">
             International DJ &amp; Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.
           </h2>
@@ -246,7 +246,7 @@ export default async function HomePage() {
           <span className="lnr-reach-sig">— Late Night Ricky</span>
         </a>
         {/* Secondary texture strip — bottom right */}
-        <div className="lnr-reach-photo-secondary">
+        <div className="lnr-reach-photo-secondary reveal-bottom-right" data-delay="400">
           <img src="/assets/ricky-seated.jpg" alt="" />
         </div>
       </section>
