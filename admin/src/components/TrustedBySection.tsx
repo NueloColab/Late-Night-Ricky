@@ -73,11 +73,10 @@ export default function TrustedBySection({
     return doubled.map((item, i) => {
       const originalIndex = items.indexOf(item);
       const isActive = displayIndex === originalIndex;
-      const isRonaldo = item.name === 'Ronaldo';
       return (
         <button
           key={`${item.name}-${rowIndex}-${i}`}
-          className={`lnr-client-name ${isActive ? 'lnr-client-name-active' : ''} ${isRonaldo ? 'lnr-client-name-ronaldo' : ''}`}
+          className={`lnr-client-name ${isActive ? 'lnr-client-name-active' : ''}`}
           onMouseEnter={() => setHoverIndex(originalIndex)}
           onMouseLeave={() => setHoverIndex(null)}
           onClick={() => handleSelect(originalIndex)}
@@ -107,13 +106,16 @@ export default function TrustedBySection({
 
       {/* Content */}
       <div className="lnr-trusted-content">
-        {/* Header line */}
+        {/* Header line — sits above the image in the black space */}
         <p className="lnr-trusted-header">{description}</p>
 
-        {/* Quote */}
+        {/* Quote with attribution — Ronaldo's name in gold */}
         <div className="lnr-trusted-quote">
           <h2 className="lnr-trusted-quote-text">&ldquo;{quote}&rdquo;</h2>
-          <p className="lnr-trusted-attribution">&mdash; {attribution}</p>
+          <p className="lnr-trusted-attribution">
+            <span className="lnr-trusted-attribution-dash">&mdash;</span>
+            <span className="lnr-trusted-attribution-name">{attribution}</span>
+          </p>
         </div>
 
         {/* Scrolling name rows — split across 3 rows, alternating direction */}
