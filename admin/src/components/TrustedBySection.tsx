@@ -130,6 +130,9 @@ export default function TrustedBySection({
             {makeRow(row3, 2)}
           </div>
         </div>
+
+        {/* Artist Gallery pill button */}
+        <a href="/shows" className="lnr-trusted-gallery-pill">Artist Gallery</a>
       </div>
     </section>
   );
