@@ -264,8 +264,13 @@ export default async function HomePage() {
 
       {/* ═══ HIGHLIGHTS — Garrix-style 2-column release grid ═══ */}
       <section className="lnr-highlights">
+          <div className="lnr-highlights-label">HIGHLIGHTS</div>
+          <div className="lnr-highlights-line" />
           <div className="lnr-highlights-header">
-            <h2 className="lnr-highlights-heading">RECENT HIGHLIGHTS</h2>
+            <div className="lnr-highlights-header-left">
+              <h2 className="lnr-highlights-heading">HIGHLIGHTS</h2>
+              <a href="/shows" className="lnr-highlights-cta">VIEW ALL SHOWS</a>
+            </div>
             <p className="lnr-highlights-subtitle">A selection of standout shows and performances from across the globe.</p>
           </div>
           <div className="lnr-highlights-grid">
@@ -349,9 +354,6 @@ export default async function HomePage() {
                 </div>
               </a>
             </div>
-          </div>
-          <div className="lnr-highlights-cta-wrap">
-            <a href="/shows" className="lnr-highlights-cta">VIEW ALL SHOWS</a>
           </div>
         </section>
 
