@@ -274,7 +274,6 @@ export default async function HomePage() {
                   <a href={card.href || '#'} className="lnr-highlights-card" style={{ zIndex: 10 + idx }}>
                     <div className="lnr-highlights-card-img" style={{ backgroundImage: `url('${assetPath(card.image)}')` }}>
                       <div className="lnr-highlights-card-overlay" />
-                      <div className="lnr-highlights-card-play" />
                       <div className="lnr-highlights-card-text">
                         <h3 className="lnr-highlights-card-title">{card.title}</h3>
                         <span className="lnr-highlights-card-venue">— {card.venue}{card.location ? `, ${card.location}` : ''}</span>
@@ -294,7 +293,6 @@ export default async function HomePage() {
                   <a href={card.href || '#'} className="lnr-highlights-card" style={{ zIndex: 10 + idx }}>
                     <div className="lnr-highlights-card-img" style={{ backgroundImage: `url('${assetPath(card.image)}')` }}>
                       <div className="lnr-highlights-card-overlay" />
-                      <div className="lnr-highlights-card-play" />
                       <div className="lnr-highlights-card-text">
                         <h3 className="lnr-highlights-card-title">{card.title}</h3>
                         <span className="lnr-highlights-card-venue">— {card.venue}{card.location ? `, ${card.location}` : ''}</span>
