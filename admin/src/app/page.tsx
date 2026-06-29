@@ -210,13 +210,21 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ═══ LOADING ANIMATION ═══ */}
+      {/* ═══ LOADING ANIMATION — outlined text, 3 lines ═══ */}
       <div className="lnr-loader" id="lnr-loader">
-        <div className="lnr-loader-text">
-          {'LATE NIGHT RICKY'.split('').map((char, i) => (
-            <span key={i} className="lnr-loader-char" style={{ animationDelay: `${i * 0.05 + 0.3}s` }}>
-              {char === ' ' ? '\u00A0' : char}
-            </span>
+        <div className="lnr-loader-inner">
+          {['LATE', 'NIGHT', 'RICKY'].map((word, wi) => (
+            <div key={wi} className="lnr-loader-line" style={{ animationDelay: `${wi * 0.35 + 0.2}s` }}>
+              {word.split('').map((char, ci) => (
+                <span
+                  key={ci}
+                  className="lnr-loader-char"
+                  style={{ animationDelay: `${(wi * 4 + ci) * 0.06 + 0.4}s` }}
+                >
+                  {char}
+                </span>
+              ))}
+            </div>
           ))}
         </div>
       </div>

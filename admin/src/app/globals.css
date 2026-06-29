@@ -12,7 +12,7 @@
   font-display: swap;
 }
 
-/* ── Loading Animation — letters scramble into place ────────── */
+/* ── Loading Animation — outlined text scrambles into place (Garrix-style) ── */
 .lnr-loader {
   position: fixed;
   inset: 0;
@@ -21,70 +21,84 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: lnr-loader-fadeout 0.6s ease 3.2s forwards;
+  animation: lnr-loader-fadeout 0.8s ease 3.6s forwards;
   pointer-events: none;
 }
 
-.lnr-loader-text {
+.lnr-loader-inner {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 0;
-  max-width: 90vw;
+  justify-content: center;
+  gap: clamp(4px, 1vw, 12px);
 }
+
+.lnr-loader-line {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  opacity: 0;
+  transform: translateY(var(--line-y, 40px)) scale(0.92);
+  animation: lnr-line-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.lnr-loader-line:nth-child(1) { --line-y: -50px; }
+.lnr-loader-line:nth-child(2) { --line-y: 30px; }
+.lnr-loader-line:nth-child(3) { --line-y: 60px; }
 
 .lnr-loader-char {
   font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
-  font-size: clamp(32px, 8vw, 80px);
+  font-size: clamp(48px, 14vw, 160px);
   font-weight: 700;
   text-transform: uppercase;
-  color: #fff;
+  /* Outlined/stroke text — hollow inside, thin white outline */
+  color: transparent;
+  -webkit-text-stroke: clamp(1px, 0.25vw, 2px) #fff;
+  paint-order: stroke fill;
   display: inline-block;
   opacity: 0;
-  transform: translateY(var(--rand-y, 60px)) rotate(var(--rand-r, 15deg)) scale(0.5);
-  animation: lnr-char-fly-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform: translateY(var(--char-y, 30px)) rotate(var(--char-r, 10deg)) scale(0.7);
+  filter: blur(6px);
+  animation: lnr-char-fly-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  letter-spacing: clamp(4px, 1.2vw, 20px);
+  line-height: 0.9;
 }
 
-/* Stagger each letter differently using nth-child */
-.lnr-loader-char:nth-child(1)  { --rand-y: -80px; --rand-r: -25deg; }
-.lnr-loader-char:nth-child(2)  { --rand-y: 50px;  --rand-r: 30deg; }
-.lnr-loader-char:nth-child(3)  { --rand-y: -40px; --rand-r: -15deg; }
-.lnr-loader-char:nth-child(4)  { --rand-y: 70px;  --rand-r: 20deg; }
-.lnr-loader-char:nth-child(5)  { --rand-y: -90px; --rand-r: -35deg; }
-/* space at index 5 */
-.lnr-loader-char:nth-child(6)  { --rand-y: 60px;  --rand-r: 10deg; }
-.lnr-loader-char:nth-child(7)  { --rand-y: -50px; --rand-r: -20deg; }
-.lnr-loader-char:nth-child(8)  { --rand-y: 80px;  --rand-r: 25deg; }
-.lnr-loader-char:nth-child(9)  { --rand-y: -30px; --rand-r: -10deg; }
-.lnr-loader-char:nth-child(10) { --rand-y: 90px;  --rand-r: 35deg; }
-/* space at index 10 */
-.lnr-loader-char:nth-child(11) { --rand-y: -70px; --rand-r: -30deg; }
-.lnr-loader-char:nth-child(12) { --rand-y: 40px;  --rand-r: 15deg; }
-.lnr-loader-char:nth-child(13) { --rand-y: -60px; --rand-r: -25deg; }
-.lnr-loader-char:nth-child(14) { --rand-y: 80px;  --rand-r: 20deg; }
-.lnr-loader-char:nth-child(15) { --rand-y: -45px; --rand-r: -35deg; }
-.lnr-loader-char:nth-child(16) { --rand-y: 55px;  --rand-r: 10deg; }
+@keyframes lnr-line-in {
+  0% {
+    opacity: 0;
+    transform: translateY(var(--line-y, 40px)) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
 @keyframes lnr-char-fly-in {
   0% {
     opacity: 0;
-    transform: translateY(var(--rand-y)) rotate(var(--rand-r)) scale(0.5);
-    filter: blur(4px);
+    transform: translateY(var(--char-y, 30px)) rotate(var(--char-r, 10deg)) scale(0.7);
+    filter: blur(6px);
+    -webkit-text-stroke: clamp(1px, 0.25vw, 2px) #fff;
   }
-  60% {
-    opacity: 0.8;
-    filter: blur(0);
+  50% {
+    opacity: 0.6;
+    filter: blur(2px);
   }
   100% {
     opacity: 1;
     transform: translateY(0) rotate(0deg) scale(1);
     filter: blur(0);
+    -webkit-text-stroke: clamp(1px, 0.25vw, 2px) #fff;
   }
 }
 
 @keyframes lnr-loader-fadeout {
   0% {
+    opacity: 1;
+  }
+  60% {
     opacity: 1;
   }
   100% {
