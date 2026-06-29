@@ -3,7 +3,7 @@ import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
 import PartnerLogosSection from '../components/PartnerLogosSection';
 import HomeContactSection from '../components/HomeContactSection';
-import { getShowCards, getClientNames, getVenueTicker, getTracks, getSiteSections, getSeoMeta } from '@/lib/cms';
+import { getShowCards, getClientNames, getTracks, getSiteSections, getSeoMeta } from '@/lib/cms';
 import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -76,23 +76,6 @@ const DEFAULT_CLIENTS = [
   'Rihanna', 'Ronaldo', 'Travis Scott', 'Usain Bolt', 'Vin Diesel',
 ];
 
-const DEFAULT_VENUES = [
-  'LIV Miami', 'WALL Miami', 'TAPE London', 'HAKKASAN Las Vegas', 'MOVIDA Dubai',
-  "JIMMY'Z Monte Carlo", 'MINISTRY OF SOUND London', '1 OAK New York', 'BYBLOS Milan',
-  'PACHA Ibiza', 'ARMANI Dubai', 'MANDALAY BAY Las Vegas', 'TEMPLE San Francisco',
-  'POPPY Los Angeles', 'CIRQUE LE SOIR London', 'HIGHLIGHT ROOM Los Angeles',
-  "TEDDY'S @ ROOSEVELT Los Angeles", 'DELILAH Los Angeles', 'GIBSON Frankfurt',
-  'LIO Ibiza', 'STUDIO PARIS Chicago', 'PREMIER @ BORGATE Atlantic City',
-  'PARQ San Diego', 'BOOTSY BELLOWS Los Angeles', 'WARWICK Los Angeles',
-  'LAVO New York', 'TAO New York', 'UP & DOWN New York', 'LIBERTINE London',
-  'SCANDAL London', 'TOY ROOM Dubai', '1 OAK Dubai', 'TAO Las Vegas',
-  'BAOLI Cannes', 'SHOKO Barcelona', 'LASTA Serbia', 'REX ROOMS London',
-  "HARRIET'S Los Angeles", 'VIP ROOM St. Tropez', 'BON BONNIERE Mykonos',
-  'DRAMA London', 'DEAR DARLING London', 'TRAMP London', 'SPIRITO Brussels',
-  'CUCKOO CLUB London', 'RAFFLES London', 'SUBOIS Montreal', 'P1 Munich',
-  "ZELO'S Monte Carlo", 'WIRELESS FESTIVAL UK', 'READING & LEEDS FESTIVAL UK',
-];
-
 const DEFAULT_TRACKS = [
   { title: 'Late Night Ricky — Midnight in London', time: '0:30' },
   { title: 'Late Night Ricky — Vegas Lights', time: '0:30' },
@@ -111,7 +94,6 @@ function assetPath(p?: string | null) {
 export default async function HomePage() {
   let shows: any[] = DEFAULT_SHOWS;
   let clients: string[] = DEFAULT_CLIENTS;
-  let venues: string[] = DEFAULT_VENUES;
   let tracks = DEFAULT_TRACKS;
   let heroImage = '/assets/ricky-hero-v2.jpg';
   let heroLogo = '/assets/ricky-logo.png';
@@ -139,8 +121,8 @@ export default async function HomePage() {
   // Suppress unused-variable warnings for CMS values not yet used in new layout
   void heroGrayscale; void heroBackgroundSize; void heroBackgroundPosition; void reachOutImage; void reachOutCta;
   try {
-    const [dbCards, dbNames, dbVenues, dbTracks, dbSections] = await Promise.all([
-      getShowCards(), getClientNames(), getVenueTicker(), getTracks(), getSiteSections('home'),
+    const [dbCards, dbNames, dbTracks, dbSections] = await Promise.all([
+      getShowCards(), getClientNames(), getTracks(), getSiteSections('home'),
     ]);
     if (dbSections.length > 0) {
       const heroSection = dbSections.find((s: any) => s.section === 'hero');
@@ -202,10 +184,8 @@ export default async function HomePage() {
       shows = dbCards.map((c: any) => ({ href: c.href || '#', image: c.imagePath || '/assets/ricky-hero-new.jpg', venue: c.venue, location: c.location, season: c.season, title: c.title, description: c.description }));
     }
     if (dbNames.length > 0) { clients = dbNames.map((n: any) => n.name); }
-    if (dbVenues && Array.isArray(dbVenues) && dbVenues.length > 0) { venues = dbVenues; }
   } catch { /* DB unreachable — use hardcoded defaults */ }
 
-  const venueRows = venues.length > 0 ? [...venues, ...venues, ...venues] : ['NO UPCOMING SHOWS'];
   const clientRows = clients.length > 0 ? [...clients, ...clients, ...clients] : ['STAY TUNED'];
 
   return (
