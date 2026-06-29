@@ -1056,46 +1056,17 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   min-height: 60vh;
 }
 
-.garrix-life-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.8s ease;
-  z-index: 0;
-}
-
-.garrix-life-video.playing {
-  opacity: 1;
-}
-
 .garrix-life-banner::before {
   content: '';
   position: absolute;
   inset: 0;
   background: rgba(10, 14, 23, 0.75);
-  z-index: 1;
-}
-
-.garrix-life-banner-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 14, 23, 0.4);
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.8s ease;
-}
-
-.garrix-life-banner-overlay.hidden {
-  opacity: 1;
+  z-index: 0;
 }
 
 .garrix-life-quote {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   font-family: 'Playfair Display', 'Georgia', serif;
   font-size: clamp(20px, 3vw, 40px);
   font-weight: 700;
@@ -1107,47 +1078,14 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 .garrix-life-attribution {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   font-family: var(--font-montserrat), 'Montserrat', sans-serif;
   font-size: clamp(12px, 1.2vw, 16px);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: rgba(255, 255, 255, 0.5);
-  margin: 0 0 clamp(20px, 3vh, 40px) 0;
-}
-
-.garrix-life-play-wrap {
-  position: relative;
-  z-index: 2;
-  margin-bottom: clamp(30px, 5vh, 60px);
-}
-
-.garrix-life-play-btn {
-  width: 72px;
-  height: 72px;
-  border: none;
-  background: none;
-  color: #fff;
-  cursor: pointer;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  padding: 0;
-  opacity: 0.85;
-}
-
-.garrix-life-play-btn:hover {
-  transform: scale(1.1);
-  opacity: 1;
-}
-
-.garrix-life-play-btn svg {
-  width: 100%;
-  height: 100%;
-}
-
-.garrix-life-play-btn.playing {
-  opacity: 0;
-  pointer-events: none;
+  margin: 0 0 clamp(30px, 5vh, 60px) 0;
 }
 
 .garrix-life-banner h2 {

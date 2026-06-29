@@ -383,17 +383,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ LIFE IS CRAZY — outlined text banner with play button ═══ */}
-      <div className="garrix-life-banner" id="life-banner">
-        <video id="life-video" className="garrix-life-video" src="/assets/video-desktop.mp4" poster="/assets/ricky-hero-v2.jpg" muted loop playsInline preload="none" />
-        <div className="garrix-life-banner-overlay" />
+      {/* ═══ LIFE IS CRAZY — outlined text banner ═══ */}
+      <div className="garrix-life-banner">
         <p className="garrix-life-quote">&ldquo;{partnersQuote}&rdquo;</p>
         <p className="garrix-life-attribution">&mdash; {partnersAttribution}</p>
-        <div className="garrix-life-play-wrap">
-          <button className="garrix-life-play-btn" id="life-play-btn" aria-label="Play video">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="23" stroke="currentColor" strokeWidth="2" /><polygon points="20,16 34,24 20,32" fill="currentColor" /></svg>
-          </button>
-        </div>
         <h2>LATE NIGHT RICKY</h2>
       </div>
 
@@ -483,23 +476,6 @@ export default async function HomePage() {
         </div>
       </footer>
       </div>
-
-      {/* ═══ Play button interaction ═══ */}
-      <script dangerouslySetInnerHTML={{ __html: `
-        document.addEventListener('DOMContentLoaded', function() {
-          var btn = document.getElementById('life-play-btn');
-          var video = document.getElementById('life-video');
-          var overlay = document.querySelector('.garrix-life-banner-overlay');
-          if (btn && video) {
-            btn.addEventListener('click', function() {
-              video.classList.add('playing');
-              if (overlay) overlay.classList.add('hidden');
-              btn.classList.add('playing');
-              video.play();
-            });
-          }
-        });
-      `}} />
     </>
   );
 }
