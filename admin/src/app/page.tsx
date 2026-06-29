@@ -362,22 +362,22 @@ export default async function HomePage() {
       {/* ═══ COLLAGE — asymmetric scatter with ghost watermark ═══ */}
       <section className="garrix-collage-section">
         <div className="garrix-collage-ghost" aria-hidden="true">RICKY</div>
-        <div className="garrix-collage-photos">
-          <div className="garrix-collage-photo garrix-cp-1 reveal-left" data-speed="-0.03">
+        <div className="garrix-collage-grid">
+          <div className="garrix-collage-photo garrix-cp-1" data-layer="layer4">
             <img src="/assets/ricky-hero-new.jpg" alt="Late Night Ricky" />
             <div className="garrix-collage-quote">
               <p>&ldquo;Music is the only thing that makes sense&rdquo;</p>
             </div>
           </div>
-          <div className="garrix-collage-photo garrix-cp-2 reveal-right" data-speed="-0.05">
-            <img src="/assets/ricky-hero-v2.jpg" alt="Ricky DJing" />
+          <div className="garrix-collage-photo garrix-cp-2" data-layer="layer3">
+            <img src="/assets/ricky-hero-v2.jpg" alt="Ricky performing" />
           </div>
-          <div className="garrix-collage-photo garrix-cp-3 reveal-left" data-delay="200" data-speed="-0.02">
+          <div className="garrix-collage-photo garrix-cp-3" data-layer="layer2">
             <img src="/assets/ricky-seated.jpg" alt="Ricky seated" />
             <div className="garrix-collage-outline">LATE<br/>NIGHT</div>
           </div>
-          <div className="garrix-collage-photo garrix-cp-4 reveal-right" data-delay="200" data-speed="-0.04">
-            <img src="/assets/ricky-portrait-standing.jpg" alt="" />
+          <div className="garrix-collage-photo garrix-cp-4" data-layer="layer2">
+            <img src="/assets/ricky-portrait-standing.jpg" alt="" style={{ filter: 'grayscale(1) contrast(1.1)' }} />
           </div>
         </div>
         <div className="garrix-collage-caption">

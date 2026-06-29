@@ -28,11 +28,36 @@ export default function ScrollReveal() {
       els.forEach((el) => observer.observe(el));
     }
 
-    // Parallax scroll effect for elements with data-speed
-    const parallaxEls = document.querySelectorAll('[data-speed]');
-    if (parallaxEls.length) {
+    // Garrix-style parallax: elements with data-layer scroll at different speeds
+    const layerEls = document.querySelectorAll('[data-layer]');
+    if (layerEls.length) {
+      const speeds: Record<string, number> = {
+        layer4: -0.02,
+        layer3: -0.04,
+        layer2: -0.06,
+        layer1: -0.08,
+      };
+
       const onScroll = () => {
-        parallaxEls.forEach((el) => {
+        layerEls.forEach((el) => {
+          const layer = el.getAttribute('data-layer') || 'layer3';
+          const speed = speeds[layer] || -0.04;
+          const rect = el.getBoundingClientRect();
+          const centerY = rect.top + rect.height / 2;
+          const viewCenter = window.innerHeight / 2;
+          const offset = (centerY - viewCenter) * speed;
+          (el as HTMLElement).style.transform = `translate3d(0, ${offset}px, 0)`;
+        });
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+
+    // Also handle data-speed parallax (legacy)
+    const speedEls = document.querySelectorAll('[data-speed]');
+    if (speedEls.length) {
+      const onSpeedScroll = () => {
+        speedEls.forEach((el) => {
           const speed = parseFloat(el.getAttribute('data-speed') || '0');
           const rect = el.getBoundingClientRect();
           const centerY = rect.top + rect.height / 2;
@@ -41,11 +66,8 @@ export default function ScrollReveal() {
           (el as HTMLElement).style.transform = `translateY(${offset}px)`;
         });
       };
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-      return () => {
-        window.removeEventListener('scroll', onScroll);
-      };
+      window.addEventListener('scroll', onSpeedScroll, { passive: true });
+      onSpeedScroll();
     }
 
     return () => {};
