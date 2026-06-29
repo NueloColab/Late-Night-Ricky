@@ -32,20 +32,17 @@
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  opacity: 0.7;
+  opacity: 0.35;
 }
 
 .lnr-loader-inner {
   position: relative;
   z-index: 1;
-  background: #000;
-  mix-blend-mode: multiply;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: clamp(4px, 1vw, 12px);
-  padding: clamp(16px, 4vw, 48px);
 }
 
 .lnr-loader-line {
@@ -66,9 +63,8 @@
   font-size: clamp(48px, 14vw, 160px);
   font-weight: 700;
   text-transform: uppercase;
-  /* Black fill + white stroke — mix-blend-mode: multiply on parent makes
-     black opaque (hides video) and white transparent (shows video through strokes) */
-  color: #000;
+  /* Outlined/stroke text — hollow inside, thin white outline */
+  color: transparent;
   -webkit-text-stroke: clamp(1px, 0.25vw, 2px) #fff;
   paint-order: stroke fill;
   display: inline-block;
