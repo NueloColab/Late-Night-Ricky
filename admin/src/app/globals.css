@@ -199,7 +199,7 @@
 .lnr-reach-sig {
   font-family: 'Rockybilly', cursive, sans-serif;
   font-size: clamp(14px, 2vw, 24px);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.4);
   letter-spacing: 0.02em;
 }
 
