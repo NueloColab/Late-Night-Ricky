@@ -28,49 +28,48 @@ export default function ScrollReveal() {
       els.forEach((el) => observer.observe(el));
     }
 
-    // Garrix-style parallax: elements with data-layer scroll at different speeds
+    // Garrix-style parallax: vertical + horizontal movement on scroll
     const layerEls = document.querySelectorAll('[data-layer]');
-    if (layerEls.length) {
-      const speeds: Record<string, number> = {
-        layer4: -0.02,
-        layer3: -0.04,
-        layer2: -0.06,
-        layer1: -0.08,
-      };
+    const speeds: Record<string, { y: number; x: number }> = {
+      layer4: { y: -0.02, x: 0.01 },
+      layer3: { y: -0.04, x: -0.015 },
+      layer2: { y: -0.06, x: 0.02 },
+      layer1: { y: -0.08, x: -0.025 },
+    };
 
-      const onScroll = () => {
-        layerEls.forEach((el) => {
-          const layer = el.getAttribute('data-layer') || 'layer3';
-          const speed = speeds[layer] || -0.04;
-          const rect = el.getBoundingClientRect();
-          const centerY = rect.top + rect.height / 2;
-          const viewCenter = window.innerHeight / 2;
-          const offset = (centerY - viewCenter) * speed;
-          (el as HTMLElement).style.transform = `translate3d(0, ${offset}px, 0)`;
-        });
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    }
+    const ghostEl = document.querySelector('.garrix-collage-ghost');
+    const outlineEl = document.querySelector('.garrix-collage-ghost-outline');
 
-    // Also handle data-speed parallax (legacy)
-    const speedEls = document.querySelectorAll('[data-speed]');
-    if (speedEls.length) {
-      const onSpeedScroll = () => {
-        speedEls.forEach((el) => {
-          const speed = parseFloat(el.getAttribute('data-speed') || '0');
-          const rect = el.getBoundingClientRect();
-          const centerY = rect.top + rect.height / 2;
-          const viewCenter = window.innerHeight / 2;
-          const offset = (centerY - viewCenter) * speed;
-          (el as HTMLElement).style.transform = `translateY(${offset}px)`;
-        });
-      };
-      window.addEventListener('scroll', onSpeedScroll, { passive: true });
-      onSpeedScroll();
-    }
+    const onScroll = () => {
+      // Photo parallax with horizontal drift
+      layerEls.forEach((el) => {
+        const layer = el.getAttribute('data-layer') || 'layer3';
+        const speed = speeds[layer] || { y: -0.04, x: -0.015 };
+        const rect = el.getBoundingClientRect();
+        const centerY = rect.top + rect.height / 2;
+        const viewCenter = window.innerHeight / 2;
+        const offsetY = (centerY - viewCenter) * speed.y;
+        const offsetX = (centerY - viewCenter) * speed.x;
+        (el as HTMLElement).style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
+      });
 
-    return () => {};
+      // Ghost text horizontal drift on scroll
+      if (ghostEl) {
+        const scrollY = window.scrollY;
+        (ghostEl as HTMLElement).style.transform = `translateX(${Math.sin(scrollY * 0.002) * 15}px)`;
+      }
+      if (outlineEl) {
+        const scrollY = window.scrollY;
+        (outlineEl as HTMLElement).style.transform = `translateX(${Math.cos(scrollY * 0.002) * -10}px)`;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
   }, []);
 
   return null;

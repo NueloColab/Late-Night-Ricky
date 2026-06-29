@@ -380,11 +380,18 @@ export default async function HomePage() {
           <div className="garrix-collage-photo garrix-cp-4" data-layer="layer2">
             <img src="/assets/ricky-portrait-standing.jpg" alt="" style={{ filter: 'grayscale(1) contrast(1.1)' }} />
             <div className="garrix-collage-play">
-              <button className="garrix-play-circle" aria-label="Play video">
+              <button className="garrix-play-circle" id="collage-play-btn" aria-label="Play video" onClick={() => { const v = document.getElementById('collage-video') as HTMLVideoElement | null; const o = document.getElementById('collage-video-overlay'); const b = document.getElementById('collage-play-btn') as HTMLButtonElement | null; if (v && o && b) { v.play(); o.style.opacity = '1'; b.style.opacity = '0'; b.style.pointerEvents = 'none'; } }}>
                 <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="30" stroke="currentColor" strokeWidth="2" /><polygon points="26,18 50,32 26,46" fill="currentColor" /></svg>
               </button>
             </div>
           </div>
+        </div>
+        {/* Video overlay that expands over the collage */}
+        <div className="garrix-collage-video-overlay" id="collage-video-overlay">
+          <video id="collage-video" className="garrix-collage-video" src="/assets/video-desktop.mp4" poster="/assets/ricky-portrait-standing.jpg" muted playsInline loop />
+          <button className="garrix-video-close" id="collage-video-close" aria-label="Close video" onClick={() => { const v = document.getElementById('collage-video') as HTMLVideoElement | null; const o = document.getElementById('collage-video-overlay'); const b = document.getElementById('collage-play-btn') as HTMLButtonElement | null; if (v && o && b) { v.pause(); o.style.opacity = '0'; b.style.opacity = '0.9'; b.style.pointerEvents = 'auto'; } }}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+          </button>
         </div>
         <div className="garrix-collage-caption">
           <span className="garrix-serif">Living life to the fullest!</span>
