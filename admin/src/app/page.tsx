@@ -228,26 +228,29 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ REACH — Garrix-style editorial collage ═══ */}
-      <section id="reach" className="lnr-reach-collage">
+      <section id="reach" className="reach-v2-section">
         {/* Ghost watermark behind photos */}
-        <div className="lnr-reach-ghost" aria-hidden="true">RICKY</div>
-        {/* Primary portrait photo — left side, slides in from left */}
-        <div className="lnr-reach-photo-primary reveal-slide-left">
-          <img src="/assets/ricky-portrait-v2.jpg" alt="Late Night Ricky" />
+        <div className="reach-v2-ghost" aria-hidden="true">RICKY</div>
+        
+        {/* Primary portrait photo — left side */}
+        <div className="reach-v2-photo-primary" data-reach-animate="left">
+          <img src="/assets/ricky-portrait-v2.jpg?v=2" alt="Late Night Ricky" />
         </div>
-        {/* Dark text card — overlaps photo, center-right, slides in from right */}
-        <div className="lnr-reach-card reveal-slide-right">
-          <h2 className="lnr-reach-quote reveal-slide-up">
+        
+        {/* Dark text card — overlaps photo, center-right */}
+        <div className="reach-v2-card" data-reach-animate="right">
+          <h2 className="reach-v2-quote" data-reach-animate="up">
             International DJ &amp; Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.
           </h2>
-          <p className="lnr-reach-sub reveal-slide-up">
+          <p className="reach-v2-sub" data-reach-animate="up">
             150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
           </p>
-          <span className="lnr-reach-sig reveal-slide-up">— Late Night Ricky</span>
+          <span className="reach-v2-sig" data-reach-animate="up">— Late Night Ricky</span>
         </div>
-        {/* Secondary texture strip — bottom right, slides in from bottom */}
-        <div className="lnr-reach-photo-secondary reveal-slide-up">
-          <img src="/assets/ricky-stool.jpg" alt="" />
+        
+        {/* Secondary photo — bottom right */}
+        <div className="reach-v2-photo-secondary" data-reach-animate="up">
+          <img src="/assets/ricky-stool.jpg?v=2" alt="" />
         </div>
       </section>
 

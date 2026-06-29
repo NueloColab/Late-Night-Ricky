@@ -216,6 +216,191 @@
   filter: brightness(0.7) saturate(1.3);
 }
 
+/* ── Reach Section v2 — Clean rebuild with isolated animation ────────── */
+.reach-v2-section {
+  position: relative;
+  min-height: 100vh;
+  background: #141414;
+  overflow: hidden;
+}
+
+.reach-v2-ghost {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: clamp(120px, 20vw, 300px);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.06);
+  z-index: 2;
+  pointer-events: none;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+
+.reach-v2-photo-primary {
+  position: absolute;
+  top: 8%;
+  left: 4%;
+  width: 52%;
+  aspect-ratio: 3/4;
+  z-index: 3;
+  overflow: hidden;
+  /* Animation initial state */
+  opacity: 0;
+  margin-left: -80px;
+  transition: opacity 1s cubic-bezier(.22, 1, .36, 1), margin-left 1s cubic-bezier(.22, 1, .36, 1);
+}
+.reach-v2-photo-primary.reach-visible {
+  opacity: 1;
+  margin-left: 0;
+}
+.reach-v2-photo-primary img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.1) brightness(0.9);
+}
+
+.reach-v2-card {
+  position: absolute;
+  top: 22%;
+  right: 4%;
+  width: 48%;
+  background: #141414;
+  padding: clamp(24px, 4vw, 56px);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2vw, 24px);
+  /* Animation initial state */
+  opacity: 0;
+  margin-right: -80px;
+  transition: opacity 1s cubic-bezier(.22, 1, .36, 1), margin-right 1s cubic-bezier(.22, 1, .36, 1);
+}
+.reach-v2-card.reach-visible {
+  opacity: 1;
+  margin-right: 0;
+}
+
+.reach-v2-quote {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: clamp(22px, 3.2vw, 48px);
+  font-weight: 700;
+  font-style: italic;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  /* Stagger animation */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(.22, 1, .36, 1) 0.2s, transform 0.8s cubic-bezier(.22, 1, .36, 1) 0.2s;
+}
+.reach-v2-card.reach-visible .reach-v2-quote {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reach-v2-sub {
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: clamp(10px, 1.2vw, 14px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  /* Stagger animation */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(.22, 1, .36, 1) 0.35s, transform 0.8s cubic-bezier(.22, 1, .36, 1) 0.35s;
+}
+.reach-v2-card.reach-visible .reach-v2-sub {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reach-v2-sig {
+  font-family: 'Rockybilly', cursive, sans-serif;
+  font-size: clamp(14px, 2vw, 24px);
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.02em;
+  /* Stagger animation */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(.22, 1, .36, 1) 0.5s, transform 0.8s cubic-bezier(.22, 1, .36, 1) 0.5s;
+}
+.reach-v2-card.reach-visible .reach-v2-sig {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reach-v2-photo-secondary {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 42%;
+  height: 32%;
+  z-index: 4;
+  overflow: hidden;
+  /* Animation initial state */
+  opacity: 0;
+  margin-bottom: -60px;
+  transition: opacity 1s cubic-bezier(.22, 1, .36, 1) 0.3s, margin-bottom 1s cubic-bezier(.22, 1, .36, 1) 0.3s;
+}
+.reach-v2-photo-secondary.reach-visible {
+  opacity: 1;
+  margin-bottom: 0;
+}
+.reach-v2-photo-secondary img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7) saturate(1.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .reach-v2-section {
+    min-height: auto;
+    padding: 60px 0;
+  }
+  .reach-v2-photo-primary {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    aspect-ratio: 4/3;
+    margin-left: 0;
+  }
+  .reach-v2-photo-primary.reach-visible {
+    margin-left: 0;
+  }
+  .reach-v2-card {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    margin-right: 0;
+  }
+  .reach-v2-card.reach-visible {
+    margin-right: 0;
+  }
+  .reach-v2-photo-secondary {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    width: 100%;
+    height: 250px;
+    margin-bottom: 0;
+  }
+  .reach-v2-photo-secondary.reach-visible {
+    margin-bottom: 0;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .lnr-reach-collage {
