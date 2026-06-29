@@ -45,9 +45,9 @@ export default function TrustedBySection({
 }: TrustedBySectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  void _clients;
 
   const items = DEFAULT_CLIENTS_WITH_IMAGES;
-  void _clients;
   const displayIndex = hoverIndex !== null ? hoverIndex : activeIndex;
 
   const handleSelect = useCallback((index: number) => {
@@ -62,29 +62,47 @@ export default function TrustedBySection({
     return () => clearInterval(timer);
   }, [items.length]);
 
-  // Split into 3 rows
-  const row1 = items.slice(0, Math.ceil(items.length / 3));
-  const row2 = items.slice(Math.ceil(items.length / 3), Math.ceil(items.length / 3) + Math.ceil(items.length / 3));
-  const row3 = items.slice(Math.ceil(items.length / 3) + Math.ceil(items.length / 3));
+  // Triple the names for seamless loop
+  const tripled = [...items, ...items, ...items];
+  const row1Names = tripled.map((item, i) => (
+    <button
+      key={`r1-${item.name}-${i}`}
+      className={`lnr-client-name ${displayIndex === (i % items.length) ? 'lnr-client-name-active' : ''}`}
+      onMouseEnter={() => setHoverIndex(i % items.length)}
+      onMouseLeave={() => setHoverIndex(null)}
+      onClick={() => handleSelect(i % items.length)}
+    >
+      {item.name.toUpperCase()}<span className="lnr-client-dot">&middot;</span>
+    </button>
+  ));
 
-  const renderItem = (item: ClientItem, globalIndex: number) => {
-    const isActive = displayIndex === globalIndex;
-    return (
-      <button
-        key={`${item.name}-${globalIndex}`}
-        className={`lnr-client-name ${isActive ? 'lnr-client-name-active' : ''}`}
-        onMouseEnter={() => setHoverIndex(globalIndex)}
-        onMouseLeave={() => setHoverIndex(null)}
-        onClick={() => handleSelect(globalIndex)}
-      >
-        {item.name.toUpperCase()}
-      </button>
-    );
-  };
+  const row2Names = tripled.map((item, i) => (
+    <button
+      key={`r2-${item.name}-${i}`}
+      className={`lnr-client-name ${displayIndex === (i % items.length) ? 'lnr-client-name-active' : ''}`}
+      onMouseEnter={() => setHoverIndex(i % items.length)}
+      onMouseLeave={() => setHoverIndex(null)}
+      onClick={() => handleSelect(i % items.length)}
+    >
+      {item.name.toUpperCase()}<span className="lnr-client-dot">&middot;</span>
+    </button>
+  ));
+
+  const row3Names = tripled.map((item, i) => (
+    <button
+      key={`r3-${item.name}-${i}`}
+      className={`lnr-client-name ${displayIndex === (i % items.length) ? 'lnr-client-name-active' : ''}`}
+      onMouseEnter={() => setHoverIndex(i % items.length)}
+      onMouseLeave={() => setHoverIndex(null)}
+      onClick={() => handleSelect(i % items.length)}
+    >
+      {item.name.toUpperCase()}<span className="lnr-client-dot">&middot;</span>
+    </button>
+  ));
 
   return (
     <section id="trusted" className="lnr-trusted-section">
-      {/* Contained background image — sits behind text like Garrix reference */}
+      {/* Background image — centred, feathered edges */}
       <div className="lnr-trusted-bg-container">
         {items.map((item, i) => (
           <div
@@ -106,16 +124,16 @@ export default function TrustedBySection({
           <p className="lnr-trusted-attribution">&mdash; {attribution}. {description}</p>
         </div>
 
-        {/* Client name rows */}
+        {/* Scrolling name rows — alternating direction */}
         <div className="lnr-trusted-names">
-          <div className="lnr-trusted-row">
-            {row1.map((item, i) => renderItem(item, i))}
+          <div className="lnr-trusted-row lnr-trusted-row-forward">
+            {row1Names}
           </div>
-          <div className="lnr-trusted-row">
-            {row2.map((item, i) => renderItem(item, row1.length + i))}
+          <div className="lnr-trusted-row lnr-trusted-row-reverse">
+            {row2Names}
           </div>
-          <div className="lnr-trusted-row">
-            {row3.map((item, i) => renderItem(item, row1.length + row2.length + i))}
+          <div className="lnr-trusted-row lnr-trusted-row-forward-slow">
+            {row3Names}
           </div>
         </div>
       </div>
