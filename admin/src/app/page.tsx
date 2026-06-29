@@ -236,7 +236,7 @@ export default async function HomePage() {
           <img src="/assets/ricky-portrait-standing.jpg" alt="Late Night Ricky" />
         </div>
         {/* Dark text card — overlaps photo, center-right */}
-        <div className="lnr-reach-card">
+        <a href="/about" className="lnr-reach-card">
           <h2 className="lnr-reach-quote">
             International DJ &amp; Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.
           </h2>
@@ -244,7 +244,7 @@ export default async function HomePage() {
             150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
           </p>
           <span className="lnr-reach-sig">— Late Night Ricky</span>
-        </div>
+        </a>
         {/* Secondary texture strip — bottom right */}
         <div className="lnr-reach-photo-secondary">
           <img src="/assets/ricky-seated.jpg" alt="" />
