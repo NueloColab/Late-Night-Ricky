@@ -706,7 +706,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   display: flex;
   flex-direction: column;
   gap: clamp(20px, 2.5vw, 36px);
-  padding-bottom: 40vh;
+  align-self: flex-start;
 }
 
 .lnr-highlights-divider {
@@ -741,9 +741,15 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   color: #fff;
   display: block;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.08);
+  position: sticky;
 }
+
+.lnr-highlights-card:nth-child(1) { top: 80px; }
+.lnr-highlights-card:nth-child(2) { top: 100px; }
+.lnr-highlights-card:nth-child(3) { top: 120px; }
+.lnr-highlights-card:nth-child(4) { top: 140px; }
 
 .lnr-highlights-card:hover {
   transform: translateY(-3px);

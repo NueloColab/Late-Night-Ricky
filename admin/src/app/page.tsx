@@ -270,7 +270,7 @@ export default async function HomePage() {
           <div className="lnr-highlights-grid">
             <div className="lnr-highlights-col">
               {shows.filter((_: any, i: number) => i % 2 === 0).map((card: any, idx: number) => (
-                <a key={card.id || card.title} href={card.href || '#'} className="lnr-highlights-card" style={{ position: 'sticky', top: `${80 + idx * 20}px` }}>
+                <a key={card.id || card.title} href={card.href || '#'} className="lnr-highlights-card" style={{ zIndex: 10 + idx }}>
                   <div className="lnr-highlights-card-img" style={{ backgroundImage: `url('${assetPath(card.image)}')` }}>
                     <div className="lnr-highlights-card-overlay" />
                     <div className="lnr-highlights-card-play" />
@@ -288,7 +288,7 @@ export default async function HomePage() {
             </div>
             <div className="lnr-highlights-col">
               {shows.filter((_: any, i: number) => i % 2 !== 0).map((card: any, idx: number) => (
-                <a key={card.id || card.title} href={card.href || '#'} className="lnr-highlights-card" style={{ position: 'sticky', top: `${80 + idx * 20}px` }}>
+                <a key={card.id || card.title} href={card.href || '#'} className="lnr-highlights-card" style={{ zIndex: 10 + idx }}>
                   <div className="lnr-highlights-card-img" style={{ backgroundImage: `url('${assetPath(card.image)}')` }}>
                     <div className="lnr-highlights-card-overlay" />
                     <div className="lnr-highlights-card-play" />
