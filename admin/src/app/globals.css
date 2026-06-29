@@ -130,9 +130,6 @@
   position: relative;
   min-height: 100vh;
   background: #141414;
-  background-image: url('/assets/highlight-studio.jpg');
-  background-size: cover;
-  background-position: center;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -143,7 +140,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(20, 20, 20, 0.5);
+  background: #141414;
   z-index: 0;
 }
 
