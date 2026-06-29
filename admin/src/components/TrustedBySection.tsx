@@ -54,51 +54,32 @@ export default function TrustedBySection({
     setActiveIndex(index);
   }, []);
 
-  // Auto-rotate every 3.5 seconds
+  // Auto-rotate every 3 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % items.length);
-    }, 3500);
+    }, 3000);
     return () => clearInterval(timer);
   }, [items.length]);
 
-  // Triple the names for seamless loop
-  const tripled = [...items, ...items, ...items];
-  const row1Names = tripled.map((item, i) => (
-    <button
-      key={`r1-${item.name}-${i}`}
-      className={`lnr-client-name ${displayIndex === (i % items.length) ? 'lnr-client-name-active' : ''}`}
-      onMouseEnter={() => setHoverIndex(i % items.length)}
-      onMouseLeave={() => setHoverIndex(null)}
-      onClick={() => handleSelect(i % items.length)}
-    >
-      {item.name.toUpperCase()}<span className="lnr-client-dot">&middot;</span>
-    </button>
-  ));
+  // Duplicate once for seamless loop (2x, not 3x)
+  const doubled = [...items, ...items];
 
-  const row2Names = tripled.map((item, i) => (
-    <button
-      key={`r2-${item.name}-${i}`}
-      className={`lnr-client-name ${displayIndex === (i % items.length) ? 'lnr-client-name-active' : ''}`}
-      onMouseEnter={() => setHoverIndex(i % items.length)}
-      onMouseLeave={() => setHoverIndex(null)}
-      onClick={() => handleSelect(i % items.length)}
-    >
-      {item.name.toUpperCase()}<span className="lnr-client-dot">&middot;</span>
-    </button>
-  ));
-
-  const row3Names = tripled.map((item, i) => (
-    <button
-      key={`r3-${item.name}-${i}`}
-      className={`lnr-client-name ${displayIndex === (i % items.length) ? 'lnr-client-name-active' : ''}`}
-      onMouseEnter={() => setHoverIndex(i % items.length)}
-      onMouseLeave={() => setHoverIndex(null)}
-      onClick={() => handleSelect(i % items.length)}
-    >
-      {item.name.toUpperCase()}<span className="lnr-client-dot">&middot;</span>
-    </button>
-  ));
+  const renderItem = (item: ClientItem, i: number) => {
+    const originalIndex = i % items.length;
+    const isActive = displayIndex === originalIndex;
+    return (
+      <button
+        key={`${item.name}-${i}`}
+        className={`lnr-client-name ${isActive ? 'lnr-client-name-active' : ''}`}
+        onMouseEnter={() => setHoverIndex(originalIndex)}
+        onMouseLeave={() => setHoverIndex(null)}
+        onClick={() => handleSelect(originalIndex)}
+      >
+        {item.name.toUpperCase()}<span className="lnr-client-dot">&middot;</span>
+      </button>
+    );
+  };
 
   return (
     <section id="trusted" className="lnr-trusted-section">
@@ -127,13 +108,13 @@ export default function TrustedBySection({
         {/* Scrolling name rows — alternating direction */}
         <div className="lnr-trusted-names">
           <div className="lnr-trusted-row lnr-trusted-row-forward">
-            {row1Names}
+            {doubled.map((item, i) => renderItem(item, i))}
           </div>
           <div className="lnr-trusted-row lnr-trusted-row-reverse">
-            {row2Names}
+            {doubled.map((item, i) => renderItem(item, i + items.length))}
           </div>
           <div className="lnr-trusted-row lnr-trusted-row-forward-slow">
-            {row3Names}
+            {doubled.map((item, i) => renderItem(item, i + items.length * 2))}
           </div>
         </div>
       </div>
