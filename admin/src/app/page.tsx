@@ -73,6 +73,7 @@ const DEFAULT_TRACKS = [
   { title: 'Late Night Ricky — After Hours', time: '0:30' },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function assetPath(p?: string | null) {
   if (!p) return '';
   if (p.startsWith('http')) return p;
@@ -81,6 +82,7 @@ function assetPath(p?: string | null) {
 }
 
 export default async function HomePage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let shows: any[] = DEFAULT_SHOWS;
   let clients: string[] = DEFAULT_CLIENTS;
   let tracks = DEFAULT_TRACKS;
