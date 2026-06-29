@@ -177,8 +177,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ═══ LOADING ANIMATION — outlined text, 3 lines ═══ */}
-      <div className="lnr-loader" id="lnr-loader">
+      {/* ═══ LOADING ANIMATION — temporarily disabled during testing ═══ */}
+      {/* <div className="lnr-loader" id="lnr-loader">
         <div className="lnr-loader-inner">
           {['LATE', 'NIGHT', 'RICKY'].map((word, wi) => (
             <div key={wi} className="lnr-loader-line" style={{ animationDelay: `${wi * 0.35 + 0.2}s` }}>
@@ -194,7 +194,7 @@ export default async function HomePage() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       <Navbar />
       <ScrollReveal />
