@@ -1191,75 +1191,77 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .garrix-venues-section {
   position: relative;
   background: #0a0a0a;
-  padding: 120px 0;
+  padding: 80px 0;
   overflow: hidden;
 }
 
-.garrix-venues-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(ellipse at center, rgba(42, 196, 182, 0.03) 0%, transparent 70%);
-  pointer-events: none;
-}
-
 .garrix-venues-label {
-  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
-  font-size: 10px;
+  font-family: var(--font-oswald), 'Oswald', sans-serif;
+  font-size: clamp(14px, 2vw, 18px);
   font-weight: 600;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.4em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.5);
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
   position: relative;
   z-index: 2;
+}
+
+.garrix-venues-label::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px auto 0;
 }
 
 .garrix-venues-track {
   position: relative;
   width: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-.garrix-venues-scroll {
+.garrix-venues-row {
   display: flex;
   align-items: center;
   gap: 0;
   white-space: nowrap;
-  animation: garrix-venues-scroll 80s linear infinite;
   will-change: transform;
 }
 
-.garrix-venues-scroll span {
+.garrix-venues-row-forward {
+  animation: garrix-venues-scroll 45s linear infinite;
+}
+
+.garrix-venues-row-reverse {
+  animation: garrix-venues-scroll-reverse 40s linear infinite;
+}
+
+.garrix-venues-row span {
   font-family: var(--font-oswald), 'Oswald', sans-serif;
-  font-size: clamp(48px, 10vw, 120px);
-  font-weight: 700;
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 500;
   text-transform: uppercase;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
-  letter-spacing: 0.02em;
-  padding: 0 20px;
-  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-  line-height: 1.1;
+  color: rgba(255, 255, 255, 0.12);
+  letter-spacing: 0.08em;
+  padding: 0 12px;
+  transition: color 0.3s ease;
+  line-height: 1.6;
 }
 
-.garrix-venues-scroll span:hover {
-  color: rgba(255, 255, 255, 0.9);
-  -webkit-text-stroke: 1px rgba(42, 196, 182, 0.6);
-  text-shadow: 0 0 40px rgba(42, 196, 182, 0.3);
+.garrix-venues-row span:hover {
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.garrix-venues-scroll .garrix-venues-dot {
-  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
-  font-size: 12px !important;
-  font-weight: 400 !important;
-  padding: 0 8px !important;
-  color: rgba(42, 196, 182, 0.4) !important;
-  -webkit-text-stroke: 0 !important;
+.garrix-venues-row .garrix-venues-dot {
+  font-size: 6px !important;
+  padding: 0 6px !important;
+  color: rgba(255, 255, 255, 0.15) !important;
 }
 
 @keyframes garrix-venues-scroll {
@@ -1267,9 +1269,15 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   100% { transform: translateX(-50%); }
 }
 
+@keyframes garrix-venues-scroll-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
 @media (max-width: 768px) {
-  .garrix-venues-section { padding: 80px 0; }
-  .garrix-venues-scroll span { font-size: clamp(36px, 12vw, 64px); }
+  .garrix-venues-section { padding: 50px 0; }
+  .garrix-venues-row span { font-size: clamp(16px, 5vw, 22px); }
+  .garrix-venues-label { font-size: 12px; letter-spacing: 0.3em; margin-bottom: 30px; }
 }
 
 .garrix-life-banner {
