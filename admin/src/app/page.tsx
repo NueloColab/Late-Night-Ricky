@@ -253,6 +253,79 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ═══ VENUES — scrolling marquee ═══ */}
+      <section className="garrix-venues-section">
+        <div className="garrix-venues-label">VENUES</div>
+        <div className="garrix-venues-track">
+          <div className="garrix-venues-scroll">
+            <span>O2 Arena</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Ushuaïa</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Ibiza Rocks</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Ministry of Sound</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Hakkasan</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Marquee</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Atlantis</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Wembley</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Printworks</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Fabric</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Drai&apos;s</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Encore Beach</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Hi Ibiza</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Amnesia</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Pacha</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>DC10</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>O2 Arena</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Ushuaïa</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Ibiza Rocks</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Ministry of Sound</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Hakkasan</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Marquee</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Atlantis</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Wembley</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Printworks</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Fabric</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Drai&apos;s</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Encore Beach</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Hi Ibiza</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Amnesia</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>Pacha</span>
+            <span className="garrix-venues-dot">✦</span>
+            <span>DC10</span>
+            <span className="garrix-venues-dot">✦</span>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ TRUSTED BY THE BEST — interactive names with background ═══ */}
       <TrustedBySection
         quote={partnersQuote}

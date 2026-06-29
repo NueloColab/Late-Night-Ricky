@@ -1188,6 +1188,70 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 /* ── LIFE IS CRAZY — outlined text banner ─────────────────────── */
+.garrix-venues-section {
+  position: relative;
+  background: #0a0a0a;
+  padding: 100px 0;
+  overflow: hidden;
+}
+
+.garrix-venues-label {
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.garrix-venues-track {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.garrix-venues-scroll {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  animation: garrix-venues-scroll 40s linear infinite;
+  will-change: transform;
+}
+
+.garrix-venues-scroll span {
+  font-family: var(--font-oswald), 'Oswald', sans-serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.08);
+  letter-spacing: 0.05em;
+  padding: 0 10px;
+  transition: color 0.3s ease;
+}
+
+.garrix-venues-scroll span:hover {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.garrix-venues-dot {
+  font-size: clamp(12px, 2vw, 18px) !important;
+  padding: 0 6px !important;
+  color: rgba(42, 196, 182, 0.3) !important;
+}
+
+@keyframes garrix-venues-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+  .garrix-venues-section { padding: 60px 0; }
+  .garrix-venues-scroll span { font-size: clamp(28px, 8vw, 48px); }
+}
+
 .garrix-life-banner {
   background: var(--black);
   background-image: url('/assets/highlight-studio.jpg');
