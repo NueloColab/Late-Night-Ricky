@@ -1656,6 +1656,28 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   color: var(--white);
 }
 
+.garrix-footer-powered {
+  text-align: center;
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.garrix-footer-powered a {
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.garrix-footer-powered a:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 /* ── Animations ──────────────────────────────────────────────── */
 @keyframes eq-bounce { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(.4)} }
 .eq-bar { display:inline-block; width:3px; background:var(--wh); border-radius:2px; animation:eq-bounce 1.2s ease-in-out infinite; }
