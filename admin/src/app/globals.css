@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
+
 @font-face {
   font-family: 'Rockybilly';
   src: url('/assets/Rockybilly.woff2') format('woff2'),
@@ -258,8 +260,6 @@
 }
 
 /* Import Oswald for Garrix-style headings */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
-
 :root {
   --gd: #7EB8E6;
   --gs: #A8D5F0;
