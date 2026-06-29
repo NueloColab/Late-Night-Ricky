@@ -668,21 +668,21 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* ── HIGHLIGHTS — Garrix-style 2-column release grid ──── */
 .lnr-highlights {
   background: #fff;
-  padding: clamp(80px, 12vw, 160px) clamp(40px, 8vw, 120px);
+  padding: clamp(100px, 14vw, 200px) clamp(60px, 10vw, 160px) clamp(60px, 8vw, 120px);
   position: relative;
 }
 
 /* Vertical label — like Garrix */
 .lnr-highlights-label {
   position: absolute;
-  top: clamp(60px, 10vh, 120px);
-  left: clamp(12px, 2vw, 32px);
+  top: clamp(80px, 12vh, 160px);
+  left: clamp(16px, 3vw, 48px);
   font-family: var(--font-montserrat), 'Montserrat', sans-serif;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.18);
+  color: rgba(0, 0, 0, 0.15);
   z-index: 10;
   writing-mode: vertical-rl;
   text-orientation: mixed;
@@ -691,11 +691,11 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 .lnr-highlights-line {
   position: absolute;
-  top: clamp(80px, 12vh, 140px);
-  left: clamp(20px, 2.5vw, 40px);
+  top: clamp(100px, 14vh, 180px);
+  left: clamp(24px, 3.5vw, 56px);
   width: 1px;
-  height: 25vh;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.12), transparent);
+  height: 30vh;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
   z-index: 10;
 }
 
@@ -703,33 +703,33 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: clamp(40px, 6vw, 80px);
-  max-width: 900px;
+  gap: clamp(60px, 8vw, 120px);
+  max-width: 1200px;
   margin: 0 auto;
-  margin-bottom: clamp(40px, 6vw, 80px);
+  margin-bottom: clamp(60px, 8vw, 120px);
 }
 
 .lnr-highlights-header-left {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   flex-shrink: 0;
 }
 
 .lnr-highlights-heading {
   font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
-  font-size: clamp(48px, 7vw, 96px);
+  font-size: clamp(72px, 10vw, 140px);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   color: #111;
-  line-height: 0.95;
+  line-height: 0.9;
   margin: 0;
 }
 
 .lnr-highlights-cta {
   display: inline-block;
-  padding: 12px 32px;
+  padding: 14px 40px;
   background: #111;
   color: #fff;
   font-family: var(--font-montserrat), 'Montserrat', sans-serif;
@@ -747,13 +747,13 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 .lnr-highlights-subtitle {
-  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
-  font-size: clamp(13px, 1.4vw, 16px);
-  color: #999;
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: clamp(14px, 1.6vw, 18px);
+  color: #888;
   line-height: 1.5;
-  max-width: 360px;
+  max-width: 340px;
   margin: 0;
-  margin-top: clamp(8px, 1vw, 16px);
+  margin-top: clamp(12px, 1.5vw, 24px);
 }
 
 .lnr-highlights-grid {
