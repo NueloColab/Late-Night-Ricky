@@ -287,6 +287,24 @@ export default async function HomePage() {
                   </div>
                 </div>
               </a>
+              <a href="/show-ibiza-2024" className="lnr-highlights-card">
+                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/ricky-hero-new.jpg')" }}>
+                  <div className="lnr-highlights-card-overlay" />
+                  <div className="lnr-highlights-card-text">
+                    <h3 className="lnr-highlights-card-title">IBIZA SUMMER</h3>
+                    <span className="lnr-highlights-card-venue">— Ushuaïa, Ibiza</span>
+                  </div>
+                </div>
+              </a>
+              <a href="/show-private" className="lnr-highlights-card">
+                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/press-bg2.jpg')" }}>
+                  <div className="lnr-highlights-card-overlay" />
+                  <div className="lnr-highlights-card-text">
+                    <h3 className="lnr-highlights-card-title">PRIVATE EVENTS</h3>
+                    <span className="lnr-highlights-card-venue">— Worldwide</span>
+                  </div>
+                </div>
+              </a>
             </div>
             <div className="lnr-highlights-divider">
               <span className="lnr-highmarks-cross">×</span>
@@ -308,6 +326,24 @@ export default async function HomePage() {
                   <div className="lnr-highlights-card-text">
                     <h3 className="lnr-highlights-card-title">IBIZA ROCKS</h3>
                     <span className="lnr-highlights-card-venue">— Ibiza Rocks, Ibiza</span>
+                  </div>
+                </div>
+              </a>
+              <a href="/show-dubai" className="lnr-highlights-card">
+                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/ricky-hero-v2.jpg')" }}>
+                  <div className="lnr-highlights-card-overlay" />
+                  <div className="lnr-highlights-card-text">
+                    <h3 className="lnr-highlights-card-title">DUBAI NEW YEAR</h3>
+                    <span className="lnr-highlights-card-venue">— Atlantis, Dubai</span>
+                  </div>
+                </div>
+              </a>
+              <a href="/show-festival" className="lnr-highlights-card">
+                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/ricky-radio-new.jpg')" }}>
+                  <div className="lnr-highlights-card-overlay" />
+                  <div className="lnr-highlights-card-text">
+                    <h3 className="lnr-highlights-card-title">FESTIVAL SEASON</h3>
+                    <span className="lnr-highlights-card-venue">— Various, Europe</span>
                   </div>
                 </div>
               </a>
