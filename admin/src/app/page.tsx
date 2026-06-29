@@ -178,8 +178,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ═══ LOADING ANIMATION ═══ */}
-      <Loader />
+      {/* ═══ LOADING ANIMATION — DISABLED FOR TESTING ═══ */}
+      {/* <Loader /> */}
 
       <Navbar />
       <ScrollReveal />
