@@ -379,6 +379,11 @@ export default async function HomePage() {
           </div>
           <div className="garrix-collage-photo garrix-cp-4" data-layer="layer2">
             <img src="/assets/ricky-portrait-standing.jpg" alt="" style={{ filter: 'grayscale(1) contrast(1.1)' }} />
+            <div className="garrix-collage-play">
+              <button className="garrix-play-circle" aria-label="Play video">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="30" stroke="currentColor" strokeWidth="2" /><polygon points="26,18 50,32 26,46" fill="currentColor" /></svg>
+              </button>
+            </div>
           </div>
         </div>
         <div className="garrix-collage-caption">
