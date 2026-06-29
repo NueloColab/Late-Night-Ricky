@@ -35,6 +35,7 @@ interface TrustedBySectionProps {
   attribution?: string;
   description?: string;
   clients?: string[];
+  revealClass?: string;
 }
 
 export default function TrustedBySection({
@@ -42,6 +43,7 @@ export default function TrustedBySection({
   attribution = 'Cristiano Ronaldo',
   description = 'Trusted by A-list artists, global brands, and sold-out crowds worldwide.',
   clients: _clients,
+  revealClass,
 }: TrustedBySectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
@@ -88,7 +90,7 @@ export default function TrustedBySection({
   };
 
   return (
-    <section id="trusted" className="lnr-trusted-section">
+    <section id="trusted" className={`lnr-trusted-section ${revealClass || ''}`}>
       {/* Background image — centred, feathered edges, frost overlay */}
       <div className="lnr-trusted-bg-container">
         <div className="lnr-trusted-frost" />

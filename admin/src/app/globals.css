@@ -1145,6 +1145,28 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .reveal { opacity:0; transform:translateY(50px); transition:opacity 1.1s cubic-bezier(.22,1,.36,1),transform 1.1s cubic-bezier(.22,1,.36,1); }
 .reveal.visible { opacity:1; transform:translateY(0); }
 
+/* ═══ Aggressive scroll-reveal animations ═══ */
+.reveal-left { opacity: 0; transform: translateX(-80px); transition: opacity 0.8s cubic-bezier(.22,1,.36,1), transform 0.8s cubic-bezier(.22,1,.36,1); }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+.reveal-right { opacity: 0; transform: translateX(80px); transition: opacity 0.8s cubic-bezier(.22,1,.36,1), transform 0.8s cubic-bezier(.22,1,.36,1); }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+.reveal-scale { opacity: 0; transform: scale(0.85); transition: opacity 0.8s cubic-bezier(.22,1,.36,1), transform 0.8s cubic-bezier(.22,1,.36,1); }
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+.reveal-fade { opacity: 0; transition: opacity 0.8s cubic-bezier(.22,1,.36,1); }
+.reveal-fade.visible { opacity: 1; }
+
+/* Staggered children */
+.reveal-stagger > * { opacity: 0; transform: translateY(30px); transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1); }
+.reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0s; }
+.reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
+.reveal-stagger.visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+.reveal-stagger.visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+.reveal-stagger.visible > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+.reveal-stagger.visible > *:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0.5s; }
+
 /* Grammy Trophy Animation */
 .grammy-float { animation: grammy-bob 4s ease-in-out infinite; }
 .grammy-glow { animation: grammy-pulse 3s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.35)); }

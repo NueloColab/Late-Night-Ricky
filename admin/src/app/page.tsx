@@ -200,9 +200,9 @@ export default async function HomePage() {
       <ScrollReveal />
 
       {/* ═══ HERO — original LNR hero with logo ═══ */}
-      <section className="lnr-hero">
+      <section className="lnr-hero reveal-fade">
         <div className="lnr-hero-bg" style={{ backgroundImage: `url('${heroImage}')`, backgroundSize: heroBackgroundSize, backgroundPosition: heroBackgroundPosition, filter: heroGrayscale ? 'grayscale(100%) brightness(1.3)' : 'none', mixBlendMode: 'multiply' }} />
-        <img src={heroLogo} alt="Late Night Ricky" className="lnr-hero-logo" />
+        <img src={heroLogo} alt="Late Night Ricky" className="lnr-hero-logo reveal-scale" data-delay="200" />
         <div className="lnr-hero-scroll">
           <span>Scroll</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
@@ -210,7 +210,7 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ SHOWREEL — outlined text over video (bright, visible) ═══ */}
-      <section className="garrix-showreel">
+      <section className="garrix-showreel reveal-left">
         <video
           className="garrix-showreel-video"
           src={videoSrc}
@@ -232,7 +232,7 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ REACH — Garrix-style editorial collage ═══ */}
-      <section id="reach" className="lnr-reach-collage">
+      <section id="reach" className="lnr-reach-collage reveal-left">
         {/* Ghost watermark behind photos */}
         <div className="lnr-reach-ghost" aria-hidden="true">RICKY</div>
         {/* Primary portrait photo — left side */}
@@ -261,11 +261,12 @@ export default async function HomePage() {
         attribution={partnersAttribution}
         description={partnersDescription}
         clients={clients}
+        revealClass="reveal-scale"
       />
 
       {/* ═══ HIGHLIGHTS — stacking cards with vertical label ═══ */}
       {shows.length > 0 && (
-        <section className="garrix-section garrix-highlights-section">
+        <section className="garrix-section garrix-highlights-section reveal-right">
           <div className="garrix-section-label">HIGHLIGHTS<span className="garrix-section-line" /></div>
           <div className="garrix-section-inner">
             <div className="garrix-highlights-header">
@@ -292,7 +293,7 @@ export default async function HomePage() {
       )}
 
       {/* ═══ COLLAGE — asymmetric scatter with ghost watermark ═══ */}
-      <section className="garrix-collage-section">
+      <section className="garrix-collage-section reveal-scale">
         <div className="garrix-collage-ghost" aria-hidden="true">RICKY</div>
         <div className="garrix-collage-photos">
           <div className="garrix-collage-photo garrix-cp-1">
@@ -318,12 +319,12 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ LIFE IS CRAZY — outlined text banner ═══ */}
-      <div className="garrix-life-banner">
+      <div className="garrix-life-banner reveal-fade">
         <h2>LATE NIGHT RICKY</h2>
       </div>
 
       {/* ═══ RADIO ═══ */}
-      <section id="radio" className="garrix-section garrix-radio-section">
+      <section id="radio" className="garrix-section garrix-radio-section reveal-left">
         <div className="garrix-section-label">MUSIC<span className="garrix-section-line" /></div>
         <div className="garrix-section-inner">
           <div className="garrix-radio-grid">
@@ -353,7 +354,7 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ SHARE MUSIC CTA ═══ */}
-      <section className="garrix-cta-section">
+      <section className="garrix-cta-section reveal-scale">
         <div className="garrix-cta-bg" style={{ backgroundImage: `url('/assets/press-bg2.jpg')` }} />
         <div className="garrix-cta-overlay" />
         <div className="garrix-cta-content">
