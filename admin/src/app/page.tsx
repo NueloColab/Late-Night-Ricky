@@ -367,7 +367,7 @@ export default async function HomePage() {
           <div className="garrix-collage-photo garrix-cp-1" data-layer="layer4">
             <img src="/assets/ricky-hero-new.jpg" alt="Late Night Ricky" />
             <div className="garrix-collage-quote">
-              <p>&ldquo;Music is the only thing that makes sense&rdquo;</p>
+              <p>&ldquo;Living life to the fullest!&rdquo;</p>
             </div>
           </div>
           <div className="garrix-collage-photo garrix-cp-2" data-layer="layer3">
@@ -394,7 +394,7 @@ export default async function HomePage() {
           </button>
         </div>
         <div className="garrix-collage-caption">
-          <span className="garrix-serif">Living life to the fullest!</span>
+          <span className="garrix-serif">Music is the only thing that makes sense.</span>
         </div>
       </section>
 
