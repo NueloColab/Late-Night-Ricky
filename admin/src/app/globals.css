@@ -325,7 +325,7 @@ html {
 }
 
 .lnr-page-wrapper {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
