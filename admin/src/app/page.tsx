@@ -3,6 +3,7 @@ import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
 import TrustedBySection from '../components/TrustedBySection';
 import HomeContactSection from '../components/HomeContactSection';
+import Loader from '../components/Loader';
 import { getShowCards, getClientNames, getTracks, getSiteSections, getSeoMeta } from '@/lib/cms';
 import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
@@ -177,24 +178,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ═══ LOADING ANIMATION — temporarily disabled during testing ═══ */}
-      {/* <div className="lnr-loader" id="lnr-loader">
-        <div className="lnr-loader-inner">
-          {['LATE', 'NIGHT', 'RICKY'].map((word, wi) => (
-            <div key={wi} className="lnr-loader-line" style={{ animationDelay: `${wi * 0.35 + 0.2}s` }}>
-              {word.split('').map((char, ci) => (
-                <span
-                  key={ci}
-                  className="lnr-loader-char"
-                  style={{ animationDelay: `${(wi * 4 + ci) * 0.06 + 0.4}s` }}
-                >
-                  {char}
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div> */}
+      {/* ═══ LOADING ANIMATION ═══ */}
+      <Loader />
 
       <Navbar />
       <ScrollReveal />
