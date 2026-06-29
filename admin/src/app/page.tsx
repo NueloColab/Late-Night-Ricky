@@ -179,6 +179,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <div className="lnr-page-wrapper">
       {/* ═══ LOADING ANIMATION ═══ */}
       {/* Loader disabled temporarily */}
 
@@ -470,6 +471,7 @@ export default async function HomePage() {
           </div>
         </div>
       </footer>
+      </div>
     </>
   );
 }
