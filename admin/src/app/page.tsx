@@ -233,7 +233,7 @@ export default async function HomePage() {
         <div className="lnr-reach-ghost" aria-hidden="true">RICKY</div>
         {/* Primary portrait photo — left side */}
         <div className="lnr-reach-photo-primary">
-          <img src="/assets/ricky-portrait-new.jpg" alt="Late Night Ricky" />
+          <img src="/assets/ricky-portrait-standing.jpg" alt="Late Night Ricky" />
         </div>
         {/* Dark text card — overlaps photo, center-right */}
         <div className="lnr-reach-card">
@@ -247,7 +247,7 @@ export default async function HomePage() {
         </div>
         {/* Secondary texture strip — bottom right */}
         <div className="lnr-reach-photo-secondary">
-          <img src="/assets/press-bg2.jpg" alt="" />
+          <img src="/assets/ricky-seated.jpg" alt="" />
         </div>
       </section>
 
