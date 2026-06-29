@@ -130,10 +130,21 @@
   position: relative;
   min-height: 100vh;
   background: #141414;
+  background-image: url('/assets/highlight-arena.jpg');
+  background-size: cover;
+  background-position: center;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+}
+
+.lnr-reach-collage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 20, 20, 0.82);
+  z-index: 0;
 }
 
 /* Ghost watermark */
