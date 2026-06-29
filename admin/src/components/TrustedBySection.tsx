@@ -163,6 +163,7 @@ export default function TrustedBySection({
 
       {/* PARTNERSHIPS — brand logo grid */}
       <div className="lnr-partners-section">
+        <a href="/#partnerships" className="lnr-partners-pill">ALL PARTNERSHIPS</a>
         <div className="lnr-partners-grid">
           <div className="lnr-partner-logo"><img src="/assets/logo-f1.png" alt="F1" /></div>
           <div className="lnr-partner-logo"><img src="/assets/logo-coca-cola.png" alt="Coca-Cola" /></div>
@@ -176,7 +177,6 @@ export default function TrustedBySection({
           <div className="lnr-partner-logo"><img src="/assets/logo-cartier.png" alt="Cartier" /></div>
           <div className="lnr-partner-logo"><img src="/assets/apple-logo.png" alt="Apple Music" /></div>
         </div>
-        <a href="/#partnerships" className="lnr-partners-pill">ALL PARTNERSHIPS</a>
       </div>
     </section>
   );
