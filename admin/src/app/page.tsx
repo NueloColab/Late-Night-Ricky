@@ -260,30 +260,24 @@ export default async function HomePage() {
         revealClass=""
       />
 
-      {/* ═══ HIGHLIGHTS — stacking cards with vertical label ═══ */}
+      {/* ═══ HIGHLIGHTS — Garrix-style 2-column release grid ═══ */}
       {shows.length > 0 && (
-        <section className="garrix-section garrix-highlights-section">
-          <div className="garrix-section-label">HIGHLIGHTS<span className="garrix-section-line" /></div>
-          <div className="garrix-section-inner">
-            <div className="garrix-highlights-header">
-              <h2 className="garrix-heading">RECENT HIGHLIGHTS</h2>
-              <p className="garrix-subtitle">Learn more about the music, or check the latest releases right here.</p>
-            </div>
-            <div className="garrix-stack">
-              {shows.map((card: any, i: number) => (
-                <a key={card.id || card.title} href={card.href || '#'} className="garrix-stack-card" style={{ top: `${80 + i * 24}px` }}>
-                  <div className="garrix-stack-card-img" style={{ backgroundImage: `url('${assetPath(card.image)}')` }}>
-                    <div className="garrix-stack-card-overlay" />
-                    <div className="garrix-stack-card-play" />
+        <section className="lnr-highlights">
+          <h2 className="lnr-highlights-heading">RECENT HIGHLIGHTS</h2>
+          <div className="lnr-highlights-grid">
+            {shows.map((card: any, i: number) => (
+              <a key={card.id || card.title} href={card.href || '#'} className="lnr-highlights-card">
+                <div className="lnr-highlights-card-img" style={{ backgroundImage: `url('${assetPath(card.image)}')` }}>
+                  <div className="lnr-highlights-card-overlay" />
+                  <div className="lnr-highlights-card-play" />
+                  <div className="lnr-highlights-card-text">
+                    <span className="lnr-highlights-card-label">{card.season}</span>
+                    <h3 className="lnr-highlights-card-title">{card.title}</h3>
+                    <span className="lnr-highlights-card-venue">— {card.venue}{card.location ? `, ${card.location}` : ''}</span>
                   </div>
-                  <div className="garrix-stack-card-info">
-                    <span className="garrix-stack-card-season">{card.season}</span>
-                    <h3 className="garrix-stack-card-title">{card.title}</h3>
-                    <span className="garrix-stack-card-venue">{card.venue}{card.location ? ` — ${card.location}` : ''}</span>
-                  </div>
-                </a>
-              ))}
-            </div>
+                </div>
+              </a>
+            ))}
           </div>
         </section>
       )}
