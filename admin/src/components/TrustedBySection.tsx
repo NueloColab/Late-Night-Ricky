@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface ClientItem {
   name: string;
@@ -47,8 +47,6 @@ export default function TrustedBySection({
 }: TrustedBySectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const [visibleNames, setVisibleNames] = useState<Set<number>>(new Set());
-  const nameRefs = useRef<Map<number, HTMLElement>>(new Map());
   void _clients;
 
   const items = DEFAULT_CLIENTS_WITH_IMAGES;
@@ -58,42 +56,17 @@ export default function TrustedBySection({
     setActiveIndex(index);
   }, []);
 
-  // Intersection Observer: track which names are fully visible
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        setVisibleNames((prev) => {
-          const next = new Set(prev);
-          entries.forEach((entry) => {
-            const idx = Number(entry.target.getAttribute('data-index'));
-            if (entry.isIntersecting && entry.intersectionRatio >= 0.9) {
-              next.add(idx);
-            } else {
-              next.delete(idx);
-            }
-          });
-          return next;
-        });
-      },
-      { threshold: 0.9 }
-    );
-
-    nameRefs.current.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
-  // Auto-highlight: only cycle through names that are currently visible
+  // Random highlight: jumps to a random different name every 2.5s
   useEffect(() => {
     const timer = setInterval(() => {
-      if (hoverIndex !== null) return; // don't cycle while hovering
-      const visibleArray = Array.from(visibleNames).sort((a, b) => a - b);
-      if (visibleArray.length === 0) return;
-      const currentPos = visibleArray.indexOf(activeIndex);
-      const nextPos = currentPos === -1 ? 0 : (currentPos + 1) % visibleArray.length;
-      setActiveIndex(visibleArray[nextPos]);
-    }, 3000);
+      let next: number;
+      do {
+        next = Math.floor(Math.random() * items.length);
+      } while (next === activeIndex && items.length > 1);
+      setActiveIndex(next);
+    }, 2500);
     return () => clearInterval(timer);
-  }, [visibleNames, hoverIndex, activeIndex]);
+  }, [activeIndex, items.length]);
 
   const row1 = items.slice(0, 7);
   const row2 = items.slice(7, 14);
@@ -107,8 +80,6 @@ export default function TrustedBySection({
       return (
         <button
           key={`${item.name}-${rowIndex}-${i}`}
-          ref={(el) => { if (el) nameRefs.current.set(originalIndex, el); }}
-          data-index={originalIndex}
           className={`lnr-client-name ${isActive ? 'lnr-client-name-active' : ''}`}
           onMouseEnter={() => setHoverIndex(originalIndex)}
           onMouseLeave={() => setHoverIndex(null)}
