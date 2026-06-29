@@ -67,6 +67,30 @@ export default function ScrollReveal() {
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
+    // Video play button
+    const playBtn = document.getElementById('collage-play-btn');
+    const closeBtn = document.getElementById('collage-video-close');
+    const videoOverlay = document.getElementById('collage-video-overlay');
+    const video = document.getElementById('collage-video') as HTMLVideoElement | null;
+
+    if (playBtn && videoOverlay && video) {
+      playBtn.addEventListener('click', () => {
+        video.play();
+        videoOverlay.style.opacity = '1';
+        playBtn.style.opacity = '0';
+        playBtn.style.pointerEvents = 'none';
+      });
+    }
+
+    if (closeBtn && videoOverlay && video && playBtn) {
+      closeBtn.addEventListener('click', () => {
+        video.pause();
+        videoOverlay.style.opacity = '0';
+        playBtn.style.opacity = '0.9';
+        playBtn.style.pointerEvents = 'auto';
+      });
+    }
+
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
