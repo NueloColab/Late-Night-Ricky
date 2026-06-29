@@ -3,7 +3,7 @@ import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
 import TrustedBySection from '../components/TrustedBySection';
 import HomeContactSection from '../components/HomeContactSection';
-import Loader from '../components/Loader';
+// import Loader from '../components/Loader';
 import { getShowCards, getClientNames, getTracks, getSiteSections, getSeoMeta } from '@/lib/cms';
 import type { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
