@@ -18,9 +18,6 @@
   inset: 0;
   z-index: 9999;
   background: #000;
-  background-image: url('/assets/ricky-hero-v2.jpg');
-  background-size: cover;
-  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,22 +25,27 @@
   pointer-events: none;
 }
 
-.lnr-loader::after {
-  content: '';
+.lnr-loader-video {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   z-index: 0;
+  opacity: 0.7;
 }
 
 .lnr-loader-inner {
   position: relative;
   z-index: 1;
+  background: #000;
+  mix-blend-mode: multiply;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: clamp(4px, 1vw, 12px);
+  padding: clamp(16px, 4vw, 48px);
 }
 
 .lnr-loader-line {
@@ -64,8 +66,9 @@
   font-size: clamp(48px, 14vw, 160px);
   font-weight: 700;
   text-transform: uppercase;
-  /* Outlined/stroke text — hollow inside, thin white outline */
-  color: transparent;
+  /* Black fill + white stroke — mix-blend-mode: multiply on parent makes
+     black opaque (hides video) and white transparent (shows video through strokes) */
+  color: #000;
   -webkit-text-stroke: clamp(1px, 0.25vw, 2px) #fff;
   paint-order: stroke fill;
   display: inline-block;
