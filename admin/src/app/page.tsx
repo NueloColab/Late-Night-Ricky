@@ -206,7 +206,7 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ SHOWREEL — outlined text over video (bright, visible) ═══ */}
-      <section className="garrix-showreel reveal-left">
+      <section className="garrix-showreel">
         <video
           className="garrix-showreel-video"
           src={videoSrc}
@@ -257,12 +257,12 @@ export default async function HomePage() {
         attribution={partnersAttribution}
         description={partnersDescription}
         clients={clients}
-        revealClass="reveal-scale"
+        revealClass=""
       />
 
       {/* ═══ HIGHLIGHTS — stacking cards with vertical label ═══ */}
       {shows.length > 0 && (
-        <section className="garrix-section garrix-highlights-section reveal-right">
+        <section className="garrix-section garrix-highlights-section">
           <div className="garrix-section-label">HIGHLIGHTS<span className="garrix-section-line" /></div>
           <div className="garrix-section-inner">
             <div className="garrix-highlights-header">
@@ -289,7 +289,7 @@ export default async function HomePage() {
       )}
 
       {/* ═══ COLLAGE — asymmetric scatter with ghost watermark ═══ */}
-      <section className="garrix-collage-section reveal-scale">
+      <section className="garrix-collage-section">
         <div className="garrix-collage-ghost" aria-hidden="true">RICKY</div>
         <div className="garrix-collage-photos">
           <div className="garrix-collage-photo garrix-cp-1">
@@ -315,12 +315,12 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ LIFE IS CRAZY — outlined text banner ═══ */}
-      <div className="garrix-life-banner reveal-fade">
+      <div className="garrix-life-banner">
         <h2>LATE NIGHT RICKY</h2>
       </div>
 
       {/* ═══ RADIO ═══ */}
-      <section id="radio" className="garrix-section garrix-radio-section reveal-left">
+      <section id="radio" className="garrix-section garrix-radio-section">
         <div className="garrix-section-label">MUSIC<span className="garrix-section-line" /></div>
         <div className="garrix-section-inner">
           <div className="garrix-radio-grid">
@@ -350,7 +350,7 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ SHARE MUSIC CTA ═══ */}
-      <section className="garrix-cta-section reveal-scale">
+      <section className="garrix-cta-section">
         <div className="garrix-cta-bg" style={{ backgroundImage: `url('/assets/press-bg2.jpg')` }} />
         <div className="garrix-cta-overlay" />
         <div className="garrix-cta-content">
