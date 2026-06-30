@@ -209,10 +209,10 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ SHOWREEL — outlined text over video (bright, visible) ═══ */}
-      <section className="garrix-showreel">
+      <section className="garrix-showreel reveal-left">
         <video
           className="garrix-showreel-video"
-          src={videoSrc}
+          src="/assets/showreel-video.mp4"
           poster={videoPoster}
           playsInline
           autoPlay
