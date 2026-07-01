@@ -86,7 +86,7 @@ export default async function HomePage() {
   let shows: any[] = DEFAULT_SHOWS; // used by CMS fallback, kept for future dynamic rendering
   let clients: string[] = DEFAULT_CLIENTS;
   let tracks = DEFAULT_TRACKS;
-  let heroImage = '/assets/ricky-hero-real.jpg';
+  const heroImage = '/assets/ricky-hero-real.jpg';
   let heroLogo = '/assets/ricky-logo.png';
   let heroGrayscale = true;
   let heroBackgroundSize = 'cover';
@@ -119,7 +119,8 @@ export default async function HomePage() {
       const heroSection = dbSections.find((s: any) => s.section === 'hero');
       if (heroSection?.content) {
         const c = typeof heroSection.content === 'string' ? JSON.parse(heroSection.content) : heroSection.content;
-        if (c.image) heroImage = c.image;
+        // CMS hero image override disabled — using real photo
+        // if (c.image) heroImage = c.image;
         if (c.logo) heroLogo = c.logo;
         if (c.grayscale !== undefined) heroGrayscale = c.grayscale;
         if (c.backgroundSize) heroBackgroundSize = c.backgroundSize;
