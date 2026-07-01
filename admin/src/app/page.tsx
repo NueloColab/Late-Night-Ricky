@@ -119,7 +119,8 @@ export default async function HomePage() {
       const heroSection = dbSections.find((s: any) => s.section === 'hero');
       if (heroSection?.content) {
         const c = typeof heroSection.content === 'string' ? JSON.parse(heroSection.content) : heroSection.content;
-        if (c.image) heroImage = c.image;
+        // CMS hero image override disabled — using new generated portrait
+        // if (c.image) heroImage = c.image;
         if (c.logo) heroLogo = c.logo;
         if (c.grayscale !== undefined) heroGrayscale = c.grayscale;
         if (c.backgroundSize) heroBackgroundSize = c.backgroundSize;
