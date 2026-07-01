@@ -55,7 +55,7 @@ export default function Navbar() {
           left: 0;
           right: 0;
           z-index: 500;
-          background: rgba(10, 14, 23, 0.7);
+          background: rgba(80, 50, 30, 0.65);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           border-bottom: 1px solid rgba(255,255,255,0.06);
