@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 const navLinks = [
@@ -15,15 +15,32 @@ const navLinks = [
 
 export default function Navbar() {
   const [visible, setVisible] = useState(true);
+  const [manualToggle, setManualToggle] = useState(false);
+  const lastScrollY = useRef(0);
 
-  // Lock scroll when menu is open (not needed for this pattern but keeping in case)
+  // Scroll-driven collapse/expand
   useEffect(() => {
-    return () => { document.body.style.overflow = ''; };
-  }, []);
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const heroHeight = window.innerHeight;
+
+      if (scrollY > heroHeight && !manualToggle) {
+        // Scrolled past hero/showreel — hide header
+        setVisible(false);
+      } else if (scrollY <= heroHeight && !manualToggle) {
+        // At hero or scrolling up to hero — show header
+        setVisible(true);
+      }
+      lastScrollY.current = scrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [manualToggle]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setVisible(true);
+      if (e.key === 'Escape') { setVisible(true); setManualToggle(false); }
     };
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
@@ -243,7 +260,7 @@ export default function Navbar() {
 
         <button
           className="lnr-hamburger-plain"
-          onClick={() => setVisible(false)}
+          onClick={() => { setVisible(false); setManualToggle(true); }}
           aria-label="Hide menu"
         >
           <span className="lines">
@@ -257,7 +274,7 @@ export default function Navbar() {
       {/* Animated circle trigger — appears when header is hidden */}
       <div
         className={`lnr-circle-trigger ${visible ? '' : 'visible'}`}
-        onClick={() => setVisible(true)}
+        onClick={() => { setVisible(true); setManualToggle(false); }}
       >
         <button className="lnr-circle-btn" aria-label="Show menu">
           <span className="lines">
