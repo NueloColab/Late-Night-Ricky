@@ -187,21 +187,17 @@ export default async function HomePage() {
       <Navbar />
       <ScrollReveal />
 
-      {/* ═══ HERO — matching production exactly ═══ */}
-      <section className="relative min-h-[100dvh] flex flex-col items-center justify-center px-8 md:px-14 pb-14 pt-20">
-        <div className="fixed inset-0 -z-10" style={{ backgroundColor: '#8db8d8' }}>
-          <div
-            className="absolute inset-0 bg-cover bg-no-repeat"
-            style={{
-              backgroundImage: `url('${heroImage}')`,
-              backgroundSize: heroBackgroundSize,
-              backgroundPosition: heroBackgroundPosition,
-              filter: heroGrayscale ? 'grayscale(100%) brightness(1.3)' : 'none',
-              mixBlendMode: 'multiply',
-            }}
-          />
-        </div>
-        <img src={heroLogo} alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] mx-auto mb-14 brightness-0 invert opacity-80 drop-shadow-[0_4px_30px_rgba(255,255,255,0.3)]" />
+      {/* ═══ HERO — raw photo, no colour overlay ═══ */}
+      <section className="relative min-h-[100dvh] flex flex-col justify-center px-8 md:px-14 pb-14 pt-20">
+        <div
+          className="fixed inset-0 -z-10 bg-cover bg-no-repeat"
+          style={{
+            backgroundImage: `url('${heroImage}')`,
+            backgroundSize: heroBackgroundSize,
+            backgroundPosition: heroBackgroundPosition,
+          }}
+        />
+        <img src={heroLogo} alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] ml-4 md:ml-8 mb-14 drop-shadow-[0_4px_30px_rgba(0,0,0,0.4)]" />
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white opacity-70">
           <span className="text-[11px] tracking-[2.5px] uppercase font-medium">Scroll</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
