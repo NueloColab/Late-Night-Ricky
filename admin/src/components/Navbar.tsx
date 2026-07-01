@@ -154,6 +154,18 @@ export default function Navbar() {
         .lnr-hamburger.active .lines span:nth-child(3) {
           transform: translateY(-7px) rotate(-45deg);
         }
+        .lnr-menu-label {
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #fff;
+          text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+          opacity: 0.9;
+          margin-left: 10px;
+          transition: opacity 300ms ease;
+          white-space: nowrap;
+        }
 
         .lnr-fullscreen-menu {
           position: fixed;
@@ -265,17 +277,20 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <button
-          className={`lnr-hamburger ${menuOpen ? 'active' : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        >
-          <span className="lines">
-            <span />
-            <span />
-            <span />
-          </span>
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <button
+            className={`lnr-hamburger ${menuOpen ? 'active' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            <span className="lines">
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
+          <span className="lnr-menu-label">{menuOpen ? 'Close' : 'Menu'}</span>
+        </div>
       </div>
 
       <div className={`lnr-fullscreen-menu ${menuOpen ? 'open' : ''}`}>
