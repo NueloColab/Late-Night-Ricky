@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 const navLinks = [
@@ -16,6 +16,26 @@ const navLinks = [
 export default function Navbar() {
   const [collapsed, setCollapsed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
+
+  // Scroll-driven collapse/expand
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const heroHeight = window.innerHeight * 0.8; // 80% of viewport
+      
+      if (scrollY > heroHeight && !collapsed) {
+        setCollapsed(true);
+      } else if (scrollY <= heroHeight && collapsed) {
+        setCollapsed(false);
+        setMenuOpen(false);
+      }
+      lastScrollY.current = scrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [collapsed]);
 
   useEffect(() => {
     if (menuOpen) {
@@ -52,7 +72,7 @@ export default function Navbar() {
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           border-bottom: 1px solid rgba(255,255,255,0.08);
-          transition: transform 400ms cubic-bezier(.22,1,.36,1), opacity 300ms ease;
+          transition: transform 500ms cubic-bezier(.22,1,.36,1), opacity 400ms ease;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -103,12 +123,15 @@ export default function Navbar() {
           gap: 10px;
           cursor: pointer;
           -webkit-tap-highlight-color: transparent;
-          transition: opacity 300ms ease, transform 300ms ease;
-        }
-        .lnr-nav-circle.hidden {
+          transition: opacity 400ms ease, transform 400ms cubic-bezier(.22,1,.36,1);
           opacity: 0;
+          transform: scale(0.8) translateY(-20px);
           pointer-events: none;
-          transform: scale(0.9);
+        }
+        .lnr-nav-circle.visible {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+          pointer-events: auto;
         }
         .lnr-nav-circle-btn {
           width: 44px;
@@ -230,31 +253,6 @@ export default function Navbar() {
           opacity: 0.9;
         }
 
-        /* Collapse button inside bar */
-        .lnr-nav-collapse {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.15);
-          border: 1px solid rgba(255,255,255,0.2);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 200ms ease;
-          padding: 0;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .lnr-nav-collapse:hover {
-          background: rgba(255,255,255,0.25);
-        }
-        .lnr-nav-collapse svg {
-          width: 14px;
-          height: 14px;
-          color: rgba(255,255,255,0.8);
-        }
-
-        /* Fullscreen overlay menu */
         .menu-overlay {
           position: fixed;
           inset: 0;
@@ -370,21 +368,11 @@ export default function Navbar() {
             </Link>
           ))}
         </nav>
-
-        <button
-          className="lnr-nav-collapse"
-          onClick={() => setCollapsed(true)}
-          aria-label="Collapse menu"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <path d="M18 6L6 18M6 6l12 12" />
-          </svg>
-        </button>
       </div>
 
-      {/* Collapsed: animated circle + Menu label */}
+      {/* Collapsed: animated circle + Menu label — appears when scrolled past hero */}
       <div
-        className={`lnr-nav-circle ${!collapsed ? 'hidden' : ''}`}
+        className={`lnr-nav-circle ${collapsed && !menuOpen ? 'visible' : ''}`}
         onClick={() => setMenuOpen(true)}
       >
         <button className={`lnr-nav-circle-btn ${menuOpen ? 'active' : ''}`} aria-label="Open menu">
