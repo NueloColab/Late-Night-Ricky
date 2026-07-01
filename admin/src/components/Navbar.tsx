@@ -14,20 +14,16 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
 
+  // Lock scroll when menu is open (not needed for this pattern but keeping in case)
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
     return () => { document.body.style.overflow = ''; };
-  }, [menuOpen]);
+  }, []);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMenuOpen(false);
+      if (e.key === 'Escape') setVisible(true);
     };
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
@@ -36,7 +32,7 @@ export default function Navbar() {
   return (
     <>
       <style>{`
-        .lnr-header {
+        .lnr-header-bar {
           position: fixed;
           top: 0;
           left: 0;
@@ -46,15 +42,17 @@ export default function Navbar() {
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           border-bottom: 1px solid rgba(255,255,255,0.06);
-          transition: background 300ms ease;
+          transition: transform 500ms cubic-bezier(.22,1,.36,1), opacity 400ms ease;
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding: 0 24px;
           height: 56px;
         }
-        .lnr-header.open {
-          background: rgba(10, 14, 23, 0.92);
+        .lnr-header-bar.hidden {
+          transform: translateY(-100%);
+          opacity: 0;
+          pointer-events: none;
         }
         .lnr-header-logo {
           display: flex;
@@ -71,19 +69,6 @@ export default function Navbar() {
           display: flex;
           align-items: center;
           gap: 28px;
-          transition: opacity 400ms ease, transform 400ms cubic-bezier(.22,1,.36,1), max-width 400ms ease;
-        }
-        .lnr-header-nav.closed {
-          opacity: 0;
-          transform: translateX(20px);
-          max-width: 0;
-          overflow: hidden;
-          pointer-events: none;
-        }
-        .lnr-header-nav.open {
-          opacity: 1;
-          transform: translateX(0);
-          max-width: 800px;
         }
         .lnr-header-nav a {
           color: rgba(255,255,255,0.85);
@@ -99,13 +84,11 @@ export default function Navbar() {
           color: #fff;
         }
 
-        .lnr-hamburger {
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.95);
-          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .lnr-hamburger-plain {
+          width: 40px;
+          height: 40px;
           border: none;
+          background: none;
           cursor: pointer;
           display: flex;
           align-items: center;
@@ -115,19 +98,75 @@ export default function Navbar() {
           transition: transform 300ms ease;
           flex-shrink: 0;
         }
-        .lnr-hamburger:hover {
+        .lnr-hamburger-plain:hover {
           transform: scale(1.05);
         }
-        .lnr-hamburger .lines {
+        .lnr-hamburger-plain .lines {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           gap: 5px;
         }
-        .lnr-hamburger .lines span {
+        .lnr-hamburger-plain .lines span {
           display: block;
-          width: 20px;
+          width: 22px;
+          height: 2px;
+          background: rgba(255,255,255,0.9);
+          border-radius: 1px;
+          transition: all 300ms ease;
+        }
+        .lnr-hamburger-plain:hover .lines span {
+          background: #fff;
+        }
+
+        .lnr-circle-trigger {
+          position: fixed;
+          top: 16px;
+          right: 20px;
+          z-index: 550;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+          -webkit-tap-highlight-color: transparent;
+          transition: opacity 400ms ease, transform 400ms cubic-bezier(.22,1,.36,1);
+          opacity: 0;
+          transform: scale(0.8) translateY(-10px);
+          pointer-events: none;
+        }
+        .lnr-circle-trigger.visible {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+          pointer-events: auto;
+        }
+        .lnr-circle-btn {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.95);
+          box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
+          cursor: pointer;
+          transition: transform 300ms ease;
+        }
+        .lnr-circle-btn:hover {
+          transform: scale(1.05);
+        }
+        .lnr-circle-btn .lines {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 5px;
+        }
+        .lnr-circle-btn .lines span {
+          display: block;
+          width: 18px;
           height: 2px;
           background: #152a47;
           border-radius: 1px;
@@ -135,26 +174,26 @@ export default function Navbar() {
           transform-origin: center;
         }
         @keyframes wave-pulse {
-          0%, 100% { width: 20px; transform: translateX(0); }
-          25% { width: 15px; transform: translateX(2px); }
-          50% { width: 24px; transform: translateX(-2px); }
-          75% { width: 17px; transform: translateX(1px); }
+          0%, 100% { width: 18px; transform: translateX(0); }
+          25% { width: 13px; transform: translateX(2px); }
+          50% { width: 22px; transform: translateX(-2px); }
+          75% { width: 15px; transform: translateX(1px); }
         }
-        .lnr-hamburger .lines span:nth-child(2) {
+        .lnr-circle-btn .lines span:nth-child(2) {
           animation: wave-pulse 1.4s ease-in-out infinite;
           animation-delay: .25s;
         }
-        .lnr-hamburger.active .lines span:nth-child(1) {
+        .lnr-circle-btn.active .lines span:nth-child(1) {
           transform: translateY(7px) rotate(45deg);
         }
-        .lnr-hamburger.active .lines span:nth-child(2) {
+        .lnr-circle-btn.active .lines span:nth-child(2) {
           opacity: 0;
           transform: scaleX(0);
         }
-        .lnr-hamburger.active .lines span:nth-child(3) {
+        .lnr-circle-btn.active .lines span:nth-child(3) {
           transform: translateY(-7px) rotate(-45deg);
         }
-        .lnr-menu-label {
+        .lnr-circle-label {
           font-size: 11px;
           font-weight: 600;
           letter-spacing: 0.15em;
@@ -162,80 +201,11 @@ export default function Navbar() {
           color: #fff;
           text-shadow: 0 1px 4px rgba(0,0,0,0.5);
           opacity: 0.9;
-          margin-left: 10px;
-          transition: opacity 300ms ease;
           white-space: nowrap;
         }
 
-        .lnr-fullscreen-menu {
-          position: fixed;
-          inset: 0;
-          top: 56px;
-          z-index: 490;
-          background: rgba(10,14,23,0.96);
-          backdrop-filter: blur(24px);
-          -webkit-backdrop-filter: blur(24px);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 400ms ease;
-        }
-        .lnr-fullscreen-menu.open {
-          opacity: 1;
-          pointer-events: auto;
-        }
-        .lnr-fullscreen-menu a {
-          display: block;
-          color: #fff;
-          text-decoration: none;
-          font-size: clamp(20px, 4vw, 32px);
-          font-weight: 700;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          padding: 12px 24px;
-          transition: color 200ms ease, transform 200ms ease;
-          opacity: 0;
-          transform: translateY(20px);
-          transition: opacity 400ms ease, transform 400ms ease, color 200ms ease;
-        }
-        .lnr-fullscreen-menu.open a {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .lnr-fullscreen-menu.open a:nth-child(1) { transition-delay: .08s; }
-        .lnr-fullscreen-menu.open a:nth-child(2) { transition-delay: .12s; }
-        .lnr-fullscreen-menu.open a:nth-child(3) { transition-delay: .16s; }
-        .lnr-fullscreen-menu.open a:nth-child(4) { transition-delay: .20s; }
-        .lnr-fullscreen-menu.open a:nth-child(5) { transition-delay: .24s; }
-        .lnr-fullscreen-menu.open a:nth-child(6) { transition-delay: .28s; }
-        .lnr-fullscreen-menu.open a:nth-child(7) { transition-delay: .32s; }
-        .lnr-fullscreen-menu a:hover {
-          color: #c4b8a8;
-          transform: scale(1.05);
-        }
-        .lnr-fullscreen-menu .menu-footer {
-          position: absolute;
-          bottom: 40px;
-          opacity: 0;
-          transition: opacity 400ms ease .4s;
-        }
-        .lnr-fullscreen-menu.open .menu-footer {
-          opacity: 1;
-        }
-        .lnr-fullscreen-menu .menu-footer p {
-          color: rgba(255,255,255,0.35);
-          font-size: 10px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          font-weight: 600;
-        }
-
         @media (max-width: 768px) {
-          .lnr-header {
+          .lnr-header-bar {
             padding: 0 16px;
             height: 48px;
           }
@@ -254,58 +224,49 @@ export default function Navbar() {
           .lnr-header-nav {
             display: none;
           }
-          .lnr-fullscreen-menu {
-            top: 48px;
-          }
         }
       `}</style>
 
-      <div className={`lnr-header ${menuOpen ? 'open' : ''}`}>
+      {/* Header bar with nav links */}
+      <div className={`lnr-header-bar ${visible ? '' : 'hidden'}`}>
         <Link href="/" className="lnr-header-logo">
           <img src="/assets/ricky-logo.png" alt="Late Night Ricky" />
         </Link>
 
-        <nav className={`lnr-header-nav ${menuOpen ? 'open' : 'closed'}`}>
+        <nav className="lnr-header-nav">
           {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link key={link.href} href={link.href}>
               {link.label}
             </Link>
           ))}
         </nav>
 
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <button
-            className={`lnr-hamburger ${menuOpen ? 'active' : ''}`}
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          >
-            <span className="lines">
-              <span />
-              <span />
-              <span />
-            </span>
-          </button>
-          <span className="lnr-menu-label">{menuOpen ? 'Close' : 'Menu'}</span>
-        </div>
+        <button
+          className="lnr-hamburger-plain"
+          onClick={() => setVisible(false)}
+          aria-label="Hide menu"
+        >
+          <span className="lines">
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
       </div>
 
-      <div className={`lnr-fullscreen-menu ${menuOpen ? 'open' : ''}`}>
-        {navLinks.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            onClick={() => setMenuOpen(false)}
-          >
-            {link.label}
-          </Link>
-        ))}
-        <div className="menu-footer">
-          <p>Late Night Ricky</p>
-        </div>
+      {/* Animated circle trigger — appears when header is hidden */}
+      <div
+        className={`lnr-circle-trigger ${visible ? '' : 'visible'}`}
+        onClick={() => setVisible(true)}
+      >
+        <button className="lnr-circle-btn" aria-label="Show menu">
+          <span className="lines">
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
+        <span className="lnr-circle-label">Menu</span>
       </div>
     </>
   );
