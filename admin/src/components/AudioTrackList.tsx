@@ -146,7 +146,7 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
             {/* Right column: title + wave/timer row */}
             <div className="flex flex-col min-w-0">
               {/* Title — aligned with artwork top */}
-              <span className="font-serif text-[15px] md:text-[16px] font-medium text-[#2a1a0a] leading-tight pt-1">
+              <span className="font-serif text-[17px] md:text-[20px] font-medium text-[#2a1a0a] leading-tight pt-1">
                 {track.title}
               </span>
 
