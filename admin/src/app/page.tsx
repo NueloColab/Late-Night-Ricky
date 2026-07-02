@@ -337,15 +337,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ TRUSTED BY THE BEST — interactive names with background ═══ */}
-      <TrustedBySection
-        quote={partnersQuote}
-        attribution={partnersAttribution}
-        description={partnersDescription}
-        clients={clients}
-        revealClass=""
-      />
-
       {/* ═══ LATE NIGHT MOMENTS — editorial 2-column, large B&W squares ═══ */}
       <section id="moments" className="relative py-24 md:py-32 px-6 md:px-14 overflow-hidden">
         {/* Warm editorial cream background */}
@@ -410,6 +401,15 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ═══ TRUSTED BY THE BEST — interactive names with background ═══ */}
+      <TrustedBySection
+        quote={partnersQuote}
+        attribution={partnersAttribution}
+        description={partnersDescription}
+        clients={clients}
+        revealClass=""
+      />
 
 
       {/* ═══ VENUES — scrolling marquee ═══ */}
