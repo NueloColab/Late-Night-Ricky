@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 
 interface Track {
   title: string;
@@ -22,22 +22,40 @@ function formatTime(seconds: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
+// Generate consistent waveform bars for a track (seeded by index)
+function generateWaveformBars(seed: number, count = 50): number[] {
+  const bars: number[] = [];
+  let value = seed * 12345;
+  for (let i = 0; i < count; i++) {
+    value = (value * 9301 + 49297) % 233280;
+    bars.push(20 + (value / 233280) * 80);
+  }
+  return bars;
+}
+
 export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
   const [playingId, setPlayingId] = useState<number | null>(null);
   const [remaining, setRemaining] = useState<number>(0);
+  const [progress, setProgress] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const clearTimer = () => {
+  const clearTimer = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-  };
+    if (progressRef.current) {
+      clearInterval(progressRef.current);
+      progressRef.current = null;
+    }
+  }, []);
 
-  const startTimer = (totalSeconds: number) => {
+  const startTimer = useCallback((totalSeconds: number) => {
     clearTimer();
     setRemaining(totalSeconds);
+    setProgress(0);
     intervalRef.current = setInterval(() => {
       setRemaining((prev) => {
         if (prev <= 1) {
@@ -47,11 +65,18 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
         return prev - 1;
       });
     }, 1000);
-  };
+    // Progress update every 100ms for smooth wave fill
+    progressRef.current = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) return 100;
+        return prev + (100 / (totalSeconds * 10));
+      });
+    }, 100);
+  }, [clearTimer]);
 
   useEffect(() => {
     return () => clearTimer();
-  }, []);
+  }, [clearTimer]);
 
   const togglePlay = (id: number, src: string | null | undefined) => {
     if (!src) return;
@@ -59,6 +84,7 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
       audioRef.current?.pause();
       clearTimer();
       setPlayingId(null);
+      setProgress(0);
       return;
     }
     audioRef.current?.pause();
@@ -72,18 +98,21 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
     audio.onended = () => {
       clearTimer();
       setPlayingId(null);
+      setProgress(0);
     };
 
     audio.onpause = () => {
       if (audio.ended || audio.currentTime >= audio.duration - 0.5) {
         clearTimer();
         setPlayingId(null);
+        setProgress(0);
       }
     };
 
     audio.onerror = () => {
       clearTimer();
       setPlayingId(null);
+      setProgress(0);
     };
 
     const stopAt = Math.min(totalSeconds, audio.duration || totalSeconds);
@@ -93,6 +122,7 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
         clearInterval(checkInterval);
         clearTimer();
         setPlayingId(null);
+        setProgress(0);
       }
     }, 100);
 
@@ -103,39 +133,82 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
 
   return (
     <div className="border-t border-[#5a3a1a]/20 pt-6">
-      {tracks.map((track, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-4 py-3.5 border-b border-[#5a3a1a]/20 hover:bg-[#5a3a1a]/10 hover:mx-[-12px] hover:px-3 hover:rounded-lg transition cursor-pointer group"
-          onClick={() => togglePlay(i, track.src)}
-        >
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              togglePlay(i, track.src);
-            }}
-            disabled={!track.src}
-            className="w-10 h-10 rounded-full border-[1.5px] border-[#5a3a1a]/60 bg-transparent flex items-center justify-center text-[#2a1a0a] group-hover:bg-[#2a1a0a] group-hover:text-[#f8f1e8] transition flex-shrink-0 disabled:opacity-30"
+      {tracks.map((track, i) => {
+        const waveformBars = generateWaveformBars(i + 1);
+        const isPlaying = playingId === i;
+        const filledBars = isPlaying ? Math.floor((progress / 100) * waveformBars.length) : 0;
+        return (
+          <div
+            key={i}
+            className="flex items-start gap-3 py-4 border-b border-[#5a3a1a]/20 hover:bg-[#5a3a1a]/5 hover:mx-[-12px] hover:px-3 hover:rounded-lg transition cursor-pointer group"
+            onClick={() => togglePlay(i, track.src)}
           >
-            {playingId === i ? (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <rect x="6" y="4" width="4" height="16" rx="1" />
-                <rect x="14" y="4" width="4" height="16" rx="1" />
-              </svg>
-            ) : (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="7 4 19 12 7 20" />
-              </svg>
-            )}
-          </button>
-          <div className="flex-1 flex justify-between items-center gap-4">
-            <span className="font-serif text-[16px] font-medium text-[#2a1a0a]">{track.title}</span>
-            <span className="text-[13px] text-[#5a3a1a]/60 font-variant-numeric-tabular">
-              {playingId === i ? formatTime(remaining) : track.time}
-            </span>
+            {/* Left: artwork + play button */}
+            <div className="flex flex-col items-center gap-2 flex-shrink-0">
+              {/* Square artwork */}
+              <div className="w-12 h-12 rounded bg-[#5a3a1a]/10 overflow-hidden">
+                <img
+                  src="/assets/ricky-radio-new.jpg"
+                  alt="Track artwork"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* Play button under artwork */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  togglePlay(i, track.src);
+                }}
+                disabled={!track.src}
+                className="w-8 h-8 rounded-full border-[1.5px] border-[#5a3a1a]/50 bg-transparent flex items-center justify-center text-[#2a1a0a] group-hover:bg-[#2a1a0a] group-hover:text-[#f8f1e8] group-hover:border-[#2a1a0a] transition-all duration-200 disabled:opacity-30"
+              >
+                {isPlaying ? (
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="6" y="4" width="4" height="16" rx="1" />
+                    <rect x="14" y="4" width="4" height="16" rx="1" />
+                  </svg>
+                ) : (
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="7 4 19 12 7 20" />
+                  </svg>
+                )}
+              </button>
+            </div>
+
+            {/* Right: title + wave + timer */}
+            <div className="flex-1 flex flex-col gap-2 min-w-0 pt-1">
+              {/* Title */}
+              <span className="font-serif text-[15px] font-medium text-[#2a1a0a] leading-tight">
+                {track.title}
+              </span>
+              {/* Wave + timer row */}
+              <div className="flex items-center gap-3">
+                {/* Sound wave */}
+                <div className="flex-1 h-7 flex items-center gap-[1px]">
+                  {waveformBars.map((h, idx) => {
+                    const isFilled = isPlaying && idx < filledBars;
+                    return (
+                      <div
+                        key={idx}
+                        className="flex-1 rounded-full transition-colors duration-150"
+                        style={{
+                          height: `${h}%`,
+                          backgroundColor: isFilled ? '#2a1a0a' : '#c4b498',
+                          opacity: isFilled ? 0.9 : 0.5,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+                {/* Timer */}
+                <span className="text-[13px] text-[#5a3a1a]/60 font-variant-numeric-tabular flex-shrink-0 w-10 text-right">
+                  {isPlaying ? formatTime(remaining) : track.time}
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
