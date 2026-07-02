@@ -339,8 +339,14 @@ export default async function HomePage() {
 
       <LateNightMoments />
 
-      {/* ═══ ARTISTS & VENUES — brown background, carousel, locations ═══ */}
+      {/* ═══ ACTS ARTISTS & VENUES — brown background, carousel, locations PRIVATE CLIENTS ═══ */}
       <section id="artists" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
+        {/* Dark leather background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#7a5c3a] via-[#5c4328] to-[#4a3520]" />
+        <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E")', backgroundSize: '256px 256px' }} />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#b89a6e]/40 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(200,170,130,0.25)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Title */}
           <h2 className="text-[clamp(32px,4.5vw,64px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20 reveal-fade">
@@ -399,6 +405,12 @@ export default async function HomePage() {
           </p>
 
           {/* Locations text */}
+        </div>
+      </section>
+
+      {/* ═══ WORLDWIDE PERFORMANCES ═══ */}
+      <section id="venues" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
+        <div className="relative z-10 max-w-[1400px] mx-auto">
           <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 rounded-xl overflow-hidden">
             {/* Background image */}
             <div className="absolute inset-0 z-0">
