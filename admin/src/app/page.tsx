@@ -151,7 +151,7 @@ export default async function HomePage() {
         const c = typeof radioSection.content === 'string' ? JSON.parse(radioSection.content) : radioSection.content;
         if (c.headline) radioHeadline = c.headline;
         if (c.description) radioDescription = c.description;
-        if (c.image) radioImage = c.image;
+        // if (c.image) radioImage = c.image;  // OVERRIDE: use new jacket photo
         if (c.label) radioLabel = c.label;
         if (c.spotifyUrl) spotifyUrl = c.spotifyUrl;
         if (c.appleMusicUrl) appleMusicUrl = c.appleMusicUrl;
