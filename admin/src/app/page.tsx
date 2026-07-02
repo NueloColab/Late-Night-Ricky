@@ -114,7 +114,7 @@ export default async function HomePage() {
   let aboutBio2 = 'As a producer, Ricky cites his key influences as Michael Jackson, Dr. Dre, Quincy Jones, and Timbaland, merging soulful R&B, House and cinematic grooves. Having earned Grammy recognition for his work with Chris Brown on the 11:11 album, plus previous cuts with Kendrick Lamar and NAV, Ricky has now stepped into a creative chapter with a new wave of releases scheduled for release.';
   let aboutBio3 = 'Ricky has embraced his British and South Asian Roots working with some legendary South Asian talent such as DIVINE and rising British R&B star H33RA as well as showcasing Punjabi artists such as Diljit Dosanjh, Karan Aujla and Sidhu Moosewala to mainstream audiences.';
   let aboutBio4 = 'With many unreleased tracks in the works, plans to further expand his brand and collaborations with other artists, there is a lot more to come this year.';
-  let aboutImage = '/assets/ricky-about-new.jpg?v=3';
+  let aboutImage = '/assets/ricky-about-blend.jpg?v=1';
 
   const productionCredits = [
     'Chris Brown', 'Kendrick Lamar', 'NAV', 'Divine',
@@ -263,27 +263,29 @@ export default async function HomePage() {
       </section>
       */}
 
-      {/* ═══ ABOUT RICKY — warm golden hour with sunlight glass texture ═══ */}
+      {/* ═══ ABOUT RICKY — dark leather texture, image blends into page ═══ */}
       <section id="about" className="relative min-h-[100dvh] py-20 px-6 md:px-14 overflow-hidden">
-        {/* Base warm golden background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#c9a882] via-[#b8986e] to-[#a88b5e]" />
-        {/* Warm light beam from top-left — sunlight through glass */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#f5e6d0]/50 via-[#e8d4b8]/20 to-transparent" />
-        {/* Diagonal warm light streaks */}
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,transparent_40%,rgba(245,230,208,0.25)_50%,transparent_60%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_30%,rgba(255,240,220,0.2)_45%,transparent_55%)]" />
-        {/* Subtle warm glow from top-right */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,240,220,0.35)_0%,transparent_60%)]" />
-        {/* Soft bottom shadow for depth */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(90,70,40,0.15)_0%,transparent_70%)]" />
+        {/* Dark leather base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#7a5c3a] via-[#5c4328] to-[#4a3520]" />
+        {/* Leather grain noise texture */}
+        <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E")', backgroundSize: '256px 256px' }} />
+        {/* Warm amber light beam from top-left */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#b89a6e]/40 via-transparent to-transparent" />
+        {/* Diagonal light streaks */}
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,transparent_40%,rgba(184,154,110,0.15)_50%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_30%,rgba(200,170,130,0.12)_45%,transparent_55%)]" />
+        {/* Warm glow from top-right */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(200,170,130,0.25)_0%,transparent_60%)]" />
+        {/* Soft bottom vignette for depth */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Ronaldo Quote */}
           <div className="mb-12 md:mb-16 reveal-left">
-            <p className="font-['Playfair_Display',serif] text-[clamp(28px,4vw,52px)] italic text-[#5a3a1a] leading-[1.3] max-w-[900px] drop-shadow-[0_1px_2px_rgba(255,255,255,0.3)]">
+            <p className="font-['Playfair_Display',serif] text-[clamp(28px,4vw,52px)] italic text-[#d4c4a8] leading-[1.3] max-w-[900px] drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)]">
               &ldquo;The best DJ I&apos;ve heard.&rdquo;
             </p>
-            <p className="mt-4 text-[13px] md:text-[15px] font-semibold tracking-[0.25em] uppercase text-[#5a3a1a]/70">
+            <p className="mt-4 text-[13px] md:text-[15px] font-semibold tracking-[0.25em] uppercase text-[#c4b498]/80">
               — Cristiano Ronaldo
             </p>
           </div>
@@ -292,38 +294,35 @@ export default async function HomePage() {
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-stretch">
             {/* Left — Text */}
             <div className="reveal-left" data-delay="100">
-              <h2 className="text-[clamp(36px,5vw,72px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#2a1a0a] mb-8">
+              <h2 className="text-[clamp(36px,5vw,72px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-8">
                 About Ricky
               </h2>
-              <h3 className="text-[clamp(18px,2vw,28px)] font-bold uppercase tracking-[0.02em] text-[#5a3a1a] mb-8 leading-[1.2]">
-                {aboutHeadline}
-              </h3>
               <div className="space-y-5">
-                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#3a2515]/85">
+                <p className="text-[13px] md:text-[14px] leading-[1.7] tracking-[0.02em] text-[#d4c4a8]/95">
                   {aboutBio1}
                 </p>
-                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#3a2515]/85">
+                <p className="text-[13px] md:text-[14px] leading-[1.7] tracking-[0.02em] text-[#d4c4a8]/95">
                   {aboutBio2}
                 </p>
-                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#3a2515]/85">
+                <p className="text-[13px] md:text-[14px] leading-[1.7] tracking-[0.02em] text-[#d4c4a8]/95">
                   {aboutBio3}
                 </p>
-                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#3a2515]/85">
+                <p className="text-[13px] md:text-[14px] leading-[1.7] tracking-[0.02em] text-[#d4c4a8]/95">
                   {aboutBio4}
                 </p>
               </div>
             </div>
 
             {/* Right — Photo */}
+            {/* Right — Photo blends into page */}
             <div className="reveal-right h-full" data-delay="200">
-              <div className="relative overflow-hidden rounded-sm shadow-2xl h-full">
+              <div className="relative h-full">
                 <img
                   src={aboutImage}
                   alt="Late Night Ricky"
                   className="w-full h-full object-cover"
-                  style={{ filter: 'sepia(25%) saturate(1.15) brightness(1.05) contrast(1.02)' }}
+                  style={{ mixBlendMode: 'multiply', filter: 'sepia(10%) saturate(1.1) brightness(1.05)' }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#c9a882]/30 to-transparent mix-blend-multiply" />
               </div>
             </div>
           </div>
