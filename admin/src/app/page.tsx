@@ -553,6 +553,8 @@ export default async function HomePage() {
         clients={clients}
         revealClass=""
       />
+      {/* ═══ SHARE YOUR MUSIC — cream/warm brown palette ═══ */}
+      <ShareMusicCTA />
 
 
       {/* ═══ VENUES — scrolling marquee ═══ */}
@@ -703,10 +705,6 @@ export default async function HomePage() {
         <p className="garrix-life-attribution">&mdash; {partnersAttribution}</p>
         <h2>LATE NIGHT RICKY</h2>
       </div>
-
-
-      {/* ═══ SHARE MUSIC CTA ═══ */}
-      <ShareMusicCTA />
 
       {/* ═══ CONTACT ═══ */}
       <HomeContactSection />

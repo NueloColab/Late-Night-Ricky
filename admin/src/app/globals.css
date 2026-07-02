@@ -1509,9 +1509,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .garrix-cta-input {
   width: 100%;
   padding: 14px 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: rgba(90, 58, 26, 0.05);
+  border: 1px solid rgba(90, 58, 26, 0.15);
+  color: #2a1a0a;
   font-family: 'Oswald', var(--font-montserrat), 'Montserrat', sans-serif;
   font-size: 13px;
   font-weight: 500;
@@ -1522,13 +1522,13 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 .garrix-cta-input::placeholder {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(90, 58, 26, 0.4);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
 .garrix-cta-input:focus {
-  border-color: rgba(42, 196, 182, 0.5);
+  border-color: rgba(90, 58, 26, 0.4);
 }
 
 .garrix-cta-submit {
