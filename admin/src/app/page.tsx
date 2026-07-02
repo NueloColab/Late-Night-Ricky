@@ -286,7 +286,7 @@ export default async function HomePage() {
               &ldquo;The best DJ I&apos;ve heard.&rdquo;
             </p>
             <p className="mt-4 text-[13px] md:text-[15px] font-semibold tracking-[0.25em] uppercase text-[#c4b498]/80">
-              — Cristiano Ronaldo
+              — Ronaldo
             </p>
           </div>
 
