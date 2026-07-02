@@ -263,11 +263,19 @@ export default async function HomePage() {
       </section>
       */}
 
-      {/* ═══ ABOUT RICKY — warm golden hour tones, matching hero ═══ */}
+      {/* ═══ ABOUT RICKY — warm golden hour with sunlight glass texture ═══ */}
       <section id="about" className="relative min-h-[100dvh] py-20 px-6 md:px-14 overflow-hidden">
-        {/* Warm golden hour background — matches hero tones */}
+        {/* Base warm golden background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#c9a882] via-[#b8986e] to-[#a88b5e]" />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#e8d4b8]/30 via-transparent to-[#8a7355]/20" />
+        {/* Warm light beam from top-left — sunlight through glass */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#f5e6d0]/50 via-[#e8d4b8]/20 to-transparent" />
+        {/* Diagonal warm light streaks */}
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,transparent_40%,rgba(245,230,208,0.25)_50%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_30%,rgba(255,240,220,0.2)_45%,transparent_55%)]" />
+        {/* Subtle warm glow from top-right */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,240,220,0.35)_0%,transparent_60%)]" />
+        {/* Soft bottom shadow for depth */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(90,70,40,0.15)_0%,transparent_70%)]" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Ronaldo Quote */}
@@ -304,10 +312,6 @@ export default async function HomePage() {
                   {aboutBio4}
                 </p>
               </div>
-              {/* Small signature at bottom */}
-              <p className="mt-10 font-['Rockybilly',cursive] text-[14px] text-[#5a3a1a]/60 tracking-[0.02em]">
-                — Late Night Ricky
-              </p>
             </div>
 
             {/* Right — Photo */}
@@ -324,19 +328,6 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* Production Credits */}
-          <div className="mt-20 md:mt-28 reveal-fade">
-            <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#5a3a1a]/60 mb-10 text-center">
-              Production Credits
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
-              {productionCredits.map((name) => (
-                <div key={name} className="text-[clamp(12px,1.5vw,18px)] font-bold uppercase tracking-[-0.3px] text-[#2a1a0a]/70 text-center py-3 px-2 hover:text-[#5a3a1a] transition-colors duration-300 cursor-default">
-                  {name}
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
