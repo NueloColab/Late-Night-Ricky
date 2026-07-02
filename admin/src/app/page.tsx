@@ -341,13 +341,6 @@ export default async function HomePage() {
 
       {/* ═══ ARTISTS & VENUES — brown background, carousel, locations ═══ */}
       <section id="artists" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
-        {/* Background image */}
-        <div className="absolute inset-0 z-0">
-          <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-[#2a1a0a]/75" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/60 via-transparent to-[#2a1a0a]/80" />
-        </div>
-
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Title */}
           <h2 className="text-[clamp(32px,4.5vw,64px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20 reveal-fade">
@@ -401,16 +394,22 @@ export default async function HomePage() {
             ))}
           </div>
 
-          <p className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#c4b498]/50 font-medium text-center mb-16">
+          <p className="relative z-10 text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#c4b498]/50 font-medium text-center mb-16">
             And many more...
           </p>
 
           {/* Locations text */}
-          <div className="text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10">
-            <h2 className="text-[clamp(28px,3.5vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-12">
+          <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 rounded-xl overflow-hidden">
+            {/* Background image */}
+            <div className="absolute inset-0 z-0">
+              <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-[#2a1a0a]/70" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/40 via-transparent to-[#2a1a0a]/70" />
+            </div>
+            <h2 className="relative z-10 text-[clamp(28px,3.5vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-12">
               Worldwide Performances
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 md:gap-x-6 gap-y-1 max-w-[800px] mx-auto pl-4 md:pl-12 justify-items-start">
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-x-4 md:gap-x-6 gap-y-1 max-w-[800px] mx-auto pl-4 md:pl-12 justify-items-start">
               <div className="space-y-1">
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">LIV (Miami)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">WALL (Miami)</p>
