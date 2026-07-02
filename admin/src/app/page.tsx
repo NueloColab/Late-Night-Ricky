@@ -497,15 +497,11 @@ export default async function HomePage() {
                 <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">Apple</a>
                 <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">YouTube</a>
               </div>
-              {/* New Music label + tracks inside left column */}
               <div className="mt-6 border-t border-[#5a3a1a]/20 pt-4">
-                <p className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#5a3a1a]/50 font-medium mb-4">
-                  New Music
-                </p>
                 <AudioTrackList tracks={tracks} />
               </div>
             </div>
-            <div className="garrix-radio-image" style={{ aspectRatio: '1/1', maxHeight: '360px', overflow: 'hidden' }}>
+            <div className="garrix-radio-image" style={{ maxHeight: '520px', overflow: 'hidden' }}>
               <img src={radioImage} alt="Late Night Ricky" className="w-full h-full object-cover" style={{ objectPosition: 'top center' }} />
               <div className="garrix-eq-bars">
                 {[12, 20, 16, 24, 14].map((h, i) => (
