@@ -344,7 +344,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/30 via-transparent to-[#d4c4a8]/20" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          <h2 className="text-[clamp(36px,5vw,72px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#2a1a0a] text-center mb-16 md:mb-24">
+          <h2 className="text-[clamp(36px,5vw,72px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#5a3a1a] text-center mb-16 md:mb-24">
             Late Night Moments
           </h2>
 
