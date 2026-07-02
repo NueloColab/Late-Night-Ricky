@@ -114,7 +114,7 @@ export default async function HomePage() {
   let aboutBio2 = 'As a producer, Ricky cites his key influences as Michael Jackson, Dr. Dre, Quincy Jones, and Timbaland, merging soulful R&B, House and cinematic grooves. Having earned Grammy recognition for his work with Chris Brown on the 11:11 album, plus previous cuts with Kendrick Lamar and NAV, Ricky has now stepped into a creative chapter with a new wave of releases scheduled for release.';
   let aboutBio3 = 'Ricky has embraced his British and South Asian Roots working with some legendary South Asian talent such as DIVINE and rising British R&B star H33RA as well as showcasing Punjabi artists such as Diljit Dosanjh, Karan Aujla and Sidhu Moosewala to mainstream audiences.';
   let aboutBio4 = 'With many unreleased tracks in the works, plans to further expand his brand and collaborations with other artists, there is a lot more to come this year.';
-  let aboutImage = '/assets/ricky-about-blend.jpg?v=1';
+  let aboutImage = '/assets/about-ricky-jacket.jpg';
 
   const productionCredits = [
     'Chris Brown', 'Kendrick Lamar', 'NAV', 'Divine',
@@ -313,15 +313,22 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Right — Photo */}
             {/* Right — Photo blends into page */}
             <div className="reveal-right h-full" data-delay="200">
-              <div className="relative h-full">
+              <div
+                className="h-full w-full"
+                style={{
+                  background: 'linear-gradient(to bottom, #7a5c3a, #4a3520)',
+                }}
+              >
                 <img
                   src={aboutImage}
                   alt="Late Night Ricky"
-                  className="w-full h-full object-cover"
-                  style={{ mixBlendMode: 'multiply', filter: 'sepia(10%) saturate(1.1) brightness(1.05)' }}
+                  className="w-full h-full object-cover object-top"
+                  style={{
+                    mixBlendMode: 'multiply',
+                    filter: 'contrast(1.1) brightness(1.05)',
+                  }}
                 />
               </div>
             </div>
