@@ -103,11 +103,11 @@ export default function LateNightMoments() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/20 via-transparent to-[#d4c4a8]/15" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          <h2 className="text-[clamp(32px,4.5vw,64px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#5a3a1a] text-center mb-14 md:mb-20 reveal-fade">
+          <h2 className="text-[clamp(40px,7vw,96px)] font-black uppercase tracking-[0.05em] leading-[0.95] text-[#5a3a1a] text-center mb-14 md:mb-20 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
             Late Night Moments
           </h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 reveal-stagger">
+          <div className="grid grid-cols-3 gap-4 md:gap-6 reveal-stagger">
             {momentsData.map((moment) => (
               <button
                 key={moment.id}
