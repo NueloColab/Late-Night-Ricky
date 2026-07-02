@@ -149,8 +149,9 @@ export default function LateNightMoments() {
 
           {/* Modal box */}
           <div
-            className={`relative z-10 w-full max-w-[1000px] max-h-[90vh] overflow-y-auto bg-[#f8f1e8] rounded-sm shadow-[0_25px_80px_-20px_rgba(42,26,10,0.4)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.92] translate-y-8'}`}
+            className={`modal-scroll-hide relative z-10 w-full max-w-[1000px] max-h-[90vh] overflow-y-auto bg-[#f8f1e8] rounded-xl border border-[#2a1a0a]/8 shadow-[0_20px_60px_-15px_rgba(42,26,10,0.35),0_0_0_1px_rgba(42,26,10,0.05)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.92] translate-y-8'}`}
             onClick={(e) => e.stopPropagation()}
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {/* Close button */}
             <button
@@ -240,6 +241,11 @@ export default function LateNightMoments() {
           </div>
         </div>
       )}
+      <style jsx>{`
+        .modal-scroll-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </>
   );
 }
