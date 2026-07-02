@@ -271,10 +271,10 @@ export default async function HomePage() {
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Ronaldo Quote */}
           <div className="mb-12 md:mb-16 reveal-left">
-            <p className="font-['Playfair_Display',serif] text-[clamp(22px,3vw,36px)] italic text-[#5a3a1a] leading-[1.3] max-w-[800px] drop-shadow-[0_1px_2px_rgba(255,255,255,0.3)]">
+            <p className="font-['Playfair_Display',serif] text-[clamp(28px,4vw,52px)] italic text-[#5a3a1a] leading-[1.3] max-w-[900px] drop-shadow-[0_1px_2px_rgba(255,255,255,0.3)]">
               &ldquo;The best DJ I&apos;ve heard.&rdquo;
             </p>
-            <p className="mt-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-[#5a3a1a]/70">
+            <p className="mt-4 text-[13px] md:text-[15px] font-semibold tracking-[0.25em] uppercase text-[#5a3a1a]/70">
               — Cristiano Ronaldo
             </p>
           </div>
