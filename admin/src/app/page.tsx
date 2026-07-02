@@ -357,14 +357,9 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          {/* Subtitle */}
-          <p className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#c4b498]/70 font-medium text-center mb-6">
-            Acts & Private Clients
-          </p>
-
           {/* Title */}
           <h2 className="text-[clamp(32px,4.5vw,64px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20 reveal-fade">
-            Artists He&apos;s Worked With
+            Acts & Private Clients
           </h2>
 
           {/* Names grid */}
@@ -389,9 +384,9 @@ export default async function HomePage() {
 
           {/* Locations text */}
           <div className="text-center reveal-fade border-t border-[#c4b498]/20 pt-12">
-            <p className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#c4b498]/70 font-medium mb-4">
+            <h2 className="text-[clamp(28px,3.5vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-6">
               Worldwide Performances
-            </p>
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1 max-w-[900px] mx-auto text-left">
               <div className="space-y-1">
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">LIV (Miami)</p>
