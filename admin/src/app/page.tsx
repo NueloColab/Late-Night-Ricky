@@ -484,11 +484,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ RADIO ═══ */}
+      {/* ═══ MUSIC & MIXES ═══ */}
       <section id="radio" className="garrix-section garrix-radio-section">
         <div className="garrix-section-label">MUSIC<span className="garrix-section-line" /></div>
         <div className="garrix-section-inner">
-          <div className="garrix-radio-grid">
+          <div className="garrix-radio-grid" style={{ alignItems: 'stretch' }}>
             <div className="garrix-radio-text">
               <span className="garrix-label-tag">Listen & Download</span>
               <h2 className="garrix-heading">Music & Mixes</h2>
@@ -498,18 +498,23 @@ export default async function HomePage() {
                 <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">Apple</a>
                 <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">YouTube</a>
               </div>
-              <div className="garrix-audio-divider">
-                <AudioTrackList tracks={tracks} />
-              </div>
             </div>
-            <div className="garrix-radio-image">
-              <img src={radioImage} alt="Late Night Ricky" />
+            <div className="garrix-radio-image" style={{ minHeight: '420px' }}>
+              <img src={radioImage} alt="Late Night Ricky" className="w-full h-full object-cover" />
               <div className="garrix-eq-bars">
                 {[12, 20, 16, 24, 14].map((h, i) => (
                   <span key={i} className="eq-bar" style={{ height: `${h}px`, animationDelay: `${[0, 0.2, 0.4, 0.1, 0.3][i]}s` }} />
                 ))}
               </div>
             </div>
+          </div>
+
+          {/* Divider + New Music Label + Tracks */}
+          <div className="mt-10 md:mt-12 border-t border-[#5a3a1a]/20 pt-6">
+            <p className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#5a3a1a]/50 font-medium mb-4">
+              New Music
+            </p>
+            <AudioTrackList tracks={tracks} />
           </div>
         </div>
       </section>

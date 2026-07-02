@@ -132,7 +132,7 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
   };
 
   return (
-    <div className="border-t border-[#5a3a1a]/20 pt-6">
+    <div className="pt-2">
       {tracks.map((track, i) => {
         const waveformBars = generateWaveformBars(i + 1);
         const isPlaying = playingId === i;
