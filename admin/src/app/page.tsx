@@ -416,8 +416,9 @@ export default async function HomePage() {
           <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 rounded-xl overflow-hidden">
             {/* Background image */}
             <div className="absolute inset-0 z-0">
-              <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover opacity-[0.12]" />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/85 via-[#5c4328]/75 to-[#4a3520]/85" />
+              <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-[#2a1a0a]/75" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/60 via-transparent to-[#2a1a0a]/80" />
             </div>
             <h2 className="relative z-10 text-[clamp(28px,3.5vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-12">
               Worldwide Performances
