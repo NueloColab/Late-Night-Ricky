@@ -280,12 +280,12 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          {/* Ronaldo Quote */}
-          <div className="mb-12 md:mb-16 reveal-left">
-            <p className="font-['Playfair_Display',serif] text-[clamp(28px,4vw,52px)] italic text-[#d4c4a8] leading-[1.3] max-w-[900px] drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)]">
+          {/* Ronaldo Quote — centered, bold statement style */}
+          <div className="mb-12 md:mb-16 reveal-left text-center">
+            <p className="text-[clamp(32px,5vw,56px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#e8d4b8] max-w-[1000px] mx-auto" style={{ fontFamily: "'Oswald', sans-serif" }}>
               &ldquo;The best DJ I&apos;ve heard.&rdquo;
             </p>
-            <p className="mt-4 text-[13px] md:text-[15px] font-semibold tracking-[0.25em] uppercase text-[#c4b498]/80">
+            <p className="mt-4 text-[12px] md:text-[14px] font-semibold tracking-[0.3em] uppercase text-[#c4b498]/80">
               — Ronaldo
             </p>
           </div>
