@@ -1351,8 +1351,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* ── RADIO section ────────────────────────────────────────────── */
 .garrix-radio-section {
   padding: 100px 0;
-  background: var(--black);
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  background: #f8f1e8;
+  border-top: 1px solid rgba(90, 58, 26, 0.08);
 }
 
 .garrix-radio-grid {
@@ -1372,17 +1372,17 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .garrix-radio-image {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #111;
+  border: 1px solid rgba(90, 58, 26, 0.12);
+  background: #ede4d8;
 }
 
 .garrix-radio-image img {
-  filter: brightness(0.6) contrast(1.1);
+  filter: brightness(0.95) contrast(1.05);
   transition: filter 0.3s ease;
 }
 
 .garrix-radio-image:hover img {
-  filter: brightness(0.75) contrast(1.1);
+  filter: brightness(1) contrast(1.05);
 }
 
 .garrix-eq-bars {
@@ -1394,7 +1394,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   gap: 3px;
   z-index: 10;
   padding: 12px;
-  background: rgba(21, 42, 71, 0.7);
+  background: rgba(90, 58, 26, 0.7);
   backdrop-filter: blur(8px);
   border-radius: 8px;
 }
@@ -1407,8 +1407,28 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 .garrix-audio-divider {
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(90, 58, 26, 0.2);
   padding-top: 24px;
+}
+
+/* Radio section — warm palette overrides */
+.garrix-radio-section .garrix-label-tag {
+  color: #8a6a4a;
+}
+.garrix-radio-section .garrix-heading {
+  color: #2a1a0a;
+}
+.garrix-radio-section .garrix-body-text {
+  color: #5a3a1a;
+}
+.garrix-radio-section .garrix-btn-outline {
+  color: #2a1a0a;
+  border-color: rgba(90, 58, 26, 0.3);
+}
+.garrix-radio-section .garrix-btn-outline:hover {
+  background: #2a1a0a;
+  color: #f8f1e8;
+  border-color: #2a1a0a;
 }
 
 /* ── SHARE MUSIC CTA — faded background ──────────────────────── */

@@ -95,8 +95,8 @@ export default async function HomePage() {
   let videoPoster = '/assets/video-poster-desktop.jpg';
   let videoSrc = '/assets/video-desktop.mp4';
   let radioImage = '/assets/ricky-radio-new.jpg';
-  let radioHeadline = 'As Heard On';
-  let radioLabel = 'Music & Radio';
+  let radioHeadline = 'Music & Mixes';
+  let radioLabel = 'Listen & Download';
   let radioDescription = 'Preview snippets of the latest releases. Click play to hear 30-second previews, then stream or download the full tracks on Spotify, Apple Music and YouTube.';
   let spotifyUrl = 'https://open.spotify.com/artist/3lOtUgicoyDn2qKe5zc3dl?si=M3MjTUy7TOmOhc676Dsgvw';
   let appleMusicUrl = 'https://music.apple.com/gb/artist/late-night-ricky/1759491226';
