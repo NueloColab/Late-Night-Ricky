@@ -511,10 +511,28 @@ export default async function HomePage() {
               <span className="garrix-label-tag">Listen & Download</span>
               <h2 className="garrix-heading">Music & Mixes</h2>
               <p className="garrix-body-text">{radioDescription}</p>
-              <div className="garrix-stream-links">
-                <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">Spotify</a>
-                <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">Apple</a>
-                <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">YouTube</a>
+              <div className="garrix-stream-links mt-8">
+                <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline flex items-center gap-2.5 px-5 py-2.5" aria-label="Spotify">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+                    <circle cx="12" cy="12" r="12" fill="#1DB954"/>
+                    <path d="M17.9 10.9C14.7 8 9.35 8.06 6.3 10.7c-.5.45-.13 1.24.55 1.05 3.45-1.05 7.3-.6 10.25 1.35.5.35 1.15-.15.8-.75v-.45zm-.9 2.5c-2.65-1.6-6.35-2.1-9.3-1.15-.45.15-.7-.45-.35-.75 3.35-1.95 7.85-1.5 10.75.35.35.25.15.75-.35.75-.25.05-.45 0-.75-.2zm-1 2.6c-2.1-1.25-5.25-1.6-7.75-.9-.3.1-.55-.3-.25-.5 2.8-1.65 6.55-1.25 8.8.25.25.15.1.55-.2.55-.25.05-.45 0-.6-.4z" fill="white"/>
+                  </svg>
+                  <span className="text-sm font-medium">Spotify</span>
+                </a>
+                <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline flex items-center gap-2.5 px-5 py-2.5" aria-label="Apple Music">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+                    <circle cx="12" cy="12" r="12" fill="#000"/>
+                    <path d="M17.5 9.5c-.2-.65-.7-1.2-1.3-1.5-.7-.3-1.5-.2-2.1.2-.3.2-.5.5-.7.8-.2-.3-.4-.6-.7-.8-.6-.4-1.4-.5-2.1-.2-.6.3-1.1.8-1.3 1.5-.2.7-.1 1.5.3 2.1.2.3.5.6.8.8-.5.3-1 .7-1.3 1.2-.5.7-.7 1.5-.5 2.3.1.5.4 1 .8 1.3.5.4 1.1.5 1.7.5.6 0 1.2-.2 1.7-.5l.3-.2c.2-.1.4-.1.6 0l.3.2c.5.3 1.1.5 1.7.5.6 0 1.2-.2 1.7-.5.4-.3.7-.8.8-1.3.2-.8 0-1.6-.5-2.3-.3-.5-.8-.9-1.3-1.2.3-.2.6-.5.8-.8.4-.6.5-1.4.3-2.1z" fill="#FA243C"/>
+                  </svg>
+                  <span className="text-sm font-medium">Apple Music</span>
+                </a>
+                <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline flex items-center gap-2.5 px-5 py-2.5" aria-label="YouTube">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+                    <path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 00.5 6.19 31.5 31.5 0 000 12a31.5 31.5 0 00.5 5.81 3.02 3.02 0 002.12 2.14c1.88.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 002.12-2.14A31.5 31.5 0 0024 12a31.5 31.5 0 00-.5-5.81z" fill="#FF0000"/>
+                    <path d="M9.55 15.5V8.5l6.27 3.5-6.27 3.5z" fill="white"/>
+                  </svg>
+                  <span className="text-sm font-medium">YouTube</span>
+                </a>
               </div>
               <div className="mt-6 border-t border-[#5a3a1a]/20 pt-4">
                 <AudioTrackList tracks={tracks} />
