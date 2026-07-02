@@ -272,7 +272,7 @@ export default async function HomePage() {
           {/* Ronaldo Quote */}
           <div className="mb-12 md:mb-16 reveal-left">
             <p className="font-['Playfair_Display',serif] text-[clamp(22px,3vw,36px)] italic text-[#5a3a1a] leading-[1.3] max-w-[800px] drop-shadow-[0_1px_2px_rgba(255,255,255,0.3)]">
-              "The best DJ I've heard."
+              &ldquo;The best DJ I&apos;ve heard.&rdquo;
             </p>
             <p className="mt-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-[#5a3a1a]/70">
               — Cristiano Ronaldo
