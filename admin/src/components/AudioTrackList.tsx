@@ -116,7 +116,7 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
               {/* Square artwork — bigger */}
               <div className="w-16 h-16 md:w-20 md:h-20 rounded bg-[#5a3a1a]/10 overflow-hidden flex-shrink-0">
                 <img
-                  src="/assets/ricky-music-jacket.jpg"
+                  src="/assets/ricky-music-jacket-sm.jpg"
                   alt="Track artwork"
                   className="w-full h-full object-cover"
                 />

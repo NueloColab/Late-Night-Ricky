@@ -93,7 +93,7 @@ export default async function HomePage() {
   let heroBackgroundPosition = '70% center';
   let videoPoster = '/assets/video-poster-desktop.jpg';
   let videoSrc = '/assets/video-desktop.mp4';
-  let radioImage = '/assets/ricky-music-jacket.jpg';
+  let radioImage = '/assets/ricky-music-jacket-sm.jpg';
   let radioHeadline = 'Music & Mixes';
   let radioLabel = 'Listen & Download';
   let radioDescription = 'Preview snippets of the latest releases. Click play to hear 30-second previews, then stream or download the full tracks on Spotify, Apple Music and YouTube.';
