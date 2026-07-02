@@ -140,15 +140,15 @@ export default function LateNightMoments() {
       {/* ═══ MODAL ═══ */}
       {activeMoment && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 transition-all duration-500 ${modalVisible ? 'opacity-100' : 'opacity-0'}`}
+          className={`fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100' : 'opacity-0'}`}
           onClick={close}
         >
           {/* Backdrop */}
-          <div className={`absolute inset-0 bg-[#2a1a0a]/80 backdrop-blur-sm transition-opacity duration-500 ${modalVisible ? 'opacity-100' : 'opacity-0'}`} />
+          <div className={`absolute inset-0 bg-[#2a1a0a]/85 backdrop-blur-[8px] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100' : 'opacity-0'}`} />
 
           {/* Modal box */}
           <div
-            className={`relative z-10 w-full max-w-[1000px] max-h-[90vh] overflow-y-auto bg-[#f8f1e8] rounded-sm shadow-2xl transition-all duration-500 ease-out ${modalVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'}`}
+            className={`relative z-10 w-full max-w-[1000px] max-h-[90vh] overflow-y-auto bg-[#f8f1e8] rounded-sm shadow-[0_25px_80px_-20px_rgba(42,26,10,0.4)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.92] translate-y-8'}`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
