@@ -337,67 +337,143 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ LATE NIGHT MOMENTS — editorial 2-column, large B&W squares ═══ */}
-      <section id="moments" className="relative py-24 md:py-32 px-6 md:px-14 overflow-hidden">
-        {/* Warm editorial cream background */}
-        <div className="absolute inset-0 bg-[#f5efe6]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/30 via-transparent to-[#d4c4a8]/20" />
+      {/* ═══ LATE NIGHT MOMENTS — 3x2 grid, title above image, square B&W ═══ */}
+      <section id="moments" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
+        {/* Slightly creamier warm background */}
+        <div className="absolute inset-0 bg-[#f8f1e8]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/20 via-transparent to-[#d4c4a8]/15" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          <h2 className="text-[clamp(36px,5vw,72px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#5a3a1a] text-center mb-16 md:mb-24">
+          <h2 className="text-[clamp(32px,4.5vw,64px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#5a3a1a] text-center mb-14 md:mb-20">
             Late Night Moments
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-            {/* Card 1 — Misfits Boxing */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {/* Row 1 — 3 cards */}
             <a href="/show-misfits-boxing" className="group block">
-              <div className="relative aspect-[4/5] overflow-hidden mb-5">
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-2">
+                Misfits Boxing
+              </h3>
+              <div className="relative aspect-square overflow-hidden">
                 <img
                   src="/assets/highlight-studio.jpg"
                   alt="Misfits Boxing"
                   className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
                 />
-                {/* Arrow button on image corner */}
-                <div className="absolute bottom-4 right-4 w-12 h-12 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
+                <div className="absolute bottom-3 right-3 w-9 h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
                 </div>
               </div>
-              <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#5a3a1a]/60 mb-2 font-medium">
-                Spring/Summer 2024
-              </p>
-              <h3 className="font-['Playfair_Display',serif] text-[clamp(24px,3vw,40px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.1]">
-                Misfits Boxing
-              </h3>
-              <p className="mt-1 text-[13px] text-[#5a3a1a]/50 font-medium">
+              <p className="mt-2 text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium">
                 Ministry of Sound, London
               </p>
             </a>
 
-            {/* Card 2 — O2 Arena */}
             <a href="/show-arena" className="group block">
-              <div className="relative aspect-[4/5] overflow-hidden mb-5">
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-2">
+                O2 Arena
+              </h3>
+              <div className="relative aspect-square overflow-hidden">
                 <img
                   src="/assets/highlight-arena.jpg"
                   alt="O2 Arena"
                   className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
                 />
-                {/* Arrow button on image corner */}
-                <div className="absolute bottom-4 right-4 w-12 h-12 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
+                <div className="absolute bottom-3 right-3 w-9 h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
                 </div>
               </div>
-              <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#5a3a1a]/60 mb-2 font-medium">
-                London, UK
-              </p>
-              <h3 className="font-['Playfair_Display',serif] text-[clamp(24px,3vw,40px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.1]">
-                O2 Arena
-              </h3>
-              <p className="mt-1 text-[13px] text-[#5a3a1a]/50 font-medium">
+              <p className="mt-2 text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium">
                 The O2, London
+              </p>
+            </a>
+
+            <a href="/show-ibiza-2024" className="group block">
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-2">
+                Ibiza Summer
+              </h3>
+              <div className="relative aspect-square overflow-hidden">
+                <img
+                  src="/assets/moment-ibiza.jpg"
+                  alt="Ibiza Summer"
+                  className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute bottom-3 right-3 w-9 h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+              <p className="mt-2 text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium">
+                Ushuaïa, Ibiza
+              </p>
+            </a>
+
+            {/* Row 2 — 3 cards */}
+            <a href="/show-private" className="group block">
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-2">
+                Private Events
+              </h3>
+              <div className="relative aspect-square overflow-hidden">
+                <img
+                  src="/assets/press-bg2.jpg"
+                  alt="Private Events"
+                  className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute bottom-3 right-3 w-9 h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+              <p className="mt-2 text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium">
+                Worldwide
+              </p>
+            </a>
+
+            <a href="/show-club" className="group block">
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-2">
+                Back to Back
+              </h3>
+              <div className="relative aspect-square overflow-hidden">
+                <img
+                  src="/assets/highlight-club.jpg"
+                  alt="Back to Back"
+                  className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute bottom-3 right-3 w-9 h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+              <p className="mt-2 text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium">
+                Private Events, London
+              </p>
+            </a>
+
+            <a href="/show-ibiza" className="group block">
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-2">
+                Ibiza Rocks
+              </h3>
+              <div className="relative aspect-square overflow-hidden">
+                <img
+                  src="/assets/highlight-misfits.jpg"
+                  alt="Ibiza Rocks"
+                  className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute bottom-3 right-3 w-9 h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+              <p className="mt-2 text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium">
+                Ibiza Rocks, Ibiza
               </p>
             </a>
           </div>
