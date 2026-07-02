@@ -357,44 +357,38 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
+          {/* Subtitle */}
+          <p className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#c4b498]/70 font-medium text-center mb-6">
+            Acts & Private Clients
+          </p>
+
           {/* Title */}
           <h2 className="text-[clamp(32px,4.5vw,64px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20 reveal-fade">
             Artists He&apos;s Worked With
           </h2>
 
-          {/* Carousel — square images moving slowly left */}
-          <div className="relative overflow-hidden mb-16">
-            <div className="flex gap-4 animate-marquee-left">
-              {[
-                '/assets/highlight-studio.jpg',
-                '/assets/highlight-arena.jpg',
-                '/assets/moment-ibiza.jpg',
-                '/assets/press-bg2.jpg',
-                '/assets/highlight-club.jpg',
-                '/assets/highlight-misfits.jpg',
-              ].map((img, i) => (
-                <div key={i} className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square overflow-hidden">
-                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover grayscale" />
-                </div>
-              ))}
-              {/* Duplicate for seamless loop */}
-              {[
-                '/assets/highlight-studio.jpg',
-                '/assets/highlight-arena.jpg',
-                '/assets/moment-ibiza.jpg',
-                '/assets/press-bg2.jpg',
-                '/assets/highlight-club.jpg',
-                '/assets/highlight-misfits.jpg',
-              ].map((img, i) => (
-                <div key={`dup-${i}`} className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square overflow-hidden">
-                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover grayscale" />
-                </div>
-              ))}
-            </div>
+          {/* Names grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-4 gap-y-8 md:gap-x-6 md:gap-y-10 mb-16 reveal-stagger">
+            {[
+              '50 Cent', 'Bruno Mars', 'Chris Brown', 'Dr. Dre & Jimmy Iovine', 'Drake',
+              'Future', 'Jason Momoa', 'Jason Statham', 'Justin Bieber', 'Kendrick Lamar',
+              'Leonardo DiCaprio', 'Lewis Hamilton', 'Mick Jagger', 'Neymar Jr', 'Paul McCartney',
+              'Rihanna', 'Ronaldo', 'Travis Scott', 'Usain Bolt', 'Vin Diesel',
+            ].map((name) => (
+              <div key={name} className="text-center">
+                <p className="text-[13px] md:text-[15px] font-bold uppercase tracking-[0.02em] text-[#e8d4b8] leading-[1.3]">
+                  {name}
+                </p>
+              </div>
+            ))}
           </div>
 
+          <p className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#c4b498]/50 font-medium text-center mb-16">
+            And many more...
+          </p>
+
           {/* Locations text */}
-          <div className="text-center reveal-fade">
+          <div className="text-center reveal-fade border-t border-[#c4b498]/20 pt-12">
             <p className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#c4b498]/70 font-medium mb-4">
               Locations
             </p>
