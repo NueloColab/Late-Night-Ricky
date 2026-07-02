@@ -498,6 +498,9 @@ export default async function HomePage() {
                 <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">Apple</a>
                 <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">YouTube</a>
               </div>
+              <div className="garrix-audio-divider">
+                <AudioTrackList tracks={tracks} />
+              </div>
             </div>
             <div className="garrix-radio-image">
               <img src={radioImage} alt="Late Night Ricky" />
@@ -507,10 +510,6 @@ export default async function HomePage() {
                 ))}
               </div>
             </div>
-          </div>
-          {/* Track cards grid */}
-          <div className="mt-10 md:mt-14">
-            <AudioTrackList tracks={tracks} />
           </div>
         </div>
       </section>
