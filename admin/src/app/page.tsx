@@ -197,7 +197,7 @@ export default async function HomePage() {
       }
     }
     if (dbTracks.length > 0) {
-      tracks = dbTracks.map((t: any) => ({ title: t.title, time: t.duration || '0:30', src: t.filePath }));
+      tracks = dbTracks.map((t: any) => ({ title: t.title, time: t.duration || '0:30', src: t.filePath })).slice(0, 4);
     }
     if (dbCards.length > 0) {
       shows = dbCards.map((c: any) => ({ href: c.href || '#', image: c.imagePath || '/assets/ricky-hero-new.jpg', venue: c.venue, location: c.location, season: c.season, title: c.title, description: c.description }));
@@ -505,8 +505,8 @@ export default async function HomePage() {
                 <AudioTrackList tracks={tracks} />
               </div>
             </div>
-            <div className="garrix-radio-image" style={{ aspectRatio: '1/1', maxHeight: '400px' }}>
-              <img src={radioImage} alt="Late Night Ricky" className="w-full h-full object-cover" />
+            <div className="garrix-radio-image" style={{ aspectRatio: '1/1', maxHeight: '360px', overflow: 'hidden' }}>
+              <img src={radioImage} alt="Late Night Ricky" className="w-full h-full object-cover" style={{ objectPosition: 'top center' }} />
               <div className="garrix-eq-bars">
                 {[12, 20, 16, 24, 14].map((h, i) => (
                   <span key={i} className="eq-bar" style={{ height: `${h}px`, animationDelay: `${[0, 0.2, 0.4, 0.1, 0.3][i]}s` }} />
