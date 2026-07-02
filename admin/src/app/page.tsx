@@ -72,7 +72,6 @@ const DEFAULT_TRACKS = [
   { title: 'Late Night Ricky — Vegas Lights', time: '0:30' },
   { title: 'Late Night Ricky — Ibiza Sunrise', time: '0:30' },
   { title: 'Late Night Ricky — South Side', time: '0:30' },
-  { title: 'Late Night Ricky — After Hours', time: '0:30' },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -488,7 +487,7 @@ export default async function HomePage() {
       <section id="radio" className="garrix-section garrix-radio-section">
         <div className="garrix-section-label">MUSIC<span className="garrix-section-line" /></div>
         <div className="garrix-section-inner">
-          <div className="garrix-radio-grid" style={{ alignItems: 'stretch' }}>
+          <div className="garrix-radio-grid" style={{ alignItems: 'start' }}>
             <div className="garrix-radio-text">
               <span className="garrix-label-tag">Listen & Download</span>
               <h2 className="garrix-heading">Music & Mixes</h2>
@@ -506,7 +505,7 @@ export default async function HomePage() {
                 <AudioTrackList tracks={tracks} />
               </div>
             </div>
-            <div className="garrix-radio-image" style={{ minHeight: '420px' }}>
+            <div className="garrix-radio-image" style={{ aspectRatio: '1/1', maxHeight: '400px' }}>
               <img src={radioImage} alt="Late Night Ricky" className="w-full h-full object-cover" />
               <div className="garrix-eq-bars">
                 {[12, 20, 16, 24, 14].map((h, i) => (
