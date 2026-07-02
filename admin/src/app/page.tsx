@@ -418,7 +418,7 @@ export default async function HomePage() {
             <h2 className="text-[clamp(28px,3.5vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-12">
               Worldwide Performances
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 md:gap-x-6 gap-y-1 max-w-[800px] mx-auto justify-items-start">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 md:gap-x-6 gap-y-1 max-w-[800px] mx-auto pl-4 md:pl-12 justify-items-start">
               <div className="space-y-1">
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">LIV (Miami)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">WALL (Miami)</p>
