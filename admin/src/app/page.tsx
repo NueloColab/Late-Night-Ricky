@@ -484,6 +484,36 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ═══ RADIO ═══ */}
+      <section id="radio" className="garrix-section garrix-radio-section">
+        <div className="garrix-section-label">MUSIC<span className="garrix-section-line" /></div>
+        <div className="garrix-section-inner">
+          <div className="garrix-radio-grid">
+            <div className="garrix-radio-image">
+              <img src={radioImage} alt="Late Night Ricky" />
+              <div className="garrix-eq-bars">
+                {[12, 20, 16, 24, 14].map((h, i) => (
+                  <span key={i} className="eq-bar" style={{ height: `${h}px`, animationDelay: `${[0, 0.2, 0.4, 0.1, 0.3][i]}s` }} />
+                ))}
+              </div>
+            </div>
+            <div className="garrix-radio-text">
+              <span className="garrix-label-tag">{radioLabel}</span>
+              <h2 className="garrix-heading">{radioHeadline}</h2>
+              <p className="garrix-body-text">{radioDescription}</p>
+              <div className="garrix-stream-links">
+                <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">Spotify</a>
+                <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">Apple</a>
+                <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">YouTube</a>
+              </div>
+              <div className="garrix-audio-divider">
+                <AudioTrackList tracks={tracks} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ TRUSTED BY THE BEST — interactive names with background ═══ */}
       <TrustedBySection
         quote={partnersQuote}
@@ -643,35 +673,6 @@ export default async function HomePage() {
         <h2>LATE NIGHT RICKY</h2>
       </div>
 
-      {/* ═══ RADIO ═══ */}
-      <section id="radio" className="garrix-section garrix-radio-section">
-        <div className="garrix-section-label">MUSIC<span className="garrix-section-line" /></div>
-        <div className="garrix-section-inner">
-          <div className="garrix-radio-grid">
-            <div className="garrix-radio-image">
-              <img src={radioImage} alt="Late Night Ricky" />
-              <div className="garrix-eq-bars">
-                {[12, 20, 16, 24, 14].map((h, i) => (
-                  <span key={i} className="eq-bar" style={{ height: `${h}px`, animationDelay: `${[0, 0.2, 0.4, 0.1, 0.3][i]}s` }} />
-                ))}
-              </div>
-            </div>
-            <div className="garrix-radio-text">
-              <span className="garrix-label-tag">{radioLabel}</span>
-              <h2 className="garrix-heading">{radioHeadline}</h2>
-              <p className="garrix-body-text">{radioDescription}</p>
-              <div className="garrix-stream-links">
-                <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">Spotify</a>
-                <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">Apple</a>
-                <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline">YouTube</a>
-              </div>
-              <div className="garrix-audio-divider">
-                <AudioTrackList tracks={tracks} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ═══ SHARE MUSIC CTA ═══ */}
       <ShareMusicCTA />
