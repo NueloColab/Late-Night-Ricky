@@ -149,7 +149,7 @@ export default function LateNightMoments() {
 
           {/* Modal box */}
           <div
-            className={`modal-scroll-hide relative z-10 w-full max-w-[1000px] max-h-[90vh] overflow-y-auto bg-[#f8f1e8] rounded-xl border border-[#2a1a0a]/8 shadow-[0_20px_60px_-15px_rgba(42,26,10,0.35),0_0_0_1px_rgba(42,26,10,0.05)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.92] translate-y-8'}`}
+            className={`modal-scroll-hide relative z-10 w-full max-w-[1100px] max-h-[75vh] overflow-y-auto bg-[#f8f1e8] rounded-xl border border-[#2a1a0a]/8 shadow-[0_20px_60px_-15px_rgba(42,26,10,0.35),0_0_0_1px_rgba(42,26,10,0.05)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.92] translate-y-8'}`}
             onClick={(e) => e.stopPropagation()}
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
@@ -163,22 +163,22 @@ export default function LateNightMoments() {
               </svg>
             </button>
 
-            <div className="p-6 md:p-10">
+            <div className="p-5 md:p-8">
               {/* Title */}
               <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase tracking-[-1px] leading-[1] text-[#5a3a1a] mb-2 pr-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
                 {activeMoment.title}
               </h2>
-              <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#5a3a1a]/60 font-medium mb-6">
+              <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#5a3a1a]/60 font-medium mb-4">
                 {activeMoment.subtitle}
               </p>
 
               {/* Description */}
-              <p className="text-[13px] md:text-[14px] leading-[1.7] text-[#3a2515]/80 mb-8">
+              <p className="text-[13px] md:text-[14px] leading-[1.7] text-[#3a2515]/80 mb-5">
                 {activeMoment.description}
               </p>
 
               {/* Gallery */}
-              <div className="mb-8">
+              <div className="mb-5">
                 <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#5a3a1a]/50 font-medium mb-3">
                   Gallery
                 </p>
@@ -222,7 +222,7 @@ export default function LateNightMoments() {
                 <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#5a3a1a]/50 font-medium mb-3">
                   Video
                 </p>
-                <div className="aspect-video overflow-hidden bg-[#2a1a0a]/5 flex items-center justify-center">
+                <div className="max-w-[600px] mx-auto aspect-video overflow-hidden bg-[#2a1a0a]/5 flex items-center justify-center">
                   {activeMoment.video ? (
                     <video
                       src={activeMoment.video}
