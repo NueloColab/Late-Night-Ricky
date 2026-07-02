@@ -262,18 +262,19 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ ABOUT RICKY — from About page, warm tones ═══ */}
-      <section id="about" className="relative min-h-[100dvh] bg-[#1a1209] py-20 px-6 md:px-14 overflow-hidden">
-        {/* Subtle warm gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2a1d10] via-[#1a1209] to-[#1a1209] opacity-80" />
+      {/* ═══ ABOUT RICKY — warm golden hour tones, matching hero ═══ */}
+      <section id="about" className="relative min-h-[100dvh] py-20 px-6 md:px-14 overflow-hidden">
+        {/* Warm golden hour background — matches hero tones */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#c9a882] via-[#b8986e] to-[#a88b5e]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#e8d4b8]/30 via-transparent to-[#8a7355]/20" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Ronaldo Quote */}
           <div className="mb-12 md:mb-16 reveal-left">
-            <p className="font-['Playfair_Display',serif] text-[clamp(22px,3vw,36px)] italic text-[#c9a96e] leading-[1.3] max-w-[800px]">
+            <p className="font-['Playfair_Display',serif] text-[clamp(22px,3vw,36px)] italic text-[#5a3a1a] leading-[1.3] max-w-[800px] drop-shadow-[0_1px_2px_rgba(255,255,255,0.3)]">
               "The best DJ I've heard."
             </p>
-            <p className="mt-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-[#c9a96e]/60">
+            <p className="mt-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-[#5a3a1a]/70">
               — Cristiano Ronaldo
             </p>
           </div>
@@ -282,53 +283,54 @@ export default async function HomePage() {
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
             {/* Left — Text */}
             <div className="reveal-left" data-delay="100">
-              <h2 className="text-[clamp(36px,5vw,72px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#f5efe6] mb-8">
+              <h2 className="text-[clamp(36px,5vw,72px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#2a1a0a] mb-8">
                 About Ricky
               </h2>
-              <h3 className="text-[clamp(18px,2vw,28px)] font-bold uppercase tracking-[0.02em] text-[#c9a96e] mb-8 leading-[1.2]">
+              <h3 className="text-[clamp(18px,2vw,28px)] font-bold uppercase tracking-[0.02em] text-[#5a3a1a] mb-8 leading-[1.2]">
                 {aboutHeadline}
               </h3>
               <div className="space-y-5">
-                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#d4c8b8]/80">
+                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#3a2515]/85">
                   {aboutBio1}
                 </p>
-                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#d4c8b8]/80">
+                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#3a2515]/85">
                   {aboutBio2}
                 </p>
-                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#d4c8b8]/80">
+                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#3a2515]/85">
                   {aboutBio3}
                 </p>
-                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#d4c8b8]/80">
+                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#3a2515]/85">
                   {aboutBio4}
                 </p>
               </div>
               {/* Small signature at bottom */}
-              <p className="mt-10 font-['Rockybilly',cursive] text-[14px] text-[#c9a96e]/50 tracking-[0.02em]">
+              <p className="mt-10 font-['Rockybilly',cursive] text-[14px] text-[#5a3a1a]/60 tracking-[0.02em]">
                 — Late Night Ricky
               </p>
             </div>
 
             {/* Right — Photo */}
             <div className="reveal-right" data-delay="200">
-              <div className="relative overflow-hidden rounded-sm">
+              <div className="relative overflow-hidden rounded-sm shadow-2xl">
                 <img
                   src={aboutImage}
                   alt="Late Night Ricky"
                   className="w-full h-auto object-cover"
+                  style={{ filter: 'sepia(25%) saturate(1.15) brightness(1.05) contrast(1.02)' }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1209]/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#c9a882]/30 to-transparent mix-blend-multiply" />
               </div>
             </div>
           </div>
 
           {/* Production Credits */}
           <div className="mt-20 md:mt-28 reveal-fade">
-            <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#c9a96e]/60 mb-10 text-center">
+            <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#5a3a1a]/60 mb-10 text-center">
               Production Credits
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
               {productionCredits.map((name) => (
-                <div key={name} className="text-[clamp(12px,1.5vw,18px)] font-bold uppercase tracking-[-0.3px] text-[#f5efe6]/70 text-center py-3 px-2 hover:text-[#c9a96e] transition-colors duration-300 cursor-default">
+                <div key={name} className="text-[clamp(12px,1.5vw,18px)] font-bold uppercase tracking-[-0.3px] text-[#2a1a0a]/70 text-center py-3 px-2 hover:text-[#5a3a1a] transition-colors duration-300 cursor-default">
                   {name}
                 </div>
               ))}
