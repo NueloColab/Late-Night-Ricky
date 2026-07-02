@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 export default function ScrollReveal() {
   useEffect(() => {
     // Scroll reveal animations
-    const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-fade, .reveal-bottom-right');
+    const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-fade, .reveal-bottom-right, .reveal-stagger');
     if (els.length) {
       const observer = new IntersectionObserver(
         (entries) => {
