@@ -487,7 +487,7 @@ export default async function HomePage() {
       <section id="radio" className="garrix-section garrix-radio-section">
         <div className="garrix-section-label">MUSIC<span className="garrix-section-line" /></div>
         <div className="garrix-section-inner">
-          <div className="garrix-radio-grid" style={{ alignItems: 'start' }}>
+          <div className="garrix-radio-grid">
             <div className="garrix-radio-text">
               <span className="garrix-label-tag">Listen & Download</span>
               <h2 className="garrix-heading">Music & Mixes</h2>
@@ -501,8 +501,8 @@ export default async function HomePage() {
                 <AudioTrackList tracks={tracks} />
               </div>
             </div>
-            <div className="garrix-radio-image" style={{ maxHeight: '520px', overflow: 'hidden' }}>
-              <img src={radioImage} alt="Late Night Ricky" className="w-full h-full object-cover" style={{ objectPosition: 'top center' }} />
+            <div className="garrix-radio-image">
+              <img src={radioImage} alt="Late Night Ricky" />
               <div className="garrix-eq-bars">
                 {[12, 20, 16, 24, 14].map((h, i) => (
                   <span key={i} className="eq-bar" style={{ height: `${h}px`, animationDelay: `${[0, 0.2, 0.4, 0.1, 0.3][i]}s` }} />
