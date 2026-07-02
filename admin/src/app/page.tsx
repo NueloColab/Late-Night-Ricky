@@ -353,8 +353,8 @@ export default async function HomePage() {
             Acts & Private Clients
           </h2>
 
-          {/* Carousel */}
-          <div className="relative overflow-hidden mb-16">
+          {/* Carousel 1 */}
+          <div className="relative overflow-hidden mb-6">
             <div className="flex gap-4 animate-marquee-left">
               {[
                 '/assets/highlight-studio.jpg',
@@ -365,7 +365,7 @@ export default async function HomePage() {
                 '/assets/highlight-misfits.jpg',
               ].map((img, i) => (
                 <div key={i} className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square overflow-hidden">
-                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover grayscale" />
+                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
               {/* Duplicate for seamless loop */}
@@ -378,26 +378,41 @@ export default async function HomePage() {
                 '/assets/highlight-misfits.jpg',
               ].map((img, i) => (
                 <div key={`dup-${i}`} className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square overflow-hidden">
-                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover grayscale" />
+                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Names grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-4 gap-y-8 md:gap-x-6 md:gap-y-10 mb-16 reveal-stagger">
-            {[
-              '50 Cent', 'Bruno Mars', 'Chris Brown', 'Dr. Dre & Jimmy Iovine', 'Drake',
-              'Future', 'Jason Momoa', 'Jason Statham', 'Justin Bieber', 'Kendrick Lamar',
-              'Leonardo DiCaprio', 'Lewis Hamilton', 'Mick Jagger', 'Neymar Jr', 'Paul McCartney',
-              'Rihanna', 'Ronaldo', 'Travis Scott', 'Usain Bolt', 'Vin Diesel',
-            ].map((name) => (
-              <div key={name} className="text-center">
-                <p className="text-[13px] md:text-[15px] font-bold uppercase tracking-[0.02em] text-[#e8d4b8] leading-[1.3]">
-                  {name}
-                </p>
-              </div>
-            ))}
+          {/* Carousel 2 — opposite direction */}
+          <div className="relative overflow-hidden mb-16">
+            <div className="flex gap-4 animate-marquee-right">
+              {[
+                '/assets/highlight-misfits.jpg',
+                '/assets/highlight-club.jpg',
+                '/assets/press-bg2.jpg',
+                '/assets/moment-ibiza.jpg',
+                '/assets/highlight-arena.jpg',
+                '/assets/highlight-studio.jpg',
+              ].map((img, i) => (
+                <div key={i} className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square overflow-hidden">
+                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
+                </div>
+              ))}
+              {/* Duplicate for seamless loop */}
+              {[
+                '/assets/highlight-misfits.jpg',
+                '/assets/highlight-club.jpg',
+                '/assets/press-bg2.jpg',
+                '/assets/moment-ibiza.jpg',
+                '/assets/highlight-arena.jpg',
+                '/assets/highlight-studio.jpg',
+              ].map((img, i) => (
+                <div key={`dup2-${i}`} className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square overflow-hidden">
+                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
           </div>
 
           <p className="relative z-10 text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#c4b498]/50 font-medium text-center mb-16">

@@ -2208,3 +2208,11 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .animate-marquee-left {
   animation: marquee-left 30s linear infinite;
 }
+
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+.animate-marquee-right {
+  animation: marquee-right 30s linear infinite;
+}
