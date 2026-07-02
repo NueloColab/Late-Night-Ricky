@@ -346,102 +346,70 @@ export default async function HomePage() {
         revealClass=""
       />
 
-      {/* ═══ HIGHLIGHTS — Garrix-style 2-column release grid ═══ */}
-      <section className="lnr-highlights">
-          <div className="lnr-highlights-label">HIGHLIGHTS</div>
-          <div className="lnr-highlights-line" />
-          <div className="lnr-highlights-header">
-            <div className="lnr-highlights-header-left">
-              <h2 className="lnr-highlights-heading">HIGHLIGHTS</h2>
-              <div className="lnr-highlights-header-row">
-                <a href="/shows" className="lnr-highlights-cta">VIEW ALL SHOWS</a>
-                <p className="lnr-highlights-subtitle">Standout shows and performances from across the globe.</p>
+      {/* ═══ LATE NIGHT MOMENTS — editorial 2-column, large B&W squares ═══ */}
+      <section id="moments" className="relative py-24 md:py-32 px-6 md:px-14 overflow-hidden">
+        {/* Warm editorial cream background */}
+        <div className="absolute inset-0 bg-[#f5efe6]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/30 via-transparent to-[#d4c4a8]/20" />
+
+        <div className="relative z-10 max-w-[1400px] mx-auto">
+          <h2 className="font-['Playfair_Display',serif] text-[clamp(36px,5vw,56px)] font-medium text-[#2a1a0a] text-center mb-16 md:mb-24 tracking-[-0.5px]">
+            Late Night Moments
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+            {/* Card 1 — Misfits Boxing */}
+            <a href="/show-misfits-boxing" className="group block">
+              <div className="aspect-[4/5] overflow-hidden mb-5">
+                <img
+                  src="/assets/highlight-studio.jpg"
+                  alt="Misfits Boxing"
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                />
               </div>
-            </div>
+              <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#5a3a1a]/60 mb-2 font-medium">
+                Spring/Summer 2024
+              </p>
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(24px,3vw,40px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.1]">
+                Misfits Boxing
+              </h3>
+              <p className="mt-1 text-[13px] text-[#5a3a1a]/50 font-medium">
+                Ministry of Sound, London
+              </p>
+              <div className="mt-4 w-12 h-12 rounded-full border border-[#2a1a0a]/20 flex items-center justify-center group-hover:border-[#2a1a0a]/60 group-hover:bg-[#2a1a0a] transition-all duration-300">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#2a1a0a]/40 group-hover:text-white transition-colors">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+
+            {/* Card 2 — O2 Arena */}
+            <a href="/show-arena" className="group block">
+              <div className="aspect-[4/5] overflow-hidden mb-5">
+                <img
+                  src="/assets/highlight-arena.jpg"
+                  alt="O2 Arena"
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                />
+              </div>
+              <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#5a3a1a]/60 mb-2 font-medium">
+                London, UK
+              </p>
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(24px,3vw,40px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.1]">
+                O2 Arena
+              </h3>
+              <p className="mt-1 text-[13px] text-[#5a3a1a]/50 font-medium">
+                The O2, London
+              </p>
+              <div className="mt-4 w-12 h-12 rounded-full border border-[#2a1a0a]/20 flex items-center justify-center group-hover:border-[#2a1a0a]/60 group-hover:bg-[#2a1a0a] transition-all duration-300">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#2a1a0a]/40 group-hover:text-white transition-colors">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
           </div>
-          <div className="lnr-highlights-grid">
-            <div className="lnr-highlights-col">
-              <a href="/show-misfits-boxing" className="lnr-highlights-card">
-                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/highlight-studio.jpg')" }}>
-                  <div className="lnr-highlights-card-overlay" />
-                  <div className="lnr-highlights-card-text">
-                    <h3 className="lnr-highlights-card-title">MISFITS BOXING</h3>
-                    <span className="lnr-highlights-card-venue">— Ministry of Sound, London</span>
-                  </div>
-                </div>
-              </a>
-              <a href="/show-arena" className="lnr-highlights-card">
-                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/highlight-arena.jpg')" }}>
-                  <div className="lnr-highlights-card-overlay" />
-                  <div className="lnr-highlights-card-text">
-                    <h3 className="lnr-highlights-card-title">O2 ARENA</h3>
-                    <span className="lnr-highlights-card-venue">— O2 Arena, London</span>
-                  </div>
-                </div>
-              </a>
-              <a href="/show-ibiza-2024" className="lnr-highlights-card">
-                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/ricky-hero-new.jpg')" }}>
-                  <div className="lnr-highlights-card-overlay" />
-                  <div className="lnr-highlights-card-text">
-                    <h3 className="lnr-highlights-card-title">IBIZA SUMMER</h3>
-                    <span className="lnr-highlights-card-venue">— Ushuaïa, Ibiza</span>
-                  </div>
-                </div>
-              </a>
-              <a href="/show-private" className="lnr-highlights-card">
-                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/press-bg2.jpg')" }}>
-                  <div className="lnr-highlights-card-overlay" />
-                  <div className="lnr-highlights-card-text">
-                    <h3 className="lnr-highlights-card-title">PRIVATE EVENTS</h3>
-                    <span className="lnr-highlights-card-venue">— Worldwide</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div className="lnr-highlights-divider">
-              <span className="lnr-highmarks-cross">×</span>
-              <div className="lnr-highlights-line" />
-            </div>
-            <div className="lnr-highlights-col">
-              <a href="/show-club" className="lnr-highlights-card">
-                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/highlight-club.jpg')" }}>
-                  <div className="lnr-highlights-card-overlay" />
-                  <div className="lnr-highlights-card-text">
-                    <h3 className="lnr-highlights-card-title">BACK TO BACK</h3>
-                    <span className="lnr-highlights-card-venue">— Private Events, London</span>
-                  </div>
-                </div>
-              </a>
-              <a href="/show-ibiza" className="lnr-highlights-card">
-                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/highlight-misfits.jpg')" }}>
-                  <div className="lnr-highlights-card-overlay" />
-                  <div className="lnr-highlights-card-text">
-                    <h3 className="lnr-highlights-card-title">IBIZA ROCKS</h3>
-                    <span className="lnr-highlights-card-venue">— Ibiza Rocks, Ibiza</span>
-                  </div>
-                </div>
-              </a>
-              <a href="/show-dubai" className="lnr-highlights-card">
-                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/ricky-hero-v2.jpg')" }}>
-                  <div className="lnr-highlights-card-overlay" />
-                  <div className="lnr-highlights-card-text">
-                    <h3 className="lnr-highlights-card-title">DUBAI NEW YEAR</h3>
-                    <span className="lnr-highlights-card-venue">— Atlantis, Dubai</span>
-                  </div>
-                </div>
-              </a>
-              <a href="/show-festival" className="lnr-highlights-card">
-                <div className="lnr-highlights-card-img" style={{ backgroundImage: "url('/assets/ricky-radio-new.jpg')" }}>
-                  <div className="lnr-highlights-card-overlay" />
-                  <div className="lnr-highlights-card-text">
-                    <h3 className="lnr-highlights-card-title">FESTIVAL SEASON</h3>
-                    <span className="lnr-highlights-card-venue">— Various, Europe</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </section>
+        </div>
+      </section>
 
 
       {/* ═══ VENUES — scrolling marquee ═══ */}
