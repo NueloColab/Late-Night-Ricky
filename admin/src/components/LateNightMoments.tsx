@@ -18,6 +18,7 @@ const momentsData: MomentData[] = [
     subtitle: 'Ministry of Sound, London',
     description: 'Headlining the biggest influencer boxing event in the UK. Misfits Boxing at Ministry of Sound brought together sport, music, and culture for an unforgettable night.',
     images: ['/assets/highlight-studio.jpg', '/assets/highlight-arena.jpg', '/assets/moment-ibiza.jpg'],
+    video: '/assets/showreel-video.mp4',
   },
   {
     id: 'o2',
