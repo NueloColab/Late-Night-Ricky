@@ -349,7 +349,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Title */}
-          <h2 className="text-[clamp(32px,4.5vw,64px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20 reveal-fade">
+          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
             Ricky Has Performed With...
           </h2>
 
