@@ -350,7 +350,7 @@ export default async function HomePage() {
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Title */}
           <h2 className="text-[clamp(32px,4.5vw,64px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20 reveal-fade">
-            Acts & Private Clients
+            Ricky Has Performed With...
           </h2>
 
           {/* Carousel 1 */}
@@ -364,7 +364,7 @@ export default async function HomePage() {
                 '/assets/highlight-club.jpg',
                 '/assets/highlight-misfits.jpg',
               ].map((img, i) => (
-                <div key={i} className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square overflow-hidden">
+                <div key={i} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden">
                   <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
@@ -377,7 +377,7 @@ export default async function HomePage() {
                 '/assets/highlight-club.jpg',
                 '/assets/highlight-misfits.jpg',
               ].map((img, i) => (
-                <div key={`dup-${i}`} className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square overflow-hidden">
+                <div key={`dup-${i}`} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden">
                   <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
@@ -395,7 +395,7 @@ export default async function HomePage() {
                 '/assets/highlight-arena.jpg',
                 '/assets/highlight-studio.jpg',
               ].map((img, i) => (
-                <div key={i} className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square overflow-hidden">
+                <div key={i} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden">
                   <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
@@ -408,7 +408,7 @@ export default async function HomePage() {
                 '/assets/highlight-arena.jpg',
                 '/assets/highlight-studio.jpg',
               ].map((img, i) => (
-                <div key={`dup2-${i}`} className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square overflow-hidden">
+                <div key={`dup2-${i}`} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden">
                   <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
