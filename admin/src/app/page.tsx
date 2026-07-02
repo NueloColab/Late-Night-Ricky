@@ -518,8 +518,8 @@ export default async function HomePage() {
                   </svg>
                 </a>
                 <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline flex items-center justify-center px-3 py-2.5" aria-label="Apple Music">
-                  <svg viewBox="0 0 814 1000" width="22" height="28">
-                    <path fill="#5a3a1a" d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 789.2 0 660 0 533.8c0-121 75.3-185.6 149.5-230.2C211.1 270.8 275.9 255.2 337.4 255.2c58.9 0 114.3 39.5 150.2 39.5 33.8 0 86.9-41.5 158.2-41.5 28.3 0 129.1 2.8 195.6 107.2-5.2 3.2-116.1 68.5-116.1 203 0 161.2 139.1 216.8 142.3 217.8-1 3.5-21.9 74.5-69.5 146.2zM534.2 171.5c28.8-34.3 48.7-81.8 43.4-129.2-42.1 1.7-93.1 28.1-123.3 62.5-26.6 30.6-49.9 79.5-43.7 126.4 46.3 3.6 93.6-23.8 123.6-59.7z"/>
+                  <svg viewBox="0 0 24 24" width="22" height="28">
+                    <path fill="#5a3a1a" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
                   </svg>
                 </a>
                 <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline flex items-center justify-center px-3 py-2.5" aria-label="YouTube">
@@ -545,6 +545,9 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ═══ SHARE YOUR MUSIC — cream/warm brown palette ═══ */}
+      <ShareMusicCTA />
+
       {/* ═══ TRUSTED BY THE BEST — interactive names with background ═══ */}
       <TrustedBySection
         quote={partnersQuote}
@@ -553,9 +556,6 @@ export default async function HomePage() {
         clients={clients}
         revealClass=""
       />
-      {/* ═══ SHARE YOUR MUSIC — cream/warm brown palette ═══ */}
-      <ShareMusicCTA />
-
 
       {/* ═══ VENUES — scrolling marquee ═══ */}
       <section className="garrix-venues-section">
