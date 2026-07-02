@@ -109,11 +109,26 @@ export default async function HomePage() {
   let shareMusicDescription = "I'm always on the lookout for new music to play, so send me your tracks";
   let reachOutImage = '/assets/ricky-hero-new.jpg';
   let reachOutCta = 'Get in touch';
+  let aboutHeadline = 'International DJ & Grammy Winning Producer';
+  let aboutBio1 = 'Late Night Ricky (Previously DJ Fricktion) is an Award-Winning DJ, Grammy Award Winner and Platinum Certified Music Producer based in London. From teaching music in prison programs to performing at some of the world\'s most exclusive celebrity events, Ricky\'s rich and diverse music career has led him to become one of the most popular and trusted faces in London\'s thriving music scene.';
+  let aboutBio2 = 'As a producer, Ricky cites his key influences as Michael Jackson, Dr. Dre, Quincy Jones, and Timbaland, merging soulful R&B, House and cinematic grooves. Having earned Grammy recognition for his work with Chris Brown on the 11:11 album, plus previous cuts with Kendrick Lamar and NAV, Ricky has now stepped into a creative chapter with a new wave of releases scheduled for release.';
+  let aboutBio3 = 'Ricky has embraced his British and South Asian Roots working with some legendary South Asian talent such as DIVINE and rising British R&B star H33RA as well as showcasing Punjabi artists such as Diljit Dosanjh, Karan Aujla and Sidhu Moosewala to mainstream audiences.';
+  let aboutBio4 = 'With many unreleased tracks in the works, plans to further expand his brand and collaborations with other artists, there is a lot more to come this year.';
+  let aboutImage = '/assets/ricky-portrait-new.jpg';
+
+  const productionCredits = [
+    'Chris Brown', 'Kendrick Lamar', 'NAV', 'Divine',
+    'Potter Payper', 'Swae Lee', 'N.O.R.E', 'Styles P',
+    'Raekwon', 'RZA', 'Jim Jones', 'D Smoke',
+    'Apache Indian', 'MC Altaf', 'H33RA', 'Stefflon Don',
+    'Lil Keed', 'Ivorian Doll', 'Safe', 'Plus Many More'
+  ];
+
   // Suppress unused-variable warnings for CMS values not yet used in new layout
   void heroGrayscale; void heroBackgroundSize; void heroBackgroundPosition; void reachOutImage; void reachOutCta; void pressPack; void clientsTitle; void clients;
   try {
-    const [dbCards, dbNames, dbTracks, dbSections] = await Promise.all([
-      getShowCards(), getClientNames(), getTracks(), getSiteSections('home'),
+    const [dbCards, dbNames, dbTracks, dbSections, dbAboutSections] = await Promise.all([
+      getShowCards(), getClientNames(), getTracks(), getSiteSections('home'), getSiteSections('about'),
     ]);
     if (dbSections.length > 0) {
       const heroSection = dbSections.find((s: any) => s.section === 'hero');
@@ -154,6 +169,19 @@ export default async function HomePage() {
       if (clientsSection?.content) {
         const c = typeof clientsSection.content === 'string' ? JSON.parse(clientsSection.content) : clientsSection.content;
         if (c.title) clientsTitle = c.title;
+      }
+      // About page sections
+      if (dbAboutSections.length > 0) {
+        const introSection = dbAboutSections.find((s: any) => s.section === 'intro');
+        if (introSection?.content) {
+          const c = typeof introSection.content === 'string' ? JSON.parse(introSection.content) : introSection.content;
+          if (c.headline) aboutHeadline = c.headline;
+          if (c.bio1) aboutBio1 = c.bio1;
+          if (c.bio2) aboutBio2 = c.bio2;
+          if (c.bio3) aboutBio3 = c.bio3;
+          if (c.bio4) aboutBio4 = c.bio4;
+          if (c.image) aboutImage = c.image;
+        }
       }
       const shareMusicSection = dbSections.find((s: any) => s.section === 'share_music');
       if (shareMusicSection?.content) {
@@ -234,27 +262,78 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ REACH — Garrix-style editorial collage ═══ */}
-      <section id="reach" className="lnr-reach-collage reveal-left">
-        {/* Ghost watermark behind photos */}
-        <div className="lnr-reach-ghost" aria-hidden="true">RICKY</div>
-        {/* Primary portrait photo — left side */}
-        <div className="lnr-reach-photo-primary reveal-left" data-delay="0">
-          <img src="/assets/ricky-portrait-standing.jpg" alt="Late Night Ricky" />
-        </div>
-        {/* Dark text card — overlaps photo, center-right */}
-        <a href="/about" className="lnr-reach-card reveal-right" data-delay="200">
-          <h2 className="lnr-reach-quote">
-            International DJ &amp; Grammy Winning Producer. From London to New York / LA to Las Vegas / Miami to Ibiza and beyond.
-          </h2>
-          <p className="lnr-reach-sub">
-            150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.
-          </p>
-          <span className="lnr-reach-sig">— Late Night Ricky</span>
-        </a>
-        {/* Secondary texture strip — bottom right */}
-        <div className="lnr-reach-photo-secondary reveal-bottom-right" data-delay="400">
-          <img src="/assets/ricky-seated.jpg" alt="" />
+      {/* ═══ ABOUT RICKY — from About page, warm tones ═══ */}
+      <section id="about" className="relative min-h-[100dvh] bg-[#1a1209] py-20 px-6 md:px-14 overflow-hidden">
+        {/* Subtle warm gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2a1d10] via-[#1a1209] to-[#1a1209] opacity-80" />
+
+        <div className="relative z-10 max-w-[1400px] mx-auto">
+          {/* Ronaldo Quote */}
+          <div className="mb-12 md:mb-16 reveal-left">
+            <p className="font-['Playfair_Display',serif] text-[clamp(22px,3vw,36px)] italic text-[#c9a96e] leading-[1.3] max-w-[800px]">
+              "The best DJ I've heard."
+            </p>
+            <p className="mt-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-[#c9a96e]/60">
+              — Cristiano Ronaldo
+            </p>
+          </div>
+
+          {/* 2-column layout */}
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
+            {/* Left — Text */}
+            <div className="reveal-left" data-delay="100">
+              <h2 className="text-[clamp(36px,5vw,72px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#f5efe6] mb-8">
+                About Ricky
+              </h2>
+              <h3 className="text-[clamp(18px,2vw,28px)] font-bold uppercase tracking-[0.02em] text-[#c9a96e] mb-8 leading-[1.2]">
+                {aboutHeadline}
+              </h3>
+              <div className="space-y-5">
+                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#d4c8b8]/80">
+                  {aboutBio1}
+                </p>
+                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#d4c8b8]/80">
+                  {aboutBio2}
+                </p>
+                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#d4c8b8]/80">
+                  {aboutBio3}
+                </p>
+                <p className="text-[13px] md:text-[14px] leading-[1.7] uppercase tracking-[0.08em] text-[#d4c8b8]/80">
+                  {aboutBio4}
+                </p>
+              </div>
+              {/* Small signature at bottom */}
+              <p className="mt-10 font-['Rockybilly',cursive] text-[14px] text-[#c9a96e]/50 tracking-[0.02em]">
+                — Late Night Ricky
+              </p>
+            </div>
+
+            {/* Right — Photo */}
+            <div className="reveal-right" data-delay="200">
+              <div className="relative overflow-hidden rounded-sm">
+                <img
+                  src={aboutImage}
+                  alt="Late Night Ricky"
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1209]/40 to-transparent" />
+              </div>
+            </div>
+          </div>
+
+          {/* Production Credits */}
+          <div className="mt-20 md:mt-28 reveal-fade">
+            <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#c9a96e]/60 mb-10 text-center">
+              Production Credits
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
+              {productionCredits.map((name) => (
+                <div key={name} className="text-[clamp(12px,1.5vw,18px)] font-bold uppercase tracking-[-0.3px] text-[#f5efe6]/70 text-center py-3 px-2 hover:text-[#c9a96e] transition-colors duration-300 cursor-default">
+                  {name}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
