@@ -114,7 +114,7 @@ export default async function HomePage() {
   let aboutBio2 = 'As a producer, Ricky cites his key influences as Michael Jackson, Dr. Dre, Quincy Jones, and Timbaland, merging soulful R&B, House and cinematic grooves. Having earned Grammy recognition for his work with Chris Brown on the 11:11 album, plus previous cuts with Kendrick Lamar and NAV, Ricky has now stepped into a creative chapter with a new wave of releases scheduled for release.';
   let aboutBio3 = 'Ricky has embraced his British and South Asian Roots working with some legendary South Asian talent such as DIVINE and rising British R&B star H33RA as well as showcasing Punjabi artists such as Diljit Dosanjh, Karan Aujla and Sidhu Moosewala to mainstream audiences.';
   let aboutBio4 = 'With many unreleased tracks in the works, plans to further expand his brand and collaborations with other artists, there is a lot more to come this year.';
-  let aboutImage = '/assets/ricky-about-jacket.jpg';
+  let aboutImage = '/assets/ricky-about-chair.jpg';
 
   const productionCredits = [
     'Chris Brown', 'Kendrick Lamar', 'NAV', 'Divine',
@@ -240,7 +240,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ SHOWREEL — outlined text over video (bright, visible) ═══ */}
+      {/* ═══ SHOWREEL — disabled for now ═══
       <section className="garrix-showreel reveal-left">
         <video
           className="garrix-showreel-video"
@@ -261,6 +261,7 @@ export default async function HomePage() {
           <a href="/showreel" className="garrix-btn garrix-btn-outline">WATCH SHOWREEL</a>
         </div>
       </section>
+      */}
 
       {/* ═══ ABOUT RICKY — warm golden hour tones, matching hero ═══ */}
       <section id="about" className="relative min-h-[100dvh] py-20 px-6 md:px-14 overflow-hidden">
