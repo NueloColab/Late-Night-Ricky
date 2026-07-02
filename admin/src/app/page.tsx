@@ -351,9 +351,12 @@ export default async function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {/* Row 1 — 3 cards */}
             <a href="/show-misfits-boxing" className="group block">
-              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-2">
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-1">
                 Misfits Boxing
               </h3>
+              <p className="text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium mb-2">
+                Ministry of Sound, London
+              </p>
               <div className="relative aspect-square overflow-hidden">
                 <img
                   src="/assets/highlight-studio.jpg"
@@ -366,15 +369,15 @@ export default async function HomePage() {
                   </svg>
                 </div>
               </div>
-              <p className="mt-2 text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium">
-                Ministry of Sound, London
-              </p>
             </a>
 
             <a href="/show-arena" className="group block">
-              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-2">
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-1">
                 O2 Arena
               </h3>
+              <p className="text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium mb-2">
+                The O2, London
+              </p>
               <div className="relative aspect-square overflow-hidden">
                 <img
                   src="/assets/highlight-arena.jpg"
@@ -387,15 +390,15 @@ export default async function HomePage() {
                   </svg>
                 </div>
               </div>
-              <p className="mt-2 text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium">
-                The O2, London
-              </p>
             </a>
 
             <a href="/show-ibiza-2024" className="group block">
-              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-2">
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-1">
                 Ibiza Summer
               </h3>
+              <p className="text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium mb-2">
+                Ushuaïa, Ibiza
+              </p>
               <div className="relative aspect-square overflow-hidden">
                 <img
                   src="/assets/moment-ibiza.jpg"
@@ -415,9 +418,12 @@ export default async function HomePage() {
 
             {/* Row 2 — 3 cards */}
             <a href="/show-private" className="group block">
-              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-2">
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-1">
                 Private Events
               </h3>
+              <p className="text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium mb-2">
+                Worldwide
+              </p>
               <div className="relative aspect-square overflow-hidden">
                 <img
                   src="/assets/press-bg2.jpg"
@@ -430,15 +436,15 @@ export default async function HomePage() {
                   </svg>
                 </div>
               </div>
-              <p className="mt-2 text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium">
-                Worldwide
-              </p>
             </a>
 
             <a href="/show-club" className="group block">
-              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-2">
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-1">
                 Back to Back
               </h3>
+              <p className="text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium mb-2">
+                Private Events, London
+              </p>
               <div className="relative aspect-square overflow-hidden">
                 <img
                   src="/assets/highlight-club.jpg"
@@ -451,15 +457,15 @@ export default async function HomePage() {
                   </svg>
                 </div>
               </div>
-              <p className="mt-2 text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium">
-                Private Events, London
-              </p>
             </a>
 
             <a href="/show-ibiza" className="group block">
-              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-2">
+              <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-1">
                 Ibiza Rocks
               </h3>
+              <p className="text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium mb-2">
+                Ibiza Rocks, Ibiza
+              </p>
               <div className="relative aspect-square overflow-hidden">
                 <img
                   src="/assets/highlight-misfits.jpg"
@@ -472,9 +478,6 @@ export default async function HomePage() {
                   </svg>
                 </div>
               </div>
-              <p className="mt-2 text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium">
-                Ibiza Rocks, Ibiza
-              </p>
             </a>
           </div>
         </div>
