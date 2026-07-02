@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
 interface MomentData {
   id: string;
@@ -58,7 +58,7 @@ const momentsData: MomentData[] = [
 
 export default function LateNightMoments() {
   const [openModal, setOpenModal] = useState<string | null>(null);
-  const [scrollPos, setScrollPos] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
   const galleryRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const startX = useRef(0);
@@ -66,8 +66,14 @@ export default function LateNightMoments() {
 
   const activeMoment = momentsData.find((m) => m.id === openModal);
 
-  const open = (id: string) => setOpenModal(id);
-  const close = () => setOpenModal(null);
+  const open = (id: string) => {
+    setOpenModal(id);
+    setTimeout(() => setModalVisible(true), 50);
+  };
+  const close = () => {
+    setModalVisible(false);
+    setTimeout(() => setOpenModal(null), 400);
+  };
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     isDragging.current = true;
@@ -134,15 +140,15 @@ export default function LateNightMoments() {
       {/* ═══ MODAL ═══ */}
       {activeMoment && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
+          className={`fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 transition-all duration-500 ${modalVisible ? 'opacity-100' : 'opacity-0'}`}
           onClick={close}
         >
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-[#2a1a0a]/80 backdrop-blur-sm" />
+          <div className={`absolute inset-0 bg-[#2a1a0a]/80 backdrop-blur-sm transition-opacity duration-500 ${modalVisible ? 'opacity-100' : 'opacity-0'}`} />
 
           {/* Modal box */}
           <div
-            className="relative z-10 w-full max-w-[700px] max-h-[90vh] overflow-y-auto bg-[#f8f1e8] rounded-sm shadow-2xl"
+            className={`relative z-10 w-full max-w-[1000px] max-h-[90vh] overflow-y-auto bg-[#f8f1e8] rounded-sm shadow-2xl transition-all duration-500 ease-out ${modalVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'}`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
@@ -170,7 +176,7 @@ export default function LateNightMoments() {
               </p>
 
               {/* Gallery */}
-              <div className="mb-6">
+              <div className="mb-8">
                 <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#5a3a1a]/50 font-medium mb-3">
                   Gallery
                 </p>
@@ -186,7 +192,7 @@ export default function LateNightMoments() {
                   {activeMoment.images.map((img, i) => (
                     <div
                       key={i}
-                      className="flex-shrink-0 w-[280px] md:w-[320px] aspect-square overflow-hidden"
+                      className="flex-shrink-0 w-[260px] md:w-[300px] aspect-square overflow-hidden"
                       style={{ scrollSnapAlign: 'start' }}
                     >
                       <img
@@ -210,21 +216,25 @@ export default function LateNightMoments() {
               </div>
 
               {/* Video */}
-              {activeMoment.video && (
-                <div className="mb-2">
-                  <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#5a3a1a]/50 font-medium mb-3">
-                    Video
-                  </p>
-                  <div className="aspect-video overflow-hidden bg-[#2a1a0a]/5">
+              <div className="mb-2">
+                <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#5a3a1a]/50 font-medium mb-3">
+                  Video
+                </p>
+                <div className="aspect-video overflow-hidden bg-[#2a1a0a]/5 flex items-center justify-center">
+                  {activeMoment.video ? (
                     <video
                       src={activeMoment.video}
                       className="w-full h-full object-cover"
                       controls
                       playsInline
                     />
-                  </div>
+                  ) : (
+                    <p className="text-[13px] text-[#5a3a1a]/40 font-medium">
+                      Video coming soon
+                    </p>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
