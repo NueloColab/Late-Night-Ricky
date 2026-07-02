@@ -362,6 +362,37 @@ export default async function HomePage() {
             Acts & Private Clients
           </h2>
 
+          {/* Carousel */}
+          <div className="relative overflow-hidden mb-16">
+            <div className="flex gap-4 animate-marquee-left">
+              {[
+                '/assets/highlight-studio.jpg',
+                '/assets/highlight-arena.jpg',
+                '/assets/moment-ibiza.jpg',
+                '/assets/press-bg2.jpg',
+                '/assets/highlight-club.jpg',
+                '/assets/highlight-misfits.jpg',
+              ].map((img, i) => (
+                <div key={i} className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square overflow-hidden">
+                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover grayscale" />
+                </div>
+              ))}
+              {/* Duplicate for seamless loop */}
+              {[
+                '/assets/highlight-studio.jpg',
+                '/assets/highlight-arena.jpg',
+                '/assets/moment-ibiza.jpg',
+                '/assets/press-bg2.jpg',
+                '/assets/highlight-club.jpg',
+                '/assets/highlight-misfits.jpg',
+              ].map((img, i) => (
+                <div key={`dup-${i}`} className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square overflow-hidden">
+                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover grayscale" />
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Names grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-4 gap-y-8 md:gap-x-6 md:gap-y-10 mb-16 reveal-stagger">
             {[
