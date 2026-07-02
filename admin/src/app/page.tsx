@@ -344,19 +344,25 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/30 via-transparent to-[#d4c4a8]/20" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          <h2 className="font-['Playfair_Display',serif] text-[clamp(36px,5vw,56px)] font-medium text-[#2a1a0a] text-center mb-16 md:mb-24 tracking-[-0.5px]">
+          <h2 className="text-[clamp(36px,5vw,72px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#2a1a0a] text-center mb-16 md:mb-24">
             Late Night Moments
           </h2>
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {/* Card 1 — Misfits Boxing */}
             <a href="/show-misfits-boxing" className="group block">
-              <div className="aspect-[4/5] overflow-hidden mb-5">
+              <div className="relative aspect-[4/5] overflow-hidden mb-5">
                 <img
                   src="/assets/highlight-studio.jpg"
                   alt="Misfits Boxing"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
                 />
+                {/* Arrow button on image corner */}
+                <div className="absolute bottom-4 right-4 w-12 h-12 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
               </div>
               <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#5a3a1a]/60 mb-2 font-medium">
                 Spring/Summer 2024
@@ -367,21 +373,22 @@ export default async function HomePage() {
               <p className="mt-1 text-[13px] text-[#5a3a1a]/50 font-medium">
                 Ministry of Sound, London
               </p>
-              <div className="mt-4 w-12 h-12 rounded-full border border-[#2a1a0a]/20 flex items-center justify-center group-hover:border-[#2a1a0a]/60 group-hover:bg-[#2a1a0a] transition-all duration-300">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#2a1a0a]/40 group-hover:text-white transition-colors">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </div>
             </a>
 
             {/* Card 2 — O2 Arena */}
             <a href="/show-arena" className="group block">
-              <div className="aspect-[4/5] overflow-hidden mb-5">
+              <div className="relative aspect-[4/5] overflow-hidden mb-5">
                 <img
                   src="/assets/highlight-arena.jpg"
                   alt="O2 Arena"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
                 />
+                {/* Arrow button on image corner */}
+                <div className="absolute bottom-4 right-4 w-12 h-12 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
               </div>
               <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#5a3a1a]/60 mb-2 font-medium">
                 London, UK
@@ -392,11 +399,6 @@ export default async function HomePage() {
               <p className="mt-1 text-[13px] text-[#5a3a1a]/50 font-medium">
                 The O2, London
               </p>
-              <div className="mt-4 w-12 h-12 rounded-full border border-[#2a1a0a]/20 flex items-center justify-center group-hover:border-[#2a1a0a]/60 group-hover:bg-[#2a1a0a] transition-all duration-300">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#2a1a0a]/40 group-hover:text-white transition-colors">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </div>
             </a>
           </div>
         </div>
