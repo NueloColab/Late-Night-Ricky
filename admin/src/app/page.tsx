@@ -570,16 +570,16 @@ export default async function HomePage() {
           {/* Brand logos — uniform container size for visual consistency */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-8 max-w-[700px] reveal-stagger">
             {[
-              { src: '/assets/logo-cartier.png', alt: 'Cartier' },
-              { src: '/assets/logo-f1.png', alt: 'F1' },
-              { src: '/assets/logo-coca-cola.png', alt: 'Coca-Cola' },
-              { src: '/assets/logo-ciroc.png', alt: 'CÎROC' },
-              { src: '/assets/logo-dior.png', alt: 'Dior' },
-              { src: '/assets/logo-patek.png', alt: 'Patek Philippe' },
-              { src: '/assets/logo-prime.png', alt: 'Prime' },
-              { src: '/assets/logo-louis-vuitton.png', alt: 'Louis Vuitton' },
-              { src: '/assets/logo-mf-boxing-v2.png', alt: 'Misfits Boxing' },
-              { src: '/assets/logo-cannes.png', alt: 'Festival de Cannes' },
+              { src: '/assets/logo-cartier-trimmed.png', alt: 'Cartier' },
+              { src: '/assets/logo-f1-trimmed.png', alt: 'F1' },
+              { src: '/assets/logo-coca-cola-trimmed.png', alt: 'Coca-Cola' },
+              { src: '/assets/logo-ciroc-trimmed.png', alt: 'CÎROC' },
+              { src: '/assets/logo-dior-trimmed.png', alt: 'Dior' },
+              { src: '/assets/logo-patek-trimmed.png', alt: 'Patek Philippe' },
+              { src: '/assets/logo-prime-trimmed.png', alt: 'Prime' },
+              { src: '/assets/logo-louis-vuitton-trimmed.png', alt: 'Louis Vuitton' },
+              { src: '/assets/logo-mf-boxing-v2-trimmed.png', alt: 'Misfits Boxing' },
+              { src: '/assets/logo-cannes-trimmed.png', alt: 'Festival de Cannes' },
             ].map((logo, i) => (
               <div key={i} className="flex items-center justify-center w-28 h-12 md:w-36 md:h-14">
                 <img
