@@ -221,7 +221,7 @@ export default function LateNightMoments() {
                       <img
                         src={img}
                         alt={`${activeMoment.title} ${i + 1}`}
-                        className="w-full h-full object-cover grayscale pointer-events-none"
+                        className="w-full h-full object-cover pointer-events-none"
                         draggable={false}
                       />
                     </div>
