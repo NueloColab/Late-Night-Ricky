@@ -26,7 +26,9 @@ export default function HomeContactSection() {
         const imageSection = sections.find((s: any) => s.section === 'image');
 
         const email = emailSection?.content?.[0] || contactInfo.email;
-        const image = imageSection?.content?.[0] || contactInfo.image;
+        // CMS override disabled — hardcoded image for cache busting
+        // const image = imageSection?.content?.[0] || contactInfo.image;
+        const image = contactInfo.image;
         const formEnabled = formSection?.isActive !== false;
 
         setContactInfo({ email, image, formEnabled });
