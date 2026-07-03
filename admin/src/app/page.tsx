@@ -526,8 +526,8 @@ export default async function HomePage() {
             backgroundImage: `url('/assets/ricky-brands-gold.png')`,
           }}
         />
-        {/* Very soft brown overlay for texture */}
-        <div className="absolute inset-0 bg-[#5a3a1a]/20" />
+        {/* Brown frosting overlay for warmth */}
+        <div className="absolute inset-0 bg-[#5a3a0a]/30" />
         <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E")', backgroundSize: '256px 256px' }} />
         <div className="absolute inset-0 bg-gradient-to-r from-[#f8f1e8]/10 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#4a3520]/15" />
@@ -558,7 +558,7 @@ export default async function HomePage() {
                   alt={logo.alt}
                   className="w-full h-full object-contain transition-all duration-300 hover:scale-105"
                   style={{
-                    filter: 'brightness(0) invert(1) sepia(0.4) saturate(0.4) hue-rotate(350deg) brightness(0.85)',
+                    filter: 'brightness(0) invert(1) sepia(0.5) saturate(0.3) hue-rotate(350deg) brightness(0.8)',
                   }}
                 />
               </div>
