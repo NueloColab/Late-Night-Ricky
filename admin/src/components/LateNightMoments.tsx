@@ -65,6 +65,8 @@ export default function LateNightMoments() {
   const startX = useRef(0);
   const scrollStart = useRef(0);
 
+  const [videoOverlay, setVideoOverlay] = useState(false);
+
   const activeMoment = momentsData.find((m) => m.id === openModal);
 
   const open = (id: string) => {
@@ -232,13 +234,14 @@ export default function LateNightMoments() {
                 <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#5a3a1a]/50 font-medium mb-3">
                   Video
                 </p>
-                <div className="max-w-[600px] mx-auto aspect-video overflow-hidden bg-[#2a1a0a]/5 flex items-center justify-center">
+                <div className="max-w-[600px] mx-auto aspect-video overflow-hidden bg-[#2a1a0a]/5 flex items-center justify-center cursor-pointer">
                   {activeMoment.video ? (
                     <video
                       src={activeMoment.video}
                       className="w-full h-full object-cover"
                       controls
                       playsInline
+                      onClick={() => setVideoOverlay(true)}
                     />
                   ) : (
                     <p className="text-[13px] text-[#5a3a1a]/40 font-medium">
@@ -249,6 +252,35 @@ export default function LateNightMoments() {
               </div>
             </div>
           </div>
+
+          {/* Video overlay — larger centered video player */}
+          {videoOverlay && activeMoment.video && (
+            <div
+              className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+              onClick={() => setVideoOverlay(false)}
+            >
+              <div className="absolute inset-0 bg-[#2a1a0a]/95 backdrop-blur-[12px] transition-opacity duration-300" />
+              <div className="relative z-10 w-full max-w-[900px] aspect-video"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <video
+                  src={activeMoment.video}
+                  className="w-full h-full object-cover rounded-lg shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]"
+                  controls
+                  autoPlay
+                  playsInline
+                />
+                <button
+                  onClick={() => setVideoOverlay(false)}
+                  className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
       <style jsx>{`
