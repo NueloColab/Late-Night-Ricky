@@ -412,7 +412,7 @@ export default async function HomePage() {
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">TAPE (London)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">HAKKASAN (Las Vegas)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">MOVIDA (Dubai)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">JIMMY'Z (Monte Carlo)</p>
+                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">JIMMY&apos;Z (Monte Carlo)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">MINISTRY OF SOUND (London)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">1 OAK (New York)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">BYBLOS (Milan)</p>
@@ -423,7 +423,7 @@ export default async function HomePage() {
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">POPPY (Los Angeles)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">CIRQUE LE SOIR (London)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">HIGHLIGHT ROOM (Los Angeles)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">TEDDY'S @ ROOSEVELT (Los Angeles)</p>
+                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">TEDDY&apos;S @ ROOSEVELT (Los Angeles)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">DELILAH (Los Angeles)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">GIBSON (Frankfurt)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">LIO (Ibiza)</p>
@@ -446,7 +446,7 @@ export default async function HomePage() {
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">SHOKO (Barcelona)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">LASTA (Serbia)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">REX ROOMS (London)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">HARRIET'S (Los Angeles)</p>
+                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">HARRIET&apos;S (Los Angeles)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">VIP ROOM (St. Tropez)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">BON BONNIERE (Mykonos)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">DRAMA (London)</p>
@@ -457,7 +457,7 @@ export default async function HomePage() {
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">RAFFLES (London)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">SUBOIS (Montreal)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">P1 (Munich)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">ZELO'S (Monte Carlo)</p>
+                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">ZELO&apos;S (Monte Carlo)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">BOOTSY BELLOWS (Los Angeles)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">WARWICK (Los Angeles)</p>
                 <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">LAVO (New York)</p>
