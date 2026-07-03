@@ -392,86 +392,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ WORLDWIDE PERFORMANCES ═══ */}
-      <section id="venues" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
-        <div className="relative z-10 max-w-[1400px] mx-auto">
-          <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 rounded-xl overflow-hidden">
-            {/* Background image */}
-            <div className="absolute inset-0 z-0">
-              <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-[#2a1a0a]/70" />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/40 via-transparent to-[#2a1a0a]/70" />
-            </div>
-            <h2 className="relative z-10 text-[clamp(28px,3.5vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-12">
-              Worldwide Performances
-            </h2>
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-x-4 md:gap-x-6 gap-y-1 max-w-[800px] mx-auto pl-4 md:pl-12 justify-items-start">
-              <div className="space-y-1">
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">LIV (Miami)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">WALL (Miami)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">TAPE (London)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">HAKKASAN (Las Vegas)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">MOVIDA (Dubai)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">JIMMY&apos;Z (Monte Carlo)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">MINISTRY OF SOUND (London)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">1 OAK (New York)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">BYBLOS (Milan)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">PACHA (Ibiza)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">ARMANI (Dubai)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">MANDALAY BAY (Las Vegas)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">TEMPLE (San Francisco)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">POPPY (Los Angeles)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">CIRQUE LE SOIR (London)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">HIGHLIGHT ROOM (Los Angeles)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">TEDDY&apos;S @ ROOSEVELT (Los Angeles)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">DELILAH (Los Angeles)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">GIBSON (Frankfurt)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">LIO (Ibiza)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">STUDIO PARIS (Chicago)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">PREMIER @ BORGATE (Atlantic City)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">PARQ (San Diego)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">BOOTSY BELLOWS (Los Angeles)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">WARWICK (Los Angeles)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">LAVO (New York)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">TAO (New York)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">UP & DOWN (New York)</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">LIBERTINE (London)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">SCANDAL (London)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">TOY ROOM (Dubai)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">1 OAK (Dubai)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">TAO (Las Vegas)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">BAOLI (Cannes)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">SHOKO (Barcelona)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">LASTA (Serbia)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">REX ROOMS (London)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">HARRIET&apos;S (Los Angeles)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">VIP ROOM (St. Tropez)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">BON BONNIERE (Mykonos)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">DRAMA (London)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">DEAR DARLING (London)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">TRAMP (London)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">SPIRITO (Brussels)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">CUCKOO CLUB (London)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">RAFFLES (London)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">SUBOIS (Montreal)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">P1 (Munich)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">ZELO&apos;S (Monte Carlo)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">BOOTSY BELLOWS (Los Angeles)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">WARWICK (Los Angeles)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">LAVO (New York)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">TAO (New York)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">UP & DOWN (New York)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">WIRELESS FESTIVAL (UK)</p>
-                <p className="text-[12px] md:text-[13px] text-[#d4c4a8]/80">READING & LEEDS FESTIVAL (UK)</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ MUSIC & MIXES ═══ */}
+            {/* ═══ MUSIC & MIXES ═══ */}
       <section id="radio" className="garrix-section garrix-radio-section">
         <div className="garrix-section-label">MUSIC<span className="garrix-section-line" /></div>
         <div className="garrix-section-inner">
@@ -574,53 +495,7 @@ export default async function HomePage() {
         revealClass=""
       />
 
-            {/* ═══ COLLAGE — asymmetric scatter with ghost watermark ═══ */}
-      <section className="garrix-collage-section">
-        <div className="garrix-collage-ghost" aria-hidden="true">RICKY</div>
-        <div className="garrix-collage-ghost garrix-collage-ghost-outline" aria-hidden="true">LATE<br/>NIGHT</div>
-        <div className="garrix-collage-grid">
-          <div className="garrix-collage-photo garrix-cp-1" data-layer="layer4">
-            <img src="/assets/ricky-hero-new.jpg" alt="Late Night Ricky" />
-            <div className="garrix-collage-quote">
-              <p>&ldquo;Living life to the fullest!&rdquo;</p>
-            </div>
-          </div>
-          <div className="garrix-collage-photo garrix-cp-2" data-layer="layer3">
-            <img src="/assets/ricky-hero-v2.jpg" alt="Ricky performing" />
-          </div>
-          <div className="garrix-collage-photo garrix-cp-3" data-layer="layer2">
-            <img src="/assets/ricky-seated.jpg" alt="Ricky seated" />
-            <div className="garrix-collage-outline">LATE<br/>NIGHT</div>
-          </div>
-          <div className="garrix-collage-photo garrix-cp-4" data-layer="layer2">
-            <img src="/assets/ricky-portrait-standing.jpg" alt="" style={{ filter: 'grayscale(1) contrast(1.1)' }} />
-            <div className="garrix-collage-play">
-              <button className="garrix-play-circle" id="collage-play-btn" aria-label="Play video">
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="30" stroke="currentColor" strokeWidth="2" /><polygon points="26,18 50,32 26,46" fill="currentColor" /></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        {/* Video overlay that expands over the collage */}
-        <div className="garrix-collage-video-overlay" id="collage-video-overlay">
-          <video id="collage-video" className="garrix-collage-video" src="/assets/video-desktop.mp4" poster="/assets/ricky-portrait-standing.jpg" muted playsInline loop />
-          <button className="garrix-video-close" id="collage-video-close" aria-label="Close video">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
-          </button>
-        </div>
-        <div className="garrix-collage-caption">
-          <span className="garrix-serif">Music is the only thing that makes sense.</span>
-        </div>
-      </section>
-
-      {/* ═══ LIFE IS CRAZY — outlined text banner ═══ */}
-      <div className="garrix-life-banner">
-        <p className="garrix-life-quote">&ldquo;{partnersQuote}&rdquo;</p>
-        <p className="garrix-life-attribution">&mdash; {partnersAttribution}</p>
-        <h2>LATE NIGHT RICKY</h2>
-      </div>
-
-      {/* ═══ CONTACT ═══ */}
+                        {/* ═══ CONTACT ═══ */}
       <HomeContactSection />
 
       {/* ═══ FOOTER ═══ */}
