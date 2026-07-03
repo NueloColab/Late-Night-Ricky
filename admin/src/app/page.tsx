@@ -514,8 +514,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ SHARE YOUR MUSIC — cream/warm brown palette ═══ */}
-      <ShareMusicCTA />
+      {/* ═══ SHARE YOUR MUSIC ═══ */}
+      <section id="share-music">
+        <ShareMusicCTA />
+      </section>
 
       {/* ═══ TRUSTED BY GLOBAL BRANDS — hero-style with photo background ═══ */}
       <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden">

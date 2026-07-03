@@ -4,12 +4,14 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 const navLinks = [
-  { href: '/about', label: 'About' },
-  { href: '/#shows', label: 'Shows' },
-  { href: '/#partnerships', label: 'Partners' },
-  { href: '/#supporting', label: 'Supporting' },
-  { href: '/share-music', label: 'Share Music' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/#about', label: 'About' },
+  { href: '/#moments', label: 'Moments' },
+  { href: '/#artists', label: 'Artists' },
+  { href: '/#venues', label: 'Venues' },
+  { href: '/#radio', label: 'Music' },
+  { href: '/#share-music', label: 'Share Music' },
+  { href: '/#brands', label: 'Brands' },
+  { href: '/#contact-form', label: 'Contact' },
 ];
 
 export default function Navbar() {
@@ -251,9 +253,20 @@ export default function Navbar() {
 
         <nav className="lnr-header-nav">
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href}>
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={(e) => {
+                e.preventDefault();
+                const id = link.href.replace('/#', '');
+                const el = document.getElementById(id);
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
               {link.label}
-            </Link>
+            </a>
           ))}
         </nav>
 
