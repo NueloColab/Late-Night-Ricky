@@ -45,22 +45,16 @@ export default function ShareMusicCTA() {
 
   if (status === 'success') {
     return (
-      <section className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden bg-[#f8f1e8]">
+      <section className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
         <div className="max-w-[1400px] mx-auto">
-          <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 rounded-xl overflow-hidden">
-            {/* Background image */}
-            <div className="absolute inset-0 z-0">
-              <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-[#2a1a0a]/70" />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/40 via-transparent to-[#2a1a0a]/70" />
-            </div>
+          <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 rounded-xl overflow-hidden bg-[#f8f1e8]">
             <div className="relative z-10 max-w-[800px] mx-auto">
-              <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8]" style={{ fontFamily: "'Oswald', sans-serif" }}>TRACK SENT</h2>
-              <p className="text-[13px] md:text-[14px] text-[#d4c4a8]/70 mt-3">Thanks for sharing. Your music has been uploaded successfully.</p>
+              <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#2a1a0a]" style={{ fontFamily: "'Oswald', sans-serif" }}>TRACK SENT</h2>
+              <p className="text-[13px] md:text-[14px] text-[#5a3a1a]/70 mt-3">Thanks for sharing. Your music has been uploaded successfully.</p>
               <button
                 onClick={() => { setStatus('idle'); setFile(null); setEmail(''); setArtistName(''); setInstagram(''); setTrackTitle(''); setExpanded(false); }}
                 className="garrix-btn garrix-btn-outline mt-6"
-                style={{ borderColor: '#e8d4b8', color: '#e8d4b8' }}
+                style={{ borderColor: '#5a3a1a', color: '#2a1a0a' }}
               >
                 SEND ANOTHER
               </button>
@@ -72,20 +66,13 @@ export default function ShareMusicCTA() {
   }
 
   return (
-    <section className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden bg-[#f8f1e8]">
+    <section className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
-        <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 rounded-xl overflow-hidden">
-          {/* Background image */}
-          <div className="absolute inset-0 z-0">
-            <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-[#2a1a0a]/70" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/40 via-transparent to-[#2a1a0a]/70" />
-          </div>
-
+        <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 rounded-xl overflow-hidden bg-[#f8f1e8]">
           <div className="relative z-10 max-w-[800px] mx-auto">
-            <span className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#d4c4a8]/60 font-medium block mb-4">Listen &amp; Download</span>
-            <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-4" style={{ fontFamily: "'Oswald', sans-serif" }}>SHARE YOUR MUSIC</h2>
-            <p className="text-[13px] md:text-[14px] text-[#d4c4a8]/80 max-w-[500px] mx-auto mb-8">
+            <span className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#8a6a4a] font-medium block mb-4">Listen &amp; Download</span>
+            <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#2a1a0a] mb-4" style={{ fontFamily: "'Oswald', sans-serif" }}>SHARE YOUR MUSIC</h2>
+            <p className="text-[13px] md:text-[14px] text-[#5a3a1a]/80 max-w-[500px] mx-auto mb-8">
               I&apos;m always on the lookout for new music to play, so send me your tracks
             </p>
 
@@ -93,7 +80,7 @@ export default function ShareMusicCTA() {
               <button
                 onClick={() => setExpanded(true)}
                 className="garrix-btn garrix-btn-outline"
-                style={{ borderColor: '#e8d4b8', color: '#e8d4b8' }}
+                style={{ borderColor: '#5a3a1a', color: '#2a1a0a' }}
               >
                 UPLOAD YOUR TRACK
               </button>
@@ -108,7 +95,7 @@ export default function ShareMusicCTA() {
                     if (e.dataTransfer.files?.[0]) setFile(e.dataTransfer.files[0]);
                   }}
                   onClick={() => fileInputRef.current?.click()}
-                  style={{ borderColor: dragOver ? '#e8d4b8' : 'rgba(232,212,184,0.2)', background: 'rgba(232,212,184,0.03)' }}
+                  style={{ borderColor: dragOver ? '#5a3a1a' : 'rgba(90,58,26,0.2)', background: 'rgba(90,58,26,0.03)' }}
                 >
                   <input
                     ref={fileInputRef}
@@ -117,11 +104,11 @@ export default function ShareMusicCTA() {
                     style={{ display: 'none' }}
                     onChange={(e) => setFile(e.target.files?.[0] || null)}
                   />
-                  <span className="garrix-cta-upload-btn" style={{ color: '#e8d4b8' }}>UPLOAD YOUR TRACK</span>
-                  <p style={{ fontSize: '13px', color: 'rgba(212,196,168,0.6)', marginTop: '12px' }}>Click the button and upload your file in mp3 320 kbps</p>
-                  <p style={{ fontSize: '11px', color: 'rgba(212,196,168,0.4)', marginTop: '4px' }}>Max 20MB — MP3 or WAV only</p>
+                  <span className="garrix-cta-upload-btn" style={{ color: '#2a1a0a' }}>UPLOAD YOUR TRACK</span>
+                  <p style={{ fontSize: '13px', color: 'rgba(90,58,26,0.6)', marginTop: '12px' }}>Click the button and upload your file in mp3 320 kbps</p>
+                  <p style={{ fontSize: '11px', color: 'rgba(90,58,26,0.4)', marginTop: '4px' }}>Max 20MB — MP3 or WAV only</p>
                   {file && (
-                    <p style={{ fontSize: '13px', color: '#e8d4b8', marginTop: '8px' }}>Selected: {file.name}</p>
+                    <p style={{ fontSize: '13px', color: '#5a3a1a', marginTop: '8px' }}>Selected: {file.name}</p>
                   )}
                 </div>
 
@@ -132,7 +119,7 @@ export default function ShareMusicCTA() {
                     onChange={(e) => setTrackTitle(e.target.value)}
                     placeholder="Track name"
                     className="garrix-cta-input"
-                    style={{ background: 'rgba(232,212,184,0.05)', borderColor: 'rgba(232,212,184,0.15)', color: '#e8d4b8' }}
+                    style={{ background: 'rgba(90,58,26,0.05)', borderColor: 'rgba(90,58,26,0.15)', color: '#2a1a0a' }}
                   />
                   <input
                     type="email"
@@ -141,7 +128,7 @@ export default function ShareMusicCTA() {
                     placeholder="Your email"
                     required
                     className="garrix-cta-input"
-                    style={{ background: 'rgba(232,212,184,0.05)', borderColor: 'rgba(232,212,184,0.15)', color: '#e8d4b8' }}
+                    style={{ background: 'rgba(90,58,26,0.05)', borderColor: 'rgba(90,58,26,0.15)', color: '#2a1a0a' }}
                   />
                   <input
                     type="text"
@@ -149,12 +136,12 @@ export default function ShareMusicCTA() {
                     onChange={(e) => setInstagram(e.target.value)}
                     placeholder="Your Instagram"
                     className="garrix-cta-input"
-                    style={{ background: 'rgba(232,212,184,0.05)', borderColor: 'rgba(232,212,184,0.15)', color: '#e8d4b8' }}
+                    style={{ background: 'rgba(90,58,26,0.05)', borderColor: 'rgba(90,58,26,0.15)', color: '#2a1a0a' }}
                   />
                 </div>
 
                 {status === 'error' && (
-                  <p style={{ color: '#e8d4b8', fontSize: '13px', marginTop: '8px', textAlign: 'center' }}>
+                  <p style={{ color: '#8a1a1a', fontSize: '13px', marginTop: '8px', textAlign: 'center' }}>
                     Upload failed. Please try again.
                   </p>
                 )}
@@ -166,8 +153,8 @@ export default function ShareMusicCTA() {
                   style={{
                     opacity: canSubmit ? 1 : 0.3,
                     cursor: canSubmit ? 'pointer' : 'not-allowed',
-                    background: canSubmit ? '#e8d4b8' : 'rgba(232,212,184,0.08)',
-                    color: '#2a1a0a',
+                    background: canSubmit ? '#5a3a1a' : 'rgba(90,58,26,0.08)',
+                    color: '#f8f1e8',
                   }}
                 >
                   {submitting ? 'UPLOADING...' : 'SUBMIT TRACK'}
