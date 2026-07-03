@@ -451,12 +451,12 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#4a3520]/15" />
 
         <div className="relative z-10 flex flex-col justify-center min-h-[80dvh] md:min-h-[100dvh] px-8 md:px-14 py-20">
-          {/* Title — white on dark brown bg */}
-          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-white mb-10 md:mb-14 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
+          {/* Title — cream like About section */}
+          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-10 md:mb-14 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
             Trusted by Global Brands
           </h2>
 
-          {/* Brand logos — pure white on dark brown bg */}
+          {/* Brand logos — cream colored like About section */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-8 max-w-[700px] reveal-stagger">
             {[
               { src: '/assets/logo-cartier-trimmed.png', alt: 'Cartier' },
@@ -476,7 +476,7 @@ export default async function HomePage() {
                   alt={logo.alt}
                   className="w-full h-full object-contain transition-all duration-300 hover:scale-105"
                   style={{
-                    filter: 'brightness(0) invert(1) brightness(0.95)',
+                    filter: 'brightness(0) invert(1) sepia(0.25) saturate(0.5) hue-rotate(350deg) brightness(0.92)',
                   }}
                 />
               </div>
