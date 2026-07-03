@@ -567,25 +567,25 @@ export default async function HomePage() {
             Trusted by Global Brands
           </h2>
 
-          {/* Brand logos — embedded in the left white space, cream colored */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-8 gap-y-10 md:gap-x-12 md:gap-y-12 max-w-[800px] reveal-stagger">
+          {/* Brand logos — embedded in the left white space, uniform cream color */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-8 max-w-[700px] reveal-stagger">
             {[
-              { src: '/assets/logo-cartier.png', alt: 'Cartier', w: 'w-24 md:w-32' },
-              { src: '/assets/logo-f1.png', alt: 'F1', w: 'w-16 md:w-24' },
-              { src: '/assets/logo-coca-cola.png', alt: 'Coca-Cola', w: 'w-24 md:w-36' },
-              { src: '/assets/logo-ciroc.png', alt: 'CÎROC', w: 'w-20 md:w-28' },
-              { src: '/assets/logo-dior.png', alt: 'Dior', w: 'w-16 md:w-24' },
-              { src: '/assets/logo-patek.png', alt: 'Patek Philippe', w: 'w-24 md:w-32' },
-              { src: '/assets/logo-prime.png', alt: 'Prime', w: 'w-20 md:w-28' },
-              { src: '/assets/logo-louis-vuitton.png', alt: 'Louis Vuitton', w: 'w-14 md:w-20' },
-              { src: '/assets/logo-mf-boxing-v2.png', alt: 'Misfits Boxing', w: 'w-20 md:w-28' },
-              { src: '/assets/logo-cannes.png', alt: 'Festival de Cannes', w: 'w-16 md:w-24' },
+              { src: '/assets/logo-cartier.png', alt: 'Cartier' },
+              { src: '/assets/logo-f1.png', alt: 'F1' },
+              { src: '/assets/logo-coca-cola.png', alt: 'Coca-Cola' },
+              { src: '/assets/logo-ciroc.png', alt: 'CÎROC' },
+              { src: '/assets/logo-dior.png', alt: 'Dior' },
+              { src: '/assets/logo-patek.png', alt: 'Patek Philippe' },
+              { src: '/assets/logo-prime.png', alt: 'Prime' },
+              { src: '/assets/logo-louis-vuitton.png', alt: 'Louis Vuitton' },
+              { src: '/assets/logo-mf-boxing-v2.png', alt: 'Misfits Boxing' },
+              { src: '/assets/logo-cannes.png', alt: 'Festival de Cannes' },
             ].map((logo, i) => (
-              <div key={i} className="flex items-center justify-center">
+              <div key={i} className="flex items-center justify-center h-12 md:h-14">
                 <img
                   src={logo.src}
                   alt={logo.alt}
-                  className={`${logo.w} h-auto object-contain transition-all duration-300 hover:scale-105`}
+                  className="h-full w-auto max-w-[120px] md:max-w-[160px] object-contain transition-all duration-300 hover:scale-105"
                   style={{
                     filter: 'brightness(0) invert(1) sepia(0.4) saturate(0.3) hue-rotate(350deg) brightness(0.95)',
                   }}
