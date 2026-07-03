@@ -91,8 +91,6 @@ export default async function HomePage() {
   let heroGrayscale = true;
   let heroBackgroundSize = 'cover';
   let heroBackgroundPosition = '70% center';
-  let videoPoster = '/assets/video-poster-desktop.jpg';
-  let videoSrc = '/assets/video-desktop.mp4';
   const radioImage = '/assets/ricky-music-jacket-sm.jpg';
   let radioHeadline = 'Music & Mixes';
   let radioLabel = 'Listen & Download';
@@ -139,12 +137,6 @@ export default async function HomePage() {
         if (c.grayscale !== undefined) heroGrayscale = c.grayscale;
         if (c.backgroundSize) heroBackgroundSize = c.backgroundSize;
         if (c.backgroundPosition) heroBackgroundPosition = c.backgroundPosition;
-      }
-      const videoSection = dbSections.find((s: any) => s.section === 'video');
-      if (videoSection?.content) {
-        const c = typeof videoSection.content === 'string' ? JSON.parse(videoSection.content) : videoSection.content;
-        if (c.poster) videoPoster = c.poster;
-        if (c.src) videoSrc = c.src;
       }
       const radioSection = dbSections.find((s: any) => s.section === 'radio');
       if (radioSection?.content) {
@@ -239,29 +231,6 @@ export default async function HomePage() {
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
         </div>
       </section>
-
-      {/* ═══ SHOWREEL — disabled for now ═══
-      <section className="garrix-showreel reveal-left">
-        <video
-          className="garrix-showreel-video"
-          src="/assets/showreel-video.mp4"
-          poster={videoPoster}
-          playsInline
-          autoPlay
-          muted
-          loop
-          preload="auto"
-          controls={false}
-          disablePictureInPicture
-          disableRemotePlayback
-        />
-        <div className="garrix-showreel-gradient" />
-        <div className="garrix-showreel-content">
-          <h2 className="garrix-hero-title">LATE<br/>NIGHT<br/>RICKY</h2>
-          <a href="/showreel" className="garrix-btn garrix-btn-outline">WATCH SHOWREEL</a>
-        </div>
-      </section>
-      */}
 
       {/* ═══ ABOUT RICKY — dark leather texture, image blends into page ═══ */}
       <section id="about" className="relative min-h-[100dvh] py-20 px-6 md:px-14 overflow-hidden">
@@ -605,110 +574,7 @@ export default async function HomePage() {
         revealClass=""
       />
 
-      {/* ═══ VENUES — scrolling marquee ═══ */}
-      <section className="garrix-venues-section">
-        <div className="garrix-venues-label">WORLDWIDE PERFORMANCES</div>
-        <div className="garrix-venues-track">
-          <div className="garrix-venues-row garrix-venues-row-forward">
-            <span>LIV Miami</span><span className="garrix-venues-dot">·</span>
-            <span>HAKKASAN Las Vegas</span><span className="garrix-venues-dot">·</span>
-            <span>MINISTRY OF SOUND London</span><span className="garrix-venues-dot">·</span>
-            <span>BYBLOS Milan</span><span className="garrix-venues-dot">·</span>
-            <span>MANDALAY BAY Las Vegas</span><span className="garrix-venues-dot">·</span>
-            <span>CIRQUE LE SOIR London</span><span className="garrix-venues-dot">·</span>
-            <span>GIBSON Frankfurt</span><span className="garrix-venues-dot">·</span>
-            <span>LIBERTINE London</span><span className="garrix-venues-dot">·</span>
-            <span>1 OAK Dubai</span><span className="garrix-venues-dot">·</span>
-            <span>SHOKO Barcelona</span><span className="garrix-venues-dot">·</span>
-            <span>TRAMP London</span><span className="garrix-venues-dot">·</span>
-            <span>RAFFLES London</span><span className="garrix-venues-dot">·</span>
-            <span>O2 ARENA London</span><span className="garrix-venues-dot">·</span>
-            <span>FABRIC London</span><span className="garrix-venues-dot">·</span>
-            <span>AMNESIA Ibiza</span><span className="garrix-venues-dot">·</span>
-            {/* Duplicate for seamless loop */}
-            <span>LIV Miami</span><span className="garrix-venues-dot">·</span>
-            <span>HAKKASAN Las Vegas</span><span className="garrix-venues-dot">·</span>
-            <span>MINISTRY OF SOUND London</span><span className="garrix-venues-dot">·</span>
-            <span>BYBLOS Milan</span><span className="garrix-venues-dot">·</span>
-            <span>MANDALAY BAY Las Vegas</span><span className="garrix-venues-dot">·</span>
-            <span>CIRQUE LE SOIR London</span><span className="garrix-venues-dot">·</span>
-            <span>GIBSON Frankfurt</span><span className="garrix-venues-dot">·</span>
-            <span>LIBERTINE London</span><span className="garrix-venues-dot">·</span>
-            <span>1 OAK Dubai</span><span className="garrix-venues-dot">·</span>
-            <span>SHOKO Barcelona</span><span className="garrix-venues-dot">·</span>
-            <span>TRAMP London</span><span className="garrix-venues-dot">·</span>
-            <span>RAFFLES London</span><span className="garrix-venues-dot">·</span>
-            <span>O2 ARENA London</span><span className="garrix-venues-dot">·</span>
-            <span>FABRIC London</span><span className="garrix-venues-dot">·</span>
-            <span>AMNESIA Ibiza</span><span className="garrix-venues-dot">·</span>
-          </div>
-          <div className="garrix-venues-row garrix-venues-row-reverse">
-            <span>WALL Miami</span><span className="garrix-venues-dot">·</span>
-            <span>TAPE London</span><span className="garrix-venues-dot">·</span>
-            <span>MOVIDA Dubai</span><span className="garrix-venues-dot">·</span>
-            <span>1 OAK New York</span><span className="garrix-venues-dot">·</span>
-            <span>PACHA Ibiza</span><span className="garrix-venues-dot">·</span>
-            <span>ARMANI Dubai</span><span className="garrix-venues-dot">·</span>
-            <span>POPPY Los Angeles</span><span className="garrix-venues-dot">·</span>
-            <span>DELILAH Los Angeles</span><span className="garrix-venues-dot">·</span>
-            <span>STUDIO PARIS Chicago</span><span className="garrix-venues-dot">·</span>
-            <span>SCANDAL London</span><span className="garrix-venues-dot">·</span>
-            <span>TAO Las Vegas</span><span className="garrix-venues-dot">·</span>
-            <span>VIP ROOM St Tropez</span><span className="garrix-venues-dot">·</span>
-            <span>DEAR DARLING London</span><span className="garrix-venues-dot">·</span>
-            <span>CUCKOO CLUB London</span><span className="garrix-venues-dot">·</span>
-            <span>USHUAÏA Ibiza</span><span className="garrix-venues-dot">·</span>
-            <span>PRINTWORKS London</span><span className="garrix-venues-dot">·</span>
-            <span>DC10 Ibiza</span><span className="garrix-venues-dot">·</span>
-            {/* Duplicate for seamless loop */}
-            <span>WALL Miami</span><span className="garrix-venues-dot">·</span>
-            <span>TAPE London</span><span className="garrix-venues-dot">·</span>
-            <span>MOVIDA Dubai</span><span className="garrix-venues-dot">·</span>
-            <span>1 OAK New York</span><span className="garrix-venues-dot">·</span>
-            <span>PACHA Ibiza</span><span className="garrix-venues-dot">·</span>
-            <span>ARMANI Dubai</span><span className="garrix-venues-dot">·</span>
-            <span>POPPY Los Angeles</span><span className="garrix-venues-dot">·</span>
-            <span>DELILAH Los Angeles</span><span className="garrix-venues-dot">·</span>
-            <span>STUDIO PARIS Chicago</span><span className="garrix-venues-dot">·</span>
-            <span>SCANDAL London</span><span className="garrix-venues-dot">·</span>
-            <span>TAO Las Vegas</span><span className="garrix-venues-dot">·</span>
-            <span>VIP ROOM St Tropez</span><span className="garrix-venues-dot">·</span>
-            <span>DEAR DARLING London</span><span className="garrix-venues-dot">·</span>
-            <span>CUCKOO CLUB London</span><span className="garrix-venues-dot">·</span>
-            <span>USHUAÏA Ibiza</span><span className="garrix-venues-dot">·</span>
-            <span>PRINTWORKS London</span><span className="garrix-venues-dot">·</span>
-            <span>DC10 Ibiza</span><span className="garrix-venues-dot">·</span>
-          </div>
-          <div className="garrix-venues-row garrix-venues-row-forward">
-            <span>JIMMY&apos;Z Monte Carlo</span><span className="garrix-venues-dot">·</span>
-            <span>TEMPLE San Francisco</span><span className="garrix-venues-dot">·</span>
-            <span>HIGHLIGHT ROOM Los Angeles</span><span className="garrix-venues-dot">·</span>
-            <span>LIO Ibiza</span><span className="garrix-venues-dot">·</span>
-            <span>PARQ San Diego</span><span className="garrix-venues-dot">·</span>
-            <span>TOY ROOM Dubai</span><span className="garrix-venues-dot">·</span>
-            <span>BAOLI Cannes</span><span className="garrix-venues-dot">·</span>
-            <span>DRAMA London</span><span className="garrix-venues-dot">·</span>
-            <span>SPIRITO Brussels</span><span className="garrix-venues-dot">·</span>
-            <span>WIRELESS FESTIVAL UK</span><span className="garrix-venues-dot">·</span>
-            <span>IBIZA ROCKS</span><span className="garrix-venues-dot">·</span>
-            <span>WEMBLEY London</span><span className="garrix-venues-dot">·</span>
-            {/* Duplicate for seamless loop */}
-            <span>JIMMY&apos;Z Monte Carlo</span><span className="garrix-venues-dot">·</span>
-            <span>TEMPLE San Francisco</span><span className="garrix-venues-dot">·</span>
-            <span>HIGHLIGHT ROOM Los Angeles</span><span className="garrix-venues-dot">·</span>
-            <span>LIO Ibiza</span><span className="garrix-venues-dot">·</span>
-            <span>PARQ San Diego</span><span className="garrix-venues-dot">·</span>
-            <span>TOY ROOM Dubai</span><span className="garrix-venues-dot">·</span>
-            <span>BAOLI Cannes</span><span className="garrix-venues-dot">·</span>
-            <span>DRAMA London</span><span className="garrix-venues-dot">·</span>
-            <span>SPIRITO Brussels</span><span className="garrix-venues-dot">·</span>
-            <span>WIRELESS FESTIVAL UK</span><span className="garrix-venues-dot">·</span>
-            <span>IBIZA ROCKS</span><span className="garrix-venues-dot">·</span>
-            <span>WEMBLEY London</span><span className="garrix-venues-dot">·</span>
-          </div>
-        </div>
-      </section>
-      {/* ═══ COLLAGE — asymmetric scatter with ghost watermark ═══ */}
+            {/* ═══ COLLAGE — asymmetric scatter with ghost watermark ═══ */}
       <section className="garrix-collage-section">
         <div className="garrix-collage-ghost" aria-hidden="true">RICKY</div>
         <div className="garrix-collage-ghost garrix-collage-ghost-outline" aria-hidden="true">LATE<br/>NIGHT</div>

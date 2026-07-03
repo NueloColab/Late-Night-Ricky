@@ -25,7 +25,6 @@ interface NavLink {
 const DEFAULT_LINKS: NavLink[] = [
   { label: 'Home', href: '/', visible: true },
   { label: 'About', href: '/about', visible: true },
-  { label: 'Showreel', href: '/showreel', visible: true },
   { label: 'Contact', href: '/contact', visible: true },
 ];
 
