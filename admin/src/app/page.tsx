@@ -567,8 +567,8 @@ export default async function HomePage() {
             Trusted by Global Brands
           </h2>
 
-          {/* Brand logos — embedded in the left white space, cream tinted */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-6 gap-y-8 md:gap-x-10 md:gap-y-10 max-w-[850px] reveal-stagger">
+          {/* Brand logos — embedded in the left white space, cream colored */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-8 gap-y-10 md:gap-x-12 md:gap-y-12 max-w-[800px] reveal-stagger">
             {[
               { src: '/assets/logo-cartier.png', alt: 'Cartier', w: 'w-24 md:w-32' },
               { src: '/assets/logo-f1.png', alt: 'F1', w: 'w-16 md:w-24' },
@@ -578,7 +578,7 @@ export default async function HomePage() {
               { src: '/assets/logo-patek.png', alt: 'Patek Philippe', w: 'w-24 md:w-32' },
               { src: '/assets/logo-prime.png', alt: 'Prime', w: 'w-20 md:w-28' },
               { src: '/assets/logo-louis-vuitton.png', alt: 'Louis Vuitton', w: 'w-14 md:w-20' },
-              { src: '/assets/logo-mf-boxing.png', alt: 'Misfits Boxing', w: 'w-20 md:w-28' },
+              { src: '/assets/logo-mf-boxing-v2.png', alt: 'Misfits Boxing', w: 'w-20 md:w-28' },
               { src: '/assets/logo-cannes.png', alt: 'Festival de Cannes', w: 'w-16 md:w-24' },
             ].map((logo, i) => (
               <div key={i} className="flex items-center justify-center">
@@ -587,7 +587,7 @@ export default async function HomePage() {
                   alt={logo.alt}
                   className={`${logo.w} h-auto object-contain transition-all duration-300 hover:scale-105`}
                   style={{
-                    filter: 'sepia(1) saturate(0.3) brightness(0.9) hue-rotate(330deg)',
+                    filter: 'brightness(0) invert(1) sepia(0.4) saturate(0.3) hue-rotate(350deg) brightness(0.95)',
                   }}
                 />
               </div>
