@@ -439,11 +439,11 @@ export default async function HomePage() {
 
       {/* ═══ TRUSTED BY GLOBAL BRANDS — hero-style with photo background ═══ */}
       <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden">
-        {/* Full background image — the wide photo with Ricky on right, white space on left */}
+        {/* Full background image — warm golden studio shot */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/assets/ricky-brands-wide.jpg')`,
+            backgroundImage: `url('/assets/ricky-brands-gold.png')`,
           }}
         />
         {/* Very subtle gradient to help text at edges */}
@@ -451,12 +451,12 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#4a3520]/15" />
 
         <div className="relative z-10 flex flex-col justify-center min-h-[80dvh] md:min-h-[100dvh] px-8 md:px-14 py-20">
-          {/* Title */}
-          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#5a3a1a] mb-10 md:mb-14 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
+          {/* Title — white on dark brown bg */}
+          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-white mb-10 md:mb-14 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
             Trusted by Global Brands
           </h2>
 
-          {/* Brand logos — uniform container size for visual consistency */}
+          {/* Brand logos — pure white on dark brown bg */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-8 max-w-[700px] reveal-stagger">
             {[
               { src: '/assets/logo-cartier-trimmed.png', alt: 'Cartier' },
@@ -476,7 +476,7 @@ export default async function HomePage() {
                   alt={logo.alt}
                   className="w-full h-full object-contain transition-all duration-300 hover:scale-105"
                   style={{
-                    filter: 'brightness(0) invert(1) sepia(0.4) saturate(0.3) hue-rotate(350deg) brightness(0.95)',
+                    filter: 'brightness(0) invert(1) brightness(0.95)',
                   }}
                 />
               </div>
