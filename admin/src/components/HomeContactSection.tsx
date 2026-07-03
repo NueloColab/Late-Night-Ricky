@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 export default function HomeContactSection() {
   const [contactInfo, setContactInfo] = useState({
     email: 'samir@wearemediahive.com',
-    image: '/assets/ricky-contact-studio.jpg',
+    image: '/assets/ricky-contact-studio-2.jpg',
     formEnabled: true,
   });
   const [expanded, setExpanded] = useState(false);
