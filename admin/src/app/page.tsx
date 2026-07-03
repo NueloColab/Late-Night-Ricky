@@ -550,43 +550,45 @@ export default async function HomePage() {
 
       {/* ═══ TRUSTED BY GLOBAL BRANDS — hero-style with photo background ═══ */}
       <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden">
-        {/* Background image — same style as hero */}
+        {/* Full background image — the wide photo with Ricky on right, white space on left */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url('/assets/ricky-brands.jpg')`,
           }}
         />
-        {/* Warm brown overlay — blends photo into site palette */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#4a3520]/50 via-[#5c4328]/60 to-[#4a3520]/70" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(200,170,130,0.2)_0%,transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(74,53,32,0.4)_0%,transparent_60%)]" />
+        {/* Very subtle gradient to help text at edges */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#f8f1e8]/10 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#4a3520]/15" />
 
-        <div className="relative z-10 flex flex-col min-h-[80dvh] md:min-h-[100dvh] px-8 md:px-14 py-20">
-          {/* Title at top */}
-          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-12 md:mb-16 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
+        <div className="relative z-10 flex flex-col justify-center min-h-[80dvh] md:min-h-[100dvh] px-8 md:px-14 py-20">
+          {/* Title */}
+          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#5a3a1a] mb-10 md:mb-14 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
             Trusted by Global Brands
           </h2>
 
-          {/* Brand logos grid — left-aligned, fills the space */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 md:gap-8 max-w-[900px] reveal-stagger">
+          {/* Brand logos — embedded in the left white space, cream tinted */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-6 gap-y-8 md:gap-x-10 md:gap-y-10 max-w-[850px] reveal-stagger">
             {[
-              { src: '/assets/logo-cartier.png', alt: 'Cartier' },
-              { src: '/assets/logo-f1.png', alt: 'F1' },
-              { src: '/assets/logo-coca-cola.png', alt: 'Coca-Cola' },
-              { src: '/assets/logo-ciroc.png', alt: 'CÎROC' },
-              { src: '/assets/logo-dior.png', alt: 'Dior' },
-              { src: '/assets/logo-patek.png', alt: 'Patek Philippe' },
-              { src: '/assets/logo-prime.png', alt: 'Prime' },
-              { src: '/assets/logo-louis-vuitton.png', alt: 'Louis Vuitton' },
-              { src: '/assets/logo-mf-boxing.png', alt: 'Misfits Boxing' },
-              { src: '/assets/logo-cannes.png', alt: 'Festival de Cannes' },
+              { src: '/assets/logo-cartier.png', alt: 'Cartier', w: 'w-24 md:w-32' },
+              { src: '/assets/logo-f1.png', alt: 'F1', w: 'w-16 md:w-24' },
+              { src: '/assets/logo-coca-cola.png', alt: 'Coca-Cola', w: 'w-24 md:w-36' },
+              { src: '/assets/logo-ciroc.png', alt: 'CÎROC', w: 'w-20 md:w-28' },
+              { src: '/assets/logo-dior.png', alt: 'Dior', w: 'w-16 md:w-24' },
+              { src: '/assets/logo-patek.png', alt: 'Patek Philippe', w: 'w-24 md:w-32' },
+              { src: '/assets/logo-prime.png', alt: 'Prime', w: 'w-20 md:w-28' },
+              { src: '/assets/logo-louis-vuitton.png', alt: 'Louis Vuitton', w: 'w-14 md:w-20' },
+              { src: '/assets/logo-mf-boxing.png', alt: 'Misfits Boxing', w: 'w-20 md:w-28' },
+              { src: '/assets/logo-cannes.png', alt: 'Festival de Cannes', w: 'w-16 md:w-24' },
             ].map((logo, i) => (
-              <div key={i} className="flex items-center justify-center p-4 md:p-6 bg-[#f8f1e8]/10 backdrop-blur-sm rounded-lg border border-[#e8d4b8]/10 hover:bg-[#f8f1e8]/20 transition-all duration-300">
+              <div key={i} className="flex items-center justify-center">
                 <img
                   src={logo.src}
                   alt={logo.alt}
-                  className="max-h-[40px] md:max-h-[50px] w-auto object-contain filter brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
+                  className={`${logo.w} h-auto object-contain transition-all duration-300 hover:scale-105`}
+                  style={{
+                    filter: 'sepia(1) saturate(0.3) brightness(0.9) hue-rotate(330deg)',
+                  }}
                 />
               </div>
             ))}
