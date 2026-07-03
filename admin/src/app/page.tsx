@@ -548,55 +548,48 @@ export default async function HomePage() {
       {/* ═══ SHARE YOUR MUSIC — cream/warm brown palette ═══ */}
       <ShareMusicCTA />
 
-      {/* ═══ TRUSTED BY GLOBAL BRANDS ═══ */}
-      <section id="brands" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
-        {/* Dark leather background — same as About */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#7a5c3a] via-[#5c4328] to-[#4a3520]" />
-        <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E")', backgroundSize: '256px 256px' }} />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#b89a6e]/40 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(200,170,130,0.25)_0%,transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
+      {/* ═══ TRUSTED BY GLOBAL BRANDS — hero-style with photo background ═══ */}
+      <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden">
+        {/* Background image — same style as hero */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('/assets/ricky-brands.jpg')`,
+          }}
+        />
+        {/* Warm brown overlay — blends photo into site palette */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#4a3520]/50 via-[#5c4328]/60 to-[#4a3520]/70" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(200,170,130,0.2)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(74,53,32,0.4)_0%,transparent_60%)]" />
 
-        <div className="relative z-10 max-w-[1400px] mx-auto">
-          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
+        <div className="relative z-10 flex flex-col min-h-[80dvh] md:min-h-[100dvh] px-8 md:px-14 py-20">
+          {/* Title at top */}
+          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-12 md:mb-16 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
             Trusted by Global Brands
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-            {/* Left — Brand logos grid */}
-            <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:gap-x-12 md:gap-y-12 reveal-stagger">
-              {[
-                { name: 'Cartier', style: 'font-serif italic tracking-wide' },
-                { name: 'F1', style: 'font-black tracking-[0.15em] uppercase' },
-                { name: 'Coca-Cola', style: 'font-serif italic tracking-wide' },
-                { name: 'Cîroc', style: 'font-medium tracking-[0.2em] uppercase' },
-                { name: 'Dior', style: 'font-serif tracking-[0.15em] uppercase' },
-                { name: 'Patek Philippe', style: 'font-serif tracking-[0.05em]' },
-                { name: 'Prime', style: 'font-black tracking-[0.1em] uppercase' },
-                { name: 'Louis Vuitton', style: 'font-serif tracking-[0.1em] uppercase' },
-                { name: 'Misfits Boxing', style: 'font-black tracking-[0.05em] uppercase' },
-                { name: 'Festival de Cannes', style: 'font-serif italic tracking-wide' },
-              ].map((brand) => (
-                <div key={brand.name} className="text-center">
-                  <p className={`text-[clamp(14px,2.5vw,22px)] text-[#e8d4b8]/90 leading-[1.2] ${brand.style}`}>
-                    {brand.name}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Right — Ricky image */}
-            <div className="reveal-right">
-              <div className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-lg">
+          {/* Brand logos grid — left-aligned, fills the space */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 md:gap-8 max-w-[900px] reveal-stagger">
+            {[
+              { src: '/assets/logo-cartier.png', alt: 'Cartier' },
+              { src: '/assets/logo-f1.png', alt: 'F1' },
+              { src: '/assets/logo-coca-cola.png', alt: 'Coca-Cola' },
+              { src: '/assets/logo-ciroc.png', alt: 'CÎROC' },
+              { src: '/assets/logo-dior.png', alt: 'Dior' },
+              { src: '/assets/logo-patek.png', alt: 'Patek Philippe' },
+              { src: '/assets/logo-prime.png', alt: 'Prime' },
+              { src: '/assets/logo-louis-vuitton.png', alt: 'Louis Vuitton' },
+              { src: '/assets/logo-mf-boxing.png', alt: 'Misfits Boxing' },
+              { src: '/assets/logo-cannes.png', alt: 'Festival de Cannes' },
+            ].map((logo, i) => (
+              <div key={i} className="flex items-center justify-center p-4 md:p-6 bg-[#f8f1e8]/10 backdrop-blur-sm rounded-lg border border-[#e8d4b8]/10 hover:bg-[#f8f1e8]/20 transition-all duration-300">
                 <img
-                  src="/assets/ricky-brands.jpg"
-                  alt="Late Night Ricky"
-                  className="w-full h-full object-cover object-top"
-                  style={{ filter: 'contrast(1.05) brightness(1.02)' }}
+                  src={logo.src}
+                  alt={logo.alt}
+                  className="max-h-[40px] md:max-h-[50px] w-auto object-contain filter brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#4a3520]/30 via-transparent to-transparent" />
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
