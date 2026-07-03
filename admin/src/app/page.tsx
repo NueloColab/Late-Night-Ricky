@@ -2,7 +2,6 @@ import Navbar from '../components/Navbar';
 import ScrollReveal from '../components/ScrollReveal';
 import AudioTrackList from '../components/AudioTrackList';
 import ShareMusicCTA from '../components/ShareMusicCTA';
-import TrustedBySection from '../components/TrustedBySection';
 import HomeContactSection from '../components/HomeContactSection';
 import LateNightMoments from '../components/LateNightMoments';
 // import Loader from '../components/Loader'; // disabled temporarily
@@ -123,7 +122,7 @@ export default async function HomePage() {
   ];
 
   // Suppress unused-variable warnings for CMS values not yet used in new layout
-  void heroGrayscale; void heroBackgroundSize; void heroBackgroundPosition; void reachOutImage; void reachOutCta; void pressPack; void clientsTitle; void clients;
+  void heroGrayscale; void heroBackgroundSize; void heroBackgroundPosition; void reachOutImage; void reachOutCta; void pressPack; void clientsTitle; void clients; void partnersQuote; void partnersAttribution; void partnersDescription;
   try {
     const [dbCards, dbNames, dbTracks, dbSections, dbAboutSections] = await Promise.all([
       getShowCards(), getClientNames(), getTracks(), getSiteSections('home'), getSiteSections('about'),
@@ -486,16 +485,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ═══ TRUSTED BY THE BEST — interactive names with background ═══ */}
-      <TrustedBySection
-        quote={partnersQuote}
-        attribution={partnersAttribution}
-        description={partnersDescription}
-        clients={clients}
-        revealClass=""
-      />
-
-                        {/* ═══ CONTACT ═══ */}
+      {/* ═══ CONTACT ═══ */}
       <HomeContactSection />
 
       {/* ═══ FOOTER ═══ */}
