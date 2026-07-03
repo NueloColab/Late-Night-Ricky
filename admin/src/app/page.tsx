@@ -558,7 +558,8 @@ export default async function HomePage() {
                   alt={logo.alt}
                   className="w-full h-full object-contain transition-all duration-300 hover:scale-105"
                   style={{
-                    filter: 'brightness(0) invert(1) sepia(0.5) saturate(0.3) hue-rotate(350deg) brightness(0.8)',
+                    filter: 'brightness(0.5) sepia(1) saturate(0.2) hue-rotate(330deg) brightness(0.6)',
+                    opacity: 0.7,
                   }}
                 />
               </div>
