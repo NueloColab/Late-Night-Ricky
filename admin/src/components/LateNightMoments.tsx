@@ -66,6 +66,7 @@ export default function LateNightMoments() {
   const scrollStart = useRef(0);
 
   const [videoOverlay, setVideoOverlay] = useState(false);
+  const [videoOverlayVisible, setVideoOverlayVisible] = useState(false);
 
   const activeMoment = momentsData.find((m) => m.id === openModal);
 
@@ -76,6 +77,14 @@ export default function LateNightMoments() {
   const close = () => {
     setModalVisible(false);
     setTimeout(() => setOpenModal(null), 400);
+  };
+  const openVideo = () => {
+    setVideoOverlay(true);
+    setTimeout(() => setVideoOverlayVisible(true), 50);
+  };
+  const closeVideo = () => {
+    setVideoOverlayVisible(false);
+    setTimeout(() => setVideoOverlay(false), 400);
   };
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
@@ -241,7 +250,7 @@ export default function LateNightMoments() {
                       className="w-full h-full object-cover"
                       controls
                       playsInline
-                      onClick={() => setVideoOverlay(true)}
+                      onClick={(e) => { e.stopPropagation(); openVideo(); }}
                     />
                   ) : (
                     <p className="text-[13px] text-[#5a3a1a]/40 font-medium">
@@ -253,14 +262,15 @@ export default function LateNightMoments() {
             </div>
           </div>
 
-          {/* Video overlay — larger centered video player */}
+          {/* Video overlay — smooth elegant transition */}
           {videoOverlay && activeMoment.video && (
             <div
-              className="fixed inset-0 z-[60] flex items-center justify-center p-4"
-              onClick={() => setVideoOverlay(false)}
+              className={`fixed inset-0 z-[60] flex items-center justify-center p-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${videoOverlayVisible ? 'opacity-100' : 'opacity-0'}`}
+              onClick={closeVideo}
             >
-              <div className="absolute inset-0 bg-[#2a1a0a]/95 backdrop-blur-[12px] transition-opacity duration-300" />
-              <div className="relative z-10 w-full max-w-[900px] aspect-video"
+              <div className={`absolute inset-0 bg-[#2a1a0a]/95 backdrop-blur-[12px] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${videoOverlayVisible ? 'opacity-100' : 'opacity-0'}`} />
+              <div
+                className={`relative z-10 w-full max-w-[900px] aspect-video transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${videoOverlayVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.92] translate-y-6'}`}
                 onClick={(e) => e.stopPropagation()}
               >
                 <video
@@ -271,7 +281,7 @@ export default function LateNightMoments() {
                   playsInline
                 />
                 <button
-                  onClick={() => setVideoOverlay(false)}
+                  onClick={closeVideo}
                   className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white">
