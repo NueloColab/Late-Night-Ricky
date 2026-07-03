@@ -567,7 +567,7 @@ export default async function HomePage() {
             Trusted by Global Brands
           </h2>
 
-          {/* Brand logos — embedded in the left white space, uniform cream color */}
+          {/* Brand logos — uniform container size for visual consistency */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-8 max-w-[700px] reveal-stagger">
             {[
               { src: '/assets/logo-cartier.png', alt: 'Cartier' },
@@ -581,11 +581,11 @@ export default async function HomePage() {
               { src: '/assets/logo-mf-boxing-v2.png', alt: 'Misfits Boxing' },
               { src: '/assets/logo-cannes.png', alt: 'Festival de Cannes' },
             ].map((logo, i) => (
-              <div key={i} className="flex items-center justify-center h-12 md:h-14">
+              <div key={i} className="flex items-center justify-center w-28 h-12 md:w-36 md:h-14">
                 <img
                   src={logo.src}
                   alt={logo.alt}
-                  className="h-full w-auto max-w-[120px] md:max-w-[160px] object-contain transition-all duration-300 hover:scale-105"
+                  className="w-full h-full object-contain transition-all duration-300 hover:scale-105"
                   style={{
                     filter: 'brightness(0) invert(1) sepia(0.4) saturate(0.3) hue-rotate(350deg) brightness(0.95)',
                   }}
