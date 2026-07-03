@@ -554,7 +554,7 @@ export default async function HomePage() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/assets/ricky-brands.jpg')`,
+            backgroundImage: `url('/assets/ricky-brands-wide.jpg')`,
           }}
         />
         {/* Very subtle gradient to help text at edges */}
