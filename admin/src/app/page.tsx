@@ -217,9 +217,9 @@ export default async function HomePage() {
           }}
         />
         {/* Logo + subtitle — positioned left, level with sunglasses (~mid-hero) */}
-        <div className="relative z-10 flex flex-col items-start ml-4 md:ml-12" style={{ marginTop: '28vh' }}>
-          <img src={heroLogo} alt="Late Night Ricky" className="w-[40%] max-w-[500px] min-w-[200px] drop-shadow-[0_4px_30px_rgba(0,0,0,0.4)]" />
-          <p className="mt-3 text-[clamp(11px,1.2vw,14px)] font-bold tracking-[0.2em] uppercase text-[#c9a96e] drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]"
+        <div className="relative z-10 flex flex-col items-start ml-4 md:ml-12" style={{ marginTop: '22vh' }}>
+          <img src={heroLogo} alt="Late Night Ricky" className="w-[50%] md:w-[40%] max-w-[500px] min-w-[180px] drop-shadow-[0_4px_30px_rgba(0,0,0,0.4)]" />
+          <p className="mt-3 text-[10px] md:text-[clamp(11px,1.2vw,14px)] font-bold tracking-[0.2em] uppercase text-[#c9a96e] drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]"
              style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             Grammy Winning Producer | International DJ
@@ -572,7 +572,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#f0e6d8]/10 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#4a3520]/15" />
 
-        <div className="relative z-10 flex flex-col justify-center min-h-[60dvh] md:min-h-[100dvh] px-6 md:px-14 py-16 md:py-20">
+        <div className="relative z-10 flex flex-col justify-center min-h-[80dvh] md:min-h-[100dvh] px-6 md:px-14 py-20 md:py-20">
           {/* Title — cream like About section */}
           <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-10 md:mb-14 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
             Trusted by Global Brands
@@ -673,7 +673,7 @@ export default async function HomePage() {
           {/* Bottom bar */}
           <div className="garrix-footer-bottom">
             <div className="garrix-footer-logo">
-              <img src="/assets/ricky-logo.png" alt="LNR" className="h-6 opacity-40" style={{ filter: 'brightness(0) invert(1) sepia(0.4) saturate(0.3) hue-rotate(350deg) brightness(0.75)' }} />
+              <img src="/assets/ricky-logo.png" alt="LNR" className="h-8 md:h-6 opacity-40" style={{ filter: 'brightness(0) invert(1) sepia(0.4) saturate(0.3) hue-rotate(350deg) brightness(0.75)' }} />
             </div>
             <p>&copy; {new Date().getFullYear()} Late Night Ricky. All rights reserved.</p>
             <div className="garrix-footer-links">

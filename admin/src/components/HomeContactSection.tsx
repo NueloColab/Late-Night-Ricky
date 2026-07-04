@@ -92,7 +92,7 @@ export default function HomeContactSection() {
           className="w-full h-full object-cover object-center"
           style={{ filter: 'grayscale(100%)' }}
         />
-        <div className="absolute inset-0 bg-[#2a1a0a]/40" />
+        <div className="absolute inset-0 bg-[#2a1a0a]/60" />
       </div>
 
       {/* Contact content on the left */}
