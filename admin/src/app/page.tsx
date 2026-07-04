@@ -262,7 +262,7 @@ export default async function HomePage() {
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-stretch">
             {/* Left — Text */}
             <div className="reveal-left" data-delay="100">
-              <div className="flex items-center gap-2 md:gap-3 mb-8">
+              <div className="flex items-center gap-0 mb-8">
                 <img
                   src="/assets/about-text-final.png"
                   alt="About"
