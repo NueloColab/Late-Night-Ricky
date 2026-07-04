@@ -222,7 +222,7 @@ export default function LateNightMoments() {
                   {activeMoment.images.map((img, i) => (
                     <div
                       key={i}
-                      className="flex-shrink-0 w-[260px] md:w-[300px] aspect-square overflow-hidden"
+                      className="flex-shrink-0 w-[260px] md:w-[300px] aspect-square overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)]"
                       style={{ scrollSnapAlign: 'start' }}
                     >
                       <img
@@ -250,7 +250,7 @@ export default function LateNightMoments() {
                 <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#d4c4a8]/60 font-medium mb-3">
                   Video
                 </p>
-                <div className="max-w-[600px] mx-auto aspect-video overflow-hidden bg-[#2a1a0a]/5 flex items-center justify-center cursor-pointer">
+                <div className="max-w-[600px] mx-auto aspect-video overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)] bg-[#2a1a0a]/20 flex items-center justify-center cursor-pointer">
                   {activeMoment.video ? (
                     <video
                       src={activeMoment.video}
