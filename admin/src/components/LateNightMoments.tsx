@@ -114,10 +114,13 @@ export default function LateNightMoments() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/20 via-transparent to-[#d4c4a8]/15" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(32px,5vw,56px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#5a3a1a] text-center mb-14 md:mb-20" style={{ fontFamily: "'Oswald', sans-serif" }}>
+          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(32px,5vw,56px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#5a3a1a] text-center mb-2" style={{ fontFamily: "'Oswald', sans-serif" }}>
             <span className="reveal-left" data-delay="100">Late Night</span>
             <span className="reveal-right" data-delay="300">Moments</span>
           </h2>
+          <p className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#5a3a1a]/50 font-medium text-center mb-14 md:mb-20 reveal-fade">
+            An insight to Ricky&apos;s world
+          </p>
 
           <div className="grid grid-cols-3 gap-4 md:gap-6 reveal-stagger">
             {momentsData.map((moment) => (
