@@ -267,11 +267,13 @@ export default async function HomePage() {
                   src="/assets/about-text-final.png"
                   alt="About"
                   className="h-[clamp(48px,7vw,84px)] w-auto object-contain"
+                  style={{ filter: 'sepia(0.3) brightness(0.95) saturate(0.8)' }}
                 />
                 <img
                   src="/assets/ricky-text-final.png"
                   alt="Ricky"
-                  className="h-[clamp(48px,7vw,84px)] w-auto object-contain"
+                  className="h-[clamp(48px,7vw,84px)] w-auto object-contain -ml-2 md:-ml-4"
+                  style={{ filter: 'sepia(0.3) brightness(0.95) saturate(0.8)' }}
                 />
               </div>
               <div className="space-y-5">
