@@ -174,18 +174,20 @@ export default function LateNightMoments() {
             onClick={(e) => e.stopPropagation()}
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {/* Leather background image */}
-            <div className="absolute inset-0 z-0 rounded-xl overflow-hidden">
-              <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-[#2a1a0a]/70" />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/40 via-transparent to-[#2a1a0a]/70" />
-            </div>
+            {/* Wrapper that grows with content */}
+            <div className="relative min-h-full">
+              {/* Leather background image — covers full content */}
+              <div className="absolute inset-0 z-0 rounded-xl overflow-hidden">
+                <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-[#2a1a0a]/70" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/40 via-transparent to-[#2a1a0a]/70" />
+              </div>
 
-            {/* Close button */}
-            <button
-              onClick={close}
-              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-[#e8d4b8]/10 hover:bg-[#e8d4b8]/20 flex items-center justify-center transition-colors"
-            >
+              {/* Close button */}
+              <button
+                onClick={close}
+                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-[#e8d4b8]/10 hover:bg-[#e8d4b8]/20 flex items-center justify-center transition-colors"
+              >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#e8d4b8]">
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
@@ -267,6 +269,8 @@ export default function LateNightMoments() {
                 </div>
               </div>
             </div>
+          </div>
+
           </div>
 
           {/* Video overlay — smooth elegant transition */}
