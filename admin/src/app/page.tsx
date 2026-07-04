@@ -217,7 +217,7 @@ export default async function HomePage() {
           }}
         />
         {/* Logo + subtitle — positioned left, level with sunglasses (~mid-hero) */}
-        <div className="absolute z-10 flex flex-col items-center top-[18%] left-0 right-0 px-4">
+        <div className="absolute z-10 flex flex-col items-center top-1/2 left-0 right-0 -translate-y-1/2 px-4">
           <img src={heroLogo} alt="Late Night Ricky" className="w-[60%] md:w-[40%] max-w-[500px] min-w-[220px] drop-shadow-[0_4px_30px_rgba(0,0,0,0.4)]" />
           <p className="mt-3 text-[12px] md:text-[clamp(11px,1.2vw,14px)] font-bold tracking-[0.2em] uppercase text-[#c9a96e] drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]"
              style={{ fontFamily: "'Montserrat', sans-serif" }}
