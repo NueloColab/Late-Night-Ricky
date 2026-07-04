@@ -262,9 +262,20 @@ export default async function HomePage() {
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-stretch">
             {/* Left — Text */}
             <div className="reveal-left" data-delay="100">
-              <h2 className="text-[clamp(36px,5vw,72px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-8">
-                About Ricky
-              </h2>
+              <div className="flex items-center gap-2 md:gap-3 mb-8">
+                <img
+                  src="/assets/about-text.png"
+                  alt="About"
+                  className="h-[clamp(40px,6vw,72px)] w-auto object-contain"
+                  style={{ mixBlendMode: 'screen' }}
+                />
+                <img
+                  src="/assets/ricky-text.png"
+                  alt="Ricky"
+                  className="h-[clamp(40px,6vw,72px)] w-auto object-contain"
+                  style={{ mixBlendMode: 'screen' }}
+                />
+              </div>
               <div className="space-y-5">
                 <p className="text-[13px] md:text-[14px] leading-[1.7] tracking-[0.02em] text-[#d4c4a8]/95">
                   {aboutBio1}
