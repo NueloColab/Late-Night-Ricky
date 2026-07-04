@@ -528,7 +528,7 @@ export default async function HomePage() {
                 <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline flex items-center justify-center px-3 py-2.5" aria-label="YouTube">
                   <svg viewBox="0 0 24 24" width="28" height="28">
                     <path fill="#5a3a1a" d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 00.5 6.19 31.5 31.5 0 000 12a31.5 31.5 0 00.5 5.81 3.02 3.02 0 002.12 2.14c1.88.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 002.12-2.14A31.5 31.5 0 0024 12a31.5 31.5 0 00-.5-5.81z"/>
-                    <path fill="#f8f1e8" d="M9.55 15.5V8.5l6.27 3.5-6.27 3.5z"/>
+                    <path fill="#f0e6d8" d="M9.55 15.5V8.5l6.27 3.5-6.27 3.5z"/>
                   </svg>
                 </a>
               </div>
@@ -565,7 +565,7 @@ export default async function HomePage() {
         {/* Brown frosting overlay for warmth */}
         <div className="absolute inset-0 bg-[#5a3a0a]/30" />
         <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E")', backgroundSize: '256px 256px' }} />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#f8f1e8]/10 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#f0e6d8]/10 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#4a3520]/15" />
 
         <div className="relative z-10 flex flex-col justify-center min-h-[80dvh] md:min-h-[100dvh] px-8 md:px-14 py-20">

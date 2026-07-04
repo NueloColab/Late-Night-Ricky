@@ -128,7 +128,7 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
                   togglePlay(i, track.src);
                 }}
                 disabled={!track.src}
-                className="w-10 h-10 rounded-full border-[1.5px] border-[#5a3a1a]/50 bg-transparent flex items-center justify-center text-[#2a1a0a] group-hover:bg-[#2a1a0a] group-hover:text-[#f8f1e8] group-hover:border-[#2a1a0a] transition-all duration-200 disabled:opacity-30"
+                className="w-10 h-10 rounded-full border-[1.5px] border-[#5a3a1a]/50 bg-transparent flex items-center justify-center text-[#2a1a0a] group-hover:bg-[#2a1a0a] group-hover:text-[#f0e6d8] group-hover:border-[#2a1a0a] transition-all duration-200 disabled:opacity-30"
               >
                 {isPlaying ? (
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">

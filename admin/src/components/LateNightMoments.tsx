@@ -110,7 +110,7 @@ export default function LateNightMoments() {
       {/* ═══ LATE NIGHT MOMENTS — 3x2 grid, title above image, square B&W ═══ */}
       <section id="moments" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
         {/* Slightly creamier warm background */}
-        <div className="absolute inset-0 bg-[#f8f1e8]" />
+        <div className="absolute inset-0 bg-[#f0e6d8]" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/20 via-transparent to-[#d4c4a8]/15" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
