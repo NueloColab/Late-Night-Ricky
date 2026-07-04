@@ -217,9 +217,9 @@ export default async function HomePage() {
           }}
         />
         {/* Logo + subtitle — positioned left, level with sunglasses (~mid-hero) */}
-        <div className="relative z-10 flex flex-col items-start ml-4 md:ml-12" style={{ marginTop: '22vh' }}>
-          <img src={heroLogo} alt="Late Night Ricky" className="w-[50%] md:w-[40%] max-w-[500px] min-w-[180px] drop-shadow-[0_4px_30px_rgba(0,0,0,0.4)]" />
-          <p className="mt-3 text-[10px] md:text-[clamp(11px,1.2vw,14px)] font-bold tracking-[0.2em] uppercase text-[#c9a96e] drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]"
+        <div className="relative z-10 flex flex-col items-center justify-center h-full">
+          <img src={heroLogo} alt="Late Night Ricky" className="w-[60%] md:w-[40%] max-w-[500px] min-w-[220px] drop-shadow-[0_4px_30px_rgba(0,0,0,0.4)]" />
+          <p className="mt-3 text-[12px] md:text-[clamp(11px,1.2vw,14px)] font-bold tracking-[0.2em] uppercase text-[#c9a96e] drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]"
              style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             Grammy Winning Producer | International DJ
