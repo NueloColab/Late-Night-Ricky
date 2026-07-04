@@ -263,16 +263,20 @@ export default async function HomePage() {
             {/* Left — Text */}
             <div className="reveal-left" data-delay="100">
               <div className="flex items-center gap-0 mb-8">
-                <img
-                  src="/assets/about-text-cream.png"
-                  alt="About"
-                  className="h-[clamp(48px,7vw,84px)] w-auto object-contain"
-                />
-                <img
-                  src="/assets/ricky-text-cream.png"
-                  alt="Ricky"
-                  className="h-[clamp(48px,7vw,84px)] w-auto object-contain -ml-1 md:-ml-2"
-                />
+                <div className="reveal-left" data-delay="100">
+                  <img
+                    src="/assets/about-text-cream.png"
+                    alt="About"
+                    className="h-[clamp(48px,7vw,84px)] w-auto object-contain"
+                  />
+                </div>
+                <div className="reveal-right" data-delay="300">
+                  <img
+                    src="/assets/ricky-text-cream.png"
+                    alt="Ricky"
+                    className="h-[clamp(48px,7vw,84px)] w-auto object-contain -ml-1 md:-ml-2"
+                  />
+                </div>
               </div>
               <div className="space-y-5">
                 <p className="text-[13px] md:text-[14px] leading-[1.7] tracking-[0.02em] text-[#d4c4a8]/95">
