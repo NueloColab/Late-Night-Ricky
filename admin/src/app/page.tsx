@@ -341,14 +341,18 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(200,170,130,0.25)_0%,transparent_60%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          {/* Title */}
-          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
-            <img
-              src="/assets/ricky-text-cream.png"
-              alt="Ricky"
-              className="h-[clamp(40px,6vw,72px)] w-auto object-contain"
-            />
-            <span>Has Performed With...</span>
+          {/* Title — animated from both sides */}
+          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20" style={{ fontFamily: "'Oswald', sans-serif" }}>
+            <div className="reveal-left" data-delay="100">
+              <img
+                src="/assets/ricky-text-cream.png"
+                alt="Ricky"
+                className="h-[clamp(40px,6vw,72px)] w-auto object-contain"
+              />
+            </div>
+            <span className="reveal-right" data-delay="300">
+              Has Performed With...
+            </span>
           </h2>
 
           {/* Carousel 1 */}
