@@ -307,7 +307,7 @@ export default async function HomePage() {
             {/* Right — Photo blends into page */}
             <div className="reveal-right h-full" data-delay="200">
               <div
-                className="h-full w-full"
+                className="h-full w-full relative"
                 style={{
                   background: 'linear-gradient(to bottom, #7a5c3a, #4a3520)',
                 }}
@@ -318,9 +318,11 @@ export default async function HomePage() {
                   className="w-full h-full object-cover object-top"
                   style={{
                     mixBlendMode: 'multiply',
-                    filter: 'contrast(1.1) brightness(1.05)',
+                    filter: 'contrast(1.1) brightness(1.15)',
                   }}
                 />
+                {/* Lighten overlay */}
+                <div className="absolute inset-0 bg-[#7a5c3a]/20 pointer-events-none" />
               </div>
             </div>
           </div>
