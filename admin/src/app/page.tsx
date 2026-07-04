@@ -346,7 +346,7 @@ export default async function HomePage() {
             <img
               src="/assets/ricky-text-cream.png"
               alt="Ricky"
-              className="h-[clamp(32px,4.5vw,56px)] w-auto object-contain"
+              className="h-[clamp(40px,6vw,72px)] w-auto object-contain"
             />
             <span>Has Performed With...</span>
           </h2>
