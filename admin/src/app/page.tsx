@@ -279,6 +279,20 @@ export default async function HomePage() {
                   {aboutBio4}
                 </p>
               </div>
+              {/* Press Pack button */}
+              <div className="mt-8 flex justify-center md:justify-start">
+                <a
+                  href="/assets/press-pack.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#e8d4b8]/30 text-[#e8d4b8] text-[13px] font-semibold tracking-[0.08em] uppercase hover:bg-[#e8d4b8]/10 hover:border-[#e8d4b8]/50 transition-all duration-300"
+                >
+                  Press Pack
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-70">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </a>
+              </div>
             </div>
 
             {/* Right — Photo blends into page */}
