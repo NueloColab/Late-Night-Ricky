@@ -122,7 +122,7 @@ export default function LateNightMoments() {
             An insight to Ricky&apos;s world
           </p>
 
-          <div className="grid grid-cols-3 gap-4 md:gap-6 reveal-stagger">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 reveal-stagger">
             {momentsData.map((moment) => (
               <button
                 key={moment.id}

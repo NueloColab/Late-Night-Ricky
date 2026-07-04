@@ -346,12 +346,12 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Title — animated from both sides */}
-          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20" style={{ fontFamily: "'Oswald', sans-serif" }}>
+          <h2 className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[clamp(24px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20" style={{ fontFamily: "'Oswald', sans-serif" }}>
             <div className="reveal-left" data-delay="100">
               <img
                 src="/assets/ricky-text-cream.png"
                 alt="Ricky"
-                className="h-[clamp(40px,6vw,72px)] w-auto object-contain"
+                className="h-[clamp(32px,6vw,72px)] w-auto object-contain"
               />
             </div>
             <span className="reveal-right" data-delay="300">
@@ -433,7 +433,7 @@ export default async function HomePage() {
       {/* ═══ WORLDWIDE PERFORMANCES ═══ */}
       <section id="venues" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 rounded-xl overflow-hidden">
+          <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-16 md:pb-10 rounded-xl overflow-hidden">
             {/* Background image */}
             <div className="absolute inset-0 z-0">
               <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
@@ -572,7 +572,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#f0e6d8]/10 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#4a3520]/15" />
 
-        <div className="relative z-10 flex flex-col justify-center min-h-[80dvh] md:min-h-[100dvh] px-8 md:px-14 py-20">
+        <div className="relative z-10 flex flex-col justify-center min-h-[60dvh] md:min-h-[100dvh] px-6 md:px-14 py-16 md:py-20">
           {/* Title — cream like About section */}
           <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-10 md:mb-14 reveal-fade" style={{ fontFamily: "'Oswald', sans-serif" }}>
             Trusted by Global Brands
