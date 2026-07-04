@@ -166,41 +166,48 @@ export default function LateNightMoments() {
           onClick={close}
         >
           {/* Backdrop */}
-          <div className={`absolute inset-0 bg-[#2a1a0a]/85 backdrop-blur-[8px] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100' : 'opacity-0'}`} />
+          <div className={`absolute inset-0 bg-[#2a1a0a]/90 backdrop-blur-[8px] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100' : 'opacity-0'}`} />
 
-          {/* Modal box */}
+          {/* Modal box — leather background */}
           <div
-            className={`modal-scroll-hide relative z-10 w-full max-w-[1100px] max-h-[75vh] overflow-y-auto bg-[#f8f1e8] rounded-xl border border-[#2a1a0a]/8 shadow-[0_20px_60px_-15px_rgba(42,26,10,0.35),0_0_0_1px_rgba(42,26,10,0.05)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.92] translate-y-8'}`}
+            className={`modal-scroll-hide relative z-10 w-full max-w-[1100px] max-h-[75vh] overflow-y-auto rounded-xl border border-[#e8d4b8]/15 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(42,26,10,0.05)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.92] translate-y-8'}`}
             onClick={(e) => e.stopPropagation()}
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
+            {/* Leather background image */}
+            <div className="absolute inset-0 z-0 rounded-xl overflow-hidden">
+              <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-[#2a1a0a]/70" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/40 via-transparent to-[#2a1a0a]/70" />
+            </div>
+
             {/* Close button */}
             <button
               onClick={close}
-              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-[#2a1a0a]/10 hover:bg-[#2a1a0a]/20 flex items-center justify-center transition-colors"
+              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-[#e8d4b8]/10 hover:bg-[#e8d4b8]/20 flex items-center justify-center transition-colors"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#2a1a0a]">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#e8d4b8]">
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             </button>
 
-            <div className="p-5 md:p-8">
+            <div className="relative z-10 p-5 md:p-8">
               {/* Title */}
-              <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase tracking-[-1px] leading-[1] text-[#5a3a1a] mb-2 pr-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
+              <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase tracking-[-1px] leading-[1] text-[#e8d4b8] mb-2 pr-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
                 {activeMoment.title}
               </h2>
-              <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#5a3a1a]/60 font-medium mb-4">
+              <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#d4c4a8]/80 font-medium mb-4">
                 {activeMoment.subtitle}
               </p>
 
               {/* Description */}
-              <p className="text-[13px] md:text-[14px] leading-[1.7] text-[#3a2515]/80 mb-5">
+              <p className="text-[13px] md:text-[14px] leading-[1.7] text-[#d4c4a8]/90 mb-5">
                 {activeMoment.description}
               </p>
 
               {/* Gallery */}
               <div className="mb-5">
-                <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#5a3a1a]/50 font-medium mb-3">
+                <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#d4c4a8]/60 font-medium mb-3">
                   Gallery
                 </p>
                 <div
@@ -232,7 +239,7 @@ export default function LateNightMoments() {
                   {activeMoment.images.map((_, i) => (
                     <div
                       key={i}
-                      className={`w-2 h-2 rounded-full transition-colors ${i === 0 ? 'bg-[#5a3a1a]' : 'bg-[#5a3a1a]/30'}`}
+                      className={`w-2 h-2 rounded-full transition-colors ${i === 0 ? 'bg-[#e8d4b8]' : 'bg-[#e8d4b8]/30'}`}
                     />
                   ))}
                 </div>
@@ -240,7 +247,7 @@ export default function LateNightMoments() {
 
               {/* Video */}
               <div className="mb-2">
-                <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#5a3a1a]/50 font-medium mb-3">
+                <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#d4c4a8]/60 font-medium mb-3">
                   Video
                 </p>
                 <div className="max-w-[600px] mx-auto aspect-video overflow-hidden bg-[#2a1a0a]/5 flex items-center justify-center cursor-pointer">
@@ -253,7 +260,7 @@ export default function LateNightMoments() {
                       onClick={(e) => { e.stopPropagation(); openVideo(); }}
                     />
                   ) : (
-                    <p className="text-[13px] text-[#5a3a1a]/40 font-medium">
+                    <p className="text-[13px] text-[#d4c4a8]/60 font-medium">
                       Video coming soon
                     </p>
                   )}
