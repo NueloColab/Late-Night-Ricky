@@ -155,8 +155,9 @@ export default function HomeContactSection() {
                   </a>
                 </div>
               ) : (
-                <>
-                  <form onSubmit={handleSubmit} hidden={activeTab !== 'booking'} data-tab="booking">
+                <div>
+                  <div className={activeTab === 'booking' ? 'overflow-hidden transition-all duration-300 ease-in-out max-h-[500px] opacity-100' : 'overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0'}>
+                    <form onSubmit={handleSubmit} data-tab="booking">
                     {[
                       { label: 'Name *', name: 'name', type: 'text' },
                       { label: 'Email *', name: 'email', type: 'email' },
@@ -171,7 +172,7 @@ export default function HomeContactSection() {
                           type={field.type}
                           name={field.name}
                           required
-                          className="w-full bg-[#2a1a0a]/30 border border-[#e8d4b8]/20 px-4 py-3 text-sm text-[#e8d4b8] placeholder-[#d4c4a8]/40 focus:outline-none focus:border-[#e8d4b8]/50"
+                          className="w-full min-w-0 bg-[#2a1a0a]/30 border border-[#e8d4b8]/20 px-4 py-3 text-sm text-[#e8d4b8] placeholder-[#d4c4a8]/40 focus:outline-none focus:border-[#e8d4b8]/50"
                         />
                       </div>
                     ))}
@@ -184,8 +185,10 @@ export default function HomeContactSection() {
                       {submitting ? 'Sending...' : 'Submit'}
                     </button>
                   </form>
+                  </div>
 
-                  <form onSubmit={handleSubmit} hidden={activeTab !== 'private'} data-tab="private">
+                  <div className={activeTab === 'private' ? 'overflow-hidden transition-all duration-300 ease-in-out max-h-[400px] opacity-100' : 'overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0'}>
+                  <form onSubmit={handleSubmit} data-tab="private">
                     {[
                       { label: 'Name *', name: 'name', type: 'text' },
                       { label: 'Email *', name: 'email', type: 'email' },
@@ -196,7 +199,7 @@ export default function HomeContactSection() {
                           type={field.type}
                           name={field.name}
                           required
-                          className="w-full bg-[#2a1a0a]/30 border border-[#e8d4b8]/20 px-4 py-3 text-sm text-[#e8d4b8] placeholder-[#d4c4a8]/40 focus:outline-none focus:border-[#e8d4b8]/50"
+                          className="w-full min-w-0 bg-[#2a1a0a]/30 border border-[#e8d4b8]/20 px-4 py-3 text-sm text-[#e8d4b8] placeholder-[#d4c4a8]/40 focus:outline-none focus:border-[#e8d4b8]/50"
                         />
                       </div>
                     ))}
@@ -206,7 +209,7 @@ export default function HomeContactSection() {
                         name="message"
                         required
                         rows={4}
-                        className="w-full bg-[#2a1a0a]/30 border border-[#e8d4b8]/20 px-4 py-3 text-sm text-[#e8d4b8] placeholder-[#d4c4a8]/40 focus:outline-none focus:border-[#e8d4b8]/50 resize-y min-h-[80px]"
+                        className="w-full min-w-0 bg-[#2a1a0a]/30 border border-[#e8d4b8]/20 px-4 py-3 text-sm text-[#e8d4b8] placeholder-[#d4c4a8]/40 focus:outline-none focus:border-[#e8d4b8]/50 resize-y min-h-[80px]"
                       />
                     </div>
                     {error && activeTab === 'private' && <p className="text-red-300 text-sm mb-4">{error}</p>}
@@ -218,6 +221,7 @@ export default function HomeContactSection() {
                       {submitting ? 'Sending...' : 'Submit'}
                     </button>
                   </form>
+                  </div>
 
                   {/* Bottom buttons */}
                   <div className="mt-6 pt-6 border-t border-[#e8d4b8]/20 flex flex-col sm:flex-row gap-3">
@@ -235,7 +239,7 @@ export default function HomeContactSection() {
                       Share Your Music
                     </a>
                   </div>
-                </>
+                </div>
               )}
             </div>
           )}
