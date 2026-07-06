@@ -4,6 +4,7 @@ import AudioTrackList from '../components/AudioTrackList';
 import ShareMusicCTA from '../components/ShareMusicCTA';
 import HomeContactSection from '../components/HomeContactSection';
 import LateNightMoments from '../components/LateNightMoments';
+import PinProtectedDownload from '../components/PinProtectedDownload';
 // import Loader from '../components/Loader'; // disabled temporarily
 import { getShowCards, getClientNames, getTracks, getSiteSections, getSeoMeta } from '@/lib/cms';
 import type { Metadata } from 'next';
@@ -292,19 +293,9 @@ export default async function HomePage() {
                   {aboutBio4}
                 </p>
               </div>
-              {/* Press Pack button */}
+              {/* Press Pack button — PIN protected */}
               <div className="mt-8 flex justify-center md:justify-start">
-                <a
-                  href="/assets/press-pack.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/30 text-white text-[13px] font-semibold tracking-[0.08em] uppercase hover:bg-white/10 hover:border-white/50 transition-all duration-300"
-                >
-                  Press Pack
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-70">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </a>
+                <PinProtectedDownload />
               </div>
             </div>
 
