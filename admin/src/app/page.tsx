@@ -157,6 +157,9 @@ export default async function HomePage() {
   const brandsData = {
     heading: 'Trusted by Global Brands',
     backgroundImage: '/assets/ricky-brands-gold.png',
+    brandsGrayscale: false,
+    brandsBrownFilter: false,
+    brandsGoldFilter: false,
     logos: [
       { name: 'Cartier', src: '/assets/logo-cartier-trimmed.png' },
       { name: 'F1', src: '/assets/logo-f1-trimmed.png' },
@@ -297,6 +300,9 @@ export default async function HomePage() {
         const c = typeof brandsSection.content === 'string' ? JSON.parse(brandsSection.content) : brandsSection.content;
         if (c.heading) brandsData.heading = c.heading;
         if (c.backgroundImage) brandsData.backgroundImage = c.backgroundImage;
+        if (c.brandsGrayscale !== undefined) brandsData.brandsGrayscale = c.brandsGrayscale;
+        if (c.brandsBrownFilter !== undefined) brandsData.brandsBrownFilter = c.brandsBrownFilter;
+        if (c.brandsGoldFilter !== undefined) brandsData.brandsGoldFilter = c.brandsGoldFilter;
         if (c.logos && Array.isArray(c.logos)) brandsData.logos = c.logos;
       }
 
@@ -645,6 +651,7 @@ export default async function HomePage() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url('${brandsData.backgroundImage}')`,
+            filter: brandsData.brandsGrayscale ? 'grayscale(100%)' : brandsData.brandsBrownFilter ? 'sepia(60%) brightness(0.85)' : brandsData.brandsGoldFilter ? 'sepia(30%) saturate(1.4) hue-rotate(10deg) brightness(0.9)' : undefined,
           }}
         />
         {/* Brown frosting overlay for warmth */}

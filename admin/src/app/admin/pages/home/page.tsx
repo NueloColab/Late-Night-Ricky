@@ -987,10 +987,29 @@ function BrandsEditor({ section, onUpdate, onSave, saving, onToggleVisibility, o
           {content.backgroundImage && <div className="w-full aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 max-w-md border border-[#6B8FAB]/30"><img src={content.backgroundImage} alt="" className="object-cover w-full h-full" /></div>}
           <button onClick={() => onOpenMedia('backgroundImage')} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">{content.backgroundImage ? 'Replace Image' : 'Choose Image'}</button>
         </div>
+        {/* Filter toggles */}
+        <div>
+          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Image Filters</label>
+          <div className="flex flex-wrap gap-3">
+            {[
+              { key: 'brandsGrayscale', label: 'Black & White' },
+              { key: 'brandsBrownFilter', label: 'Brown / Sepia' },
+              { key: 'brandsGoldFilter', label: 'Gold Tint' },
+            ].map(f => (
+              <label key={f.key} className={`flex items-center gap-2 px-3 py-2 rounded-full border-2 cursor-pointer transition ${content[f.key] ? 'border-[#1B3A4C] bg-[#1B3A4C]/5 text-[#1B3A4C]' : 'border-[#6B8FAB]/30 text-[#6B8FAB] hover:border-[#1B3A4C]/50'}`}>
+                <input type="checkbox" checked={!!content[f.key]} onChange={(e) => onUpdate(f.key, e.target.checked)} className="w-4 h-4 accent-[#1B3A4C] rounded" />
+                <span className="text-[11px] font-semibold uppercase tracking-[1px]">{f.label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
       </div>
       <div className="border-t border-[#6B8FAB]/20 pt-4">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Brand Logos ({logos.length})</p>
+          <div>
+            <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Brand Logos ({logos.length})</p>
+            <p className="text-[10px] text-[#a0a0a0] mt-1">Use logos on transparent backgrounds for best results. The site automatically applies a cream tint.</p>
+          </div>
           <button onClick={addLogo} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">+ Add Logo</button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
