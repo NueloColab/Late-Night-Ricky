@@ -90,7 +90,7 @@ export default async function HomePage() {
   let heroLogo = '/assets/ricky-logo.png';
   let heroGrayscale = true;
   let heroBackgroundSize = 'cover';
-  let heroBackgroundPosition = 'center';
+  const heroBackgroundPosition = 'center';
   const radioImage = '/assets/ricky-music-jacket-sm.jpg';
   let radioHeadline = 'Music & Mixes';
   let radioLabel = 'Listen & Download';
@@ -123,7 +123,7 @@ export default async function HomePage() {
   ];
 
   // Suppress unused-variable warnings for CMS values not yet used in new layout
-  void heroGrayscale; void heroBackgroundSize; void heroBackgroundPosition; void reachOutImage; void reachOutCta; void pressPack; void clientsTitle; void clients; void partnersQuote; void partnersAttribution; void partnersDescription;
+  void heroGrayscale; void heroBackgroundSize; void reachOutImage; void reachOutCta; void pressPack; void clientsTitle; void clients; void partnersQuote; void partnersAttribution; void partnersDescription;
   try {
     const [dbCards, dbNames, dbTracks, dbSections, dbAboutSections] = await Promise.all([
       getShowCards(), getClientNames(), getTracks(), getSiteSections('home'), getSiteSections('about'),
