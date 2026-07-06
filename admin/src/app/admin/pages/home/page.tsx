@@ -74,7 +74,7 @@ function parseContent(content: any): Record<string, any> {
 
 export default function HomeEditor() {
   const [sections, setSections] = useState<SectionData[]>([]);
-  const [selectedSection, setSelectedSection] = useState<string>('hero');
+  const [selectedSection, setSelectedSection] = useState<string>(typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('section') || 'hero' : 'hero');
   const [showCards, setShowCards] = useState<ShowCard[]>([]);
   const [tracks, setTracks] = useState<Track[]>([]);
   const [loading, setLoading] = useState(true);
@@ -92,22 +92,21 @@ export default function HomeEditor() {
 
   const fetchSections = useCallback(async () => {
     const res = await fetch('/api/sections?page=home');
-    if (res.ok) { const data = await res.json(); setSections(data.sections || []); }
-    setLoading(false);
-  }, []);
-
-  const fetchAbout = useCallback(async () => {
-    const res = await fetch('/api/sections?page=about');
     if (res.ok) {
       const data = await res.json();
-      const intro = (data.sections || []).find((s: any) => s.section === 'intro');
-      if (intro) {
-        setSections(prev => {
-          if (prev.find(s => s.section === 'about' && s.id === intro.id)) return prev;
-          return [...prev, { ...intro, section: 'about' }];
-        });
+      const homeSections = data.sections || [];
+      // Fetch about section separately since it's on a different page
+      const aboutRes = await fetch('/api/sections?page=about');
+      if (aboutRes.ok) {
+        const aboutData = await aboutRes.json();
+        const intro = (aboutData.sections || []).find((s: any) => s.section === 'intro');
+        if (intro) {
+          homeSections.push({ ...intro, section: 'about' });
+        }
       }
+      setSections(homeSections);
     }
+    setLoading(false);
   }, []);
 
   const fetchShowCards = useCallback(async () => {
@@ -120,7 +119,7 @@ export default function HomeEditor() {
     if (res.ok) { const data = await res.json(); setTracks(data.tracks || []); }
   }, []);
 
-  useEffect(() => { fetchSections(); fetchAbout(); fetchShowCards(); fetchTracks(); }, [fetchSections, fetchAbout, fetchShowCards, fetchTracks]);
+  useEffect(() => { fetchSections(); fetchShowCards(); fetchTracks(); }, [fetchSections, fetchShowCards, fetchTracks]);
 
   function getSection(name: string): SectionData | undefined {
     return sections.find(s => s.section === name || (name === 'about' && s.section === 'intro'));
