@@ -8,6 +8,15 @@ export default function HomeContactSection() {
     image: '/assets/ricky-contact-studio-2.jpg',
     formEnabled: true,
   });
+  const [socialLinks, setSocialLinks] = useState({
+    instagram: 'https://instagram.com/latenightricky',
+    youtube: 'https://youtube.com/@latenightricky',
+    spotify: 'https://open.spotify.com/artist/latenightricky',
+    appleMusic: 'https://music.apple.com/gb/artist/late-night-ricky/1759491226',
+    tiktok: 'https://tiktok.com/@latenightricky',
+    twitter: 'https://twitter.com/latenightricky',
+    facebook: 'https://facebook.com/latenightricky',
+  });
   const [expanded, setExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState('booking');
   const [submitting, setSubmitting] = useState(false);
@@ -17,6 +26,7 @@ export default function HomeContactSection() {
   useEffect(() => {
     async function fetchSections() {
       try {
+        // Fetch contact page sections (email, form, image)
         const res = await fetch('/api/public/sections?page=contact');
         const data = await res.json();
         const sections = data.sections || [];
@@ -26,12 +36,28 @@ export default function HomeContactSection() {
         const imageSection = sections.find((s: any) => s.section === 'image');
 
         const email = emailSection?.content?.[0] || contactInfo.email;
-        // CMS override disabled — hardcoded image for cache busting
-        // const image = imageSection?.content?.[0] || contactInfo.image;
-        const image = contactInfo.image;
-        const formEnabled = formSection?.isActive !== false;
 
-        setContactInfo({ email, image, formEnabled });
+        setContactInfo(prev => ({
+          ...prev,
+          email,
+          formEnabled: formSection?.isActive !== false,
+        }));
+
+        // Fetch home contact section for social links
+        const homeRes = await fetch('/api/sections?page=home');
+        const homeData = await homeRes.json();
+        const homeSections = homeData.sections || [];
+        const contactSection = homeSections.find((s: any) => s.section === 'contact_section');
+        if (contactSection?.content) {
+          const c = typeof contactSection.content === 'string' ? JSON.parse(contactSection.content) : contactSection.content;
+          if (c.instagramUrl) setSocialLinks(prev => ({ ...prev, instagram: c.instagramUrl }));
+          if (c.youtubeUrl) setSocialLinks(prev => ({ ...prev, youtube: c.youtubeUrl }));
+          if (c.spotifyUrl) setSocialLinks(prev => ({ ...prev, spotify: c.spotifyUrl }));
+          if (c.appleMusicUrl) setSocialLinks(prev => ({ ...prev, appleMusic: c.appleMusicUrl }));
+          if (c.tiktokUrl) setSocialLinks(prev => ({ ...prev, tiktok: c.tiktokUrl }));
+          if (c.twitterUrl) setSocialLinks(prev => ({ ...prev, twitter: c.twitterUrl }));
+          if (c.facebookUrl) setSocialLinks(prev => ({ ...prev, facebook: c.facebookUrl }));
+        }
       } catch {
         // keep defaults
       }
