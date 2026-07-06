@@ -6,7 +6,7 @@ export default function HomeContactSection() {
   const [contactInfo, setContactInfo] = useState({
     email: 'samir@wearemediahive.com',
     heading: 'Get in Touch',
-    image: '/assets/ricky-contact-studio-2.jpg',
+    image: 'https://res.cloudinary.com/dfllse3az/image/upload/v1781170009/nuelo/late-night-ricky/media/LATENIGHTRICKY-332.jpg',
     formEnabled: true,
   });
   const [socialLinks, setSocialLinks] = useState({
