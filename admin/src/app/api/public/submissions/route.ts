@@ -80,13 +80,13 @@ export async function POST(request: Request) {
     let fileSize: number | null = null;
 
     if (file) {
-      const maxSize = 20 * 1024 * 1024; // 20MB
+      const maxSize = 50 * 1024 * 1024; // 50MB
       if (file.size > maxSize) {
         return NextResponse.json({ error: 'File must be under 20MB' }, { status: 400, headers: corsHeaders() });
       }
 
-      const allowedTypes = ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav', 'audio/wave'];
-      if (!allowedTypes.includes(file.type) && !file.name.match(/\.(mp3|wav)$/i)) {
+      const allowedTypes = ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav', 'audio/wave', 'audio/flac', 'audio/x-flac', 'audio/aac', 'audio/x-aac'];
+      if (!allowedTypes.includes(file.type) && !file.name.match(/\.(mp3|wav|flac|aac|m4a)$/i)) {
         return NextResponse.json({ error: 'Only MP3 and WAV files are allowed' }, { status: 400, headers: corsHeaders() });
       }
 

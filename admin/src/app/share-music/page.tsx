@@ -147,7 +147,7 @@ export default function ShareMusicPage() {
                   Upload your track
                 </button>
                 <p className="mt-4 text-sm text-[#a0a0a0]">Click the button and upload your file in mp3 320 kbps</p>
-                <p className="mt-2 text-xs text-[#C5E5F8]">Max 20MB — MP3 or WAV only</p>
+                <p className="mt-2 text-xs text-[#C5E5F8]">Max 50MB — MP3, WAV, FLAC, or AAC</p>
                 {file && (
                   <p className="mt-4 text-sm text-[#152a47] font-medium">Selected: {file.name}</p>
                 )}
