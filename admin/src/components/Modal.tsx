@@ -35,22 +35,22 @@ export default function Modal({ isOpen, onClose, children, maxWidth = 'max-w-3xl
       <div className="fixed inset-0 z-50 overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4">
           <div
-            className={`relative w-full ${maxWidth} bg-white shadow-2xl border border-[#0d1f3d]`}
+            className={`relative w-full ${maxWidth} bg-white shadow-2xl border border-[#2a1a0a]`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 p-2 hover:bg-[#0d1f3d] rounded-lg transition-colors"
+              className="absolute top-4 right-4 z-10 p-2 hover:bg-[#2a1a0a] rounded-lg transition-colors"
               aria-label="Close modal"
             >
-              <X size={20} className="text-[#152a47]" />
+              <X size={20} className="text-[#4a3520]" />
             </button>
 
             {/* Title */}
             {title && (
               <div className="px-6 pt-6 pb-2">
-                <h2 className="text-xl font-serif font-semibold text-[#152a47] pr-10">{title}</h2>
+                <h2 className="text-xl font-serif font-semibold text-[#4a3520] pr-10">{title}</h2>
               </div>
             )}
 

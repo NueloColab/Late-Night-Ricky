@@ -28,7 +28,7 @@ const DEFAULT_LINKS: NavLink[] = [
   { label: 'Contact', href: '/contact', visible: true },
 ];
 
-const inputClass = 'w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors';
+const inputClass = 'w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-[#2a1a0a] text-sm focus:outline-none focus:border-[#2a1a0a] transition-colors';
 
 export default function NavEditor() {
   const [sections, setSections] = useState<SectionData[]>([]);
@@ -98,65 +98,65 @@ export default function NavEditor() {
     <div className="max-w-3xl">
       {/* Header */}
       <div className="mb-12">
-        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Global Settings</p>
+        <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-4">Global Settings</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">Nav & Logo</h1>
-            <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Edit navigation links and logo</p>
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#2a1a0a] tracking-[-2px] uppercase leading-[0.95]">Nav & Logo</h1>
+            <p className="text-sm text-[#b89a6e] mt-4 font-semibold uppercase tracking-[0.5px]">Edit navigation links and logo</p>
           </div>
         </div>
       </div>
 
       <div className="space-y-6">
         {/* Logo */}
-        <div className="bg-white border border-[#6B8FAB]/30 rounded-xl p-6 md:p-8">
-          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E3E8ED]">
-            <div className="w-10 h-px bg-[#1B3A4C]"></div>
-            <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Logo</p>
+        <div className="bg-white border border-[#91715c]/30 rounded-xl p-6 md:p-8">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#FAFAF7]">
+            <div className="w-10 h-px bg-[#2a1a0a]"></div>
+            <p className="text-xs font-semibold text-[#91715c] uppercase tracking-[3px]">Logo</p>
           </div>
-          <p className="text-xs text-[#6B8FAB] mb-4">The logo shown in the site navigation</p>
+          <p className="text-xs text-[#91715c] mb-4">The logo shown in the site navigation</p>
 
           <div className="flex items-center gap-6">
-            <div className="relative w-40 h-20 bg-[#F8FAFB] rounded-lg border border-[#E3E8ED] overflow-hidden flex items-center justify-center">
+            <div className="relative w-40 h-20 bg-[#f5f0e8] rounded-lg border border-[#FAFAF7] overflow-hidden flex items-center justify-center">
               {logoPath ? (
                 <Image src={logoPath} alt="Logo" fill className="object-contain p-2" sizes="160px" />
               ) : (
-                <ImageIcon className="w-8 h-8 text-[#6B8FAB]" />
+                <ImageIcon className="w-8 h-8 text-[#91715c]" />
               )}
             </div>
             <button
               onClick={() => setMediaOpen(true)}
-              className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+              className="px-5 py-2.5 bg-[#2a1a0a] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
             >
               {logoPath ? 'Replace Logo' : 'Upload Logo'}
             </button>
           </div>
-          {logoPath && <p className="text-xs text-[#6B8FAB] mt-3">{logoPath}</p>}
+          {logoPath && <p className="text-xs text-[#91715c] mt-3">{logoPath}</p>}
         </div>
 
         {/* Links */}
-        <div className="bg-white border border-[#6B8FAB]/30 rounded-xl p-6 md:p-8">
-          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E3E8ED]">
-            <div className="w-10 h-px bg-[#1B3A4C]"></div>
-            <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Navigation Links</p>
+        <div className="bg-white border border-[#91715c]/30 rounded-xl p-6 md:p-8">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#FAFAF7]">
+            <div className="w-10 h-px bg-[#2a1a0a]"></div>
+            <p className="text-xs font-semibold text-[#91715c] uppercase tracking-[3px]">Navigation Links</p>
           </div>
-          <p className="text-xs text-[#6B8FAB] mb-6">Reorder, rename, and show/hide links</p>
+          <p className="text-xs text-[#91715c] mb-6">Reorder, rename, and show/hide links</p>
 
           <div className="space-y-3">
             {links.map((link, idx) => (
-              <div key={idx} className="flex items-center gap-3 p-4 bg-[#F8FAFB] rounded-lg border border-[#E3E8ED]">
+              <div key={idx} className="flex items-center gap-3 p-4 bg-[#f5f0e8] rounded-lg border border-[#FAFAF7]">
                 <div className="flex flex-col gap-1">
                   <button
                     onClick={() => moveLink(idx, 'up')}
                     disabled={idx === 0}
-                    className="p-1 text-[#6B8FAB] hover:text-[#1B3A4C] transition-colors disabled:opacity-30"
+                    className="p-1 text-[#91715c] hover:text-[#2a1a0a] transition-colors disabled:opacity-30"
                   >
                     <UpIcon className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => moveLink(idx, 'down')}
                     disabled={idx === links.length - 1}
-                    className="p-1 text-[#6B8FAB] hover:text-[#1B3A4C] transition-colors disabled:opacity-30"
+                    className="p-1 text-[#91715c] hover:text-[#2a1a0a] transition-colors disabled:opacity-30"
                   >
                     <DownIcon className="w-4 h-4" />
                   </button>
@@ -185,8 +185,8 @@ export default function NavEditor() {
                   }}
                   className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
                     link.visible
-                      ? 'bg-[#1B3A4C] text-white'
-                      : 'bg-[#E3E8ED] text-[#6B8FAB]'
+                      ? 'bg-[#2a1a0a] text-white'
+                      : 'bg-[#FAFAF7] text-[#91715c]'
                   }`}
                 >
                   {link.visible ? 'Shown' : 'Hidden'}
@@ -205,14 +205,14 @@ export default function NavEditor() {
                   )
                 );
               }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition"
+              className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#FAFAF7] hover:text-white transition"
             >
               + Add Link
             </button>
             <button
               onClick={() => saveNav({ content: links })}
               disabled={saving}
-              className="inline-flex items-center gap-2 px-7 py-3 bg-[#E3E8ED] text-white rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-7 py-3 bg-[#FAFAF7] text-white rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#2a1a0a] transition disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save Links'}
             </button>

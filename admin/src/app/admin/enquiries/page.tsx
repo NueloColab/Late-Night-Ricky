@@ -40,9 +40,9 @@ interface Enquiry {
 }
 
 const statusStyles: Record<string, string> = {
-  new: 'bg-[#1B3A4C] text-white border-[#1B3A4C]',
-  read: 'bg-[#6B8FAB] text-white border-[#6B8FAB]',
-  replied: 'bg-[#1B3A4C] text-white border-[#1B3A4C]',
+  new: 'bg-[#2a1a0a] text-white border-[#2a1a0a]',
+  read: 'bg-[#91715c] text-white border-[#91715c]',
+  replied: 'bg-[#2a1a0a] text-white border-[#2a1a0a]',
   archived: 'bg-gray-400 text-white border-gray-400',
 }
 
@@ -207,15 +207,15 @@ export default function EnquiriesPage() {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-px bg-[#6B8FAB]" />
-          <p className="text-xs uppercase tracking-widest text-[#8a9bac]">Inbox</p>
+          <div className="w-10 h-px bg-[#91715c]" />
+          <p className="text-xs uppercase tracking-widest text-[#b89a6e]">Inbox</p>
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#2a1a0a] tracking-[-2px] uppercase leading-[0.95]">
               Enquiries
             </h1>
-            <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Manage booking requests and messages</p>
+            <p className="text-sm text-[#b89a6e] mt-4 font-semibold uppercase tracking-[0.5px]">Manage booking requests and messages</p>
           </div>
         </div>
       </div>
@@ -223,51 +223,51 @@ export default function EnquiriesPage() {
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {[
-          { label: 'Total', value: stats.total, icon: Mail, color: '#1B3A4C' },
-          { label: 'Unread', value: stats.unread, icon: MailOpen, color: '#6B8FAB' },
-          { label: 'Replied', value: stats.replied, icon: Reply, color: '#1B3A4C' },
-          { label: 'Archived', value: stats.archived, icon: Archive, color: '#6B8FAB' },
+          { label: 'Total', value: stats.total, icon: Mail, color: '#2a1a0a' },
+          { label: 'Unread', value: stats.unread, icon: MailOpen, color: '#91715c' },
+          { label: 'Replied', value: stats.replied, icon: Reply, color: '#2a1a0a' },
+          { label: 'Archived', value: stats.archived, icon: Archive, color: '#91715c' },
         ].map((stat) => (
-          <div key={stat.label} className="bg-white border border-[#E3E8ED] p-5">
+          <div key={stat.label} className="bg-white border border-[#FAFAF7] p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="p-2 text-white" style={{ backgroundColor: stat.color }}>
                 <stat.icon size={16} />
               </div>
             </div>
-            <p className="text-2xl font-black text-[#0d1f3d] mb-1">{loading ? '—' : stat.value}</p>
-            <p className="text-xs uppercase tracking-widest text-[#6B8FAB]">{stat.label}</p>
+            <p className="text-2xl font-black text-[#2a1a0a] mb-1">{loading ? '—' : stat.value}</p>
+            <p className="text-xs uppercase tracking-widest text-[#91715c]">{stat.label}</p>
           </div>
         ))}
       </div>
 
       {/* Filters */}
-      <div className="bg-white border border-[#E3E8ED] p-6 mb-6">
+      <div className="bg-white border border-[#FAFAF7] p-6 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs uppercase tracking-widest font-semibold text-[#6B8FAB] mb-3">Search Enquiries</label>
+            <label className="block text-xs uppercase tracking-widest font-semibold text-[#91715c] mb-3">Search Enquiries</label>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#E3E8ED]">
-                <Search className="w-4 h-4 text-[#6B8FAB]" />
+              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#FAFAF7]">
+                <Search className="w-4 h-4 text-[#91715c]" />
               </div>
               <input
                 type="text"
                 placeholder="Search by name, email, or club..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 bg-white border border-[#E3E8ED] text-[#0d1f3d] placeholder-[#6B8FAB] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
+                className="w-full pl-14 pr-4 py-3 bg-white border border-[#FAFAF7] text-[#2a1a0a] placeholder-[#91715c] text-sm focus:outline-none focus:border-[#2a1a0a] transition-colors"
               />
             </div>
           </div>
           <div>
-            <label className="block text-xs uppercase tracking-widest font-semibold text-[#6B8FAB] mb-3">Filter by Status</label>
+            <label className="block text-xs uppercase tracking-widest font-semibold text-[#91715c] mb-3">Filter by Status</label>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#E3E8ED]">
-                <Filter className="w-4 h-4 text-[#6B8FAB]" />
+              <div className="absolute left-0 top-0 bottom-0 w-12 flex items-center justify-center border-r border-[#FAFAF7]">
+                <Filter className="w-4 h-4 text-[#91715c]" />
               </div>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 bg-white border border-[#E3E8ED] text-[#0d1f3d] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors appearance-none"
+                className="w-full pl-14 pr-4 py-3 bg-white border border-[#FAFAF7] text-[#2a1a0a] text-sm focus:outline-none focus:border-[#2a1a0a] transition-colors appearance-none"
               >
                 <option value="all">All Enquiries</option>
                 <option value="new">Unread</option>
@@ -281,47 +281,47 @@ export default function EnquiriesPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white border border-[#E3E8ED] overflow-hidden">
+      <div className="bg-white border border-[#FAFAF7] overflow-hidden">
         {loading ? (
-          <div className="text-center py-12 text-[#6B8FAB]">Loading enquiries...</div>
+          <div className="text-center py-12 text-[#91715c]">Loading enquiries...</div>
         ) : filteredEnquiries.length === 0 ? (
-          <div className="text-center py-12 text-[#6B8FAB]">No enquiries found.</div>
+          <div className="text-center py-12 text-[#91715c]">No enquiries found.</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-[#F8FAFB] border-b border-[#E3E8ED]">
+                <tr className="bg-[#f5f0e8] border-b border-[#FAFAF7]">
                   {['Name', 'Type', 'Preview', 'Status', 'Date', 'Actions'].map((h) => (
-                    <th key={h} className="px-6 py-4 text-left text-xs font-semibold text-[#6B8FAB] uppercase tracking-widest">{h}</th>
+                    <th key={h} className="px-6 py-4 text-left text-xs font-semibold text-[#91715c] uppercase tracking-widest">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E3E8ED]">
+              <tbody className="divide-y divide-[#FAFAF7]">
                 {filteredEnquiries.map((e) => (
                   <tr
                     key={e.id}
                     onClick={() => handleViewEnquiry(e)}
-                    className={`hover:bg-[#F8FAFB] cursor-pointer transition-colors ${
+                    className={`hover:bg-[#f5f0e8] cursor-pointer transition-colors ${
                       e.status === 'new' ? 'bg-blue-50/30' : ''
                     }`}
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        {e.status === 'new' && <div className="w-2 h-2 bg-[#1B3A4C] rounded-full flex-shrink-0" />}
-                        <span className={`text-sm ${e.status === 'new' ? 'font-semibold text-[#0d1f3d]' : 'text-[#1B3A4C]'}`}>
+                        {e.status === 'new' && <div className="w-2 h-2 bg-[#2a1a0a] rounded-full flex-shrink-0" />}
+                        <span className={`text-sm ${e.status === 'new' ? 'font-semibold text-[#2a1a0a]' : 'text-[#2a1a0a]'}`}>
                           {e.name}
                         </span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider ${
-                        e.type === 'booking' ? 'bg-[#1B3A4C] text-white' : 'bg-[#6B8FAB] text-white'
+                        e.type === 'booking' ? 'bg-[#2a1a0a] text-white' : 'bg-[#91715c] text-white'
                       }`}>
                         {e.type === 'booking' ? 'Booking' : 'Message'}
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-sm text-[#8a9bac] max-w-xs truncate block">
+                      <span className="text-sm text-[#b89a6e] max-w-xs truncate block">
                         {e.message?.substring(0, 60)}{e.message && e.message.length > 60 ? '...' : ''}
                       </span>
                     </td>
@@ -330,20 +330,20 @@ export default function EnquiriesPage() {
                         {e.status === 'new' ? 'unread' : e.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-[#6B8FAB]">
+                    <td className="px-6 py-4 text-sm text-[#91715c]">
                       {formatDate(e.createdAt)}
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-end gap-2" onClick={(ev) => ev.stopPropagation()}>
                         <button
                           onClick={() => handleViewEnquiry(e)}
-                          className="p-2 hover:bg-[#E3E8ED] transition-colors text-[#6B8FAB] hover:text-[#1B3A4C]"
+                          className="p-2 hover:bg-[#FAFAF7] transition-colors text-[#91715c] hover:text-[#2a1a0a]"
                         >
                           <Eye size={14} />
                         </button>
                         <button
                           onClick={() => confirmDelete(e.id)}
-                          className="p-2 hover:bg-red-50 transition-colors text-[#6B8FAB] hover:text-red-500"
+                          className="p-2 hover:bg-red-50 transition-colors text-[#91715c] hover:text-red-500"
                         >
                           <Trash2 size={14} />
                         </button>
@@ -365,21 +365,21 @@ export default function EnquiriesPage() {
             className="fixed inset-0 bg-black/50 z-50"
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white border border-[#E3E8ED] max-w-md w-full p-6">
+            <div className="bg-white border border-[#FAFAF7] max-w-md w-full p-6">
               <div className="flex items-start gap-4 mb-4">
                 <div className="bg-red-100 p-3">
                   <AlertTriangle className="w-6 h-6 text-red-600" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-light text-[#0d1f3d] mb-2">Delete Enquiry?</h3>
-                  <p className="text-sm text-[#8a9bac]">This action cannot be undone. The enquiry will be permanently deleted.</p>
+                  <h3 className="text-xl font-light text-[#2a1a0a] mb-2">Delete Enquiry?</h3>
+                  <p className="text-sm text-[#b89a6e]">This action cannot be undone. The enquiry will be permanently deleted.</p>
                 </div>
               </div>
               <div className="flex gap-3 justify-end">
                 <button
                   onClick={() => setShowDeleteModal(false)}
                   disabled={isDeleting}
-                  className="px-6 py-3 border border-[#E3E8ED] text-xs uppercase tracking-wider text-[#1B3A4C] hover:bg-[#F8FAFB] transition-colors"
+                  className="px-6 py-3 border border-[#FAFAF7] text-xs uppercase tracking-wider text-[#2a1a0a] hover:bg-[#f5f0e8] transition-colors"
                 >
                   Cancel
                 </button>
@@ -404,15 +404,15 @@ export default function EnquiriesPage() {
             className="fixed inset-0 bg-black/50 z-40"
           />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
-            <div className="bg-white border border-[#E3E8ED] max-w-2xl w-full my-8 max-h-[90vh] overflow-y-auto"
+            <div className="bg-white border border-[#FAFAF7] max-w-2xl w-full my-8 max-h-[90vh] overflow-y-auto"
             >
               {/* Header */}
-              <div className="sticky top-0 bg-white border-b border-[#E3E8ED] p-6 flex items-start justify-between">
+              <div className="sticky top-0 bg-white border-b border-[#FAFAF7] p-6 flex items-start justify-between">
                 <div className="flex-1">
-                  <h3 className="text-2xl font-light text-[#0d1f3d] mb-2">{selectedEnquiry.name}</h3>
+                  <h3 className="text-2xl font-light text-[#2a1a0a] mb-2">{selectedEnquiry.name}</h3>
                   <a
                     href={`mailto:${selectedEnquiry.email}`}
-                    className="text-sm text-[#1B3A4C] hover:text-[#0d1f3d] transition-colors"
+                    className="text-sm text-[#2a1a0a] hover:text-[#2a1a0a] transition-colors"
                   >
                     {selectedEnquiry.email}
                   </a>
@@ -421,8 +421,8 @@ export default function EnquiriesPage() {
                   <span className={`text-[10px] px-3 py-1 border capitalize ${statusStyles[selectedEnquiry.status] || statusStyles.new}`}>
                     {selectedEnquiry.status === 'new' ? 'unread' : selectedEnquiry.status}
                   </span>
-                  <button onClick={() => setShowModal(false)} className="p-2 hover:bg-[#F8FAFB] transition-colors">
-                    <X className="w-5 h-5 text-[#6B8FAB]" />
+                  <button onClick={() => setShowModal(false)} className="p-2 hover:bg-[#f5f0e8] transition-colors">
+                    <X className="w-5 h-5 text-[#91715c]" />
                   </button>
                 </div>
               </div>
@@ -433,67 +433,67 @@ export default function EnquiriesPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {selectedEnquiry.clubName && (
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-1">Club/Venue</p>
+                      <p className="text-xs uppercase tracking-widest text-[#91715c] mb-1">Club/Venue</p>
                       <div className="flex items-center gap-2">
-                        <Building2 className="w-4 h-4 text-[#6B8FAB]" />
-                        <p className="text-sm text-[#0d1f3d]">{selectedEnquiry.clubName}</p>
+                        <Building2 className="w-4 h-4 text-[#91715c]" />
+                        <p className="text-sm text-[#2a1a0a]">{selectedEnquiry.clubName}</p>
                       </div>
                     </div>
                   )}
                   {selectedEnquiry.city && (
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-1">City</p>
+                      <p className="text-xs uppercase tracking-widest text-[#91715c] mb-1">City</p>
                       <div className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-[#6B8FAB]" />
-                        <p className="text-sm text-[#0d1f3d]">{selectedEnquiry.city}</p>
+                        <MapPin className="w-4 h-4 text-[#91715c]" />
+                        <p className="text-sm text-[#2a1a0a]">{selectedEnquiry.city}</p>
                       </div>
                     </div>
                   )}
                   {selectedEnquiry.fee && (
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-1">Fee</p>
+                      <p className="text-xs uppercase tracking-widest text-[#91715c] mb-1">Fee</p>
                       <div className="flex items-center gap-2">
-                        <DollarSign className="w-4 h-4 text-[#6B8FAB]" />
-                        <p className="text-sm text-[#0d1f3d]">{selectedEnquiry.fee}</p>
+                        <DollarSign className="w-4 h-4 text-[#91715c]" />
+                        <p className="text-sm text-[#2a1a0a]">{selectedEnquiry.fee}</p>
                       </div>
                     </div>
                   )}
                   {selectedEnquiry.eventDate && (
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-1">Event Date</p>
+                      <p className="text-xs uppercase tracking-widest text-[#91715c] mb-1">Event Date</p>
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-[#6B8FAB]" />
-                        <p className="text-sm text-[#0d1f3d]">{selectedEnquiry.eventDate}</p>
+                        <Calendar className="w-4 h-4 text-[#91715c]" />
+                        <p className="text-sm text-[#2a1a0a]">{selectedEnquiry.eventDate}</p>
                       </div>
                     </div>
                   )}
                   <div>
-                    <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-1">Received</p>
+                    <p className="text-xs uppercase tracking-widest text-[#91715c] mb-1">Received</p>
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-[#6B8FAB]" />
-                      <p className="text-sm text-[#0d1f3d]">{formatDateTime(selectedEnquiry.createdAt)}</p>
+                      <Calendar className="w-4 h-4 text-[#91715c]" />
+                      <p className="text-sm text-[#2a1a0a]">{formatDateTime(selectedEnquiry.createdAt)}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Message */}
-                <div className="pt-4 border-t border-[#E3E8ED]">
-                  <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-3">Message</p>
-                  <div className="bg-[#F8FAFB] border border-[#E3E8ED] p-4">
-                    <p className="text-sm text-[#0d1f3d] leading-relaxed whitespace-pre-wrap">{selectedEnquiry.message || 'No message provided.'}</p>
+                <div className="pt-4 border-t border-[#FAFAF7]">
+                  <p className="text-xs uppercase tracking-widest text-[#91715c] mb-3">Message</p>
+                  <div className="bg-[#f5f0e8] border border-[#FAFAF7] p-4">
+                    <p className="text-sm text-[#2a1a0a] leading-relaxed whitespace-pre-wrap">{selectedEnquiry.message || 'No message provided.'}</p>
                   </div>
                 </div>
 
                 {/* Replies */}
                 {Array.isArray(selectedEnquiry.replies) && selectedEnquiry.replies.length > 0 && (
-                  <div className="pt-4 border-t border-[#E3E8ED]">
-                    <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-3">Replies ({selectedEnquiry.replies.length})</p>
+                  <div className="pt-4 border-t border-[#FAFAF7]">
+                    <p className="text-xs uppercase tracking-widest text-[#91715c] mb-3">Replies ({selectedEnquiry.replies.length})</p>
                     <div className="space-y-3">
                       {selectedEnquiry.replies.map((reply: any, i: number) => (
                         <div key={i} className="bg-blue-50/50 border border-blue-100 p-4">
                           <div className="flex items-center justify-between mb-2">
-                            <p className="text-xs font-medium text-[#1B3A4C]">{reply.sentBy || 'Late Night Ricky'}</p>
-                            <p className="text-xs text-[#6B8FAB]">
+                            <p className="text-xs font-medium text-[#2a1a0a]">{reply.sentBy || 'Late Night Ricky'}</p>
+                            <p className="text-xs text-[#91715c]">
                               {new Date(reply.sentAt).toLocaleDateString('en-GB', {
                                 day: 'numeric',
                                 month: 'short',
@@ -502,8 +502,8 @@ export default function EnquiriesPage() {
                               })}
                             </p>
                           </div>
-                          <p className="text-xs text-[#6B8FAB] mb-1">Subject: {reply.subject}</p>
-                          <p className="text-sm text-[#0d1f3d] leading-relaxed whitespace-pre-wrap">{reply.message}</p>
+                          <p className="text-xs text-[#91715c] mb-1">Subject: {reply.subject}</p>
+                          <p className="text-sm text-[#2a1a0a] leading-relaxed whitespace-pre-wrap">{reply.message}</p>
                         </div>
                       ))}
                     </div>
@@ -511,25 +511,25 @@ export default function EnquiriesPage() {
                 )}
 
                 {/* Reply Box */}
-                <div className="pt-4 border-t border-[#E3E8ED]">
-                  <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-3">Reply via Email</p>
+                <div className="pt-4 border-t border-[#FAFAF7]">
+                  <p className="text-xs uppercase tracking-widest text-[#91715c] mb-3">Reply via Email</p>
                   <input
                     value={replySubject}
                     onChange={(e) => setReplySubject(e.target.value)}
                     placeholder="Subject"
-                    className="w-full px-4 py-2 bg-white border border-[#E3E8ED] text-sm text-[#0d1f3d] focus:outline-none focus:border-[#1B3A4C] mb-2"
+                    className="w-full px-4 py-2 bg-white border border-[#FAFAF7] text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a] mb-2"
                   />
                   <textarea
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
                     rows={4}
                     placeholder="Type your reply..."
-                    className="w-full px-4 py-3 bg-white border border-[#E3E8ED] text-sm text-[#0d1f3d] placeholder-[#6B8FAB] focus:outline-none focus:border-[#1B3A4C] resize-none mb-3"
+                    className="w-full px-4 py-3 bg-white border border-[#FAFAF7] text-sm text-[#2a1a0a] placeholder-[#91715c] focus:outline-none focus:border-[#2a1a0a] resize-none mb-3"
                   />
                   <button
                     onClick={handleSendReply}
                     disabled={!replyText.trim() || sendingReply}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#1B3A4C] text-white text-xs uppercase tracking-wider hover:bg-[#E3E8ED] transition-colors disabled:opacity-50"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#2a1a0a] text-white text-xs uppercase tracking-wider hover:bg-[#FAFAF7] transition-colors disabled:opacity-50"
                   >
                     <Send size={14} />
                     <span>{sendingReply ? 'Sending...' : 'Send Reply'}</span>
@@ -538,13 +538,13 @@ export default function EnquiriesPage() {
               </div>
 
               {/* Footer Actions */}
-              <div className="sticky bottom-0 bg-white border-t border-[#E3E8ED] p-6 space-y-4">
+              <div className="sticky bottom-0 bg-white border-t border-[#FAFAF7] p-6 space-y-4">
                 {/* Status Actions */}
                 <div className="grid grid-cols-3 gap-3">
                   {selectedEnquiry.status === 'new' ? (
                     <button
                       onClick={() => updateStatus(selectedEnquiry.id, 'read')}
-                      className="px-4 py-2.5 border border-[#E3E8ED] text-xs uppercase tracking-wider text-[#1B3A4C] hover:bg-[#F8FAFB] transition-colors flex items-center justify-center gap-2"
+                      className="px-4 py-2.5 border border-[#FAFAF7] text-xs uppercase tracking-wider text-[#2a1a0a] hover:bg-[#f5f0e8] transition-colors flex items-center justify-center gap-2"
                     >
                       <Eye size={14} />
                       <span>Mark Read</span>
@@ -552,7 +552,7 @@ export default function EnquiriesPage() {
                   ) : (
                     <button
                       onClick={() => updateStatus(selectedEnquiry.id, 'new')}
-                      className="px-4 py-2.5 border border-[#E3E8ED] text-xs uppercase tracking-wider text-[#1B3A4C] hover:bg-[#F8FAFB] transition-colors flex items-center justify-center gap-2"
+                      className="px-4 py-2.5 border border-[#FAFAF7] text-xs uppercase tracking-wider text-[#2a1a0a] hover:bg-[#f5f0e8] transition-colors flex items-center justify-center gap-2"
                     >
                       <Mail size={14} />
                       <span>Mark Unread</span>
@@ -560,14 +560,14 @@ export default function EnquiriesPage() {
                   )}
                   <button
                     onClick={() => updateStatus(selectedEnquiry.id, 'replied')}
-                    className="px-4 py-2.5 border border-[#E3E8ED] text-xs uppercase tracking-wider text-[#1B3A4C] hover:bg-[#F8FAFB] transition-colors flex items-center justify-center gap-2"
+                    className="px-4 py-2.5 border border-[#FAFAF7] text-xs uppercase tracking-wider text-[#2a1a0a] hover:bg-[#f5f0e8] transition-colors flex items-center justify-center gap-2"
                   >
                     <Reply size={14} />
                     <span>Replied</span>
                   </button>
                   <button
                     onClick={() => updateStatus(selectedEnquiry.id, 'archived')}
-                    className="px-4 py-2.5 border border-[#E3E8ED] text-xs uppercase tracking-wider text-[#1B3A4C] hover:bg-[#F8FAFB] transition-colors flex items-center justify-center gap-2"
+                    className="px-4 py-2.5 border border-[#FAFAF7] text-xs uppercase tracking-wider text-[#2a1a0a] hover:bg-[#f5f0e8] transition-colors flex items-center justify-center gap-2"
                   >
                     <Archive size={14} />
                     <span>Archive</span>
@@ -576,7 +576,7 @@ export default function EnquiriesPage() {
 
                 {/* Pipeline */}
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-2">Pipeline</p>
+                  <p className="text-xs uppercase tracking-widest text-[#91715c] mb-2">Pipeline</p>
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       disabled={pipelineLoading === 'quote'}
@@ -598,7 +598,7 @@ export default function EnquiriesPage() {
                           setPipelineLoading('')
                         }
                       }}
-                      className="px-4 py-2.5 bg-[#1B3A4C] text-white text-xs uppercase tracking-wider hover:bg-[#E3E8ED] transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                      className="px-4 py-2.5 bg-[#2a1a0a] text-white text-xs uppercase tracking-wider hover:bg-[#FAFAF7] transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                       <FileText size={14} />
                       <span>{pipelineLoading === 'quote' ? 'Creating...' : 'Create Quote'}</span>
@@ -623,7 +623,7 @@ export default function EnquiriesPage() {
                           setPipelineLoading('')
                         }
                       }}
-                      className="px-4 py-2.5 bg-[#E3E8ED] text-white text-xs uppercase tracking-wider hover:bg-[#1B3A4C] transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                      className="px-4 py-2.5 bg-[#FAFAF7] text-white text-xs uppercase tracking-wider hover:bg-[#2a1a0a] transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                       <Receipt size={14} />
                       <span>{pipelineLoading === 'invoice' ? 'Creating...' : 'Create Invoice'}</span>
@@ -637,7 +637,7 @@ export default function EnquiriesPage() {
                     setShowModal(false)
                     confirmDelete(selectedEnquiry.id)
                   }}
-                  className="w-full text-xs uppercase tracking-wider text-[#6B8FAB] hover:text-red-600 transition-colors flex items-center justify-center gap-2 py-2"
+                  className="w-full text-xs uppercase tracking-wider text-[#91715c] hover:text-red-600 transition-colors flex items-center justify-center gap-2 py-2"
                 >
                   <Trash2 size={12} />
                   <span>Delete Enquiry</span>

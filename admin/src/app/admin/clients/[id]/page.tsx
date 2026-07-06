@@ -109,8 +109,8 @@ export default function ClientDetailPage() {
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto py-12 text-center">
-        <Loader2 size={32} className="animate-spin mx-auto text-[#6B8FAB] mb-4" />
-        <p className="text-[#6B8FAB] text-sm">Loading client...</p>
+        <Loader2 size={32} className="animate-spin mx-auto text-[#91715c] mb-4" />
+        <p className="text-[#91715c] text-sm">Loading client...</p>
       </div>
     )
   }
@@ -119,7 +119,7 @@ export default function ClientDetailPage() {
     return (
       <div className="max-w-6xl mx-auto py-12 text-center">
         <AlertCircle size={32} className="mx-auto text-red-400 mb-4" />
-        <p className="text-[#8a9bac] text-sm">Client not found.</p>
+        <p className="text-[#b89a6e] text-sm">Client not found.</p>
       </div>
     )
   }
@@ -138,7 +138,7 @@ export default function ClientDetailPage() {
       {/* Back Link */}
       <Link
         href="/admin/clients"
-        className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#0d1f3d] transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-[#2a1a0a] hover:text-[#2a1a0a] transition-colors"
       >
         <ArrowLeft size={14} />
         <span>Back to Clients</span>
@@ -148,11 +148,11 @@ export default function ClientDetailPage() {
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-px bg-[#6B8FAB]" />
-            <p className="text-xs uppercase tracking-widest text-[#8a9bac]">Client Details</p>
+            <div className="w-10 h-px bg-[#91715c]" />
+            <p className="text-xs uppercase tracking-widest text-[#b89a6e]">Client Details</p>
           </div>
-          <h1 className="text-3xl md:text-4xl font-light text-[#0d1f3d] mb-2">{client.name}</h1>
-          <p className="text-sm text-[#8a9bac]">
+          <h1 className="text-3xl md:text-4xl font-light text-[#2a1a0a] mb-2">{client.name}</h1>
+          <p className="text-sm text-[#b89a6e]">
             Added {new Date(client.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
           </p>
         </div>
@@ -163,7 +163,7 @@ export default function ClientDetailPage() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-[#1B3A4C] text-white hover:bg-[#E3E8ED]"
+                className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-[#2a1a0a] text-white hover:bg-[#FAFAF7]"
               >
                 <Save size={14} />
                 <span>{saving ? 'Saving...' : 'Save'}</span>
@@ -173,7 +173,7 @@ export default function ClientDetailPage() {
                   setForm(client)
                   setIsEditing(false)
                 }}
-                className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#6B8FAB] text-[#0d1f3d] hover:border-[#1B3A4C]"
+                className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#91715c] text-[#2a1a0a] hover:border-[#2a1a0a]"
               >
                 <X size={14} />
                 <span>Cancel</span>
@@ -182,7 +182,7 @@ export default function ClientDetailPage() {
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#6B8FAB] text-[#0d1f3d] hover:border-[#1B3A4C]"
+              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#91715c] text-[#2a1a0a] hover:border-[#2a1a0a]"
             >
               <Edit2 size={14} />
               <span>Edit</span>
@@ -193,98 +193,98 @@ export default function ClientDetailPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-white border border-[#E3E8ED] p-6 text-center">
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#0d1f3d] leading-none tracking-[-1px]">
+        <div className="bg-white border border-[#FAFAF7] p-6 text-center">
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#2a1a0a] leading-none tracking-[-1px]">
             {quotes.length}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Quotes</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#91715c] font-medium mt-2">Quotes</p>
         </div>
-        <div className="bg-white border border-[#E3E8ED] p-6 text-center">
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#0d1f3d] leading-none tracking-[-1px]">
+        <div className="bg-white border border-[#FAFAF7] p-6 text-center">
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#2a1a0a] leading-none tracking-[-1px]">
             {invoices.length}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Invoices</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#91715c] font-medium mt-2">Invoices</p>
         </div>
-        <div className="bg-white border border-[#E3E8ED] p-6 text-center">
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#0d1f3d] leading-none tracking-[-1px]">
+        <div className="bg-white border border-[#FAFAF7] p-6 text-center">
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#2a1a0a] leading-none tracking-[-1px]">
             {client.totalRevenue ? formatCurrency(client.totalRevenue) : '—'}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Revenue</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#91715c] font-medium mt-2">Revenue</p>
         </div>
       </div>
 
       {/* Client Info */}
-      <div className="bg-white border border-[#E3E8ED] p-6">
+      <div className="bg-white border border-[#FAFAF7] p-6">
         <div className="flex items-center gap-2 mb-5">
-          <div className="p-2 bg-[#1B3A4C] text-white">
+          <div className="p-2 bg-[#2a1a0a] text-white">
             <Mail size={16} />
           </div>
-          <h3 className="text-lg font-light text-[#0d1f3d]">Contact Information</h3>
+          <h3 className="text-lg font-light text-[#2a1a0a]">Contact Information</h3>
         </div>
 
         {isEditing ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs text-[#8a9bac] uppercase tracking-widest mb-2">Name</label>
+              <label className="block text-xs text-[#b89a6e] uppercase tracking-widest mb-2">Name</label>
               <input
                 value={form.name || ''}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border border-[#E3E8ED] text-[#0d1f3d] text-sm focus:outline-none focus:border-[#1B3A4C]"
+                className="w-full px-4 py-2.5 bg-white border border-[#FAFAF7] text-[#2a1a0a] text-sm focus:outline-none focus:border-[#2a1a0a]"
               />
             </div>
             <div>
-              <label className="block text-xs text-[#8a9bac] uppercase tracking-widest mb-2">Email</label>
+              <label className="block text-xs text-[#b89a6e] uppercase tracking-widest mb-2">Email</label>
               <input
                 type="email"
                 value={form.email || ''}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border border-[#E3E8ED] text-[#0d1f3d] text-sm focus:outline-none focus:border-[#1B3A4C]"
+                className="w-full px-4 py-2.5 bg-white border border-[#FAFAF7] text-[#2a1a0a] text-sm focus:outline-none focus:border-[#2a1a0a]"
               />
             </div>
             <div>
-              <label className="block text-xs text-[#8a9bac] uppercase tracking-widest mb-2">Phone</label>
+              <label className="block text-xs text-[#b89a6e] uppercase tracking-widest mb-2">Phone</label>
               <input
                 value={form.phone || ''}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border border-[#E3E8ED] text-[#0d1f3d] text-sm focus:outline-none focus:border-[#1B3A4C]"
+                className="w-full px-4 py-2.5 bg-white border border-[#FAFAF7] text-[#2a1a0a] text-sm focus:outline-none focus:border-[#2a1a0a]"
               />
             </div>
             <div>
-              <label className="block text-xs text-[#8a9bac] uppercase tracking-widest mb-2">Instagram</label>
+              <label className="block text-xs text-[#b89a6e] uppercase tracking-widest mb-2">Instagram</label>
               <input
                 value={form.instagram || ''}
                 onChange={(e) => setForm({ ...form, instagram: e.target.value })}
-                className="w-full px-4 py-2.5 bg-white border border-[#E3E8ED] text-[#0d1f3d] text-sm focus:outline-none focus:border-[#1B3A4C]"
+                className="w-full px-4 py-2.5 bg-white border border-[#FAFAF7] text-[#2a1a0a] text-sm focus:outline-none focus:border-[#2a1a0a]"
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-xs text-[#8a9bac] uppercase tracking-widest mb-2">Notes</label>
+              <label className="block text-xs text-[#b89a6e] uppercase tracking-widest mb-2">Notes</label>
               <textarea
                 value={form.notes || ''}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
                 rows={3}
-                className="w-full px-4 py-2.5 bg-white border border-[#E3E8ED] text-[#0d1f3d] text-sm focus:outline-none focus:border-[#1B3A4C] resize-none"
+                className="w-full px-4 py-2.5 bg-white border border-[#FAFAF7] text-[#2a1a0a] text-sm focus:outline-none focus:border-[#2a1a0a] resize-none"
               />
             </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <p className="text-xs text-[#8a9bac] uppercase tracking-widest mb-1">Email</p>
-              <p className="text-base text-[#0d1f3d]">{client.email || '—'}</p>
+              <p className="text-xs text-[#b89a6e] uppercase tracking-widest mb-1">Email</p>
+              <p className="text-base text-[#2a1a0a]">{client.email || '—'}</p>
             </div>
             <div>
-              <p className="text-xs text-[#8a9bac] uppercase tracking-widest mb-1">Phone</p>
-              <p className="text-base text-[#0d1f3d]">{client.phone || '—'}</p>
+              <p className="text-xs text-[#b89a6e] uppercase tracking-widest mb-1">Phone</p>
+              <p className="text-base text-[#2a1a0a]">{client.phone || '—'}</p>
             </div>
             <div>
-              <p className="text-xs text-[#8a9bac] uppercase tracking-widest mb-1">Instagram</p>
-              <p className="text-base text-[#0d1f3d]">{client.instagram || '—'}</p>
+              <p className="text-xs text-[#b89a6e] uppercase tracking-widest mb-1">Instagram</p>
+              <p className="text-base text-[#2a1a0a]">{client.instagram || '—'}</p>
             </div>
             {client.notes && (
               <div className="md:col-span-2">
-                <p className="text-xs text-[#8a9bac] uppercase tracking-widest mb-1">Notes</p>
-                <p className="text-sm text-[#8a9bac] whitespace-pre-wrap">{client.notes}</p>
+                <p className="text-xs text-[#b89a6e] uppercase tracking-widest mb-1">Notes</p>
+                <p className="text-sm text-[#b89a6e] whitespace-pre-wrap">{client.notes}</p>
               </div>
             )}
           </div>
@@ -292,48 +292,48 @@ export default function ClientDetailPage() {
       </div>
 
       {/* Quotes */}
-      <div className="bg-white border border-[#E3E8ED] overflow-hidden">
-        <div className="p-6 border-b border-[#E3E8ED]">
+      <div className="bg-white border border-[#FAFAF7] overflow-hidden">
+        <div className="p-6 border-b border-[#FAFAF7]">
           <div className="flex items-center gap-2">
-            <div className="p-2 bg-[#1B3A4C] text-white">
+            <div className="p-2 bg-[#2a1a0a] text-white">
               <FileText size={16} />
             </div>
-            <h3 className="text-lg font-light text-[#0d1f3d]">Quotes</h3>
-            <span className="ml-2 text-xs px-2.5 py-1 rounded-full bg-[#1B3A4C1a] text-[#1B3A4C] font-medium">
+            <h3 className="text-lg font-light text-[#2a1a0a]">Quotes</h3>
+            <span className="ml-2 text-xs px-2.5 py-1 rounded-full bg-[#2a1a0a1a] text-[#2a1a0a] font-medium">
               {quotes.length}
             </span>
           </div>
         </div>
         <div className="overflow-x-auto">
           {quotes.length === 0 ? (
-            <p className="p-6 text-sm text-[#6B8FAB]">No quotes yet.</p>
+            <p className="p-6 text-sm text-[#91715c]">No quotes yet.</p>
           ) : (
             <table className="w-full">
-              <thead className="bg-[#F8FAFB] border-b border-[#E3E8ED]">
+              <thead className="bg-[#f5f0e8] border-b border-[#FAFAF7]">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Quote</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Project</th>
-                  <th className="px-6 py-4 text-right text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Total</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Status</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Date</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#2a1a0a] uppercase tracking-widest">Quote</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#2a1a0a] uppercase tracking-widest">Project</th>
+                  <th className="px-6 py-4 text-right text-xs font-semibold text-[#2a1a0a] uppercase tracking-widest">Total</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#2a1a0a] uppercase tracking-widest">Status</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#2a1a0a] uppercase tracking-widest">Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E3E8ED]">
+              <tbody className="divide-y divide-[#FAFAF7]">
                 {quotes.map((q) => (
-                  <tr key={q.id} className="hover:bg-[#F8FAFB] transition-colors">
+                  <tr key={q.id} className="hover:bg-[#f5f0e8] transition-colors">
                     <td className="px-6 py-4">
-                      <Link href={`/admin/quotes/${q.id}`} className="text-sm font-medium text-[#1B3A4C] hover:underline">
+                      <Link href={`/admin/quotes/${q.id}`} className="text-sm font-medium text-[#2a1a0a] hover:underline">
                         {q.quoteNumber || `QT-${String(q.id).padStart(3, '0')}`}
                       </Link>
                     </td>
-                    <td className="px-6 py-4 text-sm text-[#8a9bac]">{q.projectTitle || '—'}</td>
-                    <td className="px-6 py-4 text-sm font-semibold text-[#0d1f3d] text-right">{formatCurrency(q.total)}</td>
+                    <td className="px-6 py-4 text-sm text-[#b89a6e]">{q.projectTitle || '—'}</td>
+                    <td className="px-6 py-4 text-sm font-semibold text-[#2a1a0a] text-right">{formatCurrency(q.total)}</td>
                     <td className="px-6 py-4">
                       <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${statusStyles[q.status] || 'bg-gray-100 text-gray-600'}`}>
                         {q.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-[#8a9bac]">
+                    <td className="px-6 py-4 text-sm text-[#b89a6e]">
                       {q.sentAt ? new Date(q.sentAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'}
                     </td>
                   </tr>
@@ -345,48 +345,48 @@ export default function ClientDetailPage() {
       </div>
 
       {/* Invoices */}
-      <div className="bg-white border border-[#E3E8ED] overflow-hidden">
-        <div className="p-6 border-b border-[#E3E8ED]">
+      <div className="bg-white border border-[#FAFAF7] overflow-hidden">
+        <div className="p-6 border-b border-[#FAFAF7]">
           <div className="flex items-center gap-2">
-            <div className="p-2 bg-[#1B3A4C] text-white">
+            <div className="p-2 bg-[#2a1a0a] text-white">
               <Receipt size={16} />
             </div>
-            <h3 className="text-lg font-light text-[#0d1f3d]">Invoices</h3>
-            <span className="ml-2 text-xs px-2.5 py-1 rounded-full bg-[#1B3A4C1a] text-[#1B3A4C] font-medium">
+            <h3 className="text-lg font-light text-[#2a1a0a]">Invoices</h3>
+            <span className="ml-2 text-xs px-2.5 py-1 rounded-full bg-[#2a1a0a1a] text-[#2a1a0a] font-medium">
               {invoices.length}
             </span>
           </div>
         </div>
         <div className="overflow-x-auto">
           {invoices.length === 0 ? (
-            <p className="p-6 text-sm text-[#6B8FAB]">No invoices yet.</p>
+            <p className="p-6 text-sm text-[#91715c]">No invoices yet.</p>
           ) : (
             <table className="w-full">
-              <thead className="bg-[#F8FAFB] border-b border-[#E3E8ED]">
+              <thead className="bg-[#f5f0e8] border-b border-[#FAFAF7]">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Invoice</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Project</th>
-                  <th className="px-6 py-4 text-right text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Total</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Status</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Date</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#2a1a0a] uppercase tracking-widest">Invoice</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#2a1a0a] uppercase tracking-widest">Project</th>
+                  <th className="px-6 py-4 text-right text-xs font-semibold text-[#2a1a0a] uppercase tracking-widest">Total</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#2a1a0a] uppercase tracking-widest">Status</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-[#2a1a0a] uppercase tracking-widest">Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E3E8ED]">
+              <tbody className="divide-y divide-[#FAFAF7]">
                 {invoices.map((inv) => (
-                  <tr key={inv.id} className="hover:bg-[#F8FAFB] transition-colors">
+                  <tr key={inv.id} className="hover:bg-[#f5f0e8] transition-colors">
                     <td className="px-6 py-4">
-                      <Link href={`/admin/invoices/${inv.id}`} className="text-sm font-medium text-[#1B3A4C] hover:underline">
+                      <Link href={`/admin/invoices/${inv.id}`} className="text-sm font-medium text-[#2a1a0a] hover:underline">
                         {inv.invoiceNumber || `INV-${String(inv.id).padStart(3, '0')}`}
                       </Link>
                     </td>
-                    <td className="px-6 py-4 text-sm text-[#8a9bac]">{inv.projectTitle || '—'}</td>
-                    <td className="px-6 py-4 text-sm font-semibold text-[#0d1f3d] text-right">{formatCurrency(inv.total)}</td>
+                    <td className="px-6 py-4 text-sm text-[#b89a6e]">{inv.projectTitle || '—'}</td>
+                    <td className="px-6 py-4 text-sm font-semibold text-[#2a1a0a] text-right">{formatCurrency(inv.total)}</td>
                     <td className="px-6 py-4">
                       <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${statusStyles[inv.status] || 'bg-gray-100 text-gray-600'}`}>
                         {inv.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-[#8a9bac]">
+                    <td className="px-6 py-4 text-sm text-[#b89a6e]">
                       {inv.sentAt ? new Date(inv.sentAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'}
                     </td>
                   </tr>

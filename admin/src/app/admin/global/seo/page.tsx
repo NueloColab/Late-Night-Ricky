@@ -92,23 +92,23 @@ export default function SeoEditor() {
       )}
 
       <div className="mb-12">
-        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Global Settings</p>
-        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">SEO &amp; Meta</h1>
-        <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Page titles, descriptions, and favicon</p>
+        <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-4">Global Settings</p>
+        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#2a1a0a] tracking-[-2px] uppercase leading-[0.95]">SEO &amp; Meta</h1>
+        <p className="text-sm text-[#b89a6e] mt-4 font-semibold uppercase tracking-[0.5px]">Page titles, descriptions, and favicon</p>
       </div>
 
       <div className="max-w-3xl space-y-6">
         {/* Favicon */}
-        <div className="bg-white border border-[#6B8FAB]/30 p-6">
-          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Branding</p>
-          <p className="text-sm text-[#8a9bac] mb-4 font-semibold uppercase tracking-[0.5px]">The icon shown in browser tabs</p>
+        <div className="bg-white border border-[#91715c]/30 p-6">
+          <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-1">Branding</p>
+          <p className="text-sm text-[#b89a6e] mb-4 font-semibold uppercase tracking-[0.5px]">The icon shown in browser tabs</p>
 
-          <div className="relative w-16 h-16 bg-[#E3E8ED] rounded-xl overflow-hidden mb-4 border border-[#6B8FAB]/30">
+          <div className="relative w-16 h-16 bg-[#FAFAF7] rounded-xl overflow-hidden mb-4 border border-[#91715c]/30">
             {faviconPath ? (
               <img src={faviconPath} alt="Favicon" className="object-contain p-1 w-full h-full" />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6B8FAB" strokeWidth="2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#91715c" strokeWidth="2">
                   <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" />
                 </svg>
               </div>
@@ -126,12 +126,12 @@ export default function SeoEditor() {
                 );
               }}
               placeholder="/assets/favicon.png"
-              className="flex-1 px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+              className="flex-1 px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]"
             />
             <button
               onClick={() => faviconPath && saveSeo({ images: [faviconPath] })}
               disabled={saving || !faviconPath}
-              className="px-5 py-2 border-2 border-[#0d1f3d] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
+              className="px-5 py-2 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#FAFAF7] hover:text-white transition disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save Favicon'}
             </button>
@@ -139,33 +139,33 @@ export default function SeoEditor() {
         </div>
 
         {/* Page Meta */}
-        <div className="bg-white border border-[#6B8FAB]/30 p-6">
-          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">SEO</p>
-          <p className="text-sm text-[#8a9bac] mb-6 font-semibold uppercase tracking-[0.5px]">Titles and descriptions for each page</p>
+        <div className="bg-white border border-[#91715c]/30 p-6">
+          <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-1">SEO</p>
+          <p className="text-sm text-[#b89a6e] mb-6 font-semibold uppercase tracking-[0.5px]">Titles and descriptions for each page</p>
 
           <div className="space-y-6">
             {merged.map((meta) => (
-              <div key={meta.page} className="border border-[#6B8FAB]/30 rounded-xl p-4 bg-white">
-                <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">{meta.page}</p>
+              <div key={meta.page} className="border border-[#91715c]/30 rounded-xl p-4 bg-white">
+                <p className="text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-3">{meta.page}</p>
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Title</label>
+                    <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Title</label>
                     <input
                       type="text"
                       value={meta.title}
                       onChange={(e) => updateMeta(meta.page, 'title', e.target.value)}
                       placeholder="Page title"
-                      className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                      className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Meta Description</label>
+                    <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Meta Description</label>
                     <textarea
                       value={meta.description}
                       onChange={(e) => updateMeta(meta.page, 'description', e.target.value)}
                       placeholder="Short description for search engines"
                       rows={3}
-                      className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-y"
+                      className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a] resize-y"
                     />
                   </div>
                 </div>
@@ -177,7 +177,7 @@ export default function SeoEditor() {
             <button
               onClick={() => saveSeo({ content: merged })}
               disabled={saving}
-              className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
+              className="px-7 py-3 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#FAFAF7] hover:text-white transition disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save Meta'}
             </button>

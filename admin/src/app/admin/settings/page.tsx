@@ -80,26 +80,26 @@ export default function SettingsPage() {
   return (
     <div className="max-w-5xl mx-auto">
       <div className="mb-12">
-        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Configuration</p>
-        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">
+        <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-4">Configuration</p>
+        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#2a1a0a] tracking-[-2px] uppercase leading-[0.95]">
           Settings
         </h1>
-        <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Configure your admin panel preferences.</p>
+        <p className="text-sm text-[#b89a6e] mt-4 font-semibold uppercase tracking-[0.5px]">Configure your admin panel preferences.</p>
       </div>
 
       {loading ? (
-        <p className="text-[#6B8FAB] text-sm">Loading...</p>
+        <p className="text-[#91715c] text-sm">Loading...</p>
       ) : (
         <div className="space-y-8">
-          <div className="bg-white border border-[#6B8FAB]/30 p-8">
-            <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-6">Business Settings</p>
+          <div className="bg-white border border-[#91715c]/30 p-8">
+            <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-6">Business Settings</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div>
-                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Default Currency</label>
+                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-3">Default Currency</label>
                 <select
                   value={settings.currency}
                   onChange={(e) => setSettings({ ...settings, currency: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                  className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]"
                 >
                   <option value="GBP">£ GBP</option>
                   <option value="USD">$ USD</option>
@@ -107,7 +107,7 @@ export default function SettingsPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Tax Rate (%)</label>
+                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-3">Tax Rate (%)</label>
                 <input
                   type="number"
                   min="0"
@@ -115,15 +115,15 @@ export default function SettingsPage() {
                   step="0.01"
                   value={settings.taxRate}
                   onChange={(e) => setSettings({ ...settings, taxRate: Number(e.target.value) })}
-                  className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                  className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Quote Template</label>
+                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-3">Quote Template</label>
                 <select
                   value={settings.quoteTemplate}
                   onChange={(e) => setSettings({ ...settings, quoteTemplate: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                  className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]"
                 >
                   <option value="standard">Standard</option>
                   <option value="detailed">Detailed</option>
@@ -135,60 +135,60 @@ export default function SettingsPage() {
               <button
                 onClick={saveSettings}
                 disabled={saving}
-                className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
+                className="px-7 py-3 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#FAFAF7] hover:text-white transition disabled:opacity-50"
               >
                 {saving ? "Saving..." : "Save Settings"}
               </button>
             </div>
           </div>
 
-          <div className="bg-white border border-[#6B8FAB]/30 p-8">
-            <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-6">Security</p>
+          <div className="bg-white border border-[#91715c]/30 p-8">
+            <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-6">Security</p>
             <form onSubmit={changePin} className="max-w-md space-y-5">
               <div>
-                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Current PIN</label>
+                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-3">Current PIN</label>
                 <input
                   type="password"
                   inputMode="numeric"
                   maxLength={6}
                   value={currentPin}
                   onChange={(e) => setCurrentPin(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] text-center tracking-widest font-mono focus:outline-none focus:border-[#1B3A4C]"
+                  className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] text-center tracking-widest font-mono focus:outline-none focus:border-[#2a1a0a]"
                   placeholder="••••"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">New PIN</label>
+                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-3">New PIN</label>
                 <input
                   type="password"
                   inputMode="numeric"
                   maxLength={6}
                   value={newPin}
                   onChange={(e) => setNewPin(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] text-center tracking-widest font-mono focus:outline-none focus:border-[#1B3A4C]"
+                  className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] text-center tracking-widest font-mono focus:outline-none focus:border-[#2a1a0a]"
                   placeholder="••••"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Confirm New PIN</label>
+                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-3">Confirm New PIN</label>
                 <input
                   type="password"
                   inputMode="numeric"
                   maxLength={6}
                   value={confirmPin}
                   onChange={(e) => setConfirmPin(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] text-center tracking-widest font-mono focus:outline-none focus:border-[#1B3A4C]"
+                  className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] text-center tracking-widest font-mono focus:outline-none focus:border-[#2a1a0a]"
                   placeholder="••••"
                 />
               </div>
               {pinMessage && (
-                <p className={`text-sm font-medium ${pinMessage.includes("success") ? "text-[#2d6a2d]" : "text-[#8a9bac]"}`}>
+                <p className={`text-sm font-medium ${pinMessage.includes("success") ? "text-[#5c7a3c]" : "text-[#b89a6e]"}`}>
                   {pinMessage}
                 </p>
               )}
               <button
                 type="submit"
-                className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition"
+                className="px-7 py-3 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#FAFAF7] hover:text-white transition"
               >
                 Update PIN
               </button>

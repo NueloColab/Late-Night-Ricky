@@ -37,13 +37,13 @@ const PIPELINE_LABELS: Record<string, string> = {
 }
 
 const PIPELINE_STYLES: Record<string, { bg: string; text: string; border: string }> = {
-  inquiry: { bg: 'bg-[#E3E8ED]', text: 'text-[#8a9bac]', border: 'border-[#6B8FAB]/30' },
-  quoted: { bg: 'bg-[#1B3A4C]/10', text: 'text-[#1B3A4C]', border: 'border-[#1B3A4C]/30' },
+  inquiry: { bg: 'bg-[#FAFAF7]', text: 'text-[#b89a6e]', border: 'border-[#91715c]/30' },
+  quoted: { bg: 'bg-[#2a1a0a]/10', text: 'text-[#2a1a0a]', border: 'border-[#2a1a0a]/30' },
   approved: { bg: 'bg-[#91715c]/10', text: 'text-[#91715c]', border: 'border-[#91715c]/30' },
-  'in-progress': { bg: 'bg-[#1B3A4C]/10', text: 'text-[#1B3A4C]', border: 'border-[#1B3A4C]/30' },
+  'in-progress': { bg: 'bg-[#2a1a0a]/10', text: 'text-[#2a1a0a]', border: 'border-[#2a1a0a]/30' },
   completed: { bg: 'bg-[#91715c]/10', text: 'text-[#91715c]', border: 'border-[#91715c]/30' },
-  invoiced: { bg: 'bg-[#1B3A4C]/10', text: 'text-[#1B3A4C]', border: 'border-[#1B3A4C]/30' },
-  paid: { bg: 'bg-[#2d6a2d]/10', text: 'text-[#2d6a2d]', border: 'border-[#2d6a2d]/30' },
+  invoiced: { bg: 'bg-[#2a1a0a]/10', text: 'text-[#2a1a0a]', border: 'border-[#2a1a0a]/30' },
+  paid: { bg: 'bg-[#5c7a3c]/10', text: 'text-[#5c7a3c]', border: 'border-[#5c7a3c]/30' },
 }
 
 const PROJECT_TYPES: Record<string, string> = {
@@ -60,8 +60,8 @@ const PROJECT_TYPES: Record<string, string> = {
 
 const emptyProject = { title: '', type: 'dj-booking', status: 'inquiry', venue: '', eventDate: '', fee: '', currency: 'GBP', notes: '' }
 
-const inputClass = 'w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-[#1B3A4C] placeholder-[#6B8FAB] text-sm focus:outline-none focus:border-[#1B3A4C] transition-all'
-const cardClass = 'bg-white border border-[#6B8FAB]/30 p-6'
+const inputClass = 'w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-[#2a1a0a] placeholder-[#91715c] text-sm focus:outline-none focus:border-[#2a1a0a] transition-all'
+const cardClass = 'bg-white border border-[#91715c]/30 p-6'
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([])
@@ -121,15 +121,15 @@ export default function ProjectsPage() {
     <div className="max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-12">
-        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Project Management</p>
+        <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-4">Project Management</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">Projects</h1>
-            <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Pipeline tracker</p>
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#2a1a0a] tracking-[-2px] uppercase leading-[0.95]">Projects</h1>
+            <p className="text-sm text-[#b89a6e] mt-4 font-semibold uppercase tracking-[0.5px]">Pipeline tracker</p>
           </div>
           <button
             onClick={() => { setShowForm(!showForm); setForm(emptyProject) }}
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#FAFAF7] hover:text-white transition"
           >
             <Plus size={16} />
             New Project
@@ -139,51 +139,51 @@ export default function ProjectsPage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-        <div className="bg-white border border-[#6B8FAB]/30 p-5">
+        <div className="bg-white border border-[#91715c]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#1B3A4C] text-white rounded-lg"><FolderOpen size={16} /></div>
+            <div className="p-2 bg-[#2a1a0a] text-white rounded-lg"><FolderOpen size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#0d1f3d] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Projects</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#2a1a0a] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#91715c] font-medium mt-2">Total Projects</p>
         </div>
-        <div className="bg-white border border-[#6B8FAB]/30 p-5">
+        <div className="bg-white border border-[#91715c]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#1B3A4C] text-white rounded-lg"><Clock size={16} /></div>
+            <div className="p-2 bg-[#2a1a0a] text-white rounded-lg"><Clock size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#1B3A4C] leading-none tracking-[-1px]">{loading ? '–' : stats.inquiry}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Inquiries</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#2a1a0a] leading-none tracking-[-1px]">{loading ? '–' : stats.inquiry}</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#91715c] font-medium mt-2">Inquiries</p>
         </div>
-        <div className="bg-white border border-[#6B8FAB]/30 p-5">
+        <div className="bg-white border border-[#91715c]/30 p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#91715c] text-white rounded-lg"><TrendingUp size={16} /></div>
           </div>
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#91715c] leading-none tracking-[-1px]">{loading ? '–' : stats.inProgress}</p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">In Progress</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#91715c] font-medium mt-2">In Progress</p>
         </div>
-        <div className="bg-white border border-[#6B8FAB]/30 p-5">
+        <div className="bg-white border border-[#91715c]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#2d6a2d] text-white rounded-lg"><CheckCircle size={16} /></div>
+            <div className="p-2 bg-[#5c7a3c] text-white rounded-lg"><CheckCircle size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#2d6a2d] leading-none tracking-[-1px]">
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#5c7a3c] leading-none tracking-[-1px]">
             {loading ? '–' : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(stats.totalValue)}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Pipeline Value</p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#91715c] font-medium mt-2">Pipeline Value</p>
         </div>
       </div>
 
       {/* New Project Form */}
       {showForm && (
         <form onSubmit={saveProject} className={`${cardClass} mb-8 space-y-5`}>
-          <div className="flex items-center gap-3 mb-4 pb-4 border-b border-[#6B8FAB]/30">
-            <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold">New Project</p>
+          <div className="flex items-center gap-3 mb-4 pb-4 border-b border-[#91715c]/30">
+            <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold">New Project</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Title <span className="text-red-400">*</span></label>
+              <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Title <span className="text-red-400">*</span></label>
               <input type="text" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inputClass} placeholder="Project title" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Type</label>
+              <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Type</label>
               <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} className={inputClass}>
                 {Object.entries(PROJECT_TYPES).map(([value, label]) => (
                   <option key={value} value={value}>{label}</option>
@@ -191,27 +191,27 @@ export default function ProjectsPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Venue</label>
+              <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Venue</label>
               <input type="text" value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} className={inputClass} placeholder="Venue or location" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Event Date</label>
+              <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Event Date</label>
               <input type="date" value={form.eventDate} onChange={(e) => setForm({ ...form, eventDate: e.target.value })} className={inputClass} />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Fee (£)</label>
+              <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Fee (£)</label>
               <input type="number" value={form.fee} onChange={(e) => setForm({ ...form, fee: e.target.value })} className={inputClass} placeholder="0.00" min="0" step="0.01" />
             </div>
           </div>
           <div className="flex justify-end">
-            <button type="submit" className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition">Create Project</button>
+            <button type="submit" className="px-7 py-3 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#FAFAF7] hover:text-white transition">Create Project</button>
           </div>
         </form>
       )}
 
       {/* Desktop Kanban */}
       {loading ? (
-        <p className="text-[#6B8FAB] text-center py-8">Loading...</p>
+        <p className="text-[#91715c] text-center py-8">Loading...</p>
       ) : (
         <>
           <div className="hidden md:block overflow-x-auto">
@@ -222,13 +222,13 @@ export default function ProjectsPage() {
                 return (
                   <div
                     key={status}
-                    className="flex-1 min-w-[140px] bg-[#E3E8ED]/50 rounded-lg p-4 border border-[#6B8FAB]/30"
+                    className="flex-1 min-w-[140px] bg-[#FAFAF7]/50 rounded-lg p-4 border border-[#91715c]/30"
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={() => { if (dragId !== null) { moveStatus(dragId, status); setDragId(null) } }}
                   >
                     <div className="flex items-center justify-between mb-3">
-                      <p className="text-xs font-bold text-[#0d1f3d] uppercase tracking-[3px]">{PIPELINE_LABELS[status]}</p>
-                      <span className="text-xs text-[#6B8FAB]">{statusProjects.length}</span>
+                      <p className="text-xs font-bold text-[#2a1a0a] uppercase tracking-[3px]">{PIPELINE_LABELS[status]}</p>
+                      <span className="text-xs text-[#91715c]">{statusProjects.length}</span>
                     </div>
                     <div className="space-y-2">
                       {statusProjects.map((p) => (
@@ -236,16 +236,16 @@ export default function ProjectsPage() {
                           key={p.id}
                           draggable
                           onDragStart={() => setDragId(p.id)}
-                          className="bg-white rounded-lg p-3 border border-[#6B8FAB]/30 hover:border-[#1B3A4C] transition-shadow group cursor-move"
+                          className="bg-white rounded-lg p-3 border border-[#91715c]/30 hover:border-[#2a1a0a] transition-shadow group cursor-move"
                         >
                           <Link href={`/admin/projects/${p.id}`} className="block">
                             <div className="flex items-start justify-between">
-                              <p className="text-sm font-semibold text-[#1B3A4C] leading-tight">{p.title}</p>
-                              <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); deleteProject(p.id) }} className="text-xs text-[#6B8FAB] hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity ml-2 flex-shrink-0">
+                              <p className="text-sm font-semibold text-[#2a1a0a] leading-tight">{p.title}</p>
+                              <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); deleteProject(p.id) }} className="text-xs text-[#91715c] hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity ml-2 flex-shrink-0">
                                 <Trash2 size={14} />
                               </button>
                             </div>
-                            <p className="text-xs text-[#8a9bac] mt-0.5">{p.venue || 'No venue'}</p>
+                            <p className="text-xs text-[#b89a6e] mt-0.5">{p.venue || 'No venue'}</p>
                             {p.fee && <p className="text-xs font-semibold text-[#91715c] mt-1">£{Number(p.fee).toLocaleString()}</p>}
                             <span className={`inline-block mt-2 text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wide ${style.bg} ${style.text}`}>
                               {PROJECT_TYPES[p.type] || p.type}
@@ -253,7 +253,7 @@ export default function ProjectsPage() {
                           </Link>
                         </div>
                       ))}
-                      {statusProjects.length === 0 && <p className="text-xs text-[#6B8FAB] italic py-4 text-center">Drop here</p>}
+                      {statusProjects.length === 0 && <p className="text-xs text-[#91715c] italic py-4 text-center">Drop here</p>}
                     </div>
                   </div>
                 )
@@ -268,17 +268,17 @@ export default function ProjectsPage() {
               const statusProjects = projects.filter(p => p.status === status)
               if (statusProjects.length === 0) return null
               return (
-                <div key={status} className="bg-white border border-[#6B8FAB]/30 p-4">
-                  <p className="text-xs font-bold text-[#0d1f3d] uppercase tracking-[3px] mb-3">{PIPELINE_LABELS[status]} <span className="text-[#6B8FAB] font-normal">({statusProjects.length})</span></p>
+                <div key={status} className="bg-white border border-[#91715c]/30 p-4">
+                  <p className="text-xs font-bold text-[#2a1a0a] uppercase tracking-[3px] mb-3">{PIPELINE_LABELS[status]} <span className="text-[#91715c] font-normal">({statusProjects.length})</span></p>
                   <div className="space-y-2">
                     {statusProjects.map((p) => (
-                      <div key={p.id} className="bg-[#E3E8ED]/50 rounded-lg p-3 border border-[#6B8FAB]/30">
+                      <div key={p.id} className="bg-[#FAFAF7]/50 rounded-lg p-3 border border-[#91715c]/30">
                         <Link href={`/admin/projects/${p.id}`} className="block">
-                          <p className="text-sm font-semibold text-[#1B3A4C] leading-tight">{p.title}</p>
-                          <p className="text-xs text-[#8a9bac] mt-0.5">{p.venue || 'No venue'}</p>
+                          <p className="text-sm font-semibold text-[#2a1a0a] leading-tight">{p.title}</p>
+                          <p className="text-xs text-[#b89a6e] mt-0.5">{p.venue || 'No venue'}</p>
                           {p.fee && <p className="text-xs font-semibold text-[#91715c] mt-1">£{Number(p.fee).toLocaleString()}</p>}
                         </Link>
-                        <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#6B8FAB]/30">
+                        <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#91715c]/30">
                           <select
                             value={p.status}
                             onChange={(e) => moveStatus(p.id, e.target.value)}
@@ -288,7 +288,7 @@ export default function ProjectsPage() {
                               <option key={s} value={s}>{PIPELINE_LABELS[s]}</option>
                             ))}
                           </select>
-                          <button onClick={() => deleteProject(p.id)} className="text-xs text-[#6B8FAB] hover:text-red-500">Delete</button>
+                          <button onClick={() => deleteProject(p.id)} className="text-xs text-[#91715c] hover:text-red-500">Delete</button>
                         </div>
                       </div>
                     ))}
@@ -296,7 +296,7 @@ export default function ProjectsPage() {
                 </div>
               )
             })}
-            {projects.length === 0 && <p className="text-[#6B8FAB] text-center py-8">No projects yet. Create your first project above.</p>}
+            {projects.length === 0 && <p className="text-[#91715c] text-center py-8">No projects yet. Create your first project above.</p>}
           </div>
         </>
       )}
