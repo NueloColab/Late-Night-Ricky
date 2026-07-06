@@ -292,12 +292,12 @@ export default function HomeEditor() {
               { key: 'goldFilter', label: 'Gold Tint Filter', type: 'toggle' },
               { key: 'backgroundSize', label: 'Zoom (Background Size)', type: 'select', options: ['cover', 'contain', '120%', '150%', '200%'] },
               { key: 'backgroundPosition', label: 'Focus Point', type: 'select', options: ['center', 'top', 'bottom', 'left', 'right', '70% center', '25% center'] },
-            ]} onUpdate={(key, val) => updateContent('hero', key, val)} onSave={() => saveSection('hero')} saving={saving === 'hero'} onToggleVisibility={() => toggleVisibility('hero')} onOpenMedia={(field) => openMedia('section', undefined, field)} />
+            ]} onUpdate={(key, val) => updateContent('hero', key, val)} onSave={() => saveSection('hero')} saving={saving === 'hero'} onToggleVisibility={() => toggleVisibility('hero')} onOpenMedia={(field) => openMedia('section', undefined, field)} loading={loading} />
           ) : selectedSection === 'video' ? (
             <SectionEditor section={getSection('video')} label="Showreel" fields={[
               { key: 'src', label: 'Video File', type: 'text' },
               { key: 'poster', label: 'Poster Image', type: 'image' },
-            ]} onUpdate={(key, val) => updateContent('video', key, val)} onSave={() => saveSection('video')} saving={saving === 'video'} onToggleVisibility={() => toggleVisibility('video')} onOpenMedia={(field) => openMedia('section', undefined, field)} />
+            ]} onUpdate={(key, val) => updateContent('video', key, val)} onSave={() => saveSection('video')} saving={saving === 'video'} onToggleVisibility={() => toggleVisibility('video')} onOpenMedia={(field) => openMedia('section', undefined, field)} loading={loading} />
           ) : selectedSection === 'about' ? (
             <SectionEditor section={getSection('about')} label="About / Quote" fields={[
               { key: 'headline', label: 'Headline', type: 'text' },
@@ -315,7 +315,7 @@ export default function HomeEditor() {
               { key: 'rickyTextImage', label: '"Ricky" Heading Image', type: 'image' },
               { key: 'pressPackLink', label: 'Press Pack File', type: 'image' },
               { key: 'pressPackPin', label: 'Press Pack PIN (4 digits)', type: 'text' },
-            ]} onUpdate={(key, val) => updateContent('about', key, val)} onSave={() => saveSection('about')} saving={saving === 'about'} onToggleVisibility={() => toggleVisibility('about')} onOpenMedia={(field) => openMedia('section', undefined, field)} />
+            ]} onUpdate={(key, val) => updateContent('about', key, val)} onSave={() => saveSection('about')} saving={saving === 'about'} onToggleVisibility={() => toggleVisibility('about')} onOpenMedia={(field) => openMedia('section', undefined, field)} loading={loading} />
           ) : selectedSection === 'moments' ? (
             <MomentsEditor section={getSection('moments')} onUpdate={(key, val) => updateContent('moments', key, val)} onSave={() => saveSection('moments')} saving={saving === 'moments'} onToggleVisibility={() => toggleVisibility('moments')} onOpenMedia={(field) => openMedia('section', undefined, field)} setMediaTarget={setMediaTarget} setMediaOpen={setMediaOpen} />
           ) : selectedSection === 'performers' ? (
@@ -331,14 +331,14 @@ export default function HomeEditor() {
               { key: 'spotifyUrl', label: 'Spotify URL', type: 'text' },
               { key: 'appleMusicUrl', label: 'Apple Music URL', type: 'text' },
               { key: 'youtubeUrl', label: 'YouTube URL', type: 'text' },
-            ]} onUpdate={(key, val) => updateContent('radio', key, val)} onSave={() => saveSection('radio')} saving={saving === 'radio'} onToggleVisibility={() => toggleVisibility('radio')} onOpenMedia={(field) => openMedia('section', undefined, field)} />
+            ]} onUpdate={(key, val) => updateContent('radio', key, val)} onSave={() => saveSection('radio')} saving={saving === 'radio'} onToggleVisibility={() => toggleVisibility('radio')} onOpenMedia={(field) => openMedia('section', undefined, field)} loading={loading} />
           ) : selectedSection === 'share_music' ? (
             <SectionEditor section={getSection('share_music')} label="Share Your Music" fields={[
               { key: 'heading', label: 'Heading', type: 'text' },
               { key: 'description', label: 'Description', type: 'textarea' },
               { key: 'ctaText', label: 'CTA Button Text', type: 'text' },
               { key: 'ctaLink', label: 'CTA Link', type: 'text' },
-            ]} onUpdate={(key, val) => updateContent('share_music', key, val)} onSave={() => saveSection('share_music')} saving={saving === 'share_music'} onToggleVisibility={() => toggleVisibility('share_music')} onOpenMedia={(field) => openMedia('section', undefined, field)} />
+            ]} onUpdate={(key, val) => updateContent('share_music', key, val)} onSave={() => saveSection('share_music')} saving={saving === 'share_music'} onToggleVisibility={() => toggleVisibility('share_music')} onOpenMedia={(field) => openMedia('section', undefined, field)} loading={loading} />
           ) : selectedSection === 'brands' ? (
             <BrandsEditor section={getSection('brands')} onUpdate={(key, val) => updateContent('brands', key, val)} onSave={() => saveSection('brands')} saving={saving === 'brands'} onToggleVisibility={() => toggleVisibility('brands')} onOpenMedia={(field) => openMedia('section', undefined, field)} setMediaTarget={setMediaTarget} setMediaOpen={setMediaOpen} />
           ) : selectedSection === 'contact_section' ? (
@@ -353,14 +353,14 @@ export default function HomeEditor() {
               { key: 'tiktokUrl', label: 'TikTok URL', type: 'text' },
               { key: 'twitterUrl', label: 'Twitter/X URL', type: 'text' },
               { key: 'facebookUrl', label: 'Facebook URL', type: 'text' },
-            ]} onUpdate={(key, val) => updateContent('contact_section', key, val)} onSave={() => saveSection('contact_section')} saving={saving === 'contact_section'} onToggleVisibility={() => toggleVisibility('contact_section')} onOpenMedia={(field) => openMedia('section', undefined, field)} />
+            ]} onUpdate={(key, val) => updateContent('contact_section', key, val)} onSave={() => saveSection('contact_section')} saving={saving === 'contact_section'} onToggleVisibility={() => toggleVisibility('contact_section')} onOpenMedia={(field) => openMedia('section', undefined, field)} loading={loading} />
           ) : selectedSection === 'footer' ? (
             <SectionEditor section={getSection('footer')} label="Footer" fields={[
               { key: 'copyright', label: 'Copyright Text', type: 'text' },
               { key: 'poweredBy', label: 'Powered By Text', type: 'text' },
               { key: 'poweredByUrl', label: 'Powered By URL', type: 'text' },
               { key: 'logo', label: 'Footer Logo', type: 'image' },
-            ]} onUpdate={(key, val) => updateContent('footer', key, val)} onSave={() => saveSection('footer')} saving={saving === 'footer'} onToggleVisibility={() => toggleVisibility('footer')} onOpenMedia={(field) => openMedia('section', undefined, field)} />
+            ]} onUpdate={(key, val) => updateContent('footer', key, val)} onSave={() => saveSection('footer')} saving={saving === 'footer'} onToggleVisibility={() => toggleVisibility('footer')} onOpenMedia={(field) => openMedia('section', undefined, field)} loading={loading} />
           ) : (
             <p className="text-[#6B8FAB] text-sm">Select a section to edit.</p>
           )}
@@ -374,7 +374,7 @@ export default function HomeEditor() {
 
 // ─── Generic Section Editor ───
 
-function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onToggleVisibility, onOpenMedia }: {
+function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onToggleVisibility, onOpenMedia, loading }: {
   section?: SectionData;
   label: string;
   fields: { key: string; label: string; type: 'text' | 'textarea' | 'image' | 'toggle' | 'select'; options?: string[] }[];
@@ -383,8 +383,16 @@ function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onTog
   saving: boolean;
   onToggleVisibility: () => void;
   onOpenMedia: (field: string) => void;
+  loading?: boolean;
 }) {
   if (!section) {
+    if (loading) {
+      return (
+        <div className="bg-white border border-[#6B8FAB]/30 p-8">
+          <p className="text-[#6B8FAB] text-sm">Loading section data...</p>
+        </div>
+      );
+    }
     return (
       <div className="bg-white border border-[#6B8FAB]/30 p-8">
         <p className="text-[#6B8FAB] text-sm">This section doesn&apos;t exist in the database yet. Try selecting another section.</p>
