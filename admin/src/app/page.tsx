@@ -267,7 +267,7 @@ export default async function HomePage() {
                   <img
                     src="/assets/about-text-cream.png"
                     alt="About"
-                    className="h-[clamp(48px,7vw,84px)] w-auto object-contain"
+                    className="h-[clamp(36px,5.5vw,64px)] w-auto object-contain"
                   />
                 </div>
                 <div className="reveal-right" data-delay="300">
