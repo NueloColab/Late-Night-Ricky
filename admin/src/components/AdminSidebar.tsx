@@ -40,7 +40,7 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
         className={`${
           isMobile
             ? 'fixed left-0 top-0 bottom-0 z-50 w-[280px] h-screen'
-            : 'h-full w-[280px] flex-shrink-0'
+            : 'h-screen w-[280px] flex-shrink-0 sticky top-0'
         } bg-[#E3E8ED] border-r border-[#6B8FAB]/30 flex flex-col`}
         style={{
           transform: isMobile && !isOpen ? 'translateX(-100%)' : 'translateX(0)',
