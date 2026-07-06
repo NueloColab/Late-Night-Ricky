@@ -55,7 +55,7 @@ const HOME_SECTIONS = [
   { key: 'moments', label: 'Late Night Moments' },
   { key: 'performers', label: 'Has Performed With' },
   { key: 'venues', label: 'Worldwide Performances' },
-  { key: 'radio', label: 'Music & Mixes ℹ️' },
+  { key: 'radio', label: 'Music & Mixes' },
   { key: 'share_music', label: 'Share Your Music' },
   { key: 'brands', label: 'Trusted by Global Brands' },
   { key: 'contact_section', label: 'Contact' },
@@ -289,11 +289,11 @@ export default function HomeEditor() {
           {/* Show Cards & Tracks quick nav */}
           <div className="mt-4 bg-white border border-[#6B8FAB]/30 overflow-hidden">
             <button onClick={() => setSelectedSection('showcards')} className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${selectedSection === 'showcards' ? 'bg-[#1B3A4C] text-white' : 'text-[#1B3A4C] hover:bg-[#E3E8ED]'}`}>
-              <span>Show Cards <span className="text-[10px] text-[#6B8FAB] ml-1">ℹ️ Moment entry cards</span></span>
+              <span className="flex items-center gap-2">Show Cards <svg className="w-3.5 h-3.5 text-[#6B8FAB] inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span className="text-[10px] text-[#6B8FAB]">Moment entry cards</span></span>
               <span className="text-xs text-[#6B8FAB]">{showCards.length}</span>
             </button>
             <button onClick={() => setSelectedSection('tracks')} className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${selectedSection === 'tracks' ? 'bg-[#1B3A4C] text-white' : 'text-[#1B3A4C] hover:bg-[#E3E8ED]'}`}>
-              <span>Music Tracks <span className="text-[10px] text-[#6B8FAB] ml-1">ℹ️ Audio player tracks</span></span>
+              <span className="flex items-center gap-2">Music Tracks <svg className="w-3.5 h-3.5 text-[#6B8FAB] inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span className="text-[10px] text-[#6B8FAB]">Audio player tracks</span></span>
               <span className="text-xs text-[#6B8FAB]">{tracks.length}</span>
             </button>
           </div>
@@ -348,7 +348,7 @@ export default function HomeEditor() {
           ) : selectedSection === 'venues' ? (
             <VenuesEditor section={getSection('venues')} onUpdate={(key, val) => updateContent('venues', key, val)} onSave={() => saveSection('venues')} saving={saving === 'venues'} onToggleVisibility={() => toggleVisibility('venues')} onOpenMedia={(field) => openMedia('section', undefined, field)} setMediaTarget={setMediaTarget} setMediaOpen={setMediaOpen} />
           ) : selectedSection === 'radio' ? (
-            <SectionEditor section={getSection('radio')} label="Music & Mixes ℹ️ Section content (image, headline, description, streaming links)" fields={[
+            <SectionEditor section={getSection('radio')} label="Music & Mixes" fields={[
               { key: 'label', label: 'Label Tag', type: 'text' },
               { key: 'headline', label: 'Headline', type: 'text' },
               { key: 'description', label: 'Description', type: 'textarea' },
@@ -582,7 +582,7 @@ function ShowCardsEditor({ cards, setCards, onOpenMedia }: {
     <div className="bg-white border border-[#6B8FAB]/30 p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Show Cards <span className="text-[10px] normal-case tracking-normal opacity-70">ℹ️ Moment entry cards</span></p>
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Show Cards <span className="text-[10px] normal-case tracking-normal text-[#6B8FAB]/60">Moment entry cards</span></p>
           <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit show cards displayed in the Late Night Moments section</p>
         </div>
         <button onClick={addCard} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">
@@ -717,7 +717,7 @@ function TracksEditor({ tracks, setTracks, playingTrack, setPlayingTrack, audioR
     <div className="bg-white border border-[#6B8FAB]/30 p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Music Tracks <span className="text-[10px] normal-case tracking-normal opacity-70">ℹ️ Audio player tracks</span></p>
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Music Tracks <span className="text-[10px] normal-case tracking-normal text-[#6B8FAB]/60">Audio player tracks</span></p>
           <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Manage tracks in the Music & Mixes section</p>
         </div>
         <button onClick={addTrack} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">
