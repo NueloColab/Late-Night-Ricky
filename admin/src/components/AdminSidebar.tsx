@@ -8,14 +8,13 @@ const mainMenuItems = [
   { label: 'Music Submissions', href: '/admin/submissions' },
   { label: 'Enquiries', href: '/admin/enquiries' },
   { label: 'Projects', href: '/admin/projects' },
+  { label: 'Clients', href: '/admin/clients' },
   { label: 'Quotes', href: '/admin/quotes' },
   { label: 'Invoices', href: '/admin/invoices' },
-  { label: 'Clients', href: '/admin/clients' },
 ];
 
 const bottomMenuItems = [
   { label: 'Content', href: '/admin/content' },
-  { label: 'Shows', href: '/admin/shows' },
   { label: 'Show Pages', href: '/admin/show-pages' },
   { label: 'Tracks', href: '/admin/tracks' },
   { label: 'Settings', href: '/admin/settings' },

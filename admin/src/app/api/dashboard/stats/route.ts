@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { projects, tracks, submissions, invoices, enquiries, quotes, clients } from '@/lib/db/schema';
+import { projects, tracks, submissions, invoices, enquiries, quotes, clients, pageViews } from '@/lib/db/schema';
 import { sql, eq, and, desc } from 'drizzle-orm';
 
 export const dynamic = 'force-dynamic';
@@ -29,6 +29,13 @@ export async function GET() {
     // Recent quotes
     const recentQuotes = await db.select().from(quotes).orderBy(desc(quotes.sentAt)).limit(5);
 
+    // Site visits
+    const [totalViews] = await db.select({ total: sql<number>`COALESCE(sum(views), 0)::int` }).from(pageViews);
+    const [totalUnique] = await db.select({ total: sql<number>`COALESCE(sum(unique_visitors), 0)::int` }).from(pageViews);
+    const [todayViews] = await db.select({ total: sql<number>`COALESCE(views, 0)::int` }).from(pageViews).where(eq(sql`date`, sql`CURRENT_DATE`));
+    const [todayUnique] = await db.select({ total: sql<number>`COALESCE(unique_visitors, 0)::int` }).from(pageViews).where(eq(sql`date`, sql`CURRENT_DATE`));
+    const dailyViews = await db.select({ date: pageViews.date, views: pageViews.views, uniqueVisitors: pageViews.uniqueVisitors }).from(pageViews).orderBy(desc(pageViews.date)).limit(30);
+
     return NextResponse.json({
       shows: projectCount?.count ?? 0,
       tracks: trackCount?.count ?? 0,
@@ -43,9 +50,16 @@ export async function GET() {
       unpaidInvoices: unpaidInvoices?.count ?? 0,
       recentEnquiries,
       recentQuotes,
+      siteVisits: {
+        totalViews: totalViews?.total ?? 0,
+        totalUnique: totalUnique?.total ?? 0,
+        todayViews: todayViews?.total ?? 0,
+        todayUnique: todayUnique?.total ?? 0,
+        daily: dailyViews,
+      },
     });
   } catch (err: any) {
     console.error('Dashboard stats error:', err);
-    return NextResponse.json({ shows: 0, tracks: 0, submissions: 0, invoices: 0, enquiries: 0, quotes: 0, clients: 0, revenue: 0, pendingEnquiries: 0, draftQuotes: 0, unpaidInvoices: 0, recentEnquiries: [], recentQuotes: [] });
+    return NextResponse.json({ shows: 0, tracks: 0, submissions: 0, invoices: 0, enquiries: 0, quotes: 0, clients: 0, revenue: 0, pendingEnquiries: 0, draftQuotes: 0, unpaidInvoices: 0, recentEnquiries: [], recentQuotes: [], siteVisits: { totalViews: 0, totalUnique: 0, todayViews: 0, todayUnique: 0, daily: [] } });
   }
 }

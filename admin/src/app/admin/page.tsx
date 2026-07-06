@@ -11,6 +11,8 @@ import {
   TrendingUp,
   ArrowRight,
   Clock,
+  Eye,
+  BarChart3,
 } from 'lucide-react'
 
 interface DashboardStats {
@@ -27,6 +29,13 @@ interface DashboardStats {
   unpaidInvoices: number
   recentEnquiries: any[]
   recentQuotes: any[]
+  siteVisits: {
+    totalViews: number
+    totalUnique: number
+    todayViews: number
+    todayUnique: number
+    daily: { date: string; views: number; uniqueVisitors: number }[]
+  }
 }
 
 const formatCurrency = (amount: number) => {
@@ -75,6 +84,7 @@ export default function Dashboard() {
     shows: 0, tracks: 0, submissions: 0, invoices: 0, enquiries: 0,
     quotes: 0, clients: 0, revenue: 0, pendingEnquiries: 0, draftQuotes: 0, unpaidInvoices: 0,
     recentEnquiries: [], recentQuotes: [],
+    siteVisits: { totalViews: 0, totalUnique: 0, todayViews: 0, todayUnique: 0, daily: [] },
   }
 
   return (
@@ -117,6 +127,42 @@ export default function Dashboard() {
           color="#1B3A4C"
           badge={s.pendingEnquiries > 0 ? s.pendingEnquiries : undefined}
         />
+      </div>
+
+      {/* Site Visits */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="bg-white border border-[#E3E8ED] p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Eye size={16} className="text-[#6B8FAB]" />
+            <p className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] font-semibold">Today</p>
+          </div>
+          <p className="text-[clamp(24px,3vw,36px)] font-black text-[#111] leading-none mb-1">{s.siteVisits.todayViews}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a0a0a0]">page views</p>
+        </div>
+        <div className="bg-white border border-[#E3E8ED] p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Eye size={16} className="text-[#6B8FAB]" />
+            <p className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] font-semibold">Today</p>
+          </div>
+          <p className="text-[clamp(24px,3vw,36px)] font-black text-[#111] leading-none mb-1">{s.siteVisits.todayUnique}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a0a0a0]">unique visitors</p>
+        </div>
+        <div className="bg-white border border-[#E3E8ED] p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <BarChart3 size={16} className="text-[#1B3A4C]" />
+            <p className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] font-semibold">30 Days</p>
+          </div>
+          <p className="text-[clamp(24px,3vw,36px)] font-black text-[#111] leading-none mb-1">{s.siteVisits.totalViews.toLocaleString()}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a0a0a0]">total views</p>
+        </div>
+        <div className="bg-white border border-[#E3E8ED] p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <BarChart3 size={16} className="text-[#1B3A4C]" />
+            <p className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] font-semibold">30 Days</p>
+          </div>
+          <p className="text-[clamp(24px,3vw,36px)] font-black text-[#111] leading-none mb-1">{s.siteVisits.totalUnique.toLocaleString()}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a0a0a0]">unique visitors</p>
+        </div>
       </div>
 
       {/* Revenue + Pending */}

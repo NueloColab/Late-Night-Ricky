@@ -1,4 +1,11 @@
-import { pgTable, text, integer, real, serial, jsonb, boolean, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, real, serial, jsonb, boolean, timestamp, date } from "drizzle-orm/pg-core";
+
+export const pageViews = pgTable("page_views", {
+  id: serial("id").primaryKey(),
+  date: date("date").notNull(),
+  views: integer("views").default(1),
+  uniqueVisitors: integer("unique_visitors").default(1),
+});
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
