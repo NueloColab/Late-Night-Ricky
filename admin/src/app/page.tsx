@@ -120,6 +120,9 @@ export default async function HomePage() {
   let aboutBio3 = 'Ricky has embraced his British and South Asian Roots working with some legendary South Asian talent such as DIVINE and rising British R&B star H33RA as well as showcasing Punjabi artists such as Diljit Dosanjh, Karan Aujla and Sidhu Moosewala to mainstream audiences.';
   let aboutBio4 = 'With many unreleased tracks in the works, plans to further expand his brand and collaborations with other artists, there is a lot more to come this year.';
   let aboutImage = '/assets/about-ricky-jacket.jpg';
+  let aboutGrayscale = false;
+  let aboutBrownFilter = false;
+  let aboutGoldFilter = false;
   let aboutQuote = '"The best DJ I\'ve heard."';
   let aboutQuoteAttribution = 'Ronaldo';
   let aboutHeadingImage = '/assets/about-text-cream.png';
@@ -233,6 +236,9 @@ export default async function HomePage() {
           if (c.bio3) aboutBio3 = c.bio3;
           if (c.bio4) aboutBio4 = c.bio4;
           if (c.image) aboutImage = c.image;
+          if (c.aboutGrayscale !== undefined) aboutGrayscale = c.aboutGrayscale;
+          if (c.aboutBrownFilter !== undefined) aboutBrownFilter = c.aboutBrownFilter;
+          if (c.aboutGoldFilter !== undefined) aboutGoldFilter = c.aboutGoldFilter;
           if (c.quote) aboutQuote = c.quote;
           if (c.quoteAttribution) aboutQuoteAttribution = c.quoteAttribution;
           if (c.aboutHeadingImage) aboutHeadingImage = c.aboutHeadingImage;
@@ -470,7 +476,12 @@ export default async function HomePage() {
                   className="w-full h-full object-cover object-top"
                   style={{
                     mixBlendMode: 'multiply',
-                    filter: 'contrast(1.1) brightness(1.15)',
+                    filter: [
+                      'contrast(1.1) brightness(1.15)',
+                      aboutGrayscale ? 'grayscale(100%)' : '',
+                      aboutBrownFilter ? 'sepia(60%) brightness(90%)' : '',
+                      aboutGoldFilter ? 'sepia(30%) brightness(95%) saturate(150%) hue-rotate(10deg)' : '',
+                    ].filter(Boolean).join(' ') || 'none',
                   }}
                 />
                 {/* Lighten overlay */}
