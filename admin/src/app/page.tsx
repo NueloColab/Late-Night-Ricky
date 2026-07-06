@@ -90,7 +90,7 @@ export default async function HomePage() {
   let heroLogo = '/assets/ricky-logo.png';
   let heroGrayscale = true;
   let heroBackgroundSize = 'cover';
-  let heroBackgroundPosition = '70% center';
+  let heroBackgroundPosition = 'center';
   const radioImage = '/assets/ricky-music-jacket-sm.jpg';
   let radioHeadline = 'Music & Mixes';
   let radioLabel = 'Listen & Download';
@@ -136,7 +136,7 @@ export default async function HomePage() {
         if (c.logo) heroLogo = c.logo;
         if (c.grayscale !== undefined) heroGrayscale = c.grayscale;
         if (c.backgroundSize) heroBackgroundSize = c.backgroundSize;
-        if (c.backgroundPosition) heroBackgroundPosition = c.backgroundPosition;
+        // if (c.backgroundPosition) heroBackgroundPosition = c.backgroundPosition;
       }
       const radioSection = dbSections.find((s: any) => s.section === 'radio');
       if (radioSection?.content) {
