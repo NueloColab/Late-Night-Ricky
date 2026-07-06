@@ -58,8 +58,12 @@ export default function HomeContactSection() {
         const imageSection = sections.find((s: any) => s.section === 'image');
         if (imageSection?.content) {
           const img = typeof imageSection.content === 'string' ? JSON.parse(imageSection.content) : imageSection.content;
-          if (Array.isArray(img) && img[0]) setContactInfo(prev => ({ ...prev, image: img[0] }));
-          else if (typeof img === 'string') setContactInfo(prev => ({ ...prev, image: img }));
+          // Only use contact/image as fallback if home/contact_section didn't provide an image
+          const contactContent = contactSection?.content ? (typeof contactSection.content === 'string' ? JSON.parse(contactSection.content) : contactSection.content) : null;
+          if (!contactContent?.image) {
+            if (Array.isArray(img) && img[0]) setContactInfo(prev => ({ ...prev, image: img[0] }));
+            else if (typeof img === 'string') setContactInfo(prev => ({ ...prev, image: img }));
+          }
         }
       } catch {
         // keep defaults
