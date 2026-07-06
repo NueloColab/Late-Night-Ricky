@@ -70,22 +70,22 @@ export default function ShareMusicPage() {
     <>
       <Navbar />
       <main className="bg-white min-h-screen">
-        <div className="border-b-2 border-[#0d1f3d] pt-24 pb-5 px-8">
+        <div className="border-b-2 border-[#111] pt-24 pb-5 px-8">
           <div className="max-w-[1200px] mx-auto">
-            <h1 className="text-[clamp(48px,10vw,120px)] font-black tracking-[-3px] uppercase leading-[0.9] text-[#0d1f3d]">Share Your Music</h1>
+            <h1 className="text-[clamp(48px,10vw,120px)] font-black tracking-[-3px] uppercase leading-[0.9] text-[#111]">Share Your Music</h1>
           </div>
         </div>
 
         <div className="max-w-[800px] mx-auto px-8 py-20">
-          <p className="text-[clamp(28px,4vw,48px)] font-black uppercase leading-tight tracking-[-1px] mb-12 text-[#0d1f3d] max-w-[600px]">
+          <p className="text-[clamp(28px,4vw,48px)] font-black uppercase leading-tight tracking-[-1px] mb-12 text-[#111] max-w-[600px]">
             I&apos;m always on the lookout for new music to play, so send me your tracks
           </p>
 
           {status === 'success' ? (
             <div className="max-w-[600px] mx-auto border-2 border-[#152a47] p-12 text-center">
               <p className="text-2xl font-black uppercase tracking-[-1px] text-[#152a47] mb-2">Track Sent!</p>
-              <p className="text-sm text-[#8a9bac]">Thanks for sharing. Your music has been uploaded successfully.</p>
-              <button onClick={() => setStatus('idle')} className="mt-6 px-8 py-3 border-2 border-[#0d1f3d] text-[#0d1f3d] text-sm font-semibold uppercase tracking-[1.5px] hover:bg-[#0d1f3d] hover:text-white transition">
+              <p className="text-sm text-[#a0a0a0]">Thanks for sharing. Your music has been uploaded successfully.</p>
+              <button onClick={() => setStatus('idle')} className="mt-6 px-8 py-3 border-2 border-[#111] text-[#111] text-sm font-semibold uppercase tracking-[1.5px] hover:bg-[#0d1f3d] hover:text-white transition">
                 Send Another
               </button>
             </div>
@@ -98,34 +98,34 @@ export default function ShareMusicPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email *"
                   required
-                  className="w-full px-5 py-3 border-2 border-[#0d1f3d] text-[#0d1f3d] placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#152a47]"
+                  className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#152a47]"
                 />
                 <input
                   type="text"
                   value={artistName}
                   onChange={(e) => setArtistName(e.target.value)}
                   placeholder="Artist name"
-                  className="w-full px-5 py-3 border-2 border-[#0d1f3d] text-[#0d1f3d] placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#152a47]"
+                  className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#152a47]"
                 />
                 <input
                   type="text"
                   value={trackTitle}
                   onChange={(e) => setTrackTitle(e.target.value)}
                   placeholder="Track title"
-                  className="w-full px-5 py-3 border-2 border-[#0d1f3d] text-[#0d1f3d] placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#152a47]"
+                  className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#152a47]"
                 />
                 <input
                   type="text"
                   value={instagramHandle}
                   onChange={(e) => setInstagramHandle(e.target.value)}
                   placeholder="Instagram handle (e.g. @latenightricky)"
-                  className="w-full px-5 py-3 border-2 border-[#0d1f3d] text-[#0d1f3d] placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#152a47]"
+                  className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#152a47]"
                 />
               </div>
 
               <div
                 className={`border-[3px] border-dashed p-12 md:p-16 text-center transition-colors cursor-pointer max-w-[600px] mx-auto mb-8 ${
-                  dragOver ? 'border-[#152a47] bg-[rgba(21,42,71,0.04)]' : 'border-[#0d1f3d] hover:border-[#152a47] hover:bg-[rgba(21,42,71,0.02)]'
+                  dragOver ? 'border-[#152a47] bg-[rgba(21,42,71,0.04)]' : 'border-[#111] hover:border-[#152a47] hover:bg-[rgba(21,42,71,0.02)]'
                 }`}
                 onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
                 onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
@@ -146,7 +146,7 @@ export default function ShareMusicPage() {
                 <button type="button" className="inline-block px-10 py-4 bg-[#0d1f3d] text-white text-sm font-semibold uppercase tracking-[2px] hover:bg-[#152a47] transition">
                   Upload your track
                 </button>
-                <p className="mt-4 text-sm text-[#8a9bac]">Click the button and upload your file in mp3 320 kbps</p>
+                <p className="mt-4 text-sm text-[#a0a0a0]">Click the button and upload your file in mp3 320 kbps</p>
                 <p className="mt-2 text-xs text-[#C5E5F8]">Max 50MB — MP3, WAV, FLAC, or AAC</p>
                 {file && (
                   <p className="mt-4 text-sm text-[#152a47] font-medium">Selected: {file.name}</p>

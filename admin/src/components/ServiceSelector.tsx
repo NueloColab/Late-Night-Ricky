@@ -95,7 +95,7 @@ export default function ServiceSelector({
           onClick={() => {
             applyUpdates({ _custom: false, serviceCategory: '', serviceName: '' })
           }}
-          className="mt-2 text-xs text-[#152a47] hover:text-[#8a9bac] transition-colors font-semibold"
+          className="mt-2 text-xs text-[#152a47] hover:text-[#a0a0a0] transition-colors font-semibold"
         >
           ← Back to dropdown
         </button>

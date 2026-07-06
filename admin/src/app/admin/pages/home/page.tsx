@@ -239,20 +239,20 @@ export default function HomeEditor() {
         </div>
       )}
 
-      <Link href="/admin/content" className="inline-flex items-center gap-2 text-sm text-[#2a1a0a] hover:text-[#2a1a0a] transition-colors mb-6">
+      <Link href="/admin/content" className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#111] transition-colors mb-6">
         <ArrowLeft size={14} />
         <span>Back to Content</span>
       </Link>
 
       <div className="flex items-center justify-between mb-12">
         <div>
-          <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-4">Page Editor</p>
-          <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#2a1a0a] tracking-[-2px] uppercase leading-[0.95]">
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Page Editor</p>
+          <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">
             Home Page
           </h1>
-          <p className="text-sm text-[#b89a6e] mt-4 font-semibold uppercase tracking-[0.5px]">Edit sections matching the live site</p>
+          <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Edit sections matching the live site</p>
         </div>
-        <a href="/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">
+        <a href="/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">
           View on Site →
         </a>
       </div>
@@ -260,11 +260,11 @@ export default function HomeEditor() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Section nav */}
         <div className="lg:w-64 flex-shrink-0">
-          <div className="bg-white border border-[#91715c]/30 overflow-hidden">
-            <div className="px-5 py-4 border-b border-[#91715c]/30">
-              <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold">Sections</p>
+          <div className="bg-white border border-[#6B8FAB]/30 overflow-hidden">
+            <div className="px-5 py-4 border-b border-[#6B8FAB]/30">
+              <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold">Sections</p>
             </div>
-            <div className="divide-y divide-[#91715c]/20">
+            <div className="divide-y divide-[#6B8FAB]/20">
               {HOME_SECTIONS.map((sec) => {
                 const s = getSection(sec.key);
                 return (
@@ -272,7 +272,7 @@ export default function HomeEditor() {
                     key={sec.key}
                     onClick={() => setSelectedSection(sec.key)}
                     className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${
-                      selectedSection === sec.key ? 'bg-[#2a1a0a] text-white' : 'text-[#2a1a0a] hover:bg-[#FAFAF7]'
+                      selectedSection === sec.key ? 'bg-[#1B3A4C] text-white' : 'text-[#1B3A4C] hover:bg-[#E3E8ED]'
                     }`}
                   >
                     <span>{sec.label}</span>
@@ -287,14 +287,14 @@ export default function HomeEditor() {
           </div>
 
           {/* Show Cards & Tracks quick nav */}
-          <div className="mt-4 bg-white border border-[#91715c]/30 overflow-hidden">
-            <button onClick={() => setSelectedSection('showcards')} className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${selectedSection === 'showcards' ? 'bg-[#2a1a0a] text-white' : 'text-[#2a1a0a] hover:bg-[#FAFAF7]'}`}>
-              <span className="flex items-center gap-2">Show Cards <svg className="w-3.5 h-3.5 text-[#91715c] inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span className="text-[10px] text-[#91715c]">Moment entry cards</span></span>
-              <span className="text-xs text-[#91715c]">{showCards.length}</span>
+          <div className="mt-4 bg-white border border-[#6B8FAB]/30 overflow-hidden">
+            <button onClick={() => setSelectedSection('showcards')} className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${selectedSection === 'showcards' ? 'bg-[#1B3A4C] text-white' : 'text-[#1B3A4C] hover:bg-[#E3E8ED]'}`}>
+              <span className="flex items-center gap-2">Show Cards <svg className="w-3.5 h-3.5 text-[#6B8FAB] inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span className="text-[10px] text-[#6B8FAB]">Moment entry cards</span></span>
+              <span className="text-xs text-[#6B8FAB]">{showCards.length}</span>
             </button>
-            <button onClick={() => setSelectedSection('tracks')} className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${selectedSection === 'tracks' ? 'bg-[#2a1a0a] text-white' : 'text-[#2a1a0a] hover:bg-[#FAFAF7]'}`}>
-              <span className="flex items-center gap-2">Music Tracks <svg className="w-3.5 h-3.5 text-[#91715c] inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span className="text-[10px] text-[#91715c]">Audio player tracks</span></span>
-              <span className="text-xs text-[#91715c]">{tracks.length}</span>
+            <button onClick={() => setSelectedSection('tracks')} className={`w-full text-left px-5 py-3 text-sm font-medium transition-colors flex items-center justify-between ${selectedSection === 'tracks' ? 'bg-[#1B3A4C] text-white' : 'text-[#1B3A4C] hover:bg-[#E3E8ED]'}`}>
+              <span className="flex items-center gap-2">Music Tracks <svg className="w-3.5 h-3.5 text-[#6B8FAB] inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span className="text-[10px] text-[#6B8FAB]">Audio player tracks</span></span>
+              <span className="text-xs text-[#6B8FAB]">{tracks.length}</span>
             </button>
           </div>
         </div>
@@ -302,7 +302,7 @@ export default function HomeEditor() {
         {/* Editor panel */}
         <div className="flex-1 min-w-0">
           {loading ? (
-            <p className="text-[#91715c] text-sm">Loading...</p>
+            <p className="text-[#6B8FAB] text-sm">Loading...</p>
           ) : selectedSection === 'showcards' ? (
             <ShowCardsEditor cards={showCards} setCards={setShowCards} onOpenMedia={(id) => openMedia('showcard', id)} />
           ) : selectedSection === 'tracks' ? (
@@ -388,7 +388,7 @@ export default function HomeEditor() {
               { key: 'logo', label: 'Footer Logo', type: 'image' },
             ]} onUpdate={(key, val) => updateContent('footer', key, val)} onSave={() => saveSection('footer')} saving={saving === 'footer'} onToggleVisibility={() => toggleVisibility('footer')} onOpenMedia={(field) => openMedia('section', undefined, field)} loading={loading} />
           ) : (
-            <p className="text-[#91715c] text-sm">Select a section to edit.</p>
+            <p className="text-[#6B8FAB] text-sm">Select a section to edit.</p>
           )}
         </div>
       </div>
@@ -414,32 +414,32 @@ function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onTog
   if (!section) {
     if (loading) {
       return (
-        <div className="bg-white border border-[#91715c]/30 p-8">
-          <p className="text-[#91715c] text-sm">Loading section data...</p>
+        <div className="bg-white border border-[#6B8FAB]/30 p-8">
+          <p className="text-[#6B8FAB] text-sm">Loading section data...</p>
         </div>
       );
     }
     return (
-      <div className="bg-white border border-[#91715c]/30 p-8">
-        <p className="text-[#91715c] text-sm">This section doesn&apos;t exist in the database yet. Try selecting another section.</p>
+      <div className="bg-white border border-[#6B8FAB]/30 p-8">
+        <p className="text-[#6B8FAB] text-sm">This section doesn&apos;t exist in the database yet. Try selecting another section.</p>
       </div>
     );
   }
   const content = parseContent(section.content);
 
   return (
-    <div className="bg-white border border-[#91715c]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#6B8FAB]/30 p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-1">{label}</p>
-          <p className="text-sm text-[#b89a6e] font-semibold uppercase tracking-[0.5px]">Edit content for this section</p>
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">{label}</p>
+          <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit content for this section</p>
         </div>
         <button
           onClick={onToggleVisibility}
           className={`flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-semibold uppercase tracking-[1px] border-2 transition ${
             section.isVisible !== false
               ? 'border-emerald-500 text-emerald-600 hover:bg-emerald-50'
-              : 'border-[#91715c]/30 text-[#91715c] hover:bg-[#FAFAF7]'
+              : 'border-[#6B8FAB]/30 text-[#6B8FAB] hover:bg-[#E3E8ED]'
           }`}
         >
           {section.isVisible !== false ? <Eye size={14} /> : <EyeOff size={14} />}
@@ -453,12 +453,12 @@ function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onTog
           if (field.type === 'text') {
             return (
               <div key={field.key}>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">{field.label}</label>
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">{field.label}</label>
                 <input
                   type="text"
                   value={value || ''}
                   onChange={(e) => onUpdate(field.key, e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]"
+                  className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
                 />
               </div>
             );
@@ -466,12 +466,12 @@ function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onTog
           if (field.type === 'textarea') {
             return (
               <div key={field.key}>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">{field.label}</label>
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">{field.label}</label>
                 <textarea
                   value={value || ''}
                   onChange={(e) => onUpdate(field.key, e.target.value)}
                   rows={3}
-                  className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a] resize-y"
+                  className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-y"
                 />
               </div>
             );
@@ -479,22 +479,22 @@ function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onTog
           if (field.type === 'image') {
             return (
               <div key={field.key}>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">{field.label}</label>
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">{field.label}</label>
                 {value && (
-                  <div className="w-full aspect-video bg-[#FAFAF7] rounded-xl overflow-hidden mb-2 border border-[#91715c]/30 max-w-md">
+                  <div className="w-full aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 border border-[#6B8FAB]/30 max-w-md">
                     {value.match(/\.(mp4|webm|mov|avi)$/i) ? (
                       <video src={value} className="object-contain w-full h-full" controls muted />
                     ) : value.match(/\.pdf$/i) ? (
                       <div className="flex flex-col items-center justify-center h-full p-6">
-                        <svg className="w-12 h-12 text-[#91715c] mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /><path d="M9 15h6" /><path d="M9 11h6" /></svg>
-                        <span className="text-xs text-[#91715c] font-semibold">PDF Document</span>
+                        <svg className="w-12 h-12 text-[#6B8FAB] mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /><path d="M9 15h6" /><path d="M9 11h6" /></svg>
+                        <span className="text-xs text-[#6B8FAB] font-semibold">PDF Document</span>
                       </div>
                     ) : (
                       <img src={value} alt={field.label} className="object-contain w-full h-full" />
                     )}
                   </div>
                 )}
-                <button onClick={() => onOpenMedia(field.key)} className="px-4 py-2 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#FAFAF7] hover:text-white transition">
+                <button onClick={() => onOpenMedia(field.key)} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition">
                   {value ? 'Replace Media' : 'Upload Image / Video / PDF'}
                 </button>
               </div>
@@ -503,16 +503,16 @@ function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onTog
           if (field.type === 'toggle') {
             return (
               <div key={field.key} className="flex items-center gap-2">
-                <input type="checkbox" checked={value !== false} onChange={(e) => onUpdate(field.key, e.target.checked)} className="w-4 h-4 accent-[#2a1a0a]" />
-                <span className="text-sm font-semibold text-[#2a1a0a]">{field.label}</span>
+                <input type="checkbox" checked={value !== false} onChange={(e) => onUpdate(field.key, e.target.checked)} className="w-4 h-4 accent-[#1B3A4C]" />
+                <span className="text-sm font-semibold text-[#1B3A4C]">{field.label}</span>
               </div>
             );
           }
           if (field.type === 'select') {
             return (
               <div key={field.key}>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">{field.label}</label>
-                <select value={value || field.options?.[0] || ''} onChange={(e) => onUpdate(field.key, e.target.value)} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]">
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">{field.label}</label>
+                <select value={value || field.options?.[0] || ''} onChange={(e) => onUpdate(field.key, e.target.value)} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]">
                   {field.options?.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </div>
@@ -523,7 +523,7 @@ function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onTog
       </div>
 
       <div className="flex justify-end">
-        <button onClick={onSave} disabled={saving} className="px-7 py-3 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition disabled:opacity-50">
+        <button onClick={onSave} disabled={saving} className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition disabled:opacity-50">
           {saving ? 'Saving...' : `Save ${label}`}
         </button>
       </div>
@@ -580,54 +580,54 @@ function ShowCardsEditor({ cards, setCards, onOpenMedia }: {
   }
 
   return (
-    <div className="bg-white border border-[#91715c]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#6B8FAB]/30 p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-1">Show Cards <span className="text-[10px] normal-case tracking-normal text-[#91715c]/60">Moment entry cards</span></p>
-          <p className="text-sm text-[#b89a6e] font-semibold uppercase tracking-[0.5px]">Edit show cards displayed in the Late Night Moments section</p>
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Show Cards <span className="text-[10px] normal-case tracking-normal text-[#6B8FAB]/60">Moment entry cards</span></p>
+          <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit show cards displayed in the Late Night Moments section</p>
         </div>
-        <button onClick={addCard} className="px-4 py-2 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">
+        <button onClick={addCard} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">
           + Add Card
         </button>
       </div>
 
       <div className="space-y-4">
         {cards.map((card, idx) => (
-          <div key={card.id} className="border border-[#91715c]/30 p-4 space-y-3 bg-white">
+          <div key={card.id} className="border border-[#6B8FAB]/30 p-4 space-y-3 bg-white">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-[#91715c] uppercase tracking-[2px]">#{idx + 1}</span>
+              <span className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px]">#{idx + 1}</span>
               <div className="flex items-center gap-1 ml-auto">
-                <button onClick={() => moveCard(card.id, 'up')} disabled={idx === 0} className="p-1.5 text-[#91715c] hover:text-[#2a1a0a] hover:bg-[#FAFAF7] rounded-lg transition-colors disabled:opacity-30"><ChevronUp size={16} /></button>
-                <button onClick={() => moveCard(card.id, 'down')} disabled={idx === cards.length - 1} className="p-1.5 text-[#91715c] hover:text-[#2a1a0a] hover:bg-[#FAFAF7] rounded-lg transition-colors disabled:opacity-30"><ChevronDown size={16} /></button>
+                <button onClick={() => moveCard(card.id, 'up')} disabled={idx === 0} className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"><ChevronUp size={16} /></button>
+                <button onClick={() => moveCard(card.id, 'down')} disabled={idx === cards.length - 1} className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"><ChevronDown size={16} /></button>
                 <button onClick={() => deleteCard(card.id)} className="p-1.5 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><Trash2 size={16} /></button>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Title</label>
-                <input type="text" value={card.title} onChange={(e) => setCards(prev => prev.map(c => c.id === card.id ? { ...c, title: e.target.value } : c))} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" />
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Title</label>
+                <input type="text" value={card.title} onChange={(e) => setCards(prev => prev.map(c => c.id === card.id ? { ...c, title: e.target.value } : c))} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Venue</label>
-                <input type="text" value={card.venue} onChange={(e) => setCards(prev => prev.map(c => c.id === card.id ? { ...c, venue: e.target.value } : c))} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" />
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Venue</label>
+                <input type="text" value={card.venue} onChange={(e) => setCards(prev => prev.map(c => c.id === card.id ? { ...c, venue: e.target.value } : c))} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Location</label>
-                <input type="text" value={card.location} onChange={(e) => setCards(prev => prev.map(c => c.id === card.id ? { ...c, location: e.target.value } : c))} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" />
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Location</label>
+                <input type="text" value={card.location} onChange={(e) => setCards(prev => prev.map(c => c.id === card.id ? { ...c, location: e.target.value } : c))} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Season</label>
-                <input type="text" value={card.season} onChange={(e) => setCards(prev => prev.map(c => c.id === card.id ? { ...c, season: e.target.value } : c))} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" />
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Season</label>
+                <input type="text" value={card.season} onChange={(e) => setCards(prev => prev.map(c => c.id === card.id ? { ...c, season: e.target.value } : c))} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Description</label>
-              <textarea value={card.description} onChange={(e) => setCards(prev => prev.map(c => c.id === card.id ? { ...c, description: e.target.value } : c))} rows={2} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a] resize-y" />
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Description</label>
+              <textarea value={card.description} onChange={(e) => setCards(prev => prev.map(c => c.id === card.id ? { ...c, description: e.target.value } : c))} rows={2} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-y" />
             </div>
             <div className="flex items-center gap-3">
-              {card.imagePath && <div className="w-20 h-20 bg-[#FAFAF7] rounded-lg overflow-hidden border border-[#91715c]/30"><img src={card.imagePath} alt="" className="w-full h-full object-cover" /></div>}
-              <button onClick={() => onOpenMedia(card.id)} className="px-4 py-2 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">{card.imagePath ? 'Replace' : 'Add Image'}</button>
-              <button onClick={() => saveCard(card)} disabled={savingCard === card.id} className="px-4 py-2 border border-[#91715c]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:border-[#2a1a0a] transition disabled:opacity-50">{savingCard === card.id ? 'Saving...' : 'Save'}</button>
+              {card.imagePath && <div className="w-20 h-20 bg-[#E3E8ED] rounded-lg overflow-hidden border border-[#6B8FAB]/30"><img src={card.imagePath} alt="" className="w-full h-full object-cover" /></div>}
+              <button onClick={() => onOpenMedia(card.id)} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">{card.imagePath ? 'Replace' : 'Add Image'}</button>
+              <button onClick={() => saveCard(card)} disabled={savingCard === card.id} className="px-4 py-2 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] transition disabled:opacity-50">{savingCard === card.id ? 'Saving...' : 'Save'}</button>
             </div>
           </div>
         ))}
@@ -715,56 +715,56 @@ function TracksEditor({ tracks, setTracks, playingTrack, setPlayingTrack, audioR
   }
 
   return (
-    <div className="bg-white border border-[#91715c]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#6B8FAB]/30 p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-1">Music Tracks <span className="text-[10px] normal-case tracking-normal text-[#91715c]/60">Audio player tracks</span></p>
-          <p className="text-sm text-[#b89a6e] font-semibold uppercase tracking-[0.5px]">Manage tracks in the Music & Mixes section</p>
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Music Tracks <span className="text-[10px] normal-case tracking-normal text-[#6B8FAB]/60">Audio player tracks</span></p>
+          <p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Manage tracks in the Music & Mixes section</p>
         </div>
-        <button onClick={addTrack} className="px-4 py-2 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">
+        <button onClick={addTrack} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">
           + Add Track
         </button>
       </div>
 
       <div className="space-y-3">
         {tracks.map((track, idx) => (
-          <div key={track.id} className="border border-[#91715c]/30 p-4 space-y-3 bg-white">
+          <div key={track.id} className="border border-[#6B8FAB]/30 p-4 space-y-3 bg-white">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-[#91715c] uppercase tracking-[2px]">#{idx + 1}</span>
-              <span className="text-sm font-medium text-[#2a1a0a]">{track.title}</span>
+              <span className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px]">#{idx + 1}</span>
+              <span className="text-sm font-medium text-[#1B3A4C]">{track.title}</span>
               <button onClick={() => deleteTrack(track.id)} className="ml-auto p-1.5 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><Trash2 size={16} /></button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Title</label>
-                <input type="text" value={track.title} onChange={(e) => setTracks(prev => prev.map(t => t.id === track.id ? { ...t, title: e.target.value } : t))} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" />
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Title</label>
+                <input type="text" value={track.title} onChange={(e) => setTracks(prev => prev.map(t => t.id === track.id ? { ...t, title: e.target.value } : t))} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Duration</label>
-                <input type="text" value={track.duration || ''} onChange={(e) => setTracks(prev => prev.map(t => t.id === track.id ? { ...t, duration: e.target.value } : t))} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" />
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Duration</label>
+                <input type="text" value={track.duration || ''} onChange={(e) => setTracks(prev => prev.map(t => t.id === track.id ? { ...t, duration: e.target.value } : t))} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Spotify URL</label>
-                <input type="text" value={track.spotifyUrl || ''} onChange={(e) => setTracks(prev => prev.map(t => t.id === track.id ? { ...t, spotifyUrl: e.target.value } : t))} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" />
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Spotify URL</label>
+                <input type="text" value={track.spotifyUrl || ''} onChange={(e) => setTracks(prev => prev.map(t => t.id === track.id ? { ...t, spotifyUrl: e.target.value } : t))} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Apple Music URL</label>
-                <input type="text" value={track.appleMusicUrl || ''} onChange={(e) => setTracks(prev => prev.map(t => t.id === track.id ? { ...t, appleMusicUrl: e.target.value } : t))} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" />
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Apple Music URL</label>
+                <input type="text" value={track.appleMusicUrl || ''} onChange={(e) => setTracks(prev => prev.map(t => t.id === track.id ? { ...t, appleMusicUrl: e.target.value } : t))} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">YouTube URL</label>
-                <input type="text" value={track.youtubeUrl || ''} onChange={(e) => setTracks(prev => prev.map(t => t.id === track.id ? { ...t, youtubeUrl: e.target.value } : t))} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" />
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">YouTube URL</label>
+                <input type="text" value={track.youtubeUrl || ''} onChange={(e) => setTracks(prev => prev.map(t => t.id === track.id ? { ...t, youtubeUrl: e.target.value } : t))} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
             </div>
             <div className="flex items-center gap-3 flex-wrap">
-              {track.coverPath && <div className="w-16 h-16 bg-[#FAFAF7] rounded-lg overflow-hidden border border-[#91715c]/30"><img src={track.coverPath} alt="" className="w-full h-full object-cover" /></div>}
-              <button onClick={() => onOpenMedia(track.id)} className="px-3 py-1.5 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">Cover</button>
-              <label className="px-3 py-1.5 border border-[#91715c]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:border-[#2a1a0a] transition cursor-pointer">
+              {track.coverPath && <div className="w-16 h-16 bg-[#E3E8ED] rounded-lg overflow-hidden border border-[#6B8FAB]/30"><img src={track.coverPath} alt="" className="w-full h-full object-cover" /></div>}
+              <button onClick={() => onOpenMedia(track.id)} className="px-3 py-1.5 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">Cover</button>
+              <label className="px-3 py-1.5 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] transition cursor-pointer">
                 <Upload size={12} className="inline mr-1" />Audio
                 <input type="file" accept="audio/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadTrackFile(track.id, f); }} />
               </label>
-              {track.filePath && <button onClick={() => togglePlay(track.id, track.filePath)} className="px-3 py-1.5 border border-[#91715c]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:border-[#2a1a0a] transition">{playingTrack === track.id ? 'Pause' : 'Play'}</button>}
-              <button onClick={() => saveTrack(track)} disabled={savingTrack === track.id} className="px-3 py-1.5 border border-[#91715c]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:border-[#2a1a0a] transition disabled:opacity-50">{savingTrack === track.id ? 'Saving...' : 'Save'}</button>
+              {track.filePath && <button onClick={() => togglePlay(track.id, track.filePath)} className="px-3 py-1.5 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] transition">{playingTrack === track.id ? 'Pause' : 'Play'}</button>}
+              <button onClick={() => saveTrack(track)} disabled={savingTrack === track.id} className="px-3 py-1.5 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] transition disabled:opacity-50">{savingTrack === track.id ? 'Saving...' : 'Save'}</button>
             </div>
           </div>
         ))}
@@ -795,69 +795,69 @@ function MomentsEditor({ section, onUpdate, onSave, saving, onToggleVisibility, 
   function addImage(index: number, imageUrl: string) { const newItems = [...items]; newItems[index] = { ...newItems[index], images: [...(newItems[index].images || []), imageUrl] }; onUpdate('items', newItems); }
   function removeImage(itemIndex: number, imageIndex: number) { const newItems = [...items]; newItems[itemIndex] = { ...newItems[itemIndex], images: newItems[itemIndex].images.filter((_: any, i: number) => i !== imageIndex) }; onUpdate('items', newItems); }
 
-  if (!section) return <div className="bg-white border border-[#91715c]/30 p-8"><p className="text-[#91715c] text-sm">Moments section not found in database.</p></div>;
+  if (!section) return <div className="bg-white border border-[#6B8FAB]/30 p-8"><p className="text-[#6B8FAB] text-sm">Moments section not found in database.</p></div>;
 
   return (
-    <div className="bg-white border border-[#91715c]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#6B8FAB]/30 p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <div><p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-1">Late Night Moments</p><p className="text-sm text-[#b89a6e] font-semibold uppercase tracking-[0.5px]">Edit moments with gallery and video</p></div>
-        <button onClick={onToggleVisibility} className={`flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-semibold uppercase tracking-[1px] border-2 transition ${section.isVisible !== false ? 'border-emerald-500 text-emerald-600 hover:bg-emerald-50' : 'border-[#91715c]/30 text-[#91715c] hover:bg-[#FAFAF7]'}`}>
+        <div><p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Late Night Moments</p><p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Edit moments with gallery and video</p></div>
+        <button onClick={onToggleVisibility} className={`flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-semibold uppercase tracking-[1px] border-2 transition ${section.isVisible !== false ? 'border-emerald-500 text-emerald-600 hover:bg-emerald-50' : 'border-[#6B8FAB]/30 text-[#6B8FAB] hover:bg-[#E3E8ED]'}`}>
           {section.isVisible !== false ? <Eye size={14} /> : <EyeOff size={14} />}{section.isVisible !== false ? 'Visible' : 'Hidden'}
         </button>
       </div>
       <div className="space-y-4">
-        <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Heading</label><input type="text" value={content.heading || ''} onChange={(e) => onUpdate('heading', e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" /></div>
-        <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Subtext</label><input type="text" value={content.subtext || ''} onChange={(e) => onUpdate('subtext', e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" /></div>
+        <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Heading</label><input type="text" value={content.heading || ''} onChange={(e) => onUpdate('heading', e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" /></div>
+        <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Subtext</label><input type="text" value={content.subtext || ''} onChange={(e) => onUpdate('subtext', e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" /></div>
       </div>
-      <div className="border-t border-[#91715c]/20 pt-4">
+      <div className="border-t border-[#6B8FAB]/20 pt-4">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xs font-semibold text-[#91715c] uppercase tracking-[3px]">Moments ({items.length})</p>
-          <button onClick={addItem} className="px-4 py-2 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">+ Add Moment</button>
+          <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Moments ({items.length})</p>
+          <button onClick={addItem} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">+ Add Moment</button>
         </div>
         <div className="space-y-4">
           {items.map((item: any, i: number) => (
-            <div key={i} className="border border-[#91715c]/30 p-4 space-y-3 bg-white">
+            <div key={i} className="border border-[#6B8FAB]/30 p-4 space-y-3 bg-white">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-[#91715c] uppercase tracking-[2px]">Moment #{i + 1}</span>
+                <span className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px]">Moment #{i + 1}</span>
                 <button onClick={() => removeItem(i)} className="p-1.5 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><Trash2 size={16} /></button>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Title</label><input type="text" value={item.title || ''} onChange={(e) => updateItem(i, 'title', e.target.value)} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" /></div>
-                <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Subtitle</label><input type="text" value={item.subtitle || ''} onChange={(e) => updateItem(i, 'subtitle', e.target.value)} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" /></div>
+                <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Title</label><input type="text" value={item.title || ''} onChange={(e) => updateItem(i, 'title', e.target.value)} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" /></div>
+                <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Subtitle</label><input type="text" value={item.subtitle || ''} onChange={(e) => updateItem(i, 'subtitle', e.target.value)} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" /></div>
               </div>
-              <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Description</label><textarea value={item.description || ''} onChange={(e) => updateItem(i, 'description', e.target.value)} rows={2} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a] resize-y" /></div>
-              <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Gallery Images</label>
+              <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Description</label><textarea value={item.description || ''} onChange={(e) => updateItem(i, 'description', e.target.value)} rows={2} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-y" /></div>
+              <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Gallery Images</label>
                 <div className="flex flex-wrap gap-2 mb-2">
                   {(item.images || []).map((img: string, j: number) => (
-                    <div key={j} className="relative w-20 h-20 bg-[#FAFAF7] rounded-lg overflow-hidden border border-[#91715c]/30 group">
+                    <div key={j} className="relative w-20 h-20 bg-[#E3E8ED] rounded-lg overflow-hidden border border-[#6B8FAB]/30 group">
                       <img src={img} alt="" className="w-full h-full object-cover" />
                       <button onClick={() => removeImage(i, j)} className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition">×</button>
                     </div>
                   ))}
                 </div>
-                <button onClick={() => { setMediaTarget({ type: 'moments-image', id: i }); setMediaOpen(true); }} className="px-3 py-1.5 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">+ Add Image</button>
+                <button onClick={() => { setMediaTarget({ type: 'moments-image', id: i }); setMediaOpen(true); }} className="px-3 py-1.5 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">+ Add Image</button>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Video (optional)</label>
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Video (optional)</label>
                 {item.video ? (
                   <div>
-                    <div className="w-full max-w-md aspect-video bg-[#FAFAF7] rounded-xl overflow-hidden mb-2 border border-[#91715c]/30">
+                    <div className="w-full max-w-md aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 border border-[#6B8FAB]/30">
                       <video src={item.video} className="object-contain w-full h-full" controls muted />
                     </div>
                     <div className="flex items-center gap-2">
-                      <button onClick={() => { setMediaTarget({ type: 'moments-video', id: i }); setMediaOpen(true); }} className="px-3 py-1.5 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">Replace Video</button>
+                      <button onClick={() => { setMediaTarget({ type: 'moments-video', id: i }); setMediaOpen(true); }} className="px-3 py-1.5 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">Replace Video</button>
                       <button onClick={() => updateItem(i, 'video', '')} className="px-3 py-1.5 border border-red-300 text-red-600 rounded-full text-[11px] font-semibold uppercase tracking-[1px] hover:bg-red-50 transition">Remove</button>
                     </div>
                   </div>
                 ) : (
-                  <button onClick={() => { setMediaTarget({ type: 'moments-video', id: i }); setMediaOpen(true); }} className="px-4 py-2.5 bg-[#2a1a0a] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">Upload Video</button>
+                  <button onClick={() => { setMediaTarget({ type: 'moments-video', id: i }); setMediaOpen(true); }} className="px-4 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">Upload Video</button>
                 )}
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div className="flex justify-end"><button onClick={onSave} disabled={saving} className="px-7 py-3 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition disabled:opacity-50">{saving ? 'Saving...' : 'Save Moments'}</button></div>
+      <div className="flex justify-end"><button onClick={onSave} disabled={saving} className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition disabled:opacity-50">{saving ? 'Saving...' : 'Save Moments'}</button></div>
     </div>
   );
 }
@@ -873,33 +873,33 @@ function PerformersEditor({ section, onUpdate, onSave, saving, onToggleVisibilit
   function addImage(row: 'row1' | 'row2', url: string) { if (row === 'row1') onUpdate('row1Images', [...row1Images, url]); else onUpdate('row2Images', [...row2Images, url]); }
   function removeImage(row: 'row1' | 'row2', index: number) { if (row === 'row1') onUpdate('row1Images', row1Images.filter((_: string, i: number) => i !== index)); else onUpdate('row2Images', row2Images.filter((_: string, i: number) => i !== index)); }
 
-  if (!section) return <div className="bg-white border border-[#91715c]/30 p-8"><p className="text-[#91715c] text-sm">Performers section not found.</p></div>;
+  if (!section) return <div className="bg-white border border-[#6B8FAB]/30 p-8"><p className="text-[#6B8FAB] text-sm">Performers section not found.</p></div>;
 
   return (
-    <div className="bg-white border border-[#91715c]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#6B8FAB]/30 p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <div><p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-1">Has Performed With</p><p className="text-sm text-[#b89a6e] font-semibold uppercase tracking-[0.5px]">Manage carousel images</p></div>
-        <button onClick={onToggleVisibility} className={`flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-semibold uppercase tracking-[1px] border-2 transition ${section.isVisible !== false ? 'border-emerald-500 text-emerald-600 hover:bg-emerald-50' : 'border-[#91715c]/30 text-[#91715c] hover:bg-[#FAFAF7]'}`}>
+        <div><p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Has Performed With</p><p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Manage carousel images</p></div>
+        <button onClick={onToggleVisibility} className={`flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-semibold uppercase tracking-[1px] border-2 transition ${section.isVisible !== false ? 'border-emerald-500 text-emerald-600 hover:bg-emerald-50' : 'border-[#6B8FAB]/30 text-[#6B8FAB] hover:bg-[#E3E8ED]'}`}>
           {section.isVisible !== false ? <Eye size={14} /> : <EyeOff size={14} />}{section.isVisible !== false ? 'Visible' : 'Hidden'}
         </button>
       </div>
       <div className="space-y-4">
-        <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Heading</label><input type="text" value={content.heading || ''} onChange={(e) => onUpdate('heading', e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" /></div>
-        <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Subtext</label><input type="text" value={content.subtext || ''} onChange={(e) => onUpdate('subtext', e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" /></div>
-        <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Heading Image (Ricky text)</label>
-          {content.headingImage && <div className="w-full aspect-video bg-[#FAFAF7] rounded-xl overflow-hidden mb-2 max-w-md border border-[#91715c]/30"><img src={content.headingImage} alt="Heading" className="object-contain w-full h-full p-4" /></div>}
-          <button onClick={() => onOpenMedia('headingImage')} className="px-4 py-2 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">{content.headingImage ? 'Replace Image' : 'Choose Image'}</button>
+        <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Heading</label><input type="text" value={content.heading || ''} onChange={(e) => onUpdate('heading', e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" /></div>
+        <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Subtext</label><input type="text" value={content.subtext || ''} onChange={(e) => onUpdate('subtext', e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" /></div>
+        <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Heading Image (Ricky text)</label>
+          {content.headingImage && <div className="w-full aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 max-w-md border border-[#6B8FAB]/30"><img src={content.headingImage} alt="Heading" className="object-contain w-full h-full p-4" /></div>}
+          <button onClick={() => onOpenMedia('headingImage')} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">{content.headingImage ? 'Replace Image' : 'Choose Image'}</button>
         </div>
       </div>
       {[{ key: 'row1', label: 'Row 1 (Scrolls Left)', images: row1Images }, { key: 'row2', label: 'Row 2 (Scrolls Right)', images: row2Images }].map(({ key, label, images }) => (
-        <div key={key} className="border-t border-[#91715c]/20 pt-4">
+        <div key={key} className="border-t border-[#6B8FAB]/20 pt-4">
           <div className="flex items-center justify-between mb-3">
-            <p className="text-xs font-semibold text-[#91715c] uppercase tracking-[3px]">{label}</p>
-            <button onClick={() => { setMediaTarget({ type: 'performers', field: key }); setMediaOpen(true); }} className="px-3 py-1.5 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">+ Add Image</button>
+            <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">{label}</p>
+            <button onClick={() => { setMediaTarget({ type: 'performers', field: key }); setMediaOpen(true); }} className="px-3 py-1.5 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">+ Add Image</button>
           </div>
           <div className="flex flex-wrap gap-2">
             {(images as string[]).map((img: string, i: number) => (
-              <div key={i} className="relative w-24 h-24 bg-[#FAFAF7] rounded-lg overflow-hidden border border-[#91715c]/30 group">
+              <div key={i} className="relative w-24 h-24 bg-[#E3E8ED] rounded-lg overflow-hidden border border-[#6B8FAB]/30 group">
                 <img src={img} alt="" className="w-full h-full object-cover" />
                 <button onClick={() => removeImage(key as 'row1' | 'row2', i)} className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] opacity-0 group-hover:opacity-100 transition">×</button>
               </div>
@@ -907,7 +907,7 @@ function PerformersEditor({ section, onUpdate, onSave, saving, onToggleVisibilit
           </div>
         </div>
       ))}
-      <div className="flex justify-end"><button onClick={onSave} disabled={saving} className="px-7 py-3 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition disabled:opacity-50">{saving ? 'Saving...' : 'Save Performers'}</button></div>
+      <div className="flex justify-end"><button onClick={onSave} disabled={saving} className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition disabled:opacity-50">{saving ? 'Saving...' : 'Save Performers'}</button></div>
     </div>
   );
 }
@@ -923,39 +923,39 @@ function VenuesEditor({ section, onUpdate, onSave, saving, onToggleVisibility, o
   function removeVenue(index: number) { onUpdate('venues', venues.filter((_: string, i: number) => i !== index)); }
   function updateVenue(index: number, value: string) { const newVenues = [...venues]; newVenues[index] = value; onUpdate('venues', newVenues); }
 
-  if (!section) return <div className="bg-white border border-[#91715c]/30 p-8"><p className="text-[#91715c] text-sm">Venues section not found.</p></div>;
+  if (!section) return <div className="bg-white border border-[#6B8FAB]/30 p-8"><p className="text-[#6B8FAB] text-sm">Venues section not found.</p></div>;
 
   return (
-    <div className="bg-white border border-[#91715c]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#6B8FAB]/30 p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <div><p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-1">Worldwide Performances</p><p className="text-sm text-[#b89a6e] font-semibold uppercase tracking-[0.5px]">Manage venue list</p></div>
-        <button onClick={onToggleVisibility} className={`flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-semibold uppercase tracking-[1px] border-2 transition ${section.isVisible !== false ? 'border-emerald-500 text-emerald-600 hover:bg-emerald-50' : 'border-[#91715c]/30 text-[#91715c] hover:bg-[#FAFAF7]'}`}>
+        <div><p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Worldwide Performances</p><p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Manage venue list</p></div>
+        <button onClick={onToggleVisibility} className={`flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-semibold uppercase tracking-[1px] border-2 transition ${section.isVisible !== false ? 'border-emerald-500 text-emerald-600 hover:bg-emerald-50' : 'border-[#6B8FAB]/30 text-[#6B8FAB] hover:bg-[#E3E8ED]'}`}>
           {section.isVisible !== false ? <Eye size={14} /> : <EyeOff size={14} />}{section.isVisible !== false ? 'Visible' : 'Hidden'}
         </button>
       </div>
       <div className="space-y-4">
-        <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Heading</label><input type="text" value={content.heading || ''} onChange={(e) => onUpdate('heading', e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" /></div>
-        <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Background Image</label>
-          {content.backgroundImage && <div className="w-full aspect-video bg-[#FAFAF7] rounded-xl overflow-hidden mb-2 max-w-md border border-[#91715c]/30"><img src={content.backgroundImage} alt="" className="object-cover w-full h-full" /></div>}
-          <button onClick={() => onOpenMedia('backgroundImage')} className="px-4 py-2 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">{content.backgroundImage ? 'Replace Image' : 'Choose Image'}</button>
+        <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Heading</label><input type="text" value={content.heading || ''} onChange={(e) => onUpdate('heading', e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" /></div>
+        <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Background Image</label>
+          {content.backgroundImage && <div className="w-full aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 max-w-md border border-[#6B8FAB]/30"><img src={content.backgroundImage} alt="" className="object-cover w-full h-full" /></div>}
+          <button onClick={() => onOpenMedia('backgroundImage')} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">{content.backgroundImage ? 'Replace Image' : 'Choose Image'}</button>
         </div>
       </div>
-      <div className="border-t border-[#91715c]/20 pt-4">
+      <div className="border-t border-[#6B8FAB]/20 pt-4">
         <div className="flex items-center justify-between mb-3">
-          <p className="text-xs font-semibold text-[#91715c] uppercase tracking-[3px]">Venues ({venues.length})</p>
-          <button onClick={addVenue} className="px-4 py-2 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">+ Add Venue</button>
+          <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Venues ({venues.length})</p>
+          <button onClick={addVenue} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">+ Add Venue</button>
         </div>
         <div className="max-h-[400px] overflow-y-auto space-y-1">
           {venues.map((venue: string, i: number) => (
             <div key={i} className="flex items-center gap-2 group">
-              <span className="text-[10px] text-[#91715c] font-mono w-6">{i + 1}.</span>
-              <input type="text" value={venue} onChange={(e) => updateVenue(i, e.target.value)} className="flex-1 px-2 py-1.5 bg-white border border-[#91715c]/20 rounded text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" />
+              <span className="text-[10px] text-[#6B8FAB] font-mono w-6">{i + 1}.</span>
+              <input type="text" value={venue} onChange={(e) => updateVenue(i, e.target.value)} className="flex-1 px-2 py-1.5 bg-white border border-[#6B8FAB]/20 rounded text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" />
               <button onClick={() => removeVenue(i)} className="p-1 text-red-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition"><Trash2 size={14} /></button>
             </div>
           ))}
         </div>
       </div>
-      <div className="flex justify-end"><button onClick={onSave} disabled={saving} className="px-7 py-3 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition disabled:opacity-50">{saving ? 'Saving...' : 'Save Venues'}</button></div>
+      <div className="flex justify-end"><button onClick={onSave} disabled={saving} className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition disabled:opacity-50">{saving ? 'Saving...' : 'Save Venues'}</button></div>
     </div>
   );
 }
@@ -972,70 +972,70 @@ function BrandsEditor({ section, onUpdate, onSave, saving, onToggleVisibility, o
   function removeLogo(index: number) { onUpdate('logos', logos.filter((_: any, i: number) => i !== index)); }
   function moveLogo(index: number, direction: 'up' | 'down') { const newIdx = direction === 'up' ? index - 1 : index + 1; if (newIdx < 0 || newIdx >= logos.length) return; const newLogos = [...logos]; [newLogos[index], newLogos[newIdx]] = [newLogos[newIdx], newLogos[index]]; onUpdate('logos', newLogos); }
 
-  if (!section) return <div className="bg-white border border-[#91715c]/30 p-8"><p className="text-[#91715c] text-sm">Brands section not found.</p></div>;
+  if (!section) return <div className="bg-white border border-[#6B8FAB]/30 p-8"><p className="text-[#6B8FAB] text-sm">Brands section not found.</p></div>;
 
   return (
-    <div className="bg-white border border-[#91715c]/30 p-6 space-y-6">
+    <div className="bg-white border border-[#6B8FAB]/30 p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <div><p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-1">Trusted by Global Brands</p><p className="text-sm text-[#b89a6e] font-semibold uppercase tracking-[0.5px]">Manage brand logos</p></div>
-        <button onClick={onToggleVisibility} className={`flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-semibold uppercase tracking-[1px] border-2 transition ${section.isVisible !== false ? 'border-emerald-500 text-emerald-600 hover:bg-emerald-50' : 'border-[#91715c]/30 text-[#91715c] hover:bg-[#FAFAF7]'}`}>
+        <div><p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Trusted by Global Brands</p><p className="text-sm text-[#a0a0a0] font-semibold uppercase tracking-[0.5px]">Manage brand logos</p></div>
+        <button onClick={onToggleVisibility} className={`flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-semibold uppercase tracking-[1px] border-2 transition ${section.isVisible !== false ? 'border-emerald-500 text-emerald-600 hover:bg-emerald-50' : 'border-[#6B8FAB]/30 text-[#6B8FAB] hover:bg-[#E3E8ED]'}`}>
           {section.isVisible !== false ? <Eye size={14} /> : <EyeOff size={14} />}{section.isVisible !== false ? 'Visible' : 'Hidden'}
         </button>
       </div>
       <div className="space-y-4">
-        <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Heading</label><input type="text" value={content.heading || ''} onChange={(e) => onUpdate('heading', e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" /></div>
-        <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-2">Background Image</label>
-          {content.backgroundImage && <div className="w-full aspect-video bg-[#FAFAF7] rounded-xl overflow-hidden mb-2 max-w-md border border-[#91715c]/30"><img src={content.backgroundImage} alt="" className="object-cover w-full h-full" /></div>}
-          <button onClick={() => onOpenMedia('backgroundImage')} className="px-4 py-2 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">{content.backgroundImage ? 'Replace Image' : 'Choose Image'}</button>
+        <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Heading</label><input type="text" value={content.heading || ''} onChange={(e) => onUpdate('heading', e.target.value)} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" /></div>
+        <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Background Image</label>
+          {content.backgroundImage && <div className="w-full aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 max-w-md border border-[#6B8FAB]/30"><img src={content.backgroundImage} alt="" className="object-cover w-full h-full" /></div>}
+          <button onClick={() => onOpenMedia('backgroundImage')} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">{content.backgroundImage ? 'Replace Image' : 'Choose Image'}</button>
         </div>
         {/* Filter toggles */}
         <div>
-          <label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[3px] mb-3">Image Filters</label>
+          <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Image Filters</label>
           <div className="flex flex-wrap gap-3">
             {[
               { key: 'brandsGrayscale', label: 'Black & White' },
               { key: 'brandsBrownFilter', label: 'Brown / Sepia' },
               { key: 'brandsGoldFilter', label: 'Gold Tint' },
             ].map(f => (
-              <label key={f.key} className={`flex items-center gap-2 px-3 py-2 rounded-full border-2 cursor-pointer transition ${content[f.key] ? 'border-[#2a1a0a] bg-[#2a1a0a]/5 text-[#2a1a0a]' : 'border-[#91715c]/30 text-[#91715c] hover:border-[#2a1a0a]/50'}`}>
-                <input type="checkbox" checked={!!content[f.key]} onChange={(e) => onUpdate(f.key, e.target.checked)} className="w-4 h-4 accent-[#2a1a0a] rounded" />
+              <label key={f.key} className={`flex items-center gap-2 px-3 py-2 rounded-full border-2 cursor-pointer transition ${content[f.key] ? 'border-[#1B3A4C] bg-[#1B3A4C]/5 text-[#1B3A4C]' : 'border-[#6B8FAB]/30 text-[#6B8FAB] hover:border-[#1B3A4C]/50'}`}>
+                <input type="checkbox" checked={!!content[f.key]} onChange={(e) => onUpdate(f.key, e.target.checked)} className="w-4 h-4 accent-[#1B3A4C] rounded" />
                 <span className="text-[11px] font-semibold uppercase tracking-[1px]">{f.label}</span>
               </label>
             ))}
           </div>
         </div>
       </div>
-      <div className="border-t border-[#91715c]/20 pt-4">
+      <div className="border-t border-[#6B8FAB]/20 pt-4">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <p className="text-xs font-semibold text-[#91715c] uppercase tracking-[3px]">Brand Logos ({logos.length})</p>
-            <p className="text-[10px] text-[#b89a6e] mt-1">Use logos on transparent backgrounds for best results. The site automatically applies a cream tint.</p>
+            <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Brand Logos ({logos.length})</p>
+            <p className="text-[10px] text-[#a0a0a0] mt-1">Use logos on transparent backgrounds for best results. The site automatically applies a cream tint.</p>
           </div>
-          <button onClick={addLogo} className="px-4 py-2 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">+ Add Logo</button>
+          <button onClick={addLogo} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">+ Add Logo</button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {logos.map((logo: { name: string; src: string }, i: number) => (
-            <div key={i} className="border border-[#91715c]/30 p-4 space-y-3 bg-white">
+            <div key={i} className="border border-[#6B8FAB]/30 p-4 space-y-3 bg-white">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-[#91715c] uppercase tracking-[2px]">#{i + 1}</span>
+                <span className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px]">#{i + 1}</span>
                 <div className="flex items-center gap-1 ml-auto">
-                  <button onClick={() => moveLogo(i, 'up')} disabled={i === 0} className="p-1.5 text-[#91715c] hover:text-[#2a1a0a] hover:bg-[#FAFAF7] rounded-lg transition-colors disabled:opacity-30"><ChevronUp size={16} /></button>
-                  <button onClick={() => moveLogo(i, 'down')} disabled={i === logos.length - 1} className="p-1.5 text-[#91715c] hover:text-[#2a1a0a] hover:bg-[#FAFAF7] rounded-lg transition-colors disabled:opacity-30"><ChevronDown size={16} /></button>
+                  <button onClick={() => moveLogo(i, 'up')} disabled={i === 0} className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"><ChevronUp size={16} /></button>
+                  <button onClick={() => moveLogo(i, 'down')} disabled={i === logos.length - 1} className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"><ChevronDown size={16} /></button>
                   <button onClick={() => removeLogo(i)} className="p-1.5 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><Trash2 size={16} /></button>
                 </div>
               </div>
-              <div className="relative w-full aspect-[3/2] bg-[#FAFAF7] rounded-xl overflow-hidden border border-[#91715c]/30">
-                {logo.src ? <img src={logo.src} alt={logo.name} className="object-contain p-2 w-full h-full" /> : <div className="w-full h-full flex items-center justify-center"><Upload size={24} className="text-[#91715c]" /></div>}
+              <div className="relative w-full aspect-[3/2] bg-[#E3E8ED] rounded-xl overflow-hidden border border-[#6B8FAB]/30">
+                {logo.src ? <img src={logo.src} alt={logo.name} className="object-contain p-2 w-full h-full" /> : <div className="w-full h-full flex items-center justify-center"><Upload size={24} className="text-[#6B8FAB]" /></div>}
               </div>
-              <div><label className="block text-xs font-semibold text-[#91715c] uppercase tracking-[2px] mb-1">Name</label><input type="text" value={logo.name} onChange={(e) => updateLogo(i, 'name', e.target.value)} className="w-full px-3 py-2 bg-white border border-[#91715c]/30 rounded-lg text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a]" /></div>
+              <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Name</label><input type="text" value={logo.name} onChange={(e) => updateLogo(i, 'name', e.target.value)} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" /></div>
               <div className="flex gap-2">
-                <button onClick={() => { setMediaTarget({ type: 'brands-logo', id: i }); setMediaOpen(true); }} className="flex-1 px-3 py-1.5 border-2 border-[#2a1a0a] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition">{logo.src ? 'Replace' : 'Upload'}</button>
+                <button onClick={() => { setMediaTarget({ type: 'brands-logo', id: i }); setMediaOpen(true); }} className="flex-1 px-3 py-1.5 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">{logo.src ? 'Replace' : 'Upload'}</button>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div className="flex justify-end"><button onClick={onSave} disabled={saving} className="px-7 py-3 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#2a1a0a] hover:text-white transition disabled:opacity-50">{saving ? 'Saving...' : 'Save Brands'}</button></div>
+      <div className="flex justify-end"><button onClick={onSave} disabled={saving} className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition disabled:opacity-50">{saving ? 'Saving...' : 'Save Brands'}</button></div>
     </div>
   );
 }

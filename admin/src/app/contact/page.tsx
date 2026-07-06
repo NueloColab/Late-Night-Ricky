@@ -92,9 +92,9 @@ export default function ContactPage() {
       <Navbar />
       <main className="bg-white min-h-screen">
         {/* Page Title Bar */}
-        <div className="border-b-2 border-[#0d1f3d] pt-24 pb-5 px-8">
+        <div className="border-b-2 border-[#111] pt-24 pb-5 px-8">
           <div className="max-w-[1200px] mx-auto">
-            <h1 className="text-[clamp(48px,10vw,120px)] font-black tracking-[-3px] uppercase leading-[0.9] text-[#0d1f3d]">Contact</h1>
+            <h1 className="text-[clamp(48px,10vw,120px)] font-black tracking-[-3px] uppercase leading-[0.9] text-[#111]">Contact</h1>
           </div>
         </div>
 
@@ -111,16 +111,16 @@ export default function ContactPage() {
             <div className="flex gap-0 mb-10">
               <button
                 onClick={() => { setActiveTab('booking'); setSubmitted(false); setError(''); }}
-                className={`flex-1 py-3.5 px-7 border-2 border-[#0d1f3d] text-xs font-semibold uppercase tracking-[1.5px] transition ${
-                  activeTab === 'booking' ? 'bg-[#0d1f3d] text-white' : 'bg-white text-[#0d1f3d] hover:bg-[#0d1f3d]'
+                className={`flex-1 py-3.5 px-7 border-2 border-[#111] text-xs font-semibold uppercase tracking-[1.5px] transition ${
+                  activeTab === 'booking' ? 'bg-[#0d1f3d] text-white' : 'bg-white text-[#111] hover:bg-[#0d1f3d]'
                 }`}
               >
                 Booking
               </button>
               <button
                 onClick={() => { setActiveTab('private'); setSubmitted(false); setError(''); }}
-                className={`flex-1 py-3.5 px-7 border-2 border-[#0d1f3d] text-xs font-semibold uppercase tracking-[1.5px] transition ${
-                  activeTab === 'private' ? 'bg-[#0d1f3d] text-white' : 'bg-white text-[#0d1f3d] hover:bg-[#0d1f3d]'
+                className={`flex-1 py-3.5 px-7 border-2 border-[#111] text-xs font-semibold uppercase tracking-[1.5px] transition ${
+                  activeTab === 'private' ? 'bg-[#0d1f3d] text-white' : 'bg-white text-[#111] hover:bg-[#0d1f3d]'
                 }`}
               >
                 Private Message
@@ -133,16 +133,16 @@ export default function ContactPage() {
                 <p className="text-sm text-[#A8D5F0]">We&apos;ll be in touch soon.</p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="mt-6 px-6 py-2 border-2 border-[#0d1f3d] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#0d1f3d] hover:text-white transition"
+                  className="mt-6 px-6 py-2 border-2 border-[#111] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#0d1f3d] hover:text-white transition"
                 >
                   Send another
                 </button>
               </div>
             ) : !contactInfo.formEnabled ? (
               <div className="text-center py-10">
-                <p className="text-lg font-semibold text-[#0d1f3d] mb-2">Contact form is currently disabled</p>
+                <p className="text-lg font-semibold text-[#111] mb-2">Contact form is currently disabled</p>
                 <p className="text-sm text-[#A8D5F0]">Please reach out directly via email.</p>
-                <a href={`mailto:${contactInfo.email}`} className="mt-4 inline-block px-6 py-2 border-2 border-[#0d1f3d] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#0d1f3d] hover:text-white transition">
+                <a href={`mailto:${contactInfo.email}`} className="mt-4 inline-block px-6 py-2 border-2 border-[#111] rounded-full text-xs font-semibold uppercase tracking-[1px] hover:bg-[#0d1f3d] hover:text-white transition">
                   Email {contactInfo.email}
                 </a>
               </div>
@@ -155,27 +155,27 @@ export default function ContactPage() {
                 >
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>
-                    <input type="text" name="name" required className="w-full border-b-2 border-[#0d1f3d] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
+                    <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Email *</label>
-                    <input type="email" name="email" required className="w-full border-b-2 border-[#0d1f3d] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
+                    <input type="email" name="email" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Club Name *</label>
-                    <input type="text" name="club" required className="w-full border-b-2 border-[#0d1f3d] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
+                    <input type="text" name="club" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">City *</label>
-                    <input type="text" name="city" required className="w-full border-b-2 border-[#0d1f3d] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
+                    <input type="text" name="city" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Fee *</label>
-                    <input type="text" name="fee" required className="w-full border-b-2 border-[#0d1f3d] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
+                    <input type="text" name="fee" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Date *</label>
-                    <input type="date" name="date" required className="w-full border-b-2 border-[#0d1f3d] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
+                    <input type="date" name="date" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
                   </div>
                   {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
                   <button
@@ -193,15 +193,15 @@ export default function ContactPage() {
                 >
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Name *</label>
-                    <input type="text" name="name" required className="w-full border-b-2 border-[#0d1f3d] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
+                    <input type="text" name="name" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Email *</label>
-                    <input type="email" name="email" required className="w-full border-b-2 border-[#0d1f3d] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
+                    <input type="email" name="email" required className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition" />
                   </div>
                   <div className="mb-7">
                     <label className="block text-xs font-semibold uppercase tracking-[1.5px] mb-2">Message *</label>
-                    <textarea name="message" required rows={4} className="w-full border-b-2 border-[#0d1f3d] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition resize-y min-h-[80px]" />
+                    <textarea name="message" required rows={4} className="w-full border-b-2 border-[#111] py-3 px-0 text-[15px] bg-transparent outline-none focus:border-[#152a47] transition resize-y min-h-[80px]" />
                   </div>
                   {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
                   <button

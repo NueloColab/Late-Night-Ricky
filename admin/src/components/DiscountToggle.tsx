@@ -35,7 +35,7 @@ export default function DiscountToggle({ discount, onChange }: DiscountTogglePro
           />
         </button>
         <Heart size={14} className={discount.enabled ? 'text-[#152a47]' : 'text-[#A8D5F0]'} />
-        <span className="text-sm text-[#8a9bac]">{discount.enabled ? 'On' : 'Off'}</span>
+        <span className="text-sm text-[#a0a0a0]">{discount.enabled ? 'On' : 'Off'}</span>
       </div>
       {discount.enabled && (
         <div>

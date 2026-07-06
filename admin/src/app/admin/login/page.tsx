@@ -33,7 +33,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#2a1a0a] flex">
+    <div className="min-h-screen bg-[#1B3A4C] flex">
       {/* Left side — branding (desktop only) */}
       <div className="hidden lg:flex lg:w-1/2 relative items-center justify-center">
         <div className="absolute inset-0 opacity-10">
@@ -98,7 +98,7 @@ export default function LoginPage() {
                 maxLength={6}
                 value={pin}
                 onChange={(e) => setPin(e.target.value)}
-                className="w-full px-5 py-4 bg-[#111318]/5 border-2 border-[#2A2E36] rounded-xl text-white font-mono text-2xl tracking-[0.5em] text-center placeholder:text-[#5A6A7A] focus:border-[#e8d4b8] focus:outline-none focus:bg-[#111318]/10 transition-all"
+                className="w-full px-5 py-4 bg-[#111318]/5 border-2 border-[#2A2E36] rounded-xl text-white font-mono text-2xl tracking-[0.5em] text-center placeholder:text-[#5A6A7A] focus:border-[#C5E5F8] focus:outline-none focus:bg-[#111318]/10 transition-all"
                 placeholder="••••"
                 autoFocus
               />

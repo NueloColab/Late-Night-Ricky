@@ -30,7 +30,7 @@ export default function VatToggle({ vatEnabled, taxRate, onVatChange, onRateChan
           />
         </button>
         <Receipt size={14} className={vatEnabled ? 'text-[#152a47]' : 'text-[#A8D5F0]'} />
-        <span className="text-sm text-[#8a9bac]">{vatEnabled ? 'On' : 'Off'}</span>
+        <span className="text-sm text-[#a0a0a0]">{vatEnabled ? 'On' : 'Off'}</span>
       </div>
       {vatEnabled && (
         <div>

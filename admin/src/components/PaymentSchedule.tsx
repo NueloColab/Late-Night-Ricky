@@ -48,7 +48,7 @@ export default function PaymentSchedule({ schedule, termsType, total, onChange }
         <button
           type="button"
           onClick={addItem}
-          className="text-sm text-[#152a47] hover:text-[#8a9bac] flex items-center gap-1 mx-auto transition-colors font-semibold"
+          className="text-sm text-[#152a47] hover:text-[#a0a0a0] flex items-center gap-1 mx-auto transition-colors font-semibold"
         >
           <Plus size={14} /> Add First Installment
         </button>
@@ -64,7 +64,7 @@ export default function PaymentSchedule({ schedule, termsType, total, onChange }
           <button
             type="button"
             onClick={addItem}
-            className="text-xs text-[#152a47] hover:text-[#8a9bac] flex items-center gap-1 transition-colors font-semibold"
+            className="text-xs text-[#152a47] hover:text-[#a0a0a0] flex items-center gap-1 transition-colors font-semibold"
           >
             <Plus size={12} /> Add Installment
           </button>
@@ -136,8 +136,8 @@ export default function PaymentSchedule({ schedule, termsType, total, onChange }
             ) : (
               <>
                 <div className="col-span-3 text-sm font-medium text-[#152a47]">{item.label}</div>
-                <div className="col-span-2 text-sm text-[#8a9bac]">{item.percent}%</div>
-                <div className="col-span-4 text-sm text-[#8a9bac]">{item.due}</div>
+                <div className="col-span-2 text-sm text-[#a0a0a0]">{item.percent}%</div>
+                <div className="col-span-4 text-sm text-[#a0a0a0]">{item.due}</div>
                 <div className="col-span-2 text-right font-semibold text-sm text-[#152a47]">
                   £{item.amount.toFixed(2)}
                 </div>

@@ -23,7 +23,7 @@ const contentPages = [
     href: '/admin/pages/home',
     description: 'All sections: hero, showreel, about, moments, performers, venues, music, brands, contact, footer',
     icon: Home,
-    color: '#2a1a0a',
+    color: '#1B3A4C',
     sections: ['Hero', 'Showreel', 'About / Quote', 'Moments', 'Performers', 'Venues', 'Music & Mixes', 'Share Music', 'Brands', 'Contact', 'Footer'],
   },
   {
@@ -31,7 +31,7 @@ const contentPages = [
     href: '/admin/pages/home?section=about',
     description: 'Headline, bio, quote, images, press pack',
     icon: User,
-    color: '#91715c',
+    color: '#6B8FAB',
     sections: ['Headline', 'Bio', 'Quote', 'Images', 'Press Pack'],
   },
   {
@@ -39,7 +39,7 @@ const contentPages = [
     href: '/admin/pages/home?section=video',
     description: 'Video showreel toggle and poster',
     icon: Video,
-    color: '#2a1a0a',
+    color: '#1B3A4C',
     sections: ['Showreel'],
   },
   {
@@ -47,7 +47,7 @@ const contentPages = [
     href: '/admin/pages/home?section=contact_section',
     description: 'Contact form, social links, booking info',
     icon: Mail,
-    color: '#91715c',
+    color: '#6B8FAB',
     sections: ['Contact Info', 'Social Links', 'Booking'],
   },
 ]
@@ -58,7 +58,7 @@ const globalPages = [
     href: '/admin/global/nav',
     description: 'Site navigation links and logo',
     icon: Navigation,
-    color: '#2a1a0a',
+    color: '#1B3A4C',
     sections: ['Nav Items', 'Logo'],
   },
   {
@@ -66,7 +66,7 @@ const globalPages = [
     href: '/admin/global/seo',
     description: 'Page titles, descriptions, favicon',
     icon: Search,
-    color: '#91715c',
+    color: '#6B8FAB',
     sections: ['Meta Tags', 'Favicon', 'Open Graph'],
   },
 ]
@@ -77,7 +77,7 @@ const mediaPages = [
     href: '/admin/media',
     description: 'Images, videos and files',
     icon: Image,
-    color: '#2a1a0a',
+    color: '#1B3A4C',
     sections: ['Uploads', 'Organise'],
   },
   {
@@ -85,7 +85,7 @@ const mediaPages = [
     href: '/admin/submissions',
     description: 'Music submissions inbox',
     icon: FileText,
-    color: '#91715c',
+    color: '#6B8FAB',
     sections: ['Inbox', 'Reviewed'],
   },
 ]
@@ -121,22 +121,22 @@ export default function ContentPage() {
     <div className="max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-12">
-        <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-4">Content Management</p>
-        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#2a1a0a] tracking-[-2px] uppercase leading-[0.95]">
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Content Management</p>
+        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">
           Content
         </h1>
-        <p className="text-sm text-[#b89a6e] mt-4 font-semibold uppercase tracking-[0.5px]">Manage your website pages, media, and submissions.</p>
+        <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Manage your website pages, media, and submissions.</p>
       </div>
 
       {/* Database Setup */}
-      <div className="bg-white border border-[#91715c]/30 p-8 mb-10">
+      <div className="bg-white border border-[#6B8FAB]/30 p-8 mb-10">
         <div className="flex items-center gap-3 mb-4">
-          <Database size={18} className="text-[#2a1a0a]" />
-          <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold">Database Setup</p>
+          <Database size={18} className="text-[#1B3A4C]" />
+          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold">Database Setup</p>
         </div>
-        <p className="text-sm text-[#b89a6e] mb-6 font-semibold uppercase tracking-[0.5px]">
+        <p className="text-sm text-[#a0a0a0] mb-6 font-semibold uppercase tracking-[0.5px]">
           First time? Seed the database with default content from your existing pages.
-          <span className="block mt-1 text-xs text-[#91715c] font-normal normal-case tracking-normal">
+          <span className="block mt-1 text-xs text-[#6B8FAB] font-normal normal-case tracking-normal">
             “Seed Missing Content” only fills empty tables — it will NOT overwrite anything you’ve already set up.
           </span>
         </p>
@@ -144,7 +144,7 @@ export default function ContentPage() {
           <button
             onClick={() => handleSeed(false)}
             disabled={seeding}
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#2a1a0a] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#2a1a0a] hover:bg-[#FAFAF7] hover:text-white transition disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
           >
             {seeding ? <RefreshCw size={14} className="animate-spin" /> : <Database size={14} />}
             {seeding ? 'Seeding...' : 'Seed Missing Content Only'}
@@ -158,7 +158,7 @@ export default function ContentPage() {
           </button>
         </div>
         {seedResult && (
-          <div className={`mt-4 flex items-center gap-2 text-sm ${seedResult.success ? 'text-[#5c7a3c]' : 'text-red-600'}`}>
+          <div className={`mt-4 flex items-center gap-2 text-sm ${seedResult.success ? 'text-[#2d6a2d]' : 'text-red-600'}`}>
             {seedResult.success ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
             {seedResult.message}
           </div>
@@ -167,7 +167,7 @@ export default function ContentPage() {
 
       {/* Pages */}
       <div className="mb-10">
-        <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-6">Pages</p>
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-6">Pages</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {contentPages.map((page) => {
             const Icon = page.icon
@@ -175,22 +175,22 @@ export default function ContentPage() {
               <Link
                 key={page.href}
                 href={page.href}
-                className="group bg-white border border-[#91715c]/30 p-6 hover:border-[#2a1a0a] transition h-full flex flex-col"
+                className="group bg-white border border-[#6B8FAB]/30 p-6 hover:border-[#1B3A4C] transition h-full flex flex-col"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="p-3 text-white" style={{ backgroundColor: page.color }}>
                     <Icon size={18} />
                   </div>
                 </div>
-                <h3 className="text-lg font-black text-[#2a1a0a] group-hover:text-[#2a1a0a] transition-colors mb-1 uppercase tracking-[-0.5px]">
+                <h3 className="text-lg font-black text-[#111] group-hover:text-[#1B3A4C] transition-colors mb-1 uppercase tracking-[-0.5px]">
                   {page.label}
                 </h3>
-                <p className="text-sm text-[#b89a6e] mb-4 font-semibold uppercase tracking-[0.5px]">{page.description}</p>
+                <p className="text-sm text-[#a0a0a0] mb-4 font-semibold uppercase tracking-[0.5px]">{page.description}</p>
                 <div className="flex flex-wrap gap-1.5 mt-auto">
                   {page.sections.map((section) => (
                     <span
                       key={section}
-                      className="text-[10px] uppercase tracking-[2px] text-[#91715c] border border-[#91715c]/30 px-2 py-0.5 rounded"
+                      className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] border border-[#6B8FAB]/30 px-2 py-0.5 rounded"
                     >
                       {section}
                     </span>
@@ -204,7 +204,7 @@ export default function ContentPage() {
 
       {/* Global Settings */}
       <div className="mb-10">
-        <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-6">Global Settings</p>
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-6">Global Settings</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {globalPages.map((page) => {
             const Icon = page.icon
@@ -212,22 +212,22 @@ export default function ContentPage() {
               <Link
                 key={page.href}
                 href={page.href}
-                className="group bg-white border border-[#91715c]/30 p-6 hover:border-[#91715c] transition h-full flex flex-col"
+                className="group bg-white border border-[#6B8FAB]/30 p-6 hover:border-[#6B8FAB] transition h-full flex flex-col"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="p-3 text-white" style={{ backgroundColor: page.color }}>
                     <Icon size={18} />
                   </div>
                 </div>
-                <h3 className="text-lg font-black text-[#2a1a0a] group-hover:text-[#91715c] transition-colors mb-1 uppercase tracking-[-0.5px]">
+                <h3 className="text-lg font-black text-[#111] group-hover:text-[#6B8FAB] transition-colors mb-1 uppercase tracking-[-0.5px]">
                   {page.label}
                 </h3>
-                <p className="text-sm text-[#b89a6e] mb-4 font-semibold uppercase tracking-[0.5px]">{page.description}</p>
+                <p className="text-sm text-[#a0a0a0] mb-4 font-semibold uppercase tracking-[0.5px]">{page.description}</p>
                 <div className="flex flex-wrap gap-1.5 mt-auto">
                   {page.sections.map((section) => (
                     <span
                       key={section}
-                      className="text-[10px] uppercase tracking-[2px] text-[#91715c] border border-[#91715c]/30 px-2 py-0.5 rounded"
+                      className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] border border-[#6B8FAB]/30 px-2 py-0.5 rounded"
                     >
                       {section}
                     </span>
@@ -241,7 +241,7 @@ export default function ContentPage() {
 
       {/* Media */}
       <div>
-        <p className="text-xs text-[#91715c] tracking-[3px] uppercase font-semibold mb-6">Media & Data</p>
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-6">Media & Data</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {mediaPages.map((page) => {
             const Icon = page.icon
@@ -249,22 +249,22 @@ export default function ContentPage() {
               <Link
                 key={page.href}
                 href={page.href}
-                className="group bg-white border border-[#91715c]/30 p-6 hover:border-[#2a1a0a] transition h-full flex flex-col"
+                className="group bg-white border border-[#6B8FAB]/30 p-6 hover:border-[#1B3A4C] transition h-full flex flex-col"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="p-3 text-white" style={{ backgroundColor: page.color }}>
                     <Icon size={18} />
                   </div>
                 </div>
-                <h3 className="text-lg font-black text-[#2a1a0a] group-hover:text-[#2a1a0a] transition-colors mb-1 uppercase tracking-[-0.5px]">
+                <h3 className="text-lg font-black text-[#111] group-hover:text-[#1B3A4C] transition-colors mb-1 uppercase tracking-[-0.5px]">
                   {page.label}
                 </h3>
-                <p className="text-sm text-[#b89a6e] mb-4 font-semibold uppercase tracking-[0.5px]">{page.description}</p>
+                <p className="text-sm text-[#a0a0a0] mb-4 font-semibold uppercase tracking-[0.5px]">{page.description}</p>
                 <div className="flex flex-wrap gap-1.5 mt-auto">
                   {page.sections.map((section) => (
                     <span
                       key={section}
-                      className="text-[10px] uppercase tracking-[2px] text-[#91715c] border border-[#91715c]/30 px-2 py-0.5 rounded"
+                      className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] border border-[#6B8FAB]/30 px-2 py-0.5 rounded"
                     >
                       {section}
                     </span>
