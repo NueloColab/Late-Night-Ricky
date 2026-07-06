@@ -26,30 +26,15 @@ export default function HomeContactSection() {
   useEffect(() => {
     async function fetchSections() {
       try {
-        // Fetch contact page sections (email, form, image)
-        const res = await fetch('/api/public/sections?page=contact');
-        const data = await res.json();
-        const sections = data.sections || [];
-
-        const emailSection = sections.find((s: any) => s.section === 'email');
-        const formSection = sections.find((s: any) => s.section === 'form');
-        const imageSection = sections.find((s: any) => s.section === 'image');
-
-        const email = emailSection?.content?.[0] || contactInfo.email;
-
-        setContactInfo(prev => ({
-          ...prev,
-          email,
-          formEnabled: formSection?.isActive !== false,
-        }));
-
-        // Fetch home contact section for social links
-        const homeRes = await fetch('/api/sections?page=home');
+        // Fetch home contact section (primary source)
+        const homeRes = await fetch('/api/public/sections?page=home');
         const homeData = await homeRes.json();
         const homeSections = homeData.sections || [];
+        
         const contactSection = homeSections.find((s: any) => s.section === 'contact_section');
         if (contactSection?.content) {
           const c = typeof contactSection.content === 'string' ? JSON.parse(contactSection.content) : contactSection.content;
+          if (c.bookingEmail) setContactInfo(prev => ({ ...prev, email: c.bookingEmail }));
           if (c.instagramUrl) setSocialLinks(prev => ({ ...prev, instagram: c.instagramUrl }));
           if (c.youtubeUrl) setSocialLinks(prev => ({ ...prev, youtube: c.youtubeUrl }));
           if (c.spotifyUrl) setSocialLinks(prev => ({ ...prev, spotify: c.spotifyUrl }));
@@ -57,6 +42,21 @@ export default function HomeContactSection() {
           if (c.tiktokUrl) setSocialLinks(prev => ({ ...prev, tiktok: c.tiktokUrl }));
           if (c.twitterUrl) setSocialLinks(prev => ({ ...prev, twitter: c.twitterUrl }));
           if (c.facebookUrl) setSocialLinks(prev => ({ ...prev, facebook: c.facebookUrl }));
+        }
+
+        // Also fetch contact page for form/image settings (fallback)
+        const res = await fetch('/api/public/sections?page=contact');
+        const data = await res.json();
+        const sections = data.sections || [];
+        const formSection = sections.find((s: any) => s.section === 'form');
+        if (formSection?.isActive === false) {
+          setContactInfo(prev => ({ ...prev, formEnabled: false }));
+        }
+        const imageSection = sections.find((s: any) => s.section === 'image');
+        if (imageSection?.content) {
+          const img = typeof imageSection.content === 'string' ? JSON.parse(imageSection.content) : imageSection.content;
+          if (Array.isArray(img) && img[0]) setContactInfo(prev => ({ ...prev, image: img[0] }));
+          else if (typeof img === 'string') setContactInfo(prev => ({ ...prev, image: img }));
         }
       } catch {
         // keep defaults
