@@ -40,7 +40,7 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
         className={`${
           isMobile
             ? 'fixed left-0 top-0 bottom-0 z-50 w-[280px] h-screen'
-            : 'h-screen w-[280px] flex-shrink-0'
+            : 'h-full w-[280px] flex-shrink-0'
         } bg-[#E3E8ED] border-r border-[#6B8FAB]/30 flex flex-col`}
         style={{
           transform: isMobile && !isOpen ? 'translateX(-100%)' : 'translateX(0)',
@@ -79,8 +79,8 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
           </div>
         </Link>
 
-        {/* Main Navigation - grows to fill space */}
-        <nav className="flex-1 px-4 overflow-y-auto">
+        {/* Main Navigation - scrollable if needed */}
+        <nav className="flex-1 overflow-y-auto px-4">
           <div className="space-y-1 mb-6">
             {mainMenuItems.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/');

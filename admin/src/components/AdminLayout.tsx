@@ -48,9 +48,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="min-h-screen bg-[#E3E8ED] text-[#1B3A4C] flex">
-      {/* Desktop sidebar — hidden on mobile via CSS, never flashes on hydration */}
+      {/* Desktop sidebar — fixed position, full height */}
       <div
-        className="hidden lg:block h-screen flex-shrink-0 overflow-hidden transition-all duration-300"
+        className="hidden lg:flex flex-col h-screen flex-shrink-0 sticky top-0 transition-all duration-300"
         style={{ width: sidebarOpen ? 280 : 0 }}
       >
         {sidebarOpen && (
