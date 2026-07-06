@@ -57,7 +57,7 @@ const DEFAULT_MOMENTS: MomentData[] = [
   },
 ];
 
-export default function LateNightMoments({ items }: { items?: MomentData[] }) {
+export default function LateNightMoments({ items, shows }: { items?: MomentData[]; shows?: any[] }) {
   const momentsData = items || DEFAULT_MOMENTS;
   const [openModal, setOpenModal] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -124,32 +124,47 @@ export default function LateNightMoments({ items }: { items?: MomentData[] }) {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 reveal-stagger">
-            {momentsData.map((moment) => (
-              <button
-                key={moment.id}
-                onClick={() => open(moment.id)}
-                className="group block text-left w-full"
-              >
-                <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-1">
-                  {moment.title}
-                </h3>
-                <p className="text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium mb-2">
-                  {moment.subtitle}
-                </p>
-                <div className="relative aspect-square overflow-hidden">
-                  <img
-                    src={moment.images[0]}
-                    alt={moment.title}
-                    className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute bottom-3 right-3 w-9 h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
+            {(shows && shows.length > 0 ? shows : momentsData).map((item: any, i: number) => {
+              // Match show card to moment by title similarity
+              const matchingMoment = momentsData.find((m: any) => 
+                m.title?.toLowerCase() === item.title?.toLowerCase() || 
+                m.id?.toLowerCase() === item.title?.toLowerCase().replace(/\s+/g, '')
+              );
+              const momentId = matchingMoment?.id || momentsData[i]?.id || `moment-${i}`;
+              const title = item.title || '';
+              const subtitle = item.venue ? `${item.venue}${item.location ? ', ' + item.location : ''}` : (item.subtitle || '');
+              const image = item.image || (matchingMoment?.images?.[0]) || (momentsData[i]?.images?.[0]) || '/assets/ricky-hero-new.jpg';
+              const hasGallery = !!(matchingMoment || momentsData[i]);
+              
+              return (
+                <button
+                  key={i}
+                  onClick={() => hasGallery && open(momentId)}
+                  className="group block text-left w-full"
+                >
+                  <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-1">
+                    {title}
+                  </h3>
+                  <p className="text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium mb-2">
+                    {subtitle}
+                  </p>
+                  <div className="relative aspect-square overflow-hidden">
+                    <img
+                      src={image}
+                      alt={title}
+                      className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
+                    />
+                    {hasGallery && (
+                      <div className="absolute bottom-3 right-3 w-9 h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    )}
                   </div>
-                </div>
-              </button>
-            ))}
+                </button>
+              );
+            })}
           </div>
 
           {/* Animated V arrow scroll prompt */}

@@ -493,7 +493,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <LateNightMoments items={momentsItems} />
+      <LateNightMoments items={momentsItems} shows={shows} />
 
       {/* ═══ ACTS ARTISTS & VENUES — brown background, carousel, locations PRIVATE CLIENTS ═══ */}
       <section id="artists" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
