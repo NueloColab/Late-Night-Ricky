@@ -89,6 +89,8 @@ export default async function HomePage() {
   let heroImage = '/assets/ricky-hero-studio.jpg';
   let heroLogo = '/assets/ricky-logo.png';
   let heroGrayscale = true;
+  let heroBrownFilter = false;
+  let heroGoldFilter = false;
   let heroTagline = 'Grammy Winning Producer | International DJ';
   let heroBackgroundSize = 'cover';
   let heroBackgroundPosition = '70% center';
@@ -189,6 +191,8 @@ export default async function HomePage() {
         const c = typeof heroSection.content === 'string' ? JSON.parse(heroSection.content) : heroSection.content;
         if (c.logo) heroLogo = c.logo;
         if (c.grayscale !== undefined) heroGrayscale = c.grayscale;
+        if (c.brownFilter !== undefined) heroBrownFilter = c.brownFilter;
+        if (c.goldFilter !== undefined) heroGoldFilter = c.goldFilter;
         if (c.tagline) heroTagline = c.tagline;
         if (c.image) heroImage = c.image;
         if (c.backgroundSize) heroBackgroundSize = c.backgroundSize;
@@ -349,7 +353,11 @@ export default async function HomePage() {
           src={heroImage}
           alt="Late Night Ricky"
           className="fixed inset-0 -z-10 w-full h-full object-cover"
-          style={{ objectPosition: heroBackgroundPosition }}
+          style={{ objectPosition: heroBackgroundPosition, filter: [
+            heroGrayscale && 'grayscale(100%)',
+            heroBrownFilter && 'sepia(60%) brightness(90%)',
+            heroGoldFilter && 'sepia(30%) brightness(95%) saturate(150%) hue-rotate(10deg)',
+          ].filter(Boolean).join(' ') || 'none' }}
         />
         {/* Logo + subtitle — desktop: left side, ~40% width, at waist level; mobile: centered above head */}
         <div className="absolute z-10 flex flex-col items-center md:items-start justify-center md:justify-start top-[22%] md:top-auto md:mt-[30vh] w-full md:w-auto md:max-w-[45%] md:left-[15%] px-4 md:px-0">

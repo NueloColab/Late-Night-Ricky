@@ -289,6 +289,8 @@ export default function HomeEditor() {
               { key: 'logo', label: 'Logo', type: 'image' },
               { key: 'image', label: 'Background Image', type: 'image' },
               { key: 'grayscale', label: 'Black & White Filter', type: 'toggle' },
+              { key: 'brownFilter', label: 'Brown / Sepia Filter', type: 'toggle' },
+              { key: 'goldFilter', label: 'Gold Tint Filter', type: 'toggle' },
               { key: 'backgroundSize', label: 'Zoom (Background Size)', type: 'select', options: ['cover', 'contain', '120%', '150%', '200%'] },
               { key: 'backgroundPosition', label: 'Focus Point', type: 'select', options: ['center', 'top', 'bottom', 'left', 'right', '70% center', '25% center'] },
             ]} onUpdate={(key, val) => updateContent('hero', key, val)} onSave={() => saveSection('hero')} saving={saving === 'hero'} onToggleVisibility={() => toggleVisibility('hero')} onOpenMedia={(field) => openMedia('section', undefined, field)} />
