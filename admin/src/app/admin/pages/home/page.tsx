@@ -1,4 +1,3 @@
-// @ts-nocheck
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
@@ -727,7 +726,7 @@ function MomentsEditor({ section, onUpdate, onSave, saving, onToggleVisibility, 
   onSave: () => void | Promise<void>;
   saving: boolean;
   onToggleVisibility: () => void;
-  onOpenMedia: (field: string) => void;
+  onOpenMedia: (field: string) => void; setMediaTarget: any; setMediaOpen: any;
 }) {
   const content = parseContent(section?.content);
   const items: any[] = content.items || [];
@@ -797,7 +796,7 @@ function MomentsEditor({ section, onUpdate, onSave, saving, onToggleVisibility, 
 // ─── Performers Editor ───
 
 function PerformersEditor({ section, onUpdate, onSave, saving, onToggleVisibility, onOpenMedia, setMediaTarget, setMediaOpen }: {
-  section?: SectionData; onUpdate: (key: string, val: any) => void; onSave: () => void | Promise<void>; saving: boolean; onToggleVisibility: () => void; onOpenMedia: (field: string) => void;
+  section?: SectionData; onUpdate: (key: string, val: any) => void; onSave: () => void | Promise<void>; saving: boolean; onToggleVisibility: () => void; onOpenMedia: (field: string) => void; setMediaTarget: any; setMediaOpen: any;
 }) {
   const content = parseContent(section?.content);
   const row1Images: string[] = content.row1Images || [];
@@ -847,7 +846,7 @@ function PerformersEditor({ section, onUpdate, onSave, saving, onToggleVisibilit
 // ─── Venues Editor ───
 
 function VenuesEditor({ section, onUpdate, onSave, saving, onToggleVisibility, onOpenMedia, setMediaTarget, setMediaOpen }: {
-  section?: SectionData; onUpdate: (key: string, val: any) => void; onSave: () => void | Promise<void>; saving: boolean; onToggleVisibility: () => void; onOpenMedia: (field: string) => void;
+  section?: SectionData; onUpdate: (key: string, val: any) => void; onSave: () => void | Promise<void>; saving: boolean; onToggleVisibility: () => void; onOpenMedia: (field: string) => void; setMediaTarget: any; setMediaOpen: any;
 }) {
   const content = parseContent(section?.content);
   const venues: string[] = content.venues || [];
@@ -895,7 +894,7 @@ function VenuesEditor({ section, onUpdate, onSave, saving, onToggleVisibility, o
 // ─── Brands Editor ───
 
 function BrandsEditor({ section, onUpdate, onSave, saving, onToggleVisibility, onOpenMedia, setMediaTarget, setMediaOpen }: {
-  section?: SectionData; onUpdate: (key: string, val: any) => void; onSave: () => void | Promise<void>; saving: boolean; onToggleVisibility: () => void; onOpenMedia: (field: string) => void;
+  section?: SectionData; onUpdate: (key: string, val: any) => void; onSave: () => void | Promise<void>; saving: boolean; onToggleVisibility: () => void; onOpenMedia: (field: string) => void; setMediaTarget: any; setMediaOpen: any;
 }) {
   const content = parseContent(section?.content);
   const logos: { name: string; src: string }[] = content.logos || [];
