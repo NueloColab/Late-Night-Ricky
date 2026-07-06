@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 const mainMenuItems = [
   { label: 'Overview', href: '/admin' },
+  { label: 'Tracks', href: '/admin/tracks' },
   { label: 'Music Submissions', href: '/admin/submissions' },
   { label: 'Enquiries', href: '/admin/enquiries' },
   { label: 'Projects', href: '/admin/projects' },
@@ -15,8 +16,6 @@ const mainMenuItems = [
 
 const bottomMenuItems = [
   { label: 'Content', href: '/admin/content' },
-  { label: 'Show Pages', href: '/admin/show-pages' },
-  { label: 'Tracks', href: '/admin/tracks' },
   { label: 'Settings', href: '/admin/settings' },
 ];
 
