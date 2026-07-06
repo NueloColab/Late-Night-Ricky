@@ -28,24 +28,12 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
 
   return (
     <>
-      {/* Mobile overlay */}
-      {isMobile && isOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40"
-          onClick={onClose}
-        />
-      )}
-
       <aside
         className={`${
           isMobile
-            ? 'fixed left-0 top-0 bottom-0 z-50 w-[280px] h-screen'
-            : 'h-screen w-[280px] flex-shrink-0 sticky top-0'
+            ? 'h-screen w-[280px]'
+            : 'h-screen w-[280px] flex-shrink-0'
         } bg-[#E3E8ED] border-r border-[#6B8FAB]/30 flex flex-col`}
-        style={{
-          transform: isMobile && !isOpen ? 'translateX(-100%)' : 'translateX(0)',
-          transition: 'transform 0.3s ease',
-        }}
       >
         {/* Mobile close button */}
         {isMobile && (

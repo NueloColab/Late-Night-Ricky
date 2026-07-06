@@ -48,27 +48,36 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="min-h-screen bg-[#E3E8ED] text-[#1B3A4C] flex">
-      {/* Desktop sidebar — toggleable */}
-      {sidebarOpen && (
-        <div className="hidden lg:block flex-shrink-0">
-          <AdminSidebar
-            isOpen={true}
-            onClose={() => setSidebarOpen(false)}
-            isMobile={false}
-          />
-        </div>
-      )}
+      {/* Desktop sidebar — smooth slide transition */}
+      <div
+        className="hidden lg:block flex-shrink-0 overflow-hidden transition-all duration-300 ease-in-out"
+        style={{ width: sidebarOpen ? 280 : 0 }}
+      >
+        <AdminSidebar
+          isOpen={true}
+          onClose={() => setSidebarOpen(false)}
+          isMobile={false}
+        />
+      </div>
 
-      {/* Mobile sidebar — slide-over overlay */}
-      {sidebarOpen && (
-        <div className="lg:hidden">
+      {/* Mobile sidebar — slide-over overlay with backdrop */}
+      <div
+        className={`lg:hidden fixed inset-0 z-50 transition-all duration-300 ${sidebarOpen ? 'visible' : 'invisible'}`}
+        onClick={sidebarOpen ? () => setSidebarOpen(false) : undefined}
+      >
+        <div className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ${sidebarOpen ? 'opacity-100' : 'opacity-0'}`} />
+        <div
+          className="absolute left-0 top-0 bottom-0 w-[280px] transition-transform duration-300 ease-in-out"
+          style={{ transform: sidebarOpen ? 'translateX(0)' : 'translateX(-100%)' }}
+          onClick={(e) => e.stopPropagation()}
+        >
           <AdminSidebar
             isOpen={sidebarOpen}
             onClose={() => setSidebarOpen(false)}
             isMobile={true}
           />
         </div>
-      )}
+      </div>
 
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
