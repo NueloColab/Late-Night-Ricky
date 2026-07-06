@@ -7,16 +7,23 @@ export default function PinProtectedDownload() {
   const [pin, setPin] = useState('');
   const [error, setError] = useState(false);
 
+  const [visible, setVisible] = useState(false);
+
   const handleOpen = () => {
     setShowModal(true);
     setPin('');
     setError(false);
+    // trigger entrance animation after mount
+    requestAnimationFrame(() => setVisible(true));
   };
 
   const handleClose = () => {
-    setShowModal(false);
-    setPin('');
-    setError(false);
+    setVisible(false);
+    setTimeout(() => {
+      setShowModal(false);
+      setPin('');
+      setError(false);
+    }, 400);
   };
 
   const handleSubmit = () => {
@@ -43,11 +50,17 @@ export default function PinProtectedDownload() {
 
       {showModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            visible ? 'bg-black/60 opacity-100' : 'bg-black/0 opacity-0'
+          }`}
           onClick={handleClose}
         >
           <div
-            className="relative w-full max-w-[340px] mx-4 p-8 rounded-xl bg-[#2a1a0a] border border-[#5a3a1a]/30 shadow-2xl"
+            className={`relative w-full max-w-[340px] mx-4 p-8 rounded-xl bg-[#2a1a0a] border border-[#5a3a1a]/30 shadow-2xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              visible
+                ? 'opacity-100 scale-100 translate-y-0'
+                : 'opacity-0 scale-[0.92] translate-y-4'
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -85,7 +98,7 @@ export default function PinProtectedDownload() {
             />
 
             {error && (
-              <p className="text-[#c45a4a] text-[12px] text-center mt-2 mb-1">
+              <p className="text-[#e8d4b8]/80 text-[12px] text-center mt-2 mb-1">
                 Incorrect PIN. Please try again.
               </p>
             )}
