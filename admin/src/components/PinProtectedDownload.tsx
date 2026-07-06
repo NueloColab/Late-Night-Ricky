@@ -50,8 +50,8 @@ export default function PinProtectedDownload() {
 
       {showModal && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            visible ? 'bg-black/60 opacity-100' : 'bg-black/0 opacity-0'
+          className={`fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[12px] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            visible ? 'bg-black/70 opacity-100' : 'bg-black/0 opacity-0'
           }`}
           onClick={handleClose}
         >
