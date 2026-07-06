@@ -346,12 +346,12 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Title — animated from both sides */}
-          <h2 className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[clamp(20px,3.5vw,40px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20" style={{ fontFamily: "'Oswald', sans-serif" }}>
+          <h2 className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[clamp(18px,3vw,36px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20" style={{ fontFamily: "'Oswald', sans-serif" }}>
             <div className="reveal-left" data-delay="100">
               <img
                 src="/assets/ricky-text-cream.png"
                 alt="Ricky"
-                className="h-[clamp(24px,5vw,60px)] w-auto object-contain"
+                className="h-[clamp(28px,6vw,72px)] w-auto object-contain"
               />
             </div>
             <span className="reveal-right" data-delay="300">
