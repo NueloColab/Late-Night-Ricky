@@ -165,7 +165,7 @@ export default function SubmissionsPage() {
       <div className="mb-12">
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Music Submissions</p>
         <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">
-          Submissions
+          Music Submissions
         </h1>
         <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Review, listen, and download submitted tracks</p>
       </div>
