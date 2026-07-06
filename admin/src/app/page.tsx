@@ -253,7 +253,7 @@ export default async function HomePage() {
             <p className="text-[clamp(32px,5vw,56px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#e8d4b8] max-w-[1000px] mx-auto" style={{ fontFamily: "'Oswald', sans-serif" }}>
               &ldquo;The best DJ I&apos;ve heard.&rdquo;
             </p>
-            <p className="mt-4 text-[12px] md:text-[14px] font-semibold tracking-[0.3em] uppercase text-[#c4b498]/80">
+            <p className="mt-4 text-[14px] md:text-[18px] font-semibold tracking-[0.3em] uppercase text-[#c4b498]/80">
               — Ronaldo
             </p>
           </div>

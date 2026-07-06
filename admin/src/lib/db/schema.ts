@@ -18,6 +18,7 @@ export const siteSections = pgTable("site_sections", {
   links: jsonb("links"),
   order: integer("order").default(0),
   isActive: boolean("is_active").default(true),
+  isVisible: boolean("is_visible").default(true),
   updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
 });
 
@@ -231,9 +232,11 @@ export const tracks = pgTable("tracks", {
   order: integer("order").default(0),
   title: text("title").notNull(),
   filePath: text("file_path"),
+  coverPath: text("cover_path"),
   duration: text("duration").default("0:30"),
   spotifyUrl: text("spotify_url"),
   appleMusicUrl: text("apple_music_url"),
+  youtubeUrl: text("youtube_url"),
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
 });
