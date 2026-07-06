@@ -142,8 +142,9 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
               );
               const momentId = matchingMoment?.id || momentsData[i]?.id || `moment-${i}`;
               const title = item.title || '';
-              const subtitle = item.venue ? `${item.venue}${item.location ? ', ' + item.location : ''}` : (item.subtitle || '');
-              const image = item.image || (matchingMoment?.images?.[0]) || (momentsData[i]?.images?.[0]) || '/assets/ricky-hero-new.jpg';
+              const isShowCard = 'venue' in item;
+              const subtitle = isShowCard ? `${(item as ShowCard).venue || ''}${(item as ShowCard).location ? ', ' + (item as ShowCard).location : ''}` : ((item as MomentData).subtitle || '');
+              const image = isShowCard ? (item as ShowCard).image || '/assets/ricky-hero-new.jpg' : (item as MomentData).images?.[0] || '/assets/ricky-hero-new.jpg';
               const hasGallery = !!(matchingMoment || momentsData[i]);
               
               return (
