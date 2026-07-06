@@ -57,7 +57,17 @@ const DEFAULT_MOMENTS: MomentData[] = [
   },
 ];
 
-export default function LateNightMoments({ items, shows }: { items?: MomentData[]; shows?: any[] }) {
+interface ShowCard {
+  title: string;
+  venue?: string;
+  location?: string;
+  season?: string;
+  description?: string;
+  image?: string;
+  href?: string;
+}
+
+export default function LateNightMoments({ items, shows }: { items?: MomentData[]; shows?: ShowCard[] }) {
   const momentsData = items || DEFAULT_MOMENTS;
   const [openModal, setOpenModal] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -124,9 +134,9 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 reveal-stagger">
-            {(shows && shows.length > 0 ? shows : momentsData).map((item: any, i: number) => {
+            {(shows && shows.length > 0 ? shows : momentsData).map((item: MomentData | ShowCard, i: number) => {
               // Match show card to moment by title similarity
-              const matchingMoment = momentsData.find((m: any) => 
+              const matchingMoment = momentsData.find((m: MomentData) =>
                 m.title?.toLowerCase() === item.title?.toLowerCase() || 
                 m.id?.toLowerCase() === item.title?.toLowerCase().replace(/\s+/g, '')
               );
