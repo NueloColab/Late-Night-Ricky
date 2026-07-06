@@ -50,6 +50,7 @@ interface Track {
 
 const HOME_SECTIONS = [
   { key: 'hero', label: 'Hero' },
+  { key: 'video', label: 'Showreel' },
   { key: 'about', label: 'About / Quote' },
   { key: 'moments', label: 'Late Night Moments' },
   { key: 'performers', label: 'Has Performed With' },
@@ -291,6 +292,11 @@ export default function HomeEditor() {
               { key: 'backgroundSize', label: 'Zoom (Background Size)', type: 'select', options: ['cover', 'contain', '120%', '150%', '200%'] },
               { key: 'backgroundPosition', label: 'Focus Point', type: 'select', options: ['center', 'top', 'bottom', 'left', 'right', '70% center', '25% center'] },
             ]} onUpdate={(key, val) => updateContent('hero', key, val)} onSave={() => saveSection('hero')} saving={saving === 'hero'} onToggleVisibility={() => toggleVisibility('hero')} onOpenMedia={(field) => openMedia('section', undefined, field)} />
+          ) : selectedSection === 'video' ? (
+            <SectionEditor section={getSection('video')} label="Showreel" fields={[
+              { key: 'src', label: 'Video File', type: 'text' },
+              { key: 'poster', label: 'Poster Image', type: 'image' },
+            ]} onUpdate={(key, val) => updateContent('video', key, val)} onSave={() => saveSection('video')} saving={saving === 'video'} onToggleVisibility={() => toggleVisibility('video')} onOpenMedia={(field) => openMedia('section', undefined, field)} />
           ) : selectedSection === 'about' ? (
             <SectionEditor section={getSection('about')} label="About / Quote" fields={[
               { key: 'headline', label: 'Headline', type: 'text' },

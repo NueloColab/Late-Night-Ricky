@@ -123,14 +123,6 @@ export default async function HomePage() {
   let aboutHeadingImage = '/assets/about-text-cream.png';
   let rickyTextImage = '/assets/ricky-text-cream.png';
 
-  let productionCredits = [
-    'Chris Brown', 'Kendrick Lamar', 'NAV', 'Divine',
-    'Potter Payper', 'Swae Lee', 'N.O.R.E', 'Styles P',
-    'Raekwon', 'RZA', 'Jim Jones', 'D Smoke',
-    'Apache Indian', 'MC Altaf', 'H33RA', 'Stefflon Don',
-    'Lil Keed', 'Ivorian Doll', 'Safe', 'Plus Many More'
-  ];
-
   // CMS-driven data for new sections (hardcoded defaults as fallback)
   let momentsItems = [
     { id: 'misfits', title: 'Misfits Boxing', subtitle: 'Ministry of Sound, London', description: 'Headlining the biggest influencer boxing event in the UK.', images: ['/assets/highlight-studio.jpg', '/assets/highlight-arena.jpg', '/assets/moment-ibiza.jpg'] },
@@ -152,6 +144,11 @@ export default async function HomePage() {
     backgroundImage: '/assets/venues-bg.jpg',
     venues: ['LIV (Miami)', 'WALL (Miami)', 'TAPE (London)', 'HAKKASAN (Las Vegas)', 'MOVIDA (Dubai)', "JIMMY'Z (Monte Carlo)", 'MINISTRY OF SOUND (London)', '1 OAK (New York)', 'BYBLOS (Milan)', 'PACHA (Ibiza)', 'ARMANI (Dubai)', 'MANDALAY BAY (Las Vegas)', 'TEMPLE (San Francisco)', 'POPPY (Los Angeles)', 'CIRQUE LE SOIR (London)', 'HIGHLIGHT ROOM (Los Angeles)', "TEDDY'S @ ROOSEVELT (Los Angeles)", 'DELILAH (Los Angeles)', 'GIBSON (Frankfurt)', 'LIO (Ibiza)', 'STUDIO PARIS (Chicago)', 'PREMIER @ BORGATA (Atlantic City)', 'PARQ (San Diego)', 'BOOTSY BELLOWS (Los Angeles)', 'WARWICK (Los Angeles)', 'LAVO (New York)', 'TAO (New York)', 'UP & DOWN (New York)', 'LIBERTINE (London)', 'SCANDAL (London)', 'TOY ROOM (Dubai)', '1 OAK (Dubai)', 'TAO (Las Vegas)', 'BAOLI (Cannes)', 'SHOKO (Barcelona)', 'LASTA (Serbia)', 'REX ROOMS (London)', "HARRIET'S (Los Angeles)", 'VIP ROOM (St. Tropez)', 'BON BONNIERE (Mykonos)', 'DRAMA (London)', 'DEAR DARLING (London)', 'TRAMP (London)', 'SPIRITO (Brussels)', 'CUCKOO CLUB (London)', 'RAFFLES (London)', 'SUBOIS (Montreal)', 'P1 (Munich)', "ZELO'S (Monte Carlo)", 'WIRELESS FESTIVAL (UK)', 'READING & LEEDS FESTIVAL (UK)', 'USHAIA (Ibiza)', 'ABU DHABI GRAND PRIX', 'O2 ARENA (London)', 'FESTIVAL DE CANNES'],
   };
+  // Showreel visibility (default: hidden until client provides video)
+  let showreelVisible = false;
+  let showreelVideoSrc = '/assets/video-desktop.mp4';
+  let showreelPosterSrc = '/assets/video-poster-desktop.jpg';
+
   const brandsData = {
     heading: 'Trusted by Global Brands',
     backgroundImage: '/assets/ricky-brands-gold.png',
@@ -236,7 +233,6 @@ export default async function HomePage() {
           if (c.quoteAttribution) aboutQuoteAttribution = c.quoteAttribution;
           if (c.aboutHeadingImage) aboutHeadingImage = c.aboutHeadingImage;
           if (c.rickyTextImage) rickyTextImage = c.rickyTextImage;
-          if (c.productionCredits) productionCredits = c.productionCredits;
         }
       }
       const shareMusicSection = dbSections.find((s: any) => s.section === 'share_music');
@@ -316,6 +312,17 @@ export default async function HomePage() {
         if (c.twitterUrl) twitterUrl = c.twitterUrl;
         if (c.facebookUrl) facebookUrl = c.facebookUrl;
       }
+
+      // Showreel visibility
+      const videoSection = dbSections.find((s: any) => s.section === 'video');
+      if (videoSection) {
+        showreelVisible = videoSection.isVisible !== false;
+        if (videoSection.content) {
+          const c = typeof videoSection.content === 'string' ? JSON.parse(videoSection.content) : videoSection.content;
+          if (c.src) showreelVideoSrc = c.src;
+          if (c.poster) showreelPosterSrc = c.poster;
+        }
+      }
     }
     if (dbTracks.length > 0) {
       tracks = dbTracks.map((t: any) => ({ title: t.title, time: t.duration || '0:30', src: t.filePath, cover: t.coverPath || undefined })).slice(0, 5);
@@ -358,6 +365,21 @@ export default async function HomePage() {
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
         </div>
       </section>
+
+      {/* Showreel — only visible when toggled on in CMS */}
+      {showreelVisible && (
+        <section className="relative w-full bg-black">
+          <video
+            src={showreelVideoSrc}
+            poster={showreelPosterSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-auto"
+          />
+        </section>
+      )}
 
       {/* ═══ ABOUT RICKY — dark leather texture, image blends into page ═══ */}
       <section id="about" className="relative min-h-[100dvh] py-20 px-6 md:px-14 overflow-hidden">
