@@ -364,7 +364,7 @@ export default function HomeEditor() {
         </div>
       </div>
 
-      <MediaPicker open={mediaOpen} onClose={() => setMediaOpen(false)} onSelect={handleMediaSelect} filterType="image" />
+      <MediaPicker open={mediaOpen} onClose={() => setMediaOpen(false)} onSelect={handleMediaSelect} filterType="all" />
     </div>
   );
 }
@@ -445,11 +445,15 @@ function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onTog
                 <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">{field.label}</label>
                 {value && (
                   <div className="w-full aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 border border-[#6B8FAB]/30 max-w-md">
-                    <img src={value} alt={field.label} className="object-contain w-full h-full" />
+                    {value.match(/\.(mp4|webm|mov|avi)$/i) ? (
+                      <video src={value} className="object-contain w-full h-full" controls muted />
+                    ) : (
+                      <img src={value} alt={field.label} className="object-contain w-full h-full" />
+                    )}
                   </div>
                 )}
                 <button onClick={() => onOpenMedia(field.key)} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition">
-                  {value ? 'Replace Image' : 'Choose Image'}
+                  {value ? 'Replace Media' : 'Upload Image / Video'}
                 </button>
               </div>
             );

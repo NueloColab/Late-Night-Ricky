@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-import Image from 'next/image';
+import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import MediaPicker from '@/components/media-picker';
 
 interface SectionData {
@@ -11,83 +10,82 @@ interface SectionData {
   page: string;
   section: string;
   content: any;
-  images: any;
-  videos: any;
-  links: any;
   order: number;
   isActive: boolean;
+  isVisible: boolean;
 }
 
-const ABOUT_SECTIONS = ['portrait', 'biography'];
-
-const EMPTY_CONTENT = {
-  headline: '',
-  bio1: '',
-  bio2: '',
-  bio3: '',
-  bio4: '',
-  image: '',
-};
+function parseContent(content: any): Record<string, any> {
+  if (!content) return {};
+  if (typeof content === 'string') {
+    try { return JSON.parse(content); } catch { return {}; }
+  }
+  return content;
+}
 
 export default function AboutEditor() {
-  const [sections, setSections] = useState<SectionData[]>([]);
-  const [selectedSection, setSelectedSection] = useState<string | null>('biography');
+  const [section, setSection] = useState<SectionData | null>(null);
+  const [content, setContent] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [mediaOpen, setMediaOpen] = useState(false);
+  const [mediaTarget, setMediaTarget] = useState<string>('');
 
-  const fetchSections = useCallback(async () => {
-    const res = await fetch('/api/sections?page=about');
-    if (res.ok) {
-      const data = await res.json();
-      setSections(data.sections || []);
+  const fields = [
+    { key: 'headline', label: 'Headline', type: 'text' as const },
+    { key: 'quote', label: 'Quote', type: 'textarea' as const },
+    { key: 'quoteAttribution', label: 'Quote Attribution', type: 'text' as const },
+    { key: 'bio1', label: 'Bio Paragraph 1', type: 'textarea' as const },
+    { key: 'bio2', label: 'Bio Paragraph 2', type: 'textarea' as const },
+    { key: 'bio3', label: 'Bio Paragraph 3', type: 'textarea' as const },
+    { key: 'bio4', label: 'Bio Paragraph 4', type: 'textarea' as const },
+    { key: 'image', label: 'About Image', type: 'image' as const },
+    { key: 'aboutHeadingImage', label: '"About" Heading Image', type: 'image' as const },
+    { key: 'rickyTextImage', label: '"Ricky" Heading Image', type: 'image' as const },
+    { key: 'pressPackLink', label: 'Press Pack Link', type: 'text' as const },
+  ];
+
+  const fetchSection = useCallback(async () => {
+    try {
+      const res = await fetch('/api/sections?page=about');
+      if (res.ok) {
+        const data = await res.json();
+        const sections: SectionData[] = data.sections || [];
+        const intro = sections.find((s: SectionData) => s.section === 'intro');
+        if (intro) {
+          setSection(intro);
+          setContent(parseContent(intro.content));
+        }
+      }
+    } catch (err) {
+      console.error('Fetch error:', err);
     }
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    fetchSections();
-  }, [fetchSections]);
+  useEffect(() => { fetchSection(); }, [fetchSection]);
 
-  const introSection = sections.find((s) => s.section === 'intro');
-  const content = introSection?.content || {};
+  function updateContent(key: string, value: any) {
+    setContent(prev => ({ ...prev, [key]: value }));
+  }
 
-  const [form, setForm] = useState<Record<string, string>>(EMPTY_CONTENT);
-
-  useEffect(() => {
-    setForm({
-      headline: content.headline || '',
-      bio1: content.bio1 || '',
-      bio2: content.bio2 || '',
-      bio3: content.bio3 || '',
-      bio4: content.bio4 || '',
-      image: content.image || '',
-    });
-  }, [introSection?.id]);
-
-  async function saveBiography() {
+  async function saveSection() {
     setSaving(true);
     try {
-      if (introSection) {
-        await fetch(`/api/sections/${introSection.id}`, {
+      if (section) {
+        await fetch(`/api/sections/${section.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ content: form }),
+          body: JSON.stringify({ content }),
         });
       } else {
         await fetch('/api/sections', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            page: 'about',
-            section: 'intro',
-            order: 0,
-            content: form,
-            isActive: true,
-          }),
+          body: JSON.stringify({ page: 'about', section: 'intro', order: 0, content, isActive: true }),
         });
       }
-      await fetchSections();
+      await fetchSection();
     } catch (err) {
       console.error('Save error:', err);
       alert('Save failed');
@@ -96,230 +94,133 @@ export default function AboutEditor() {
     }
   }
 
-  async function saveImage(path: string) {
-    const newForm = { ...form, image: path };
-    setForm(newForm);
+  async function toggleVisibility() {
+    if (!section) return;
     setSaving(true);
     try {
-      if (introSection) {
-        await fetch(`/api/sections/${introSection.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ content: newForm }),
-        });
-      } else {
-        await fetch('/api/sections', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            page: 'about',
-            section: 'intro',
-            order: 0,
-            content: newForm,
-            isActive: true,
-          }),
-        });
-      }
-      await fetchSections();
+      await fetch(`/api/sections/${section.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isVisible: !section.isVisible }),
+      });
+      await fetchSection();
     } catch (err) {
-      console.error('Save image error:', err);
-      alert('Save failed');
+      console.error('Toggle error:', err);
     } finally {
       setSaving(false);
     }
   }
 
-  const portraitPath = form.image || content.image;
-  const hasData = !!introSection;
+  function handleMediaSelect(path: string) {
+    if (!mediaTarget) return;
+    updateContent(mediaTarget, path);
+    setMediaOpen(false);
+  }
+
+  if (loading) return <div className="p-8 text-[#6B8FAB]">Loading...</div>;
 
   return (
     <div className="max-w-5xl">
-      <Link
-        href="/admin/content"
-        className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#111] transition-colors mb-6"
-      >
+      <Link href="/admin/content" className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#111] transition-colors mb-6">
         <ArrowLeft size={14} />
         <span>Back to Content</span>
       </Link>
+
       <div className="mb-12">
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">CMS</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">About Page Editor</h1>
-            <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Edit portrait, bio, and headline</p>
+            <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Edit headline, bio, quote, images and press pack</p>
           </div>
-          <a
-            href="/about"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
-          >
-            View on Site
-          </a>
+          <div className="flex items-center gap-3">
+            <a href="/about" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] transition">
+              View on Site
+            </a>
+            <button
+              onClick={toggleVisibility}
+              disabled={!section}
+              className="inline-flex items-center gap-2 px-5 py-3 border-2 border-[#6B8FAB]/30 rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#6B8FAB] hover:bg-[#6B8FAB] hover:text-white transition disabled:opacity-50"
+            >
+              {section && !section.isVisible ? <><EyeOff size={14} /> Hidden</> : <><Eye size={14} /> Visible</>}
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
-        <div className="lg:w-64 flex-shrink-0">
-          <div className="bg-white border border-[#6B8FAB]/30 rounded-xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-[#E3E8ED]">
-              <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Sections</p>
-            </div>
-            <div className="divide-y divide-[#E3E8ED]">
-              {ABOUT_SECTIONS.map((name) => {
-                const label = name === 'portrait' ? 'Portrait' : 'Biography';
-                return (
-                  <button
-                    key={name}
-                    onClick={() => setSelectedSection(name)}
-                    className={`w-full text-left px-5 py-3 text-sm font-semibold transition-colors flex items-center justify-between ${
-                      selectedSection === name
-                        ? 'bg-[#1B3A4C] text-white'
-                        : 'text-[#1B3A4C] hover:bg-[#F8FAFB]'
-                    }`}
-                  >
-                    <span>{label}</span>
-                    {!hasData && (
-                      <span className="text-[10px] uppercase tracking-wider opacity-60">New</span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {hasData && (
-            <div className="mt-4 bg-white border border-[#6B8FAB]/30 rounded-xl p-4">
-              <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Current Data</p>
-              <div className="space-y-1.5 text-xs">
-                {[
-                  { label: 'Headline', key: 'headline' },
-                  { label: 'Bio 1', key: 'bio1' },
-                  { label: 'Bio 2', key: 'bio2' },
-                  { label: 'Bio 3', key: 'bio3' },
-                  { label: 'Bio 4', key: 'bio4' },
-                  { label: 'Image', key: 'image' },
-                ].map(({ label, key }) => (
-                  <div key={key} className="flex justify-between">
-                    <span className="text-[#a0a0a0]">{label}</span>
-                    <span className={content[key] ? 'text-[#2d6a2d] font-semibold' : 'text-[#6B8FAB]'}>
-                      {content[key] ? 'Set' : '—'}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+      <div className="bg-white border border-[#6B8FAB]/30 rounded-xl p-6 md:p-8">
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E3E8ED]">
+          <div className="w-10 h-px bg-[#1B3A4C]"></div>
+          <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">About / Quote</p>
+          {section && !section.isVisible && <span className="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold">Hidden</span>}
         </div>
 
-        <div className="flex-1 min-w-0">
-          {loading ? (
-            <p className="text-[#6B8FAB] text-sm">Loading...</p>
-          ) : selectedSection === 'portrait' ? (
-            <div className="bg-white border border-[#6B8FAB]/30 rounded-xl p-6 md:p-8">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E3E8ED]">
-                <div className="w-10 h-px bg-[#1B3A4C]"></div>
-                <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Portrait</p>
-              </div>
-
-              <div className="relative w-full max-w-sm aspect-[3/4] bg-[#F8FAFB] rounded-xl border border-[#E3E8ED] overflow-hidden mb-4 flex items-center justify-center">
-                {portraitPath ? (
-                  <Image src={portraitPath} alt="Portrait" fill className="object-cover" sizes="400px" />
-                ) : (
-                  <svg className="w-12 h-12 text-[#6B8FAB]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                    <circle cx="8.5" cy="8.5" r="1.5" />
-                    <path d="M21 15l-5-5L5 21" />
-                  </svg>
-                )}
-              </div>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setMediaOpen(true)}
-                  className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
-                >
-                  {portraitPath ? 'Replace Portrait' : 'Upload Portrait'}
-                </button>
-                {portraitPath && (
-                  <button
-                    onClick={() => {
-                      const newForm = { ...form, image: '' };
-                      setForm(newForm);
-                      saveImage('');
-                    }}
-                    className="px-4 py-2.5 border border-red-300 text-red-600 rounded-lg text-sm font-semibold hover:bg-red-50 transition"
-                  >
-                    Remove
-                  </button>
-                )}
-              </div>
-              {portraitPath && <p className="text-xs text-[#6B8FAB] mt-3">{portraitPath}</p>}
-            </div>
-          ) : (
-            <div className="bg-white border border-[#6B8FAB]/30 rounded-xl p-6 md:p-8">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E3E8ED]">
-                <div className="w-10 h-px bg-[#1B3A4C]"></div>
-                <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Biography</p>
-              </div>
-              <p className="text-xs text-[#6B8FAB] mb-6">Edit the headline and bio paragraphs</p>
-
-              <div className="space-y-5">
+        <div className="space-y-5">
+          {fields.map((field) => (
+            <div key={field.key}>
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">{field.label}</label>
+              {field.type === 'textarea' ? (
+                <textarea
+                  value={content[field.key] || ''}
+                  onChange={(e) => updateContent(field.key, e.target.value)}
+                  placeholder={field.label}
+                  rows={4}
+                  className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors resize-y"
+                />
+              ) : field.type === 'image' ? (
                 <div>
-                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Headline</label>
-                  <input
-                    type="text"
-                    value={form.headline}
-                    onChange={(e) => setForm({ ...form, headline: e.target.value })}
-                    placeholder="e.g. International DJ & Grammy Winning Producer"
-                    className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
-                  />
-                </div>
-
-                {[1, 2, 3, 4].map((n) => {
-                  const key = `bio${n}` as const;
-                  return (
-                    <div key={key}>
-                      <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">
-                        Bio Paragraph {n}
-                      </label>
-                      <textarea
-                        value={form[key]}
-                        onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                        placeholder={`Bio paragraph ${n}...`}
-                        rows={4}
-                        className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors resize-y"
-                      />
+                  {content[field.key] ? (
+                    <div className="w-full max-w-md aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 border border-[#6B8FAB]/30">
+                      {content[field.key].match(/\.(mp4|webm|mov|avi)$/i) ? (
+                        <video src={content[field.key]} className="w-full h-full object-contain" controls muted />
+                      ) : (
+                        <img src={content[field.key]} alt={field.label} className="object-contain w-full h-full p-4" />
+                      )}
                     </div>
-                  );
-                })}
-              </div>
-
-              <div className="mt-6 flex items-center gap-3">
-                <button
-                  onClick={saveBiography}
-                  disabled={saving}
-                  className="inline-flex items-center gap-2 px-7 py-3 bg-[#E3E8ED] text-white rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
-                >
-                  {saving ? 'Saving...' : 'Save Biography'}
-                </button>
-                {!hasData && (
-                  <span className="text-xs text-amber-600">No existing data — saving will create it</span>
-                )}
-              </div>
+                  ) : null}
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => { setMediaTarget(field.key); setMediaOpen(true); }}
+                      className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+                    >
+                      {content[field.key] ? 'Replace Media' : 'Upload Image / Video'}
+                    </button>
+                    {content[field.key] && (
+                      <button
+                        onClick={() => updateContent(field.key, '')}
+                        className="px-4 py-2.5 border border-red-300 text-red-600 rounded-lg text-sm font-semibold hover:bg-red-50 transition"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <input
+                  type="text"
+                  value={content[field.key] || ''}
+                  onChange={(e) => updateContent(field.key, e.target.value)}
+                  placeholder={field.label}
+                  className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
+                />
+              )}
             </div>
-          )}
+          ))}
+        </div>
+
+        <div className="mt-8 flex items-center gap-4">
+          <button
+            onClick={saveSection}
+            disabled={saving}
+            className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition disabled:opacity-50"
+          >
+            {saving ? 'Saving...' : 'Save About'}
+          </button>
+          {!section && <span className="text-xs text-amber-600">No existing data — saving will create it</span>}
         </div>
       </div>
 
-      <MediaPicker
-        open={mediaOpen}
-        onClose={() => setMediaOpen(false)}
-        onSelect={(path) => {
-          saveImage(path);
-          setMediaOpen(false);
-        }}
-        filterType="image"
-      />
+      <MediaPicker open={mediaOpen} onClose={() => setMediaOpen(false)} onSelect={handleMediaSelect} filterType="all" />
     </div>
   );
 }

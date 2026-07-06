@@ -29,10 +29,10 @@ const contentPages = [
   {
     label: 'About Page',
     href: '/admin/pages/home',
-    description: 'Bio, quote, heading images, press pack (edited in Home Page)',
+    description: 'Headline, bio, quote, images, press pack (edited in About Page)',
     icon: User,
     color: '#6B8FAB',
-    sections: ['Bio', 'Quote', 'Images'],
+    sections: ['Headline', 'Bio', 'Quote', 'Images', 'Press Pack'],
   },
   {
     label: 'Showreel',
