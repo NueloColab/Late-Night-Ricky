@@ -96,7 +96,7 @@ export default function HomeContactSection() {
       </div>
 
       {/* Contact content on the left */}
-      <div className="relative z-10 flex items-center min-h-[calc(100dvh-70px)] px-12 md:px-20 py-20">
+      <div className="relative z-10 flex items-center min-h-[calc(100dvh-70px)] px-16 md:px-28 py-20">
         <div className="w-full max-w-[600px]">
           {!expanded ? (
             <div className="text-left">
