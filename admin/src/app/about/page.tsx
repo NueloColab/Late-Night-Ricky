@@ -40,16 +40,16 @@ export default async function AboutPage() {
           <div className="max-w-[1200px] mx-auto">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm text-[#A8D5F0] hover:text-[#111] transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-[#A8D5F0] hover:text-[#0d1f3d] transition-colors"
             >
               <ArrowLeft size={14} />
               <span>Home</span>
             </Link>
           </div>
         </div>
-        <div className="border-b-2 border-[#111] pt-4 pb-5 px-6">
+        <div className="border-b-2 border-[#0d1f3d] pt-4 pb-5 px-6">
           <div className="max-w-[1200px] mx-auto flex items-baseline gap-5 flex-wrap">
-            <h1 className="text-[clamp(48px,10vw,120px)] font-black tracking-[-3px] uppercase leading-[0.9] text-[#111]">About</h1>
+            <h1 className="text-[clamp(48px,10vw,120px)] font-black tracking-[-3px] uppercase leading-[0.9] text-[#0d1f3d]">About</h1>
             <span className="font-['Rockybilly',cursive] text-[clamp(24px,3vw,40px)] text-[#A8D5F0] -rotate-1 inline-block opacity-85 whitespace-nowrap">Late Night Ricky</span>
           </div>
         </div>
@@ -58,7 +58,7 @@ export default async function AboutPage() {
             <img src={image} alt="Late Night Ricky" className="w-full h-full object-cover object-top" />
           </div>
           <div className="p-10 md:p-14 flex flex-col justify-center max-w-[680px]">
-            <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase leading-tight tracking-[-1px] mb-10 text-[#111]">
+            <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase leading-tight tracking-[-1px] mb-10 text-[#0d1f3d]">
               {headline}
             </h2>
             <p className="text-sm leading-relaxed text-[#333] mb-5 uppercase tracking-[1px]">

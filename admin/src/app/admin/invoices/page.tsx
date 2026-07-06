@@ -189,15 +189,15 @@ export default function InvoicesPage() {
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Invoice Management</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Invoices</h1>
-            <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Create, send and track payments.</p>
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">Invoices</h1>
+            <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Create, send and track payments.</p>
           </div>
           <button
             onClick={() => {
               setSelectedInvoice(null)
               setIsModalOpen(true)
             }}
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition"
           >
             <Plus size={16} />
             New Invoice
@@ -211,7 +211,7 @@ export default function InvoicesPage() {
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#1B3A4C] text-white rounded-lg"><Receipt size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#0d1f3d] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
           <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Invoices</p>
         </div>
         <div className="bg-white border border-[#6B8FAB]/30 p-5">
@@ -312,13 +312,13 @@ export default function InvoicesPage() {
                   return (
                     <tr key={inv.id} className="hover:bg-[#F8FAFB] transition-colors">
                       <td className="px-4 py-3 font-semibold text-[#1B3A4C]">{inv.invoiceNumber}</td>
-                      <td className="px-4 py-3 text-[#a0a0a0]">
+                      <td className="px-4 py-3 text-[#8a9bac]">
                         {inv.clientName || '—'}
                         {inv.clientCompany && (
                           <div className="text-xs text-[#6B8FAB]">{inv.clientCompany}</div>
                         )}
                       </td>
-                      <td className="px-4 py-3 text-[#a0a0a0]">{inv.projectTitle || proj?.title || '—'}</td>
+                      <td className="px-4 py-3 text-[#8a9bac]">{inv.projectTitle || proj?.title || '—'}</td>
                       <td className="px-4 py-3">
                         <span
                           className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide ${
@@ -328,14 +328,14 @@ export default function InvoicesPage() {
                                 ? 'bg-red-50 text-red-600'
                                 : inv.status === 'sent'
                                   ? 'bg-[#1B3A4C]/10 text-[#1B3A4C]'
-                                  : 'bg-[#E3E8ED] text-[#a0a0a0]'
+                                  : 'bg-[#E3E8ED] text-[#8a9bac]'
                           }`}
                         >
                           {STATUS_ICONS[inv.status]}
                           {STATUS_LABELS[inv.status] || inv.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-[#a0a0a0]">{inv.dueDate || '—'}</td>
+                      <td className="px-4 py-3 text-[#8a9bac]">{inv.dueDate || '—'}</td>
                       <td className="px-4 py-3 text-[#1B3A4C] font-semibold">£{inv.total.toLocaleString()}</td>
                       <td className="px-4 py-3">
                         <div className="flex gap-2">
@@ -415,7 +415,7 @@ export default function InvoicesPage() {
                         ? 'bg-red-50 text-red-600'
                         : selectedInvoice.status === 'sent'
                           ? 'bg-[#1B3A4C]/10 text-[#1B3A4C]'
-                          : 'bg-[#E3E8ED] text-[#a0a0a0]'
+                          : 'bg-[#E3E8ED] text-[#8a9bac]'
                   }`}
                 >
                   {STATUS_ICONS[selectedInvoice.status]}
@@ -432,7 +432,7 @@ export default function InvoicesPage() {
                   </span>
                 )}
               </div>
-              <span className="text-sm text-[#a0a0a0]">Due: {selectedInvoice.dueDate || '—'}</span>
+              <span className="text-sm text-[#8a9bac]">Due: {selectedInvoice.dueDate || '—'}</span>
             </div>
 
             {/* Client info */}
@@ -442,13 +442,13 @@ export default function InvoicesPage() {
                   <div className="text-sm text-[#1B3A4C] font-semibold">{selectedInvoice.clientName}</div>
                 )}
                 {selectedInvoice.clientCompany && (
-                  <div className="text-xs text-[#a0a0a0]">{selectedInvoice.clientCompany}</div>
+                  <div className="text-xs text-[#8a9bac]">{selectedInvoice.clientCompany}</div>
                 )}
                 {selectedInvoice.clientEmail && (
                   <div className="text-xs text-[#6B8FAB]">{selectedInvoice.clientEmail}</div>
                 )}
                 {selectedInvoice.projectTitle && (
-                  <div className="text-xs text-[#a0a0a0] pt-1 border-t border-[#E3E8ED] mt-1">{selectedInvoice.projectTitle}</div>
+                  <div className="text-xs text-[#8a9bac] pt-1 border-t border-[#E3E8ED] mt-1">{selectedInvoice.projectTitle}</div>
                 )}
               </div>
             )}
@@ -479,8 +479,8 @@ export default function InvoicesPage() {
                           <div className="text-xs text-[#6B8FAB]">{category}</div>
                         )}
                       </td>
-                      <td className="px-4 py-2 text-right text-[#a0a0a0]">{qty}</td>
-                      <td className="px-4 py-2 text-right text-[#a0a0a0]">£{Number(rate).toLocaleString()}</td>
+                      <td className="px-4 py-2 text-right text-[#8a9bac]">{qty}</td>
+                      <td className="px-4 py-2 text-right text-[#8a9bac]">£{Number(rate).toLocaleString()}</td>
                       <td className="px-4 py-2 text-right font-semibold text-[#1B3A4C]">
                         £{Number(amount).toLocaleString()}
                       </td>
@@ -492,8 +492,8 @@ export default function InvoicesPage() {
             </div>
 
             <div className="flex justify-between items-center pt-2">
-              <span className="text-[#a0a0a0] text-sm">Tax: {selectedInvoice.taxRate}%</span>
-              <span className="text-xl font-black text-[#111] tracking-[-1px]">
+              <span className="text-[#8a9bac] text-sm">Tax: {selectedInvoice.taxRate}%</span>
+              <span className="text-xl font-black text-[#0d1f3d] tracking-[-1px]">
                 Total: £{selectedInvoice.total.toLocaleString()}
               </span>
             </div>
@@ -502,7 +502,7 @@ export default function InvoicesPage() {
             {selectedInvoice.notes && (
               <div className="bg-[#F8FAFB] p-4 rounded-lg border border-[#E3E8ED]">
                 <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Notes</p>
-                <p className="text-sm text-[#a0a0a0] whitespace-pre-wrap">{selectedInvoice.notes}</p>
+                <p className="text-sm text-[#8a9bac] whitespace-pre-wrap">{selectedInvoice.notes}</p>
               </div>
             )}
 
@@ -541,7 +541,7 @@ export default function InvoicesPage() {
                 {selectedInvoice.status === 'paid' && (
                   <button
                     onClick={() => updateInvoiceStatus(selectedInvoice.id, 'sent')}
-                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
+                    className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#0d1f3d] hover:text-[#0d1f3d] transition"
                   >
                     <RotateCcw size={14} />
                     Mark Unpaid
@@ -558,7 +558,7 @@ export default function InvoicesPage() {
                     </button>
                     <button
                       onClick={() => updateInvoiceStatus(selectedInvoice.id, 'draft')}
-                      className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
+                      className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#0d1f3d] hover:text-[#0d1f3d] transition"
                     >
                       <RotateCcw size={14} />
                       Reopen as Draft
@@ -568,7 +568,7 @@ export default function InvoicesPage() {
                 <a
                   href={`/api/invoices/${selectedInvoice.id}/pdf`}
                   download
-                  className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
+                  className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#0d1f3d] hover:text-[#0d1f3d] transition"
                 >
                   <Download size={14} />
                   Download PDF

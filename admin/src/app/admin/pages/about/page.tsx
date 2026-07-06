@@ -125,7 +125,7 @@ export default function AboutEditor() {
 
   return (
     <div className="max-w-5xl">
-      <Link href="/admin/content" className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#111] transition-colors mb-6">
+      <Link href="/admin/content" className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#0d1f3d] transition-colors mb-6">
         <ArrowLeft size={14} />
         <span>Back to Content</span>
       </Link>
@@ -134,11 +134,11 @@ export default function AboutEditor() {
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">CMS</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">About Page Editor</h1>
-            <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Edit headline, bio, quote, images and press pack</p>
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">About Page Editor</h1>
+            <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Edit headline, bio, quote, images and press pack</p>
           </div>
           <div className="flex items-center gap-3">
-            <a href="/about" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] transition">
+            <a href="/about" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] transition">
               View on Site
             </a>
             <button
@@ -221,7 +221,7 @@ export default function AboutEditor() {
           <button
             onClick={saveSection}
             disabled={saving}
-            className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition disabled:opacity-50"
+            className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#1B3A4C] hover:text-white transition disabled:opacity-50"
           >
             {saving ? 'Saving...' : 'Save About'}
           </button>

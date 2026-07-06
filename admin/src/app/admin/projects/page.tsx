@@ -37,7 +37,7 @@ const PIPELINE_LABELS: Record<string, string> = {
 }
 
 const PIPELINE_STYLES: Record<string, { bg: string; text: string; border: string }> = {
-  inquiry: { bg: 'bg-[#E3E8ED]', text: 'text-[#a0a0a0]', border: 'border-[#6B8FAB]/30' },
+  inquiry: { bg: 'bg-[#E3E8ED]', text: 'text-[#8a9bac]', border: 'border-[#6B8FAB]/30' },
   quoted: { bg: 'bg-[#1B3A4C]/10', text: 'text-[#1B3A4C]', border: 'border-[#1B3A4C]/30' },
   approved: { bg: 'bg-[#91715c]/10', text: 'text-[#91715c]', border: 'border-[#91715c]/30' },
   'in-progress': { bg: 'bg-[#1B3A4C]/10', text: 'text-[#1B3A4C]', border: 'border-[#1B3A4C]/30' },
@@ -124,12 +124,12 @@ export default function ProjectsPage() {
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Project Management</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Projects</h1>
-            <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Pipeline tracker</p>
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">Projects</h1>
+            <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Pipeline tracker</p>
           </div>
           <button
             onClick={() => { setShowForm(!showForm); setForm(emptyProject) }}
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition"
           >
             <Plus size={16} />
             New Project
@@ -143,7 +143,7 @@ export default function ProjectsPage() {
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#1B3A4C] text-white rounded-lg"><FolderOpen size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#0d1f3d] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
           <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Projects</p>
         </div>
         <div className="bg-white border border-[#6B8FAB]/30 p-5">
@@ -204,7 +204,7 @@ export default function ProjectsPage() {
             </div>
           </div>
           <div className="flex justify-end">
-            <button type="submit" className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition">Create Project</button>
+            <button type="submit" className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition">Create Project</button>
           </div>
         </form>
       )}
@@ -227,7 +227,7 @@ export default function ProjectsPage() {
                     onDrop={() => { if (dragId !== null) { moveStatus(dragId, status); setDragId(null) } }}
                   >
                     <div className="flex items-center justify-between mb-3">
-                      <p className="text-xs font-bold text-[#111] uppercase tracking-[3px]">{PIPELINE_LABELS[status]}</p>
+                      <p className="text-xs font-bold text-[#0d1f3d] uppercase tracking-[3px]">{PIPELINE_LABELS[status]}</p>
                       <span className="text-xs text-[#6B8FAB]">{statusProjects.length}</span>
                     </div>
                     <div className="space-y-2">
@@ -245,7 +245,7 @@ export default function ProjectsPage() {
                                 <Trash2 size={14} />
                               </button>
                             </div>
-                            <p className="text-xs text-[#a0a0a0] mt-0.5">{p.venue || 'No venue'}</p>
+                            <p className="text-xs text-[#8a9bac] mt-0.5">{p.venue || 'No venue'}</p>
                             {p.fee && <p className="text-xs font-semibold text-[#91715c] mt-1">£{Number(p.fee).toLocaleString()}</p>}
                             <span className={`inline-block mt-2 text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wide ${style.bg} ${style.text}`}>
                               {PROJECT_TYPES[p.type] || p.type}
@@ -269,13 +269,13 @@ export default function ProjectsPage() {
               if (statusProjects.length === 0) return null
               return (
                 <div key={status} className="bg-white border border-[#6B8FAB]/30 p-4">
-                  <p className="text-xs font-bold text-[#111] uppercase tracking-[3px] mb-3">{PIPELINE_LABELS[status]} <span className="text-[#6B8FAB] font-normal">({statusProjects.length})</span></p>
+                  <p className="text-xs font-bold text-[#0d1f3d] uppercase tracking-[3px] mb-3">{PIPELINE_LABELS[status]} <span className="text-[#6B8FAB] font-normal">({statusProjects.length})</span></p>
                   <div className="space-y-2">
                     {statusProjects.map((p) => (
                       <div key={p.id} className="bg-[#E3E8ED]/50 rounded-lg p-3 border border-[#6B8FAB]/30">
                         <Link href={`/admin/projects/${p.id}`} className="block">
                           <p className="text-sm font-semibold text-[#1B3A4C] leading-tight">{p.title}</p>
-                          <p className="text-xs text-[#a0a0a0] mt-0.5">{p.venue || 'No venue'}</p>
+                          <p className="text-xs text-[#8a9bac] mt-0.5">{p.venue || 'No venue'}</p>
                           {p.fee && <p className="text-xs font-semibold text-[#91715c] mt-1">£{Number(p.fee).toLocaleString()}</p>}
                         </Link>
                         <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#6B8FAB]/30">

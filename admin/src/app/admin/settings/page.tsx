@@ -81,10 +81,10 @@ export default function SettingsPage() {
     <div className="max-w-5xl mx-auto">
       <div className="mb-12">
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Configuration</p>
-        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">
+        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">
           Settings
         </h1>
-        <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Configure your admin panel preferences.</p>
+        <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Configure your admin panel preferences.</p>
       </div>
 
       {loading ? (
@@ -135,7 +135,7 @@ export default function SettingsPage() {
               <button
                 onClick={saveSettings}
                 disabled={saving}
-                className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
+                className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
               >
                 {saving ? "Saving..." : "Save Settings"}
               </button>
@@ -182,13 +182,13 @@ export default function SettingsPage() {
                 />
               </div>
               {pinMessage && (
-                <p className={`text-sm font-medium ${pinMessage.includes("success") ? "text-[#2d6a2d]" : "text-[#a0a0a0]"}`}>
+                <p className={`text-sm font-medium ${pinMessage.includes("success") ? "text-[#2d6a2d]" : "text-[#8a9bac]"}`}>
                   {pinMessage}
                 </p>
               )}
               <button
                 type="submit"
-                className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
+                className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition"
               >
                 Update PIN
               </button>

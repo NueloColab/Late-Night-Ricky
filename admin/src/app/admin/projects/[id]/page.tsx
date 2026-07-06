@@ -386,8 +386,8 @@ export default function ProjectDetailPage() {
     ? (project?.tasks || [])
     : (project?.tasks || []).filter((t) => (t.phase || "PRE-PRODUCTION") === taskFilter);
 
-  if (loading) return <p className="text-[#a0a0a0] p-8 text-center">Loading...</p>;
-  if (!project) return <p className="text-[#a0a0a0] p-8 text-center">Project not found.</p>;
+  if (loading) return <p className="text-[#8a9bac] p-8 text-center">Loading...</p>;
+  if (!project) return <p className="text-[#8a9bac] p-8 text-center">Project not found.</p>;
 
   return (
     <div className="space-y-6">
@@ -402,14 +402,14 @@ export default function ProjectDetailPage() {
               <div className="w-8 h-px bg-[#6B8FAB]" />
               <span className="text-xs text-[#999] uppercase tracking-wider">PRJ-{String(project.id).padStart(3, "0")}</span>
             </div>
-            <h1 className="font-black text-[clamp(24px,3.5vw,36px)] text-[#111] tracking-[-0.5px] uppercase">{project.title}</h1>
-            <p className="text-sm text-[#a0a0a0] mt-1">{client?.name || "Unknown Client"} — Late Night Ricky</p>
+            <h1 className="font-black text-[clamp(24px,3.5vw,36px)] text-[#0d1f3d] tracking-[-0.5px] uppercase">{project.title}</h1>
+            <p className="text-sm text-[#8a9bac] mt-1">{client?.name || "Unknown Client"} — Late Night Ricky</p>
           </div>
           <span className={`text-xs font-bold uppercase tracking-wide px-3 py-1.5 rounded ${
             project.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" :
             project.status === "in-progress" || project.status === "approved" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" :
             project.status === "completed" || project.status === "invoiced" ? "bg-[#6B8FAB]/10 text-[#6B8FAB]" :
-            "bg-[#E3E8ED]/50 text-[#a0a0a0]"
+            "bg-[#E3E8ED]/50 text-[#8a9bac]"
           }`}>
             {PIPELINE_LABELS[project.status] || project.status}
           </span>
@@ -429,33 +429,33 @@ export default function ProjectDetailPage() {
             </button>
             <button
               onClick={() => setShowFileUpload(!showFileUpload)}
-              className="px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] transition flex items-center gap-1"
+              className="px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:border-[#1B3A4C] transition flex items-center gap-1"
             >
               <Paperclip size={14} /> File
             </button>
             <div className="relative">
-              <button className="px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] transition flex items-center gap-1">
+              <button className="px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:border-[#1B3A4C] transition flex items-center gap-1">
                 {PIPELINE_LABELS[project.status] || project.status} <ChevronDown size={14} />
               </button>
             </div>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-4 md:gap-6 mb-4">
-          <p className="text-3xl font-black text-[#111]">{progress}%</p>
+          <p className="text-3xl font-black text-[#0d1f3d]">{progress}%</p>
           <div className="h-10 w-px bg-[#6B8FAB]/30" />
           <div>
             <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-0.5">Tasks</p>
-            <p className="text-sm font-bold text-[#111]">{(project?.tasks || []).filter((t) => t.completed).length}/{(project?.tasks || []).length} done</p>
+            <p className="text-sm font-bold text-[#0d1f3d]">{(project?.tasks || []).filter((t) => t.completed).length}/{(project?.tasks || []).length} done</p>
           </div>
           <div className="h-10 w-px bg-[#6B8FAB]/30 hidden sm:block" />
           <div className="hidden sm:block">
             <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-0.5">Milestones</p>
-            <p className="text-sm font-bold text-[#111]">0/0 hit</p>
+            <p className="text-sm font-bold text-[#0d1f3d]">0/0 hit</p>
           </div>
           <div className="h-10 w-px bg-[#6B8FAB]/30 hidden sm:block" />
           <div>
             <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-0.5">Services</p>
-            <p className="text-sm font-bold text-[#111]">{(project?.services || []).filter((s) => s.status === "Delivered").length}/{(project?.services || []).length} delivered</p>
+            <p className="text-sm font-bold text-[#0d1f3d]">{(project?.services || []).filter((s) => s.status === "Delivered").length}/{(project?.services || []).length} delivered</p>
           </div>
         </div>
         <div className="w-full bg-[#E3E8ED]/50 rounded-full h-2 overflow-hidden mb-2">
@@ -476,12 +476,12 @@ export default function ProjectDetailPage() {
             <div className="flex flex-wrap items-center justify-between mb-4 gap-2">
               <div className="flex items-center gap-2">
                 <CheckSquare size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Tasks & Milestones</h3>
+                <h3 className="font-black text-lg text-[#0d1f3d] tracking-[-0.5px] uppercase">Tasks & Milestones</h3>
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={() => setShowTaskInput(!showTaskInput)}
-                  className="px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] transition flex items-center gap-1"
+                  className="px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:border-[#1B3A4C] transition flex items-center gap-1"
                 >
                   <Plus size={14} /> Milestone
                 </button>
@@ -503,7 +503,7 @@ export default function ProjectDetailPage() {
                   className={`px-3 py-1.5 rounded text-[11px] font-semibold uppercase tracking-[1.5px] transition-colors ${
                     taskFilter === phase
                       ? "bg-[#E3E8ED] text-white"
-                      : "bg-white border border-[#6B8FAB]/30 text-[#a0a0a0] hover:bg-[#E3E8ED]/50"
+                      : "bg-white border border-[#6B8FAB]/30 text-[#8a9bac] hover:bg-[#E3E8ED]/50"
                   }`}
                 >
                   {phase}
@@ -538,9 +538,9 @@ export default function ProjectDetailPage() {
                       {task.completed ? <CheckCircle size={18} className="text-[#2d6a2d]" /> : <Circle size={18} className="text-[#999]" />}
                     </button>
                     <div className="flex-1">
-                      <span className={`text-sm ${task.completed ? "line-through text-[#999]" : "text-[#111]"}`}>{task.text}</span>
+                      <span className={`text-sm ${task.completed ? "line-through text-[#999]" : "text-[#0d1f3d]"}`}>{task.text}</span>
                       <div className="flex items-center gap-2 mt-1">
-                        {task.phase && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#E3E8ED]/80 text-[#a0a0a0] font-medium">{task.phase}</span>}
+                        {task.phase && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#E3E8ED]/80 text-[#8a9bac] font-medium">{task.phase}</span>}
                         {task.dueDate && <span className="text-[10px] text-[#999]">{new Date(task.dueDate + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>}
                         {task.assignee && <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1B3A4C]/10 text-[#1B3A4C] font-medium">{task.assignee}</span>}
                       </div>
@@ -557,11 +557,11 @@ export default function ProjectDetailPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <PoundSterling size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Services</h3>
+                <h3 className="font-black text-lg text-[#0d1f3d] tracking-[-0.5px] uppercase">Services</h3>
               </div>
               <button
                 onClick={() => setShowServiceForm(!showServiceForm)}
-                className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition flex items-center gap-1"
+                className="px-5 py-2 border-2 border-[#0d1f3d] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition flex items-center gap-1"
               >
                 <Plus size={14} /> Add Service
               </button>
@@ -590,7 +590,7 @@ export default function ProjectDetailPage() {
                 {(project.services || []).map((service, idx) => (
                   <div key={idx} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
                     <div className="flex items-center gap-3 flex-1">
-                      <span className="text-sm font-medium text-[#111]">{service.name}</span>
+                      <span className="text-sm font-medium text-[#0d1f3d]">{service.name}</span>
                       {service.fee && <span className="text-sm text-[#6B8FAB] font-semibold">{gbp.format(service.fee)}</span>}
                     </div>
                     <div className="flex items-center gap-3">
@@ -613,7 +613,7 @@ export default function ProjectDetailPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <FileText size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Contracts</h3>
+                <h3 className="font-black text-lg text-[#0d1f3d] tracking-[-0.5px] uppercase">Contracts</h3>
               </div>
               <button
                 onClick={() => setShowContractForm(!showContractForm)}
@@ -656,15 +656,15 @@ export default function ProjectDetailPage() {
                   <div key={c.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-[#111]">{c.title}</span>
+                        <span className="text-sm font-medium text-[#0d1f3d]">{c.title}</span>
                         <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded font-medium ${
                           c.status === "signed" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" :
                           c.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" :
                           c.status === "expired" ? "bg-red-50 text-red-600" :
-                          "bg-[#E3E8ED]/80 text-[#a0a0a0]"
+                          "bg-[#E3E8ED]/80 text-[#8a9bac]"
                         }`}>{c.status}</span>
                       </div>
-                      <p className="text-xs text-[#a0a0a0] mt-0.5">{c.contractType.replace(/_/g, " ")} · {c.counterpartyName || "No counterparty"}</p>
+                      <p className="text-xs text-[#8a9bac] mt-0.5">{c.contractType.replace(/_/g, " ")} · {c.counterpartyName || "No counterparty"}</p>
                       {c.expiryDate && <p className="text-xs text-[#999] mt-0.5">Expires {new Date(c.expiryDate + "T00:00:00").toLocaleDateString("en-GB")}</p>}
                     </div>
                     <div className="flex items-center gap-2">
@@ -682,7 +682,7 @@ export default function ProjectDetailPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Users size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Team & Assignments</h3>
+                <h3 className="font-black text-lg text-[#0d1f3d] tracking-[-0.5px] uppercase">Team & Assignments</h3>
               </div>
               <button
                 onClick={() => setShowTeamForm(!showTeamForm)}
@@ -725,9 +725,9 @@ export default function ProjectDetailPage() {
                         >{member.name.charAt(0).toUpperCase()}</span>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-[#111]"
+                        <p className="text-sm font-medium text-[#0d1f3d]"
                         >{member.name}</p>
-                        <p className="text-xs text-[#a0a0a0]"
+                        <p className="text-xs text-[#8a9bac]"
                         >{member.role.toLowerCase()} · {member.email}</p>
                       </div>
                     </div>
@@ -753,7 +753,7 @@ export default function ProjectDetailPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <DollarSign size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Referrals & Commissions</h3>
+                <h3 className="font-black text-lg text-[#0d1f3d] tracking-[-0.5px] uppercase">Referrals & Commissions</h3>
               </div>
               <button
                 onClick={() => setShowReferralForm(!showReferralForm)}
@@ -785,12 +785,12 @@ export default function ProjectDetailPage() {
                   <div key={r.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-[#111]">{r.name}</span>
+                        <span className="text-sm font-medium text-[#0d1f3d]">{r.name}</span>
                         <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded font-medium ${
                           r.status === "paid" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : "bg-[#1B3A4C]/10 text-[#1B3A4C]"
                         }`}>{r.status}</span>
                       </div>
-                      {r.email && <p className="text-xs text-[#a0a0a0] mt-0.5">{r.email}</p>}
+                      {r.email && <p className="text-xs text-[#8a9bac] mt-0.5">{r.email}</p>}
                     </div>
                     <div className="flex items-center gap-3">
                       {r.commission > 0 && <span className="text-sm font-semibold text-[#6B8FAB]">{gbp.format(r.commission)}</span>}
@@ -807,7 +807,7 @@ export default function ProjectDetailPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Upload size={18} className="text-[#6B8FAB]" />
-                <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Files & Deliverables</h3>
+                <h3 className="font-black text-lg text-[#0d1f3d] tracking-[-0.5px] uppercase">Files & Deliverables</h3>
               </div>
               <button
                 onClick={() => setShowFileUpload(!showFileUpload)}
@@ -844,7 +844,7 @@ export default function ProjectDetailPage() {
                     <div className="flex items-center gap-3 flex-1">
                       <FileText size={16} className="text-[#1B3A4C]" />
                       <div>
-                        <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-[#111] hover:text-[#1B3A4C]">{file.name}</a>
+                        <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-[#0d1f3d] hover:text-[#1B3A4C]">{file.name}</a>
                         {file.phase && <span className="text-[10px] ml-2 uppercase tracking-wider px-2 py-0.5 rounded bg-[#6B8FAB]/10 text-[#6B8FAB] font-medium">{file.phase}</span>}
                       </div>
                     </div>
@@ -861,8 +861,8 @@ export default function ProjectDetailPage() {
           {/* Notes */}
           {project.notes && (
             <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-6">
-              <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase mb-3">Notes</h3>
-              <p className="text-sm text-[#a0a0a0] whitespace-pre-wrap">{project.notes}</p>
+              <h3 className="font-black text-lg text-[#0d1f3d] tracking-[-0.5px] uppercase mb-3">Notes</h3>
+              <p className="text-sm text-[#8a9bac] whitespace-pre-wrap">{project.notes}</p>
             </div>
           )}
         </div>
@@ -874,9 +874,9 @@ export default function ProjectDetailPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Briefcase size={16} className="text-[#6B8FAB]" />
-                <h3 className="text-sm font-bold text-[#111] uppercase tracking-wider">Details</h3>
+                <h3 className="text-sm font-bold text-[#0d1f3d] uppercase tracking-wider">Details</h3>
               </div>
-              <button onClick={() => setEditing(!editing)} className="text-xs text-[#a0a0a0] hover:text-[#1B3A4C] flex items-center gap-1">
+              <button onClick={() => setEditing(!editing)} className="text-xs text-[#8a9bac] hover:text-[#1B3A4C] flex items-center gap-1">
                 <Edit size={12} /> Edit
               </button>
             </div>
@@ -886,7 +886,7 @@ export default function ProjectDetailPage() {
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Client</p>
                 <div className="flex items-center gap-2">
                   <Mail size={12} className="text-[#6B8FAB]" />
-                  <span className="text-sm text-[#111]">{client.email || client.name}</span>
+                  <span className="text-sm text-[#0d1f3d]">{client.email || client.name}</span>
                 </div>
               </div>
             )}
@@ -894,11 +894,11 @@ export default function ProjectDetailPage() {
             <div className="bg-[#F8F9FA] rounded-lg p-4 mb-4">
               <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-3">Financial Summary</p>
               <div className="flex justify-between items-center mb-2">
-                <span className="text-sm text-[#a0a0a0]">Revenue</span>
-                <span className="text-sm font-bold text-[#111]">{gbpFull.format(project.fee || totalQuoted || 0)}</span>
+                <span className="text-sm text-[#8a9bac]">Revenue</span>
+                <span className="text-sm font-bold text-[#0d1f3d]">{gbpFull.format(project.fee || totalQuoted || 0)}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-[#a0a0a0]">Profit</span>
+                <span className="text-sm text-[#8a9bac]">Profit</span>
                 <span className={`text-sm font-bold ${profit >= 0 ? "text-[#2d6a2d]" : "text-red-600"}`}>
                   {gbpFull.format(profit)} {project.fee ? `(${profitPercent}%)` : ""}
                 </span>
@@ -908,18 +908,18 @@ export default function ProjectDetailPage() {
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Start</p>
-                <p className="text-sm text-[#111] font-medium">{project.createdAt ? new Date(project.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "---"}</p>
+                <p className="text-sm text-[#0d1f3d] font-medium">{project.createdAt ? new Date(project.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "---"}</p>
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Deadline</p>
-                <p className="text-sm text-[#111] font-medium">{project.deadline ? new Date(project.deadline + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "---"}</p>
+                <p className="text-sm text-[#0d1f3d] font-medium">{project.deadline ? new Date(project.deadline + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "---"}</p>
               </div>
             </div>
 
             {project.description && (
               <div>
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#999] font-medium mb-1">Description</p>
-                <p className="text-sm text-[#a0a0a0]">{project.description}</p>
+                <p className="text-sm text-[#8a9bac]">{project.description}</p>
               </div>
             )}
           </div>
@@ -928,7 +928,7 @@ export default function ProjectDetailPage() {
           <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-5">
             <div className="flex items-center gap-2 mb-4">
               <PoundSterling size={16} className="text-[#6B8FAB]" />
-              <h3 className="text-sm font-bold text-[#111] uppercase tracking-wider">Financials</h3>
+              <h3 className="text-sm font-bold text-[#0d1f3d] uppercase tracking-wider">Financials</h3>
             </div>
 
             {invoices.length === 0 && quotes.length === 0 ? (
@@ -945,7 +945,7 @@ export default function ProjectDetailPage() {
                     <div key={inv.id}>
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-semibold text-[#111]">{inv.invoiceNumber}</span>
+                          <span className="text-sm font-semibold text-[#0d1f3d]">{inv.invoiceNumber}</span>
                           <ExternalLink size={12} className="text-[#6B8FAB]" />
                         </div>
                         <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${isFullyPaid ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : inv.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : "bg-amber-50 text-amber-600"}`}>
@@ -955,11 +955,11 @@ export default function ProjectDetailPage() {
 
                       <div className="bg-[#F8F9FA] rounded-lg p-3 mt-2">
                         <div className="flex justify-between items-center mb-2">
-                          <span className="text-xs text-[#a0a0a0]">Total</span>
-                          <span className="text-sm font-bold text-[#111]">{gbpFull.format(invTotal)}</span>
+                          <span className="text-xs text-[#8a9bac]">Total</span>
+                          <span className="text-sm font-bold text-[#0d1f3d]">{gbpFull.format(invTotal)}</span>
                         </div>
                         <div className="flex justify-between items-center mb-3">
-                          <span className="text-xs text-[#a0a0a0]">Status</span>
+                          <span className="text-xs text-[#8a9bac]">Status</span>
                           <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${isFullyPaid ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : "bg-amber-50 text-amber-600"}`}>
                             {isFullyPaid ? "PAID" : "PARTIALLY PAID"}
                           </span>
@@ -983,7 +983,7 @@ export default function ProjectDetailPage() {
                           </div>
                           <div className="bg-[#F8F9FA] rounded p-2 text-center">
                             <p className="text-[10px] uppercase text-[#999] mb-1">Outstanding</p>
-                            <p className="text-sm font-bold text-[#111]">{gbpFull.format(invOutstanding)}</p>
+                            <p className="text-sm font-bold text-[#0d1f3d]">{gbpFull.format(invOutstanding)}</p>
                           </div>
                         </div>
 
@@ -991,19 +991,19 @@ export default function ProjectDetailPage() {
                           <div className="flex items-center gap-3 p-2 bg-[#E8F5E9] rounded">
                             <CheckCircle size={16} className="text-[#2d6a2d] flex-shrink-0" />
                             <div className="flex-1">
-                              <p className="text-sm font-medium text-[#111]">Deposit</p>
+                              <p className="text-sm font-medium text-[#0d1f3d]">Deposit</p>
                               <p className="text-[10px] text-[#999]">Due upfront</p>
                             </div>
-                            <span className="text-sm font-bold text-[#111]">{gbpFull.format(Math.min(invDeposit, invPaid))}</span>
+                            <span className="text-sm font-bold text-[#0d1f3d]">{gbpFull.format(Math.min(invDeposit, invPaid))}</span>
                             <span className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded bg-[#2d6a2d]/10 text-[#2d6a2d]">PAID ✓</span>
                           </div>
                           <div className="flex items-center gap-3 p-2 bg-white border border-[#6B8FAB]/20 rounded">
                             <Circle size={16} className="text-[#999] flex-shrink-0" />
                             <div className="flex-1">
-                              <p className="text-sm font-medium text-[#111]">Final Payment</p>
+                              <p className="text-sm font-medium text-[#0d1f3d]">Final Payment</p>
                               <p className="text-[10px] text-[#999]">Due on completion</p>
                             </div>
-                            <span className="text-sm font-bold text-[#111]">{gbpFull.format(invOutstanding)}</span>
+                            <span className="text-sm font-bold text-[#0d1f3d]">{gbpFull.format(invOutstanding)}</span>
                             {!isFullyPaid && (
                               <button
                                 onClick={async () => {
@@ -1027,12 +1027,12 @@ export default function ProjectDetailPage() {
                 })}
                 {quotes.map((q) => (
                   <div key={q.id} className="flex items-center justify-between p-3 bg-[#E3E8ED]/50 rounded-lg">
-                    <span className="text-sm font-semibold text-[#111]">Quote #{q.id}</span>
+                    <span className="text-sm font-semibold text-[#0d1f3d]">Quote #{q.id}</span>
                     <div className="flex items-center gap-2">
-                      <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${q.status === "accepted" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : q.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : "bg-[#E3E8ED]/50 text-[#a0a0a0]"}`}>
+                      <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded ${q.status === "accepted" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" : q.status === "sent" ? "bg-[#1B3A4C]/10 text-[#1B3A4C]" : "bg-[#E3E8ED]/50 text-[#8a9bac]"}`}>
                         {q.status}
                       </span>
-                      <span className="text-sm font-semibold text-[#111]">{gbp.format(q.total)}</span>
+                      <span className="text-sm font-semibold text-[#0d1f3d]">{gbp.format(q.total)}</span>
                     </div>
                   </div>
                 ))}
@@ -1048,13 +1048,13 @@ export default function ProjectDetailPage() {
             <div className="flex gap-2 mt-4">
               <Link
                 href={`/admin/quotes?projectId=${project.id}`}
-                className="flex-1 px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] text-center"
+                className="flex-1 px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:border-[#1B3A4C] text-center"
               >
                 + Quote
               </Link>
               <Link
                 href={`/admin/invoices?projectId=${project.id}`}
-                className="flex-1 px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:border-[#1B3A4C] text-center"
+                className="flex-1 px-4 py-2 border-2 border-[#6B8FAB]/30 rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:border-[#1B3A4C] text-center"
               >
                 + Invoice
               </Link>
@@ -1066,7 +1066,7 @@ export default function ProjectDetailPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <PoundSterling size={16} className="text-[#6B8FAB]" />
-                <h3 className="text-sm font-bold text-[#111] uppercase tracking-wider">Royalties</h3>
+                <h3 className="text-sm font-bold text-[#0d1f3d] uppercase tracking-wider">Royalties</h3>
               </div>
               <button
                 onClick={() => setShowRoyaltyForm(!showRoyaltyForm)}
@@ -1116,18 +1116,18 @@ export default function ProjectDetailPage() {
                   <div key={r.id} className="flex items-center justify-between p-2 bg-[#E3E8ED]/50 rounded-lg">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-[#111] capitalize">{r.source.replace(/_/g, " ")}</span>
+                        <span className="text-sm font-medium text-[#0d1f3d] capitalize">{r.source.replace(/_/g, " ")}</span>
                         <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded font-medium ${
                           r.status === "received" ? "bg-[#2d6a2d]/10 text-[#2d6a2d]" :
                           r.status === "pending" ? "bg-amber-50 text-amber-600" :
                           "bg-[#1B3A4C]/10 text-[#1B3A4C]"
                         }`}>{r.status}</span>
                       </div>
-                      {r.streams && <p className="text-xs text-[#a0a0a0]">{r.streams.toLocaleString()} streams</p>}
+                      {r.streams && <p className="text-xs text-[#8a9bac]">{r.streams.toLocaleString()} streams</p>}
                       {r.periodStart && r.periodEnd && <p className="text-[10px] text-[#999]">{r.periodStart} → {r.periodEnd}</p>}
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-bold text-[#111]">{gbpFull.format(r.amount || 0)}</span>
+                      <span className="text-sm font-bold text-[#0d1f3d]">{gbpFull.format(r.amount || 0)}</span>
                       <button onClick={() => removeRoyalty(r.id)} className="text-[#999] hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
                     </div>
                   </div>
@@ -1143,17 +1143,17 @@ export default function ProjectDetailPage() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <form onSubmit={saveEdit} className="bg-white rounded-xl p-6 w-full max-w-3xl max-h-[90vh] overflow-y-auto space-y-4">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Edit Project</h3>
-              <button type="button" onClick={() => setEditing(false)} className="text-[#999] hover:text-[#111]"><Trash2 size={18} /></button>
+              <h3 className="font-black text-lg text-[#0d1f3d] tracking-[-0.5px] uppercase">Edit Project</h3>
+              <button type="button" onClick={() => setEditing(false)} className="text-[#999] hover:text-[#0d1f3d]"><Trash2 size={18} /></button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Title</label>
-                <input value={form.title || ""} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
+                <label className="block text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest mb-1.5">Title</label>
+                <input value={form.title || ""} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Type</label>
-                <select value={form.type || ""} onChange={(e) => setForm({ ...form, type: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]">
+                <label className="block text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest mb-1.5">Type</label>
+                <select value={form.type || ""} onChange={(e) => setForm({ ...form, type: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#1B3A4C]">
                   <option value="dj-booking">DJ Booking</option>
                   <option value="production">Production</option>
                   <option value="remix">Remix</option>
@@ -1164,41 +1164,41 @@ export default function ProjectDetailPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Priority</label>
-                <select value={form.priority || "medium"} onChange={(e) => setForm({ ...form, priority: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]">
+                <label className="block text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest mb-1.5">Priority</label>
+                <select value={form.priority || "medium"} onChange={(e) => setForm({ ...form, priority: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#1B3A4C]">
                   <option value="high">High</option>
                   <option value="medium">Medium</option>
                   <option value="low">Low</option>
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Venue</label>
-                <input value={form.venue || ""} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
+                <label className="block text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest mb-1.5">Venue</label>
+                <input value={form.venue || ""} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Event Date</label>
-                <input type="date" value={form.eventDate || ""} onChange={(e) => setForm({ ...form, eventDate: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
+                <label className="block text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest mb-1.5">Event Date</label>
+                <input type="date" value={form.eventDate || ""} onChange={(e) => setForm({ ...form, eventDate: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Deadline</label>
-                <input type="date" value={form.deadline || ""} onChange={(e) => setForm({ ...form, deadline: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
+                <label className="block text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest mb-1.5">Deadline</label>
+                <input type="date" value={form.deadline || ""} onChange={(e) => setForm({ ...form, deadline: e.target.value })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Fee (£)</label>
-                <input type="number" value={form.fee ?? ""} onChange={(e) => setForm({ ...form, fee: e.target.value ? Number(e.target.value) : null })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C]" />
+                <label className="block text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest mb-1.5">Fee (£)</label>
+                <input type="number" value={form.fee ?? ""} onChange={(e) => setForm({ ...form, fee: e.target.value ? Number(e.target.value) : null })} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#1B3A4C]" />
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Description</label>
-                <textarea value={form.description || ""} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C] resize-y" placeholder="Project description..." />
+                <label className="block text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest mb-1.5">Description</label>
+                <textarea value={form.description || ""} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#1B3A4C] resize-y" placeholder="Project description..." />
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-[#111] uppercase tracking-widest mb-1.5">Notes</label>
-                <textarea value={form.notes || ""} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C] resize-y" />
+                <label className="block text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest mb-1.5">Notes</label>
+                <textarea value={form.notes || ""} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3} className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#1B3A4C] resize-y" />
               </div>
             </div>
             <div className="flex justify-end gap-3 pt-2">
-              <button type="button" onClick={() => setEditing(false)} className="px-4 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm font-medium text-[#111] hover:bg-[#E3E8ED]/50">Cancel</button>
-              <button type="submit" className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition">Save Changes</button>
+              <button type="button" onClick={() => setEditing(false)} className="px-4 py-2 border border-[#6B8FAB]/30 rounded-lg text-sm font-medium text-[#0d1f3d] hover:bg-[#E3E8ED]/50">Cancel</button>
+              <button type="submit" className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition">Save Changes</button>
             </div>
           </form>
         </div>

@@ -78,7 +78,7 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
             <p className="text-sm text-[#A8D5F0]">Thanks for sharing. Your music has been uploaded successfully.</p>
             <button
               onClick={() => { setStatus('idle'); setShowForm(false); }}
-              className="mt-6 px-8 py-3 border-2 border-white text-white text-sm font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#111] transition"
+              className="mt-6 px-8 py-3 border-2 border-white text-white text-sm font-semibold uppercase tracking-[1.5px] hover:bg-white hover:text-[#0d1f3d] transition"
             >
               Send Another
             </button>
@@ -116,7 +116,7 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
               className="hidden"
               onChange={(e) => handleFile(e.target.files?.[0] || null)}
             />
-            <button type="button" className="inline-block px-10 py-4 bg-white text-[#111] text-sm font-semibold uppercase tracking-[2px] hover:bg-[#A8D5F0] transition">
+            <button type="button" className="inline-block px-10 py-4 bg-white text-[#0d1f3d] text-sm font-semibold uppercase tracking-[2px] hover:bg-[#A8D5F0] transition">
               {file ? 'Change track' : 'Upload your track'}
             </button>
             <p className="mt-4 text-sm text-[#A8D5F0]">Click the button and upload your file in mp3 320 kbps</p>
@@ -161,7 +161,7 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
           <button
             type="submit"
             disabled={submitting || !file}
-            className="inline-block px-10 py-4 bg-white text-[#111] text-sm font-semibold uppercase tracking-[2px] hover:bg-[#A8D5F0] transition w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-block px-10 py-4 bg-white text-[#0d1f3d] text-sm font-semibold uppercase tracking-[2px] hover:bg-[#A8D5F0] transition w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? 'Uploading...' : 'Submit Track'}
           </button>

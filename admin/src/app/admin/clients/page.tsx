@@ -81,15 +81,15 @@ export default function ClientsPage() {
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Client Management</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Clients</h1>
-            <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Manage contacts, venues and partners.</p>
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">Clients</h1>
+            <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Manage contacts, venues and partners.</p>
           </div>
           <button
             onClick={() => {
               setForm({ name: '', email: '', phone: '', instagram: '', notes: '' })
               setShowForm(true)
             }}
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition"
           >
             <Plus size={16} />
             Add Client
@@ -146,17 +146,17 @@ export default function ClientsPage() {
                     <td className="px-4 py-3">
                       <div className="space-y-1">
                         {client.email && (
-                          <div className="flex items-center gap-1.5 text-xs text-[#a0a0a0]">
+                          <div className="flex items-center gap-1.5 text-xs text-[#8a9bac]">
                             <Mail size={12} /> {client.email}
                           </div>
                         )}
                         {client.phone && (
-                          <div className="flex items-center gap-1.5 text-xs text-[#a0a0a0]">
+                          <div className="flex items-center gap-1.5 text-xs text-[#8a9bac]">
                             <Phone size={12} /> {client.phone}
                           </div>
                         )}
                         {client.instagram && (
-                          <div className="flex items-center gap-1.5 text-xs text-[#a0a0a0]">
+                          <div className="flex items-center gap-1.5 text-xs text-[#8a9bac]">
                             <Globe size={12} /> {client.instagram}
                           </div>
                         )}
@@ -228,7 +228,7 @@ export default function ClientsPage() {
           </div>
           <div className="flex justify-end">
             <button type="submit"
-              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition">Save Client</button>
+              className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition">Save Client</button>
           </div>
         </form>
       </Modal>

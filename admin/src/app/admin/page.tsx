@@ -70,7 +70,7 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-10">
           <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-2">Overview</p>
-          <h1 className="text-2xl font-black text-[#111] uppercase tracking-[-0.5px]">Dashboard</h1>
+          <h1 className="text-2xl font-black text-[#0d1f3d] uppercase tracking-[-0.5px]">Dashboard</h1>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
@@ -98,7 +98,7 @@ export default function Dashboard() {
       {/* Header */}
       <div className="mb-8">
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-2">Overview</p>
-        <h1 className="text-2xl font-black text-[#111] uppercase tracking-[-0.5px]">Dashboard</h1>
+        <h1 className="text-2xl font-black text-[#0d1f3d] uppercase tracking-[-0.5px]">Dashboard</h1>
       </div>
 
       {/* Key Metrics */}
@@ -109,8 +109,8 @@ export default function Dashboard() {
             <Eye size={14} className="text-[#6B8FAB]" />
             <p className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] font-semibold">Visits Today</p>
           </div>
-          <p className="text-2xl font-black text-[#111] leading-none">{siteVisits.todayViews}<span className="text-sm font-semibold text-[#6B8FAB] ml-1">views</span></p>
-          <p className="text-xs text-[#a0a0a0] mt-1">{siteVisits.todayUnique} unique</p>
+          <p className="text-2xl font-black text-[#0d1f3d] leading-none">{siteVisits.todayViews}<span className="text-sm font-semibold text-[#6B8FAB] ml-1">views</span></p>
+          <p className="text-xs text-[#8a9bac] mt-1">{siteVisits.todayUnique} unique</p>
         </div>
 
         {/* Music Submissions */}
@@ -119,8 +119,8 @@ export default function Dashboard() {
             <Music size={14} className="text-[#1B3A4C]" />
             <p className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] font-semibold">Submissions</p>
           </div>
-          <p className="text-2xl font-black text-[#111] leading-none">{s.submissions}</p>
-          <p className="text-xs text-[#a0a0a0] mt-1">music tracks</p>
+          <p className="text-2xl font-black text-[#0d1f3d] leading-none">{s.submissions}</p>
+          <p className="text-xs text-[#8a9bac] mt-1">music tracks</p>
         </Link>
 
         {/* Enquiries */}
@@ -129,8 +129,8 @@ export default function Dashboard() {
             <MessageSquare size={14} className="text-[#1B3A4C]" />
             <p className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] font-semibold">Enquiries</p>
           </div>
-          <p className="text-2xl font-black text-[#111] leading-none">{s.enquiries}</p>
-          <p className="text-xs text-[#a0a0a0] mt-1">total received</p>
+          <p className="text-2xl font-black text-[#0d1f3d] leading-none">{s.enquiries}</p>
+          <p className="text-xs text-[#8a9bac] mt-1">total received</p>
           {s.pendingEnquiries > 0 && (
             <span className="absolute top-3 right-3 text-[10px] px-2 py-0.5 rounded-full bg-[#1B3A4C] text-white font-semibold">
               {s.pendingEnquiries} new
@@ -144,8 +144,8 @@ export default function Dashboard() {
             <TrendingUp size={14} className="text-[#1B3A4C]" />
             <p className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] font-semibold">Revenue</p>
           </div>
-          <p className="text-2xl font-black text-[#111] leading-none">{formatCurrency(s.revenue)}</p>
-          <p className="text-xs text-[#a0a0a0] mt-1">total paid</p>
+          <p className="text-2xl font-black text-[#0d1f3d] leading-none">{formatCurrency(s.revenue)}</p>
+          <p className="text-xs text-[#8a9bac] mt-1">total paid</p>
         </Link>
       </div>
 
@@ -158,13 +158,13 @@ export default function Dashboard() {
           </div>
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <p className="text-lg font-black text-[#111]">{siteVisits.totalViews.toLocaleString()}</p>
-              <p className="text-[10px] uppercase tracking-widest text-[#a0a0a0]">views</p>
+              <p className="text-lg font-black text-[#0d1f3d]">{siteVisits.totalViews.toLocaleString()}</p>
+              <p className="text-[10px] uppercase tracking-widest text-[#8a9bac]">views</p>
             </div>
             <div className="w-px h-8 bg-[#E3E8ED]" />
             <div className="text-right">
-              <p className="text-lg font-black text-[#111]">{siteVisits.totalUnique.toLocaleString()}</p>
-              <p className="text-[10px] uppercase tracking-widest text-[#a0a0a0]">unique</p>
+              <p className="text-lg font-black text-[#0d1f3d]">{siteVisits.totalUnique.toLocaleString()}</p>
+              <p className="text-[10px] uppercase tracking-widest text-[#8a9bac]">unique</p>
             </div>
           </div>
         </div>
@@ -191,30 +191,30 @@ export default function Dashboard() {
         <Link href="/admin/quotes" className="bg-white border border-[#E3E8ED] p-4 hover:border-[#1B3A4C] transition">
           <div className="flex items-center justify-between">
             <p className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] font-semibold">Quotes</p>
-            <FileText size={14} className="text-[#a0a0a0]" />
+            <FileText size={14} className="text-[#8a9bac]" />
           </div>
-          <p className="text-xl font-black text-[#111] mt-2">{s.quotes}</p>
+          <p className="text-xl font-black text-[#0d1f3d] mt-2">{s.quotes}</p>
         </Link>
         <Link href="/admin/invoices" className="bg-white border border-[#E3E8ED] p-4 hover:border-[#1B3A4C] transition">
           <div className="flex items-center justify-between">
             <p className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] font-semibold">Invoices</p>
-            <Receipt size={14} className="text-[#a0a0a0]" />
+            <Receipt size={14} className="text-[#8a9bac]" />
           </div>
-          <p className="text-xl font-black text-[#111] mt-2">{s.invoices}</p>
+          <p className="text-xl font-black text-[#0d1f3d] mt-2">{s.invoices}</p>
         </Link>
         <Link href="/admin/clients" className="bg-white border border-[#E3E8ED] p-4 hover:border-[#1B3A4C] transition">
           <div className="flex items-center justify-between">
             <p className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] font-semibold">Clients</p>
-            <Users size={14} className="text-[#a0a0a0]" />
+            <Users size={14} className="text-[#8a9bac]" />
           </div>
-          <p className="text-xl font-black text-[#111] mt-2">{s.clients}</p>
+          <p className="text-xl font-black text-[#0d1f3d] mt-2">{s.clients}</p>
         </Link>
         <Link href="/admin/tracks" className="bg-white border border-[#E3E8ED] p-4 hover:border-[#1B3A4C] transition">
           <div className="flex items-center justify-between">
             <p className="text-[10px] uppercase tracking-[2px] text-[#6B8FAB] font-semibold">Tracks</p>
-            <Music size={14} className="text-[#a0a0a0]" />
+            <Music size={14} className="text-[#8a9bac]" />
           </div>
-          <p className="text-xl font-black text-[#111] mt-2">{s.tracks}</p>
+          <p className="text-xl font-black text-[#0d1f3d] mt-2">{s.tracks}</p>
         </Link>
       </div>
 
@@ -227,7 +227,7 @@ export default function Dashboard() {
             <Link href="/admin/enquiries" className="text-[11px] text-[#1B3A4C] font-semibold uppercase tracking-wider hover:underline">View all</Link>
           </div>
           {s.recentEnquiries.length === 0 ? (
-            <p className="text-sm text-[#a0a0a0] py-6 text-center">No enquiries yet</p>
+            <p className="text-sm text-[#8a9bac] py-6 text-center">No enquiries yet</p>
           ) : (
             <div className="space-y-2">
               {s.recentEnquiries.slice(0, 5).map((e) => (
@@ -238,10 +238,10 @@ export default function Dashboard() {
                 >
                   <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${e.status === 'new' ? 'bg-[#1B3A4C]' : 'bg-[#6B8FAB]/40'}`} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-[#111] truncate">{e.name}</p>
-                    <p className="text-xs text-[#a0a0a0] truncate">{e.message?.substring(0, 40) || 'No message'}</p>
+                    <p className="text-sm font-medium text-[#0d1f3d] truncate">{e.name}</p>
+                    <p className="text-xs text-[#8a9bac] truncate">{e.message?.substring(0, 40) || 'No message'}</p>
                   </div>
-                  <span className="text-[10px] text-[#a0a0a0] flex-shrink-0">{formatDate(e.createdAt)}</span>
+                  <span className="text-[10px] text-[#8a9bac] flex-shrink-0">{formatDate(e.createdAt)}</span>
                 </Link>
               ))}
             </div>
@@ -255,7 +255,7 @@ export default function Dashboard() {
             <Link href="/admin/submissions" className="text-[11px] text-[#1B3A4C] font-semibold uppercase tracking-wider hover:underline">View all</Link>
           </div>
           {(s.recentSubmissions || []).length === 0 ? (
-            <p className="text-sm text-[#a0a0a0] py-6 text-center">No submissions yet</p>
+            <p className="text-sm text-[#8a9bac] py-6 text-center">No submissions yet</p>
           ) : (
             <div className="space-y-2">
               {(s.recentSubmissions || []).slice(0, 5).map((sub) => (
@@ -266,8 +266,8 @@ export default function Dashboard() {
                 >
                   <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${sub.status === 'new' ? 'bg-[#1B3A4C]' : 'bg-[#6B8FAB]/40'}`} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-[#111] truncate">{sub.trackTitle || sub.artistName || 'Unknown'}</p>
-                    <p className="text-xs text-[#a0a0a0] truncate">{sub.artistName || sub.email}</p>
+                    <p className="text-sm font-medium text-[#0d1f3d] truncate">{sub.trackTitle || sub.artistName || 'Unknown'}</p>
+                    <p className="text-xs text-[#8a9bac] truncate">{sub.artistName || sub.email}</p>
                   </div>
                   <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-[#E3E8ED] text-[#1B3A4C]">{sub.status}</span>
                 </Link>
@@ -302,8 +302,8 @@ export default function Dashboard() {
                         {q.quoteNumber || `QT-${String(q.id).padStart(3, '0')}`}
                       </Link>
                     </td>
-                    <td className="px-3 py-3 text-[#a0a0a0]">{q.clientName || '-'}</td>
-                    <td className="px-3 py-3 text-right font-semibold text-[#111]">{formatCurrency(q.total)}</td>
+                    <td className="px-3 py-3 text-[#8a9bac]">{q.clientName || '-'}</td>
+                    <td className="px-3 py-3 text-right font-semibold text-[#0d1f3d]">{formatCurrency(q.total)}</td>
                     <td className="px-3 py-3">
                       <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider ${
                         q.status === 'draft' ? 'bg-gray-100 text-gray-600' :

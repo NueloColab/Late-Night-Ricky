@@ -101,11 +101,11 @@ export default function ShowsPage() {
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Show Cards</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Shows</h1>
-            <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Manage show cards displayed on the front end.</p>
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">Shows</h1>
+            <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Manage show cards displayed on the front end.</p>
           </div>
           <button onClick={openNew}
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition"
           >
             <Plus size={16} />
             Add Show
@@ -119,7 +119,7 @@ export default function ShowsPage() {
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#E3E8ED] text-white rounded-lg"><Music size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{loading ? '–' : cards.length}</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#0d1f3d] leading-none tracking-[-1px]">{loading ? '–' : cards.length}</p>
           <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Shows</p>
         </div>
         <div className="bg-white border border-[#6B8FAB]/30 p-5">
@@ -158,7 +158,7 @@ export default function ShowsPage() {
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <h3 className="text-sm font-semibold text-[#1B3A4C]">{card.title || 'Untitled'}</h3>
-                    <p className="text-xs text-[#a0a0a0] mt-0.5">{card.venue}{card.location ? ` · ${card.location}` : ''}</p>
+                    <p className="text-xs text-[#8a9bac] mt-0.5">{card.venue}{card.location ? ` · ${card.location}` : ''}</p>
                   </div>
                   <button
                     onClick={() => toggleActive(card.id, !card.isActive)}
@@ -168,7 +168,7 @@ export default function ShowsPage() {
                   </button>
                 </div>
                 {card.season && <p className="text-xs text-[#6B8FAB] mt-1">{card.season}</p>}
-                {card.description && <p className="text-xs text-[#a0a0a0] mt-2 line-clamp-2">{card.description}</p>}
+                {card.description && <p className="text-xs text-[#8a9bac] mt-2 line-clamp-2">{card.description}</p>}
                 <div className="flex gap-2 mt-3 pt-3 border-t border-[#6B8FAB]/20">
                   <button onClick={() => openEdit(card)} className="text-xs text-[#1B3A4C] hover:underline font-semibold">Edit</button>
                   <button onClick={() => deleteCard(card.id)} className="text-xs text-[#6B8FAB] hover:text-red-500">Delete</button>
@@ -214,12 +214,12 @@ export default function ShowsPage() {
           </div>
           <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <button type="submit"
-              className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
+              className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition"
             >
               {editCard ? 'Update Show' : 'Add Show'}
             </button>
             <button type="button" onClick={() => { setIsModalOpen(false); setEditCard(null) }}
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#0d1f3d] hover:text-[#0d1f3d] transition"
             >
               Cancel
             </button>

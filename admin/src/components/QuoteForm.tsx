@@ -430,7 +430,7 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
           {/* Totals Box */}
           <div className="ml-auto max-w-sm w-full space-y-2.5 p-5 bg-[#F8FAFB] rounded-lg border border-[#0d1f3d]">
             <div className="flex justify-between text-sm">
-              <span className="text-[#a0a0a0]">Subtotal</span>
+              <span className="text-[#8a9bac]">Subtotal</span>
               <span className="font-semibold text-[#152a47]">£{subtotal.toFixed(2)}</span>
             </div>
             {discount.enabled && (
@@ -443,18 +443,18 @@ export default function QuoteForm({ quote, projects = [], onClose, onSuccess }: 
             )}
             {vatEnabled ? (
               <div className="flex justify-between text-sm">
-                <span className="text-[#a0a0a0]">VAT ({taxRate}%)</span>
+                <span className="text-[#8a9bac]">VAT ({taxRate}%)</span>
                 <span className="font-semibold text-[#152a47]">£{tax.toFixed(2)}</span>
               </div>
             ) : (
               <div className="flex justify-between text-sm">
-                <span className="text-[#a0a0a0]">VAT</span>
+                <span className="text-[#8a9bac]">VAT</span>
                 <span className="text-[#A8D5F0]">N/A</span>
               </div>
             )}
             <div className="flex justify-between pt-3 border-t border-[#0d1f3d]">
-              <span className="text-base font-black text-[#111] tracking-[-1px]">Total</span>
-              <span className="text-base font-black text-[#111] tracking-[-1px]">£{total.toFixed(2)}</span>
+              <span className="text-base font-black text-[#0d1f3d] tracking-[-1px]">Total</span>
+              <span className="text-base font-black text-[#0d1f3d] tracking-[-1px]">£{total.toFixed(2)}</span>
             </div>
           </div>
         </div>

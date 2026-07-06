@@ -173,15 +173,15 @@ export default function QuotesPage() {
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Quote Management</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Quotes</h1>
-            <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Create, send and track client quotes.</p>
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">Quotes</h1>
+            <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Create, send and track client quotes.</p>
           </div>
           <button
             onClick={() => {
               setSelectedQuote(null)
               setIsModalOpen(true)
             }}
-            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
+            className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition"
           >
             <Plus size={16} />
             New Quote
@@ -195,7 +195,7 @@ export default function QuotesPage() {
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#1B3A4C] text-white rounded-lg"><FileText size={16} /></div>
           </div>
-          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#111] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#0d1f3d] leading-none tracking-[-1px]">{loading ? '–' : stats.total}</p>
           <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Quotes</p>
         </div>
         <div className="bg-white border border-[#6B8FAB]/30 p-5">
@@ -302,22 +302,22 @@ export default function QuotesPage() {
                       <td className="px-4 py-3 font-semibold text-[#1B3A4C]">
                         {quote.quoteNumber || `QT-${String(quote.id).padStart(3, '0')}`}
                       </td>
-                      <td className="px-4 py-3 text-[#a0a0a0]">
+                      <td className="px-4 py-3 text-[#8a9bac]">
                         {quote.clientName || '—'}
                         {quote.clientCompany && (
                           <div className="text-xs text-[#6B8FAB]">{quote.clientCompany}</div>
                         )}
                       </td>
-                      <td className="px-4 py-3 text-[#a0a0a0]">{quote.projectTitle || proj?.title || '—'}</td>
+                      <td className="px-4 py-3 text-[#8a9bac]">{quote.projectTitle || proj?.title || '—'}</td>
                       <td className="px-4 py-3">
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide bg-[#E3E8ED] text-[#1B3A4C]">
                           {STATUS_ICONS[quote.status] || <Clock size={14} />}
                           {STATUS_LABELS[quote.status] || quote.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-[#a0a0a0]">{quote.lineItems.length} items</td>
+                      <td className="px-4 py-3 text-[#8a9bac]">{quote.lineItems.length} items</td>
                       <td className="px-4 py-3 text-[#1B3A4C] font-semibold">£{quote.total.toLocaleString()}</td>
-                      <td className="px-4 py-3 text-[#a0a0a0] text-xs">
+                      <td className="px-4 py-3 text-[#8a9bac] text-xs">
                         {quote.paymentTermsLabel || PAYMENT_TERMS_MAP[quote.paymentTermsType || ''] || quote.paymentTermsType || 'Net 30'}
                       </td>
                       <td className="px-4 py-3">

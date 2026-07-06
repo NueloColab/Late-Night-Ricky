@@ -129,7 +129,7 @@ export default function MoodBoardSection({ projectId }: MoodBoardSectionProps) {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <ImageIcon size={18} className="text-[#A8D5F0]" />
-          <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Mood Boards</h3>
+          <h3 className="font-black text-lg text-[#0d1f3d] tracking-[-0.5px] uppercase">Mood Boards</h3>
         </div>
         <button
           onClick={() => setShowCreator(!showCreator)}
@@ -145,13 +145,13 @@ export default function MoodBoardSection({ projectId }: MoodBoardSectionProps) {
             placeholder="Board title"
             value={newBoardTitle}
             onChange={(e) => setNewBoardTitle(e.target.value)}
-            className="w-full px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47]"
+            className="w-full px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#152a47]"
           />
           <input
             placeholder="Description (optional)"
             value={newBoardDesc}
             onChange={(e) => setNewBoardDesc(e.target.value)}
-            className="w-full px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47]"
+            className="w-full px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#152a47]"
           />
           <div className="flex gap-2">
             <button
@@ -163,7 +163,7 @@ export default function MoodBoardSection({ projectId }: MoodBoardSectionProps) {
             </button>
             <button
               type="submit"
-              className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition"
+              className="px-5 py-2 border-2 border-[#0d1f3d] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#0d1f3d] hover:text-white transition"
             >
               Create Board
             </button>
@@ -200,14 +200,14 @@ export default function MoodBoardSection({ projectId }: MoodBoardSectionProps) {
         <div className="border-t border-[#A8D5F0]/30 pt-4">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="font-semibold text-sm text-[#111]">{selectedBoard.title}</p>
+              <p className="font-semibold text-sm text-[#0d1f3d]">{selectedBoard.title}</p>
               {selectedBoard.description && (
                 <p className="text-xs text-[#A8D5F0]">{selectedBoard.description}</p>
               )}
             </div>
             <button
               onClick={() => setShowPinForm(!showPinForm)}
-              className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition flex items-center gap-1"
+              className="px-5 py-2 border-2 border-[#0d1f3d] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#0d1f3d] hover:text-white transition flex items-center gap-1"
             >
               <Plus size={14} /> Add Pin
             </button>
@@ -219,13 +219,13 @@ export default function MoodBoardSection({ projectId }: MoodBoardSectionProps) {
                 placeholder="Image URL"
                 value={newPinUrl}
                 onChange={(e) => setNewPinUrl(e.target.value)}
-                className="w-full px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47]"
+                className="w-full px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#152a47]"
               />
               <input
                 placeholder="Caption (optional)"
                 value={newPinCaption}
                 onChange={(e) => setNewPinCaption(e.target.value)}
-                className="w-full px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm text-[#111] focus:outline-none focus:border-[#152a47]"
+                className="w-full px-3 py-2 border border-[#A8D5F0]/30 rounded-lg text-sm text-[#0d1f3d] focus:outline-none focus:border-[#152a47]"
               />
               <div className="flex gap-2">
                 <button
@@ -237,7 +237,7 @@ export default function MoodBoardSection({ projectId }: MoodBoardSectionProps) {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#0d1f3d] hover:text-white transition"
+                  className="px-5 py-2 border-2 border-[#0d1f3d] rounded-full text-[11px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#0d1f3d] hover:text-white transition"
                 >
                   Add Pin
                 </button>
@@ -270,7 +270,7 @@ export default function MoodBoardSection({ projectId }: MoodBoardSectionProps) {
                 </div>
                 {pin.caption && (
                   <div className="absolute bottom-0 left-0 right-0 bg-white/90 px-3 py-2">
-                    <p className="text-xs text-[#111] truncate">{pin.caption}</p>
+                    <p className="text-xs text-[#0d1f3d] truncate">{pin.caption}</p>
                   </div>
                 )}
               </div>

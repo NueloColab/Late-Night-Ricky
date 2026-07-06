@@ -147,7 +147,7 @@ export default function ContactEditor() {
       {/* Header */}
       <Link
         href="/admin/content"
-        className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#111] transition-colors mb-6"
+        className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#0d1f3d] transition-colors mb-6"
       >
         <ArrowLeft size={14} />
         <span>Back to Content</span>
@@ -155,14 +155,14 @@ export default function ContactEditor() {
       <div className="flex items-center justify-between mb-12">
         <div>
           <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Page Editor</p>
-          <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Contact Page</h1>
-          <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Edit email, Instagram, and form settings</p>
+          <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">Contact Page</h1>
+          <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Edit email, Instagram, and form settings</p>
         </div>
         <a
           href="/contact"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
+          className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition"
         >
           View on Site →
         </a>
@@ -203,7 +203,7 @@ export default function ContactEditor() {
           ) : selectedSection === 'image' ? (
             <div className="bg-white border border-[#6B8FAB]/30 p-6">
               <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Contact</p>
-              <p className="text-sm text-[#a0a0a0] mb-6 font-semibold uppercase tracking-[0.5px]">The portrait image on the left side of the contact page</p>
+              <p className="text-sm text-[#8a9bac] mb-6 font-semibold uppercase tracking-[0.5px]">The portrait image on the left side of the contact page</p>
               <div className="relative w-full max-w-md aspect-[3/4] bg-[#E3E8ED] rounded-xl overflow-hidden mb-4 border border-[#6B8FAB]/30">
                 {imageValue ? (
                   <img src={imageValue} alt="Contact portrait" className="object-cover w-full h-full" />
@@ -218,7 +218,7 @@ export default function ContactEditor() {
               <button
                 onClick={() => setMediaOpen(true)}
                 disabled={saving}
-                className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
+                className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
               >
                 {imageValue ? 'Replace Image' : 'Upload Image'}
               </button>
@@ -226,7 +226,7 @@ export default function ContactEditor() {
           ) : selectedSection === 'email' ? (
             <div className="bg-white border border-[#6B8FAB]/30 p-6">
               <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Contact</p>
-              <p className="text-sm text-[#a0a0a0] mb-6 font-semibold uppercase tracking-[0.5px]">The contact email displayed on the site</p>
+              <p className="text-sm text-[#8a9bac] mb-6 font-semibold uppercase tracking-[0.5px]">The contact email displayed on the site</p>
               <input
                 type="email"
                 value={emailValue}
@@ -243,7 +243,7 @@ export default function ContactEditor() {
               <button
                 onClick={() => saveField('email', emailValue)}
                 disabled={saving}
-                className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
+                className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
               >
                 {saving ? 'Saving...' : 'Save Email'}
               </button>
@@ -251,7 +251,7 @@ export default function ContactEditor() {
           ) : selectedSection === 'instagram' ? (
             <div className="bg-white border border-[#6B8FAB]/30 p-6">
               <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Contact</p>
-              <p className="text-sm text-[#a0a0a0] mb-6 font-semibold uppercase tracking-[0.5px]">The Instagram handle displayed on the site</p>
+              <p className="text-sm text-[#8a9bac] mb-6 font-semibold uppercase tracking-[0.5px]">The Instagram handle displayed on the site</p>
               <input
                 type="text"
                 value={instagramValue}
@@ -268,7 +268,7 @@ export default function ContactEditor() {
               <button
                 onClick={() => saveField('instagram', instagramValue)}
                 disabled={saving}
-                className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
+                className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
               >
                 {saving ? 'Saving...' : 'Save Instagram'}
               </button>
@@ -276,7 +276,7 @@ export default function ContactEditor() {
           ) : selectedSection === 'form' ? (
             <div className="bg-white border border-[#6B8FAB]/30 p-6">
               <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Contact</p>
-              <p className="text-sm text-[#a0a0a0] mb-6 font-semibold uppercase tracking-[0.5px]">Toggle the contact form on or off</p>
+              <p className="text-sm text-[#8a9bac] mb-6 font-semibold uppercase tracking-[0.5px]">Toggle the contact form on or off</p>
 
               <div className="flex items-center justify-between p-4 bg-[#E3E8ED] rounded-xl mb-6">
                 <div>

@@ -109,8 +109,8 @@ export default function SubmissionsPage() {
       {/* Header */}
       <div className="mb-8">
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-2">Music Submissions</p>
-        <h1 className="text-2xl font-black text-[#111] uppercase tracking-[-1px]">Submissions</h1>
-        <p className="text-sm text-[#a0a0a0] mt-1">Review, listen, and manage submitted tracks</p>
+        <h1 className="text-2xl font-black text-[#0d1f3d] uppercase tracking-[-1px]">Submissions</h1>
+        <p className="text-sm text-[#8a9bac] mt-1">Review, listen, and manage submitted tracks</p>
       </div>
 
       {/* Filters */}
@@ -142,7 +142,7 @@ export default function SubmissionsPage() {
         <div className="text-center py-20">
           <Music size={48} className="mx-auto text-[#6B8FAB]/30 mb-4" />
           <p className="text-[#6B8FAB]">No submissions yet</p>
-          <p className="text-sm text-[#a0a0a0] mt-1">Tracks submitted through the Share Your Music form will appear here</p>
+          <p className="text-sm text-[#8a9bac] mt-1">Tracks submitted through the Share Your Music form will appear here</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -260,12 +260,12 @@ export default function SubmissionsPage() {
                         <div className="bg-white border border-[#E3E8ED] rounded p-3 space-y-2">
                           <p className="text-[10px] text-[#6B8FAB] uppercase tracking-[2px] font-semibold">Details</p>
                           <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
-                            <span className="text-[#6B8FAB]">Email</span><span className="text-[#111] text-right truncate">{s.email}</span>
-                            <span className="text-[#6B8FAB]">Artist</span><span className="text-[#111] text-right">{s.artistName || '-'}</span>
-                            {s.instagramHandle && <><span className="text-[#6B8FAB]">Instagram</span><span className="text-[#111] text-right">{s.instagramHandle}</span></>}
-                            <span className="text-[#6B8FAB]">Track</span><span className="text-[#111] text-right">{s.trackTitle || '-'}</span>
-                            <span className="text-[#6B8FAB]">Date</span><span className="text-[#111] text-right">{formatDate(s.createdAt)}</span>
-                            <span className="text-[#6B8FAB]">Size</span><span className="text-[#111] text-right">{formatSize(s.fileSize)}</span>
+                            <span className="text-[#6B8FAB]">Email</span><span className="text-[#0d1f3d] text-right truncate">{s.email}</span>
+                            <span className="text-[#6B8FAB]">Artist</span><span className="text-[#0d1f3d] text-right">{s.artistName || '-'}</span>
+                            {s.instagramHandle && <><span className="text-[#6B8FAB]">Instagram</span><span className="text-[#0d1f3d] text-right">{s.instagramHandle}</span></>}
+                            <span className="text-[#6B8FAB]">Track</span><span className="text-[#0d1f3d] text-right">{s.trackTitle || '-'}</span>
+                            <span className="text-[#6B8FAB]">Date</span><span className="text-[#0d1f3d] text-right">{formatDate(s.createdAt)}</span>
+                            <span className="text-[#6B8FAB]">Size</span><span className="text-[#0d1f3d] text-right">{formatSize(s.fileSize)}</span>
                           </div>
                         </div>
                       </div>

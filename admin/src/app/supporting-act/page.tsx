@@ -22,24 +22,24 @@ export default async function SupportingActPage() {
       <Navbar />
       <main className="bg-white min-h-screen">
         {/* Page Title */}
-        <div className="border-b-2 border-[#111] pt-24 pb-5 px-8">
+        <div className="border-b-2 border-[#0d1f3d] pt-24 pb-5 px-8">
           <div className="max-w-[1200px] mx-auto">
-            <h1 className="text-[clamp(48px,10vw,120px)] font-black tracking-[-3px] uppercase leading-[0.9] text-[#111]">Clients</h1>
+            <h1 className="text-[clamp(48px,10vw,120px)] font-black tracking-[-3px] uppercase leading-[0.9] text-[#0d1f3d]">Clients</h1>
           </div>
         </div>
 
         {/* Artists List */}
         <div className="max-w-[900px] mx-auto px-8 py-20 text-center">
-          <p className="text-sm text-[#a0a0a0] mb-12 tracking-[2px] uppercase">Late Night Ricky has shared the stage with</p>
+          <p className="text-sm text-[#8a9bac] mb-12 tracking-[2px] uppercase">Late Night Ricky has shared the stage with</p>
           <div className="flex flex-col gap-1">
             {artists.map((name: string) => (
-              <div key={name} className="text-[clamp(36px,7vw,80px)] font-black uppercase tracking-[-2px] leading-none text-[#111] hover:text-[#152a47] transition cursor-default">
+              <div key={name} className="text-[clamp(36px,7vw,80px)] font-black uppercase tracking-[-2px] leading-none text-[#0d1f3d] hover:text-[#152a47] transition cursor-default">
                 {name}
               </div>
             ))}
           </div>
           <div className="w-[60px] h-0.5 bg-[#0d1f3d] mx-auto my-8 opacity-15" />
-          <p className="text-sm text-[#a0a0a0] tracking-[2px] uppercase">And many more</p>
+          <p className="text-sm text-[#8a9bac] tracking-[2px] uppercase">And many more</p>
         </div>
       </main>
       <Footer />

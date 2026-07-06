@@ -141,11 +141,11 @@ export default function TracksPage() {
       <div className="flex items-center justify-between mb-12">
         <div>
           <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Audio Library</p>
-          <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Tracks</h1>
+          <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">Tracks</h1>
         </div>
         <button
           onClick={() => { setEditTrack(null); setForm(emptyTrack); setIsModalOpen(true) }}
-          className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition"
+          className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#1B3A4C] hover:text-white transition"
         >
           <Plus size={18} />
           Add Track
@@ -174,7 +174,7 @@ export default function TracksPage() {
               {/* Track info */}
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-[#1B3A4C] text-sm truncate">{track.title}</p>
-                <p className="text-xs text-[#a0a0a0]">{track.filePath ? 'Audio uploaded' : 'No audio'}{track.duration ? ` · ${track.duration}` : ''}</p>
+                <p className="text-xs text-[#8a9bac]">{track.filePath ? 'Audio uploaded' : 'No audio'}{track.duration ? ` · ${track.duration}` : ''}</p>
               </div>
 
               {/* Play button */}
@@ -257,7 +257,7 @@ export default function TracksPage() {
               <div className="flex-1">
                 <input ref={coverInputRef} type="file" accept="image/*" className="hidden" onChange={handleCoverUpload} />
                 <button type="button" onClick={() => coverInputRef.current?.click()} disabled={uploadingCover}
-                  className="px-4 py-2 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition">
+                  className="px-4 py-2 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#0d1f3d] hover:text-[#0d1f3d] transition">
                   {uploadingCover ? 'Uploading...' : form.coverPath ? 'Replace Cover' : 'Upload Cover'}
                 </button>
                 {form.coverPath && <span className="ml-2 text-xs text-[#2d6a2d]">✓ Uploaded</span>}
@@ -278,7 +278,7 @@ export default function TracksPage() {
               <input type="text" value={form.duration} onChange={e => setForm({ ...form, duration: e.target.value })}
                 className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C]"
                 placeholder="0:30" />
-              <p className="text-[10px] text-[#a0a0a0] mt-1">e.g. 0:30 for preview, 3:45 for full track</p>
+              <p className="text-[10px] text-[#8a9bac] mt-1">e.g. 0:30 for preview, 3:45 for full track</p>
             </div>
             <div>
               <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Order</label>
@@ -292,7 +292,7 @@ export default function TracksPage() {
             <div className="flex items-center gap-3">
               <input ref={fileInputRef} type="file" accept="audio/mp3,audio/mpeg,audio/wav,audio/flac,audio/aac,audio/x-m4a" className="hidden" onChange={handleFileUpload} />
               <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading}
-                className="inline-flex items-center gap-2 px-4 py-2 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition">
+                className="inline-flex items-center gap-2 px-4 py-2 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#0d1f3d] hover:text-[#0d1f3d] transition">
                 <Upload size={14} />
                 {uploading ? 'Uploading...' : form.filePath ? 'Replace Audio' : 'Upload Audio'}
               </button>
@@ -328,11 +328,11 @@ export default function TracksPage() {
 
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={() => setIsModalOpen(false)}
-              className="flex-1 px-4 py-2 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition">
+              className="flex-1 px-4 py-2 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#0d1f3d] hover:text-[#0d1f3d] transition">
               Cancel
             </button>
             <button type="submit"
-              className="flex-1 px-4 py-2 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">
+              className="flex-1 px-4 py-2 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#1B3A4C] hover:text-white transition">
               {editTrack ? 'Save Changes' : 'Add Track'}
             </button>
           </div>

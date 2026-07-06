@@ -23,7 +23,7 @@ export default function PaymentMethodSelector({ value, onChange, className = '' 
       <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px]">
         Payment Method
       </label>
-      <div className="flex items-center gap-2 text-sm text-[#a0a0a0]">
+      <div className="flex items-center gap-2 text-sm text-[#8a9bac]">
         <CreditCard size={14} className="text-[#152a47]" />
         <span>{label}</span>
       </div>

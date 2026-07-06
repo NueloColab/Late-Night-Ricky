@@ -208,14 +208,14 @@ export default function EnquiriesPage() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-3">
           <div className="w-10 h-px bg-[#6B8FAB]" />
-          <p className="text-xs uppercase tracking-widest text-[#a0a0a0]">Inbox</p>
+          <p className="text-xs uppercase tracking-widest text-[#8a9bac]">Inbox</p>
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">
+            <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">
               Enquiries
             </h1>
-            <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Manage booking requests and messages</p>
+            <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Manage booking requests and messages</p>
           </div>
         </div>
       </div>
@@ -234,7 +234,7 @@ export default function EnquiriesPage() {
                 <stat.icon size={16} />
               </div>
             </div>
-            <p className="text-2xl font-black text-[#111] mb-1">{loading ? '—' : stat.value}</p>
+            <p className="text-2xl font-black text-[#0d1f3d] mb-1">{loading ? '—' : stat.value}</p>
             <p className="text-xs uppercase tracking-widest text-[#6B8FAB]">{stat.label}</p>
           </div>
         ))}
@@ -254,7 +254,7 @@ export default function EnquiriesPage() {
                 placeholder="Search by name, email, or club..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 bg-white border border-[#E3E8ED] text-[#111] placeholder-[#6B8FAB] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
+                className="w-full pl-14 pr-4 py-3 bg-white border border-[#E3E8ED] text-[#0d1f3d] placeholder-[#6B8FAB] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors"
               />
             </div>
           </div>
@@ -267,7 +267,7 @@ export default function EnquiriesPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full pl-14 pr-4 py-3 bg-white border border-[#E3E8ED] text-[#111] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors appearance-none"
+                className="w-full pl-14 pr-4 py-3 bg-white border border-[#E3E8ED] text-[#0d1f3d] text-sm focus:outline-none focus:border-[#1B3A4C] transition-colors appearance-none"
               >
                 <option value="all">All Enquiries</option>
                 <option value="new">Unread</option>
@@ -308,7 +308,7 @@ export default function EnquiriesPage() {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         {e.status === 'new' && <div className="w-2 h-2 bg-[#1B3A4C] rounded-full flex-shrink-0" />}
-                        <span className={`text-sm ${e.status === 'new' ? 'font-semibold text-[#111]' : 'text-[#1B3A4C]'}`}>
+                        <span className={`text-sm ${e.status === 'new' ? 'font-semibold text-[#0d1f3d]' : 'text-[#1B3A4C]'}`}>
                           {e.name}
                         </span>
                       </div>
@@ -321,7 +321,7 @@ export default function EnquiriesPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-sm text-[#a0a0a0] max-w-xs truncate block">
+                      <span className="text-sm text-[#8a9bac] max-w-xs truncate block">
                         {e.message?.substring(0, 60)}{e.message && e.message.length > 60 ? '...' : ''}
                       </span>
                     </td>
@@ -371,8 +371,8 @@ export default function EnquiriesPage() {
                   <AlertTriangle className="w-6 h-6 text-red-600" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-light text-[#111] mb-2">Delete Enquiry?</h3>
-                  <p className="text-sm text-[#a0a0a0]">This action cannot be undone. The enquiry will be permanently deleted.</p>
+                  <h3 className="text-xl font-light text-[#0d1f3d] mb-2">Delete Enquiry?</h3>
+                  <p className="text-sm text-[#8a9bac]">This action cannot be undone. The enquiry will be permanently deleted.</p>
                 </div>
               </div>
               <div className="flex gap-3 justify-end">
@@ -409,10 +409,10 @@ export default function EnquiriesPage() {
               {/* Header */}
               <div className="sticky top-0 bg-white border-b border-[#E3E8ED] p-6 flex items-start justify-between">
                 <div className="flex-1">
-                  <h3 className="text-2xl font-light text-[#111] mb-2">{selectedEnquiry.name}</h3>
+                  <h3 className="text-2xl font-light text-[#0d1f3d] mb-2">{selectedEnquiry.name}</h3>
                   <a
                     href={`mailto:${selectedEnquiry.email}`}
-                    className="text-sm text-[#1B3A4C] hover:text-[#111] transition-colors"
+                    className="text-sm text-[#1B3A4C] hover:text-[#0d1f3d] transition-colors"
                   >
                     {selectedEnquiry.email}
                   </a>
@@ -436,7 +436,7 @@ export default function EnquiriesPage() {
                       <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-1">Club/Venue</p>
                       <div className="flex items-center gap-2">
                         <Building2 className="w-4 h-4 text-[#6B8FAB]" />
-                        <p className="text-sm text-[#111]">{selectedEnquiry.clubName}</p>
+                        <p className="text-sm text-[#0d1f3d]">{selectedEnquiry.clubName}</p>
                       </div>
                     </div>
                   )}
@@ -445,7 +445,7 @@ export default function EnquiriesPage() {
                       <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-1">City</p>
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4 text-[#6B8FAB]" />
-                        <p className="text-sm text-[#111]">{selectedEnquiry.city}</p>
+                        <p className="text-sm text-[#0d1f3d]">{selectedEnquiry.city}</p>
                       </div>
                     </div>
                   )}
@@ -454,7 +454,7 @@ export default function EnquiriesPage() {
                       <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-1">Fee</p>
                       <div className="flex items-center gap-2">
                         <DollarSign className="w-4 h-4 text-[#6B8FAB]" />
-                        <p className="text-sm text-[#111]">{selectedEnquiry.fee}</p>
+                        <p className="text-sm text-[#0d1f3d]">{selectedEnquiry.fee}</p>
                       </div>
                     </div>
                   )}
@@ -463,7 +463,7 @@ export default function EnquiriesPage() {
                       <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-1">Event Date</p>
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4 text-[#6B8FAB]" />
-                        <p className="text-sm text-[#111]">{selectedEnquiry.eventDate}</p>
+                        <p className="text-sm text-[#0d1f3d]">{selectedEnquiry.eventDate}</p>
                       </div>
                     </div>
                   )}
@@ -471,7 +471,7 @@ export default function EnquiriesPage() {
                     <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-1">Received</p>
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4 text-[#6B8FAB]" />
-                      <p className="text-sm text-[#111]">{formatDateTime(selectedEnquiry.createdAt)}</p>
+                      <p className="text-sm text-[#0d1f3d]">{formatDateTime(selectedEnquiry.createdAt)}</p>
                     </div>
                   </div>
                 </div>
@@ -480,7 +480,7 @@ export default function EnquiriesPage() {
                 <div className="pt-4 border-t border-[#E3E8ED]">
                   <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-3">Message</p>
                   <div className="bg-[#F8FAFB] border border-[#E3E8ED] p-4">
-                    <p className="text-sm text-[#111] leading-relaxed whitespace-pre-wrap">{selectedEnquiry.message || 'No message provided.'}</p>
+                    <p className="text-sm text-[#0d1f3d] leading-relaxed whitespace-pre-wrap">{selectedEnquiry.message || 'No message provided.'}</p>
                   </div>
                 </div>
 
@@ -503,7 +503,7 @@ export default function EnquiriesPage() {
                             </p>
                           </div>
                           <p className="text-xs text-[#6B8FAB] mb-1">Subject: {reply.subject}</p>
-                          <p className="text-sm text-[#111] leading-relaxed whitespace-pre-wrap">{reply.message}</p>
+                          <p className="text-sm text-[#0d1f3d] leading-relaxed whitespace-pre-wrap">{reply.message}</p>
                         </div>
                       ))}
                     </div>
@@ -517,14 +517,14 @@ export default function EnquiriesPage() {
                     value={replySubject}
                     onChange={(e) => setReplySubject(e.target.value)}
                     placeholder="Subject"
-                    className="w-full px-4 py-2 bg-white border border-[#E3E8ED] text-sm text-[#111] focus:outline-none focus:border-[#1B3A4C] mb-2"
+                    className="w-full px-4 py-2 bg-white border border-[#E3E8ED] text-sm text-[#0d1f3d] focus:outline-none focus:border-[#1B3A4C] mb-2"
                   />
                   <textarea
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
                     rows={4}
                     placeholder="Type your reply..."
-                    className="w-full px-4 py-3 bg-white border border-[#E3E8ED] text-sm text-[#111] placeholder-[#6B8FAB] focus:outline-none focus:border-[#1B3A4C] resize-none mb-3"
+                    className="w-full px-4 py-3 bg-white border border-[#E3E8ED] text-sm text-[#0d1f3d] placeholder-[#6B8FAB] focus:outline-none focus:border-[#1B3A4C] resize-none mb-3"
                   />
                   <button
                     onClick={handleSendReply}

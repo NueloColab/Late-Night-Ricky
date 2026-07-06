@@ -93,15 +93,15 @@ export default function SeoEditor() {
 
       <div className="mb-12">
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Global Settings</p>
-        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">SEO &amp; Meta</h1>
-        <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Page titles, descriptions, and favicon</p>
+        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">SEO &amp; Meta</h1>
+        <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Page titles, descriptions, and favicon</p>
       </div>
 
       <div className="max-w-3xl space-y-6">
         {/* Favicon */}
         <div className="bg-white border border-[#6B8FAB]/30 p-6">
           <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Branding</p>
-          <p className="text-sm text-[#a0a0a0] mb-4 font-semibold uppercase tracking-[0.5px]">The icon shown in browser tabs</p>
+          <p className="text-sm text-[#8a9bac] mb-4 font-semibold uppercase tracking-[0.5px]">The icon shown in browser tabs</p>
 
           <div className="relative w-16 h-16 bg-[#E3E8ED] rounded-xl overflow-hidden mb-4 border border-[#6B8FAB]/30">
             {faviconPath ? (
@@ -131,7 +131,7 @@ export default function SeoEditor() {
             <button
               onClick={() => faviconPath && saveSeo({ images: [faviconPath] })}
               disabled={saving || !faviconPath}
-              className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
+              className="px-5 py-2 border-2 border-[#0d1f3d] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save Favicon'}
             </button>
@@ -141,7 +141,7 @@ export default function SeoEditor() {
         {/* Page Meta */}
         <div className="bg-white border border-[#6B8FAB]/30 p-6">
           <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">SEO</p>
-          <p className="text-sm text-[#a0a0a0] mb-6 font-semibold uppercase tracking-[0.5px]">Titles and descriptions for each page</p>
+          <p className="text-sm text-[#8a9bac] mb-6 font-semibold uppercase tracking-[0.5px]">Titles and descriptions for each page</p>
 
           <div className="space-y-6">
             {merged.map((meta) => (
@@ -177,7 +177,7 @@ export default function SeoEditor() {
             <button
               onClick={() => saveSeo({ content: merged })}
               disabled={saving}
-              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
+              className="px-7 py-3 border-2 border-[#0d1f3d] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#0d1f3d] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save Meta'}
             </button>

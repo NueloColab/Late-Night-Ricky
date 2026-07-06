@@ -221,7 +221,7 @@ export default function QuoteDetailPage() {
     return (
       <div className="max-w-6xl mx-auto py-12 text-center">
         <AlertCircle size={32} className="mx-auto text-red-400 mb-4" />
-        <p className="text-[#a0a0a0] text-sm">Quote not found.</p>
+        <p className="text-[#8a9bac] text-sm">Quote not found.</p>
       </div>
     )
   }
@@ -249,7 +249,7 @@ export default function QuoteDetailPage() {
       {/* Back Link */}
       <Link
         href="/admin/quotes"
-        className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#111] transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-[#1B3A4C] hover:text-[#0d1f3d] transition-colors"
       >
         <ArrowLeft size={14} />
         <span>Back to Quotes</span>
@@ -261,9 +261,9 @@ export default function QuoteDetailPage() {
           <div>
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-px bg-[#6B8FAB]" />
-              <p className="text-xs uppercase tracking-widest text-[#a0a0a0]">Quote Details</p>
+              <p className="text-xs uppercase tracking-widest text-[#8a9bac]">Quote Details</p>
             </div>
-            <h1 className="text-3xl md:text-4xl font-light text-[#111] mb-2">
+            <h1 className="text-3xl md:text-4xl font-light text-[#0d1f3d] mb-2">
               {quote.quoteNumber || `QT-${String(quote.id).padStart(3, '0')}`}
             </h1>
             <div className="flex items-center gap-3 mt-3 flex-wrap">
@@ -275,7 +275,7 @@ export default function QuoteDetailPage() {
                 {currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1)}
               </span>
               {quote.emailSentAt && (
-                <span className="text-sm text-[#a0a0a0]">
+                <span className="text-sm text-[#8a9bac]">
                   Email sent on {new Date(quote.emailSentAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                 </span>
               )}
@@ -286,7 +286,7 @@ export default function QuoteDetailPage() {
           <div className="flex items-center gap-3 flex-wrap">
             <button
               onClick={() => setIsEditOpen(true)}
-              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#6B8FAB] text-[#111] hover:border-[#1B3A4C]"
+              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#6B8FAB] text-[#0d1f3d] hover:border-[#1B3A4C]"
             >
               <Edit2 size={14} />
               <span>Edit</span>
@@ -310,7 +310,7 @@ export default function QuoteDetailPage() {
             </button>
             <button
               onClick={handleDownloadPDF}
-              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#6B8FAB] text-[#111] hover:border-[#1B3A4C]"
+              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#6B8FAB] text-[#0d1f3d] hover:border-[#1B3A4C]"
             >
               <Download size={14} />
               <span>PDF</span>
@@ -353,22 +353,22 @@ export default function QuoteDetailPage() {
             <div className="p-2 bg-[#1B3A4C] text-white">
               <Users size={16} />
             </div>
-            <h3 className="text-lg font-light text-[#111]">Client Information</h3>
+            <h3 className="text-lg font-light text-[#0d1f3d]">Client Information</h3>
           </div>
           <div className="space-y-3">
             <div>
-              <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-1">Name</p>
-              <p className="text-base font-medium text-[#111]">{quote.clientName || '—'}</p>
+              <p className="text-xs text-[#8a9bac] uppercase tracking-widest mb-1">Name</p>
+              <p className="text-base font-medium text-[#0d1f3d]">{quote.clientName || '—'}</p>
             </div>
             {quote.clientCompany && (
               <div>
-                <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-1">Company</p>
-                <p className="text-base text-[#111]">{quote.clientCompany}</p>
+                <p className="text-xs text-[#8a9bac] uppercase tracking-widest mb-1">Company</p>
+                <p className="text-base text-[#0d1f3d]">{quote.clientCompany}</p>
               </div>
             )}
             <div>
-              <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-1">Email</p>
-              <p className="text-base text-[#111]">{quote.clientEmail || '—'}</p>
+              <p className="text-xs text-[#8a9bac] uppercase tracking-widest mb-1">Email</p>
+              <p className="text-base text-[#0d1f3d]">{quote.clientEmail || '—'}</p>
             </div>
           </div>
         </div>
@@ -378,22 +378,22 @@ export default function QuoteDetailPage() {
             <div className="p-2 bg-[#1B3A4C] text-white">
               <FolderOpen size={16} />
             </div>
-            <h3 className="text-lg font-light text-[#111]">Project Details</h3>
+            <h3 className="text-lg font-light text-[#0d1f3d]">Project Details</h3>
           </div>
           <div className="space-y-3">
             <div>
-              <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-1">Project Title</p>
-              <p className="text-base font-medium text-[#111]">{quote.projectTitle || '—'}</p>
+              <p className="text-xs text-[#8a9bac] uppercase tracking-widest mb-1">Project Title</p>
+              <p className="text-base font-medium text-[#0d1f3d]">{quote.projectTitle || '—'}</p>
             </div>
             <div>
-              <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-1">Date Created</p>
-              <p className="text-base text-[#111]">
+              <p className="text-xs text-[#8a9bac] uppercase tracking-widest mb-1">Date Created</p>
+              <p className="text-base text-[#0d1f3d]">
                 {new Date(quote.createdAt).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
             </div>
             <div>
-              <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-1">Valid Until</p>
-              <p className={`text-base ${isExpired ? 'text-red-600 font-medium' : 'text-[#111]'}`}>
+              <p className="text-xs text-[#8a9bac] uppercase tracking-widest mb-1">Valid Until</p>
+              <p className={`text-base ${isExpired ? 'text-red-600 font-medium' : 'text-[#0d1f3d]'}`}>
                 {validUntil.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
                 {isExpired && <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-red-50 text-red-600">Expired</span>}
               </p>
@@ -409,25 +409,25 @@ export default function QuoteDetailPage() {
             <div className="p-2 bg-[#1B3A4C] text-white">
               <FileText size={16} />
             </div>
-            <h3 className="text-lg font-light text-[#111]">Services</h3>
+            <h3 className="text-lg font-light text-[#0d1f3d]">Services</h3>
           </div>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-[#F8FAFB] border-b border-[#E3E8ED]">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-[#111] uppercase tracking-widest">Service</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-[#111] uppercase tracking-widest">Category</th>
-                <th className="px-6 py-4 text-right text-xs font-semibold text-[#111] uppercase tracking-widest">Price</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Service</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Category</th>
+                <th className="px-6 py-4 text-right text-xs font-semibold text-[#0d1f3d] uppercase tracking-widest">Price</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E3E8ED]">
               {lineItems.map((item, index) => (
                 <tr key={index} className="hover:bg-[#F8FAFB] transition-colors">
                   <td className="px-6 py-4">
-                    <p className="text-sm font-medium text-[#111]">{item.serviceName || item.description || 'Service'}</p>
+                    <p className="text-sm font-medium text-[#0d1f3d]">{item.serviceName || item.description || 'Service'}</p>
                     {item.description && item.serviceName && (
-                      <p className="text-xs text-[#a0a0a0] mt-1 leading-relaxed">{item.description}</p>
+                      <p className="text-xs text-[#8a9bac] mt-1 leading-relaxed">{item.description}</p>
                     )}
                   </td>
                   <td className="px-6 py-4">
@@ -437,7 +437,7 @@ export default function QuoteDetailPage() {
                       </span>
                     )}
                   </td>
-                  <td className="px-6 py-4 text-sm font-semibold text-[#111] text-right">
+                  <td className="px-6 py-4 text-sm font-semibold text-[#0d1f3d] text-right">
                     {formatCurrency(item.price || item.amount || 0)}
                   </td>
                 </tr>
@@ -453,31 +453,31 @@ export default function QuoteDetailPage() {
           <div className="p-2 bg-[#1B3A4C] text-white">
             <Receipt size={16} />
           </div>
-          <h3 className="text-lg font-light text-[#111]">Pricing Summary</h3>
+          <h3 className="text-lg font-light text-[#0d1f3d]">Pricing Summary</h3>
         </div>
         <div className="max-w-md ml-auto space-y-3">
           <div className="flex justify-between items-center text-sm">
-            <span className="text-[#a0a0a0]">Subtotal:</span>
-            <span className="font-semibold text-[#111]">{formatCurrency(quote.subtotal)}</span>
+            <span className="text-[#8a9bac]">Subtotal:</span>
+            <span className="font-semibold text-[#0d1f3d]">{formatCurrency(quote.subtotal)}</span>
           </div>
           <div className="flex justify-between items-center text-sm">
-            <span className="text-[#a0a0a0]">VAT ({quote.taxRate}%):</span>
-            <span className="font-semibold text-[#111]">{formatCurrency((quote.subtotal * quote.taxRate) / 100)}</span>
+            <span className="text-[#8a9bac]">VAT ({quote.taxRate}%):</span>
+            <span className="font-semibold text-[#0d1f3d]">{formatCurrency((quote.subtotal * quote.taxRate) / 100)}</span>
           </div>
-          <div className="flex justify-between items-center text-lg font-bold pt-3 border-t-2 border-[#111]">
+          <div className="flex justify-between items-center text-lg font-bold pt-3 border-t-2 border-[#0d1f3d]">
             <span className="text-[#E3E8ED]">Total:</span>
             <span className="text-[#E3E8ED]">{formatCurrency(quote.total)}</span>
           </div>
           {quote.paymentMethod && (
             <div className="flex justify-between items-center text-sm pt-3 border-t border-[#E3E8ED]">
-              <span className="text-[#a0a0a0]">Payment Method:</span>
-              <span className="font-medium text-[#111] capitalize">{(quote.paymentMethod || '').replace(/-/g, ' ')}</span>
+              <span className="text-[#8a9bac]">Payment Method:</span>
+              <span className="font-medium text-[#0d1f3d] capitalize">{(quote.paymentMethod || '').replace(/-/g, ' ')}</span>
             </div>
           )}
           {quote.paymentTermsLabel && (
             <div className="flex justify-between items-center text-sm pt-3 border-t border-[#E3E8ED]">
-              <span className="text-[#a0a0a0]">Payment Terms:</span>
-              <span className="font-semibold text-[#111]">{quote.paymentTermsLabel}</span>
+              <span className="text-[#8a9bac]">Payment Terms:</span>
+              <span className="font-semibold text-[#0d1f3d]">{quote.paymentTermsLabel}</span>
             </div>
           )}
         </div>
@@ -490,9 +490,9 @@ export default function QuoteDetailPage() {
             <div className="p-2 bg-[#1B3A4C] text-white">
               <FileText size={16} />
             </div>
-            <h3 className="text-lg font-light text-[#111]">Notes & Terms</h3>
+            <h3 className="text-lg font-light text-[#0d1f3d]">Notes & Terms</h3>
           </div>
-          <p className="text-sm text-[#a0a0a0] whitespace-pre-wrap leading-relaxed">{quote.notes}</p>
+          <p className="text-sm text-[#8a9bac] whitespace-pre-wrap leading-relaxed">{quote.notes}</p>
         </div>
       )}
 
@@ -502,7 +502,7 @@ export default function QuoteDetailPage() {
           <div className="p-2 bg-[#1B3A4C] text-white">
             <Clock size={16} />
           </div>
-          <h3 className="text-lg font-light text-[#111]">Update Status</h3>
+          <h3 className="text-lg font-light text-[#0d1f3d]">Update Status</h3>
         </div>
         <div className="flex flex-wrap gap-3">
           {['draft', 'sent', 'accepted', 'declined'].map((status) => {
@@ -533,18 +533,18 @@ export default function QuoteDetailPage() {
             <div className="p-2 bg-[#1B3A4C] text-white">
               <CheckCircle size={16} />
             </div>
-            <h3 className="text-lg font-light text-[#111]">Client Accept Link</h3>
+            <h3 className="text-lg font-light text-[#0d1f3d]">Client Accept Link</h3>
           </div>
           <div className="flex items-center gap-3">
             <input
               type="text"
               readOnly
               value={`${typeof window !== 'undefined' ? window.location.origin : ''}/quote/accept?token=${quote.acceptToken}`}
-              className="flex-1 px-4 py-2 text-sm border border-[#E3E8ED] bg-[#F8FAFB] text-[#a0a0a0] focus:outline-none"
+              className="flex-1 px-4 py-2 text-sm border border-[#E3E8ED] bg-[#F8FAFB] text-[#8a9bac] focus:outline-none"
             />
             <button
               onClick={handleCopyAcceptLink}
-              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#E3E8ED] text-[#111] hover:border-[#1B3A4C]"
+              className="px-4 py-2 text-sm font-medium transition-all flex items-center gap-2 bg-white border border-[#E3E8ED] text-[#0d1f3d] hover:border-[#1B3A4C]"
             >
               <Copy size={14} />
               <span>{copiedLink ? 'Copied!' : 'Copy'}</span>

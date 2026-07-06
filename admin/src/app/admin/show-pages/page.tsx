@@ -124,16 +124,16 @@ export default function ShowPagesAdmin() {
     <div className="max-w-[1200px] mx-auto">
       <div className="mb-10">
         <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">CMS</p>
-        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">Show Pages</h1>
-        <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Manage individual show detail pages</p>
+        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#0d1f3d] tracking-[-2px] uppercase leading-[0.95]">Show Pages</h1>
+        <p className="text-sm text-[#8a9bac] mt-4 font-semibold uppercase tracking-[0.5px]">Manage individual show detail pages</p>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-8">
         {/* List */}
         <div className="lg:col-span-1">
-          <div className="bg-white border-2 border-[#111] p-6">
+          <div className="bg-white border-2 border-[#0d1f3d] p-6">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-sm font-semibold tracking-[1.5px] uppercase text-[#111]">Pages</h2>
+              <h2 className="text-sm font-semibold tracking-[1.5px] uppercase text-[#0d1f3d]">Pages</h2>
               <button onClick={startCreate} className="text-xs font-semibold tracking-[1px] uppercase px-4 py-2 bg-[#E3E8ED] text-white hover:bg-[#1B3A4C] transition">
                 + New
               </button>
@@ -149,12 +149,12 @@ export default function ShowPagesAdmin() {
                     key={page.id}
                     onClick={() => startEdit(page)}
                     className={`p-4 border-2 cursor-pointer transition ${
-                      editing?.id === page.id ? 'border-[#111] bg-[#E3E8ED]' : 'border-[#E3E8ED] hover:border-[#6B8FAB]'
+                      editing?.id === page.id ? 'border-[#0d1f3d] bg-[#E3E8ED]' : 'border-[#E3E8ED] hover:border-[#6B8FAB]'
                     }`}
                   >
                     <div className="flex justify-between items-start">
                       <div>
-                        <p className="font-semibold text-[15px] text-[#111]">{page.title}</p>
+                        <p className="font-semibold text-[15px] text-[#0d1f3d]">{page.title}</p>
                         <p className="text-xs text-[#6B8FAB] mt-1">/{page.slug}</p>
                       </div>
                       {!page.isActive && (
@@ -170,8 +170,8 @@ export default function ShowPagesAdmin() {
 
         {/* Editor */}
         <div className="lg:col-span-2">
-          <div className="bg-white border-2 border-[#111] p-6 md:p-8">
-            <h2 className="text-sm font-semibold tracking-[1.5px] uppercase text-[#111] mb-6">
+          <div className="bg-white border-2 border-[#0d1f3d] p-6 md:p-8">
+            <h2 className="text-sm font-semibold tracking-[1.5px] uppercase text-[#0d1f3d] mb-6">
               {editing ? 'Edit Show Page' : 'New Show Page'}
             </h2>
 
@@ -183,7 +183,7 @@ export default function ShowPagesAdmin() {
                   value={form.slug}
                   onChange={(e) => setForm({ ...form, slug: e.target.value })}
                   placeholder="e.g. sidemen"
-                  className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
+                  className="w-full border-2 border-[#0d1f3d] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                 />
                 <p className="text-xs text-[#6B8FAB] mt-1">Used in URL: /show-{'{slug}'}</p>
               </div>
@@ -194,7 +194,7 @@ export default function ShowPagesAdmin() {
                   type="text"
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
-                  className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
+                  className="w-full border-2 border-[#0d1f3d] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                 />
               </div>
 
@@ -205,7 +205,7 @@ export default function ShowPagesAdmin() {
                     type="text"
                     value={form.venue}
                     onChange={(e) => setForm({ ...form, venue: e.target.value })}
-                    className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
+                    className="w-full border-2 border-[#0d1f3d] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                   />
                 </div>
                 <div>
@@ -214,7 +214,7 @@ export default function ShowPagesAdmin() {
                     type="text"
                     value={form.location}
                     onChange={(e) => setForm({ ...form, location: e.target.value })}
-                    className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
+                    className="w-full border-2 border-[#0d1f3d] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                   />
                 </div>
               </div>
@@ -227,7 +227,7 @@ export default function ShowPagesAdmin() {
                     value={form.season}
                     onChange={(e) => setForm({ ...form, season: e.target.value })}
                     placeholder="e.g. Spring / Summer 2025"
-                    className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
+                    className="w-full border-2 border-[#0d1f3d] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                   />
                 </div>
                 <div>
@@ -237,7 +237,7 @@ export default function ShowPagesAdmin() {
                     value={form.setLength}
                     onChange={(e) => setForm({ ...form, setLength: e.target.value })}
                     placeholder="e.g. 4 Hour Set"
-                    className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
+                    className="w-full border-2 border-[#0d1f3d] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                   />
                 </div>
               </div>
@@ -249,7 +249,7 @@ export default function ShowPagesAdmin() {
                   value={form.heroImage}
                   onChange={(e) => setForm({ ...form, heroImage: e.target.value })}
                   placeholder="/assets/ricky-hero-new.jpg"
-                  className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
+                  className="w-full border-2 border-[#0d1f3d] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition"
                 />
               </div>
 
@@ -259,7 +259,7 @@ export default function ShowPagesAdmin() {
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   rows={4}
-                  className="w-full border-2 border-[#111] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition resize-y"
+                  className="w-full border-2 border-[#0d1f3d] px-4 py-3 text-[15px] bg-transparent outline-none focus:border-[#1B3A4C] transition resize-y"
                 />
               </div>
             </div>
