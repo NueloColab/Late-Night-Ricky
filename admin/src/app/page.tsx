@@ -642,33 +642,6 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* Navigation columns — matches site sections, 4 columns */}
-          <div className="garrix-footer-grid">
-            <div className="garrix-footer-col">
-              <h4>Navigate</h4>
-              <a href="/">Home</a>
-              <a href="/about">About</a>
-              <a href="/#moments">Late Night Moments</a>
-            </div>
-            <div className="garrix-footer-col">
-              <h4>Music</h4>
-              <a href="/#radio">Music & Mixes</a>
-              <a href="/share-music">Share Your Music</a>
-              <a href="/assets/press-pack.pdf" target="_blank" rel="noopener noreferrer">Press Pack</a>
-            </div>
-            <div className="garrix-footer-col">
-              <h4>Performances</h4>
-              <a href="/#artists">Artists</a>
-              <a href="/#venues">Worldwide Performances</a>
-              <a href="/#brands">Trusted by Global Brands</a>
-            </div>
-            <div className="garrix-footer-col">
-              <h4>Contact</h4>
-              <a href="/contact">Contact Us</a>
-              <a href="/#contact-form">Bookings</a>
-            </div>
-          </div>
-
           {/* Bottom bar */}
           <div className="garrix-footer-bottom">
             <div className="garrix-footer-logo">
