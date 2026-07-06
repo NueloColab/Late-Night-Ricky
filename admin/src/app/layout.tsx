@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display, Montserrat } from "next/font/google";
 import { getSeoMeta, getFavicon } from "@/lib/cms";
+import PageViewTracker from "@/components/PageViewTracker";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -25,7 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <meta name="version" content="v231" />
       </head>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        <PageViewTracker />
+        {children}
+      </body>
     </html>
   );
 }

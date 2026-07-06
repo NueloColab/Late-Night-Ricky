@@ -35,8 +35,9 @@ export async function GET() {
     // Site visits
     const [totalViews] = await db.select({ total: sql<number>`COALESCE(sum(views), 0)::int` }).from(pageViews);
     const [totalUnique] = await db.select({ total: sql<number>`COALESCE(sum(unique_visitors), 0)::int` }).from(pageViews);
-    const [todayViews] = await db.select({ total: sql<number>`COALESCE(views, 0)::int` }).from(pageViews).where(eq(sql`date`, sql`CURRENT_DATE`));
-    const [todayUnique] = await db.select({ total: sql<number>`COALESCE(unique_visitors, 0)::int` }).from(pageViews).where(eq(sql`date`, sql`CURRENT_DATE`));
+    const today = new Date().toISOString().split('T')[0];
+    const [todayViews] = await db.select({ total: sql<number>`COALESCE(views, 0)::int` }).from(pageViews).where(eq(pageViews.date, today));
+    const [todayUnique] = await db.select({ total: sql<number>`COALESCE(unique_visitors, 0)::int` }).from(pageViews).where(eq(pageViews.date, today));
     const dailyViews = await db.select({ date: pageViews.date, views: pageViews.views, uniqueVisitors: pageViews.uniqueVisitors }).from(pageViews).orderBy(desc(pageViews.date)).limit(30);
 
     return NextResponse.json({
