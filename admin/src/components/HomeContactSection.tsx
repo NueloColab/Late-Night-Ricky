@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 export default function HomeContactSection() {
   const [contactInfo, setContactInfo] = useState({
     email: 'samir@wearemediahive.com',
+    heading: 'Get in Touch',
     image: '/assets/ricky-contact-studio-2.jpg',
     formEnabled: true,
   });
@@ -35,6 +36,8 @@ export default function HomeContactSection() {
         if (contactSection?.content) {
           const c = typeof contactSection.content === 'string' ? JSON.parse(contactSection.content) : contactSection.content;
           if (c.bookingEmail) setContactInfo(prev => ({ ...prev, email: c.bookingEmail }));
+          if (c.heading) setContactInfo(prev => ({ ...prev, heading: c.heading }));
+          if (c.image) setContactInfo(prev => ({ ...prev, image: c.image }));
           if (c.instagramUrl) setSocialLinks(prev => ({ ...prev, instagram: c.instagramUrl }));
           if (c.youtubeUrl) setSocialLinks(prev => ({ ...prev, youtube: c.youtubeUrl }));
           if (c.spotifyUrl) setSocialLinks(prev => ({ ...prev, spotify: c.spotifyUrl }));
@@ -126,7 +129,7 @@ export default function HomeContactSection() {
         <div className="w-full max-w-[600px]">
           {!expanded ? (
             <div className="text-left">
-              <span className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#d4c4a8]/80 font-medium block mb-4">Get in Touch</span>
+              <span className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#d4c4a8]/80 font-medium block mb-4">{contactInfo.heading || 'Get in Touch'}</span>
               <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-6" style={{ fontFamily: "'Oswald', sans-serif" }}>CONTACT</h2>
               <button
                 onClick={() => setExpanded(true)}

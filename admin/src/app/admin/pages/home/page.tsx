@@ -369,6 +369,7 @@ export default function HomeEditor() {
           ) : selectedSection === 'contact_section' ? (
             <SectionEditor section={getSection('contact_section')} label="Contact" fields={[
               { key: 'heading', label: 'Heading', type: 'text' },
+              { key: 'image', label: 'Background Image', type: 'image' },
               { key: 'bookingEmail', label: 'Booking Email', type: 'text' },
               { key: 'instagram', label: 'Instagram', type: 'text' },
               { key: 'instagramUrl', label: 'Instagram URL', type: 'text' },
