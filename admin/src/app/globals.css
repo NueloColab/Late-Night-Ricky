@@ -322,6 +322,9 @@ html {
 }
 
 .lnr-page-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
 }
 
 body {
