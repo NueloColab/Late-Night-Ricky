@@ -666,7 +666,6 @@ export default async function HomePage() {
               <h4>Contact</h4>
               <a href="/contact">Contact Us</a>
               <a href="/#contact-form">Bookings</a>
-              <a href="/admin">Admin Login</a>
             </div>
           </div>
 
@@ -679,6 +678,7 @@ export default async function HomePage() {
             <div className="garrix-footer-links">
               <a href="/privacy">Privacy</a>
               <a href="/terms">Terms</a>
+              <a href="/admin">Admin Login</a>
             </div>
           </div>
           <div className="garrix-footer-powered">
