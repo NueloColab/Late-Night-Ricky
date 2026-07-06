@@ -81,7 +81,7 @@ const mediaPages = [
     sections: ['Uploads', 'Organise'],
   },
   {
-    label: 'Submissions',
+    label: 'Music Submissions',
     href: '/admin/submissions',
     description: 'Music submissions inbox',
     icon: FileText,
