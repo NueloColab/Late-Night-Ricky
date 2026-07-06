@@ -11,7 +11,7 @@ interface MomentData {
   video?: string;
 }
 
-const momentsData: MomentData[] = [
+const DEFAULT_MOMENTS: MomentData[] = [
   {
     id: 'misfits',
     title: 'Misfits Boxing',
@@ -57,7 +57,8 @@ const momentsData: MomentData[] = [
   },
 ];
 
-export default function LateNightMoments() {
+export default function LateNightMoments({ items }: { items?: MomentData[] }) {
+  const momentsData = items || DEFAULT_MOMENTS;
   const [openModal, setOpenModal] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const galleryRef = useRef<HTMLDivElement>(null);

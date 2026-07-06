@@ -86,10 +86,13 @@ export default async function HomePage() {
   let shows: any[] = DEFAULT_SHOWS; // used by CMS fallback, kept for future dynamic rendering
   let clients: string[] = DEFAULT_CLIENTS;
   let tracks = DEFAULT_TRACKS;
-  const heroImage = '/assets/ricky-hero-studio.jpg';
+  let heroImage = '/assets/ricky-hero-studio.jpg';
   let heroLogo = '/assets/ricky-logo.png';
   let heroGrayscale = true;
-  const radioImage = '/assets/ricky-music-jacket-sm.jpg';
+  let heroTagline = 'Grammy Winning Producer | International DJ';
+  let heroBackgroundSize = 'cover';
+  let heroBackgroundPosition = '70% center';
+  let radioImage = '/assets/ricky-music-jacket-sm.jpg';
   let radioHeadline = 'Music & Mixes';
   let radioLabel = 'Listen & Download';
   let radioDescription = 'Preview snippets of the latest releases. Click play to hear 30-second previews, then stream or download the full tracks on Spotify, Apple Music and YouTube.';
@@ -111,8 +114,12 @@ export default async function HomePage() {
   let aboutBio3 = 'Ricky has embraced his British and South Asian Roots working with some legendary South Asian talent such as DIVINE and rising British R&B star H33RA as well as showcasing Punjabi artists such as Diljit Dosanjh, Karan Aujla and Sidhu Moosewala to mainstream audiences.';
   let aboutBio4 = 'With many unreleased tracks in the works, plans to further expand his brand and collaborations with other artists, there is a lot more to come this year.';
   let aboutImage = '/assets/about-ricky-jacket.jpg';
+  let aboutQuote = '"The best DJ I\'ve heard."';
+  let aboutQuoteAttribution = 'Ronaldo';
+  let aboutHeadingImage = '/assets/about-text-cream.png';
+  let rickyTextImage = '/assets/ricky-text-cream.png';
 
-  const productionCredits = [
+  let productionCredits = [
     'Chris Brown', 'Kendrick Lamar', 'NAV', 'Divine',
     'Potter Payper', 'Swae Lee', 'N.O.R.E', 'Styles P',
     'Raekwon', 'RZA', 'Jim Jones', 'D Smoke',
@@ -120,8 +127,57 @@ export default async function HomePage() {
     'Lil Keed', 'Ivorian Doll', 'Safe', 'Plus Many More'
   ];
 
-  // Suppress unused-variable warnings for CMS values not yet used in new layout
-  void heroGrayscale; void reachOutImage; void reachOutCta; void pressPack; void clientsTitle; void clients; void partnersQuote; void partnersAttribution; void partnersDescription;
+  // CMS-driven data for new sections (hardcoded defaults as fallback)
+  let momentsItems = [
+    { id: 'misfits', title: 'Misfits Boxing', subtitle: 'Ministry of Sound, London', description: 'Headlining the biggest influencer boxing event in the UK.', images: ['/assets/highlight-studio.jpg', '/assets/highlight-arena.jpg', '/assets/moment-ibiza.jpg'] },
+    { id: 'o2', title: 'O2 Arena', subtitle: 'The O2, London', description: 'Performing to a sold-out crowd at one of London\'s most iconic venues.', images: ['/assets/highlight-arena.jpg', '/assets/highlight-studio.jpg', '/assets/press-bg2.jpg'] },
+    { id: 'ibiza', title: 'Ibiza Summer', subtitle: 'Ushuaïa, Ibiza', description: 'Summer residency at the world\'s most iconic open-air club.', images: ['/assets/moment-ibiza.jpg', '/assets/highlight-club.jpg', '/assets/highlight-misfits.jpg'] },
+    { id: 'private', title: 'Private Events', subtitle: 'Worldwide', description: 'Exclusive performances for A-list celebrities and private gatherings across the globe.', images: ['/assets/press-bg2.jpg', '/assets/highlight-club.jpg', '/assets/highlight-studio.jpg'] },
+    { id: 'backtoback', title: 'Back to Back', subtitle: 'Private Events, London', description: 'Intimate back-to-back sets with some of the biggest names in the industry.', images: ['/assets/highlight-club.jpg', '/assets/highlight-misfits.jpg', '/assets/press-bg2.jpg'] },
+    { id: 'ibizarocks', title: 'Ibiza Rocks', subtitle: 'Ibiza Rocks, Ibiza', description: 'High-energy daytime pool parties at Ibiza Rocks.', images: ['/assets/highlight-misfits.jpg', '/assets/moment-ibiza.jpg', '/assets/highlight-arena.jpg'] },
+  ];
+  const performersData = {
+    heading: 'Has Performed With...',
+    subtext: 'And many more...',
+    row1Images: ['/assets/highlight-studio.jpg', '/assets/highlight-arena.jpg', '/assets/moment-ibiza.jpg', '/assets/press-bg2.jpg', '/assets/highlight-club.jpg', '/assets/highlight-misfits.jpg'],
+    row2Images: ['/assets/highlight-misfits.jpg', '/assets/highlight-club.jpg', '/assets/press-bg2.jpg', '/assets/moment-ibiza.jpg', '/assets/highlight-arena.jpg', '/assets/highlight-studio.jpg'],
+    headingImage: '/assets/ricky-text-cream.png',
+  };
+  const venuesData = {
+    heading: 'Worldwide Performances',
+    backgroundImage: '/assets/venues-bg.jpg',
+    venues: ['LIV (Miami)', 'WALL (Miami)', 'TAPE (London)', 'HAKKASAN (Las Vegas)', 'MOVIDA (Dubai)', "JIMMY'Z (Monte Carlo)", 'MINISTRY OF SOUND (London)', '1 OAK (New York)', 'BYBLOS (Milan)', 'PACHA (Ibiza)', 'ARMANI (Dubai)', 'MANDALAY BAY (Las Vegas)', 'TEMPLE (San Francisco)', 'POPPY (Los Angeles)', 'CIRQUE LE SOIR (London)', 'HIGHLIGHT ROOM (Los Angeles)', "TEDDY'S @ ROOSEVELT (Los Angeles)", 'DELILAH (Los Angeles)', 'GIBSON (Frankfurt)', 'LIO (Ibiza)', 'STUDIO PARIS (Chicago)', 'PREMIER @ BORGATA (Atlantic City)', 'PARQ (San Diego)', 'BOOTSY BELLOWS (Los Angeles)', 'WARWICK (Los Angeles)', 'LAVO (New York)', 'TAO (New York)', 'UP & DOWN (New York)', 'LIBERTINE (London)', 'SCANDAL (London)', 'TOY ROOM (Dubai)', '1 OAK (Dubai)', 'TAO (Las Vegas)', 'BAOLI (Cannes)', 'SHOKO (Barcelona)', 'LASTA (Serbia)', 'REX ROOMS (London)', "HARRIET'S (Los Angeles)", 'VIP ROOM (St. Tropez)', 'BON BONNIERE (Mykonos)', 'DRAMA (London)', 'DEAR DARLING (London)', 'TRAMP (London)', 'SPIRITO (Brussels)', 'CUCKOO CLUB (London)', 'RAFFLES (London)', 'SUBOIS (Montreal)', 'P1 (Munich)', "ZELO'S (Monte Carlo)", 'WIRELESS FESTIVAL (UK)', 'READING & LEEDS FESTIVAL (UK)', 'USHAIA (Ibiza)', 'ABU DHABI GRAND PRIX', 'O2 ARENA (London)', 'FESTIVAL DE CANNES'],
+  };
+  const brandsData = {
+    heading: 'Trusted by Global Brands',
+    backgroundImage: '/assets/ricky-brands-gold.png',
+    logos: [
+      { name: 'Cartier', src: '/assets/logo-cartier-trimmed.png' },
+      { name: 'F1', src: '/assets/logo-f1-trimmed.png' },
+      { name: 'Coca-Cola', src: '/assets/logo-coca-cola-trimmed.png' },
+      { name: 'Ciroc', src: '/assets/logo-ciroc-trimmed.png' },
+      { name: 'Dior', src: '/assets/logo-dior-trimmed.png' },
+      { name: 'Patek Philippe', src: '/assets/logo-patek-trimmed.png' },
+      { name: 'Prime', src: '/assets/logo-prime-trimmed.png' },
+      { name: 'Louis Vuitton', src: '/assets/logo-louis-vuitton-trimmed.png' },
+      { name: 'Misfits Boxing', src: '/assets/logo-mf-boxing-v2-trimmed.png' },
+      { name: 'Festival de Cannes', src: '/assets/logo-cannes-trimmed.png' },
+    ],
+  };
+  const footerData = {
+    copyright: 'Late Night Ricky',
+    poweredBy: 'Nuelo CoLab',
+    poweredByUrl: 'https://nuelo.co',
+    logo: '/assets/ricky-logo.png',
+    links: [
+      { text: 'Privacy', href: '/privacy' },
+      { text: 'Terms', href: '/terms' },
+      { text: 'Admin Login', href: '/admin' },
+    ],
+  };
+
+  // Suppress unused-variable warnings for CMS values not yet fully used
+  void clients; void pressPack;
   try {
     const [dbCards, dbNames, dbTracks, dbSections, dbAboutSections] = await Promise.all([
       getShowCards(), getClientNames(), getTracks(), getSiteSections('home'), getSiteSections('about'),
@@ -130,20 +186,23 @@ export default async function HomePage() {
       const heroSection = dbSections.find((s: any) => s.section === 'hero');
       if (heroSection?.content) {
         const c = typeof heroSection.content === 'string' ? JSON.parse(heroSection.content) : heroSection.content;
-        // if (c.image) heroImage = c.image; // DISABLED: use code default to prevent CMS override
         if (c.logo) heroLogo = c.logo;
         if (c.grayscale !== undefined) heroGrayscale = c.grayscale;
+        if (c.tagline) heroTagline = c.tagline;
+        if (c.image) heroImage = c.image;
+        if (c.backgroundSize) heroBackgroundSize = c.backgroundSize;
+        if (c.backgroundPosition) heroBackgroundPosition = c.backgroundPosition;
       }
       const radioSection = dbSections.find((s: any) => s.section === 'radio');
       if (radioSection?.content) {
         const c = typeof radioSection.content === 'string' ? JSON.parse(radioSection.content) : radioSection.content;
         if (c.headline) radioHeadline = c.headline;
         if (c.description) radioDescription = c.description;
-        // if (c.image) radioImage = c.image;  // OVERRIDE: use new jacket photo
         if (c.label) radioLabel = c.label;
         if (c.spotifyUrl) spotifyUrl = c.spotifyUrl;
         if (c.appleMusicUrl) appleMusicUrl = c.appleMusicUrl;
         if (c.youtubeUrl) youtubeUrl = c.youtubeUrl;
+        if (c.image) radioImage = c.image;
       }
       const partnersSection = dbSections.find((s: any) => s.section === 'partners');
       if (partnersSection?.content) {
@@ -169,6 +228,11 @@ export default async function HomePage() {
           if (c.bio3) aboutBio3 = c.bio3;
           if (c.bio4) aboutBio4 = c.bio4;
           if (c.image) aboutImage = c.image;
+          if (c.quote) aboutQuote = c.quote;
+          if (c.quoteAttribution) aboutQuoteAttribution = c.quoteAttribution;
+          if (c.aboutHeadingImage) aboutHeadingImage = c.aboutHeadingImage;
+          if (c.rickyTextImage) rickyTextImage = c.rickyTextImage;
+          if (c.productionCredits) productionCredits = c.productionCredits;
         }
       }
       const shareMusicSection = dbSections.find((s: any) => s.section === 'share_music');
@@ -183,9 +247,61 @@ export default async function HomePage() {
         if (c.image) reachOutImage = c.image;
         if (c.cta) reachOutCta = c.cta;
       }
+
+      // New CMS-driven sections
+      const momentsSection = dbSections.find((s: any) => s.section === 'moments');
+      if (momentsSection?.content) {
+        const c = typeof momentsSection.content === 'string' ? JSON.parse(momentsSection.content) : momentsSection.content;
+        if (c.items && Array.isArray(c.items)) {
+          momentsItems = c.items.map((item: any) => ({
+            id: item.id || String(Math.random()),
+            title: item.title || '',
+            subtitle: item.subtitle || '',
+            description: item.description || '',
+            images: item.images || [],
+            video: item.video || undefined,
+          }));
+        }
+      }
+
+      const performersSection = dbSections.find((s: any) => s.section === 'performers');
+      if (performersSection?.content) {
+        const c = typeof performersSection.content === 'string' ? JSON.parse(performersSection.content) : performersSection.content;
+        if (c.heading) performersData.heading = c.heading;
+        if (c.subtext) performersData.subtext = c.subtext;
+        if (c.row1Images) performersData.row1Images = c.row1Images;
+        if (c.row2Images) performersData.row2Images = c.row2Images;
+        if (c.headingImage) performersData.headingImage = c.headingImage;
+      }
+
+      const venuesSection = dbSections.find((s: any) => s.section === 'venues');
+      if (venuesSection?.content) {
+        const c = typeof venuesSection.content === 'string' ? JSON.parse(venuesSection.content) : venuesSection.content;
+        if (c.heading) venuesData.heading = c.heading;
+        if (c.backgroundImage) venuesData.backgroundImage = c.backgroundImage;
+        if (c.venues && Array.isArray(c.venues)) venuesData.venues = c.venues;
+      }
+
+      const brandsSection = dbSections.find((s: any) => s.section === 'brands');
+      if (brandsSection?.content) {
+        const c = typeof brandsSection.content === 'string' ? JSON.parse(brandsSection.content) : brandsSection.content;
+        if (c.heading) brandsData.heading = c.heading;
+        if (c.backgroundImage) brandsData.backgroundImage = c.backgroundImage;
+        if (c.logos && Array.isArray(c.logos)) brandsData.logos = c.logos;
+      }
+
+      const footerSection = dbSections.find((s: any) => s.section === 'footer');
+      if (footerSection?.content) {
+        const c = typeof footerSection.content === 'string' ? JSON.parse(footerSection.content) : footerSection.content;
+        if (c.copyright) footerData.copyright = c.copyright;
+        if (c.poweredBy) footerData.poweredBy = c.poweredBy;
+        if (c.poweredByUrl) footerData.poweredByUrl = c.poweredByUrl;
+        if (c.logo) footerData.logo = c.logo;
+        if (c.links) footerData.links = c.links;
+      }
     }
     if (dbTracks.length > 0) {
-      tracks = dbTracks.map((t: any) => ({ title: t.title, time: t.duration || '0:30', src: t.filePath })).slice(0, 4);
+      tracks = dbTracks.map((t: any) => ({ title: t.title, time: t.duration || '0:30', src: t.filePath, cover: t.coverPath || undefined })).slice(0, 5);
     }
     if (dbCards.length > 0) {
       shows = dbCards.map((c: any) => ({ href: c.href || '#', image: c.imagePath || '/assets/ricky-hero-new.jpg', venue: c.venue, location: c.location, season: c.season, title: c.title, description: c.description }));
@@ -209,7 +325,7 @@ export default async function HomePage() {
           src={heroImage}
           alt="Late Night Ricky"
           className="fixed inset-0 -z-10 w-full h-full object-cover"
-          style={{ objectPosition: '70% center' }}
+          style={{ objectPosition: heroBackgroundPosition }}
         />
         {/* Logo + subtitle — desktop: left side, ~40% width, at waist level; mobile: centered above head */}
         <div className="absolute z-10 flex flex-col items-center md:items-start justify-center md:justify-start top-[22%] md:top-auto md:mt-[30vh] w-full md:w-auto md:max-w-[45%] md:left-[15%] px-4 md:px-0">
@@ -217,7 +333,7 @@ export default async function HomePage() {
           <p className="mt-3 text-[10px] md:text-[clamp(11px,1.2vw,14px)] font-bold tracking-[0.15em] md:tracking-[0.2em] uppercase text-[#c9a96e] drop-shadow-[0_1px_4px_rgba(0,0,0,0.3)]"
              style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
-            Grammy Winning Producer | International DJ
+            {heroTagline}
           </p>
         </div>
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white opacity-70">
@@ -246,10 +362,10 @@ export default async function HomePage() {
           {/* Ronaldo Quote — centered, bold statement style */}
           <div className="mb-12 md:mb-16 reveal-left text-center">
             <p className="text-[clamp(32px,5vw,56px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#e8d4b8] max-w-[1000px] mx-auto" style={{ fontFamily: "'Oswald', sans-serif" }}>
-              &ldquo;The best DJ I&apos;ve heard.&rdquo;
+              {aboutQuote}
             </p>
             <p className="mt-4 text-[14px] md:text-[18px] font-semibold tracking-[0.3em] uppercase text-[#c4b498]/80">
-              — Ronaldo
+              — {aboutQuoteAttribution}
             </p>
           </div>
 
@@ -260,14 +376,14 @@ export default async function HomePage() {
               <div className="flex items-center gap-0 mb-8">
                 <div className="reveal-left" data-delay="100">
                   <img
-                    src="/assets/about-text-cream.png"
+                    src={aboutHeadingImage}
                     alt="About"
                     className="h-[clamp(36px,5.5vw,64px)] w-auto object-contain"
                   />
                 </div>
                 <div className="reveal-right" data-delay="300">
                   <img
-                    src="/assets/ricky-text-cream.png"
+                    src={rickyTextImage}
                     alt="Ricky"
                     className="h-[clamp(48px,7vw,84px)] w-auto object-contain -ml-1 md:-ml-2"
                   />
@@ -319,7 +435,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <LateNightMoments />
+      <LateNightMoments items={momentsItems} />
 
       {/* ═══ ACTS ARTISTS & VENUES — brown background, carousel, locations PRIVATE CLIENTS ═══ */}
       <section id="artists" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
@@ -334,40 +450,26 @@ export default async function HomePage() {
           <h2 className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[clamp(18px,3vw,36px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20" style={{ fontFamily: "'Oswald', sans-serif" }}>
             <div className="reveal-left" data-delay="100">
               <img
-                src="/assets/ricky-text-cream.png"
+                src={performersData.headingImage}
                 alt="Ricky"
                 className="h-[clamp(28px,6vw,72px)] w-auto object-contain"
               />
             </div>
             <span className="reveal-right" data-delay="300">
-              Has Performed With...
+              {performersData.heading}
             </span>
           </h2>
 
           {/* Carousel 1 */}
           <div className="relative overflow-hidden mb-6">
             <div className="flex gap-4 animate-marquee-left">
-              {[
-                '/assets/highlight-studio.jpg',
-                '/assets/highlight-arena.jpg',
-                '/assets/moment-ibiza.jpg',
-                '/assets/press-bg2.jpg',
-                '/assets/highlight-club.jpg',
-                '/assets/highlight-misfits.jpg',
-              ].map((img, i) => (
+              {performersData.row1Images.map((img: string, i: number) => (
                 <div key={i} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden">
                   <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
               {/* Duplicate for seamless loop */}
-              {[
-                '/assets/highlight-studio.jpg',
-                '/assets/highlight-arena.jpg',
-                '/assets/moment-ibiza.jpg',
-                '/assets/press-bg2.jpg',
-                '/assets/highlight-club.jpg',
-                '/assets/highlight-misfits.jpg',
-              ].map((img, i) => (
+              {performersData.row1Images.map((img: string, i: number) => (
                 <div key={`dup-${i}`} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden">
                   <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
                 </div>
@@ -378,27 +480,13 @@ export default async function HomePage() {
           {/* Carousel 2 — opposite direction */}
           <div className="relative overflow-hidden mb-16">
             <div className="flex gap-4 animate-marquee-right">
-              {[
-                '/assets/highlight-misfits.jpg',
-                '/assets/highlight-club.jpg',
-                '/assets/press-bg2.jpg',
-                '/assets/moment-ibiza.jpg',
-                '/assets/highlight-arena.jpg',
-                '/assets/highlight-studio.jpg',
-              ].map((img, i) => (
+              {performersData.row2Images.map((img: string, i: number) => (
                 <div key={i} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden">
                   <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
               {/* Duplicate for seamless loop */}
-              {[
-                '/assets/highlight-misfits.jpg',
-                '/assets/highlight-club.jpg',
-                '/assets/press-bg2.jpg',
-                '/assets/moment-ibiza.jpg',
-                '/assets/highlight-arena.jpg',
-                '/assets/highlight-studio.jpg',
-              ].map((img, i) => (
+              {performersData.row2Images.map((img: string, i: number) => (
                 <div key={`dup2-${i}`} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden">
                   <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
                 </div>
@@ -407,7 +495,7 @@ export default async function HomePage() {
           </div>
 
           <p className="relative z-10 text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#c4b498]/50 font-medium text-center mb-16">
-            And many more...
+            {performersData.subtext}
           </p>
 
           {/* Locations text */}
@@ -421,73 +509,23 @@ export default async function HomePage() {
           <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-16 md:pb-10 rounded-xl overflow-hidden">
             {/* Background image */}
             <div className="absolute inset-0 z-0">
-              <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
+              <img src={venuesData.backgroundImage} alt="" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-[#2a1a0a]/70" />
               <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/40 via-transparent to-[#2a1a0a]/70" />
             </div>
             <h2 className="relative z-10 text-[clamp(28px,3.5vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-12">
-              Worldwide Performances
+              {venuesData.heading}
             </h2>
             <div className="relative z-10 grid grid-cols-2 md:grid-cols-2 gap-x-2 md:gap-x-6 gap-y-0.5 md:gap-y-1 max-w-[800px] mx-auto px-4 md:px-8 justify-items-center">
               <div className="space-y-0.5 md:space-y-1">
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">LIV (Miami)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">WALL (Miami)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">TAPE (London)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">HAKKASAN (Las Vegas)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">MOVIDA (Dubai)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">JIMMY&apos;Z (Monte Carlo)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">MINISTRY OF SOUND (London)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">1 OAK (New York)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">BYBLOS (Milan)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">PACHA (Ibiza)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">ARMANI (Dubai)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">MANDALAY BAY (Las Vegas)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">TEMPLE (San Francisco)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">POPPY (Los Angeles)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">CIRQUE LE SOIR (London)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">HIGHLIGHT ROOM (Los Angeles)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">TEDDY&apos;S @ ROOSEVELT (Los Angeles)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">DELILAH (Los Angeles)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">GIBSON (Frankfurt)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">LIO (Ibiza)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">STUDIO PARIS (Chicago)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">PREMIER @ BORGATE (Atlantic City)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">PARQ (San Diego)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">BOOTSY BELLOWS (Los Angeles)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">WARWICK (Los Angeles)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">LAVO (New York)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">TAO (New York)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">UP & DOWN (New York)</p>
+                {venuesData.venues.filter((_: string, i: number) => i % 2 === 0).map((venue: string, i: number) => (
+                  <p key={i} className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">{venue}</p>
+                ))}
               </div>
               <div className="space-y-0.5 md:space-y-1">
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">LIBERTINE (London)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">SCANDAL (London)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">TOY ROOM (Dubai)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">1 OAK (Dubai)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">TAO (Las Vegas)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">BAOLI (Cannes)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">SHOKO (Barcelona)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">LASTA (Serbia)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">REX ROOMS (London)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">HARRIET&apos;S (Los Angeles)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">VIP ROOM (St. Tropez)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">BON BONNIERE (Mykonos)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">DRAMA (London)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">DEAR DARLING (London)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">TRAMP (London)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">SPIRITO (Brussels)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">CUCKOO CLUB (London)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">RAFFLES (London)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">SUBOIS (Montreal)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">P1 (Munich)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">ZELO&apos;S (Monte Carlo)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">BOOTSY BELLOWS (Los Angeles)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">WARWICK (Los Angeles)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">LAVO (New York)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">TAO (New York)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">UP & DOWN (New York)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">WIRELESS FESTIVAL (UK)</p>
-                <p className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">READING & LEEDS FESTIVAL (UK)</p>
+                {venuesData.venues.filter((_: string, i: number) => i % 2 !== 0).map((venue: string, i: number) => (
+                  <p key={i} className="text-[10px] md:text-[13px] text-[#d4c4a8]/80 text-center">{venue}</p>
+                ))}
               </div>
             </div>
           </div>
@@ -539,7 +577,7 @@ export default async function HomePage() {
 
       {/* ═══ SHARE YOUR MUSIC ═══ */}
       <section id="share-music">
-        <ShareMusicCTA />
+        <ShareMusicCTA headline={shareMusicHeadline} description={shareMusicDescription} />
       </section>
 
       {/* ═══ TRUSTED BY GLOBAL BRANDS — hero-style with photo background ═══ */}
@@ -548,7 +586,7 @@ export default async function HomePage() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/assets/ricky-brands-gold.png')`,
+            backgroundImage: `url('${brandsData.backgroundImage}')`,
           }}
         />
         {/* Brown frosting overlay for warmth */}
@@ -560,27 +598,16 @@ export default async function HomePage() {
         <div className="relative z-10 flex flex-col justify-center min-h-[80dvh] md:min-h-[100dvh] px-6 md:px-14 py-20 md:py-20">
           {/* Title — cream like About section */}
           <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-10 md:mb-14 reveal-fade pl-4 md:pl-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
-            Trusted by Global Brands
+            {brandsData.heading}
           </h2>
 
           {/* Brand logos — cream colored like About section */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-8 max-w-[700px] pl-4 md:pl-12 reveal-stagger">
-            {[
-              { src: '/assets/logo-cartier-trimmed.png', alt: 'Cartier' },
-              { src: '/assets/logo-f1-trimmed.png', alt: 'F1' },
-              { src: '/assets/logo-coca-cola-trimmed.png', alt: 'Coca-Cola' },
-              { src: '/assets/logo-ciroc-trimmed.png', alt: 'CÎROC' },
-              { src: '/assets/logo-dior-trimmed.png', alt: 'Dior' },
-              { src: '/assets/logo-patek-trimmed.png', alt: 'Patek Philippe' },
-              { src: '/assets/logo-prime-trimmed.png', alt: 'Prime' },
-              { src: '/assets/logo-louis-vuitton-trimmed.png', alt: 'Louis Vuitton' },
-              { src: '/assets/logo-mf-boxing-v2-trimmed.png', alt: 'Misfits Boxing' },
-              { src: '/assets/logo-cannes-trimmed.png', alt: 'Festival de Cannes' },
-            ].map((logo, i) => (
+            {brandsData.logos.map((logo: { name: string; src: string }, i: number) => (
               <div key={i} className="flex items-center justify-center w-28 h-12 md:w-36 md:h-14">
                 <img
                   src={logo.src}
-                  alt={logo.alt}
+                  alt={logo.name}
                   className="w-full h-full object-contain transition-all duration-300 hover:scale-105"
                   style={{
                     filter: 'brightness(0) invert(1) sepia(0.4) saturate(0.3) hue-rotate(350deg) brightness(0.75)',
@@ -630,17 +657,17 @@ export default async function HomePage() {
           {/* Bottom bar */}
           <div className="garrix-footer-bottom">
             <div className="garrix-footer-logo">
-              <img src="/assets/ricky-logo.png" alt="LNR" className="h-8 md:h-6 opacity-40" style={{ filter: 'brightness(0) invert(1) sepia(0.4) saturate(0.3) hue-rotate(350deg) brightness(0.75)' }} />
+              <img src={footerData.logo} alt="LNR" className="h-8 md:h-6 opacity-40" style={{ filter: 'brightness(0) invert(1) sepia(0.4) saturate(0.3) hue-rotate(350deg) brightness(0.75)' }} />
             </div>
-            <p>&copy; {new Date().getFullYear()} Late Night Ricky. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} {footerData.copyright}. All rights reserved.</p>
             <div className="garrix-footer-links">
-              <a href="/privacy">Privacy</a>
-              <a href="/terms">Terms</a>
-              <a href="/admin">Admin Login</a>
+              {footerData.links.map((link: { text: string; href: string }, i: number) => (
+                <a key={i} href={link.href}>{link.text}</a>
+              ))}
             </div>
           </div>
           <div className="garrix-footer-powered">
-            Powered by <a href="https://nuelo.co" target="_blank" rel="noopener noreferrer">Nuelo CoLab</a>
+            Powered by <a href={footerData.poweredByUrl} target="_blank" rel="noopener noreferrer">{footerData.poweredBy}</a>
           </div>
         </div>
       </footer>
