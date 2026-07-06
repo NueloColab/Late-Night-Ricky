@@ -89,8 +89,6 @@ export default async function HomePage() {
   let heroImage = '/assets/ricky-hero-real.jpg';
   let heroLogo = '/assets/ricky-logo.png';
   let heroGrayscale = true;
-  let heroBackgroundSize = 'cover';
-  const heroBackgroundPosition = 'center';
   const radioImage = '/assets/ricky-music-jacket-sm.jpg';
   let radioHeadline = 'Music & Mixes';
   let radioLabel = 'Listen & Download';
@@ -123,7 +121,7 @@ export default async function HomePage() {
   ];
 
   // Suppress unused-variable warnings for CMS values not yet used in new layout
-  void heroGrayscale; void heroBackgroundSize; void reachOutImage; void reachOutCta; void pressPack; void clientsTitle; void clients; void partnersQuote; void partnersAttribution; void partnersDescription;
+  void heroGrayscale; void reachOutImage; void reachOutCta; void pressPack; void clientsTitle; void clients; void partnersQuote; void partnersAttribution; void partnersDescription;
   try {
     const [dbCards, dbNames, dbTracks, dbSections, dbAboutSections] = await Promise.all([
       getShowCards(), getClientNames(), getTracks(), getSiteSections('home'), getSiteSections('about'),
@@ -135,8 +133,6 @@ export default async function HomePage() {
         if (c.image) heroImage = c.image;
         if (c.logo) heroLogo = c.logo;
         if (c.grayscale !== undefined) heroGrayscale = c.grayscale;
-        if (c.backgroundSize) heroBackgroundSize = c.backgroundSize;
-        // if (c.backgroundPosition) heroBackgroundPosition = c.backgroundPosition;
       }
       const radioSection = dbSections.find((s: any) => s.section === 'radio');
       if (radioSection?.content) {
@@ -209,13 +205,11 @@ export default async function HomePage() {
 
       {/* ═══ HERO — raw photo, no colour overlay ═══ */}
       <section className="relative min-h-[100dvh] px-8 md:px-14 pb-14 pt-20">
-        <div
-          className="fixed inset-0 -z-10 bg-cover bg-no-repeat"
-          style={{
-            backgroundImage: `url('${heroImage}')`,
-            backgroundSize: heroBackgroundSize,
-            backgroundPosition: heroBackgroundPosition,
-          }}
+        <img
+          src={heroImage}
+          alt="Late Night Ricky"
+          className="fixed inset-0 -z-10 w-full h-full object-cover"
+          style={{ objectPosition: 'center 70%' }}
         />
         {/* Logo + subtitle — desktop: left side, ~40% width, at waist level; mobile: centered above head */}
         <div className="absolute z-10 flex flex-col items-center md:items-start justify-center md:justify-start top-[22%] md:top-auto md:mt-[30vh] w-full md:w-auto md:max-w-[45%] md:left-[15%] px-4 md:px-0">
