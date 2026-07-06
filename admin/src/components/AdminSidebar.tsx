@@ -39,8 +39,8 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
       <aside
         className={`${
           isMobile
-            ? 'fixed left-0 top-0 bottom-0 z-50 w-[280px] h-screen overflow-y-auto'
-            : 'h-screen overflow-y-auto w-[280px] flex-shrink-0'
+            ? 'fixed left-0 top-0 bottom-0 z-50 w-[280px] h-screen'
+            : 'h-screen w-[280px] flex-shrink-0'
         } bg-[#E3E8ED] border-r border-[#6B8FAB]/30 flex flex-col`}
         style={{
           transform: isMobile && !isOpen ? 'translateX(-100%)' : 'translateX(0)',
@@ -63,7 +63,7 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
         )}
 
         {/* Logo */}
-        <Link href="/admin" className="mb-8 pt-4 px-6" onClick={isMobile ? onClose : undefined}>
+        <Link href="/admin" className="pt-6 pb-4 px-6" onClick={isMobile ? onClose : undefined}>
           <div className="text-center">
             <img
               src="/assets/ricky-logo.png"
@@ -79,9 +79,9 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
           </div>
         </Link>
 
-        {/* Main Navigation */}
-        <nav className="flex-1 px-4">
-          <div className="space-y-1 mb-8">
+        {/* Main Navigation - grows to fill space */}
+        <nav className="flex-1 px-4 overflow-y-auto">
+          <div className="space-y-1 mb-6">
             {mainMenuItems.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
               return (
@@ -101,8 +101,8 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
             })}
           </div>
 
-          {/* Bottom section */}
-          <div className="bg-white border border-[#6B8FAB]/30 p-3 space-y-1">
+          {/* Bottom section (Content + Settings) */}
+          <div className="bg-white border border-[#6B8FAB]/30 p-3 space-y-1 mb-6">
             {bottomMenuItems.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
               return (
@@ -123,18 +123,20 @@ export default function AdminSidebar({ isOpen, onClose, isMobile }: {
           </div>
         </nav>
 
-        {/* Divider */}
-        <div className="px-6 my-4 border-t border-[#6B8FAB]/30" />
-
-        {/* Logout */}
-        <div className="px-4 mb-4">
+        {/* Logout - pinned to bottom */}
+        <div className="px-4 pb-6 pt-4 border-t border-[#6B8FAB]/30">
           <button
             onClick={async () => {
               await fetch('/api/auth/logout', { method: 'POST' });
               window.location.href = '/admin/login';
             }}
-            className="flex items-center gap-3 w-full px-4 py-3 text-[13px] font-semibold uppercase tracking-[1.5px] border-2 border-[#1B3A4C] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition-all duration-300"
+            className="flex items-center justify-center gap-2 w-full px-4 py-3 text-[12px] font-semibold uppercase tracking-[2px] border-2 border-[#1B3A4C] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition-all duration-300"
           >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
             <span>Logout</span>
           </button>
         </div>
