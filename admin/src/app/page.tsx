@@ -209,7 +209,7 @@ export default async function HomePage() {
           src={heroImage}
           alt="Late Night Ricky"
           className="fixed inset-0 -z-10 w-full h-full object-cover"
-          style={{ objectPosition: 'center 70%' }}
+          style={{ objectPosition: '70% center' }}
         />
         {/* Logo + subtitle — desktop: left side, ~40% width, at waist level; mobile: centered above head */}
         <div className="absolute z-10 flex flex-col items-center md:items-start justify-center md:justify-start top-[22%] md:top-auto md:mt-[30vh] w-full md:w-auto md:max-w-[45%] md:left-[15%] px-4 md:px-0">
