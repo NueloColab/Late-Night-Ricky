@@ -26,6 +26,9 @@ export async function GET() {
     // Recent enquiries
     const recentEnquiries = await db.select().from(enquiries).orderBy(desc(enquiries.createdAt)).limit(5);
 
+    // Recent submissions
+    const recentSubmissions = await db.select().from(submissions).orderBy(desc(submissions.createdAt)).limit(5);
+
     // Recent quotes
     const recentQuotes = await db.select().from(quotes).orderBy(desc(quotes.sentAt)).limit(5);
 
@@ -49,6 +52,7 @@ export async function GET() {
       draftQuotes: draftQuotes?.count ?? 0,
       unpaidInvoices: unpaidInvoices?.count ?? 0,
       recentEnquiries,
+      recentSubmissions,
       recentQuotes,
       siteVisits: {
         totalViews: totalViews?.total ?? 0,
@@ -60,6 +64,6 @@ export async function GET() {
     });
   } catch (err: any) {
     console.error('Dashboard stats error:', err);
-    return NextResponse.json({ shows: 0, tracks: 0, submissions: 0, invoices: 0, enquiries: 0, quotes: 0, clients: 0, revenue: 0, pendingEnquiries: 0, draftQuotes: 0, unpaidInvoices: 0, recentEnquiries: [], recentQuotes: [], siteVisits: { totalViews: 0, totalUnique: 0, todayViews: 0, todayUnique: 0, daily: [] } });
+    return NextResponse.json({ shows: 0, tracks: 0, submissions: 0, invoices: 0, enquiries: 0, quotes: 0, clients: 0, revenue: 0, pendingEnquiries: 0, draftQuotes: 0, unpaidInvoices: 0, recentEnquiries: [], recentSubmissions: [], recentQuotes: [], siteVisits: { totalViews: 0, totalUnique: 0, todayViews: 0, todayUnique: 0, daily: [] } });
   }
 }
