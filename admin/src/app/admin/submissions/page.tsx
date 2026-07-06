@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { Play, Pause, Download, Trash2, ChevronDown, ChevronUp, Music, Mail, User, Calendar, FileAudio } from 'lucide-react'
+import { Play, Pause, Download, Trash2, ChevronDown, ChevronUp, Music, Mail, User, Calendar, FileAudio,  } from 'lucide-react'
 
 interface Submission {
   id: number
@@ -17,20 +17,12 @@ interface Submission {
   createdAt: string
 }
 
-const statusLabels: Record<string, string> = {
-  new: 'New',
-  reviewed: 'Reviewed',
-  shortlisted: 'Shortlisted',
-  accepted: 'Accepted',
-  rejected: 'Rejected',
-}
-
-const statusStyles: Record<string, { bg: string; text: string; border: string }> = {
-  new:        { bg: '#C5E5F820', text: '#1B3A4C', border: '#C5E5F840' },
-  reviewed:   { bg: '#6B8FAB20', text: '#1B3A4C', border: '#6B8FAB40' },
-  shortlisted:{ bg: '#1B3A4C',   text: '#fff',    border: '#1B3A4C' },
-  accepted:   { bg: '#2d6a2d20', text: '#2d6a2d', border: '#2d6a2d40' },
-  rejected:   { bg: '#6B8FAB20', text: '#a0a0a0', border: '#6B8FAB40' },
+const statusConfig: Record<string, { label: string; color: string; bg: string }> = {
+  new:        { label: 'New', color: '#1B3A4C', bg: '#E3E8ED' },
+  reviewed:   { label: 'Reviewed', color: '#6B8FAB', bg: '#F0F4F8' },
+  shortlisted:{ label: 'Shortlisted', color: '#fff', bg: '#1B3A4C' },
+  accepted:   { label: 'Accepted', color: '#2d6a2d', bg: '#e8f5e8' },
+  rejected:   { label: 'Rejected', color: '#999', bg: '#f5f5f5' },
 }
 
 export default function SubmissionsPage() {
@@ -58,17 +50,12 @@ export default function SubmissionsPage() {
     }
   }, [filter])
 
-  useEffect(() => {
-    fetchSubmissions()
-  }, [fetchSubmissions])
+  useEffect(() => { fetchSubmissions() }, [fetchSubmissions])
 
-  const toggleExpand = (id: number) => {
-    setExpandedId((prev) => (prev === id ? null : id))
-  }
+  const toggleExpand = (id: number) => setExpandedId(prev => prev === id ? null : id)
 
   const togglePlay = (submission: Submission) => {
     if (!submission.filePath) return
-
     if (playingId === submission.id) {
       audioRef.current?.pause()
       setPlayingId(null)
@@ -77,21 +64,9 @@ export default function SubmissionsPage() {
       audioRef.current?.pause()
       const audio = new Audio(submission.filePath)
       audio.play().catch(() => {})
-      audio.onended = () => {
-        setPlayingId(null)
-        setAudioProgress(0)
-        if (progressInterval.current) clearInterval(progressInterval.current)
-      }
-      audio.onpause = () => {
-        setPlayingId(null)
-        if (progressInterval.current) clearInterval(progressInterval.current)
-      }
-      audio.onloadedmetadata = () => {
-        setAudioDuration(audio.duration)
-      }
-      audio.ontimeupdate = () => {
-        setAudioProgress(audio.currentTime)
-      }
+      audio.onended = () => { setPlayingId(null); setAudioProgress(0); if (progressInterval.current) clearInterval(progressInterval.current) }
+      audio.onloadedmetadata = () => setAudioDuration(audio.duration)
+      audio.ontimeupdate = () => setAudioProgress(audio.currentTime)
       audioRef.current = audio
       setPlayingId(submission.id)
     }
@@ -99,43 +74,25 @@ export default function SubmissionsPage() {
 
   const updateStatus = async (id: number, status: string) => {
     try {
-      await fetch('/api/submissions', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, status }),
-      })
-      setSubmissions((prev) =>
-        prev.map((s) => (s.id === id ? { ...s, status: status as any } : s))
-      )
-    } catch (err) {
-      console.error('Update failed', err)
-    }
+      await fetch('/api/submissions', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, status }) })
+      setSubmissions(prev => prev.map(s => s.id === id ? { ...s, status: status as any } : s))
+    } catch (err) { console.error('Update failed', err) }
   }
 
   const updateNotes = async (id: number, notes: string) => {
     try {
-      await fetch('/api/submissions', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, notes }),
-      })
-      setSubmissions((prev) =>
-        prev.map((s) => (s.id === id ? { ...s, notes } : s))
-      )
-    } catch (err) {
-      console.error('Notes update failed', err)
-    }
+      await fetch('/api/submissions', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, notes }) })
+      setSubmissions(prev => prev.map(s => s.id === id ? { ...s, notes } : s))
+    } catch (err) { console.error('Notes update failed', err) }
   }
 
   const deleteSubmission = async (id: number) => {
     if (!confirm('Delete this submission?')) return
     try {
       await fetch(`/api/submissions?ids=${id}`, { method: 'DELETE' })
-      setSubmissions((prev) => prev.filter((s) => s.id !== id))
+      setSubmissions(prev => prev.filter(s => s.id !== id))
       if (expandedId === id) setExpandedId(null)
-    } catch (err) {
-      console.error('Delete failed', err)
-    }
+    } catch (err) { console.error('Delete failed', err) }
   }
 
   const formatSize = (bytes: number | null) => {
@@ -144,293 +101,171 @@ export default function SubmissionsPage() {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
   }
 
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    })
-  }
-
-  const formatTime = (seconds: number) => {
-    if (!seconds || isNaN(seconds)) return '0:00'
-    const m = Math.floor(seconds / 60)
-    const s = Math.floor(seconds % 60)
-    return `${m}:${s.toString().padStart(2, '0')}`
-  }
+  const formatDate = (date: string) => new Date(date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  const formatTime = (seconds: number) => { if (!seconds || isNaN(seconds)) return '0:00'; const m = Math.floor(seconds / 60); const s = Math.floor(seconds % 60); return `${m}:${s.toString().padStart(2, '0')}` }
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-5xl mx-auto">
       {/* Header */}
-      <div className="mb-12">
-        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-4">Music Submissions</p>
-        <h1 className="text-[clamp(36px,5.5vw,64px)] font-black text-[#111] tracking-[-2px] uppercase leading-[0.95]">
-          Music Submissions
-        </h1>
-        <p className="text-sm text-[#a0a0a0] mt-4 font-semibold uppercase tracking-[0.5px]">Review, listen, and download submitted tracks</p>
+      <div className="mb-8">
+        <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-2">Music Submissions</p>
+        <h1 className="text-2xl font-black text-[#111] uppercase tracking-[-1px]">Submissions</h1>
+        <p className="text-sm text-[#a0a0a0] mt-1">Review, listen, and manage submitted tracks</p>
       </div>
 
-      {/* Filter */}
-      <div className="flex flex-wrap items-center gap-3 mb-8">
-        {['all', 'new', 'reviewed', 'shortlisted', 'accepted', 'rejected'].map((status) => (
-          <button
-            key={status}
-            onClick={() => setFilter(status)}
-            className={`px-2 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[1px] transition-all border ${
-              filter === status
-                ? 'bg-[#1B3A4C] text-white border-[#1B3A4C]'
-                : 'bg-white text-[#6B8FAB] border-[#6B8FAB]/30 hover:border-[#1B3A4C] hover:text-[#1B3A4C]'
-            }`}
-          >
-            {status === 'all' ? 'All' : statusLabels[status]}
-          </button>
-        ))}
+      {/* Filters */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        {(['all', 'new', 'reviewed', 'shortlisted', 'accepted', 'rejected'] as const).map((status) => {
+          const count = status === 'all' ? submissions.length : submissions.filter(s => s.status === status).length
+          const config = status !== 'all' ? statusConfig[status] : null
+          return (
+            <button
+              key={status}
+              onClick={() => setFilter(status)}
+              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[1px] transition-all ${
+                filter === status
+                  ? 'bg-[#1B3A4C] text-white shadow-sm'
+                  : 'bg-white text-[#6B8FAB] border border-[#6B8FAB]/30 hover:border-[#1B3A4C] hover:text-[#1B3A4C]'
+              }`}
+            >
+              {status === 'all' ? 'All' : config?.label || status}
+              {count > 0 && <span className="ml-1.5 opacity-60">{count}</span>}
+            </button>
+          )
+        })}
       </div>
 
       {/* Submissions */}
       {loading ? (
-        <div className="text-center py-20 text-[#6B8FAB]">Loading submissions...</div>
+        <div className="text-center py-20 text-[#6B8FAB]">Loading...</div>
       ) : submissions.length === 0 ? (
-        <div className="text-center py-20 text-[#6B8FAB]">No submissions found.</div>
+        <div className="text-center py-20">
+          <Music size={48} className="mx-auto text-[#6B8FAB]/30 mb-4" />
+          <p className="text-[#6B8FAB]">No submissions yet</p>
+          <p className="text-sm text-[#a0a0a0] mt-1">Tracks submitted through the Share Your Music form will appear here</p>
+        </div>
       ) : (
         <div className="space-y-3">
           {submissions.map((s) => {
             const isExpanded = expandedId === s.id
             const isPlaying = playingId === s.id
-            const style = statusStyles[s.status] || statusStyles.new
+            const config = statusConfig[s.status] || statusConfig.new
 
             return (
-              <div
-                key={s.id}
-                className={`bg-white border transition-all duration-200 ${
-                  isExpanded ? 'border-[#1B3A4C]' : 'border-[#6B8FAB]/30 hover:border-[#6B8FAB]'
-                }`}
-              >
-                {/* Collapsed Row — Single Line */}
-                <div
-                  onClick={() => toggleExpand(s.id)}
-                  className="flex items-center gap-3 px-5 py-3 cursor-pointer"
-                >
-                  {/* Play Button */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      togglePlay(s)
-                    }}
-                    disabled={!s.filePath}
-                    className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                      isPlaying
-                        ? 'bg-[#1B3A4C] text-white'
-                        : s.filePath
-                        ? 'bg-[#E3E8ED] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white'
-                        : 'bg-gray-100 text-gray-300 cursor-not-allowed'
-                    }`}
-                  >
-                    {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-                  </button>
+              <div key={s.id} className={`bg-white border rounded-xl overflow-hidden transition-all ${isExpanded ? 'border-[#1B3A4C] shadow-sm' : 'border-[#6B8FAB]/20 hover:border-[#6B8FAB]/40'}`}>
+                {/* Collapsed Row */}
+                <div onClick={() => toggleExpand(s.id)} className="flex items-center gap-4 px-5 py-4 cursor-pointer">
+                  {/* Play/Status indicator */}
+                  <div className="flex-shrink-0">
+                    {s.filePath ? (
+                      <button onClick={(e) => { e.stopPropagation(); togglePlay(s) }} className={`w-10 h-10 rounded-full flex items-center justify-center transition ${isPlaying ? 'bg-[#1B3A4C] text-white' : 'bg-[#E3E8ED] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white'}`}>
+                        {isPlaying ? <Pause size={16} /> : <Play size={16} className="ml-0.5" />}
+                      </button>
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                        <Music size={16} className="text-gray-300" />
+                      </div>
+                    )}
+                  </div>
 
-                  {/* Info — All Inline */}
-                  <div className="flex-1 min-w-0 flex items-center gap-3">
-                    <span className="text-sm font-semibold text-[#1B3A4C] truncate">
-                      {s.trackTitle || 'Untitled Track'}
-                    </span>
-                    <span
-                      className="text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider flex-shrink-0"
-                      style={{
-                        backgroundColor: style.bg,
-                        color: style.text,
-                        border: `1px solid ${style.border}`,
-                      }}
-                    >
-                      {statusLabels[s.status]}
-                    </span>
-                    <span className="hidden md:flex items-center gap-1 text-xs text-[#6B8FAB]">
-                      <User size={11} /> {s.artistName || 'Unknown Artist'}
-                    </span>
-                    {s.instagramHandle && (
-                      <span className="hidden md:flex items-center gap-1 text-xs text-[#6B8FAB]">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
-                        {s.instagramHandle}
-                      </span>
-                    )}
-                    <span className="hidden md:flex items-center gap-1 text-xs text-[#6B8FAB]">
-                      <Mail size={11} /> {s.email}
-                    </span>
-                    <span className="hidden lg:flex items-center gap-1 text-xs text-[#6B8FAB]">
-                      <Calendar size={11} /> {formatDate(s.createdAt)}
-                    </span>
-                    {s.fileSize && (
-                      <span className="hidden lg:flex items-center gap-1 text-xs text-[#6B8FAB]">
-                        <FileAudio size={11} /> {formatSize(s.fileSize)}
-                      </span>
-                    )}
+                  {/* Track info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold text-[#1B3A4C] text-sm truncate">{s.trackTitle || 'Untitled Track'}</span>
+                      <span className="flex-shrink-0 px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider" style={{ backgroundColor: config.bg, color: config.color }}>{config.label}</span>
+                    </div>
+                    <div className="flex items-center gap-3 mt-0.5 text-xs text-[#6B8FAB]">
+                      <span className="flex items-center gap-1"><User size={11} /> {s.artistName || 'Unknown'}</span>
+                      {s.instagramHandle && <span className="flex items-center gap-1"><svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg> {s.instagramHandle}</span>}
+                      <span className="flex items-center gap-1"><Calendar size={11} /> {formatDate(s.createdAt)}</span>
+                    </div>
                   </div>
 
                   {/* Actions */}
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {s.filePath && (
-                      <a
-                        href={s.filePath}
-                        download={s.fileName || `${s.artistName || 'track'} - ${s.trackTitle || 'demo'}.mp3`}
-                        onClick={(e) => e.stopPropagation()}
-                        className="w-9 h-9 rounded-full border border-[#6B8FAB]/40 flex items-center justify-center text-[#6B8FAB] hover:bg-[#1B3A4C] hover:text-white hover:border-[#1B3A4C] transition"
-                        title="Download"
-                      >
+                      <a href={s.filePath} download onClick={(e) => e.stopPropagation()} className="w-8 h-8 rounded-full flex items-center justify-center text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] transition" title="Download">
                         <Download size={14} />
                       </a>
                     )}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        deleteSubmission(s.id)
-                      }}
-                      className="w-10 h-10 rounded-full border border-red-200 flex items-center justify-center text-[#6B8FAB] hover:bg-red-50 hover:text-red-500 hover:border-red-300 transition"
-                      title="Delete"
-                    >
-                      <Trash2 size={16} />
+                    <button onClick={(e) => { e.stopPropagation(); deleteSubmission(s.id) }} className="w-8 h-8 rounded-full flex items-center justify-center text-[#6B8FAB]/50 hover:text-red-500 hover:bg-red-50 transition" title="Delete">
+                      <Trash2 size={14} />
                     </button>
-
-                    <div className="w-6 flex items-center justify-center">
-                      {isExpanded ? <ChevronUp size={16} className="text-[#6B8FAB]" /> : <ChevronDown size={16} className="text-[#6B8FAB]" />}
+                    <div className="w-5 flex items-center justify-center text-[#6B8FAB]/40">
+                      {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                     </div>
                   </div>
                 </div>
 
                 {/* Expanded Detail */}
                 {isExpanded && (
-                  <div className="border-t border-[#E3E8ED] px-5 py-4">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="border-t border-[#E3E8ED] bg-[#FAFBFC]">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-5">
                       {/* Left: Audio Player */}
-                      <div className="space-y-4">
+                      <div>
                         {s.filePath ? (
-                          <>
-                            <div className="bg-[#E3E8ED] rounded-lg p-5 text-white">
-                              <div className="flex items-center gap-4 mb-4">
-                                <div className="w-14 h-14 bg-white/10 rounded-lg flex items-center justify-center">
-                                  <Music size={24} className="text-[#C5E5F8]" />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-semibold truncate">{s.trackTitle || 'Untitled Track'}</p>
-                                  <p className="text-xs text-[#C5E5F8]">{s.artistName || 'Unknown Artist'}</p>
-                                </div>
-                                <button
-                                  onClick={() => togglePlay(s)}
-                                  className="w-12 h-12 rounded-full bg-white text-[#E3E8ED] flex items-center justify-center hover:bg-[#C5E5F8] transition"
-                                >
-                                  {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-                                </button>
+                          <div className="bg-[#1B3A4C] rounded-lg p-5">
+                            <div className="flex items-center gap-4 mb-4">
+                              <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center">
+                                <Music size={20} className="text-[#C5E5F8]" />
                               </div>
-
-                              {/* Progress Bar */}
-                              <div className="flex items-center gap-3">
-                                <span className="text-xs text-[#C5E5F8] w-10 text-right">
-                                  {formatTime(audioProgress)}
-                                </span>
-                                <div className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
-                                  <div
-                                    className="h-full bg-white rounded-full transition-all"
-                                    style={{ width: `${audioDuration ? (audioProgress / audioDuration) * 100 : 0}%` }}
-                                  />
-                                </div>
-                                <span className="text-xs text-[#C5E5F8] w-10">
-                                  {formatTime(audioDuration)}
-                                </span>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-semibold text-white truncate">{s.trackTitle || 'Untitled Track'}</p>
+                                <p className="text-xs text-[#C5E5F8]">{s.artistName || 'Unknown Artist'}</p>
                               </div>
+                              <button onClick={() => togglePlay(s)} className="w-10 h-10 rounded-full bg-white text-[#1B3A4C] flex items-center justify-center hover:bg-[#C5E5F8] transition">
+                                {isPlaying ? <Pause size={18} /> : <Play size={18} className="ml-0.5" />}
+                              </button>
                             </div>
-
-                            <div className="flex gap-3">
-                              <a
-                                href={s.filePath}
-                                download={s.fileName || `${s.artistName || 'track'} - ${s.trackTitle || 'demo'}.mp3`}
-                                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#1B3A4C] text-white text-sm font-semibold uppercase tracking-[1.5px] hover:bg-[#E3E8ED] transition"
-                              >
-                                <Download size={16} />
-                                Download Track
-                              </a>
+                            <div className="flex items-center gap-3">
+                              <span className="text-xs text-[#C5E5F8]">{formatTime(audioProgress)}</span>
+                              <div className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
+                                <div className="h-full bg-white rounded-full transition-all" style={{ width: `${audioDuration ? (audioProgress / audioDuration) * 100 : 0}%` }} />
+                              </div>
+                              <span className="text-xs text-[#C5E5F8]">{formatTime(audioDuration)}</span>
                             </div>
-                          </>
+                            <a href={s.filePath} download className="mt-3 flex items-center justify-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded text-xs text-white font-semibold uppercase tracking-wider transition">
+                              <Download size={12} /> Download
+                            </a>
+                          </div>
                         ) : (
-                          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center">
-                            <Music size={32} className="mx-auto text-gray-300 mb-3" />
-                            <p className="text-sm text-gray-400">No audio file attached</p>
+                          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center">
+                            <Music size={32} className="mx-auto text-gray-300 mb-2" />
+                            <p className="text-sm text-gray-400">No audio file</p>
                           </div>
                         )}
                       </div>
 
-                      {/* Right: Details & Notes */}
-                      <div className="space-y-3">
+                      {/* Right: Status & Details */}
+                      <div className="space-y-4">
                         {/* Status */}
-                        <div className="bg-white border border-[#E3E8ED] p-3">
-                          <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-2">Update Status</p>
+                        <div>
+                          <p className="text-[10px] text-[#6B8FAB] uppercase tracking-[2px] font-semibold mb-2">Status</p>
                           <div className="flex flex-wrap gap-2">
-                            {Object.entries(statusLabels).map(([value, label]) => {
-                              const sStyle = statusStyles[value]
-                              const isActive = s.status === value
-                              return (
-                                <button
-                                  key={value}
-                                  onClick={() => updateStatus(s.id, value)}
-                                  className="px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all"
-                                  style={isActive
-                                    ? { backgroundColor: sStyle.bg, color: sStyle.text, border: `1px solid ${sStyle.border}` }
-                                    : { backgroundColor: '#fff', color: '#666', border: '1px solid #e5e5e5' }
-                                  }
-                                >
-                                  {label}
-                                </button>
-                              )
-                            })}
+                            {Object.entries(statusConfig).map(([value, cfg]) => (
+                              <button key={value} onClick={() => updateStatus(s.id, value)} className={`px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wider border transition ${s.status === value ? `bg-[${cfg.bg}] text-[${cfg.color}] border-[${cfg.color}]/30` : 'bg-white text-[#999] border-gray-200 hover:border-[#6B8FAB] hover:text-[#6B8FAB]'}`} style={s.status === value ? { backgroundColor: cfg.bg, color: cfg.color, borderColor: cfg.color + '40' } : {}}>
+                                {cfg.label}
+                              </button>
+                            ))}
                           </div>
                         </div>
 
                         {/* Notes */}
-                        <div className="bg-white border border-[#E3E8ED] p-3">
-                          <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-2">Notes</p>
-                          <textarea
-                            value={s.notes || ''}
-                            onChange={(e) => updateNotes(s.id, e.target.value)}
-                            placeholder="Add your review notes, feedback, or thoughts on this track..."
-                            rows={3}
-                            className="w-full px-3 py-2 bg-[#F8FAFB] border border-[#E3E8ED] text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-none"
-                          />
+                        <div>
+                          <p className="text-[10px] text-[#6B8FAB] uppercase tracking-[2px] font-semibold mb-2">Notes</p>
+                          <textarea value={s.notes || ''} onChange={(e) => updateNotes(s.id, e.target.value)} placeholder="Add review notes..." rows={2} className="w-full px-3 py-2 bg-white border border-[#E3E8ED] rounded text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-none" />
                         </div>
 
-                        {/* Metadata */}
-                        <div className="bg-[#F8FAFB] border border-[#E3E8ED] p-3">
-                          <p className="text-xs text-[#a0a0a0] uppercase tracking-widest mb-2">Submission Details</p>
-                          <div className="space-y-1.5 text-sm">
-                            <div className="flex justify-between">
-                              <span className="text-[#6B8FAB]">Submitted by</span>
-                              <span className="text-[#111]">{s.email}</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-[#6B8FAB]">Artist</span>
-                              <span className="text-[#111]">{s.artistName || '—'}</span>
-                            </div>
-                            {s.instagramHandle && (
-                              <div className="flex justify-between">
-                                <span className="text-[#6B8FAB]">Instagram</span>
-                                <span className="text-[#111]">{s.instagramHandle}</span>
-                              </div>
-                            )}
-                            <div className="flex justify-between">
-                              <span className="text-[#6B8FAB]">Track</span>
-                              <span className="text-[#111]">{s.trackTitle || '—'}</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-[#6B8FAB]">Date</span>
-                              <span className="text-[#111]">{formatDate(s.createdAt)}</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-[#6B8FAB]">File Size</span>
-                              <span className="text-[#111]">{formatSize(s.fileSize)}</span>
-                            </div>
-                            {s.fileName && (
-                              <div className="flex justify-between">
-                                <span className="text-[#6B8FAB]">File Name</span>
-                                <span className="text-[#111] truncate max-w-[200px]">{s.fileName}</span>
-                              </div>
-                            )}
+                        {/* Details */}
+                        <div className="bg-white border border-[#E3E8ED] rounded p-3 space-y-2">
+                          <p className="text-[10px] text-[#6B8FAB] uppercase tracking-[2px] font-semibold">Details</p>
+                          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
+                            <span className="text-[#6B8FAB]">Email</span><span className="text-[#111] text-right truncate">{s.email}</span>
+                            <span className="text-[#6B8FAB]">Artist</span><span className="text-[#111] text-right">{s.artistName || '-'}</span>
+                            {s.instagramHandle && <><span className="text-[#6B8FAB]">Instagram</span><span className="text-[#111] text-right">{s.instagramHandle}</span></>}
+                            <span className="text-[#6B8FAB]">Track</span><span className="text-[#111] text-right">{s.trackTitle || '-'}</span>
+                            <span className="text-[#6B8FAB]">Date</span><span className="text-[#111] text-right">{formatDate(s.createdAt)}</span>
+                            <span className="text-[#6B8FAB]">Size</span><span className="text-[#111] text-right">{formatSize(s.fileSize)}</span>
                           </div>
                         </div>
                       </div>
@@ -445,5 +280,3 @@ export default function SubmissionsPage() {
     </div>
   )
 }
-
-
