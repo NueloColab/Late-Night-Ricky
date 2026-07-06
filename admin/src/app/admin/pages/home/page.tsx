@@ -74,7 +74,14 @@ function parseContent(content: any): Record<string, any> {
 
 export default function HomeEditor() {
   const [sections, setSections] = useState<SectionData[]>([]);
-  const [selectedSection, setSelectedSection] = useState<string>(typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('section') || 'hero' : 'hero');
+  const [selectedSection, setSelectedSectionRaw] = useState<string>(typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('section') || 'hero' : 'hero');
+
+  function setSelectedSection(section: string) {
+    setSelectedSectionRaw(section);
+    const url = new URL(window.location.href);
+    url.searchParams.set('section', section);
+    window.history.replaceState({}, '', url.toString());
+  }
   const [showCards, setShowCards] = useState<ShowCard[]>([]);
   const [tracks, setTracks] = useState<Track[]>([]);
   const [loading, setLoading] = useState(true);
