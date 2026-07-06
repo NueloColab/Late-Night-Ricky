@@ -69,6 +69,7 @@ export async function POST(request: Request) {
     const email = formData.get('email') as string;
     const artistName = formData.get('artistName') as string | null;
     const trackTitle = formData.get('trackTitle') as string | null;
+    const instagramHandle = formData.get('instagramHandle') as string | null;
     const file = formData.get('file') as File | null;
 
     if (!email || !email.includes('@')) {
@@ -103,6 +104,7 @@ export async function POST(request: Request) {
         email,
         artistName: artistName || null,
         trackTitle: trackTitle || null,
+        instagramHandle: instagramHandle || null,
         filePath,
         fileSize,
         status: 'new',

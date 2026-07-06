@@ -6,6 +6,7 @@ import Footer from '../../components/Footer';
 export const dynamic = 'force-dynamic';
 
 export default function ShareMusicPage() {
+  const [instagramHandle, setInstagramHandle] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [email, setEmail] = useState('');
@@ -43,6 +44,7 @@ export default function ShareMusicPage() {
       formData.append('email', email);
       if (artistName) formData.append('artistName', artistName);
       if (trackTitle) formData.append('trackTitle', trackTitle);
+      if (instagramHandle) formData.append('instagramHandle', instagramHandle);
       formData.append('file', file);
 
       const res = await fetch('/api/public/submissions', {
@@ -55,6 +57,7 @@ export default function ShareMusicPage() {
       setFile(null);
       setArtistName('');
       setTrackTitle('');
+      setInstagramHandle('');
     } catch {
       setStatus('error');
       setErrorMsg('Upload failed. Please try again or email bookings@latenightricky.com directly.');
@@ -109,6 +112,13 @@ export default function ShareMusicPage() {
                   value={trackTitle}
                   onChange={(e) => setTrackTitle(e.target.value)}
                   placeholder="Track title"
+                  className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#152a47]"
+                />
+                <input
+                  type="text"
+                  value={instagramHandle}
+                  onChange={(e) => setInstagramHandle(e.target.value)}
+                  placeholder="Instagram handle (e.g. @latenightricky)"
                   className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#152a47]"
                 />
               </div>

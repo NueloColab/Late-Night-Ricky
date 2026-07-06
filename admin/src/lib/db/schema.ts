@@ -84,6 +84,7 @@ export const submissions = pgTable("submissions", {
   trackTitle: text("track_title"),
   filePath: text("file_path"),
   fileSize: integer("file_size"),
+  instagramHandle: text("instagram_handle"),
   status: text("status").default("new"),
   notes: text("notes"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),

@@ -11,6 +11,7 @@ interface Submission {
   filePath: string | null
   fileSize: number | null
   fileName: string | null
+  instagramHandle: string | null
   status: 'new' | 'reviewed' | 'shortlisted' | 'accepted' | 'rejected'
   notes: string | null
   createdAt: string
@@ -246,6 +247,12 @@ export default function SubmissionsPage() {
                     <span className="hidden md:flex items-center gap-1 text-xs text-[#6B8FAB]">
                       <User size={11} /> {s.artistName || 'Unknown Artist'}
                     </span>
+                    {s.instagramHandle && (
+                      <span className="hidden md:flex items-center gap-1 text-xs text-[#6B8FAB]">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+                        {s.instagramHandle}
+                      </span>
+                    )}
                     <span className="hidden md:flex items-center gap-1 text-xs text-[#6B8FAB]">
                       <Mail size={11} /> {s.email}
                     </span>
@@ -400,6 +407,12 @@ export default function SubmissionsPage() {
                               <span className="text-[#6B8FAB]">Artist</span>
                               <span className="text-[#111]">{s.artistName || '—'}</span>
                             </div>
+                            {s.instagramHandle && (
+                              <div className="flex justify-between">
+                                <span className="text-[#6B8FAB]">Instagram</span>
+                                <span className="text-[#111]">{s.instagramHandle}</span>
+                              </div>
+                            )}
                             <div className="flex justify-between">
                               <span className="text-[#6B8FAB]">Track</span>
                               <span className="text-[#111]">{s.trackTitle || '—'}</span>
