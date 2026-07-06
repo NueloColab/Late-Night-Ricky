@@ -42,7 +42,8 @@ export default function AboutEditor() {
     { key: 'image', label: 'About Image', type: 'image' as const },
     { key: 'aboutHeadingImage', label: '"About" Heading Image', type: 'image' as const },
     { key: 'rickyTextImage', label: '"Ricky" Heading Image', type: 'image' as const },
-    { key: 'pressPackLink', label: 'Press Pack Link', type: 'text' as const },
+    { key: 'pressPackLink', label: 'Press Pack File', type: 'image' as const },
+    { key: 'pressPackPin', label: 'Press Pack PIN (4 digits)', type: 'text' as const },
   ];
 
   const fetchSection = useCallback(async () => {
@@ -173,6 +174,11 @@ export default function AboutEditor() {
                     <div className="w-full max-w-md aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 border border-[#6B8FAB]/30">
                       {content[field.key].match(/\.(mp4|webm|mov|avi)$/i) ? (
                         <video src={content[field.key]} className="w-full h-full object-contain" controls muted />
+                      ) : content[field.key].match(/\.pdf$/i) ? (
+                        <div className="flex flex-col items-center justify-center h-full p-6">
+                          <svg className="w-12 h-12 text-[#6B8FAB] mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /><path d="M9 15h6" /><path d="M9 11h6" /></svg>
+                          <span className="text-xs text-[#6B8FAB] font-semibold">PDF Document</span>
+                        </div>
                       ) : (
                         <img src={content[field.key]} alt={field.label} className="object-contain w-full h-full p-4" />
                       )}
@@ -183,7 +189,7 @@ export default function AboutEditor() {
                       onClick={() => { setMediaTarget(field.key); setMediaOpen(true); }}
                       className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
                     >
-                      {content[field.key] ? 'Replace Media' : 'Upload Image / Video'}
+                      {content[field.key] ? 'Replace Media' : 'Upload Image / Video / PDF'}
                     </button>
                     {content[field.key] && (
                       <button

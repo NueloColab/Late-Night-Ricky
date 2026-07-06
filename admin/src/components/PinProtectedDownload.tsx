@@ -1,19 +1,38 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function PinProtectedDownload() {
   const [showModal, setShowModal] = useState(false);
   const [pin, setPin] = useState('');
   const [error, setError] = useState(false);
-
   const [visible, setVisible] = useState(false);
+  const [correctPin, setCorrectPin] = useState('7291');
+  const [pressPackUrl, setPressPackUrl] = useState('/assets/press-pack.pdf');
+
+  useEffect(() => {
+    async function fetchSection() {
+      try {
+        const res = await fetch('/api/public/sections?page=about');
+        const data = await res.json();
+        const sections = data.sections || [];
+        const intro = sections.find((s: any) => s.section === 'intro');
+        if (intro?.content) {
+          const c = typeof intro.content === 'string' ? JSON.parse(intro.content) : intro.content;
+          if (c.pressPackPin) setCorrectPin(c.pressPackPin);
+          if (c.pressPackLink) setPressPackUrl(c.pressPackLink);
+        }
+      } catch {
+        // keep defaults
+      }
+    }
+    fetchSection();
+  }, []);
 
   const handleOpen = () => {
     setShowModal(true);
     setPin('');
     setError(false);
-    // trigger entrance animation after mount
     requestAnimationFrame(() => setVisible(true));
   };
 
@@ -27,8 +46,8 @@ export default function PinProtectedDownload() {
   };
 
   const handleSubmit = () => {
-    if (pin === '7291') {
-      window.open('/assets/press-pack.pdf', '_blank');
+    if (!correctPin || pin === correctPin) {
+      window.open(pressPackUrl, '_blank');
       handleClose();
     } else {
       setError(true);

@@ -311,7 +311,8 @@ export default function HomeEditor() {
               { key: 'image', label: 'About Image', type: 'image' },
               { key: 'aboutHeadingImage', label: '"About" Heading Image', type: 'image' },
               { key: 'rickyTextImage', label: '"Ricky" Heading Image', type: 'image' },
-              { key: 'pressPackLink', label: 'Press Pack Link', type: 'text' },
+              { key: 'pressPackLink', label: 'Press Pack File', type: 'image' },
+              { key: 'pressPackPin', label: 'Press Pack PIN (4 digits)', type: 'text' },
             ]} onUpdate={(key, val) => updateContent('about', key, val)} onSave={() => saveSection('about')} saving={saving === 'about'} onToggleVisibility={() => toggleVisibility('about')} onOpenMedia={(field) => openMedia('section', undefined, field)} />
           ) : selectedSection === 'moments' ? (
             <MomentsEditor section={getSection('moments')} onUpdate={(key, val) => updateContent('moments', key, val)} onSave={() => saveSection('moments')} saving={saving === 'moments'} onToggleVisibility={() => toggleVisibility('moments')} onOpenMedia={(field) => openMedia('section', undefined, field)} setMediaTarget={setMediaTarget} setMediaOpen={setMediaOpen} />
@@ -447,13 +448,18 @@ function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onTog
                   <div className="w-full aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 border border-[#6B8FAB]/30 max-w-md">
                     {value.match(/\.(mp4|webm|mov|avi)$/i) ? (
                       <video src={value} className="object-contain w-full h-full" controls muted />
+                    ) : value.match(/\.pdf$/i) ? (
+                      <div className="flex flex-col items-center justify-center h-full p-6">
+                        <svg className="w-12 h-12 text-[#6B8FAB] mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /><path d="M9 15h6" /><path d="M9 11h6" /></svg>
+                        <span className="text-xs text-[#6B8FAB] font-semibold">PDF Document</span>
+                      </div>
                     ) : (
                       <img src={value} alt={field.label} className="object-contain w-full h-full" />
                     )}
                   </div>
                 )}
                 <button onClick={() => onOpenMedia(field.key)} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition">
-                  {value ? 'Replace Media' : 'Upload Image / Video'}
+                  {value ? 'Replace Media' : 'Upload Image / Video / PDF'}
                 </button>
               </div>
             );

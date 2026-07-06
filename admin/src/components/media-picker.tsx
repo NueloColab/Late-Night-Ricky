@@ -196,7 +196,7 @@ export default function MediaPicker({ open, onClose, onSelect, filterType = 'all
   const accept =
     filterType === 'image' ? 'image/*' :
     filterType === 'video' ? 'video/*' :
-    'image/*,video/*,audio/*';
+    'image/*,video/*,audio/*,.pdf,application/pdf';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
