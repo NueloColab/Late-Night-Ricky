@@ -216,10 +216,10 @@ export default async function HomePage() {
             backgroundPosition: heroBackgroundPosition,
           }}
         />
-        {/* Logo + subtitle — positioned left, level with sunglasses (~mid-hero) */}
-        <div className="absolute z-10 flex flex-col items-center top-1/2 left-0 right-0 -translate-y-1/2 px-4">
-          <img src={heroLogo} alt="Late Night Ricky" className="w-[60%] md:w-[40%] max-w-[500px] min-w-[220px] drop-shadow-[0_4px_30px_rgba(0,0,0,0.4)]" />
-          <p className="mt-3 text-[12px] md:text-[clamp(11px,1.2vw,14px)] font-bold tracking-[0.2em] uppercase text-[#c9a96e] drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]"
+        {/* Logo + subtitle — mobile: centered, desktop: left-aligned */}
+        <div className="absolute z-10 flex flex-col items-center md:items-start justify-center md:justify-start h-full md:h-auto md:mt-[28vh] w-full md:w-auto md:max-w-[50%] md:ml-8 px-4">
+          <img src={heroLogo} alt="Late Night Ricky" className="w-[60%] md:w-[40%] max-w-[500px] min-w-[220px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.25)]" />
+          <p className="mt-3 text-[12px] md:text-[clamp(11px,1.2vw,14px)] font-bold tracking-[0.2em] uppercase text-[#c9a96e] drop-shadow-[0_1px_4px_rgba(0,0,0,0.3)]"
              style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             Grammy Winning Producer | International DJ
