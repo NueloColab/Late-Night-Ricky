@@ -201,6 +201,16 @@ export default function HomeEditor() {
         newItems[itemIndex] = { ...newItems[itemIndex], images: [...(newItems[itemIndex].images || []), path] };
         updateContent('moments', 'items', newItems);
       }
+    } else if (type === 'moments-video' && id !== undefined) {
+      const section = getSection('moments');
+      const content = parseContent(section?.content);
+      const items = content.items || [];
+      const itemIndex = Number(id);
+      if (items[itemIndex]) {
+        const newItems = [...items];
+        newItems[itemIndex] = { ...newItems[itemIndex], video: path };
+        updateContent('moments', 'items', newItems);
+      }
     } else if (type === 'performers' && field) {
       const section = getSection('performers');
       const content = parseContent(section?.content);
@@ -826,7 +836,22 @@ function MomentsEditor({ section, onUpdate, onSave, saving, onToggleVisibility, 
                 </div>
                 <button onClick={() => { setMediaTarget({ type: 'moments-image', id: i }); setMediaOpen(true); }} className="px-3 py-1.5 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">+ Add Image</button>
               </div>
-              <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Video URL (optional)</label><input type="text" value={item.video || ''} onChange={(e) => updateItem(i, 'video', e.target.value)} placeholder="e.g. /assets/showreel-video.mp4" className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" /></div>
+              <div>
+                <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Video (optional)</label>
+                {item.video ? (
+                  <div>
+                    <div className="w-full max-w-md aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 border border-[#6B8FAB]/30">
+                      <video src={item.video} className="object-contain w-full h-full" controls muted />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button onClick={() => { setMediaTarget({ type: 'moments-video', id: i }); setMediaOpen(true); }} className="px-3 py-1.5 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">Replace Video</button>
+                      <button onClick={() => updateItem(i, 'video', '')} className="px-3 py-1.5 border border-red-300 text-red-600 rounded-full text-[11px] font-semibold uppercase tracking-[1px] hover:bg-red-50 transition">Remove</button>
+                    </div>
+                  </div>
+                ) : (
+                  <button onClick={() => { setMediaTarget({ type: 'moments-video', id: i }); setMediaOpen(true); }} className="px-4 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">Upload Video</button>
+                )}
+              </div>
             </div>
           ))}
         </div>
