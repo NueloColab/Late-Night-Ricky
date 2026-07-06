@@ -48,14 +48,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="min-h-screen bg-[#E3E8ED] text-[#1B3A4C] flex">
-      {/* Desktop sidebar — always visible on large screens */}
-      <div className="hidden lg:block">
-        <AdminSidebar
-          isOpen={true}
-          onClose={() => {}}
-          isMobile={false}
-        />
-      </div>
+      {/* Desktop sidebar — toggleable */}
+      {sidebarOpen && (
+        <div className="hidden lg:block flex-shrink-0">
+          <AdminSidebar
+            isOpen={true}
+            onClose={() => setSidebarOpen(false)}
+            isMobile={false}
+          />
+        </div>
+      )}
 
       {/* Mobile sidebar — slide-over overlay */}
       {sidebarOpen && (
