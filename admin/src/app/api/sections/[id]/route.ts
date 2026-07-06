@@ -19,6 +19,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     if (body.videos !== undefined) updateData.videos = typeof body.videos === 'string' ? body.videos : JSON.stringify(body.videos);
     if (body.links !== undefined) updateData.links = typeof body.links === 'string' ? body.links : JSON.stringify(body.links);
     if (body.isActive !== undefined) updateData.isActive = body.isActive;
+    if (body.isVisible !== undefined) updateData.isVisible = body.isVisible;
     if (body.order !== undefined) updateData.order = body.order;
 
     await db.update(siteSections).set(updateData).where(eq(siteSections.id, id))

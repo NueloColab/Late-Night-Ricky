@@ -86,7 +86,7 @@ export default async function HomePage() {
   let shows: any[] = DEFAULT_SHOWS; // used by CMS fallback, kept for future dynamic rendering
   let clients: string[] = DEFAULT_CLIENTS;
   let tracks = DEFAULT_TRACKS;
-  let heroImage = '/assets/ricky-hero-studio.jpg';
+  const heroImage = '/assets/ricky-hero-studio.jpg';
   let heroLogo = '/assets/ricky-logo.png';
   let heroGrayscale = true;
   const radioImage = '/assets/ricky-music-jacket-sm.jpg';
