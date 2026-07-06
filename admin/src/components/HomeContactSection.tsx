@@ -4,19 +4,20 @@ import { useState, useEffect } from 'react';
 
 export default function HomeContactSection() {
   const [contactInfo, setContactInfo] = useState({
-    email: 'samir@wearemediahive.com',
-    heading: 'Get in Touch',
-    image: 'https://res.cloudinary.com/dfllse3az/image/upload/v1781170009/nuelo/late-night-ricky/media/LATENIGHTRICKY-332.jpg',
+    email: '',
+    heading: '',
+    image: '',
     formEnabled: true,
   });
+  const [cmsLoaded, setCmsLoaded] = useState(false);
   const [socialLinks, setSocialLinks] = useState({
-    instagram: 'https://instagram.com/latenightricky',
-    youtube: 'https://youtube.com/@latenightricky',
-    spotify: 'https://open.spotify.com/artist/latenightricky',
-    appleMusic: 'https://music.apple.com/gb/artist/late-night-ricky/1759491226',
-    tiktok: 'https://tiktok.com/@latenightricky',
-    twitter: 'https://twitter.com/latenightricky',
-    facebook: 'https://facebook.com/latenightricky',
+    instagram: '',
+    youtube: '',
+    spotify: '',
+    appleMusic: '',
+    tiktok: '',
+    twitter: '',
+    facebook: '',
   });
   const [expanded, setExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState('booking');
@@ -67,6 +68,25 @@ export default function HomeContactSection() {
         }
       } catch {
         // keep defaults
+      } finally {
+        setCmsLoaded(true);
+        // Apply hardcoded defaults for any fields CMS didn't populate
+        setContactInfo(prev => ({
+          ...prev,
+          email: prev.email || 'samir@wearemediahive.com',
+          heading: prev.heading || 'Get in Touch',
+          image: prev.image || '/assets/ricky-contact-studio-2.jpg',
+        }));
+        setSocialLinks(prev => ({
+          ...prev,
+          instagram: prev.instagram || 'https://instagram.com/latenightricky',
+          youtube: prev.youtube || 'https://youtube.com/@latenightricky',
+          spotify: prev.spotify || 'https://open.spotify.com/artist/latenightricky',
+          appleMusic: prev.appleMusic || 'https://music.apple.com/gb/artist/late-night-ricky/1759491226',
+          tiktok: prev.tiktok || 'https://tiktok.com/@latenightricky',
+          twitter: prev.twitter || 'https://twitter.com/latenightricky',
+          facebook: prev.facebook || 'https://facebook.com/latenightricky',
+        }));
       }
     }
     fetchSections();
@@ -119,12 +139,14 @@ export default function HomeContactSection() {
     <section id="contact-form" className="relative min-h-[calc(100dvh-70px)]">
       {/* Full background image — no gradient fade */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={contactInfo.image}
-          alt="Late Night Ricky"
-          className="w-full h-full object-cover object-center"
-          style={{ filter: 'grayscale(100%)' }}
-        />
+        {cmsLoaded && contactInfo.image && (
+          <img
+            src={contactInfo.image}
+            alt="Late Night Ricky"
+            className="w-full h-full object-cover object-center"
+            style={{ filter: 'grayscale(100%)' }}
+          />
+        )}
         <div className="absolute inset-0 bg-[#2a1a0a]/60" />
       </div>
 
