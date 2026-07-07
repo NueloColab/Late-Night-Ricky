@@ -19,7 +19,7 @@ export default function PinProtectedDownload() {
         const intro = sections.find((s: any) => s.section === 'intro');
         if (intro?.content) {
           const c = typeof intro.content === 'string' ? JSON.parse(intro.content) : intro.content;
-          if (c.pressPackPin) setCorrectPin(c.pressPackPin);
+          if (c.pressPackPin) setCorrectPin(String(c.pressPackPin).trim());
           if (c.pressPackLink) setPressPackUrl(c.pressPackLink);
         }
       } catch {
@@ -46,7 +46,9 @@ export default function PinProtectedDownload() {
   };
 
   const handleSubmit = () => {
-    if (!correctPin || pin === correctPin) {
+    const normalizedPin = String(pin).trim();
+    const normalizedCorrectPin = String(correctPin).trim();
+    if (!normalizedCorrectPin || normalizedPin === normalizedCorrectPin) {
       window.open(pressPackUrl, '_blank');
       handleClose();
     } else {
