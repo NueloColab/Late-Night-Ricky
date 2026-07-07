@@ -161,14 +161,9 @@ export default function LoginPage() {
             <img
               src="/assets/ricky-logo.png"
               alt="Late Night Ricky"
-              className="mx-auto invert w-[200px] h-auto"
+              className="mx-auto invert w-[320px] h-auto"
             />
           </div>
-          <h1 className="font-serif text-6xl font-semibold text-white tracking-tight mb-4">
-            Late Night
-            <br />
-            Ricky
-          </h1>
           <p className="text-[#8FA3B3] text-sm font-medium uppercase tracking-[0.3em]">
             International DJ & Grammy Winning Producer
           </p>
@@ -191,7 +186,7 @@ export default function LoginPage() {
             <img
               src="/assets/ricky-logo.png"
               alt="Late Night Ricky"
-              className="mx-auto invert w-[160px] h-auto"
+              className="mx-auto invert w-[200px] h-auto"
             />
           </div>
 
