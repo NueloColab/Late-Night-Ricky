@@ -1,7 +1,123 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
+// Star-flicker keyframes injected via style tag
+const StarFlickerStyles = () => (
+  <style>{`
+    @keyframes star-flicker {
+      0%, 100% { opacity: 1; transform: scale(1); filter: brightness(1.2); }
+      25% { opacity: 0.4; transform: scale(0.85); filter: brightness(0.8); }
+      50% { opacity: 0.9; transform: scale(1.1); filter: brightness(1.4); }
+      75% { opacity: 0.3; transform: scale(0.9); filter: brightness(0.7); }
+    }
+    @keyframes star-glow {
+      0%, 100% { box-shadow: 0 0 4px rgba(197, 229, 248, 0.3); }
+      50% { box-shadow: 0 0 12px rgba(197, 229, 248, 0.6), 0 0 20px rgba(197, 229, 248, 0.2); }
+    }
+    .star-dot {
+      animation: star-flicker 2s ease-in-out infinite, star-glow 3s ease-in-out infinite;
+    }
+    .star-dot:nth-child(2) { animation-delay: 0.3s, 0.5s; }
+    .star-dot:nth-child(3) { animation-delay: 0.7s, 1.2s; }
+    .star-dot:nth-child(4) { animation-delay: 1.1s, 0.8s; }
+    .star-dot:nth-child(5) { animation-delay: 0.5s, 1.5s; }
+    .star-dot:nth-child(6) { animation-delay: 0.9s, 0.3s; }
+    .star-dot-empty:hover {
+      transform: scale(1.3);
+      box-shadow: 0 0 8px rgba(197, 229, 248, 0.4);
+    }
+    .star-dot-filled:hover {
+      transform: scale(1.2);
+      filter: brightness(1.5);
+    }
+  `}</style>
+);
+
+function PinInput({
+  value,
+  onChange,
+  maxLength = 4,
+  error,
+}: {
+  value: string;
+  onChange: (val: string) => void;
+  maxLength?: number;
+  error?: boolean;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [focusedIndex, setFocusedIndex] = useState(0);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key >= "0" && e.key <= "9") {
+      e.preventDefault();
+      const newVal = (value + e.key).slice(0, maxLength);
+      onChange(newVal);
+    } else if (e.key === "Backspace") {
+      e.preventDefault();
+      onChange(value.slice(0, -1));
+    }
+  };
+
+  const handleContainerClick = () => {
+    inputRef.current?.focus();
+  };
+
+  return (
+    <div
+      onClick={handleContainerClick}
+      className={`relative flex items-center justify-center gap-4 px-6 py-5 bg-[#111318]/5 border-2 rounded-xl cursor-text transition-all ${
+        error
+          ? "border-red-400/50"
+          : value.length === maxLength
+          ? "border-[#C5E5F8]/60"
+          : "border-[#2A2E36] hover:border-[#3A3E46]"
+      }`}
+    >
+      {/* Hidden real input for mobile keyboard */}
+      <input
+        ref={inputRef}
+        type="tel"
+        inputMode="numeric"
+        maxLength={maxLength}
+        value={value}
+        onChange={(e) => {
+          const digits = e.target.value.replace(/\D/g, "").slice(0, maxLength);
+          onChange(digits);
+        }}
+        onKeyDown={handleKeyDown}
+        onFocus={() => setFocusedIndex(value.length)}
+        className="absolute inset-0 w-full h-full opacity-0 cursor-text"
+        autoFocus
+      />
+
+      {/* Visual dots */}
+      {Array.from({ length: maxLength }).map((_, i) => {
+        const filled = i < value.length;
+        const isActive = i === value.length;
+
+        return (
+          <div
+            key={i}
+            className={`relative w-4 h-4 rounded-full transition-all duration-300 cursor-default ${
+              filled
+                ? "star-dot star-dot-filled bg-[#C5E5F8]"
+                : "star-dot-empty bg-transparent border-2 border-[#5A6A7A]/40 hover:border-[#C5E5F8]/50"
+            } ${isActive ? "ring-2 ring-[#C5E5F8]/20 ring-offset-2 ring-offset-[#1B3A4C]" : ""}`}
+          >
+            {filled && (
+              <div className="absolute inset-0 rounded-full bg-[#C5E5F8]" />
+            )}
+            {isActive && !filled && (
+              <div className="absolute inset-0.5 rounded-full bg-[#C5E5F8]/30 animate-pulse" />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function LoginPage() {
   const [pin, setPin] = useState("");
@@ -34,6 +150,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-[#1B3A4C] flex">
+      <StarFlickerStyles />
       {/* Left side — branding (desktop only) */}
       <div className="hidden lg:flex lg:w-1/2 relative items-center justify-center">
         <div className="absolute inset-0 opacity-10">
@@ -92,15 +209,11 @@ export default function LoginPage() {
               <label className="block text-xs font-semibold tracking-[0.2em] uppercase text-[#8FA3B3] mb-3">
                 Enter PIN
               </label>
-              <input
-                type="password"
-                inputMode="numeric"
-                maxLength={6}
+              <PinInput
                 value={pin}
-                onChange={(e) => setPin(e.target.value)}
-                className="w-full px-5 py-4 bg-[#111318]/5 border-2 border-[#2A2E36] rounded-xl text-white font-mono text-2xl tracking-[0.5em] text-center placeholder:text-[#5A6A7A] focus:border-[#C5E5F8] focus:outline-none focus:bg-[#111318]/10 transition-all"
-                placeholder="••••"
-                autoFocus
+                onChange={setPin}
+                maxLength={4}
+                error={!!error}
               />
             </div>
 
