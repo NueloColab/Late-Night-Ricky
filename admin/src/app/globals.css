@@ -2201,6 +2201,15 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   }
 }
 
+/* Admin status dot flicker */
+@keyframes admin-dot-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.animate-admin-dot-flicker {
+  animation: admin-dot-flicker 1.5s ease-in-out infinite;
+}
+
 /* Marquee carousel */
 @keyframes marquee-left {
   0% { transform: translateX(0); }

@@ -236,7 +236,7 @@ export default function Dashboard() {
                   href="/admin/enquiries"
                   className="flex items-center gap-3 p-3 hover:bg-[#FAFBFC] transition"
                 >
-                  <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${e.status === 'new' ? 'bg-[#1B3A4C]' : 'bg-[#6B8FAB]/40'}`} />
+                  <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${e.status === 'new' ? 'bg-[#1B3A4C] animate-admin-dot-flicker' : 'bg-[#6B8FAB]/40'}`} />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-[#111] truncate">{e.name}</p>
                     <p className="text-xs text-[#a0a0a0] truncate">{e.message?.substring(0, 40) || 'No message'}</p>
@@ -264,7 +264,7 @@ export default function Dashboard() {
                   href="/admin/submissions"
                   className="flex items-center gap-3 p-3 hover:bg-[#FAFBFC] transition"
                 >
-                  <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${sub.status === 'new' ? 'bg-[#1B3A4C]' : 'bg-[#6B8FAB]/40'}`} />
+                  <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${sub.status === 'new' ? 'bg-[#1B3A4C] animate-admin-dot-flicker' : 'bg-[#6B8FAB]/40'}`} />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-[#111] truncate">{sub.trackTitle || sub.artistName || 'Unknown'}</p>
                     <p className="text-xs text-[#a0a0a0] truncate">{sub.artistName || sub.email}</p>
