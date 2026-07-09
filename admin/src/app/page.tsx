@@ -182,6 +182,7 @@ export default async function HomePage() {
   };
 
   // Showreel
+  let showreelVisible = false;
   let showreelVideoSrc = '';
   let showreelPosterSrc = '';
 
@@ -329,19 +330,19 @@ export default async function HomePage() {
         if (c.facebookUrl) facebookUrl = c.facebookUrl;
       }
 
-      // Video / Showreel — only use non-hardcoded CMS-uploaded videos
+      // Video / Showreel
       const videoSection = dbSections.find((s: any) => s.section === 'video');
       if (videoSection) {
-        const HARDCODED = ['/assets/video-desktop.mp4', '/assets/video-mobile.mp4', '/assets/showreel-video.mp4'];
+        showreelVisible = videoSection.isVisible !== false;
         if (videoSection.content) {
           const c = typeof videoSection.content === 'string' ? JSON.parse(videoSection.content) : videoSection.content;
-          if (c.src && !HARDCODED.includes(c.src)) showreelVideoSrc = c.src;
-          if (c.poster && c.poster !== '/assets/video-poster-desktop.jpg') showreelPosterSrc = c.poster;
+          if (c.src) showreelVideoSrc = c.src;
+          if (c.poster) showreelPosterSrc = c.poster;
         }
         if (videoSection.videos) {
           try {
             const vids = typeof videoSection.videos === 'string' ? JSON.parse(videoSection.videos) : videoSection.videos;
-            if (Array.isArray(vids) && vids.length > 0 && vids[0] && !HARDCODED.includes(vids[0])) {
+            if (Array.isArray(vids) && vids.length > 0 && vids[0]) {
               showreelVideoSrc = vids[0];
             }
           } catch { /* ignore */ }
@@ -394,8 +395,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Showreel — only renders when CMS provides a real video */}
-      {showreelVideoSrc && (
+      {/* Showreel — only renders when visible AND has a CMS video */}
+      {showreelVisible && showreelVideoSrc && (
         <section className="relative w-full bg-black">
           <video
             src={showreelVideoSrc}
