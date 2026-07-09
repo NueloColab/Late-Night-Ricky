@@ -149,10 +149,6 @@ export default async function HomePage() {
     backgroundImage: '/assets/venues-bg.jpg',
     venues: ['LIV (Miami)', 'WALL (Miami)', 'TAPE (London)', 'HAKKASAN (Las Vegas)', 'MOVIDA (Dubai)', "JIMMY'Z (Monte Carlo)", 'MINISTRY OF SOUND (London)', '1 OAK (New York)', 'BYBLOS (Milan)', 'PACHA (Ibiza)', 'ARMANI (Dubai)', 'MANDALAY BAY (Las Vegas)', 'TEMPLE (San Francisco)', 'POPPY (Los Angeles)', 'CIRQUE LE SOIR (London)', 'HIGHLIGHT ROOM (Los Angeles)', "TEDDY'S @ ROOSEVELT (Los Angeles)", 'DELILAH (Los Angeles)', 'GIBSON (Frankfurt)', 'LIO (Ibiza)', 'STUDIO PARIS (Chicago)', 'PREMIER @ BORGATA (Atlantic City)', 'PARQ (San Diego)', 'BOOTSY BELLOWS (Los Angeles)', 'WARWICK (Los Angeles)', 'LAVO (New York)', 'TAO (New York)', 'UP & DOWN (New York)', 'LIBERTINE (London)', 'SCANDAL (London)', 'TOY ROOM (Dubai)', '1 OAK (Dubai)', 'TAO (Las Vegas)', 'BAOLI (Cannes)', 'SHOKO (Barcelona)', 'LASTA (Serbia)', 'REX ROOMS (London)', "HARRIET'S (Los Angeles)", 'VIP ROOM (St. Tropez)', 'BON BONNIERE (Mykonos)', 'DRAMA (London)', 'DEAR DARLING (London)', 'TRAMP (London)', 'SPIRITO (Brussels)', 'CUCKOO CLUB (London)', 'RAFFLES (London)', 'SUBOIS (Montreal)', 'P1 (Munich)', "ZELO'S (Monte Carlo)", 'WIRELESS FESTIVAL (UK)', 'READING & LEEDS FESTIVAL (UK)', 'USHAIA (Ibiza)', 'ABU DHABI GRAND PRIX', 'O2 ARENA (London)', 'FESTIVAL DE CANNES'],
   };
-  // Showreel visibility (default: hidden until CMS provides video)
-  let showreelVisible = false;
-  let showreelVideoSrc = '';
-  let showreelPosterSrc = '';
 
   const brandsData = {
     heading: 'Trusted by Global Brands',
@@ -329,29 +325,6 @@ export default async function HomePage() {
         if (c.facebookUrl) facebookUrl = c.facebookUrl;
       }
 
-      // Showreel visibility
-      const videoSection = dbSections.find((s: any) => s.section === 'video');
-      if (videoSection) {
-        showreelVisible = videoSection.isVisible !== false;
-        // Skip old hardcoded video paths from seed data
-        const HARDCODED_VIDEOS = ['/assets/video-desktop.mp4', '/assets/video-mobile.mp4', '/assets/showreel-video.mp4'];
-        if (videoSection.content) {
-          const c = typeof videoSection.content === 'string' ? JSON.parse(videoSection.content) : videoSection.content;
-          if (c.src && !HARDCODED_VIDEOS.includes(c.src)) showreelVideoSrc = c.src;
-          if (c.poster && c.poster !== '/assets/video-poster-desktop.jpg') showreelPosterSrc = c.poster;
-        }
-        // Prefer videos array (CMS media uploads)
-        if (videoSection.videos) {
-          try {
-            const vids = typeof videoSection.videos === 'string' ? JSON.parse(videoSection.videos) : videoSection.videos;
-            if (Array.isArray(vids) && vids.length > 0 && vids[0] && !HARDCODED_VIDEOS.includes(vids[0])) {
-              showreelVideoSrc = vids[0];
-            }
-          } catch {
-            // ignore invalid videos JSON
-          }
-        }
-      }
     }
     if (dbTracks.length > 0) {
       tracks = dbTracks.map((t: any) => ({ title: t.title, time: t.duration || '0:30', src: t.filePath, cover: t.coverPath || undefined })).slice(0, 5);
@@ -398,21 +371,6 @@ export default async function HomePage() {
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
         </div>
       </section>
-
-      {/* Showreel — only visible when CMS has a video configured */}
-      {showreelVisible && showreelVideoSrc && (
-        <section className="relative w-full bg-black">
-          <video
-            src={showreelVideoSrc}
-            poster={showreelPosterSrc}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-auto"
-          />
-        </section>
-      )}
 
       {/* ═══ ABOUT RICKY — dark leather texture, image blends into page ═══ */}
       <section id="about" className="relative min-h-[100dvh] py-20 px-6 md:px-14 overflow-hidden">
