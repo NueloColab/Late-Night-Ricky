@@ -338,6 +338,13 @@ export default async function HomePage() {
           if (c.src) showreelVideoSrc = c.src;
           if (c.poster) showreelPosterSrc = c.poster;
         }
+        // Fallback: check videos array for CMS-uploaded videos
+        if (videoSection.videos) {
+          const vids = typeof videoSection.videos === 'string' ? JSON.parse(videoSection.videos) : videoSection.videos;
+          if (Array.isArray(vids) && vids.length > 0 && vids[0]) {
+            showreelVideoSrc = vids[0];
+          }
+        }
       }
     }
     if (dbTracks.length > 0) {
