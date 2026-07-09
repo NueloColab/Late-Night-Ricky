@@ -340,9 +340,13 @@ export default async function HomePage() {
         }
         // Fallback: check videos array for CMS-uploaded videos
         if (videoSection.videos) {
-          const vids = typeof videoSection.videos === 'string' ? JSON.parse(videoSection.videos) : videoSection.videos;
-          if (Array.isArray(vids) && vids.length > 0 && vids[0]) {
-            showreelVideoSrc = vids[0];
+          try {
+            const vids = typeof videoSection.videos === 'string' ? JSON.parse(videoSection.videos) : videoSection.videos;
+            if (Array.isArray(vids) && vids.length > 0 && vids[0]) {
+              showreelVideoSrc = vids[0];
+            }
+          } catch {
+            // ignore invalid videos JSON
           }
         }
       }
