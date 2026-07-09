@@ -181,6 +181,10 @@ export default async function HomePage() {
     ],
   };
 
+  // Showreel
+  let showreelVideoSrc = '';
+  let showreelPosterSrc = '';
+
   // Suppress unused-variable warnings for CMS values not yet fully used
   void clients; void pressPack;
   try {
@@ -325,6 +329,24 @@ export default async function HomePage() {
         if (c.facebookUrl) facebookUrl = c.facebookUrl;
       }
 
+      // Video / Showreel — only use non-hardcoded CMS-uploaded videos
+      const videoSection = dbSections.find((s: any) => s.section === 'video');
+      if (videoSection) {
+        const HARDCODED = ['/assets/video-desktop.mp4', '/assets/video-mobile.mp4', '/assets/showreel-video.mp4'];
+        if (videoSection.content) {
+          const c = typeof videoSection.content === 'string' ? JSON.parse(videoSection.content) : videoSection.content;
+          if (c.src && !HARDCODED.includes(c.src)) showreelVideoSrc = c.src;
+          if (c.poster && c.poster !== '/assets/video-poster-desktop.jpg') showreelPosterSrc = c.poster;
+        }
+        if (videoSection.videos) {
+          try {
+            const vids = typeof videoSection.videos === 'string' ? JSON.parse(videoSection.videos) : videoSection.videos;
+            if (Array.isArray(vids) && vids.length > 0 && vids[0] && !HARDCODED.includes(vids[0])) {
+              showreelVideoSrc = vids[0];
+            }
+          } catch { /* ignore */ }
+        }
+      }
     }
     if (dbTracks.length > 0) {
       tracks = dbTracks.map((t: any) => ({ title: t.title, time: t.duration || '0:30', src: t.filePath, cover: t.coverPath || undefined })).slice(0, 5);
@@ -371,6 +393,21 @@ export default async function HomePage() {
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
         </div>
       </section>
+
+      {/* Showreel — only renders when CMS provides a real video */}
+      {showreelVideoSrc && (
+        <section className="relative w-full bg-black">
+          <video
+            src={showreelVideoSrc}
+            poster={showreelPosterSrc || undefined}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-auto"
+          />
+        </section>
+      )}
 
       {/* ═══ ABOUT RICKY — dark leather texture, image blends into page ═══ */}
       <section id="about" className="relative min-h-[100dvh] py-20 px-6 md:px-14 overflow-hidden">
