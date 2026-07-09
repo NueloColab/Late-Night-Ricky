@@ -320,7 +320,7 @@ export default function HomeEditor() {
             ]} onUpdate={(key, val) => updateContent('hero', key, val)} onSave={() => saveSection('hero')} saving={saving === 'hero'} onToggleVisibility={() => toggleVisibility('hero')} onOpenMedia={(field) => openMedia('section', undefined, field)} loading={loading} />
           ) : selectedSection === 'video' ? (
             <SectionEditor section={getSection('video')} label="Showreel" fields={[
-              { key: 'src', label: 'Video File', type: 'text' },
+              { key: 'src', label: 'Video File', type: 'image' },
               { key: 'poster', label: 'Poster Image', type: 'image' },
             ]} onUpdate={(key, val) => updateContent('video', key, val)} onSave={() => saveSection('video')} saving={saving === 'video'} onToggleVisibility={() => toggleVisibility('video')} onOpenMedia={(field) => openMedia('section', undefined, field)} loading={loading} />
           ) : selectedSection === 'about' ? (

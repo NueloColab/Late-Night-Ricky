@@ -333,16 +333,18 @@ export default async function HomePage() {
       const videoSection = dbSections.find((s: any) => s.section === 'video');
       if (videoSection) {
         showreelVisible = videoSection.isVisible !== false;
+        // Skip old hardcoded video paths from seed data
+        const HARDCODED_VIDEOS = ['/assets/video-desktop.mp4', '/assets/video-mobile.mp4', '/assets/showreel-video.mp4'];
         if (videoSection.content) {
           const c = typeof videoSection.content === 'string' ? JSON.parse(videoSection.content) : videoSection.content;
-          if (c.src) showreelVideoSrc = c.src;
-          if (c.poster) showreelPosterSrc = c.poster;
+          if (c.src && !HARDCODED_VIDEOS.includes(c.src)) showreelVideoSrc = c.src;
+          if (c.poster && c.poster !== '/assets/video-poster-desktop.jpg') showreelPosterSrc = c.poster;
         }
-        // Fallback: check videos array for CMS-uploaded videos
+        // Prefer videos array (CMS media uploads)
         if (videoSection.videos) {
           try {
             const vids = typeof videoSection.videos === 'string' ? JSON.parse(videoSection.videos) : videoSection.videos;
-            if (Array.isArray(vids) && vids.length > 0 && vids[0]) {
+            if (Array.isArray(vids) && vids.length > 0 && vids[0] && !HARDCODED_VIDEOS.includes(vids[0])) {
               showreelVideoSrc = vids[0];
             }
           } catch {
