@@ -149,10 +149,10 @@ export default async function HomePage() {
     backgroundImage: '/assets/venues-bg.jpg',
     venues: ['LIV (Miami)', 'WALL (Miami)', 'TAPE (London)', 'HAKKASAN (Las Vegas)', 'MOVIDA (Dubai)', "JIMMY'Z (Monte Carlo)", 'MINISTRY OF SOUND (London)', '1 OAK (New York)', 'BYBLOS (Milan)', 'PACHA (Ibiza)', 'ARMANI (Dubai)', 'MANDALAY BAY (Las Vegas)', 'TEMPLE (San Francisco)', 'POPPY (Los Angeles)', 'CIRQUE LE SOIR (London)', 'HIGHLIGHT ROOM (Los Angeles)', "TEDDY'S @ ROOSEVELT (Los Angeles)", 'DELILAH (Los Angeles)', 'GIBSON (Frankfurt)', 'LIO (Ibiza)', 'STUDIO PARIS (Chicago)', 'PREMIER @ BORGATA (Atlantic City)', 'PARQ (San Diego)', 'BOOTSY BELLOWS (Los Angeles)', 'WARWICK (Los Angeles)', 'LAVO (New York)', 'TAO (New York)', 'UP & DOWN (New York)', 'LIBERTINE (London)', 'SCANDAL (London)', 'TOY ROOM (Dubai)', '1 OAK (Dubai)', 'TAO (Las Vegas)', 'BAOLI (Cannes)', 'SHOKO (Barcelona)', 'LASTA (Serbia)', 'REX ROOMS (London)', "HARRIET'S (Los Angeles)", 'VIP ROOM (St. Tropez)', 'BON BONNIERE (Mykonos)', 'DRAMA (London)', 'DEAR DARLING (London)', 'TRAMP (London)', 'SPIRITO (Brussels)', 'CUCKOO CLUB (London)', 'RAFFLES (London)', 'SUBOIS (Montreal)', 'P1 (Munich)', "ZELO'S (Monte Carlo)", 'WIRELESS FESTIVAL (UK)', 'READING & LEEDS FESTIVAL (UK)', 'USHAIA (Ibiza)', 'ABU DHABI GRAND PRIX', 'O2 ARENA (London)', 'FESTIVAL DE CANNES'],
   };
-  // Showreel visibility (default: hidden until client provides video)
+  // Showreel visibility (default: hidden until CMS provides video)
   let showreelVisible = false;
-  let showreelVideoSrc = '/assets/video-desktop.mp4';
-  let showreelPosterSrc = '/assets/video-poster-desktop.jpg';
+  let showreelVideoSrc = '';
+  let showreelPosterSrc = '';
 
   const brandsData = {
     heading: 'Trusted by Global Brands',
@@ -397,8 +397,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Showreel — only visible when toggled on in CMS */}
-      {showreelVisible && (
+      {/* Showreel — only visible when CMS has a video configured */}
+      {showreelVisible && showreelVideoSrc && (
         <section className="relative w-full bg-black">
           <video
             src={showreelVideoSrc}
