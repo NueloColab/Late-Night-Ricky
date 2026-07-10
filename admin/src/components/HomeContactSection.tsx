@@ -151,19 +151,21 @@ export default function HomeContactSection() {
       </div>
 
       {/* Contact content on the left */}
-      <div className="relative z-10 flex items-center min-h-[calc(100dvh-70px)] px-16 md:px-28 py-20">
+      <div className="relative z-10 flex items-center min-h-[calc(100dvh-70px)] px-6 md:px-28 py-20">
         <div className="w-full max-w-[600px]">
           {!expanded ? (
-            <div className="text-left">
+            <div className="text-center md:text-left">
               <span className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#d4c4a8]/80 font-medium block mb-4">{contactInfo.heading || 'Get in Touch'}</span>
               <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-6" style={{ fontFamily: "'Oswald', sans-serif" }}>CONTACT</h2>
-              <button
-                onClick={() => setExpanded(true)}
-                className="garrix-btn garrix-btn-outline"
-                style={{ borderColor: '#e8d4b8', color: '#e8d4b8' }}
-              >
-                CONTACT
-              </button>
+              <div className="flex justify-center md:justify-start">
+                <button
+                  onClick={() => setExpanded(true)}
+                  className="garrix-btn garrix-btn-outline"
+                  style={{ borderColor: '#e8d4b8', color: '#e8d4b8' }}
+                >
+                  CONTACT
+                </button>
+              </div>
             </div>
           ) : (
             <div className="animate-in">
