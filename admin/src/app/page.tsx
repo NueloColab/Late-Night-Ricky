@@ -248,7 +248,8 @@ export default async function HomePage() {
           if (c.bio2) aboutBio2 = c.bio2;
           if (c.bio3) aboutBio3 = c.bio3;
           if (c.bio4) aboutBio4 = c.bio4;
-          if (c.image) aboutImage = c.image;
+          // CMS image override disabled — using leather composite
+          // if (c.image) aboutImage = c.image;
           if (c.aboutGrayscale !== undefined) aboutGrayscale = c.aboutGrayscale;
           if (c.aboutBrownFilter !== undefined) aboutBrownFilter = c.aboutBrownFilter;
           if (c.aboutGoldFilter !== undefined) aboutGoldFilter = c.aboutGoldFilter;
