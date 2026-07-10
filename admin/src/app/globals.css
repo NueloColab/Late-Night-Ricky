@@ -472,9 +472,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .lnr-hero-img {
     object-position: 65% 35% !important;
   }
-  /* Brands background: centre Ricky sitting figure on mobile */
+  /* Brands background: shift Ricky sitting figure further right on mobile */
   .lnr-brands-bg {
-    background-position: 65% 30% !important;
+    background-position: 72% 30% !important;
   }
 }
 
