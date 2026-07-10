@@ -527,7 +527,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Title — animated from both sides */}
-          <h2 className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[clamp(18px,3vw,36px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-14 md:mb-20" style={{ fontFamily: "'Oswald', sans-serif" }}>
+          <h2 className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[clamp(18px,3vw,36px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-6 md:mb-8" style={{ fontFamily: "'Oswald', sans-serif" }}>
             <div className="reveal-left" data-delay="100">
               <img
                 src={performersData.headingImage}
@@ -541,11 +541,11 @@ export default async function HomePage() {
           </h2>
 
           {/* Artist names — small text list */}
-          <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mb-10 md:mb-14 reveal-fade">
+          <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mb-6 md:mb-8 reveal-fade">
             {performersData.artistNames.map((name: string, i: number) => (
-              <span key={i} className="text-[10px] md:text-[11px] tracking-[0.12em] uppercase text-[#e8d4b8]/60 font-medium">
+              <span key={i} className="text-[11px] md:text-[13px] tracking-[0.12em] uppercase text-[#e8d4b8]/80 font-semibold">
                 {name}
-                {i < performersData.artistNames.length - 1 && <span className="ml-3 text-[#c4b498]/30">·</span>}
+                {i < performersData.artistNames.length - 1 && <span className="ml-2 md:ml-3 text-[#c4b498]/40">·</span>}
               </span>
             ))}
           </div>
