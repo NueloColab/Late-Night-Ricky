@@ -685,9 +685,10 @@ export default async function HomePage() {
       <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden">
         {/* Full background image — warm golden studio shot */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat brands-bg-mobile"
+          className="absolute inset-0 bg-cover bg-no-repeat brands-bg-mobile"
           style={{
             backgroundImage: `url('${brandsData.backgroundImage}')`,
+            backgroundPosition: 'center',
             filter: brandsData.brandsGrayscale ? 'grayscale(100%)' : brandsData.brandsBrownFilter ? 'sepia(60%) brightness(0.85)' : brandsData.brandsGoldFilter ? 'sepia(30%) saturate(1.4) hue-rotate(10deg) brightness(0.9)' : undefined,
           }}
         />
@@ -699,14 +700,14 @@ export default async function HomePage() {
 
         <div className="relative z-10 flex flex-col justify-center min-h-[80dvh] md:min-h-[100dvh] px-6 md:px-14 py-20 md:py-20">
           {/* Title — cream like About section */}
-          <h2 className="text-[clamp(28px,6vw,48px)] md:text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-8 md:mb-14 reveal-fade pl-4 md:pl-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
+          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-10 md:mb-14 reveal-fade pl-4 md:pl-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
             {brandsData.heading}
           </h2>
 
           {/* Brand logos — cream colored like About section */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-3 gap-y-4 md:gap-x-6 md:gap-y-8 max-w-[700px] pl-4 md:pl-12 reveal-stagger">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-8 max-w-[700px] pl-4 md:pl-12 reveal-stagger">
             {brandsData.logos.map((logo: { name: string; src: string }, i: number) => (
-              <div key={i} className="flex items-center justify-center w-24 h-10 md:w-36 md:h-14">
+              <div key={i} className="flex items-center justify-center w-28 h-12 md:w-36 md:h-14">
                 <img
                   src={logo.src}
                   alt={logo.name}
