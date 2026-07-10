@@ -1931,8 +1931,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .lnr-trusted-names {
   position: relative;
   z-index: 3;
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  width: 100dvw;
+  margin-left: calc(-50dvw + 50%);
   display: flex;
   flex-direction: column;
   gap: clamp(8px, 1.5vh, 20px);

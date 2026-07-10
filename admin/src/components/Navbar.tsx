@@ -15,6 +15,7 @@ const navLinks = [
 export default function Navbar() {
   const [visible, setVisible] = useState(true);
   const [manualToggle, setManualToggle] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
 
   // Scroll-driven collapse/expand
@@ -220,6 +221,67 @@ export default function Navbar() {
           white-space: nowrap;
         }
 
+        /* Mobile overlay menu — leather background */
+        .lnr-mobile-menu {
+          position: fixed;
+          inset: 0;
+          z-index: 600;
+          background: #2a1a0a url('/assets/footer-leather-bg.jpg') center/cover no-repeat;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 32px;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 400ms ease;
+        }
+        .lnr-mobile-menu::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: rgba(42, 26, 10, 0.82);
+          pointer-events: none;
+        }
+        .lnr-mobile-menu.open {
+          opacity: 1;
+          pointer-events: auto;
+        }
+        .lnr-mobile-menu-link {
+          position: relative;
+          z-index: 1;
+          color: #e8d4b8;
+          text-decoration: none;
+          font-size: 22px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          transition: color 200ms ease;
+        }
+        .lnr-mobile-menu-link:hover {
+          color: #fff;
+        }
+        .lnr-mobile-menu-close {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          z-index: 1;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: rgba(232, 212, 184, 0.1);
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: #e8d4b8;
+          transition: background 200ms ease;
+        }
+        .lnr-mobile-menu-close:hover {
+          background: rgba(232, 212, 184, 0.2);
+        }
+
         @media (max-width: 768px) {
           .lnr-header-bar {
             padding: 0 16px;
@@ -270,8 +332,14 @@ export default function Navbar() {
 
         <button
           className="lnr-hamburger-plain"
-          onClick={() => { setVisible(false); setManualToggle(true); }}
-          aria-label="Hide menu"
+          onClick={() => {
+            if (window.innerWidth <= 640) {
+              setMenuOpen(true);
+            } else {
+              setVisible(false); setManualToggle(true);
+            }
+          }}
+          aria-label="Menu"
         >
           <span className="lines">
             <span />
@@ -281,10 +349,47 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Mobile overlay menu — leather background */}
+      <div className={`lnr-mobile-menu ${menuOpen ? 'open' : ''}`}>
+        <button
+          className="lnr-mobile-menu-close"
+          onClick={() => setMenuOpen(false)}
+          aria-label="Close menu"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+        {navLinks.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            className="lnr-mobile-menu-link"
+            onClick={(e) => {
+              e.preventDefault();
+              setMenuOpen(false);
+              const id = link.href.replace('/#', '');
+              const el = document.getElementById(id);
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+
       {/* Animated circle trigger — appears when header is hidden */}
       <div
         className={`lnr-circle-trigger ${visible ? '' : 'visible'}`}
-        onClick={() => { setVisible(true); setManualToggle(false); }}
+        onClick={() => {
+          if (window.innerWidth <= 640) {
+            setMenuOpen(true);
+          } else {
+            setVisible(true); setManualToggle(false);
+          }
+        }}
       >
         <button className="lnr-circle-btn" aria-label="Show menu">
           <span className="lines">
