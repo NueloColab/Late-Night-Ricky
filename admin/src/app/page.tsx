@@ -542,7 +542,7 @@ export default async function HomePage() {
               <img
                 src={performersData.headingImage}
                 alt="Ricky"
-                className="h-[clamp(28px,6vw,72px)] w-auto object-contain"
+                className="h-[clamp(40px,8vw,72px)] md:h-[clamp(28px,6vw,72px)] w-auto object-contain"
               />
             </div>
             <span className="reveal-right" data-delay="300">
