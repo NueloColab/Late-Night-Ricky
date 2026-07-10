@@ -1548,7 +1548,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .garrix-footer-follow {
   text-align: center;
   padding-bottom: 40px;
-  border-bottom: 1px solid rgba(232, 212, 184, 0.15);
   margin-bottom: 40px;
 }
 
@@ -1607,10 +1606,21 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .garrix-footer {
   border-top: 1px solid rgba(232, 212, 184, 0.15);
   padding: 50px 24px 30px;
-  background: #2a1a0a;
+  background: #2a1a0a url('/assets/footer-leather-bg.jpg') center/cover no-repeat;
+  position: relative;
+}
+
+.garrix-footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(42, 26, 10, 0.82);
+  pointer-events: none;
 }
 
 .garrix-footer-inner {
+  position: relative;
+  z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
 }
