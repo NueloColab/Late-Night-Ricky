@@ -255,7 +255,7 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
                   {activeMoment.images.map((img, i) => (
                     <div
                       key={i}
-                      className="flex-shrink-0 w-[260px] md:w-[300px] aspect-square overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)]"
+                      className="flex-1 min-w-0 aspect-square overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)]"
                       style={{ scrollSnapAlign: 'start' }}
                     >
                       <img
