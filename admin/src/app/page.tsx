@@ -494,7 +494,7 @@ export default async function HomePage() {
             </div>
 
             {/* Right — Photo blends into page */}
-            <div className="reveal-right h-full" data-delay="200">
+            <div className="reveal-right min-h-[60vh] md:min-h-0 h-full" data-delay="200">
               <div
                 className="h-full w-full relative"
                 style={{
