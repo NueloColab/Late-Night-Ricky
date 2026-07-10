@@ -472,6 +472,14 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .lnr-hero-img {
     object-position: 65% 35% !important;
   }
+  /* Brands background: centre Ricky sitting figure on mobile */
+  .lnr-brands-bg {
+    background-position: 60% 30% !important;
+  }
+}
+
+.lnr-brands-bg {
+  background-position: center;
 }
 
 /* ── SHOWREEL — outlined text over video background ───────────── */
