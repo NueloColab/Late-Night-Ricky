@@ -685,10 +685,9 @@ export default async function HomePage() {
       <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden">
         {/* Full background image — warm golden studio shot */}
         <div
-          className="absolute inset-0 bg-cover bg-no-repeat brands-bg-mobile md:bg-center"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat brands-bg-mobile"
           style={{
             backgroundImage: `url('${brandsData.backgroundImage}')`,
-            backgroundPosition: undefined,
             filter: brandsData.brandsGrayscale ? 'grayscale(100%)' : brandsData.brandsBrownFilter ? 'sepia(60%) brightness(0.85)' : brandsData.brandsGoldFilter ? 'sepia(30%) saturate(1.4) hue-rotate(10deg) brightness(0.9)' : undefined,
           }}
         />

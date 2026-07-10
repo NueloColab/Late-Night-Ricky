@@ -472,10 +472,12 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .lnr-hero-img {
     object-position: 65% 35% !important;
   }
-  /* Brands background: shift image left on mobile so Ricky is visible */
+/* Brands background: shift image left on mobile */
+@media (max-width: 640px) {
   .brands-bg-mobile {
-    background-position: left top !important;
+    background-position: left center !important;
   }
+}
 }
 
 /* ── SHOWREEL — outlined text over video background ───────────── */
