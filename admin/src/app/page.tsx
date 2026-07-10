@@ -143,6 +143,12 @@ export default async function HomePage() {
     row1Images: ['/assets/highlight-studio.jpg', '/assets/highlight-arena.jpg', '/assets/moment-ibiza.jpg', '/assets/press-bg2.jpg', '/assets/highlight-club.jpg', '/assets/highlight-misfits.jpg'],
     row2Images: ['/assets/highlight-misfits.jpg', '/assets/highlight-club.jpg', '/assets/press-bg2.jpg', '/assets/moment-ibiza.jpg', '/assets/highlight-arena.jpg', '/assets/highlight-studio.jpg'],
     headingImage: '/assets/ricky-text-cream.png',
+    artistNames: [
+      '50 Cent', 'Bruno Mars', 'Chris Brown', 'Dr. Dre & Jimmy Iovine', 'Drake',
+      'Future', 'Jason Momoa', 'Jason Statham', 'Justin Bieber', 'Kendrick Lamar',
+      'Leonardo DiCaprio', 'Lewis Hamilton', 'Mick Jagger', 'Neymar Jnr', 'Paul McCartney',
+      'Rihanna', 'Ronaldo', 'Travis Scott', 'Usain Bolt', 'Vin Diesel',
+    ],
   };
   const venuesData = {
     heading: 'Worldwide Performances',
@@ -286,6 +292,7 @@ export default async function HomePage() {
         if (c.row1Images) performersData.row1Images = c.row1Images;
         if (c.row2Images) performersData.row2Images = c.row2Images;
         if (c.headingImage) performersData.headingImage = c.headingImage;
+        if (c.artistNames && Array.isArray(c.artistNames)) performersData.artistNames = c.artistNames;
       }
 
       const venuesSection = dbSections.find((s: any) => s.section === 'venues');
@@ -532,6 +539,16 @@ export default async function HomePage() {
               {performersData.heading}
             </span>
           </h2>
+
+          {/* Artist names — small text list */}
+          <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mb-10 md:mb-14 reveal-fade">
+            {performersData.artistNames.map((name: string, i: number) => (
+              <span key={i} className="text-[10px] md:text-[11px] tracking-[0.12em] uppercase text-[#e8d4b8]/60 font-medium">
+                {name}
+                {i < performersData.artistNames.length - 1 && <span className="ml-3 text-[#c4b498]/30">·</span>}
+              </span>
+            ))}
+          </div>
 
           {/* Carousel 1 */}
           <div className="relative overflow-hidden mb-6">

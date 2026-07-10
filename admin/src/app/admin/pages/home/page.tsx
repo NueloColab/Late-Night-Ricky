@@ -870,8 +870,12 @@ function PerformersEditor({ section, onUpdate, onSave, saving, onToggleVisibilit
   const content = parseContent(section?.content);
   const row1Images: string[] = content.row1Images || [];
   const row2Images: string[] = content.row2Images || [];
+  const artistNames: string[] = content.artistNames || [];
   function addImage(row: 'row1' | 'row2', url: string) { if (row === 'row1') onUpdate('row1Images', [...row1Images, url]); else onUpdate('row2Images', [...row2Images, url]); }
   function removeImage(row: 'row1' | 'row2', index: number) { if (row === 'row1') onUpdate('row1Images', row1Images.filter((_: string, i: number) => i !== index)); else onUpdate('row2Images', row2Images.filter((_: string, i: number) => i !== index)); }
+  function addArtist() { const name = prompt('Enter artist name:'); if (name) onUpdate('artistNames', [...artistNames, name]); }
+  function removeArtist(index: number) { onUpdate('artistNames', artistNames.filter((_: string, i: number) => i !== index)); }
+  function updateArtist(index: number, value: string) { const newNames = [...artistNames]; newNames[index] = value; onUpdate('artistNames', newNames); }
 
   if (!section) return <div className="bg-white border border-[#6B8FAB]/30 p-8"><p className="text-[#6B8FAB] text-sm">Performers section not found.</p></div>;
 
@@ -889,6 +893,22 @@ function PerformersEditor({ section, onUpdate, onSave, saving, onToggleVisibilit
         <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Heading Image (Ricky text)</label>
           {content.headingImage && <div className="w-full aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 max-w-md border border-[#6B8FAB]/30"><img src={content.headingImage} alt="Heading" className="object-contain w-full h-full p-4" /></div>}
           <button onClick={() => onOpenMedia('headingImage')} className="px-4 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">{content.headingImage ? 'Replace Image' : 'Choose Image'}</button>
+        </div>
+      </div>
+      {/* Artist Names */}
+      <div className="border-t border-[#6B8FAB]/20 pt-4">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Artist Names ({artistNames.length})</p>
+          <button onClick={addArtist} className="px-3 py-1.5 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">+ Add Artist</button>
+        </div>
+        <div className="max-h-[300px] overflow-y-auto space-y-1">
+          {artistNames.map((name: string, i: number) => (
+            <div key={i} className="flex items-center gap-2 group">
+              <span className="text-[10px] text-[#6B8FAB] font-mono w-6">{i + 1}.</span>
+              <input type="text" value={name} onChange={(e) => updateArtist(i, e.target.value)} className="flex-1 px-2 py-1.5 bg-white border border-[#6B8FAB]/20 rounded text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" />
+              <button onClick={() => removeArtist(i)} className="p-1 text-red-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition">×</button>
+            </div>
+          ))}
         </div>
       </div>
       {[{ key: 'row1', label: 'Row 1 (Scrolls Left)', images: row1Images }, { key: 'row2', label: 'Row 2 (Scrolls Right)', images: row2Images }].map(({ key, label, images }) => (
