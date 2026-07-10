@@ -685,9 +685,10 @@ export default async function HomePage() {
       <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden">
         {/* Full background image — warm golden studio shot */}
         <div
-          className="absolute inset-0 bg-cover bg-center md:bg-center bg-[center_top] md:bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-no-repeat brands-bg-mobile md:bg-center"
           style={{
             backgroundImage: `url('${brandsData.backgroundImage}')`,
+            backgroundPosition: undefined,
             filter: brandsData.brandsGrayscale ? 'grayscale(100%)' : brandsData.brandsBrownFilter ? 'sepia(60%) brightness(0.85)' : brandsData.brandsGoldFilter ? 'sepia(30%) saturate(1.4) hue-rotate(10deg) brightness(0.9)' : undefined,
           }}
         />
@@ -704,9 +705,9 @@ export default async function HomePage() {
           </h2>
 
           {/* Brand logos — cream colored like About section */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-8 max-w-[700px] pl-4 md:pl-12 reveal-stagger">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-3 gap-y-4 md:gap-x-6 md:gap-y-8 max-w-[700px] pl-4 md:pl-12 reveal-stagger">
             {brandsData.logos.map((logo: { name: string; src: string }, i: number) => (
-              <div key={i} className="flex items-center justify-center w-full h-14 md:w-36 md:h-14">
+              <div key={i} className="flex items-center justify-center w-24 h-10 md:w-36 md:h-14">
                 <img
                   src={logo.src}
                   alt={logo.name}
