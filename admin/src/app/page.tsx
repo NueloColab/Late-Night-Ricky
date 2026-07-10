@@ -143,12 +143,7 @@ export default async function HomePage() {
     row1Images: ['/assets/highlight-studio.jpg', '/assets/highlight-arena.jpg', '/assets/moment-ibiza.jpg', '/assets/press-bg2.jpg', '/assets/highlight-club.jpg', '/assets/highlight-misfits.jpg'],
     row2Images: ['/assets/highlight-misfits.jpg', '/assets/highlight-club.jpg', '/assets/press-bg2.jpg', '/assets/moment-ibiza.jpg', '/assets/highlight-arena.jpg', '/assets/highlight-studio.jpg'],
     headingImage: '/assets/ricky-text-cream.png',
-    artistNames: [
-      '50 Cent', 'Bruno Mars', 'Chris Brown', 'Dr. Dre & Jimmy Iovine', 'Drake',
-      'Future', 'Jason Momoa', 'Jason Statham', 'Justin Bieber', 'Kendrick Lamar',
-      'Leonardo DiCaprio', 'Lewis Hamilton', 'Mick Jagger', 'Neymar Jnr', 'Paul McCartney',
-      'Rihanna', 'Ronaldo', 'Travis Scott', 'Usain Bolt', 'Vin Diesel',
-    ],
+    artistNames: [] as string[],
   };
   const venuesData = {
     heading: 'Worldwide Performances',
@@ -186,6 +181,9 @@ export default async function HomePage() {
       { text: 'Admin Login', href: '/admin' },
     ],
   };
+
+  // Performers visibility
+  let performersVisible = true;
 
   // Showreel
   let showreelVisible = false;
@@ -285,14 +283,17 @@ export default async function HomePage() {
       }
 
       const performersSection = dbSections.find((s: any) => s.section === 'performers');
-      if (performersSection?.content) {
-        const c = typeof performersSection.content === 'string' ? JSON.parse(performersSection.content) : performersSection.content;
-        if (c.heading) performersData.heading = c.heading;
-        if (c.subtext) performersData.subtext = c.subtext;
-        if (c.row1Images) performersData.row1Images = c.row1Images;
-        if (c.row2Images) performersData.row2Images = c.row2Images;
-        if (c.headingImage) performersData.headingImage = c.headingImage;
-        if (c.artistNames && Array.isArray(c.artistNames)) performersData.artistNames = c.artistNames;
+      if (performersSection) {
+        performersVisible = performersSection.isVisible !== false;
+        if (performersSection.content) {
+          const c = typeof performersSection.content === 'string' ? JSON.parse(performersSection.content) : performersSection.content;
+          if (c.heading) performersData.heading = c.heading;
+          if (c.subtext) performersData.subtext = c.subtext;
+          if (c.row1Images) performersData.row1Images = c.row1Images;
+          if (c.row2Images) performersData.row2Images = c.row2Images;
+          if (c.headingImage) performersData.headingImage = c.headingImage;
+          if (c.artistNames && Array.isArray(c.artistNames)) performersData.artistNames = c.artistNames;
+        }
       }
 
       const venuesSection = dbSections.find((s: any) => s.section === 'venues');
@@ -518,6 +519,7 @@ export default async function HomePage() {
       <LateNightMoments items={momentsItems} shows={shows} />
 
       {/* ═══ ACTS ARTISTS & VENUES — brown background, carousel, locations PRIVATE CLIENTS ═══ */}
+      {performersVisible && (
       <section id="artists" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
         {/* Dark leather background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#7a5c3a] via-[#5c4328] to-[#4a3520]" />
@@ -591,6 +593,7 @@ export default async function HomePage() {
           {/* Locations text */}
         </div>
       </section>
+      )}
 
       
       {/* ═══ WORLDWIDE PERFORMANCES ═══ */}
