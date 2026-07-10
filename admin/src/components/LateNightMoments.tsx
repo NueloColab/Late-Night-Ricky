@@ -78,6 +78,8 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
 
   const [videoOverlay, setVideoOverlay] = useState(false);
   const [videoOverlayVisible, setVideoOverlayVisible] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [lightboxVisible, setLightboxVisible] = useState(false);
 
   const activeMoment = momentsData.find((m) => m.id === openModal);
 
@@ -96,6 +98,14 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
   const closeVideo = () => {
     setVideoOverlayVisible(false);
     setTimeout(() => setVideoOverlay(false), 400);
+  };
+  const openLightbox = (img: string) => {
+    setLightboxImage(img);
+    setTimeout(() => setLightboxVisible(true), 50);
+  };
+  const closeLightbox = () => {
+    setLightboxVisible(false);
+    setTimeout(() => setLightboxImage(null), 400);
   };
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
@@ -257,13 +267,14 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
                   {activeMoment.images.map((img, i) => (
                     <div
                       key={i}
-                      className="flex-1 min-w-0 aspect-square overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)]"
+                      className="flex-shrink-0 w-[280px] md:flex-1 md:min-w-0 aspect-square overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)] cursor-pointer hover:ring-2 hover:ring-[#e8d4b8]/40 transition-all duration-300"
                       style={{ scrollSnapAlign: 'start' }}
+                      onClick={(e) => { e.stopPropagation(); openLightbox(img); }}
                     >
                       <img
                         src={img}
                         alt={`${activeMoment.title} ${i + 1}`}
-                        className="w-full h-full object-cover pointer-events-none"
+                        className="w-full h-full object-cover"
                         draggable={false}
                       />
                     </div>
@@ -285,7 +296,7 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
                 <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#d4c4a8]/60 font-medium mb-3">
                   Video
                 </p>
-                <div className="max-w-[600px] mx-auto aspect-video overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)] bg-[#2a1a0a]/20 flex items-center justify-center cursor-pointer">
+                <div className="aspect-video overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)] bg-[#2a1a0a]/20 flex items-center justify-center cursor-pointer">
                   {activeMoment.video ? (
                     <video
                       src={activeMoment.video}
@@ -337,6 +348,35 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
           )}
         </div>
       )}
+
+      {/* Image lightbox overlay */}
+      {lightboxImage && (
+        <div
+          className={`fixed inset-0 z-[70] flex items-center justify-center p-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${lightboxVisible ? 'opacity-100' : 'opacity-0'}`}
+          onClick={closeLightbox}
+        >
+          <div className={`absolute inset-0 bg-[#2a1a0a]/95 backdrop-blur-[12px] transition-all duration-500 ${lightboxVisible ? 'opacity-100' : 'opacity-0'}`} />
+          <div
+            className={`relative z-10 max-w-[95vw] max-h-[90vh] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${lightboxVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.92] translate-y-6'}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={lightboxImage}
+              alt="Gallery"
+              className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]"
+            />
+            <button
+              onClick={closeLightbox}
+              className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
       <style jsx>{`
         .modal-scroll-hide::-webkit-scrollbar {
           display: none;
