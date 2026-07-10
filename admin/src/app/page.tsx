@@ -528,7 +528,7 @@ export default async function HomePage() {
 
       {/* ═══ ACTS ARTISTS & VENUES — brown background, carousel, locations PRIVATE CLIENTS ═══ */}
       {performersVisible && (
-      <section id="artists" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
+      <section id="artists" className="relative py-10 md:py-28 px-6 md:px-14 overflow-hidden">
         {/* Dark leather background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#7a5c3a] via-[#5c4328] to-[#4a3520]" />
         <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E")', backgroundSize: '256px 256px' }} />
@@ -542,7 +542,7 @@ export default async function HomePage() {
               <img
                 src={performersData.headingImage}
                 alt="Ricky"
-                className="h-[clamp(40px,8vw,72px)] md:h-[clamp(28px,6vw,72px)] w-auto object-contain"
+                className="h-[clamp(52px,10vw,72px)] md:h-[clamp(28px,6vw,72px)] w-auto object-contain"
               />
             </div>
             <span className="reveal-right" data-delay="300">
@@ -551,7 +551,7 @@ export default async function HomePage() {
           </h2>
 
           {/* Artist names — small text list */}
-          <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mb-6 md:mb-8 reveal-fade">
+          <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mb-10 md:mb-8 reveal-fade">
             {performersData.artistNames.map((name: string, i: number) => (
               <span key={i} className="text-[11px] md:text-[13px] tracking-[0.12em] uppercase text-[#e8d4b8]/80 font-semibold">
                 {name}
