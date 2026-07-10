@@ -133,7 +133,7 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
             An insight to Ricky&apos;s world
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 reveal-stagger">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-6 reveal-stagger">
             {(shows && shows.length > 0 ? shows : momentsData).map((item: MomentData | ShowCard, i: number) => {
               // Match show card to moment by title similarity
               const matchingMoment = momentsData.find((m: MomentData) =>
@@ -153,12 +153,6 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
                   onClick={() => hasGallery && open(momentId)}
                   className="group block text-left w-full"
                 >
-                  <h3 className="font-['Playfair_Display',serif] text-[clamp(16px,2vw,22px)] font-bold text-[#2a1a0a] group-hover:text-[#5a3a1a] transition-colors leading-[1.2] mb-1">
-                    {title}
-                  </h3>
-                  <p className="text-[10px] md:text-[11px] tracking-[0.15em] uppercase text-[#5a3a1a]/50 font-medium mb-2">
-                    {subtitle}
-                  </p>
                   <div className="relative aspect-square overflow-hidden">
                     <img
                       src={image}
@@ -166,12 +160,20 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
                       className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
                     />
                     {hasGallery && (
-                      <div className="absolute bottom-3 right-3 w-9 h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
+                      <div className="absolute bottom-2 right-2 md:bottom-3 md:right-3 w-7 h-7 md:w-9 md:h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                        <svg width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80 md:w-[14px] md:h-[14px]">
                           <path d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
                       </div>
                     )}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent p-2 md:p-3">
+                      <h3 className="font-['Playfair_Display',serif] text-[13px] md:text-[clamp(16px,2vw,22px)] font-bold text-white leading-[1.1] md:leading-[1.2]">
+                        {title}
+                      </h3>
+                      <p className="text-[9px] md:text-[11px] tracking-[0.1em] md:tracking-[0.15em] uppercase text-white/60 font-medium mt-0.5 hidden md:block">
+                        {subtitle}
+                      </p>
+                    </div>
                   </div>
                 </button>
               );
