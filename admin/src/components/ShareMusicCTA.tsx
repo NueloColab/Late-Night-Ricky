@@ -68,7 +68,7 @@ export default function ShareMusicCTA({ headline, description, ctaText, ctaLink 
   return (
     <section className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
-        <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 rounded-xl overflow-hidden bg-[#f0e6d8]">
+        <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 px-4 md:px-10 rounded-xl overflow-hidden bg-[#f0e6d8]">
           <div className="relative z-10 max-w-[800px] mx-auto">
             <span className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#8a6a4a] font-medium block mb-4">Listen &amp; Download</span>
             <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#2a1a0a] mb-4" style={{ fontFamily: "'Oswald', sans-serif" }}>{headline || 'SHARE YOUR MUSIC'}</h2>
