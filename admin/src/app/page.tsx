@@ -119,7 +119,7 @@ export default async function HomePage() {
   let aboutBio2 = 'As a producer, Ricky cites his key influences as Michael Jackson, Dr. Dre, Quincy Jones, and Timbaland, merging soulful R&B, House and cinematic grooves. Having earned Grammy recognition for his work with Chris Brown on the 11:11 album, plus previous cuts with Kendrick Lamar and NAV, Ricky has now stepped into a creative chapter with a new wave of releases scheduled for release.';
   let aboutBio3 = 'Ricky has embraced his British and South Asian Roots working with some legendary South Asian talent such as DIVINE and rising British R&B star H33RA as well as showcasing Punjabi artists such as Diljit Dosanjh, Karan Aujla and Sidhu Moosewala to mainstream audiences.';
   let aboutBio4 = 'With many unreleased tracks in the works, plans to further expand his brand and collaborations with other artists, there is a lot more to come this year.';
-  const aboutImage = '/assets/about-ricky-leather-v2.png';
+  let aboutImage = '/assets/about-ricky-jacket.jpg';
   let aboutGrayscale = false;
   let aboutBrownFilter = false;
   let aboutGoldFilter = false;
@@ -248,8 +248,7 @@ export default async function HomePage() {
           if (c.bio2) aboutBio2 = c.bio2;
           if (c.bio3) aboutBio3 = c.bio3;
           if (c.bio4) aboutBio4 = c.bio4;
-          // CMS image override disabled — using leather composite
-          // if (c.image) aboutImage = c.image;
+          if (c.image) aboutImage = c.image;
           if (c.aboutGrayscale !== undefined) aboutGrayscale = c.aboutGrayscale;
           if (c.aboutBrownFilter !== undefined) aboutBrownFilter = c.aboutBrownFilter;
           if (c.aboutGoldFilter !== undefined) aboutGoldFilter = c.aboutGoldFilter;
@@ -494,14 +493,20 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Right — Photo on leather background */}
+            {/* Right — Photo blends into page */}
             <div className="reveal-right h-full" data-delay="200">
-              <div className="h-full w-full relative">
+              <div
+                className="h-full w-full relative"
+                style={{
+                  background: 'linear-gradient(to bottom, #7a5c3a, #4a3520)',
+                }}
+              >
                 <img
                   src={aboutImage}
                   alt="Late Night Ricky"
                   className="w-full h-full object-cover object-top"
                   style={{
+                    mixBlendMode: 'multiply',
                     filter: [
                       'contrast(1.1) brightness(1.15)',
                       aboutGrayscale ? 'grayscale(100%)' : '',
@@ -510,6 +515,8 @@ export default async function HomePage() {
                     ].filter(Boolean).join(' ') || 'none',
                   }}
                 />
+                {/* Lighten overlay */}
+                <div className="absolute inset-0 bg-[#7a5c3a]/20 pointer-events-none" />
               </div>
             </div>
           </div>
