@@ -1604,7 +1604,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* ── FOOTER — warm brown with cream text ───────────────────── */
 .garrix-footer {
-  border-top: 1px solid rgba(232, 212, 184, 0.15);
   padding: 50px 24px 30px;
   background: #2a1a0a url('/assets/footer-leather-bg.jpg') center/cover no-repeat;
   position: relative;
