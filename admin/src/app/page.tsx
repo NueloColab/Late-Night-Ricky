@@ -682,7 +682,7 @@ export default async function HomePage() {
       </section>
 
       {/* ═══ TRUSTED BY GLOBAL BRANDS — hero-style with photo background ═══ */}
-      <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden">
+      <section id="brands" className="relative min-h-[60dvh] md:min-h-[100dvh] overflow-hidden">
         {/* Full background image — warm golden studio shot */}
         <div
           className="absolute inset-0 bg-cover bg-no-repeat brands-bg-mobile md:bg-center"
@@ -698,7 +698,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#f0e6d8]/10 via-transparent to-transparent hidden md:block" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#5a3a0a]/40 via-transparent to-[#4a3520]/30 md:from-transparent md:via-transparent md:to-[#4a3520]/15" />
 
-        <div className="relative z-10 flex flex-col justify-center min-h-[80dvh] md:min-h-[100dvh] px-6 md:px-14 py-20 md:py-20">
+        <div className="relative z-10 flex flex-col justify-center min-h-[60dvh] md:min-h-[100dvh] px-6 md:px-14 py-16 md:py-20">
           {/* Title — cream like About section */}
           <h2 className="text-[clamp(28px,6vw,48px)] md:text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-8 md:mb-14 reveal-fade pl-4 md:pl-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
             {brandsData.heading}
