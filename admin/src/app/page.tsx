@@ -143,7 +143,12 @@ export default async function HomePage() {
     row1Images: ['/assets/highlight-studio.jpg', '/assets/highlight-arena.jpg', '/assets/moment-ibiza.jpg', '/assets/press-bg2.jpg', '/assets/highlight-club.jpg', '/assets/highlight-misfits.jpg'],
     row2Images: ['/assets/highlight-misfits.jpg', '/assets/highlight-club.jpg', '/assets/press-bg2.jpg', '/assets/moment-ibiza.jpg', '/assets/highlight-arena.jpg', '/assets/highlight-studio.jpg'],
     headingImage: '/assets/ricky-text-cream.png',
-    artistNames: [] as string[],
+    artistNames: [
+      '50 Cent', 'Bruno Mars', 'Chris Brown', 'Dr. Dre \u0026 Jimmy Iovine', 'Drake',
+      'Future', 'Jason Momoa', 'Jason Statham', 'Justin Bieber', 'Kendrick Lamar',
+      'Leonardo DiCaprio', 'Lewis Hamilton', 'Mick Jagger', 'Neymar Jnr', 'Paul McCartney',
+      'Rihanna', 'Ronaldo', 'Travis Scott', 'Usain Bolt', 'Vin Diesel',
+    ] as string[],
   };
   const venuesData = {
     heading: 'Worldwide Performances',
@@ -292,7 +297,10 @@ export default async function HomePage() {
           if (c.row1Images) performersData.row1Images = c.row1Images;
           if (c.row2Images) performersData.row2Images = c.row2Images;
           if (c.headingImage) performersData.headingImage = c.headingImage;
-          if (c.artistNames && Array.isArray(c.artistNames)) performersData.artistNames = c.artistNames;
+          // Only override hardcoded defaults if CMS has a non-empty array
+          if (c.artistNames && Array.isArray(c.artistNames) && c.artistNames.length > 0) {
+            performersData.artistNames = c.artistNames;
+          }
         }
       }
 
