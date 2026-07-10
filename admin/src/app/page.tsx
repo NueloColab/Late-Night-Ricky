@@ -685,28 +685,28 @@ export default async function HomePage() {
       <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden">
         {/* Full background image — warm golden studio shot */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center md:bg-center bg-[center_top] md:bg-center bg-no-repeat"
           style={{
             backgroundImage: `url('${brandsData.backgroundImage}')`,
             filter: brandsData.brandsGrayscale ? 'grayscale(100%)' : brandsData.brandsBrownFilter ? 'sepia(60%) brightness(0.85)' : brandsData.brandsGoldFilter ? 'sepia(30%) saturate(1.4) hue-rotate(10deg) brightness(0.9)' : undefined,
           }}
         />
-        {/* Brown frosting overlay for warmth */}
-        <div className="absolute inset-0 bg-[#5a3a0a]/30" />
+        {/* Brown frosting overlay for warmth — heavier on mobile */}
+        <div className="absolute inset-0 bg-[#5a3a0a]/75 md:bg-[#5a3a0a]/30" />
         <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E")', backgroundSize: '256px 256px' }} />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#f0e6d8]/10 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#4a3520]/15" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#f0e6d8]/10 via-transparent to-transparent hidden md:block" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#5a3a0a]/40 via-transparent to-[#4a3520]/30 md:from-transparent md:via-transparent md:to-[#4a3520]/15" />
 
         <div className="relative z-10 flex flex-col justify-center min-h-[80dvh] md:min-h-[100dvh] px-6 md:px-14 py-20 md:py-20">
           {/* Title — cream like About section */}
-          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-10 md:mb-14 reveal-fade pl-4 md:pl-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
+          <h2 className="text-[clamp(28px,6vw,48px)] md:text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-8 md:mb-14 reveal-fade pl-4 md:pl-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
             {brandsData.heading}
           </h2>
 
           {/* Brand logos — cream colored like About section */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-8 max-w-[700px] pl-4 md:pl-12 reveal-stagger">
             {brandsData.logos.map((logo: { name: string; src: string }, i: number) => (
-              <div key={i} className="flex items-center justify-center w-28 h-12 md:w-36 md:h-14">
+              <div key={i} className="flex items-center justify-center w-full h-14 md:w-36 md:h-14">
                 <img
                   src={logo.src}
                   alt={logo.name}
