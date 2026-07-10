@@ -470,7 +470,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* Hero image: shift right on mobile to centre Ricky's figure */
 @media (max-width: 640px) {
   .lnr-hero-img {
-    object-position: 75% center !important;
+    object-position: 65% 35% !important;
   }
 }
 
