@@ -445,7 +445,7 @@ export default async function HomePage() {
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Ronaldo Quote — centered, bold statement style */}
           <div className="mb-12 md:mb-16 reveal-left text-center">
-            <p className="text-[clamp(32px,5vw,56px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#e8d4b8] max-w-[1000px] mx-auto" style={{ fontFamily: "'Oswald', sans-serif" }}>
+            <p className="text-[clamp(32px,5vw,56px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#e8d4b8] max-w-[1000px] mx-auto whitespace-nowrap" style={{ fontFamily: "'Oswald', sans-serif" }}>
               {aboutQuote}
             </p>
             <p className="mt-4 text-[14px] md:text-[18px] font-semibold tracking-[0.3em] uppercase text-[#c4b498]/80">
