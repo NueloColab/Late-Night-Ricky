@@ -125,7 +125,7 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
         <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/20 via-transparent to-[#d4c4a8]/15" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(36px,5.5vw,64px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#5a3a1a] text-center mb-2" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 2px 8px rgba(90,58,26,0.15)' }}>
+          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(36px,5.5vw,64px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#5a3a1a] text-center mb-2 whitespace-nowrap" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 2px 8px rgba(90,58,26,0.15)' }}>
             <span className="reveal-left" data-delay="100">Late Night</span>
             <span className="reveal-right" data-delay="300">Moments</span>
           </h2>
