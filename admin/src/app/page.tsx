@@ -685,18 +685,17 @@ export default async function HomePage() {
       <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden">
         {/* Full background image — warm golden studio shot */}
         <div
-          className="absolute inset-0 bg-cover bg-no-repeat brands-bg-mobile"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url('${brandsData.backgroundImage}')`,
-            backgroundPosition: 'center',
             filter: brandsData.brandsGrayscale ? 'grayscale(100%)' : brandsData.brandsBrownFilter ? 'sepia(60%) brightness(0.85)' : brandsData.brandsGoldFilter ? 'sepia(30%) saturate(1.4) hue-rotate(10deg) brightness(0.9)' : undefined,
           }}
         />
-        {/* Brown frosting overlay for warmth — heavier on mobile */}
-        <div className="absolute inset-0 bg-[#5a3a0a]/75 md:bg-[#5a3a0a]/30" />
+        {/* Brown frosting overlay for warmth */}
+        <div className="absolute inset-0 bg-[#5a3a0a]/30" />
         <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E")', backgroundSize: '256px 256px' }} />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#f0e6d8]/10 via-transparent to-transparent hidden md:block" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#5a3a0a]/40 via-transparent to-[#4a3520]/30 md:from-transparent md:via-transparent md:to-[#4a3520]/15" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#f0e6d8]/10 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#4a3520]/15" />
 
         <div className="relative z-10 flex flex-col justify-center min-h-[80dvh] md:min-h-[100dvh] px-6 md:px-14 py-20 md:py-20">
           {/* Title — cream like About section */}
