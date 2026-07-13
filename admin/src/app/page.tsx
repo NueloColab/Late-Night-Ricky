@@ -428,11 +428,16 @@ export default async function HomePage() {
 
       {/* ═══ ABOUT RICKY — dark leather texture, image blends into page ═══ */}
       <section id="about" className="relative min-h-[100dvh] overflow-hidden">
-        {/* Full-width orange studio background image */}
+        {/* Full-width orange studio background image, shifted to leather brown tone */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/assets/about-ricky-orange-studio.jpg')" }}
+          style={{
+            backgroundImage: "url('/assets/about-ricky-orange-studio.jpg')",
+            filter: 'sepia(40%) saturate(0.6) hue-rotate(-15deg) brightness(0.85)',
+          }}
         />
+        {/* Warm brown overlay to unify with leather sections */}
+        <div className="absolute inset-0 bg-[#2a1a0a]/25" />
         {/* Dark gradient overlay on left for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
         {/* Bottom fade for smooth transition to next section */}
