@@ -433,6 +433,8 @@ export default async function HomePage() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/assets/about-ricky-v2.jpg')" }}
         />
+        {/* Faint warm overlay to soften the photo and blend into background */}
+        <div className="absolute inset-0 bg-[#2a1a0a]/10" />
         {/* Dark gradient overlay on left for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
         {/* Bottom fade for smooth transition to next section */}
