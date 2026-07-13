@@ -433,11 +433,11 @@ export default async function HomePage() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: "url('/assets/about-ricky-orange-studio.jpg')",
-            filter: 'sepia(40%) saturate(0.6) hue-rotate(-15deg) brightness(0.85)',
+            filter: 'sepia(25%) saturate(0.75) hue-rotate(-10deg) brightness(0.95)',
           }}
         />
-        {/* Warm brown overlay to unify with leather sections */}
-        <div className="absolute inset-0 bg-[#2a1a0a]/25" />
+        {/* Warm brown tint overlay to match leather tone */}
+        <div className="absolute inset-0 bg-[#5a3a1a]/15" />
         {/* Dark gradient overlay on left for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
         {/* Bottom fade for smooth transition to next section */}
