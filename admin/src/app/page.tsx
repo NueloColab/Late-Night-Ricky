@@ -427,35 +427,30 @@ export default async function HomePage() {
       )}
 
       {/* ═══ ABOUT RICKY — dark leather texture, image blends into page ═══ */}
-      <section id="about" className="relative min-h-[100dvh] py-20 px-6 md:px-14 overflow-hidden">
-        {/* Dark leather base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#7a5c3a] via-[#5c4328] to-[#4a3520]" />
-        {/* Leather grain noise texture */}
-        <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E")', backgroundSize: '256px 256px' }} />
-        {/* Warm amber light beam from top-left */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#b89a6e]/40 via-transparent to-transparent" />
-        {/* Diagonal light streaks */}
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,transparent_40%,rgba(184,154,110,0.15)_50%,transparent_60%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_30%,rgba(200,170,130,0.12)_45%,transparent_55%)]" />
-        {/* Warm glow from top-right */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(200,170,130,0.25)_0%,transparent_60%)]" />
-        {/* Soft bottom vignette for depth */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
+      <section id="about" className="relative min-h-[100dvh] overflow-hidden">
+        {/* Full-width orange studio background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/assets/about-ricky-orange-studio.jpg')" }}
+        />
+        {/* Dark gradient overlay on left for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
+        {/* Bottom fade for smooth transition to next section */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#2a1a0a] to-transparent" />
 
-        <div className="relative z-10 max-w-[1400px] mx-auto">
-          {/* Ronaldo Quote — centered, bold statement style */}
-          <div className="mb-12 md:mb-16 reveal-left text-center">
-            <p className="text-[24px] md:text-[clamp(32px,5vw,56px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#e8d4b8] max-w-[1000px] mx-auto whitespace-nowrap" style={{ fontFamily: "'Oswald', sans-serif" }}>
+        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-14 py-20 min-h-[100dvh] flex flex-col justify-center">
+          {/* Ronaldo Quote — top center */}
+          <div className="mb-10 md:mb-14 reveal-left text-center">
+            <p className="text-[24px] md:text-[clamp(32px,5vw,56px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#e8d4b8] max-w-[1000px] mx-auto" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 2px 20px rgba(0,0,0,0.4)' }}>
               {aboutQuote}
             </p>
-            <p className="mt-4 text-[14px] md:text-[18px] font-semibold tracking-[0.3em] uppercase text-[#c4b498]/80">
+            <p className="mt-4 text-[14px] md:text-[18px] font-semibold tracking-[0.3em] uppercase text-[#c4b498]/80" style={{ textShadow: '0 1px 10px rgba(0,0,0,0.3)' }}>
               — {aboutQuoteAttribution}
             </p>
           </div>
 
-          {/* 2-column layout */}
-          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-stretch">
-            {/* Left — Text */}
+          {/* Left-aligned content — text only, no photo column */}
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16">
             <div className="reveal-left" data-delay="100">
               <div className="flex items-center gap-0 mb-8">
                 <div className="reveal-left" data-delay="100">
@@ -463,6 +458,7 @@ export default async function HomePage() {
                     src={aboutHeadingImage}
                     alt="About"
                     className="h-[clamp(36px,5.5vw,64px)] w-auto object-contain"
+                    style={{ filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}
                   />
                 </div>
                 <div className="reveal-right" data-delay="300">
@@ -470,57 +466,33 @@ export default async function HomePage() {
                     src={rickyTextImage}
                     alt="Ricky"
                     className="h-[clamp(48px,7vw,84px)] w-auto object-contain -ml-1 md:-ml-2"
+                    style={{ filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}
                   />
                 </div>
               </div>
               <div className="space-y-5">
-                <p className="text-[13px] md:text-[14px] leading-[1.7] tracking-[0.02em] text-[#d4c4a8]/95">
+                <p className="text-[13px] md:text-[15px] leading-[1.7] tracking-[0.02em] text-[#e8d4b8]/95" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
                   {aboutBio1}
                 </p>
-                <p className="text-[13px] md:text-[14px] leading-[1.7] tracking-[0.02em] text-[#d4c4a8]/95">
+                <p className="text-[13px] md:text-[15px] leading-[1.7] tracking-[0.02em] text-[#e8d4b8]/95" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
                   {aboutBio2}
                 </p>
-                <p className="text-[13px] md:text-[14px] leading-[1.7] tracking-[0.02em] text-[#d4c4a8]/95">
+                <p className="text-[13px] md:text-[15px] leading-[1.7] tracking-[0.02em] text-[#e8d4b8]/95" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
                   {aboutBio3}
                 </p>
-                <p className="text-[13px] md:text-[14px] leading-[1.7] tracking-[0.02em] text-[#d4c4a8]/95">
+                <p className="text-[13px] md:text-[15px] leading-[1.7] tracking-[0.02em] text-[#e8d4b8]/95" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
                   {aboutBio4}
                 </p>
               </div>
-              {/* Press Pack button — PIN protected */}
+              {/* Press Pack button */}
               <div className="mt-8 flex justify-center md:justify-start">
                 <PinProtectedDownload />
               </div>
             </div>
 
-            {/* Right — Photo blends into page */}
-            <div className="reveal-right min-h-[60vh] md:min-h-0 h-full" data-delay="200">
-              <div
-                className="h-full w-full relative"
-                style={{
-                  background: 'linear-gradient(to bottom, #7a5c3a, #4a3520)',
-                }}
-              >
-                <img
-                  src={aboutImage}
-                  alt="Late Night Ricky"
-                  className="w-full h-full object-cover object-top"
-                  style={{
-                    mixBlendMode: 'multiply',
-                    filter: [
-                      'contrast(1.1) brightness(1.15)',
-                      aboutGrayscale ? 'grayscale(100%)' : '',
-                      aboutBrownFilter ? 'sepia(60%) brightness(90%)' : '',
-                      aboutGoldFilter ? 'sepia(30%) brightness(95%) saturate(150%) hue-rotate(10deg)' : '',
-                    ].filter(Boolean).join(' ') || 'none',
-                  }}
-                />
-                {/* Lighten overlay */}
-                <div className="absolute inset-0 bg-[#7a5c3a]/20 pointer-events-none" />
-              </div>
-            </div>
+            {/* Right column — empty, image handles the visual */}
+            <div className="hidden md:block" />
           </div>
-
         </div>
       </section>
 
