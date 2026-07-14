@@ -40,7 +40,11 @@ export default function ScrollReveal() {
     const ghostEl = document.querySelector('.garrix-collage-ghost');
     const outlineEl = document.querySelector('.garrix-collage-ghost-outline');
 
-    const onScroll = () => {
+    let rafId: number | null = null;
+    let ticking = false;
+
+    const updateParallax = () => {
+      ticking = false;
       // Photo parallax with horizontal drift
       layerEls.forEach((el) => {
         const layer = el.getAttribute('data-layer') || 'layer3';
@@ -61,6 +65,13 @@ export default function ScrollReveal() {
       if (outlineEl) {
         const scrollY = window.scrollY;
         (outlineEl as HTMLElement).style.transform = `translateX(${Math.cos(scrollY * 0.002) * -10}px)`;
+      }
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        rafId = requestAnimationFrame(updateParallax);
+        ticking = true;
       }
     };
 
@@ -112,6 +123,7 @@ export default function ScrollReveal() {
 
     return () => {
       window.removeEventListener('scroll', onScroll);
+      if (rafId) cancelAnimationFrame(rafId);
       clearInterval(highlightInterval);
     };
   }, []);

@@ -20,22 +20,31 @@ export default function Navbar() {
 
   // Scroll-driven collapse/expand
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const heroHeight = window.innerHeight;
+    let rafId: number | null = null;
+    let ticking = false;
 
-      if (scrollY > heroHeight && !manualToggle) {
-        // Scrolled past hero/showreel — hide header
-        setVisible(false);
-      } else if (scrollY <= heroHeight && !manualToggle) {
-        // At hero or scrolling up to hero — show header
-        setVisible(true);
-      }
-      lastScrollY.current = scrollY;
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      rafId = requestAnimationFrame(() => {
+        ticking = false;
+        const scrollY = window.scrollY;
+        const heroHeight = window.innerHeight;
+
+        if (scrollY > heroHeight && !manualToggle) {
+          setVisible((prev) => prev === false ? prev : false);
+        } else if (scrollY <= heroHeight && !manualToggle) {
+          setVisible((prev) => prev === true ? prev : true);
+        }
+        lastScrollY.current = scrollY;
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, [manualToggle]);
 
   useEffect(() => {

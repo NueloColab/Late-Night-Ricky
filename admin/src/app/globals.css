@@ -330,6 +330,8 @@ body {
   background: var(--black);
   position: relative;
   -webkit-font-smoothing: antialiased;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -471,11 +473,18 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 640px) {
   .lnr-hero-img {
     object-position: 65% 35% !important;
+    will-change: transform;
+    transform: translateZ(0);
   }
   /* Brands background: shift Ricky sitting figure further right on mobile */
   .lnr-brands-bg {
     background-position: 72% 30% !important;
   }
+}
+
+.lnr-hero-img {
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .lnr-brands-bg {
@@ -940,6 +949,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   line-height: 0.85;
   text-align: center;
   mix-blend-mode: screen;
+  will-change: transform;
 }
 
 /* Second ghost watermark - outlined "LATE NIGHT" filling dark spaces */
@@ -952,6 +962,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   -webkit-text-fill-color: transparent;
   opacity: 1;
   mix-blend-mode: normal;
+  will-change: transform;
 }
 
 .garrix-collage-grid {
