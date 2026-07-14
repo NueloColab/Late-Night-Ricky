@@ -213,7 +213,7 @@ export default function HomeContactSection() {
                 </div>
               ) : (
                 <div>
-                  <div className={activeTab === 'booking' ? 'overflow-hidden transition-all duration-300 ease-in-out max-h-[500px] opacity-100' : 'overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0'}>
+                  <div className={activeTab === 'booking' ? 'overflow-hidden transition-all duration-300 ease-in-out max-h-[900px] opacity-100' : 'overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0'}>
                     <form onSubmit={handleSubmit} data-tab="booking">
                     {[
                       { label: 'Name *', name: 'name', type: 'text' },
@@ -244,7 +244,7 @@ export default function HomeContactSection() {
                   </form>
                   </div>
 
-                  <div className={activeTab === 'private' ? 'overflow-hidden transition-all duration-300 ease-in-out max-h-[400px] opacity-100' : 'overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0'}>
+                  <div className={activeTab === 'private' ? 'overflow-hidden transition-all duration-300 ease-in-out max-h-[700px] opacity-100' : 'overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0'}>
                   <form onSubmit={handleSubmit} data-tab="private">
                     {[
                       { label: 'Name *', name: 'name', type: 'text' },
