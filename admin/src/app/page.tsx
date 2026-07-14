@@ -733,7 +733,7 @@ export default async function HomePage() {
           {/* Bottom bar */}
           <div className="garrix-footer-bottom">
             <div className="garrix-footer-logo">
-              <img src={footerData.logo} alt="LNR" className="h-8 md:h-6 opacity-40" style={{ filter: 'brightness(0) invert(1) sepia(0.4) saturate(0.3) hue-rotate(350deg) brightness(0.75)' }} />
+              <img src={footerData.logo} alt="LNR" className="h-8 md:h-6 opacity-40 max-w-[180px] w-auto" style={{ filter: 'brightness(0) invert(1) sepia(0.4) saturate(0.3) hue-rotate(350deg) brightness(0.75)' }} />
             </div>
             <p>&copy; {new Date().getFullYear()} {footerData.copyright}. All rights reserved.</p>
             <div className="garrix-footer-links">
