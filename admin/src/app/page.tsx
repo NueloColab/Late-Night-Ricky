@@ -183,7 +183,6 @@ export default async function HomePage() {
     links: [
       { text: 'Privacy', href: '/privacy' },
       { text: 'Terms', href: '/terms' },
-      { text: 'Admin Login', href: '/admin' },
     ],
   };
 
