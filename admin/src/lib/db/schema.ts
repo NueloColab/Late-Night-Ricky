@@ -201,6 +201,7 @@ export const invoices = pgTable("invoices", {
   paymentConfirmedAt: timestamp("payment_confirmed_at", { mode: "date" }),
   paymentConfirmation: jsonb("payment_confirmation").default({}),
   quoteId: integer("quote_id"),
+  ccEmails: text("cc_emails"),
 });
 
 export const clients = pgTable("clients", {

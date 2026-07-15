@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer'
 import { Resend } from 'resend'
+import { db } from '@/lib/db'
 
 const resendApiKey = process.env.RESEND_API_KEY
 const useResend = resendApiKey && resendApiKey !== 'your-resend-api-key' && resendApiKey !== 're_dummy'
@@ -33,15 +34,18 @@ if (useResend) {
   })
 }
 
-// Email credentials configured via env vars (RESEND_API_KEY, SMTP_FROM)
-const FROM_ADDRESS = process.env.SMTP_FROM || 'Late Night Ricky <samir@wearemediahive.com>'
+// LNR business email
+const FROM_ADDRESS = process.env.SMTP_FROM || 'Late Night Ricky <latenightricky@gmail.com>'
+const REPLY_TO_ADDRESS = 'latenightricky@gmail.com'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://late-night-ricky.vercel.app'
 
 function formatCurrency(amount: number | null | undefined) {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount || 0)
 }
 
-async function sendEmailWithFallback(mailOptions: nodemailer.SendMailOptions): Promise<{ success: boolean; messageId?: string; error?: string }> {
+async function sendEmailWithFallback(
+  mailOptions: nodemailer.SendMailOptions & { cc?: string | string[] }
+): Promise<{ success: boolean; messageId?: string; error?: string }> {
   if (useResend && resendClient) {
     try {
       const from = String(mailOptions.from || FROM_ADDRESS)
@@ -49,7 +53,12 @@ async function sendEmailWithFallback(mailOptions: nodemailer.SendMailOptions): P
       const subject = String(mailOptions.subject || '')
       const html = String(mailOptions.html || '')
       const text = mailOptions.text ? String(mailOptions.text) : undefined
-      const replyTo = mailOptions.replyTo ? String(mailOptions.replyTo) : undefined
+      const replyTo = mailOptions.replyTo ? String(mailOptions.replyTo) : REPLY_TO_ADDRESS
+      const cc = mailOptions.cc
+        ? Array.isArray(mailOptions.cc)
+          ? mailOptions.cc
+          : [mailOptions.cc]
+        : undefined
 
       const attachments = (mailOptions.attachments || []).map((att: any) => {
         let content: string
@@ -69,7 +78,8 @@ async function sendEmailWithFallback(mailOptions: nodemailer.SendMailOptions): P
         subject,
         ...(html ? { html } : {}),
         ...(text ? { text } : {}),
-        ...(replyTo ? { reply_to: replyTo } : {}),
+        reply_to: replyTo,
+        ...(cc && cc.length > 0 ? { cc } : {}),
         ...(attachments.length > 0 ? { attachments } : {}),
       }
 
@@ -129,9 +139,9 @@ const getEmailTemplate = (content: string) => `
       <td style="padding:0;">
         <table cellpadding="0" cellspacing="0" border="0" width="100%" class="container" style="background-color:#ffffff;max-width:640px;margin:0 auto;">
           <tr>
-            <td style="padding:30px 40px 25px 40px;text-align:center;border-bottom:2px solid #0f1923;background-color:#0f1923;" class="mobile-header-padding">
+            <td style="padding:30px 40px 25px 40px;text-align:center;border-bottom:2px solid #2a1a0a;background-color:#2a1a0a;" class="mobile-header-padding">
               <img src="${SITE_URL}/assets/ricky-logo.png" alt="Late Night Ricky" style="max-width:220px;height:auto;margin:0 auto 8px auto;display:block;" />
-              <p style="margin:0;color:#8FA8BE;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:500;">International DJ &amp; Grammy Winning Producer</p>
+              <p style="margin:0;color:#e8d4b8;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:500;">International DJ & Grammy Winning Producer</p>
             </td>
           </tr>
           <tr>
@@ -142,10 +152,9 @@ const getEmailTemplate = (content: string) => `
               <table cellpadding="0" cellspacing="0" border="0" width="100%">
                 <tr>
                   <td style="text-align:center;">
-                    <p style="margin:0 0 12px 0;color:#0f1923;font-size:14px;font-weight:600;letter-spacing:3px;text-transform:uppercase;">LATE NIGHT RICKY</p>
-                    <p style="margin:0 0 6px 0;color:#666;font-size:11px;line-height:1.6;">International DJ &amp; Grammy Winning Producer</p>
-                    <p style="margin:6px 0 0 0;color:#999;font-size:10px;line-height:1.6;">This is an automated message. Please do not reply directly to this email.</p>
-                    <p style="margin:6px 0 0 0;color:#999;font-size:10px;line-height:1.6;">Contact: <a href="mailto:samir@wearemediahive.com" style="color:#5c7a94;text-decoration:none;">samir@wearemediahive.com</a></p>
+                    <p style="margin:0 0 12px 0;color:#2a1a0a;font-size:14px;font-weight:600;letter-spacing:3px;text-transform:uppercase;">LATE NIGHT RICKY</p>
+                    <p style="margin:0 0 6px 0;color:#666;font-size:11px;line-height:1.6;">International DJ & Grammy Winning Producer</p>
+                    <p style="margin:6px 0 0 0;color:#999;font-size:10px;line-height:1.6;">Questions? Reply to this email or contact <a href="mailto:latenightricky@gmail.com" style="color:#5a3a1a;text-decoration:none;">latenightricky@gmail.com</a></p>
                   </td>
                 </tr>
               </table>
@@ -189,10 +198,10 @@ export async function sendQuoteEmail(
     const content = `
       <div style="padding:40px 40px 45px;background-color:#ffffff;" class="mobile-padding">
         <h2 style="margin:0 0 12px 0;color:#000;font-size:26px;font-weight:300;">Your Quote from Late Night Ricky</h2>
-        <div style="width:70px;height:2px;background-color:#0f1923;margin:0 0 35px 0;"></div>
+        <div style="width:70px;height:2px;background-color:#2a1a0a;margin:0 0 35px 0;"></div>
         <p style="margin:0 0 25px 0;color:#666;font-size:15px;line-height:1.8;" class="mobile-text">Dear ${quote.clientName || 'Valued Client'},</p>
         <p style="margin:0 0 25px 0;color:#666;font-size:15px;line-height:1.8;" class="mobile-text">Thank you for your interest. We are pleased to present your quotation for the project <strong style="color:#000;">${quote.projectTitle || '—'}</strong>.</p>
-        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#fafafa;border-left:4px solid #0f1923;margin:0 0 30px 0;">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#fafafa;border-left:4px solid #2a1a0a;margin:0 0 30px 0;">
           <tr>
             <td style="padding:25px;" class="mobile-padding">
               <p style="margin:0 0 15px 0;color:#000;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;">Quote Summary</p>
@@ -200,7 +209,7 @@ export async function sendQuoteEmail(
                 <tr><td style="padding:6px 0;font-size:14px;color:#666;">Quote Number:</td><td style="padding:6px 0;font-size:14px;font-weight:600;color:#000;text-align:right;">${quote.quoteNumber || '#' + quote.id}</td></tr>
                 <tr><td style="padding:6px 0;font-size:14px;color:#666;">Date:</td><td style="padding:6px 0;font-size:14px;font-weight:600;color:#000;text-align:right;">${createdAtStr}</td></tr>
                 <tr><td style="padding:6px 0;font-size:14px;color:#666;">Services:</td><td style="padding:6px 0;font-size:14px;font-weight:600;color:#000;text-align:right;">${serviceCount} service${serviceCount !== 1 ? 's' : ''}</td></tr>
-                <tr><td style="padding:10px 0 0 0;font-size:14px;color:#666;border-top:1px solid #e5e5e5;">Total Investment:</td><td style="padding:10px 0 0 0;font-size:20px;font-weight:700;color:#0f1923;text-align:right;border-top:1px solid #e5e5e5;" class="mobile-amount">${formatCurrency(quote.total)}</td></tr>
+                <tr><td style="padding:10px 0 0 0;font-size:14px;color:#666;border-top:1px solid #e5e5e5;">Total Investment:</td><td style="padding:10px 0 0 0;font-size:20px;font-weight:700;color:#2a1a0a;text-align:right;border-top:1px solid #e5e5e5;" class="mobile-amount">${formatCurrency(quote.total)}</td></tr>
               </table>
             </td>
           </tr>
@@ -211,7 +220,7 @@ export async function sendQuoteEmail(
           <tr>
             <td style="text-align:center;padding:0;">
               <p style="margin:0 0 15px 0;color:#666;font-size:14px;line-height:1.6;" class="mobile-text">If you're happy to proceed with this quotation, you can accept it instantly:</p>
-              <a href="${acceptUrl}" style="display:inline-block;background-color:#0f1923;color:#ffffff;text-decoration:none;padding:14px 30px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;border:none;cursor:pointer;margin:0 0 10px 0;border-radius:4px;" class="mobile-button">Accept Quote</a>
+              <a href="${acceptUrl}" style="display:inline-block;background-color:#2a1a0a;color:#e8d4b8;text-decoration:none;padding:14px 30px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;border:none;cursor:pointer;margin:0 0 10px 0;border-radius:4px;" class="mobile-button">Accept Quote</a>
               <p style="margin:0;color:#999;font-size:12px;line-height:1.5;">Once you accept this quote, your invoice will follow shortly.</p>
             </td>
           </tr>
@@ -234,6 +243,7 @@ export async function sendQuoteEmail(
     const info = await sendEmailWithFallback({
       from: FROM_ADDRESS,
       to: recipientEmail,
+      replyTo: REPLY_TO_ADDRESS,
       subject: `Your Quote from Late Night Ricky - ${quote.quoteNumber || '#' + quote.id}`,
       html: getEmailTemplate(content),
       attachments,
@@ -259,7 +269,8 @@ export async function sendInvoiceEmail(
     paymentToken: string | null
     paymentTermsLabel: string | null
     dueDate: string | null
-    createdAt?: Date | string | null
+    sentAt?: Date | string | null
+    ccEmails?: string | null
   },
   recipientEmail: string,
   pdfBuffer?: Buffer
@@ -267,8 +278,8 @@ export async function sendInvoiceEmail(
   try {
     console.log('📧 Sending invoice email to:', recipientEmail)
 
-    const createdAtStr = invoice.createdAt
-      ? new Date(invoice.createdAt).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
+    const createdAtStr = invoice.sentAt
+      ? new Date(invoice.sentAt).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
       : new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
     const dueDateStr = invoice.dueDate
       ? new Date(invoice.dueDate).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
@@ -278,13 +289,30 @@ export async function sendInvoiceEmail(
       ? `${SITE_URL}/pay/${invoice.paymentToken}`
       : undefined
 
+    // Get bank details from settings
+    const { siteSections } = await import('@/lib/db/schema');
+    const { eq, and } = await import('drizzle-orm');
+    const settingsRows = await db
+      .select()
+      .from(siteSections)
+      .where(and(eq(siteSections.page, 'global'), eq(siteSections.section, 'settings')))
+      .limit(1);
+    const settings = settingsRows.length > 0 && settingsRows[0].content
+      ? (typeof settingsRows[0].content === 'string' ? JSON.parse(settingsRows[0].content) : settingsRows[0].content)
+      : {};
+
+    const bankName = settings.bankName || 'Tide';
+    const bankAccountName = settings.bankAccountName || 'Late Night Ricky';
+    const bankSortCode = settings.bankSortCode || '04-06-05';
+    const bankAccountNumber = settings.bankAccountNumber || '23690693';
+
     const content = `
       <div style="padding:40px 40px 45px;background-color:#ffffff;" class="mobile-padding">
         <h2 style="margin:0 0 12px 0;color:#000;font-size:26px;font-weight:300;">Invoice from Late Night Ricky</h2>
-        <div style="width:70px;height:2px;background-color:#0f1923;margin:0 0 35px 0;"></div>
+        <div style="width:70px;height:2px;background-color:#2a1a0a;margin:0 0 35px 0;"></div>
         <p style="margin:0 0 25px 0;color:#666;font-size:15px;line-height:1.8;" class="mobile-text">Dear ${invoice.clientName || 'Valued Client'},</p>
         <p style="margin:0 0 25px 0;color:#666;font-size:15px;line-height:1.8;" class="mobile-text">Please find attached your invoice for the project <strong style="color:#000;">${invoice.projectTitle || '—'}</strong>.</p>
-        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#fafafa;border-left:4px solid #0f1923;margin:0 0 30px 0;">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#fafafa;border-left:4px solid #2a1a0a;margin:0 0 30px 0;">
           <tr>
             <td style="padding:25px;" class="mobile-padding">
               <p style="margin:0 0 15px 0;color:#000;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;">Invoice Summary</p>
@@ -294,20 +322,20 @@ export async function sendInvoiceEmail(
                 <tr><td style="padding:6px 0;font-size:14px;color:#666;">Payment Terms:</td><td style="padding:6px 0;font-size:14px;font-weight:600;color:#000;text-align:right;">${invoice.paymentTermsLabel || '—'}</td></tr>
                 <tr><td style="padding:6px 0;font-size:14px;color:#666;">Due Date:</td><td style="padding:6px 0;font-size:14px;font-weight:600;color:#000;text-align:right;">${dueDateStr}</td></tr>
                 <tr><td style="padding:6px 0;font-size:14px;color:#666;">Services:</td><td style="padding:6px 0;font-size:14px;font-weight:600;color:#000;text-align:right;">${invoice.lineItems?.length || 0} item${invoice.lineItems?.length !== 1 ? 's' : ''}</td></tr>
-                <tr><td style="padding:10px 0 0 0;font-size:14px;color:#666;border-top:1px solid #e5e5e5;">Amount Due:</td><td style="padding:10px 0 0 0;font-size:20px;font-weight:700;color:#0f1923;text-align:right;border-top:1px solid #e5e5e5;" class="mobile-amount">${formatCurrency(invoice.total)}</td></tr>
+                <tr><td style="padding:10px 0 0 0;font-size:14px;color:#666;border-top:1px solid #e5e5e5;">Amount Due:</td><td style="padding:10px 0 0 0;font-size:20px;font-weight:700;color:#2a1a0a;text-align:right;border-top:1px solid #e5e5e5;" class="mobile-amount">${formatCurrency(invoice.total)}</td></tr>
               </table>
             </td>
           </tr>
         </table>
-        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f0f4f8;border:1px solid #d0dce6;margin:0 0 30px 0;">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f0e6d8;border:1px solid #d0c4a8;margin:0 0 30px 0;">
           <tr>
             <td style="padding:20px 25px;" class="mobile-padding">
-              <p style="margin:0 0 12px 0;color:#5c7a94;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;">Bank Details for Payment</p>
+              <p style="margin:0 0 12px 0;color:#5a3a1a;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;">Bank Details for Payment</p>
               <table cellpadding="0" cellspacing="0" border="0" width="100%" class="mobile-table">
-                <tr><td style="padding:4px 0;font-size:13px;color:#666;width:120px;">Bank:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">Tide</td></tr>
-                <tr><td style="padding:4px 0;font-size:13px;color:#666;">Account Name:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">Late Night Ricky</td></tr>
-                <tr><td style="padding:4px 0;font-size:13px;color:#666;">Sort Code:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">04-06-05</td></tr>
-                <tr><td style="padding:4px 0;font-size:13px;color:#666;">Account Number:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">23690693</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#666;width:120px;">Bank:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${bankName}</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#666;">Account Name:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${bankAccountName}</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#666;">Sort Code:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${bankSortCode}</td></tr>
+                <tr><td style="padding:4px 0;font-size:13px;color:#666;">Account Number:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${bankAccountNumber}</td></tr>
               </table>
             </td>
           </tr>
@@ -317,13 +345,13 @@ export async function sendInvoiceEmail(
           <tr>
             <td style="text-align:center;padding:0;">
               <p style="margin:0 0 15px 0;color:#666;font-size:14px;line-height:1.6;" class="mobile-text">Once you have made your bank transfer, click the button below to confirm:</p>
-              <a href="${payUrl}" style="display:inline-block;background-color:#0f1923;color:#ffffff;text-decoration:none;padding:16px 40px;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;border:none;cursor:pointer;margin:0 0 10px 0;border-radius:4px;" class="mobile-button">Confirm Payment</a>
+              <a href="${payUrl}" style="display:inline-block;background-color:#2a1a0a;color:#e8d4b8;text-decoration:none;padding:16px 40px;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;border:none;cursor:pointer;margin:0 0 10px 0;border-radius:4px;" class="mobile-button">Confirm Payment</a>
               <p style="margin:0;color:#999;font-size:12px;line-height:1.5;">Click above to confirm your bank transfer payment.</p>
             </td>
           </tr>
         </table>` : ''}
         <p style="margin:0 0 25px 0;color:#666;font-size:14px;line-height:1.8;text-align:center;background-color:#f9f9f9;padding:18px;border:1px solid #e5e5e5;" class="mobile-text">The full invoice with payment details is attached as a PDF.</p>
-        <p style="margin:0 0 25px 0;color:#666;font-size:14px;line-height:1.8;" class="mobile-text">If you have any questions regarding this invoice, please do not hesitate to contact us.</p>
+        <p style="margin:0 0 25px 0;color:#666;font-size:14px;line-height:1.8;" class="mobile-text">If you have any questions regarding this invoice, please reply to this email or contact us.</p>
         <p style="margin:0;color:#666;font-size:15px;line-height:1.7;" class="mobile-text">Kind regards,<br/><strong style="color:#000;">The Late Night Ricky Team</strong></p>
       </div>`
 
@@ -338,9 +366,15 @@ export async function sendInvoiceEmail(
       console.warn('⚠️ No PDF buffer provided — sending email without attachment')
     }
 
+    const cc = invoice.ccEmails
+      ? invoice.ccEmails.split(',').map((e) => e.trim()).filter(Boolean)
+      : undefined
+
     const info = await sendEmailWithFallback({
       from: FROM_ADDRESS,
       to: recipientEmail,
+      replyTo: REPLY_TO_ADDRESS,
+      ...(cc && cc.length > 0 ? { cc } : {}),
       subject: `Invoice from Late Night Ricky - ${invoice.invoiceNumber}`,
       html: getEmailTemplate(content),
       attachments,
@@ -368,7 +402,7 @@ export async function sendEnquiryReplyEmail(
     const content = `
       <div style="padding:40px 40px 45px;background-color:#ffffff;" class="mobile-padding">
         <p style="margin:0 0 25px 0;color:#666;font-size:15px;line-height:1.8;" class="mobile-text">Dear ${enquiry.name || 'Valued Client'},</p>
-        <div style="margin:0 0 25px 0;color:#333;font-size:15px;line-height:1.8;background:#f8f9fa;padding:20px;border-left:3px solid #0f1923;" class="mobile-text">
+        <div style="margin:0 0 25px 0;color:#333;font-size:15px;line-height:1.8;background:#f8f9fa;padding:20px;border-left:3px solid #2a1a0a;" class="mobile-text">
           ${replyBody.replace(/\n/g, '<br/>')}
         </div>
         <div style="margin:30px 0 0 0;padding-top:20px;border-top:1px solid #e5e5e5;">
@@ -376,12 +410,13 @@ export async function sendEnquiryReplyEmail(
           <p style="margin:0;color:#999;font-size:12px;line-height:1.6;" class="mobile-text">${(enquiry.message || '').substring(0, 200)}${(enquiry.message || '').length > 200 ? '...' : ''}</p>
         </div>
         <p style="margin:30px 0 0 0;color:#666;font-size:15px;line-height:1.7;" class="mobile-text">Kind regards,<br/><strong style="color:#000;">The Late Night Ricky Team</strong></p>
-        <p style="margin:15px 0 0 0;color:#999;font-size:12px;" class="mobile-text">Questions? Contact <a href="mailto:samir@wearemediahive.com" style="color:#0f1923;">samir@wearemediahive.com</a></p>
+        <p style="margin:15px 0 0 0;color:#999;font-size:12px;" class="mobile-text">Questions? Contact <a href="mailto:latenightricky@gmail.com" style="color:#2a1a0a;">latenightricky@gmail.com</a></p>
       </div>`
 
     const info = await sendEmailWithFallback({
       from: FROM_ADDRESS,
       to: enquiry.email,
+      replyTo: REPLY_TO_ADDRESS,
       subject: replySubject,
       html: getEmailTemplate(content),
     })

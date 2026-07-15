@@ -8,6 +8,13 @@
       "when": 1783336175065,
       "tag": "0000_thick_lizard",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1783336180000,
+      "tag": "0001_lnr_invoice_updates",
+      "breakpoints": true
     }
   ]
 }

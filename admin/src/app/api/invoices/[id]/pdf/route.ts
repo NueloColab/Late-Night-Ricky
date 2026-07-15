@@ -3,93 +3,440 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { invoices } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+
+// LNR brand colours
+const DARK_BROWN = rgb(0.165, 0.102, 0.039);    // #2a1a0a
+const CREAM = rgb(0.910, 0.831, 0.722);          // #e8d4b8
+const MEDIUM_BROWN = rgb(0.353, 0.227, 0.102); // #5a3a1a
+const LIGHT_CREAM = rgb(0.941, 0.902, 0.847);   // #f0e6d8
+const GOLD = rgb(0.788, 0.663, 0.431);           // #c9a96e
+const WHITE = rgb(1, 1, 1);
+const BLACK = rgb(0.067, 0.067, 0.067);
+const GREY = rgb(0.4, 0.4, 0.4);
+
+async function getSettings() {
+  try {
+    const { siteSections } = await import('@/lib/db/schema');
+    const rows = await db
+      .select()
+      .from(siteSections)
+      .where(and(eq(siteSections.page, 'global'), eq(siteSections.section, 'settings')))
+      .limit(1);
+    if (rows.length > 0 && rows[0].content) {
+      const parsed = typeof rows[0].content === 'string' ? JSON.parse(rows[0].content) : rows[0].content;
+      return parsed;
+    }
+  } catch {
+    // ignore
+  }
+  return {};
+}
+
+function formatCurrency(amount: number | null | undefined) {
+  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount || 0);
+}
+
+function formatDate(dateStr: string | Date | null | undefined) {
+  if (!dateStr) return '—';
+  try {
+    return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  } catch {
+    return String(dateStr);
+  }
+}
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
     const [invoice] = await db.select().from(invoices).where(eq(invoices.id, Number(params.id)));
     if (!invoice) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
+    const settings = await getSettings();
+    const bankName = settings.bankName || 'Tide';
+    const bankAccountName = settings.bankAccountName || 'Late Night Ricky';
+    const bankSortCode = settings.bankSortCode || '04-06-05';
+    const bankAccountNumber = settings.bankAccountNumber || '23690693';
+
     const pdfDoc = await PDFDocument.create();
     const page = pdfDoc.addPage([595, 842]);
     const { width, height } = page.getSize();
-    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-    const navy = rgb(0.106, 0.227, 0.298);
-    const grey = rgb(0.557, 0.659, 0.745);
-    const black = rgb(0.067, 0.067, 0.067);
-    const lightGrey = rgb(0.89, 0.91, 0.93);
 
-    // Header
+    const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+    const helveticaOblique = await pdfDoc.embedFont(StandardFonts.HelveticaOblique);
+
+    // ─── Background ───
+    page.drawRectangle({
+      x: 0, y: 0, width, height,
+      color: LIGHT_CREAM,
+    });
+
+    // ─── Header band (dark brown) ───
+    page.drawRectangle({
+      x: 0, y: height - 140, width, height: 140,
+      color: DARK_BROWN,
+    });
+
+    // Logo text (since we can't embed PNG easily, use text)
     page.drawText('LATE NIGHT RICKY', {
-      x: 50, y: height - 60, size: 24, font: fontBold, color: navy,
+      x: 50, y: height - 55, size: 22, font: helveticaBold, color: CREAM,
     });
+    page.drawText('International DJ \u0026 Grammy Winning Producer', {
+      x: 50, y: height - 78, size: 9, font: helveticaOblique, color: GOLD,
+    });
+
+    // INVOICE label (right side)
     page.drawText('INVOICE', {
-      x: width - 130, y: height - 60, size: 14, font: fontBold, color: grey,
+      x: width - 140, y: height - 55, size: 26, font: helveticaBold, color: CREAM,
     });
-    page.drawLine({ start: { x: 50, y: height - 80 }, end: { x: width - 50, y: height - 80 }, thickness: 1, color: lightGrey });
 
-    // Invoice details
-    let y = height - 120;
-    page.drawText(`Invoice: ${invoice.invoiceNumber}`, { x: 50, y, size: 12, font: fontBold, color: black });
+    // Decorative line under header
+    page.drawLine({
+      start: { x: 50, y: height - 110 },
+      end: { x: width - 50, y: height - 110 },
+      thickness: 1, color: GOLD,
+    });
+
+    let y = height - 155;
+
+    // ─── BILL TO ───
+    page.drawText('BILL TO', {
+      x: 50, y, size: 9, font: helveticaBold, color: MEDIUM_BROWN,
+    });
+    y -= 18;
+    page.drawText(invoice.clientName || 'Client', {
+      x: 50, y, size: 13, font: helveticaBold, color: BLACK,
+    });
+    y -= 16;
+    if (invoice.clientCompany) {
+      page.drawText(invoice.clientCompany, {
+        x: 50, y, size: 10, font: helvetica, color: GREY,
+      });
+      y -= 14;
+    }
+    if (invoice.clientEmail) {
+      page.drawText(invoice.clientEmail, {
+        x: 50, y, size: 10, font: helvetica, color: GREY,
+      });
+      y -= 14;
+    }
+
+    // ─── Invoice Meta (right column) ───
+    const metaX = width - 220;
+    let metaY = height - 155;
+
+    const metaItems = [
+      { label: 'DATE ISSUED', value: formatDate(invoice.sentAt || new Date()) },
+      { label: 'DUE DATE', value: invoice.dueDate ? formatDate(invoice.dueDate) : 'Upon receipt' },
+      { label: 'PAYMENT TERMS', value: invoice.paymentTermsLabel || 'Net 30' },
+      { label: 'INVOICE NUMBER', value: invoice.invoiceNumber },
+    ];
+
+    metaItems.forEach((item) => {
+      page.drawText(item.label, {
+        x: metaX, y: metaY, size: 8, font: helveticaBold, color: MEDIUM_BROWN,
+      });
+      page.drawText(item.value, {
+        x: metaX + 110, y: metaY, size: 10, font: helveticaBold, color: BLACK,
+      });
+      metaY -= 18;
+    });
+
+    y = Math.min(y, metaY) - 20;
+
+    // ─── PROJECT ───
+    if (invoice.projectTitle) {
+      page.drawText('PROJECT', {
+        x: 50, y, size: 9, font: helveticaBold, color: MEDIUM_BROWN,
+      });
+      page.drawText(invoice.projectTitle, {
+        x: 110, y, size: 11, font: helveticaBold, color: BLACK,
+      });
+      y -= 22;
+    }
+
+    // ─── Separator ───
+    y -= 8;
+    page.drawLine({
+      start: { x: 50, y }, end: { x: width - 50, y },
+      thickness: 0.5, color: GOLD,
+    });
     y -= 22;
-    page.drawText(`Date: ${new Date().toLocaleDateString('en-GB')}`, { x: 50, y, size: 10, font, color: grey });
-    if (invoice.dueDate) {
-      y -= 18;
-      page.drawText(`Due: ${invoice.dueDate}`, { x: 50, y, size: 10, font, color: grey });
-    }
-    if (invoice.status) {
-      y -= 18;
-      page.drawText(`Status: ${invoice.status.toUpperCase()}`, { x: 50, y, size: 10, font, color: navy });
-    }
 
-    // Line items
-    y -= 50;
+    // ─── Line Items Table ───
     const lineItemsRaw = invoice.lineItems || '[]';
-    const lineItems = Array.isArray(lineItemsRaw) ? lineItemsRaw : JSON.parse(typeof lineItemsRaw === 'string' ? lineItemsRaw : '[]');
-    
-    if (lineItems.length > 0) {
-      page.drawRectangle({ x: 50, y: y - 5, width: width - 100, height: 22, color: navy });
-      page.drawText('Description', { x: 60, y, size: 10, font: fontBold, color: rgb(1, 1, 1) });
-      page.drawText('Qty', { x: 350, y, size: 10, font: fontBold, color: rgb(1, 1, 1) });
-      page.drawText('Rate', { x: 410, y, size: 10, font: fontBold, color: rgb(1, 1, 1) });
-      page.drawText('Amount', { x: 480, y, size: 10, font: fontBold, color: rgb(1, 1, 1) });
-      y -= 30;
+    const lineItems = Array.isArray(lineItemsRaw)
+      ? lineItemsRaw
+      : JSON.parse(typeof lineItemsRaw === 'string' ? lineItemsRaw : '[]');
 
-      lineItems.forEach((item: any) => {
-        const desc = String(item.description || '').substring(0, 45);
-        const qty = Number(item.quantity || 0);
-        const rate = Number(item.rate || 0);
-        const amount = Number(item.amount || qty * rate);
-        page.drawText(desc, { x: 60, y, size: 10, font, color: black });
-        page.drawText(String(qty), { x: 350, y, size: 10, font, color: black });
-        page.drawText(`£${rate.toLocaleString()}`, { x: 410, y, size: 10, font, color: black });
-        page.drawText(`£${amount.toLocaleString()}`, { x: 480, y, size: 10, font, color: black });
-        y -= 20;
+    if (lineItems.length > 0) {
+      // Table header
+      page.drawRectangle({
+        x: 50, y: y - 5, width: width - 100, height: 24,
+        color: DARK_BROWN,
+      });
+      page.drawText('SERVICE DESCRIPTION', {
+        x: 60, y: y, size: 9, font: helveticaBold, color: CREAM,
+      });
+      page.drawText('QTY', {
+        x: 350, y: y, size: 9, font: helveticaBold, color: CREAM,
+      });
+      page.drawText('RATE', {
+        x: 400, y: y, size: 9, font: helveticaBold, color: CREAM,
+      });
+      page.drawText('AMOUNT', {
+        x: 470, y: y, size: 9, font: helveticaBold, color: CREAM,
+      });
+      y -= 32;
+
+      lineItems.forEach((item: any, idx: number) => {
+        const isOld = !!item.description;
+        const desc = String(isOld ? item.description : item.serviceName || '').substring(0, 45);
+        const category = item.serviceCategory;
+        const qty = Number(isOld ? item.quantity : item.quantity || 1);
+        const rate = Number(isOld ? item.rate : item.price || 0);
+        const amount = Number(isOld ? item.amount : qty * rate);
+
+        // Alternating row bg
+        if (idx % 2 === 1) {
+          page.drawRectangle({
+            x: 50, y: y - 4, width: width - 100, height: 22,
+            color: rgb(0.95, 0.92, 0.88),
+          });
+        }
+
+        page.drawText(desc, {
+          x: 60, y: y, size: 10, font: helvetica, color: BLACK,
+        });
+        if (category) {
+          page.drawText(category, {
+            x: 60, y: y - 11, size: 8, font: helvetica, color: GREY,
+          });
+        }
+        page.drawText(String(qty), {
+          x: 350, y: y, size: 10, font: helvetica, color: BLACK,
+        });
+        page.drawText(formatCurrency(rate), {
+          x: 400, y: y, size: 10, font: helvetica, color: BLACK,
+        });
+        page.drawText(formatCurrency(amount), {
+          x: 470, y: y, size: 10, font: helveticaBold, color: BLACK,
+        });
+        y -= 24;
       });
 
-      y -= 20;
-      page.drawLine({ start: { x: 350, y }, end: { x: width - 50, y }, thickness: 1, color: lightGrey });
-      y -= 20;
-      page.drawText('Subtotal', { x: 350, y, size: 10, font: fontBold, color: black });
-      page.drawText(`£${Number(invoice.subtotal).toLocaleString()}`, { x: 480, y, size: 10, font: fontBold, color: black });
-      y -= 20;
-      page.drawText('Total', { x: 350, y, size: 12, font: fontBold, color: navy });
-      page.drawText(`£${Number(invoice.total).toLocaleString()}`, { x: 480, y, size: 12, font: fontBold, color: navy });
+      y -= 12;
     }
 
-    // Footer
-    page.drawLine({ start: { x: 50, y: 80 }, end: { x: width - 50, y: 80 }, thickness: 1, color: lightGrey });
-    page.drawText('Late Night Ricky · International DJ & Grammy Winning Producer · Payment due within 14 days', {
-      x: 50, y: 60, size: 9, font, color: grey,
+    // ─── Totals ───
+    const totalsX = width - 230;
+    const subtotal = Number(invoice.subtotal || 0);
+    const total = Number(invoice.total || 0);
+
+    // Get discount info
+    const discountRaw = invoice.discount || {};
+    const discount = typeof discountRaw === 'string' ? JSON.parse(discountRaw) : discountRaw;
+    const discountEnabled = discount?.enabled || false;
+    const discountPercent = discount?.percent || 0;
+    const discountAmount = discountEnabled ? (subtotal * discountPercent) / 100 : 0;
+
+    // Subtotal
+    page.drawText('Subtotal:', {
+      x: totalsX, y, size: 10, font: helveticaBold, color: GREY,
+    });
+    page.drawText(formatCurrency(subtotal), {
+      x: totalsX + 130, y, size: 10, font: helveticaBold, color: BLACK,
+    });
+    y -= 18;
+
+    // Discount
+    if (discountEnabled && discountAmount > 0) {
+      page.drawText(`${discountPercent}% Discount:`, {
+        x: totalsX, y, size: 10, font: helveticaBold, color: GREY,
+      });
+      page.drawText(`-${formatCurrency(discountAmount)}`, {
+        x: totalsX + 130, y, size: 10, font: helveticaBold, color: rgb(0.6, 0.2, 0.2),
+      });
+      y -= 18;
+    }
+
+    // VAT
+    if (invoice.vatEnabled && (invoice.taxRate || 0) > 0) {
+      const tax = Number(invoice.taxRate || 0);
+      const taxAmount = (subtotal - discountAmount) * (tax / 100);
+      page.drawText(`VAT (${tax}%):`, {
+        x: totalsX, y, size: 10, font: helveticaBold, color: GREY,
+      });
+      page.drawText(formatCurrency(taxAmount), {
+        x: totalsX + 130, y, size: 10, font: helveticaBold, color: BLACK,
+      });
+      y -= 18;
+    } else {
+      page.drawText('VAT:', {
+        x: totalsX, y, size: 10, font: helveticaBold, color: GREY,
+      });
+      page.drawText('N/A', {
+        x: totalsX + 130, y, size: 10, font: helveticaBold, color: GREY,
+      });
+      y -= 18;
+    }
+
+    // Separator
+    page.drawLine({
+      start: { x: totalsX, y: y + 4 },
+      end: { x: width - 50, y: y + 4 },
+      thickness: 1, color: DARK_BROWN,
+    });
+    y -= 4;
+
+    // Total
+    page.drawText('TOTAL:', {
+      x: totalsX, y, size: 14, font: helveticaBold, color: DARK_BROWN,
+    });
+    page.drawText(formatCurrency(total), {
+      x: totalsX + 130, y, size: 14, font: helveticaBold, color: DARK_BROWN,
+    });
+    y -= 30;
+
+    // ─── Payment Schedule ───
+    const scheduleRaw = invoice.paymentSchedule || [];
+    const schedule = Array.isArray(scheduleRaw)
+      ? scheduleRaw
+      : JSON.parse(typeof scheduleRaw === 'string' ? scheduleRaw : '[]');
+
+    if (schedule.length > 0) {
+      y -= 10;
+      page.drawText('PAYMENT SCHEDULE', {
+        x: 50, y, size: 9, font: helveticaBold, color: MEDIUM_BROWN,
+      });
+      y -= 18;
+
+      page.drawRectangle({
+        x: 50, y: y - 5, width: width - 100, height: 22,
+        color: DARK_BROWN,
+      });
+      page.drawText('INSTALLMENT', {
+        x: 60, y, size: 9, font: helveticaBold, color: CREAM,
+      });
+      page.drawText('%', {
+        x: 240, y, size: 9, font: helveticaBold, color: CREAM,
+      });
+      page.drawText('DUE', {
+        x: 300, y, size: 9, font: helveticaBold, color: CREAM,
+      });
+      page.drawText('AMOUNT', {
+        x: 470, y, size: 9, font: helveticaBold, color: CREAM,
+      });
+      y -= 28;
+
+      schedule.forEach((item: any, idx: number) => {
+        if (idx % 2 === 1) {
+          page.drawRectangle({
+            x: 50, y: y - 4, width: width - 100, height: 20,
+            color: rgb(0.95, 0.92, 0.88),
+          });
+        }
+        page.drawText(String(item.label || 'Payment'), {
+          x: 60, y, size: 10, font: helvetica, color: BLACK,
+        });
+        page.drawText(`${item.percent || 0}%`, {
+          x: 240, y, size: 10, font: helvetica, color: BLACK,
+        });
+        page.drawText(String(item.due || '—'), {
+          x: 300, y, size: 10, font: helvetica, color: BLACK,
+        });
+        page.drawText(formatCurrency((total * (item.percent || 0)) / 100), {
+          x: 470, y, size: 10, font: helveticaBold, color: BLACK,
+        });
+        y -= 22;
+      });
+      y -= 12;
+    }
+
+    // ─── Bank Details ───
+    if (y < 220) {
+      // Add a new page if we're running out of space
+      const newPage = pdfDoc.addPage([595, 842]);
+      newPage.drawRectangle({ x: 0, y: 0, width, height, color: LIGHT_CREAM });
+      y = height - 80;
+      // We'll just continue on the new page... but for simplicity let's just draw at bottom
+    }
+
+    y -= 10;
+    page.drawText('BANK DETAILS FOR PAYMENT', {
+      x: 50, y, size: 9, font: helveticaBold, color: MEDIUM_BROWN,
+    });
+    y -= 18;
+
+    page.drawText(`Bank: ${bankName}`, {
+      x: 50, y, size: 10, font: helvetica, color: BLACK,
+    });
+    y -= 14;
+    page.drawText(`Account Name: ${bankAccountName}`, {
+      x: 50, y, size: 10, font: helvetica, color: BLACK,
+    });
+    y -= 14;
+    page.drawText(`Sort Code: ${bankSortCode}`, {
+      x: 50, y, size: 10, font: helvetica, color: BLACK,
+    });
+    y -= 14;
+    page.drawText(`Account No: ${bankAccountNumber}`, {
+      x: 50, y, size: 10, font: helvetica, color: BLACK,
+    });
+    y -= 20;
+
+    // ─── Notes & Terms ───
+    if (invoice.notes) {
+      page.drawText('NOTES & TERMS', {
+        x: 50, y, size: 9, font: helveticaBold, color: MEDIUM_BROWN,
+      });
+      y -= 16;
+
+      const notesText = String(invoice.notes);
+      const maxWidth = width - 100;
+      const words = notesText.split(' ');
+      let line = '';
+      const lines: string[] = [];
+
+      for (const word of words) {
+        const test = line + (line ? ' ' : '') + word;
+        const textWidth = helvetica.widthOfTextAtSize(test, 9);
+        if (textWidth > maxWidth && line) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = test;
+        }
+      }
+      if (line) lines.push(line);
+
+      lines.slice(0, 8).forEach((l) => {
+        page.drawText(l, { x: 50, y, size: 9, font: helvetica, color: GREY });
+        y -= 13;
+      });
+      y -= 10;
+    }
+
+    // ─── Footer ───
+    const footerY = 60;
+    page.drawLine({
+      start: { x: 50, y: footerY + 25 },
+      end: { x: width - 50, y: footerY + 25 },
+      thickness: 0.5, color: GOLD,
+    });
+    page.drawText('Late Night Ricky · International DJ & Grammy Winning Producer · Payment is due by the date specified above. Thank you for your business.', {
+      x: 50, y: footerY + 8, size: 8, font: helvetica, color: GREY,
+    });
+    page.drawText('Contact: latenightricky@gmail.com', {
+      x: 50, y: footerY - 6, size: 8, font: helvetica, color: GREY,
     });
 
     const pdfBytes = await pdfDoc.save();
     return new NextResponse(new Uint8Array(pdfBytes), {
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="invoice-${invoice.invoiceNumber}.pdf"`,
+        'Content-Disposition': `attachment; filename="LNR-Invoice-${invoice.invoiceNumber}.pdf"`,
       },
     });
   } catch (err) {

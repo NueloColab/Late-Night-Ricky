@@ -6,6 +6,10 @@ interface SettingsData {
   taxRate: number;
   quoteTemplate: string;
   currency: string;
+  bankName?: string;
+  bankAccountName?: string;
+  bankSortCode?: string;
+  bankAccountNumber?: string;
 }
 
 export default function SettingsPage() {
@@ -93,7 +97,7 @@ export default function SettingsPage() {
         <div className="space-y-8">
           <div className="bg-white border border-[#6B8FAB]/30 p-8">
             <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-6">Business Settings</p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
               <div>
                 <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Default Currency</label>
                 <select
@@ -131,6 +135,54 @@ export default function SettingsPage() {
                 </select>
               </div>
             </div>
+
+            <div className="border-t border-[#6B8FAB]/20 pt-8">
+              <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-6">Bank Details for Invoices</p>
+              <p className="text-xs text-[#a0a0a0] mb-4">These details appear on all invoice PDFs and emails.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Bank Name</label>
+                  <input
+                    type="text"
+                    value={settings.bankName || ''}
+                    onChange={(e) => setSettings({ ...settings, bankName: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                    placeholder="e.g. Tide"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Account Name</label>
+                  <input
+                    type="text"
+                    value={settings.bankAccountName || ''}
+                    onChange={(e) => setSettings({ ...settings, bankAccountName: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                    placeholder="e.g. Late Night Ricky"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Sort Code</label>
+                  <input
+                    type="text"
+                    value={settings.bankSortCode || ''}
+                    onChange={(e) => setSettings({ ...settings, bankSortCode: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                    placeholder="e.g. 04-06-05"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Account Number</label>
+                  <input
+                    type="text"
+                    value={settings.bankAccountNumber || ''}
+                    onChange={(e) => setSettings({ ...settings, bankAccountNumber: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                    placeholder="e.g. 23690693"
+                  />
+                </div>
+              </div>
+            </div>
+
             <div className="mt-8">
               <button
                 onClick={saveSettings}

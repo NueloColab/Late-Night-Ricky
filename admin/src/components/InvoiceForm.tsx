@@ -53,6 +53,7 @@ interface InvoiceFormProps {
     paymentSchedule?: PaymentScheduleItem[]
     dueDate?: string | null
     projectId?: number | null
+    ccEmails?: string | null
   } | null
   projects?: { id: number; title: string; clientId?: number | null }[]
   onClose: () => void
@@ -65,6 +66,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
   const [clientEmail, setClientEmail] = useState(invoice?.clientEmail || '')
   const [clientCompany, setClientCompany] = useState(invoice?.clientCompany || '')
   const [projectTitle, setProjectTitle] = useState(invoice?.projectTitle || '')
+  const [ccEmails, setCcEmails] = useState(invoice?.ccEmails || '')
   const [projectId, setProjectId] = useState<number | null>(invoice?.projectId ?? null)
   const [notes, setNotes] = useState(invoice?.notes || '')
   const [dueDate, setDueDate] = useState(invoice?.dueDate || '')
@@ -168,6 +170,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
       clientName,
       clientEmail,
       clientCompany,
+      ccEmails,
       projectTitle,
       projectId: projectId || undefined,
       notes,
@@ -264,6 +267,19 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
               placeholder="client@example.com"
               required
             />
+          </div>
+          <div className="md:col-span-2">
+            <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
+              CC Emails
+            </label>
+            <input
+              type="text"
+              value={ccEmails}
+              onChange={(e) => setCcEmails(e.target.value)}
+              className={inputClass}
+              placeholder="finance@client.com, manager@client.com (comma separated)"
+            />
+            <p className="text-[10px] text-[#6B8FAB] mt-1">Separate multiple emails with commas. CC recipients will receive the invoice too.</p>
           </div>
           <div>
             <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
