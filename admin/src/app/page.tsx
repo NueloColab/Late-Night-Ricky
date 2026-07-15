@@ -329,7 +329,9 @@ export default async function HomePage() {
         if (c.poweredBy) footerData.poweredBy = c.poweredBy;
         if (c.poweredByUrl) footerData.poweredByUrl = c.poweredByUrl;
         if (c.logo) footerData.logo = c.logo;
-        if (c.links) footerData.links = c.links;
+        if (c.links) {
+          footerData.links = c.links.filter((l: any) => l.text !== 'Admin Login');
+        }
       }
 
       // Social links from home/contact_section
