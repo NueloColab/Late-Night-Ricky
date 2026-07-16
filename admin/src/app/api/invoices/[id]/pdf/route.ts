@@ -12,7 +12,6 @@ const CREAM = rgb(0.910, 0.831, 0.722);          // #e8d4b8
 const MEDIUM_BROWN = rgb(0.353, 0.227, 0.102); // #5a3a1a
 const LIGHT_CREAM = rgb(0.941, 0.902, 0.847);   // #f0e6d8
 const GOLD = rgb(0.788, 0.663, 0.431);           // #c9a96e
-const WHITE = rgb(1, 1, 1);
 const BLACK = rgb(0.067, 0.067, 0.067);
 const GREY = rgb(0.4, 0.4, 0.4);
 
@@ -82,8 +81,9 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const iban = settings.iban || '';
 
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([595, 842]);
-    const { width, height } = page.getSize();
+    let page = pdfDoc.addPage([595, 842]);
+    const { width } = page.getSize();
+    let height = 842;
 
     const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica);
     const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
@@ -233,13 +233,13 @@ export async function GET(request: Request, { params }: { params: { id: string }
         x: 60, y: y, size: 9, font: helveticaBold, color: CREAM,
       });
       page.drawText('QTY', {
-        x: 350, y: y, size: 9, font: helveticaBold, color: CREAM,
+        x: 350, y, size: 9, font: helveticaBold, color: CREAM,
       });
       page.drawText('RATE', {
-        x: 400, y: y, size: 9, font: helveticaBold, color: CREAM,
+        x: 400, y, size: 9, font: helveticaBold, color: CREAM,
       });
       page.drawText('AMOUNT', {
-        x: 470, y: y, size: 9, font: helveticaBold, color: CREAM,
+        x: 470, y, size: 9, font: helveticaBold, color: CREAM,
       });
       y -= 32;
 
@@ -260,7 +260,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         }
 
         page.drawText(desc, {
-          x: 60, y: y, size: 10, font: helvetica, color: BLACK,
+          x: 60, y, size: 10, font: helvetica, color: BLACK,
         });
         if (category) {
           page.drawText(category, {
@@ -268,13 +268,13 @@ export async function GET(request: Request, { params }: { params: { id: string }
           });
         }
         page.drawText(String(qty), {
-          x: 350, y: y, size: 10, font: helvetica, color: BLACK,
+          x: 350, y, size: 10, font: helvetica, color: BLACK,
         });
         page.drawText(formatCurrency(rate), {
-          x: 400, y: y, size: 10, font: helvetica, color: BLACK,
+          x: 400, y, size: 10, font: helvetica, color: BLACK,
         });
         page.drawText(formatCurrency(amount), {
-          x: 470, y: y, size: 10, font: helveticaBold, color: BLACK,
+          x: 470, y, size: 10, font: helveticaBold, color: BLACK,
         });
         y -= 24;
       });
@@ -409,10 +409,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     // ─── Bank Details ───
     if (y < 240) {
-      // Running out of space — start a new page
-      const newPage = pdfDoc.addPage([595, 842]);
-      newPage.drawRectangle({ x: 0, y: 0, width, height: 842, color: LIGHT_CREAM });
+      page = pdfDoc.addPage([595, 842]);
+      page.drawRectangle({ x: 0, y: 0, width, height: 842, color: LIGHT_CREAM });
       y = 780;
+      height = 842;
     }
 
     y -= 10;
@@ -421,31 +421,38 @@ export async function GET(request: Request, { params }: { params: { id: string }
     });
     y -= 18;
 
+    // Bank details background block
+    const bankBlockHeight = 14 * (4 + (swiftCode ? 1 : 0) + (iban ? 1 : 0)) + 16;
+    page.drawRectangle({
+      x: 50, y: y - bankBlockHeight + 10, width: width - 100, height: bankBlockHeight,
+      color: rgb(0.941, 0.902, 0.847),
+    });
+
     page.drawText(`Bank: ${bankName}`, {
-      x: 50, y, size: 10, font: helvetica, color: BLACK,
+      x: 60, y, size: 10, font: helvetica, color: BLACK,
     });
     y -= 14;
     page.drawText(`Account Name: ${bankAccountName}`, {
-      x: 50, y, size: 10, font: helvetica, color: BLACK,
+      x: 60, y, size: 10, font: helvetica, color: BLACK,
     });
     y -= 14;
     page.drawText(`Sort Code: ${bankSortCode}`, {
-      x: 50, y, size: 10, font: helvetica, color: BLACK,
+      x: 60, y, size: 10, font: helvetica, color: BLACK,
     });
     y -= 14;
     page.drawText(`Account No: ${bankAccountNumber}`, {
-      x: 50, y, size: 10, font: helvetica, color: BLACK,
+      x: 60, y, size: 10, font: helvetica, color: BLACK,
     });
     y -= 14;
     if (swiftCode) {
       page.drawText(`SWIFT: ${swiftCode}`, {
-        x: 50, y, size: 10, font: helvetica, color: BLACK,
+        x: 60, y, size: 10, font: helvetica, color: BLACK,
       });
       y -= 14;
     }
     if (iban) {
       page.drawText(`IBAN: ${iban}`, {
-        x: 50, y, size: 10, font: helvetica, color: BLACK,
+        x: 60, y, size: 10, font: helvetica, color: BLACK,
       });
       y -= 14;
     }
@@ -453,6 +460,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     // ─── Notes & Terms ───
     if (invoice.notes) {
+      if (y < 140) {
+        page = pdfDoc.addPage([595, 842]);
+        page.drawRectangle({ x: 0, y: 0, width, height: 842, color: LIGHT_CREAM });
+        y = 780;
+        height = 842;
+      }
       page.drawText('NOTES & TERMS', {
         x: 50, y, size: 9, font: helveticaBold, color: MEDIUM_BROWN,
       });
@@ -469,13 +482,19 @@ export async function GET(request: Request, { params }: { params: { id: string }
     }
 
     // ─── Footer ───
+    if (y < 80) {
+      page = pdfDoc.addPage([595, 842]);
+      page.drawRectangle({ x: 0, y: 0, width, height: 842, color: LIGHT_CREAM });
+      y = 780;
+      height = 842;
+    }
     const footerY = 60;
     page.drawLine({
       start: { x: 50, y: footerY + 25 },
       end: { x: width - 50, y: footerY + 25 },
       thickness: 0.5, color: GOLD,
     });
-    page.drawText('Late Night Ricky · International DJ & Grammy Winning Producer · Payment is due by the date specified above. Thank you for your business.', {
+    page.drawText(`${companyName} · International DJ & Grammy Winning Producer · Payment is due by the date specified above. Thank you for your business.`, {
       x: 50, y: footerY + 8, size: 8, font: helvetica, color: GREY,
     });
     page.drawText('Contact: latenightricky@gmail.com', {
