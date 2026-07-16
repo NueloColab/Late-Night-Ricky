@@ -79,6 +79,186 @@ interface Template {
   ccEmails?: string | null
 }
 
+function InvoicePreview({
+  clientName,
+  clientCompany,
+  clientEmail,
+  projectTitle,
+  lineItems,
+  subtotal,
+  discount,
+  discountAmount,
+  tax,
+  taxRate,
+  vatEnabled,
+  total,
+  paymentTermsLabel,
+  dueDate,
+  notes,
+}: {
+  clientName: string
+  clientCompany: string
+  clientEmail: string
+  projectTitle: string
+  lineItems: LineItem[]
+  subtotal: number
+  discount: Discount
+  discountAmount: number
+  tax: number
+  taxRate: number
+  vatEnabled: boolean
+  total: number
+  paymentTermsLabel: string
+  dueDate: string
+  notes: string
+}) {
+  const [settings, setSettings] = useState<any>({})
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(r => r.json())
+      .then(data => {
+        if (data.settings) setSettings(data.settings)
+      })
+      .catch(() => {})
+  }, [])
+
+  const companyName = settings.companyName || 'Fricktion Music Ltd'
+  const companyAddress = settings.companyAddress || ''
+  const companyNumber = settings.companyNumber || ''
+  const vatNumber = settings.vatNumber || ''
+  const bankName = settings.bankName || 'Tide'
+  const bankAccountName = settings.bankAccountName || 'Late Night Ricky'
+  const bankSortCode = settings.bankSortCode || '04-06-05'
+  const bankAccountNumber = settings.bankAccountNumber || '23690693'
+  const swiftCode = settings.swiftCode || ''
+  const iban = settings.iban || ''
+
+  return (
+    <div className="bg-[#f0e6d8] border border-[#A8D5F0]/30 rounded-lg overflow-hidden">
+      {/* Header */}
+      <div className="px-6 py-4 border-b border-[#d0c4a8] flex items-center justify-between">
+        <span className="text-xs font-semibold text-[#5a3a1a] uppercase tracking-[3px]">PDF Preview</span>
+        <span className="text-[10px] text-[#5a3a1a]/50">This is how the invoice will look</span>
+      </div>
+
+      <div className="p-6 space-y-5">
+        {/* Top row: Company + Bill To */}
+        <div className="flex flex-col md:flex-row justify-between gap-6">
+          {/* Bill To */}
+          <div>
+            <p className="text-[10px] font-bold text-[#5a3a1a] uppercase tracking-[0.15em] mb-1">Bill To</p>
+            <p className="text-sm font-bold text-[#2a1a0a]">{clientName || 'Client Name'}</p>
+            {clientCompany && <p className="text-xs text-[#5a3a1a]/70">{clientCompany}</p>}
+            {clientEmail && <p className="text-xs text-[#5a3a1a]/70">{clientEmail}</p>}
+          </div>
+
+          {/* Company Details */}
+          <div className="text-right">
+            <p className="text-sm font-bold text-[#2a1a0a]">{companyName}</p>
+            {companyAddress && companyAddress.split('\n').map((line: string, i: number) => (
+              <p key={i} className="text-xs text-[#5a3a1a]/70">{line}</p>
+            ))}
+            {companyNumber && <p className="text-[10px] text-[#5a3a1a]/50 mt-1">Company No: {companyNumber}</p>}
+            {vatNumber && <p className="text-[10px] text-[#5a3a1a]/50">VAT No: {vatNumber}</p>}
+          </div>
+        </div>
+
+        {/* Project + Meta */}
+        <div className="flex flex-col md:flex-row justify-between gap-4 text-xs text-[#5a3a1a]">
+          {projectTitle && <p><span className="font-semibold">Project:</span> {projectTitle}</p>}
+          <div className="flex gap-4">
+            <p><span className="font-semibold">Terms:</span> {paymentTermsLabel}</p>
+            {dueDate && <p><span className="font-semibold">Due:</span> {dueDate}</p>}
+          </div>
+        </div>
+
+        {/* Line Items */}
+        <div className="border border-[#d0c4a8] rounded-lg overflow-hidden">
+          <div className="grid grid-cols-[1fr_60px_80px_80px] gap-2 px-4 py-2 bg-[#2a1a0a] text-[#e8d4b8] text-[10px] font-bold uppercase tracking-wider">
+            <span>Service</span>
+            <span className="text-center">Qty</span>
+            <span className="text-right">Rate</span>
+            <span className="text-right">Amount</span>
+          </div>
+          {lineItems.filter(item => item.serviceName || item.description).map((item, i) => {
+            const qty = Number(item.quantity || 1)
+            const rate = Number(item.price || 0)
+            const amount = qty * rate
+            return (
+              <div key={i} className={`grid grid-cols-[1fr_60px_80px_80px] gap-2 px-4 py-2.5 text-xs ${i % 2 === 1 ? 'bg-[#e8d4b8]/20' : ''}`}>
+                <div>
+                  <p className="font-medium text-[#2a1a0a]">{item.serviceName || item.description}</p>
+                  {item.serviceCategory && <p className="text-[10px] text-[#5a3a1a]/50">{item.serviceCategory}</p>}
+                </div>
+                <span className="text-center text-[#5a3a1a]">{qty}</span>
+                <span className="text-right text-[#5a3a1a]">£{rate.toLocaleString()}</span>
+                <span className="text-right font-semibold text-[#2a1a0a]">£{amount.toLocaleString()}</span>
+              </div>
+            )
+          })}
+          {lineItems.filter(item => item.serviceName || item.description).length === 0 && (
+            <div className="px-4 py-6 text-center text-xs text-[#5a3a1a]/40 italic">No services added yet</div>
+          )}
+        </div>
+
+        {/* Totals */}
+        <div className="flex justify-end">
+          <div className="w-full max-w-[280px] space-y-1.5 text-sm">
+            <div className="flex justify-between">
+              <span className="text-[#5a3a1a]/60">Subtotal</span>
+              <span className="font-semibold text-[#2a1a0a]">£{subtotal.toFixed(2)}</span>
+            </div>
+            {discount.enabled && discountAmount > 0 && (
+              <div className="flex justify-between">
+                <span className="text-[#5a3a1a]/60">Discount ({discount.percent}%)</span>
+                <span className="font-semibold text-red-600">-£{discountAmount.toFixed(2)}</span>
+              </div>
+            )}
+            {vatEnabled && taxRate > 0 && (
+              <div className="flex justify-between">
+                <span className="text-[#5a3a1a]/60">VAT ({taxRate}%)</span>
+                <span className="font-semibold text-[#2a1a0a]">£{tax.toFixed(2)}</span>
+              </div>
+            )}
+            <div className="flex justify-between pt-2 border-t border-[#2a1a0a]">
+              <span className="text-base font-black text-[#2a1a0a] tracking-tight">Total</span>
+              <span className="text-base font-black text-[#2a1a0a] tracking-tight">£{total.toFixed(2)}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Bank Details */}
+        <div className="bg-[#e8d4b8]/30 border border-[#d0c4a8] rounded-lg p-4">
+          <p className="text-[10px] font-bold text-[#5a3a1a] uppercase tracking-[0.15em] mb-2">Bank Details for Payment</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-xs text-[#2a1a0a]">
+            <p><span className="text-[#5a3a1a]/60">Bank:</span> <span className="font-semibold">{bankName}</span></p>
+            <p><span className="text-[#5a3a1a]/60">Account Name:</span> <span className="font-semibold">{bankAccountName}</span></p>
+            <p><span className="text-[#5a3a1a]/60">Sort Code:</span> <span className="font-semibold">{bankSortCode}</span></p>
+            <p><span className="text-[#5a3a1a]/60">Account No:</span> <span className="font-semibold">{bankAccountNumber}</span></p>
+            {swiftCode && <p><span className="text-[#5a3a1a]/60">SWIFT:</span> <span className="font-semibold">{swiftCode}</span></p>}
+            {iban && <p><span className="text-[#5a3a1a]/60">IBAN:</span> <span className="font-semibold">{iban}</span></p>}
+          </div>
+        </div>
+
+        {/* Notes */}
+        {notes && (
+          <div>
+            <p className="text-[10px] font-bold text-[#5a3a1a] uppercase tracking-[0.15em] mb-1">Notes & Terms</p>
+            <p className="text-xs text-[#5a3a1a]/80 whitespace-pre-wrap leading-relaxed">{notes}</p>
+          </div>
+        )}
+
+        {/* Footer */}
+        <div className="pt-3 border-t border-[#d0c4a8] text-center">
+          <p className="text-[10px] text-[#5a3a1a]/40">Late Night Ricky · International DJ & Grammy Winning Producer</p>
+          <p className="text-[10px] text-[#5a3a1a]/40">Payment is due by the date specified above. Thank you for your business.</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess }: InvoiceFormProps) {
   const [loading, setLoading] = useState(false)
   const [savingTemplate, setSavingTemplate] = useState(false)
@@ -611,6 +791,25 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
         </div>
         <NotesField value={notes} onChange={setNotes} />
       </div>
+
+      {/* Live PDF Preview */}
+      <InvoicePreview
+        clientName={clientName}
+        clientCompany={clientCompany}
+        clientEmail={clientEmail}
+        projectTitle={projectTitle}
+        lineItems={items}
+        subtotal={subtotal}
+        discount={discount}
+        discountAmount={discountAmount}
+        tax={tax}
+        taxRate={taxRate}
+        vatEnabled={vatEnabled}
+        total={total}
+        paymentTermsLabel={paymentTermsLabel}
+        dueDate={dueDate}
+        notes={notes}
+      />
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row gap-3 pt-4">
