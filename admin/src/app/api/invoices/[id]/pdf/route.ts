@@ -331,7 +331,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const totalsX = width - 230;
 
     // Cream background box for totals
-    let totalsLines = 1 + (discountEnabled && discountAmount > 0 ? 1 : 0) + 1 + 1; // subtotal, discount?, vat, total
+    const totalsLines = 1 + (discountEnabled && discountAmount > 0 ? 1 : 0) + 1 + 1; // subtotal, discount?, vat, total
     const totalsBoxH = totalsLines * 20 + 16;
     page.drawRectangle({
       x: totalsX - 20, y: y - totalsBoxH + 8, width: width - totalsX + 20 - 50, height: totalsBoxH,
