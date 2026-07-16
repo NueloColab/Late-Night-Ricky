@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: meta?.title || "Late Night Ricky — International DJ & Grammy Winning Producer",
     description: meta?.description || "From London to New York / LA to Las Vegas / Miami to Ibiza and beyond. 150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.",
-    icons: favicon ? { icon: favicon, shortcut: favicon } : undefined,
+    icons: favicon ? { icon: favicon, shortcut: favicon } : { icon: '/assets/icon.png', shortcut: '/assets/icon.png' },
   };
 }
 
