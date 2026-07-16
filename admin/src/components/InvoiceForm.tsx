@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Plus, Trash2, Save, X, Heart } from 'lucide-react'
 import ServiceSelector from '@/components/ServiceSelector'
 import ClientAutocomplete from '@/components/ClientAutocomplete'
@@ -60,8 +60,31 @@ interface InvoiceFormProps {
   onSuccess: () => void
 }
 
+interface Template {
+  id: number
+  name: string
+  clientName?: string | null
+  clientEmail?: string | null
+  clientCompany?: string | null
+  projectTitle?: string | null
+  lineItems?: LineItem[]
+  notes?: string | null
+  taxRate?: number
+  vatEnabled?: boolean
+  discount?: Discount
+  paymentMethod?: string | null
+  paymentTermsType?: string | null
+  paymentTermsLabel?: string | null
+  paymentSchedule?: PaymentScheduleItem[]
+  ccEmails?: string | null
+}
+
 export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess }: InvoiceFormProps) {
   const [loading, setLoading] = useState(false)
+  const [savingTemplate, setSavingTemplate] = useState(false)
+  const [templates, setTemplates] = useState<Template[]>([])
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>('')
+
   const [clientName, setClientName] = useState(invoice?.clientName || '')
   const [clientEmail, setClientEmail] = useState(invoice?.clientEmail || '')
   const [clientCompany, setClientCompany] = useState(invoice?.clientCompany || '')
@@ -86,6 +109,77 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
   const [paymentSchedule, setPaymentSchedule] = useState<PaymentScheduleItem[]>(
     invoice?.paymentSchedule || getDefaultSchedule('net-30', 0)
   )
+
+  // Load templates on mount
+  useEffect(() => {
+    fetch('/api/invoice-templates')
+      .then(r => r.json())
+      .then(data => {
+        if (data.templates) setTemplates(data.templates)
+      })
+      .catch(() => {})
+  }, [])
+
+  function applyTemplate(templateId: string) {
+    const t = templates.find((tmpl) => String(tmpl.id) === templateId)
+    if (!t) return
+    setClientName(t.clientName || '')
+    setClientEmail(t.clientEmail || '')
+    setClientCompany(t.clientCompany || '')
+    setProjectTitle(t.projectTitle || '')
+    setCcEmails(t.ccEmails || '')
+    setNotes(t.notes || 'Thank you for doing business with Fricktion Music Ltd')
+    setItems(t.lineItems?.length ? t.lineItems : [{ serviceName: '', serviceCategory: '', price: 0, quantity: 1 }])
+    setTaxRate(t.taxRate ?? 20)
+    setVatEnabled(t.vatEnabled ?? true)
+    setDiscount(t.discount || { enabled: false, type: 'friends-family', percent: 10, amount: 0 })
+    setPaymentMethod(t.paymentMethod || 'bank-transfer')
+    if (t.paymentTermsType) {
+      setPaymentTermsType(t.paymentTermsType)
+      setPaymentTermsLabel(t.paymentTermsLabel || t.paymentTermsType)
+      setPaymentSchedule(t.paymentSchedule?.length ? t.paymentSchedule : getDefaultSchedule(t.paymentTermsType, 0))
+    }
+  }
+
+  async function saveAsTemplate() {
+    const name = prompt('Template name (e.g. "Weekly Club Booking"):')
+    if (!name?.trim()) return
+    setSavingTemplate(true)
+    try {
+      const res = await fetch('/api/invoice-templates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          clientName,
+          clientEmail,
+          clientCompany,
+          projectTitle,
+          lineItems: items,
+          notes,
+          taxRate,
+          vatEnabled,
+          discount,
+          paymentTermsType,
+          paymentTermsLabel,
+          paymentMethod,
+          paymentSchedule,
+          ccEmails,
+        }),
+      })
+      const data = await res.json()
+      if (data.template) {
+        setTemplates((prev) => [data.template, ...prev])
+        alert('Template saved!')
+      } else {
+        alert('Failed to save template')
+      }
+    } catch {
+      alert('Error saving template')
+    } finally {
+      setSavingTemplate(false)
+    }
+  }
 
   const calculateTotals = () => {
     const subtotal = items.reduce(
@@ -225,6 +319,40 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Template Selector */}
+      {!invoice?.id && (
+        <div className="bg-white border border-[#A8D5F0]/30 p-4 rounded-lg flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+          <div className="flex-1 w-full">
+            <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-1.5">
+              Load from Template
+            </label>
+            <select
+              value={selectedTemplateId}
+              onChange={(e) => {
+                setSelectedTemplateId(e.target.value)
+                if (e.target.value) applyTemplate(e.target.value)
+              }}
+              className={`${inputClass} appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%236b7280%22%20d%3D%22M2%204l4%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:12px] bg-[right_12px_center] bg-no-repeat pr-8`}
+            >
+              <option value="">No template — start fresh</option>
+              {templates.map((t) => (
+                <option key={t.id} value={String(t.id)}>
+                  {t.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <button
+            type="button"
+            onClick={saveAsTemplate}
+            disabled={savingTemplate}
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-[#152a47] border border-[#152a47] rounded-lg hover:bg-[#152a47] hover:text-white transition-colors whitespace-nowrap"
+          >
+            {savingTemplate ? 'Saving...' : 'Save as Template'}
+          </button>
+        </div>
+      )}
+
       {/* Client Information */}
       <div className="bg-white border border-[#A8D5F0]/30 p-6 rounded-lg">
         <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#0d1f3d]">

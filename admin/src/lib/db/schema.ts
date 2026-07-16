@@ -170,6 +170,27 @@ export const quotes = pgTable("quotes", {
   quoteNumber: text("quote_number"),
 });
 
+export const invoiceTemplates = pgTable("invoice_templates", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  clientName: text("client_name"),
+  clientEmail: text("client_email"),
+  clientCompany: text("client_company"),
+  projectTitle: text("project_title"),
+  lineItems: jsonb("line_items").default([]),
+  notes: text("notes"),
+  taxRate: real("tax_rate").default(20),
+  vatEnabled: boolean("vat_enabled").default(true),
+  discount: jsonb("discount").default({ enabled: false, type: 'friends-family', percent: 10, amount: 0 }),
+  paymentTermsType: text("payment_terms_type").default("net-30"),
+  paymentTermsLabel: text("payment_terms_label").default("Net 30"),
+  paymentMethod: text("payment_method").default("bank-transfer"),
+  paymentSchedule: jsonb("payment_schedule").default([]),
+  ccEmails: text("cc_emails"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow(),
+});
+
 export const invoices = pgTable("invoices", {
   id: serial("id").primaryKey(),
   projectId: integer("project_id"),

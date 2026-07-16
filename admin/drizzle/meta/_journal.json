@@ -15,6 +15,13 @@
       "when": 1783336180000,
       "tag": "0001_lnr_invoice_updates",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1783336190000,
+      "tag": "0002_invoice_templates",
+      "breakpoints": true
     }
   ]
 }

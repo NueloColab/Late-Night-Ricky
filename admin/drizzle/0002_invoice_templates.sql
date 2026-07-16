@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS invoice_templates (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  client_name TEXT,
+  client_email TEXT,
+  client_company TEXT,
+  project_title TEXT,
+  line_items JSONB DEFAULT '[]',
+  notes TEXT,
+  tax_rate REAL DEFAULT 20,
+  vat_enabled BOOLEAN DEFAULT true,
+  discount JSONB DEFAULT '{"enabled":false,"type":"friends-family","percent":10,"amount":0}',
+  payment_terms_type TEXT DEFAULT 'net-30',
+  payment_terms_label TEXT DEFAULT 'Net 30',
+  payment_method TEXT DEFAULT 'bank-transfer',
+  payment_schedule JSONB DEFAULT '[]',
+  cc_emails TEXT,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
