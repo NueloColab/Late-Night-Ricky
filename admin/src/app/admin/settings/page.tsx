@@ -10,6 +10,13 @@ interface SettingsData {
   bankAccountName?: string;
   bankSortCode?: string;
   bankAccountNumber?: string;
+  companyName?: string;
+  companyAddress?: string;
+  companyNumber?: string;
+  vatNumber?: string;
+  swiftCode?: string;
+  iban?: string;
+  defaultNotes?: string;
 }
 
 export default function SettingsPage() {
@@ -178,6 +185,83 @@ export default function SettingsPage() {
                     onChange={(e) => setSettings({ ...settings, bankAccountNumber: e.target.value })}
                     className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
                     placeholder="e.g. 23690693"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-[#6B8FAB]/20 pt-8 mt-8">
+              <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-6">Company Details for Invoices</p>
+              <p className="text-xs text-[#a0a0a0] mb-4">These appear on every invoice PDF. Pre-fills so you only edit services and amounts.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Company Name</label>
+                  <input
+                    type="text"
+                    value={settings.companyName || ''}
+                    onChange={(e) => setSettings({ ...settings, companyName: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                    placeholder="e.g. Fricktion Music Ltd"
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Company Address</label>
+                  <textarea
+                    value={settings.companyAddress || ''}
+                    onChange={(e) => setSettings({ ...settings, companyAddress: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-none"
+                    rows={3}
+                    placeholder="e.g. 123 Music Street, London, EC1A 1BB"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Company Number (UK)</label>
+                  <input
+                    type="text"
+                    value={settings.companyNumber || ''}
+                    onChange={(e) => setSettings({ ...settings, companyNumber: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                    placeholder="e.g. 12345678"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">VAT Number</label>
+                  <input
+                    type="text"
+                    value={settings.vatNumber || ''}
+                    onChange={(e) => setSettings({ ...settings, vatNumber: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                    placeholder="e.g. GB123456789"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">SWIFT / BIC Code</label>
+                  <input
+                    type="text"
+                    value={settings.swiftCode || ''}
+                    onChange={(e) => setSettings({ ...settings, swiftCode: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                    placeholder="e.g. TIDEGB22"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">IBAN</label>
+                  <input
+                    type="text"
+                    value={settings.iban || ''}
+                    onChange={(e) => setSettings({ ...settings, iban: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                    placeholder="e.g. GB29NWBK60161331926819"
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Default Invoice Notes</label>
+                  <textarea
+                    value={settings.defaultNotes || ''}
+                    onChange={(e) => setSettings({ ...settings, defaultNotes: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-none"
+                    rows={3}
+                    placeholder="e.g. Thank you for doing business with Fricktion Music Ltd"
                   />
                 </div>
               </div>

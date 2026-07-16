@@ -47,6 +47,23 @@ function formatDate(dateStr: string | Date | null | undefined) {
   }
 }
 
+function wrapText(text: string, font: any, size: number, maxWidth: number): string[] {
+  const words = text.split(' ');
+  const lines: string[] = [];
+  let line = '';
+  for (const word of words) {
+    const test = line + (line ? ' ' : '') + word;
+    if (font.widthOfTextAtSize(test, size) > maxWidth && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
     const [invoice] = await db.select().from(invoices).where(eq(invoices.id, Number(params.id)));
@@ -57,6 +74,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const bankAccountName = settings.bankAccountName || 'Late Night Ricky';
     const bankSortCode = settings.bankSortCode || '04-06-05';
     const bankAccountNumber = settings.bankAccountNumber || '23690693';
+    const companyName = settings.companyName || 'Fricktion Music Ltd';
+    const companyAddress = settings.companyAddress || '';
+    const companyNumber = settings.companyNumber || '';
+    const vatNumber = settings.vatNumber || '';
+    const swiftCode = settings.swiftCode || '';
+    const iban = settings.iban || '';
 
     const pdfDoc = await PDFDocument.create();
     const page = pdfDoc.addPage([595, 842]);
@@ -78,11 +101,11 @@ export async function GET(request: Request, { params }: { params: { id: string }
       color: DARK_BROWN,
     });
 
-    // Logo text (since we can't embed PNG easily, use text)
+    // Logo text
     page.drawText('LATE NIGHT RICKY', {
       x: 50, y: height - 55, size: 22, font: helveticaBold, color: CREAM,
     });
-    page.drawText('International DJ \u0026 Grammy Winning Producer', {
+    page.drawText('International DJ & Grammy Winning Producer', {
       x: 50, y: height - 78, size: 9, font: helveticaOblique, color: GOLD,
     });
 
@@ -99,6 +122,39 @@ export async function GET(request: Request, { params }: { params: { id: string }
     });
 
     let y = height - 155;
+
+    // ─── COMPANY DETAILS (right column, top) ───
+    const metaX = width - 220;
+    let metaY = height - 155;
+
+    if (companyName) {
+      page.drawText(companyName, {
+        x: metaX, y: metaY, size: 11, font: helveticaBold, color: BLACK,
+      });
+      metaY -= 16;
+    }
+    if (companyAddress) {
+      const addrLines = wrapText(companyAddress, helvetica, 9, 180);
+      addrLines.slice(0, 3).forEach((line) => {
+        page.drawText(line, {
+          x: metaX, y: metaY, size: 9, font: helvetica, color: GREY,
+        });
+        metaY -= 12;
+      });
+    }
+    if (companyNumber) {
+      page.drawText(`Company No: ${companyNumber}`, {
+        x: metaX, y: metaY, size: 9, font: helvetica, color: GREY,
+      });
+      metaY -= 14;
+    }
+    if (vatNumber) {
+      page.drawText(`VAT No: ${vatNumber}`, {
+        x: metaX, y: metaY, size: 9, font: helvetica, color: GREY,
+      });
+      metaY -= 14;
+    }
+    metaY -= 8;
 
     // ─── BILL TO ───
     page.drawText('BILL TO', {
@@ -122,10 +178,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       y -= 14;
     }
 
-    // ─── Invoice Meta (right column) ───
-    const metaX = width - 220;
-    let metaY = height - 155;
-
+    // ─── Invoice Meta (right column, below company) ───
     const metaItems = [
       { label: 'DATE ISSUED', value: formatDate(invoice.sentAt || new Date()) },
       { label: 'DUE DATE', value: invoice.dueDate ? formatDate(invoice.dueDate) : 'Upon receipt' },
@@ -355,12 +408,11 @@ export async function GET(request: Request, { params }: { params: { id: string }
     }
 
     // ─── Bank Details ───
-    if (y < 220) {
-      // Add a new page if we're running out of space
+    if (y < 240) {
+      // Running out of space — start a new page
       const newPage = pdfDoc.addPage([595, 842]);
-      newPage.drawRectangle({ x: 0, y: 0, width, height, color: LIGHT_CREAM });
-      y = height - 80;
-      // We'll just continue on the new page... but for simplicity let's just draw at bottom
+      newPage.drawRectangle({ x: 0, y: 0, width, height: 842, color: LIGHT_CREAM });
+      y = 780;
     }
 
     y -= 10;
@@ -384,7 +436,20 @@ export async function GET(request: Request, { params }: { params: { id: string }
     page.drawText(`Account No: ${bankAccountNumber}`, {
       x: 50, y, size: 10, font: helvetica, color: BLACK,
     });
-    y -= 20;
+    y -= 14;
+    if (swiftCode) {
+      page.drawText(`SWIFT: ${swiftCode}`, {
+        x: 50, y, size: 10, font: helvetica, color: BLACK,
+      });
+      y -= 14;
+    }
+    if (iban) {
+      page.drawText(`IBAN: ${iban}`, {
+        x: 50, y, size: 10, font: helvetica, color: BLACK,
+      });
+      y -= 14;
+    }
+    y -= 10;
 
     // ─── Notes & Terms ───
     if (invoice.notes) {
@@ -395,22 +460,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
       const notesText = String(invoice.notes);
       const maxWidth = width - 100;
-      const words = notesText.split(' ');
-      let line = '';
-      const lines: string[] = [];
-
-      for (const word of words) {
-        const test = line + (line ? ' ' : '') + word;
-        const textWidth = helvetica.widthOfTextAtSize(test, 9);
-        if (textWidth > maxWidth && line) {
-          lines.push(line);
-          line = word;
-        } else {
-          line = test;
-        }
-      }
-      if (line) lines.push(line);
-
+      const lines = wrapText(notesText, helvetica, 9, maxWidth);
       lines.slice(0, 8).forEach((l) => {
         page.drawText(l, { x: 50, y, size: 9, font: helvetica, color: GREY });
         y -= 13;

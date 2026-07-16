@@ -336,6 +336,8 @@ export async function sendInvoiceEmail(
                 <tr><td style="padding:4px 0;font-size:13px;color:#666;">Account Name:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${bankAccountName}</td></tr>
                 <tr><td style="padding:4px 0;font-size:13px;color:#666;">Sort Code:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${bankSortCode}</td></tr>
                 <tr><td style="padding:4px 0;font-size:13px;color:#666;">Account Number:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${bankAccountNumber}</td></tr>
+                ${settings.swiftCode ? `<tr><td style="padding:4px 0;font-size:13px;color:#666;">SWIFT:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${settings.swiftCode}</td></tr>` : ''}
+                ${settings.iban ? `<tr><td style="padding:4px 0;font-size:13px;color:#666;">IBAN:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${settings.iban}</td></tr>` : ''}
               </table>
             </td>
           </tr>

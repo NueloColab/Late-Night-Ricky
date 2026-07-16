@@ -5,6 +5,17 @@ import { db } from '@/lib/db';
 import { invoices } from '@/lib/db/schema';
 import { count, eq } from 'drizzle-orm';
 
+function cleanBody(body: any) {
+  // Strip undefined/null values to avoid DB type mismatches
+  const cleaned: any = {};
+  for (const [key, value] of Object.entries(body)) {
+    if (value !== undefined && value !== null) {
+      cleaned[key] = value;
+    }
+  }
+  return cleaned;
+}
+
 export async function GET() {
   try {
     const all = await db.select().from(invoices).orderBy(invoices.invoiceNumber);
@@ -25,11 +36,12 @@ export async function POST(request: Request) {
       const nextNum = (countRow?.count || 0) + 1;
       invoiceNumber = `INV-${String(nextNum).padStart(4, '0')}`;
     }
-    const inserted = await db.insert(invoices).values({ ...body, invoiceNumber }).returning();
+    const cleaned = cleanBody(body);
+    const inserted = await db.insert(invoices).values({ ...cleaned, invoiceNumber }).returning();
     return NextResponse.json({ invoice: inserted[0] });
   } catch (err) {
     console.error('Invoices POST error:', err);
-    return NextResponse.json({ error: 'Insert failed' }, { status: 500 });
+    return NextResponse.json({ error: 'Insert failed', details: String(err) }, { status: 500 });
   }
 }
 
@@ -52,11 +64,12 @@ export async function PUT(request: Request) {
       updateData.paidAt = null;
     }
     
-    await db.update(invoices).set(updateData).where(eq(invoices.id, id));
+    const cleaned = cleanBody(updateData);
+    await db.update(invoices).set(cleaned).where(eq(invoices.id, id));
     const [row] = await db.select().from(invoices).where(eq(invoices.id, id));
     return NextResponse.json({ invoice: row });
   } catch (err) {
     console.error('Invoices PUT error:', err);
-    return NextResponse.json({ error: 'Update failed' }, { status: 500 });
+    return NextResponse.json({ error: 'Update failed', details: String(err) }, { status: 500 });
   }
 }

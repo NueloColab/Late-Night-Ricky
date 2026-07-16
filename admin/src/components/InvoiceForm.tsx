@@ -68,7 +68,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
   const [projectTitle, setProjectTitle] = useState(invoice?.projectTitle || '')
   const [ccEmails, setCcEmails] = useState(invoice?.ccEmails || '')
   const [projectId, setProjectId] = useState<number | null>(invoice?.projectId ?? null)
-  const [notes, setNotes] = useState(invoice?.notes || '')
+  const [notes, setNotes] = useState(invoice?.notes || 'Thank you for doing business with Fricktion Music Ltd')
   const [dueDate, setDueDate] = useState(invoice?.dueDate || '')
   const [items, setItems] = useState<LineItem[]>(
     invoice?.lineItems?.length
@@ -166,25 +166,23 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
     setLoading(true)
     const { subtotal, discountAmount, tax, total } = calculateTotals()
 
-    const body = {
+    const body: any = {
       clientName,
       clientEmail,
       clientCompany,
-      ccEmails,
       projectTitle,
       projectId: projectId || undefined,
       notes,
-      dueDate: dueDate || undefined,
       lineItems: items.map((item) => ({
         ...item,
         amount: (Number(item.price) || 0) * (Number(item.quantity) || 1),
       })),
-      subtotal,
-      taxRate,
+      subtotal: Number(subtotal.toFixed(2)),
+      taxRate: Number(taxRate),
       vatEnabled,
-      discount: { ...discount, amount: discountAmount },
-      tax,
-      total,
+      discount: { ...discount, amount: Number(discountAmount.toFixed(2)) },
+      tax: Number(tax.toFixed(2)),
+      total: Number(total.toFixed(2)),
       paymentTerms: paymentTermsType,
       paymentTermsType,
       paymentTermsLabel,
@@ -194,6 +192,8 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
         amount: +((total * item.percent) / 100).toFixed(2),
       })),
     }
+    if (dueDate) body.dueDate = dueDate
+    if (ccEmails?.trim()) body.ccEmails = ccEmails.trim()
 
     try {
       const url = invoice?.id ? `/api/invoices` : '/api/invoices'
