@@ -46,6 +46,12 @@ function formatDate(dateStr: string | Date | null | undefined) {
   }
 }
 
+function sanitizePdfText(text: string | null | undefined): string {
+  if (!text) return '';
+  // WinAnni (Helvetica) cannot encode newlines, tabs, or control characters
+  return String(text).replace(/[\r\n\t]/g, ' ').replace(/[^\x20-\xFF]/g, '');
+}
+
 function wrapText(text: string, font: any, size: number, maxWidth: number): string[] {
   const words = text.split(' ');
   const lines: string[] = [];
@@ -68,17 +74,28 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const [invoice] = await db.select().from(invoices).where(eq(invoices.id, Number(params.id)));
     if (!invoice) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
+    // Sanitize all text fields — WinAnni fonts (Helvetica) cannot encode newlines or control chars
+    const s = sanitizePdfText;
+    invoice.clientName = s(invoice.clientName);
+    invoice.clientEmail = s(invoice.clientEmail);
+    invoice.clientCompany = s(invoice.clientCompany);
+    invoice.projectTitle = s(invoice.projectTitle);
+    invoice.invoiceNumber = s(invoice.invoiceNumber);
+    invoice.notes = s(invoice.notes);
+    invoice.paymentTermsLabel = s(invoice.paymentTermsLabel);
+    invoice.dueDate = s(invoice.dueDate);
+
     const settings = await getSettings();
-    const bankName = settings.bankName || 'Tide';
-    const bankAccountName = settings.bankAccountName || 'Late Night Ricky';
-    const bankSortCode = settings.bankSortCode || '04-06-05';
-    const bankAccountNumber = settings.bankAccountNumber || '23690693';
-    const companyName = settings.companyName || 'Fricktion Music Ltd';
-    const companyAddress = settings.companyAddress || '';
-    const companyNumber = settings.companyNumber || '';
-    const vatNumber = settings.vatNumber || '';
-    const swiftCode = settings.swiftCode || '';
-    const iban = settings.iban || '';
+    const bankName = s(settings.bankName) || 'Tide';
+    const bankAccountName = s(settings.bankAccountName) || 'Late Night Ricky';
+    const bankSortCode = s(settings.bankSortCode) || '04-06-05';
+    const bankAccountNumber = s(settings.bankAccountNumber) || '23690693';
+    const companyName = s(settings.companyName) || 'Fricktion Music Ltd';
+    const companyAddress = s(settings.companyAddress) || '';
+    const companyNumber = s(settings.companyNumber) || '';
+    const vatNumber = s(settings.vatNumber) || '';
+    const swiftCode = s(settings.swiftCode) || '';
+    const iban = s(settings.iban) || '';
 
     const pdfDoc = await PDFDocument.create();
     let page = pdfDoc.addPage([595, 842]);
