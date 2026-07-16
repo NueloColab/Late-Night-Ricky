@@ -10,14 +10,18 @@ export const dynamic = 'force-dynamic'
 
 async function fetchPdfBuffer(url: string): Promise<Buffer | undefined> {
   try {
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-    const res = await fetch(`${siteUrl}${url}`)
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://late-night-ricky.vercel.app'
+    const fullUrl = `${siteUrl}${url}`
+    console.log('📄 Fetching PDF from:', fullUrl)
+    const res = await fetch(fullUrl)
     if (!res.ok) {
       console.warn(`⚠️ PDF fetch failed: ${res.status} ${res.statusText}`)
       return undefined
     }
     const arrayBuffer = await res.arrayBuffer()
-    return Buffer.from(arrayBuffer)
+    const buffer = Buffer.from(arrayBuffer)
+    console.log('📄 PDF fetched:', buffer.length, 'bytes')
+    return buffer
   } catch (err) {
     console.warn('⚠️ PDF fetch error:', err)
     return undefined

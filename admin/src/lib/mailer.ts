@@ -43,6 +43,20 @@ function formatCurrency(amount: number | null | undefined) {
   return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount || 0)
 }
 
+async function getSettings() {
+  try {
+    const { siteSections } = await import('@/lib/db/schema')
+    const { eq, and } = await import('drizzle-orm')
+    const rows = await db.select().from(siteSections).where(and(eq(siteSections.page, 'global'), eq(siteSections.section, 'settings'))).limit(1)
+    if (rows.length > 0 && rows[0].content) {
+      return typeof rows[0].content === 'string' ? JSON.parse(rows[0].content) : rows[0].content
+    }
+  } catch {
+    // ignore
+  }
+  return {}
+}
+
 async function sendEmailWithFallback(
   mailOptions: nodemailer.SendMailOptions & { cc?: string | string[] }
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
@@ -289,29 +303,39 @@ export async function sendInvoiceEmail(
       ? `${SITE_URL}/pay/${invoice.paymentToken}`
       : undefined
 
-    // Get bank details from settings
-    const { siteSections } = await import('@/lib/db/schema');
-    const { eq, and } = await import('drizzle-orm');
-    const settingsRows = await db
-      .select()
-      .from(siteSections)
-      .where(and(eq(siteSections.page, 'global'), eq(siteSections.section, 'settings')))
-      .limit(1);
-    const settings = settingsRows.length > 0 && settingsRows[0].content
-      ? (typeof settingsRows[0].content === 'string' ? JSON.parse(settingsRows[0].content) : settingsRows[0].content)
-      : {};
+    // Get all settings
+    const settings = await getSettings()
 
-    const bankName = settings.bankName || 'Tide';
-    const bankAccountName = settings.bankAccountName || 'Late Night Ricky';
-    const bankSortCode = settings.bankSortCode || '04-06-05';
-    const bankAccountNumber = settings.bankAccountNumber || '23690693';
+    const bankName = settings.bankName || 'Tide'
+    const bankAccountName = settings.bankAccountName || 'Late Night Ricky'
+    const bankSortCode = settings.bankSortCode || '04-06-05'
+    const bankAccountNumber = settings.bankAccountNumber || '23690693'
+    const swiftCode = settings.swiftCode || ''
+    const iban = settings.iban || ''
+    const companyName = settings.companyName || 'Fricktion Music Ltd'
+    const companyAddress = settings.companyAddress || ''
+    const companyNumber = settings.companyNumber || ''
+    const vatNumber = settings.vatNumber || ''
 
     const content = `
       <div style="padding:40px 40px 45px;background-color:#ffffff;" class="mobile-padding">
-        <h2 style="margin:0 0 12px 0;color:#000;font-size:26px;font-weight:300;">Invoice from Late Night Ricky</h2>
+        <h2 style="margin:0 0 12px 0;color:#000;font-size:26px;font-weight:300;">Invoice from ${companyName}</h2>
         <div style="width:70px;height:2px;background-color:#2a1a0a;margin:0 0 35px 0;"></div>
         <p style="margin:0 0 25px 0;color:#666;font-size:15px;line-height:1.8;" class="mobile-text">Dear ${invoice.clientName || 'Valued Client'},</p>
         <p style="margin:0 0 25px 0;color:#666;font-size:15px;line-height:1.8;" class="mobile-text">Please find attached your invoice for the project <strong style="color:#000;">${invoice.projectTitle || '—'}</strong>.</p>
+
+        ${companyAddress || companyNumber || vatNumber ? `
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f8f8f8;border:1px solid #e5e5e5;margin:0 0 20px 0;">
+          <tr>
+            <td style="padding:15px 20px;" class="mobile-padding">
+              <p style="margin:0 0 8px 0;color:#5a3a1a;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;">${companyName}</p>
+              ${companyAddress ? `<p style="margin:0;color:#666;font-size:12px;line-height:1.6;">${companyAddress.replace(/\n/g, '<br/>')}</p>` : ''}
+              ${companyNumber ? `<p style="margin:4px 0 0 0;color:#999;font-size:11px;">Company No: ${companyNumber}</p>` : ''}
+              ${vatNumber ? `<p style="margin:2px 0 0 0;color:#999;font-size:11px;">VAT No: ${vatNumber}</p>` : ''}
+            </td>
+          </tr>
+        </table>` : ''}
+
         <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#fafafa;border-left:4px solid #2a1a0a;margin:0 0 30px 0;">
           <tr>
             <td style="padding:25px;" class="mobile-padding">
@@ -336,8 +360,8 @@ export async function sendInvoiceEmail(
                 <tr><td style="padding:4px 0;font-size:13px;color:#666;">Account Name:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${bankAccountName}</td></tr>
                 <tr><td style="padding:4px 0;font-size:13px;color:#666;">Sort Code:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${bankSortCode}</td></tr>
                 <tr><td style="padding:4px 0;font-size:13px;color:#666;">Account Number:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${bankAccountNumber}</td></tr>
-                ${settings.swiftCode ? `<tr><td style="padding:4px 0;font-size:13px;color:#666;">SWIFT:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${settings.swiftCode}</td></tr>` : ''}
-                ${settings.iban ? `<tr><td style="padding:4px 0;font-size:13px;color:#666;">IBAN:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${settings.iban}</td></tr>` : ''}
+                ${swiftCode ? `<tr><td style="padding:4px 0;font-size:13px;color:#666;">SWIFT:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${swiftCode}</td></tr>` : ''}
+                ${iban ? `<tr><td style="padding:4px 0;font-size:13px;color:#666;">IBAN:</td><td style="padding:4px 0;font-size:13px;font-weight:600;color:#000;">${iban}</td></tr>` : ''}
               </table>
             </td>
           </tr>
@@ -354,7 +378,7 @@ export async function sendInvoiceEmail(
         </table>` : ''}
         <p style="margin:0 0 25px 0;color:#666;font-size:14px;line-height:1.8;text-align:center;background-color:#f9f9f9;padding:18px;border:1px solid #e5e5e5;" class="mobile-text">The full invoice with payment details is attached as a PDF.</p>
         <p style="margin:0 0 25px 0;color:#666;font-size:14px;line-height:1.8;" class="mobile-text">If you have any questions regarding this invoice, please reply to this email or contact us.</p>
-        <p style="margin:0;color:#666;font-size:15px;line-height:1.7;" class="mobile-text">Kind regards,<br/><strong style="color:#000;">The Late Night Ricky Team</strong></p>
+        <p style="margin:0;color:#666;font-size:15px;line-height:1.7;" class="mobile-text">Kind regards,<br/><strong style="color:#000;">The ${companyName} Team</strong></p>
       </div>`
 
     const attachments: any[] = []
@@ -364,6 +388,7 @@ export async function sendInvoiceEmail(
         content: pdfBuffer,
         contentType: 'application/pdf',
       })
+      console.log('📎 PDF attached:', pdfBuffer.length, 'bytes')
     } else {
       console.warn('⚠️ No PDF buffer provided — sending email without attachment')
     }
@@ -377,7 +402,7 @@ export async function sendInvoiceEmail(
       to: recipientEmail,
       replyTo: REPLY_TO_ADDRESS,
       ...(cc && cc.length > 0 ? { cc } : {}),
-      subject: `Invoice from Late Night Ricky - ${invoice.invoiceNumber}`,
+      subject: `Invoice from ${companyName} - ${invoice.invoiceNumber}`,
       html: getEmailTemplate(content),
       attachments,
     })

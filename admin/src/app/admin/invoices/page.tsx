@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Plus, Search, Filter, Receipt, Send, CheckCircle, Clock, Trash2, Eye, Download, RotateCcw, DollarSign, Loader2 } from 'lucide-react'
+import { Plus, Search, Filter, Receipt, Send, CheckCircle, Clock, Trash2, Eye, Download, RotateCcw, DollarSign, Loader2, Pencil } from 'lucide-react'
 import Modal from '@/components/Modal'
 import InvoiceForm from '@/components/InvoiceForm'
 
@@ -345,6 +345,16 @@ export default function InvoicesPage() {
                           >
                             <Eye size={16} />
                           </button>
+                          <button
+                            onClick={() => {
+                              setSelectedInvoice(inv)
+                              setIsModalOpen(true)
+                            }}
+                            className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C]"
+                            title="Edit Invoice"
+                          >
+                            <Pencil size={16} />
+                          </button>
                           {inv.status === 'draft' && (
                             <button
                               onClick={() => sendInvoice(inv.id)}
@@ -510,6 +520,17 @@ export default function InvoicesPage() {
             <div className="border-t border-[#6B8FAB]/30 pt-4">
               <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-3">Actions</p>
               <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => {
+                    setIsViewOpen(false)
+                    setSelectedInvoice(selectedInvoice)
+                    setIsModalOpen(true)
+                  }}
+                  className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
+                >
+                  <Pencil size={14} />
+                  Edit Invoice
+                </button>
                 {selectedInvoice.status === 'draft' && (
                   <button
                     onClick={() => sendInvoice(selectedInvoice.id)}
