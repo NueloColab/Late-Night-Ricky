@@ -177,6 +177,25 @@ export default function InvoicesPage() {
     fetchInvoices()
   }
 
+  async function downloadPdf(id: number, invoiceNumber: string) {
+    try {
+      const res = await fetch(`/api/invoices/${id}/pdf`)
+      if (!res.ok) throw new Error('Failed to fetch PDF')
+      const blob = await res.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `LNR-Invoice-${invoiceNumber}.pdf`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      window.URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error('Download failed:', err)
+      alert('Failed to download PDF')
+    }
+  }
+
   function openView(invoice: Invoice) {
     setSelectedInvoice(invoice)
     setIsViewOpen(true)
@@ -364,13 +383,13 @@ export default function InvoicesPage() {
                               {sendingId === inv.id ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                             </button>
                           )}
-                          <a
-                            href={`/api/invoices/${inv.id}/pdf`}
-                            download
-                            className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C] inline-flex"
+                          <button
+                            onClick={() => downloadPdf(inv.id, inv.invoiceNumber)}
+                            className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C]"
+                            title="Download PDF"
                           >
                             <Download size={16} />
-                          </a>
+                          </button>
                           <button
                             onClick={() => deleteInvoice(inv.id)}
                             className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-red-500"
@@ -586,14 +605,13 @@ export default function InvoicesPage() {
                     </button>
                   </>
                 )}
-                <a
-                  href={`/api/invoices/${selectedInvoice.id}/pdf`}
-                  download
+                <button
+                  onClick={() => downloadPdf(selectedInvoice.id, selectedInvoice.invoiceNumber)}
                   className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition"
                 >
                   <Download size={14} />
                   Download PDF
-                </a>
+                </button>
               </div>
             </div>
           </div>
