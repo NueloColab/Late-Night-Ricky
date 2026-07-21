@@ -48,7 +48,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
   }
 }
 
-export async function DELETE(request: Request, { params }: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   try {
     await db.delete(quotes).where(eq(quotes.id, Number(params.id)));
     return NextResponse.json({ success: true });

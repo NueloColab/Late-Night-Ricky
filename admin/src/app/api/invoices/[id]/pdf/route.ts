@@ -127,7 +127,9 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // Embed logo
     const logoBytes = await getLogoBytes();
     let logoImage: any = null;
-    let logoDims = { width: 0, height: 0 };
+    const logoDims = { width: 0, height: 0 };
+    let logoW = 0;
+    let logoH = 0;
     if (logoBytes) {
       try {
         logoImage = await pdfDoc.embedPng(logoBytes);
@@ -135,11 +137,11 @@ export async function GET(request: Request, { params }: { params: { id: string }
         const logoMaxW = 180;
         const logoMaxH = 32;
         if (logoAspect > logoMaxW / logoMaxH) {
-          logoDims.width = logoMaxW;
-          logoDims.height = logoMaxW / logoAspect;
+          logoW = logoMaxW;
+          logoH = logoMaxW / logoAspect;
         } else {
-          logoDims.height = logoMaxH;
-          logoDims.width = logoMaxH * logoAspect;
+          logoH = logoMaxH;
+          logoW = logoMaxH * logoAspect;
         }
       } catch {
         logoImage = null;
@@ -162,8 +164,8 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // Logo (left) or text fallback
     if (logoImage) {
       page.drawImage(logoImage, {
-        x: 50, y: y - logoDims.height + 8,
-        width: logoDims.width, height: logoDims.height,
+        x: 50, y: y - logoH + 8,
+        width: logoW, height: logoH,
       });
     } else {
       page.drawText('LATE NIGHT RICKY', {
