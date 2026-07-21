@@ -173,11 +173,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
       thickness: 1.5, color: BRAND_GOLD,
     });
 
-    y = pageH - headerH - 25;
+    y = pageH - headerH - 35;
 
     // ─── TWO-COLUMN: Quote To (left) + Project (right) with bordered boxes ───
-    const boxH = 72;
-    const boxW = (width - 110) / 2;
+    const boxH = 80;
+    const boxGap = 20;
+    const boxW = (width - 50 - 50 - boxGap) / 2;
 
     // Left box: QUOTE TO
     page.drawRectangle({
@@ -189,24 +190,24 @@ export async function GET(request: Request, { params }: { params: { id: string }
       borderColor: LIGHT_GREY, borderWidth: 0.5,
     });
     page.drawText('QUOTE TO', {
-      x: 65, y: y - 14, size: 7, font: helveticaBold, color: MED_GREY,
+      x: 65, y: y - 18, size: 7, font: helveticaBold, color: MED_GREY,
     });
     page.drawText(quote.clientName || 'Client', {
-      x: 65, y: y - 28, size: 11, font: helveticaBold, color: BLACK,
+      x: 65, y: y - 34, size: 11, font: helveticaBold, color: BLACK,
     });
     if (quote.clientCompany) {
       page.drawText(quote.clientCompany, {
-        x: 65, y: y - 40, size: 9, font: helvetica, color: DARK_GREY,
+        x: 65, y: y - 48, size: 9, font: helvetica, color: DARK_GREY,
       });
     }
     if (quote.clientEmail) {
       page.drawText(quote.clientEmail, {
-        x: 65, y: y - 52, size: 8, font: helvetica, color: MED_GREY,
+        x: 65, y: y - 62, size: 8, font: helvetica, color: MED_GREY,
       });
     }
 
     // Right box: PROJECT
-    const rightBoxX = 50 + boxW + 10;
+    const rightBoxX = 50 + boxW + boxGap;
     page.drawRectangle({
       x: rightBoxX, y: y - boxH, width: boxW, height: boxH,
       color: VERY_LIGHT_GREY,
@@ -216,20 +217,20 @@ export async function GET(request: Request, { params }: { params: { id: string }
       borderColor: LIGHT_GREY, borderWidth: 0.5,
     });
     page.drawText('PROJECT', {
-      x: rightBoxX + 15, y: y - 14, size: 7, font: helveticaBold, color: MED_GREY,
+      x: rightBoxX + 15, y: y - 18, size: 7, font: helveticaBold, color: MED_GREY,
     });
     page.drawText(quote.projectTitle || '—', {
-      x: rightBoxX + 15, y: y - 28, size: 11, font: helveticaBold, color: BLACK,
+      x: rightBoxX + 15, y: y - 34, size: 11, font: helveticaBold, color: BLACK,
     });
     const itemCount = Array.isArray(quote.lineItems) ? quote.lineItems.length : 0;
     page.drawText(`${itemCount} service${itemCount !== 1 ? 's' : ''} included`, {
-      x: rightBoxX + 15, y: y - 42, size: 9, font: helvetica, color: DARK_GREY,
+      x: rightBoxX + 15, y: y - 48, size: 9, font: helvetica, color: DARK_GREY,
     });
 
-    y -= (boxH + 18);
+    y -= (boxH + 28);
 
     // ─── META ROW ───
-    const metaH = 40;
+    const metaH = 48;
     page.drawRectangle({
       x: 50, y: y - metaH, width: width - 100, height: metaH,
       color: VERY_LIGHT_GREY,
@@ -252,14 +253,14 @@ export async function GET(request: Request, { params }: { params: { id: string }
       const labelW = helveticaBold.widthOfTextAtSize(item.label, 7);
       const valueW = helveticaBold.widthOfTextAtSize(item.value, 9);
       page.drawText(item.label, {
-        x: cx - (labelW / 2), y: y - 13, size: 7, font: helveticaBold, color: MED_GREY,
+        x: cx - (labelW / 2), y: y - 15, size: 7, font: helveticaBold, color: MED_GREY,
       });
       page.drawText(item.value, {
-        x: cx - (valueW / 2), y: y - 28, size: 9, font: helveticaBold, color: BLACK,
+        x: cx - (valueW / 2), y: y - 32, size: 9, font: helveticaBold, color: BLACK,
       });
     });
 
-    y -= (metaH + 18);
+    y -= (metaH + 24);
 
     // ─── LINE ITEMS TABLE ───
     const lineItemsRaw = quote.lineItems || '[]';
