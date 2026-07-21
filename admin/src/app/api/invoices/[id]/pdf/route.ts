@@ -562,15 +562,15 @@ export async function GET(request: Request, { params }: { params: { id: string }
         y = 842 - 80;
       }
       page.drawText('NOTES & TERMS', {
-        x: 50, y, size: 7, font: helveticaBold, color: BRAND_GOLD,
+        x: 68, y, size: 7, font: helveticaBold, color: BRAND_GOLD,
       });
       y -= 16;
 
       const notesText = String(invoice.notes);
-      const notesMaxWidth = width - 120;  // generous margins
+      const notesMaxWidth = width - 140;  // generous margins past gold strip
       const lines = wrapText(notesText, helvetica, 9, notesMaxWidth);
       lines.slice(0, 8).forEach((l) => {
-        page.drawText(l, { x: 60, y, size: 9, font: helvetica, color: WARM_GREY });
+        page.drawText(l, { x: 68, y, size: 9, font: helvetica, color: WARM_GREY });
         y -= 14;
       });
     }
