@@ -271,16 +271,16 @@ export async function GET(request: Request, { params }: { params: { id: string }
     if (lineItems.length > 0) {
       // Table header - dark brown bar with cream text (2 columns: Description + Amount)
       page.drawRectangle({
-        x: 50, y: y - 24, width: width - 100, height: 28,
+        x: 50, y: y - 26, width: width - 100, height: 32,
         color: BRAND_BROWN,
       });
       page.drawText('SERVICE DESCRIPTION', {
-        x: 60, y: y - 16, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
+        x: 65, y: y - 16, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
       });
       page.drawText('AMOUNT', {
         x: width - 110, y: y - 16, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
       });
-      y -= 34;
+      y -= 40;
 
       lineItems.forEach((item: any, idx: number) => {
         if (y < 120) {
@@ -296,36 +296,36 @@ export async function GET(request: Request, { params }: { params: { id: string }
         // Alternating warm cream row
         if (idx % 2 === 1) {
           page.drawRectangle({
-            x: 50, y: y - 14, width: width - 100, height: 28,
+            x: 50, y: y - 18, width: width - 100, height: 34,
             color: VERY_LIGHT_GREY,
           });
         }
 
         // Bottom border for each row
         page.drawLine({
-          start: { x: 50, y: y - 16 },
-          end: { x: width - 50, y: y - 16 },
+          start: { x: 50, y: y - 20 },
+          end: { x: width - 50, y: y - 20 },
           thickness: 0.5, color: LIGHT_GREY,
         });
 
         page.drawText(desc, {
-          x: 60, y: y + 2, size: 10.5, font: helveticaBold, color: BLACK,
+          x: 65, y: y, size: 10.5, font: helveticaBold, color: BLACK,
         });
         if (category) {
           page.drawText(String(category).substring(0, 30), {
-            x: 60, y: y - 10, size: 8, font: helvetica, color: BRAND_GOLD,
+            x: 65, y: y - 13, size: 8, font: helvetica, color: BRAND_GOLD,
           });
         }
 
         const amtStr = formatCurrency(amount);
         const amtW = helveticaBold.widthOfTextAtSize(amtStr, 11);
         page.drawText(amtStr, {
-          x: width - 60 - amtW, y: y + 2, size: 11, font: helveticaBold, color: BLACK,
+          x: width - 60 - amtW, y: y, size: 11, font: helveticaBold, color: BLACK,
         });
-        y -= category ? 32 : 24;
+        y -= category ? 38 : 28;
       });
 
-      y -= 10;
+      y -= 16;
     }
 
     // ─── TOTALS ───
