@@ -5,6 +5,21 @@ import { db } from '@/lib/db';
 import { quotes } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 
+// Known columns from the quotes schema to filter unknown keys
+const knownQuoteColumns = new Set(Object.keys(quotes));
+
+function cleanBody(body: any) {
+  const cleaned: any = {};
+  for (const [key, value] of Object.entries(body)) {
+    if (value !== undefined && value !== null && knownQuoteColumns.has(key)) {
+      cleaned[key] = value;
+    } else if (value === null && knownQuoteColumns.has(key)) {
+      cleaned[key] = null;
+    }
+  }
+  return cleaned;
+}
+
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
     const [row] = await db.select().from(quotes).where(eq(quotes.id, Number(params.id)));
@@ -23,7 +38,8 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     if (body.status === 'sent' && !body.sentAt) {
       body.sentAt = new Date();
     }
-    await db.update(quotes).set(body).where(eq(quotes.id, Number(params.id)));
+    const cleaned = cleanBody(body);
+    await db.update(quotes).set(cleaned).where(eq(quotes.id, Number(params.id)));
     const [row] = await db.select().from(quotes).where(eq(quotes.id, Number(params.id)));
     return NextResponse.json({ quote: row });
   } catch (err) {
@@ -32,7 +48,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { id: string } }) {
   try {
     await db.delete(quotes).where(eq(quotes.id, Number(params.id)));
     return NextResponse.json({ success: true });

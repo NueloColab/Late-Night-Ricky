@@ -39,6 +39,18 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     if ('paidAt' in body) {
       body.paidAt = body.paidAt ? new Date(body.paidAt) : null;
     }
+    // Auto-set sentAt when status changes to sent
+    if (body.status === 'sent' && !body.sentAt) {
+      body.sentAt = new Date();
+    }
+    // Auto-set paidAt when status changes to paid
+    if (body.status === 'paid' && !body.paidAt) {
+      body.paidAt = new Date();
+    }
+    // Clear paidAt when status is not paid
+    if (body.status && body.status !== 'paid') {
+      body.paidAt = null;
+    }
     const cleaned = cleanBody(body);
     await db.update(invoices).set(cleaned).where(eq(invoices.id, Number(params.id)));
     const [row] = await db.select().from(invoices).where(eq(invoices.id, Number(params.id)));
