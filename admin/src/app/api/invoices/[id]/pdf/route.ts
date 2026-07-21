@@ -362,31 +362,39 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const discountPercent = discount?.percent || 0;
     const discountAmount = discountEnabled ? (subtotal * discountPercent) / 100 : 0;
 
-    const totalsX = 300;
+    // Right-align values at this x position (right margin with padding)
+    const rightAlign = width - 60;
 
-    // Warm cream totals background - wider to prevent overflow
+    // Warm cream totals background - spans most of the page width
+    const totalsX = 280;
+    const totalsW = width - 50 - totalsX; // right edge at width-50
     const totalsLines = 1 + (discountEnabled && discountAmount > 0 ? 1 : 0) + 1 + 1;
-    const totalsBoxH = totalsLines * 22 + 16;
+    const totalsBoxH = totalsLines * 22 + 20;
     page.drawRectangle({
-      x: totalsX - 15, y: y - totalsBoxH + 8, width: width - totalsX + 15 - 50, height: totalsBoxH,
+      x: totalsX, y: y - totalsBoxH + 10, width: totalsW, height: totalsBoxH,
       color: VERY_LIGHT_GREY,
     });
 
     page.drawText('Subtotal', {
-      x: totalsX, y, size: 9, font: helvetica, color: WARM_GREY,
+      x: totalsX + 12, y, size: 9, font: helvetica, color: WARM_GREY,
     });
-    page.drawText(formatCurrency(subtotal), {
-      x: width - 60, y, size: 9, font: helvetica, color: BRAND_BROWN,
+    // Right-align the value
+    const subtotalStr = formatCurrency(subtotal);
+    const subtotalW = helvetica.widthOfTextAtSize(subtotalStr, 9);
+    page.drawText(subtotalStr, {
+      x: rightAlign - subtotalW, y, size: 9, font: helvetica, color: BRAND_BROWN,
     });
     y -= 22;
 
     if (discountEnabled && discountAmount > 0) {
       const discountLabel = `${discountPercent}% Discount`;
       page.drawText(discountLabel, {
-        x: totalsX, y, size: 9, font: helvetica, color: WARM_GREY,
+        x: totalsX + 12, y, size: 9, font: helvetica, color: WARM_GREY,
       });
-      page.drawText(`-${formatCurrency(discountAmount)}`, {
-        x: width - 60, y, size: 9, font: helvetica, color: rgb(0.6, 0.2, 0.2),
+      const discountStr = `-${formatCurrency(discountAmount)}`;
+      const discountW = helvetica.widthOfTextAtSize(discountStr, 9);
+      page.drawText(discountStr, {
+        x: rightAlign - discountW, y, size: 9, font: helvetica, color: rgb(0.6, 0.2, 0.2),
       });
       y -= 22;
     }
@@ -395,34 +403,38 @@ export async function GET(request: Request, { params }: { params: { id: string }
       const tax = Number(invoice.taxRate || 0);
       const taxAmount = (subtotal - discountAmount) * (tax / 100);
       page.drawText(`VAT (${tax}%)`, {
-        x: totalsX, y, size: 9, font: helvetica, color: WARM_GREY,
+        x: totalsX + 12, y, size: 9, font: helvetica, color: WARM_GREY,
       });
-      page.drawText(formatCurrency(taxAmount), {
-        x: width - 60, y, size: 9, font: helvetica, color: BRAND_BROWN,
+      const vatStr = formatCurrency(taxAmount);
+      const vatW = helvetica.widthOfTextAtSize(vatStr, 9);
+      page.drawText(vatStr, {
+        x: rightAlign - vatW, y, size: 9, font: helvetica, color: BRAND_BROWN,
       });
     } else {
       page.drawText('VAT', {
-        x: totalsX, y, size: 9, font: helvetica, color: WARM_GREY,
+        x: totalsX + 12, y, size: 9, font: helvetica, color: WARM_GREY,
       });
       page.drawText('N/A', {
-        x: width - 60, y, size: 9, font: helvetica, color: WARM_GREY,
+        x: rightAlign - helvetica.widthOfTextAtSize('N/A', 9), y, size: 9, font: helvetica, color: WARM_GREY,
       });
     }
     y -= 22;
 
     // Separator
     page.drawLine({
-      start: { x: totalsX, y: y + 6 },
+      start: { x: totalsX + 12, y: y + 6 },
       end: { x: width - 50, y: y + 6 },
       thickness: 1, color: BRAND_BROWN,
     });
 
-    // TOTAL
+    // TOTAL - right-aligned
     page.drawText('TOTAL', {
-      x: totalsX, y: y - 8, size: 13, font: helveticaBold, color: BRAND_BROWN,
+      x: totalsX + 12, y: y - 8, size: 13, font: helveticaBold, color: BRAND_BROWN,
     });
-    page.drawText(formatCurrency(total), {
-      x: width - 60, y: y - 8, size: 13, font: helveticaBold, color: BRAND_BROWN,
+    const totalStr = formatCurrency(total);
+    const totalW = helveticaBold.widthOfTextAtSize(totalStr, 13);
+    page.drawText(totalStr, {
+      x: rightAlign - totalW, y: y - 8, size: 13, font: helveticaBold, color: BRAND_BROWN,
     });
     y -= 45;
 
@@ -471,16 +483,17 @@ export async function GET(request: Request, { params }: { params: { id: string }
           });
         }
         page.drawText(String(item.label || 'Payment'), {
-          x: 60, y: y, size: 9.5, font: helvetica, color: BLACK,
+          x: 60, y: y, size: 9.5, font: helvetica, color: BRAND_BROWN,
         });
         page.drawText(`${item.percent || 0}%`, {
-          x: 260, y: y, size: 9.5, font: helvetica, color: BLACK,
+          x: 260, y: y, size: 9.5, font: helvetica, color: BRAND_BROWN,
         });
         page.drawText(String(item.due || '—'), {
-          x: 320, y: y, size: 9.5, font: helvetica, color: BLACK,
+          x: 320, y: y, size: 9.5, font: helvetica, color: BRAND_BROWN,
         });
-        page.drawText(formatCurrency((total * (item.percent || 0)) / 100), {
-          x: 470, y: y, size: 9.5, font: helveticaBold, color: BLACK,
+        const schedAmtStr = formatCurrency((total * (item.percent || 0)) / 100);
+        page.drawText(schedAmtStr, {
+          x: 490 - helveticaBold.widthOfTextAtSize(schedAmtStr, 9.5), y: y, size: 9.5, font: helveticaBold, color: BRAND_BROWN,
         });
         y -= 26;
       });
