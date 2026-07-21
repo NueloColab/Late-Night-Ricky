@@ -556,7 +556,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     // ─── NOTES & TERMS ───
     if (invoice.notes) {
-      if (y < 140) {
+      if (y < 160) {
         page = pdfDoc.addPage([595, 842]);
         page.drawRectangle({ x: 0, y: 0, width, height: 842, color: WHITE });
         y = 842 - 80;
@@ -567,13 +567,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
       y -= 16;
 
       const notesText = String(invoice.notes);
-      const maxWidth = width - 100;
-      const lines = wrapText(notesText, helvetica, 9, maxWidth);
+      const notesMaxWidth = width - 120;  // generous margins
+      const lines = wrapText(notesText, helvetica, 9, notesMaxWidth);
       lines.slice(0, 8).forEach((l) => {
-        page.drawText(l, { x: 50, y, size: 9, font: helvetica, color: WARM_GREY });
+        page.drawText(l, { x: 60, y, size: 9, font: helvetica, color: WARM_GREY });
         y -= 14;
       });
-      y -= 14;
     }
 
     // ─── FOOTER ───
