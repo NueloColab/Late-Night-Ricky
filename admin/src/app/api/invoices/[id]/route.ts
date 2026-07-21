@@ -5,6 +5,22 @@ import { db } from '@/lib/db';
 import { invoices } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 
+// Known columns from the invoices schema to filter unknown keys
+const knownColumns = new Set(Object.keys(invoices));
+
+function cleanBody(body: any) {
+  const cleaned: any = {};
+  for (const [key, value] of Object.entries(body)) {
+    if (value !== undefined && value !== null && knownColumns.has(key)) {
+      cleaned[key] = value;
+    } else if (value === null && knownColumns.has(key)) {
+      // Allow explicit nulls for clearing fields
+      cleaned[key] = null;
+    }
+  }
+  return cleaned;
+}
+
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
     const [row] = await db.select().from(invoices).where(eq(invoices.id, Number(params.id)));
@@ -23,8 +39,8 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     if ('paidAt' in body) {
       body.paidAt = body.paidAt ? new Date(body.paidAt) : null;
     }
-    // Only allow status and paidAt updates, plus other invoice fields
-    await db.update(invoices).set(body).where(eq(invoices.id, Number(params.id)));
+    const cleaned = cleanBody(body);
+    await db.update(invoices).set(cleaned).where(eq(invoices.id, Number(params.id)));
     const [row] = await db.select().from(invoices).where(eq(invoices.id, Number(params.id)));
     return NextResponse.json({ invoice: row });
   } catch (err) {

@@ -3,13 +3,14 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { invoices } from '@/lib/db/schema';
-import { count, eq } from 'drizzle-orm';
+import { eq, max, sql } from 'drizzle-orm';
 
 function cleanBody(body: any) {
-  // Strip undefined/null values to avoid DB type mismatches
+  // Strip undefined/null values and unknown columns to avoid DB errors
+  const knownColumns = new Set(Object.keys(invoices));
   const cleaned: any = {};
   for (const [key, value] of Object.entries(body)) {
-    if (value !== undefined && value !== null) {
+    if (value !== undefined && value !== null && knownColumns.has(key)) {
       cleaned[key] = value;
     }
   }
@@ -30,10 +31,13 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     // Auto-generate invoice number if not provided
+    // Use MAX to avoid collisions when invoices have been deleted
     let invoiceNumber = body.invoiceNumber;
     if (!invoiceNumber) {
-      const [countRow] = await db.select({ count: count() }).from(invoices);
-      const nextNum = (countRow?.count || 0) + 1;
+      const maxResult = await db
+        .select({ maxNum: sql<string>`COALESCE(MAX(CAST(SUBSTRING(invoice_number FROM 5) AS INTEGER)), 0)` })
+        .from(invoices);
+      const nextNum = (Number(maxResult[0]?.maxNum) || 0) + 1;
       invoiceNumber = `INV-${String(nextNum).padStart(4, '0')}`;
     }
     const cleaned = cleanBody(body);

@@ -6,6 +6,19 @@ import { quotes } from '@/lib/db/schema';
 
 import { eq, sql } from 'drizzle-orm';
 
+// Known columns from the quotes schema to filter unknown keys
+const knownQuoteColumns = new Set(Object.keys(quotes));
+
+function cleanBody(body: any) {
+  const cleaned: any = {};
+  for (const [key, value] of Object.entries(body)) {
+    if (value !== undefined && value !== null && knownQuoteColumns.has(key)) {
+      cleaned[key] = value;
+    }
+  }
+  return cleaned;
+}
+
 export async function GET() {
   try {
     const all = await db.select().from(quotes).orderBy(quotes.id);
@@ -20,12 +33,15 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     
-    // Auto-generate quote number: count existing quotes + 1
-    const countResult = await db.select({ count: sql<number>`count(*)` }).from(quotes);
-    const count = countResult[0]?.count ?? 0;
-    const quoteNumber = `QT-${String(count + 1).padStart(3, '0')}`;
+    // Auto-generate quote number: use MAX to avoid collisions from deletions
+    const maxResult = await db
+      .select({ maxNum: sql<string>`COALESCE(MAX(CAST(SUBSTRING(quote_number FROM 4) AS INTEGER)), 0)` })
+      .from(quotes);
+    const nextNum = (Number(maxResult[0]?.maxNum) || 0) + 1;
+    const quoteNumber = `QT-${String(nextNum).padStart(3, '0')}`;
     
-    const inserted = await db.insert(quotes).values({ ...body, quoteNumber }).returning();
+    const cleaned = cleanBody(body);
+    const inserted = await db.insert(quotes).values({ ...cleaned, quoteNumber }).returning();
     return NextResponse.json({ quote: inserted[0] });
   } catch (err) {
     console.error('Quotes POST error:', err);
