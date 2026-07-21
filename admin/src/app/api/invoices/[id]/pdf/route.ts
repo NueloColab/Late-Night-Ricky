@@ -362,30 +362,31 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const discountPercent = discount?.percent || 0;
     const discountAmount = discountEnabled ? (subtotal * discountPercent) / 100 : 0;
 
-    const totalsX = width - 220;
+    const totalsX = 300;
 
-    // Warm cream totals background
+    // Warm cream totals background - wider to prevent overflow
     const totalsLines = 1 + (discountEnabled && discountAmount > 0 ? 1 : 0) + 1 + 1;
     const totalsBoxH = totalsLines * 22 + 16;
     page.drawRectangle({
-      x: totalsX - 20, y: y - totalsBoxH + 8, width: width - totalsX + 20 - 50, height: totalsBoxH,
+      x: totalsX - 15, y: y - totalsBoxH + 8, width: width - totalsX + 15 - 50, height: totalsBoxH,
       color: VERY_LIGHT_GREY,
     });
 
-    page.drawText('Subtotal:', {
+    page.drawText('Subtotal', {
       x: totalsX, y, size: 9, font: helvetica, color: WARM_GREY,
     });
     page.drawText(formatCurrency(subtotal), {
-      x: totalsX + 130, y, size: 9, font: helvetica, color: BRAND_BROWN,
+      x: width - 60, y, size: 9, font: helvetica, color: BRAND_BROWN,
     });
     y -= 22;
 
     if (discountEnabled && discountAmount > 0) {
-      page.drawText(`${discountPercent}% Discount:`, {
+      const discountLabel = `${discountPercent}% Discount`;
+      page.drawText(discountLabel, {
         x: totalsX, y, size: 9, font: helvetica, color: WARM_GREY,
       });
       page.drawText(`-${formatCurrency(discountAmount)}`, {
-        x: totalsX + 130, y, size: 9, font: helvetica, color: rgb(0.6, 0.2, 0.2),
+        x: width - 60, y, size: 9, font: helvetica, color: rgb(0.6, 0.2, 0.2),
       });
       y -= 22;
     }
@@ -393,18 +394,18 @@ export async function GET(request: Request, { params }: { params: { id: string }
     if (invoice.vatEnabled && (invoice.taxRate || 0) > 0) {
       const tax = Number(invoice.taxRate || 0);
       const taxAmount = (subtotal - discountAmount) * (tax / 100);
-      page.drawText(`VAT (${tax}%):`, {
+      page.drawText(`VAT (${tax}%)`, {
         x: totalsX, y, size: 9, font: helvetica, color: WARM_GREY,
       });
       page.drawText(formatCurrency(taxAmount), {
-        x: totalsX + 130, y, size: 9, font: helvetica, color: BRAND_BROWN,
+        x: width - 60, y, size: 9, font: helvetica, color: BRAND_BROWN,
       });
     } else {
-      page.drawText('VAT:', {
+      page.drawText('VAT', {
         x: totalsX, y, size: 9, font: helvetica, color: WARM_GREY,
       });
       page.drawText('N/A', {
-        x: totalsX + 130, y, size: 9, font: helvetica, color: WARM_GREY,
+        x: width - 60, y, size: 9, font: helvetica, color: WARM_GREY,
       });
     }
     y -= 22;
@@ -417,11 +418,11 @@ export async function GET(request: Request, { params }: { params: { id: string }
     });
 
     // TOTAL
-    page.drawText('TOTAL:', {
+    page.drawText('TOTAL', {
       x: totalsX, y: y - 8, size: 13, font: helveticaBold, color: BRAND_BROWN,
     });
     page.drawText(formatCurrency(total), {
-      x: totalsX + 130, y: y - 8, size: 13, font: helveticaBold, color: BRAND_BROWN,
+      x: width - 60, y: y - 8, size: 13, font: helveticaBold, color: BRAND_BROWN,
     });
     y -= 45;
 
@@ -499,7 +500,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     });
     y -= 18;
 
-    // Bank block: warm cream background with gold left border
+    // Bank block: warm cream background with gold left border - full width for padding
     const bankLines = 4 + (swiftCode ? 1 : 0) + (iban ? 1 : 0);
     const bankBlockH = bankLines * 18 + 24;
     page.drawRectangle({
@@ -512,8 +513,8 @@ export async function GET(request: Request, { params }: { params: { id: string }
     });
 
     const labelX = 68;
-    const valueX = 170;
-    const col2LabelX = 300;
+    const valueX = 175;
+    const col2LabelX = 310;
     const col2ValueX = 410;
     const lineH = 18;
 
