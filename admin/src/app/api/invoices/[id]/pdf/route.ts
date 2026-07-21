@@ -5,17 +5,18 @@ import { db } from '@/lib/db';
 import { invoices } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
-import path from 'path';
-import fs from 'fs';
 
-// Nuelo-inspired monochrome palette
+// LNR brand colours - matching Nuelo's brown palette
+const BRAND_BROWN = rgb(0.165, 0.102, 0.039);    // #2a1a0a - deep brown
+const BRAND_CREAM = rgb(0.910, 0.831, 0.722);     // #e8d4b8 - warm cream
+const BRAND_GOLD = rgb(0.788, 0.663, 0.431);      // #c9a96e - gold accent
 const BLACK = rgb(0.04, 0.04, 0.04);
 const DARK_GREY = rgb(0.25, 0.25, 0.25);
 const MED_GREY = rgb(0.45, 0.45, 0.45);
 const LIGHT_GREY = rgb(0.7, 0.7, 0.7);
-const VERY_LIGHT_GREY = rgb(0.94, 0.94, 0.94);
+const VERY_LIGHT_GREY = rgb(0.96, 0.93, 0.90);   // warm light
 const WHITE = rgb(1, 1, 1);
-const ACCENT = rgb(0.04, 0.04, 0.04); // Near-black accent
+const WARM_GREY = rgb(0.45, 0.42, 0.39);
 
 async function getSettings() {
   try {
@@ -72,15 +73,11 @@ function wrapText(text: string, font: any, size: number, maxWidth: number): stri
 
 async function getLogoBytes(): Promise<Buffer | null> {
   try {
-    // Try multiple paths for the logo
-    const paths = [
-      path.join(process.cwd(), 'public', 'assets', 'ricky-logo.png'),
-      path.join(process.cwd(), 'public', 'ricky-logo.png'),
-    ];
-    for (const p of paths) {
-      if (fs.existsSync(p)) {
-        return fs.readFileSync(p);
-      }
+    // Fetch logo from the deployed site (works on Vercel)
+    const response = await fetch('https://late-night-ricky.vercel.app/assets/ricky-logo.png');
+    if (response.ok) {
+      const arrayBuffer = await response.arrayBuffer();
+      return Buffer.from(arrayBuffer);
     }
   } catch {
     // ignore
@@ -151,50 +148,48 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // ─── WHITE BACKGROUND ───
     page.drawRectangle({ x: 0, y: 0, width, height: pageH, color: WHITE });
 
-    // ─── TOP HEADER ───
-    // Thick black rule
-    const headerRuleY = pageH - 52;
+    // ─── TOP HEADER BAND (brown) ───
+    const headerH = 80;
     page.drawRectangle({
-      x: 0, y: headerRuleY, width, height: 3,
-      color: BLACK,
+      x: 0, y: pageH - headerH, width, height: headerH,
+      color: BRAND_BROWN,
     });
 
-    y = headerRuleY - 12;
-
-    // Logo (left) or text fallback
+    // Logo (left side of header) or text fallback
     if (logoImage) {
       page.drawImage(logoImage, {
-        x: 50, y: y - logoH + 8,
+        x: 40, y: pageH - 55 - (logoH / 2),
         width: logoW, height: logoH,
       });
     } else {
       page.drawText('LATE NIGHT RICKY', {
-        x: 50, y: y - 6, size: 18, font: helveticaBold, color: BLACK,
+        x: 45, y: pageH - 48, size: 16, font: helveticaBold, color: BRAND_CREAM,
+      });
+      page.drawText('International DJ & Grammy Winning Producer', {
+        x: 45, y: pageH - 62, size: 7, font: helvetica, color: BRAND_GOLD,
       });
     }
 
     // INVOICE label (right)
-    const invoiceLabel = 'INVOICE';
-    const invoiceLabelW = helveticaBold.widthOfTextAtSize(invoiceLabel, 28);
-    page.drawText(invoiceLabel, {
-      x: width - 50 - invoiceLabelW, y: y - 2, size: 28, font: helveticaBold, color: BLACK,
+    page.drawText('INVOICE', {
+      x: width - 155, y: pageH - 52, size: 24, font: helveticaBold, color: BRAND_CREAM,
     });
 
-    // Invoice number below label
-    const invNumText = invoice.invoiceNumber || '';
-    const invNumW = helvetica.widthOfTextAtSize(invNumText, 10);
-    page.drawText(invNumText, {
-      x: width - 50 - invNumW, y: y - 20, size: 10, font: helvetica, color: MED_GREY,
+    // Gold line at bottom of header
+    page.drawLine({
+      start: { x: 40, y: pageH - headerH + 2 },
+      end: { x: width - 40, y: pageH - headerH + 2 },
+      thickness: 1.5, color: BRAND_GOLD,
     });
 
-    y -= 50;
+    y = pageH - headerH - 25;
 
-    // ─── BILL TO + INVOICE META (two columns) ───
-    // Left: Bill To
+    // ─── TWO-COLUMN: Bill To (left) + Company/Meta (right) ───
+    // Left: BILL TO
     page.drawText('BILL TO', {
-      x: 50, y, size: 7, font: helveticaBold, color: LIGHT_GREY, 
+      x: 50, y, size: 7, font: helveticaBold, color: BRAND_GOLD,
     });
-    y -= 14;
+    y -= 16;
     page.drawText(invoice.clientName || 'Client', {
       x: 50, y, size: 12, font: helveticaBold, color: BLACK,
     });
@@ -213,16 +208,14 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     // Right: Company details + Invoice meta
     const rightX = width - 230;
-    let rightY = pageH - 102;
+    let rightY = pageH - headerH - 25;
 
-    // Company name
     if (companyName) {
       page.drawText(companyName, {
-        x: rightX, y: rightY, size: 10, font: helveticaBold, color: BLACK,
+        x: rightX, y: rightY, size: 10, font: helveticaBold, color: BRAND_BROWN,
       });
       rightY -= 14;
     }
-    // Company address
     if (companyAddress) {
       const addrLines = wrapText(companyAddress, helvetica, 8, 200);
       addrLines.slice(0, 3).forEach((line) => {
@@ -245,7 +238,6 @@ export async function GET(request: Request, { params }: { params: { id: string }
       rightY -= 10;
     }
 
-    // Thin separator
     rightY -= 8;
     page.drawLine({
       start: { x: rightX, y: rightY },
@@ -254,30 +246,28 @@ export async function GET(request: Request, { params }: { params: { id: string }
     });
     rightY -= 12;
 
-    // Invoice details
     const metaItems = [
-      { label: 'Date Issued', value: formatDate(invoice.sentAt || new Date()) },
-      { label: 'Due Date', value: invoice.dueDate ? formatDate(invoice.dueDate) : 'Upon receipt' },
-      { label: 'Payment Terms', value: invoice.paymentTermsLabel || 'Net 30' },
+      { label: 'DATE ISSUED', value: formatDate(invoice.sentAt || new Date()) },
+      { label: 'DUE DATE', value: invoice.dueDate ? formatDate(invoice.dueDate) : 'Upon receipt' },
+      { label: 'PAYMENT TERMS', value: invoice.paymentTermsLabel || 'Net 30' },
     ];
 
     metaItems.forEach((item) => {
       page.drawText(item.label, {
-        x: rightX, y: rightY, size: 7, font: helvetica, color: MED_GREY,
+        x: rightX, y: rightY, size: 7, font: helveticaBold, color: MED_GREY,
       });
       page.drawText(item.value, {
-        x: rightX + 120, y: rightY, size: 9, font: helveticaBold, color: BLACK,
+        x: rightX, y: rightY - 12, size: 9, font: helveticaBold, color: BLACK,
       });
-      rightY -= 16;
+      rightY -= 28;
     });
 
-    // Align y positions below both columns
-    y = Math.min(y - 20, rightY) - 16;
+    y = Math.min(y - 20, rightY) - 10;
 
     // ─── PROJECT ───
     if (invoice.projectTitle) {
       page.drawText('PROJECT', {
-        x: 50, y, size: 7, font: helveticaBold, color: LIGHT_GREY,
+        x: 50, y, size: 7, font: helveticaBold, color: BRAND_GOLD,
       });
       page.drawText(invoice.projectTitle, {
         x: 130, y, size: 10, font: helveticaBold, color: BLACK,
@@ -290,7 +280,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       start: { x: 50, y }, end: { x: width - 50, y },
       thickness: 0.5, color: LIGHT_GREY,
     });
-    y -= 8;
+    y -= 22;
 
     // ─── LINE ITEMS TABLE ───
     const lineItemsRaw = invoice.lineItems || '[]';
@@ -299,24 +289,24 @@ export async function GET(request: Request, { params }: { params: { id: string }
       : JSON.parse(typeof lineItemsRaw === 'string' ? lineItemsRaw : '[]');
 
     if (lineItems.length > 0) {
-      // Table header
+      // Table header - dark brown bar with cream text
       page.drawRectangle({
-        x: 50, y: y - 24, width: width - 100, height: 26,
-        color: BLACK,
+        x: 50, y: y - 24, width: width - 100, height: 28,
+        color: BRAND_BROWN,
       });
       page.drawText('SERVICE DESCRIPTION', {
-        x: 60, y: y - 16, size: 7.5, font: helveticaBold, color: WHITE,
+        x: 60, y: y - 16, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
       });
       page.drawText('QTY', {
-        x: 345, y: y - 16, size: 7.5, font: helveticaBold, color: WHITE,
+        x: 345, y: y - 16, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
       });
       page.drawText('RATE', {
-        x: 400, y: y - 16, size: 7.5, font: helveticaBold, color: WHITE,
+        x: 400, y: y - 16, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
       });
       page.drawText('AMOUNT', {
-        x: 470, y: y - 16, size: 7.5, font: helveticaBold, color: WHITE,
+        x: 465, y: y - 16, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
       });
-      y -= 32;
+      y -= 34;
 
       lineItems.forEach((item: any, idx: number) => {
         if (y < 120) {
@@ -331,30 +321,30 @@ export async function GET(request: Request, { params }: { params: { id: string }
         const rate = Number(item.price || item.rate || 0);
         const amount = Number(item.amount || qty * rate);
 
-        // Alternating row
+        // Alternating warm cream row
         if (idx % 2 === 1) {
           page.drawRectangle({
-            x: 50, y: y - 14, width: width - 100, height: 26,
+            x: 50, y: y - 14, width: width - 100, height: 28,
             color: VERY_LIGHT_GREY,
           });
         }
 
         page.drawText(desc, {
-          x: 60, y: y + 2, size: 9.5, font: helvetica, color: BLACK,
+          x: 60, y: y + 2, size: 9.5, font: helvetica, color: BRAND_BROWN,
         });
         if (category) {
           page.drawText(String(category).substring(0, 30), {
-            x: 60, y: y - 10, size: 7, font: helvetica, color: MED_GREY,
+            x: 60, y: y - 10, size: 7.5, font: helvetica, color: WARM_GREY,
           });
         }
         page.drawText(String(qty), {
-          x: 345, y: y + 2, size: 9.5, font: helvetica, color: BLACK,
+          x: 345, y: y + 2, size: 9.5, font: helvetica, color: BRAND_BROWN,
         });
         page.drawText(formatCurrency(rate), {
-          x: 400, y: y + 2, size: 9.5, font: helvetica, color: BLACK,
+          x: 400, y: y + 2, size: 9.5, font: helvetica, color: BRAND_BROWN,
         });
         page.drawText(formatCurrency(amount), {
-          x: 470, y: y + 2, size: 9.5, font: helveticaBold, color: BLACK,
+          x: 465, y: y + 2, size: 9.5, font: helveticaBold, color: BRAND_BROWN,
         });
         y -= category ? 32 : 24;
       });
@@ -374,27 +364,28 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     const totalsX = width - 220;
 
-    // Light grey totals background
-    const totalsH = (discountEnabled && discountAmount > 0 ? 4 : 3) * 22 + 20;
+    // Warm cream totals background
+    const totalsLines = 1 + (discountEnabled && discountAmount > 0 ? 1 : 0) + 1 + 1;
+    const totalsBoxH = totalsLines * 22 + 16;
     page.drawRectangle({
-      x: totalsX - 15, y: y - totalsH + 8, width: width - totalsX + 15 - 50, height: totalsH,
+      x: totalsX - 20, y: y - totalsBoxH + 8, width: width - totalsX + 20 - 50, height: totalsBoxH,
       color: VERY_LIGHT_GREY,
     });
 
-    page.drawText('Subtotal', {
-      x: totalsX, y, size: 9, font: helvetica, color: MED_GREY,
+    page.drawText('Subtotal:', {
+      x: totalsX, y, size: 9, font: helvetica, color: WARM_GREY,
     });
     page.drawText(formatCurrency(subtotal), {
-      x: width - 50, y, size: 9, font: helvetica, color: BLACK,
+      x: totalsX + 130, y, size: 9, font: helvetica, color: BRAND_BROWN,
     });
     y -= 22;
 
     if (discountEnabled && discountAmount > 0) {
-      page.drawText(`${discountPercent}% Discount`, {
-        x: totalsX, y, size: 9, font: helvetica, color: MED_GREY,
+      page.drawText(`${discountPercent}% Discount:`, {
+        x: totalsX, y, size: 9, font: helvetica, color: WARM_GREY,
       });
       page.drawText(`-${formatCurrency(discountAmount)}`, {
-        x: width - 50, y, size: 9, font: helvetica, color: rgb(0.7, 0.15, 0.15),
+        x: totalsX + 130, y, size: 9, font: helvetica, color: rgb(0.6, 0.2, 0.2),
       });
       y -= 22;
     }
@@ -402,35 +393,35 @@ export async function GET(request: Request, { params }: { params: { id: string }
     if (invoice.vatEnabled && (invoice.taxRate || 0) > 0) {
       const tax = Number(invoice.taxRate || 0);
       const taxAmount = (subtotal - discountAmount) * (tax / 100);
-      page.drawText(`VAT (${tax}%)`, {
-        x: totalsX, y, size: 9, font: helvetica, color: MED_GREY,
+      page.drawText(`VAT (${tax}%):`, {
+        x: totalsX, y, size: 9, font: helvetica, color: WARM_GREY,
       });
       page.drawText(formatCurrency(taxAmount), {
-        x: width - 50, y, size: 9, font: helvetica, color: BLACK,
+        x: totalsX + 130, y, size: 9, font: helvetica, color: BRAND_BROWN,
       });
     } else {
-      page.drawText('VAT', {
-        x: totalsX, y, size: 9, font: helvetica, color: MED_GREY,
+      page.drawText('VAT:', {
+        x: totalsX, y, size: 9, font: helvetica, color: WARM_GREY,
       });
       page.drawText('N/A', {
-        x: width - 50, y, size: 9, font: helvetica, color: MED_GREY,
+        x: totalsX + 130, y, size: 9, font: helvetica, color: WARM_GREY,
       });
     }
     y -= 22;
 
-    // Separator line
+    // Separator
     page.drawLine({
       start: { x: totalsX, y: y + 6 },
       end: { x: width - 50, y: y + 6 },
-      thickness: 1, color: BLACK,
+      thickness: 1, color: BRAND_BROWN,
     });
 
     // TOTAL
-    page.drawText('TOTAL', {
-      x: totalsX, y: y - 8, size: 13, font: helveticaBold, color: BLACK,
+    page.drawText('TOTAL:', {
+      x: totalsX, y: y - 8, size: 13, font: helveticaBold, color: BRAND_BROWN,
     });
     page.drawText(formatCurrency(total), {
-      x: width - 50, y: y - 8, size: 13, font: helveticaBold, color: BLACK,
+      x: totalsX + 130, y: y - 8, size: 13, font: helveticaBold, color: BRAND_BROWN,
     });
     y -= 45;
 
@@ -448,26 +439,26 @@ export async function GET(request: Request, { params }: { params: { id: string }
       }
 
       page.drawText('PAYMENT SCHEDULE', {
-        x: 50, y, size: 7, font: helveticaBold, color: LIGHT_GREY,
+        x: 50, y, size: 7, font: helveticaBold, color: BRAND_GOLD,
       });
       y -= 20;
 
-      // Table header
+      // Table header - dark brown
       page.drawRectangle({
         x: 50, y: y - 20, width: width - 100, height: 24,
-        color: BLACK,
+        color: BRAND_BROWN,
       });
       page.drawText('INSTALLMENT', {
-        x: 60, y: y - 12, size: 7.5, font: helveticaBold, color: WHITE,
+        x: 60, y: y - 12, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
       });
       page.drawText('%', {
-        x: 260, y: y - 12, size: 7.5, font: helveticaBold, color: WHITE,
+        x: 260, y: y - 12, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
       });
       page.drawText('DUE', {
-        x: 320, y: y - 12, size: 7.5, font: helveticaBold, color: WHITE,
+        x: 320, y: y - 12, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
       });
       page.drawText('AMOUNT', {
-        x: 470, y: y - 12, size: 7.5, font: helveticaBold, color: WHITE,
+        x: 465, y: y - 12, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
       });
       y -= 28;
 
@@ -503,37 +494,49 @@ export async function GET(request: Request, { params }: { params: { id: string }
     }
 
     y -= 5;
-    page.drawText('BANK DETAILS FOR PAYMENT', {
-      x: 50, y, size: 7, font: helveticaBold, color: LIGHT_GREY,
+    page.drawText('BANK DETAILS', {
+      x: 50, y, size: 7, font: helveticaBold, color: BRAND_GOLD,
     });
     y -= 18;
 
-    // Bank details in a clean two-column layout
-    const bankLabelX = 50;
-    const bankValueX = 160;
-    const bankCol2LabelX = 300;
-    const bankCol2ValueX = 410;
-    const bankLineH = 16;
+    // Bank block: warm cream background with gold left border
+    const bankLines = 4 + (swiftCode ? 1 : 0) + (iban ? 1 : 0);
+    const bankBlockH = bankLines * 18 + 24;
+    page.drawRectangle({
+      x: 50, y: y - bankBlockH + 10, width: width - 100, height: bankBlockH,
+      color: VERY_LIGHT_GREY,
+    });
+    page.drawRectangle({
+      x: 50, y: y - bankBlockH + 10, width: 4, height: bankBlockH,
+      color: BRAND_GOLD,
+    });
 
-    page.drawText('Bank:', { x: bankLabelX, y, size: 9, font: helvetica, color: MED_GREY });
-    page.drawText(bankName, { x: bankValueX, y, size: 9, font: helveticaBold, color: BLACK });
-    page.drawText('Sort Code:', { x: bankCol2LabelX, y, size: 9, font: helvetica, color: MED_GREY });
-    page.drawText(bankSortCode, { x: bankCol2ValueX, y, size: 9, font: helveticaBold, color: BLACK });
-    y -= bankLineH;
-    page.drawText('Account Name:', { x: bankLabelX, y, size: 9, font: helvetica, color: MED_GREY });
-    page.drawText(bankAccountName, { x: bankValueX, y, size: 9, font: helveticaBold, color: BLACK });
-    page.drawText('Account No:', { x: bankCol2LabelX, y, size: 9, font: helvetica, color: MED_GREY });
-    page.drawText(bankAccountNumber, { x: bankCol2ValueX, y, size: 9, font: helveticaBold, color: BLACK });
-    y -= bankLineH;
+    const labelX = 68;
+    const valueX = 170;
+    const col2LabelX = 300;
+    const col2ValueX = 410;
+    const lineH = 18;
+
+    y -= 6;  // top padding inside block
+    page.drawText('Bank:', { x: labelX, y, size: 9, font: helvetica, color: WARM_GREY });
+    page.drawText(bankName, { x: valueX, y, size: 9, font: helveticaBold, color: BRAND_BROWN });
+    page.drawText('Sort Code:', { x: col2LabelX, y, size: 9, font: helvetica, color: WARM_GREY });
+    page.drawText(bankSortCode, { x: col2ValueX, y, size: 9, font: helveticaBold, color: BRAND_BROWN });
+    y -= lineH;
+    page.drawText('Account Name:', { x: labelX, y, size: 9, font: helvetica, color: WARM_GREY });
+    page.drawText(bankAccountName, { x: valueX, y, size: 9, font: helveticaBold, color: BRAND_BROWN });
+    page.drawText('Account No:', { x: col2LabelX, y, size: 9, font: helvetica, color: WARM_GREY });
+    page.drawText(bankAccountNumber, { x: col2ValueX, y, size: 9, font: helveticaBold, color: BRAND_BROWN });
+    y -= lineH;
     if (swiftCode) {
-      page.drawText('SWIFT:', { x: bankLabelX, y, size: 9, font: helvetica, color: MED_GREY });
-      page.drawText(swiftCode, { x: bankValueX, y, size: 9, font: helveticaBold, color: BLACK });
-      y -= bankLineH;
+      page.drawText('SWIFT:', { x: labelX, y, size: 9, font: helvetica, color: WARM_GREY });
+      page.drawText(swiftCode, { x: valueX, y, size: 9, font: helveticaBold, color: BRAND_BROWN });
+      y -= lineH;
     }
     if (iban) {
-      page.drawText('IBAN:', { x: bankLabelX, y, size: 9, font: helvetica, color: MED_GREY });
-      page.drawText(iban, { x: bankValueX, y, size: 9, font: helveticaBold, color: BLACK });
-      y -= bankLineH;
+      page.drawText('IBAN:', { x: labelX, y, size: 9, font: helvetica, color: WARM_GREY });
+      page.drawText(iban, { x: valueX, y, size: 9, font: helveticaBold, color: BRAND_BROWN });
+      y -= lineH;
     }
     y -= 20;
 
@@ -545,7 +548,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         y = 842 - 80;
       }
       page.drawText('NOTES & TERMS', {
-        x: 50, y, size: 7, font: helveticaBold, color: LIGHT_GREY,
+        x: 50, y, size: 7, font: helveticaBold, color: BRAND_GOLD,
       });
       y -= 16;
 
@@ -553,7 +556,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       const maxWidth = width - 100;
       const lines = wrapText(notesText, helvetica, 9, maxWidth);
       lines.slice(0, 8).forEach((l) => {
-        page.drawText(l, { x: 50, y, size: 9, font: helvetica, color: DARK_GREY });
+        page.drawText(l, { x: 50, y, size: 9, font: helvetica, color: WARM_GREY });
         y -= 14;
       });
       y -= 14;
@@ -565,15 +568,16 @@ export async function GET(request: Request, { params }: { params: { id: string }
       page.drawRectangle({ x: 0, y: 0, width, height: 842, color: WHITE });
     }
 
-    // Thick black footer rule
+    // Dark brown footer band
     page.drawRectangle({
-      x: 0, y: 38, width, height: 3,
-      color: BLACK,
+      x: 0, y: 30, width, height: 42,
+      color: BRAND_BROWN,
     });
-
-    // Footer text
     page.drawText(`${companyName}  |  International DJ & Grammy Winning Producer  |  Payment is due by the date specified above`, {
-      x: 50, y: 20, size: 7, font: helvetica, color: MED_GREY,
+      x: 50, y: 53, size: 7, font: helvetica, color: BRAND_CREAM,
+    });
+    page.drawText('latenightricky@gmail.com', {
+      x: 50, y: 40, size: 7, font: helvetica, color: BRAND_GOLD,
     });
 
     const pdfBytes = await pdfDoc.save();
