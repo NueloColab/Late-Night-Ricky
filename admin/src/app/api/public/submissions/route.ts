@@ -65,37 +65,48 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const formData = await request.formData();
-    const email = formData.get('email') as string;
-    const artistName = formData.get('artistName') as string | null;
-    const trackTitle = formData.get('trackTitle') as string | null;
-    const instagramHandle = formData.get('instagramHandle') as string | null;
-    const file = formData.get('file') as File | null;
+    const contentType = request.headers.get('content-type') || '';
 
-    if (!email || !email.includes('@')) {
-      return NextResponse.json({ error: 'Valid email required' }, { status: 400, headers: corsHeaders() });
-    }
-
+    let email: string;
+    let artistName: string | null = null;
+    let trackTitle: string | null = null;
+    let instagramHandle: string | null = null;
     let filePath: string | null = null;
     let fileSize: number | null = null;
 
-    if (file) {
-      const maxSize = 50 * 1024 * 1024; // 50MB
-      if (file.size > maxSize) {
-        return NextResponse.json({ error: 'File must be under 20MB' }, { status: 400, headers: corsHeaders() });
+    if (contentType.includes('application/json')) {
+      // New flow: direct Cloudinary upload from browser
+      const body = await request.json();
+      email = body.email;
+      artistName = body.artistName || null;
+      trackTitle = body.trackTitle || null;
+      instagramHandle = body.instagramHandle || null;
+      filePath = body.fileUrl || null;
+      fileSize = body.fileSize || null;
+    } else {
+      // Legacy form-data flow (fallback)
+      const formData = await request.formData();
+      email = formData.get('email') as string;
+      artistName = formData.get('artistName') as string | null;
+      trackTitle = formData.get('trackTitle') as string | null;
+      instagramHandle = formData.get('instagramHandle') as string | null;
+      const file = formData.get('file') as File | null;
+
+      if (file) {
+        const maxSize = 50 * 1024 * 1024;
+        if (file.size > maxSize) {
+          return NextResponse.json({ error: 'File must be under 50MB' }, { status: 400, headers: corsHeaders() });
+        }
+        const ext = path.extname(file.name) || '.mp3';
+        const filename = `submission-${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
+        const { url, size } = await storeFile(file, filename);
+        filePath = url;
+        fileSize = size;
       }
+    }
 
-      const allowedTypes = ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav', 'audio/wave', 'audio/flac', 'audio/x-flac', 'audio/aac', 'audio/x-aac'];
-      if (!allowedTypes.includes(file.type) && !file.name.match(/\.(mp3|wav|flac|aac|m4a)$/i)) {
-        return NextResponse.json({ error: 'Only MP3 and WAV files are allowed' }, { status: 400, headers: corsHeaders() });
-      }
-
-      const ext = path.extname(file.name) || '.mp3';
-      const filename = `submission-${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
-      const { url, size } = await storeFile(file, filename);
-
-      filePath = url;
-      fileSize = size;
+    if (!email || !email.includes('@')) {
+      return NextResponse.json({ error: 'Valid email required' }, { status: 400, headers: corsHeaders() });
     }
 
     const [row] = await db
@@ -112,9 +123,9 @@ export async function POST(request: Request) {
       .returning();
 
     return NextResponse.json({ success: true, submission: row }, { headers: corsHeaders() });
-  } catch (err) {
+  } catch (err: any) {
     console.error('Submission POST error:', err);
-    return NextResponse.json({ error: 'Upload failed' }, { status: 500, headers: corsHeaders() });
+    return NextResponse.json({ error: err.message || 'Upload failed' }, { status: 500, headers: corsHeaders() });
   }
 }
 

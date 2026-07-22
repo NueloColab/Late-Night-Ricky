@@ -16,27 +16,62 @@ export default function ShareMusicCTA({ headline, description, ctaText, ctaLink 
 
   const canSubmit = !!email && !!file && !submitting;
 
+  const uploadToCloudinary = async (file: File): Promise<string> => {
+    const signRes = await fetch('/api/cloudinary/sign', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ folder: 'nuelo/late-night-ricky/tracks' }),
+    });
+    if (!signRes.ok) throw new Error('Failed to get upload signature');
+    const { signature, timestamp, folder, apiKey, cloudName } = await signRes.json();
+
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('api_key', apiKey);
+    uploadData.append('timestamp', String(timestamp));
+    uploadData.append('signature', signature);
+    uploadData.append('folder', folder);
+
+    const cloudRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
+      method: 'POST',
+      body: uploadData,
+    });
+    if (!cloudRes.ok) {
+      const err = await cloudRes.json();
+      throw new Error(err.error?.message || 'Cloudinary upload failed');
+    }
+    const cloudData = await cloudRes.json();
+    return cloudData.secure_url;
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!canSubmit) return;
 
     setSubmitting(true);
     try {
-      const formData = new FormData();
-      formData.append('email', email);
-      if (artistName) formData.append('artistName', artistName);
-      if (trackTitle) formData.append('trackTitle', trackTitle);
-      if (instagram) formData.append('instagram', instagram);
-      formData.append('file', file!);
+      const fileUrl = await uploadToCloudinary(file!);
 
       const res = await fetch('/api/public/submissions', {
         method: 'POST',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          artistName: artistName || null,
+          trackTitle: trackTitle || null,
+          instagramHandle: instagram || null,
+          fileUrl,
+          fileName: file!.name,
+          fileSize: file!.size,
+        }),
       });
 
-      if (!res.ok) throw new Error('Upload failed');
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Upload failed');
+      }
       setStatus('success');
-    } catch {
+    } catch (err: any) {
       setStatus('error');
     } finally {
       setSubmitting(false);

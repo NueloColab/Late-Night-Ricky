@@ -27,6 +27,36 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
     setShowForm(true);
   };
 
+  const uploadToCloudinary = async (file: File): Promise<string> => {
+    // 1. Get signed upload params
+    const signRes = await fetch('/api/cloudinary/sign', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ folder: 'nuelo/late-night-ricky/tracks' }),
+    });
+    if (!signRes.ok) throw new Error('Failed to get upload signature');
+    const { signature, timestamp, folder, apiKey, cloudName } = await signRes.json();
+
+    // 2. Upload directly to Cloudinary from browser
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('api_key', apiKey);
+    uploadData.append('timestamp', String(timestamp));
+    uploadData.append('signature', signature);
+    uploadData.append('folder', folder);
+
+    const cloudRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
+      method: 'POST',
+      body: uploadData,
+    });
+    if (!cloudRes.ok) {
+      const err = await cloudRes.json();
+      throw new Error(err.error?.message || 'Cloudinary upload failed');
+    }
+    const cloudData = await cloudRes.json();
+    return cloudData.secure_url;
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!email || !email.includes('@')) {
@@ -43,26 +73,36 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
     setStatus('idle');
 
     try {
-      const formData = new FormData();
-      formData.append('email', email);
-      if (artistName) formData.append('artistName', artistName);
-      if (trackTitle) formData.append('trackTitle', trackTitle);
-      formData.append('file', file);
+      // Upload file directly to Cloudinary from browser
+      const fileUrl = await uploadToCloudinary(file);
 
+      // Submit metadata + Cloudinary URL
       const res = await fetch('/api/public/submissions', {
         method: 'POST',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          artistName: artistName || null,
+          trackTitle: trackTitle || null,
+          instagramHandle: null,
+          fileUrl,
+          fileName: file.name,
+          fileSize: file.size,
+        }),
       });
 
-      if (!res.ok) throw new Error('Upload failed');
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Upload failed');
+      }
       setStatus('success');
       setFile(null);
       setArtistName('');
       setTrackTitle('');
       setEmail('');
-    } catch {
+    } catch (err: any) {
       setStatus('error');
-      setErrorMsg('Upload failed. Please try again or email bookings@latenightricky.com directly.');
+      setErrorMsg(err.message || 'Upload failed. Please try again or email latenightricky@gmail.com directly.');
     } finally {
       setSubmitting(false);
     }
