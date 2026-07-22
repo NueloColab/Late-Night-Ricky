@@ -38,6 +38,7 @@ export async function GET(request: Request, { params }: { params: { token: strin
       clientCompany: invoice.clientCompany,
       clientEmail: invoice.clientEmail,
       projectTitle: invoice.projectTitle,
+      performanceDate: invoice.performanceDate,
       lineItems: invoice.lineItems,
       subtotal: invoice.subtotal,
       taxRate: invoice.taxRate,

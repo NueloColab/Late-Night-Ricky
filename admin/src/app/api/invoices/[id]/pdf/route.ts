@@ -460,6 +460,7 @@ interface InvoiceData {
   clientEmail: string
   clientCompany: string | null
   projectTitle: string
+  performanceDate: string | null
   invoiceNumber: string
   sentAt: string | Date | null
   dueDate: string | Date | null
@@ -533,6 +534,7 @@ function InvoicePDF({ invoice, logoBase64, bankDetails, companyName }: {
         e(View, { style: styles.infoBox },
           e(Text, { style: styles.infoBoxTitle }, 'Project'),
           e(Text, { style: styles.infoNameText }, invoice.projectTitle),
+          invoice.performanceDate ? e(Text, { style: styles.infoBodyText }, `Performance: ${formatDate(invoice.performanceDate)}`) : null,
           e(Text, { style: styles.infoBodyText },
             `${invoice.lineItems?.length || 0} item${invoice.lineItems?.length !== 1 ? 's' : ''}`
           )
@@ -717,6 +719,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       clientEmail: s(invoiceRow.clientEmail) || '',
       clientCompany: s(invoiceRow.clientCompany),
       projectTitle: s(invoiceRow.projectTitle) || '',
+      performanceDate: s(invoiceRow.performanceDate),
       invoiceNumber: s(invoiceRow.invoiceNumber) || '',
       sentAt: invoiceRow.sentAt,
       dueDate: s(invoiceRow.dueDate),

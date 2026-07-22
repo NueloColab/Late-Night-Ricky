@@ -381,15 +381,14 @@ export async function sendInvoiceEmail(
         <p style="margin:0;color:#666;font-size:15px;line-height:1.7;" class="mobile-text">Kind regards,<br/><strong style="color:#000;">Late Night Ricky</strong></p>
       </div>`
 
-    // Get primary service name for subject and filename
-    const firstItem = (invoice.lineItems || [])[0]
-    const serviceName = firstItem?.serviceName || firstItem?.description || invoice.projectTitle || 'Services'
-    const safeServiceName = String(serviceName).replace(/[^a-zA-Z0-9\s-]/g, '').trim()
+    // Use project title for email subject and filename
+    const projectName = invoice.projectTitle || 'Services'
+    const safeProjectName = String(projectName).replace(/[^a-zA-Z0-9\s-]/g, '').trim()
 
     const attachments: any[] = []
     if (pdfBuffer) {
       attachments.push({
-        filename: `LNR-Invoice-${safeServiceName}-${invoice.invoiceNumber}.pdf`,
+        filename: `LNR-Invoice-${safeProjectName}-${invoice.invoiceNumber}.pdf`,
         content: pdfBuffer,
         contentType: 'application/pdf',
       })
@@ -407,7 +406,7 @@ export async function sendInvoiceEmail(
       to: recipientEmail,
       replyTo: REPLY_TO_ADDRESS,
       ...(cc && cc.length > 0 ? { cc } : {}),
-      subject: `Invoice — ${safeServiceName} — ${invoice.invoiceNumber}`,
+      subject: `Invoice — ${safeProjectName} — ${invoice.invoiceNumber}`,
       html: getEmailTemplate(content),
       attachments,
     })

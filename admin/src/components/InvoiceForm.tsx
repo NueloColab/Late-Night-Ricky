@@ -43,6 +43,7 @@ interface InvoiceFormProps {
     clientEmail?: string | null
     clientCompany?: string | null
     projectTitle?: string | null
+    performanceDate?: string | null
     lineItems?: LineItem[]
     notes?: string | null
     taxRate?: number
@@ -68,6 +69,7 @@ interface Template {
   clientEmail?: string | null
   clientCompany?: string | null
   projectTitle?: string | null
+  performanceDate?: string | null
   lineItems?: LineItem[]
   notes?: string | null
   taxRate?: number
@@ -85,6 +87,7 @@ function InvoicePreview({
   clientCompany,
   clientEmail,
   projectTitle,
+  performanceDate,
   lineItems,
   subtotal,
   discount,
@@ -101,6 +104,7 @@ function InvoicePreview({
   clientCompany: string
   clientEmail: string
   projectTitle: string
+  performanceDate: string
   lineItems: LineItem[]
   subtotal: number
   discount: Discount
@@ -167,7 +171,10 @@ function InvoicePreview({
 
         {/* Project + Meta */}
         <div className="flex flex-col md:flex-row justify-between gap-4 text-xs text-[#5a3a1a]">
-          {projectTitle && <p><span className="font-semibold">Project:</span> {projectTitle}</p>}
+          <div>
+            {projectTitle && <p><span className="font-semibold">Project:</span> {projectTitle}</p>}
+            {performanceDate && <p><span className="font-semibold">Performance:</span> {new Date(performanceDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}</p>}
+          </div>
           <div className="flex gap-4">
             <p><span className="font-semibold">Terms:</span> {paymentTermsLabel}</p>
             {dueDate && <p><span className="font-semibold">Due:</span> {dueDate}</p>}
@@ -271,6 +278,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
   const [clientEmail, setClientEmail] = useState(invoice?.clientEmail || '')
   const [clientCompany, setClientCompany] = useState(invoice?.clientCompany || '')
   const [projectTitle, setProjectTitle] = useState(invoice?.projectTitle || '')
+  const [performanceDate, setPerformanceDate] = useState(invoice?.performanceDate || '')
   const [ccEmails, setCcEmails] = useState(invoice?.ccEmails || '')
   const [projectId, setProjectId] = useState<number | null>(invoice?.projectId ?? null)
   const [notes, setNotes] = useState(invoice?.notes || 'Thank you for doing business with Fricktion Music Ltd')
@@ -309,6 +317,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
     setClientEmail(t.clientEmail || '')
     setClientCompany(t.clientCompany || '')
     setProjectTitle(t.projectTitle || '')
+    setPerformanceDate(t.performanceDate || '')
     setCcEmails(t.ccEmails || '')
     setNotes(t.notes || 'Thank you for doing business with Fricktion Music Ltd')
     setItems(t.lineItems?.length ? t.lineItems : [{ serviceName: '', serviceCategory: '', price: 0, quantity: 1 }])
@@ -337,6 +346,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
           clientEmail,
           clientCompany,
           projectTitle,
+          performanceDate,
           lineItems: items,
           notes,
           taxRate,
@@ -447,6 +457,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
       clientEmail,
       clientCompany,
       projectTitle,
+      performanceDate: performanceDate || undefined,
       projectId: projectId || undefined,
       notes,
       lineItems: items.map((item) => ({
@@ -602,6 +613,17 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
               className={inputClass}
               placeholder="Enter project title"
               required
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
+              Performance Date
+            </label>
+            <input
+              type="date"
+              value={performanceDate}
+              onChange={(e) => setPerformanceDate(e.target.value)}
+              className={inputClass}
             />
           </div>
         </div>
@@ -820,6 +842,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
         clientCompany={clientCompany}
         clientEmail={clientEmail}
         projectTitle={projectTitle}
+        performanceDate={performanceDate}
         lineItems={items}
         subtotal={subtotal}
         discount={discount}

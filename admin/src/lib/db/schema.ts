@@ -200,6 +200,7 @@ export const invoices = pgTable("invoices", {
   clientEmail: text("client_email"),
   clientCompany: text("client_company"),
   projectTitle: text("project_title"),
+  performanceDate: text("performance_date"),
   invoiceNumber: text("invoice_number").notNull().unique(),
   lineItems: jsonb("line_items").default([]),
   notes: text("notes"),
