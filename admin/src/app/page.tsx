@@ -545,16 +545,17 @@ export default async function HomePage() {
 
           {/* Carousel 1 */}
           <div className="relative overflow-hidden mb-6">
-            <div className="flex gap-4 animate-marquee-left">
-              {performersData.row1Images.map((img: string, i: number) => (
+            <div
+              className="flex gap-4"
+              style={{
+                animation: `marquee-left ${Math.max(18, performersData.row1Images.length * 3)}s linear infinite`,
+                width: 'max-content',
+              }}
+            >
+              {/* Triple the images so the track is always wider than the viewport */}
+              {[...performersData.row1Images, ...performersData.row1Images, ...performersData.row1Images].map((img: string, i: number) => (
                 <div key={i} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden">
-                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
-                </div>
-              ))}
-              {/* Duplicate for seamless loop */}
-              {performersData.row1Images.map((img: string, i: number) => (
-                <div key={`dup-${i}`} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden">
-                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
+                  <img src={img} alt={`Artist ${(i % performersData.row1Images.length) + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
             </div>
@@ -562,16 +563,16 @@ export default async function HomePage() {
 
           {/* Carousel 2 — opposite direction */}
           <div className="relative overflow-hidden mb-16">
-            <div className="flex gap-4 animate-marquee-right">
-              {performersData.row2Images.map((img: string, i: number) => (
+            <div
+              className="flex gap-4"
+              style={{
+                animation: `marquee-right ${Math.max(18, performersData.row2Images.length * 3)}s linear infinite`,
+                width: 'max-content',
+              }}
+            >
+              {[...performersData.row2Images, ...performersData.row2Images, ...performersData.row2Images].map((img: string, i: number) => (
                 <div key={i} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden">
-                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
-                </div>
-              ))}
-              {/* Duplicate for seamless loop */}
-              {performersData.row2Images.map((img: string, i: number) => (
-                <div key={`dup2-${i}`} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden">
-                  <img src={img} alt={`Artist ${i + 1}`} className="w-full h-full object-cover" />
+                  <img src={img} alt={`Artist ${(i % performersData.row2Images.length) + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
             </div>

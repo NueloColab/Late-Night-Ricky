@@ -2248,7 +2248,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* Marquee carousel */
 @keyframes marquee-left {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-33.333%); }
 }
 .animate-bounce-slow { animation: bounce-slow 2s ease-in-out infinite; }
 @keyframes bounce-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
@@ -2258,7 +2258,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 @keyframes marquee-right {
-  0% { transform: translateX(-50%); }
+  0% { transform: translateX(-33.333%); }
   100% { transform: translateX(0); }
 }
 .animate-marquee-right {
