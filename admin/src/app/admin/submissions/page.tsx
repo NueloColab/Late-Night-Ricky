@@ -8,6 +8,8 @@ interface Submission {
   email: string
   artistName: string | null
   trackTitle: string | null
+  genre: string | null
+  bpm: number | null
   filePath: string | null
   fileSize: number | null
   fileName: string | null
@@ -278,6 +280,8 @@ export default function SubmissionsPage() {
                             <span className="text-[#6B8FAB]">Artist</span><span className="text-[#111] text-right">{s.artistName || '-'}</span>
                             {s.instagramHandle && <><span className="text-[#6B8FAB]">Instagram</span><span className="text-[#111] text-right">{s.instagramHandle}</span></>}
                             <span className="text-[#6B8FAB]">Track</span><span className="text-[#111] text-right">{s.trackTitle || '-'}</span>
+                            <span className="text-[#6B8FAB]">Genre</span><span className="text-[#111] text-right">{s.genre || '-'}</span>
+                            <span className="text-[#6B8FAB]">BPM</span><span className="text-[#111] text-right">{s.bpm || '-'}</span>
                             <span className="text-[#6B8FAB]">Date</span><span className="text-[#111] text-right">{formatDate(s.createdAt)}</span>
                             <span className="text-[#6B8FAB]">Size</span><span className="text-[#111] text-right">{formatSize(s.fileSize)}</span>
                           </div>

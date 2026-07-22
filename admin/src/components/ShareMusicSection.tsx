@@ -13,6 +13,8 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
   const [email, setEmail] = useState('');
   const [artistName, setArtistName] = useState('');
   const [trackTitle, setTrackTitle] = useState('');
+  const [genre, setGenre] = useState('');
+  const [bpm, setBpm] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
@@ -84,6 +86,8 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
           email,
           artistName: artistName || null,
           trackTitle: trackTitle || null,
+          genre: genre || null,
+          bpm: bpm || null,
           instagramHandle: null,
           fileUrl,
           fileName: file.name,
@@ -99,6 +103,8 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
       setFile(null);
       setArtistName('');
       setTrackTitle('');
+      setGenre('');
+      setBpm('');
       setEmail('');
     } catch (err: any) {
       setStatus('error');
@@ -189,6 +195,22 @@ export default function ShareMusicSection({ headline, description }: ShareMusicS
                 value={trackTitle}
                 onChange={(e) => setTrackTitle(e.target.value)}
                 placeholder="Track title"
+                className="w-full px-5 py-3 border-2 border-white/50 text-white placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-white bg-transparent"
+              />
+              <input
+                type="text"
+                value={genre}
+                onChange={(e) => setGenre(e.target.value)}
+                placeholder="Genre (e.g. House, Hip-Hop, Afrobeat)"
+                className="w-full px-5 py-3 border-2 border-white/50 text-white placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-white bg-transparent"
+              />
+              <input
+                type="number"
+                value={bpm}
+                onChange={(e) => setBpm(e.target.value)}
+                placeholder="BPM (e.g. 128)"
+                min="40"
+                max="300"
                 className="w-full px-5 py-3 border-2 border-white/50 text-white placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-white bg-transparent"
               />
             </div>

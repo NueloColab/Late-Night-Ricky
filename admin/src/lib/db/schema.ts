@@ -89,6 +89,8 @@ export const submissions = pgTable("submissions", {
   email: text("email").notNull(),
   artistName: text("artist_name"),
   trackTitle: text("track_title"),
+  genre: text("genre"),
+  bpm: integer("bpm"),
   filePath: text("file_path"),
   fileSize: integer("file_size"),
   instagramHandle: text("instagram_handle"),

@@ -9,6 +9,8 @@ export default function ShareMusicCTA({ headline, description, ctaText, ctaLink 
   const [artistName, setArtistName] = useState('');
   const [instagram, setInstagram] = useState('');
   const [trackTitle, setTrackTitle] = useState('');
+  const [genre, setGenre] = useState('');
+  const [bpm, setBpm] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [dragOver, setDragOver] = useState(false);
@@ -59,6 +61,8 @@ export default function ShareMusicCTA({ headline, description, ctaText, ctaLink 
           email,
           artistName: artistName || null,
           trackTitle: trackTitle || null,
+          genre: genre || null,
+          bpm: bpm || null,
           instagramHandle: instagram || null,
           fileUrl,
           fileName: file!.name,
@@ -170,6 +174,24 @@ export default function ShareMusicCTA({ headline, description, ctaText, ctaLink 
                     value={instagram}
                     onChange={(e) => setInstagram(e.target.value)}
                     placeholder="Your Instagram"
+                    className="garrix-cta-input"
+                    style={{ background: 'rgba(90,58,26,0.05)', borderColor: 'rgba(90,58,26,0.15)', color: '#2a1a0a' }}
+                  />
+                  <input
+                    type="text"
+                    value={genre}
+                    onChange={(e) => setGenre(e.target.value)}
+                    placeholder="Genre (e.g. House, Hip-Hop)"
+                    className="garrix-cta-input"
+                    style={{ background: 'rgba(90,58,26,0.05)', borderColor: 'rgba(90,58,26,0.15)', color: '#2a1a0a' }}
+                  />
+                  <input
+                    type="number"
+                    value={bpm}
+                    onChange={(e) => setBpm(e.target.value)}
+                    placeholder="BPM (e.g. 128)"
+                    min="40"
+                    max="300"
                     className="garrix-cta-input"
                     style={{ background: 'rgba(90,58,26,0.05)', borderColor: 'rgba(90,58,26,0.15)', color: '#2a1a0a' }}
                   />

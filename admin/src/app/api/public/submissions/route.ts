@@ -70,6 +70,8 @@ export async function POST(request: Request) {
     let email: string;
     let artistName: string | null = null;
     let trackTitle: string | null = null;
+    let genre: string | null = null;
+    let bpm: number | null = null;
     let instagramHandle: string | null = null;
     let filePath: string | null = null;
     let fileSize: number | null = null;
@@ -80,6 +82,8 @@ export async function POST(request: Request) {
       email = body.email;
       artistName = body.artistName || null;
       trackTitle = body.trackTitle || null;
+      genre = body.genre || null;
+      bpm = body.bpm ? parseInt(body.bpm, 10) : null;
       instagramHandle = body.instagramHandle || null;
       filePath = body.fileUrl || null;
       fileSize = body.fileSize || null;
@@ -89,6 +93,9 @@ export async function POST(request: Request) {
       email = formData.get('email') as string;
       artistName = formData.get('artistName') as string | null;
       trackTitle = formData.get('trackTitle') as string | null;
+      genre = formData.get('genre') as string | null;
+      const bpmVal = formData.get('bpm');
+      bpm = bpmVal ? parseInt(bpmVal as string, 10) : null;
       instagramHandle = formData.get('instagramHandle') as string | null;
       const file = formData.get('file') as File | null;
 
@@ -115,6 +122,8 @@ export async function POST(request: Request) {
         email,
         artistName: artistName || null,
         trackTitle: trackTitle || null,
+        genre: genre || null,
+        bpm: bpm || null,
         instagramHandle: instagramHandle || null,
         filePath,
         fileSize,
