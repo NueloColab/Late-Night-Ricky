@@ -627,8 +627,8 @@ export default async function HomePage() {
         <div className="garrix-section-inner">
           <div className="garrix-radio-grid">
             <div className="garrix-radio-text">
-              <span className="garrix-label-tag">Listen & Download</span>
-              <h2 className="garrix-heading">Music & Mixes</h2>
+              <span className="garrix-label-tag">{radioLabel}</span>
+              <h2 className="garrix-heading">{radioHeadline}</h2>
               <p className="garrix-body-text">{radioDescription}</p>
               <div className="garrix-stream-links mt-8">
                 <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" className="garrix-btn garrix-btn-outline flex items-center justify-center px-3 py-2.5" aria-label="Spotify">
