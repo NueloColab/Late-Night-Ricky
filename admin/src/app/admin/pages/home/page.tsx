@@ -827,10 +827,15 @@ function MomentsEditor({ section, onUpdate, onSave, saving, onToggleVisibility, 
             <div key={i} className="border border-[#6B8FAB]/30 p-4 space-y-3 bg-white">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px]">Moment #{i + 1}</span>
-                <div className="flex items-center gap-0.5">
-                  <button onClick={() => moveItem(i, 'up')} disabled={i === 0} className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"><ChevronUp size={16} /></button>
-                  <button onClick={() => moveItem(i, 'down')} disabled={i === items.length - 1} className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"><ChevronDown size={16} /></button>
-                  <button onClick={() => removeItem(i)} className="p-1.5 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><Trash2 size={16} /></button>
+                <div className="flex items-center gap-2">
+                  {/* Reorder controls — grouped with background */}
+                  <div className="flex items-center bg-[#E3E8ED]/60 rounded-lg border border-[#6B8FAB]/20">
+                    <button onClick={() => moveItem(i, 'up')} disabled={i === 0} className="px-2 py-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-white rounded-l-lg transition-colors disabled:opacity-30"><ChevronUp size={18} /></button>
+                    <div className="w-px h-4 bg-[#6B8FAB]/20" />
+                    <button onClick={() => moveItem(i, 'down')} disabled={i === items.length - 1} className="px-2 py-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-white rounded-r-lg transition-colors disabled:opacity-30"><ChevronDown size={18} /></button>
+                  </div>
+                  {/* Delete — separated by gap */}
+                  <button onClick={() => removeItem(i)} className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-red-200/50"><Trash2 size={18} /></button>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
