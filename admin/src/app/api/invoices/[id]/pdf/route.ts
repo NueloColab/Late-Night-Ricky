@@ -167,10 +167,16 @@ export async function GET(request: Request, { params }: { params: { id: string }
     page.drawText(invoice.clientName || 'Client', {
       x: 50, y: leftY, size: 13, font: helveticaBold, color: BLACK,
     });
-    leftY -= 16;
+    leftY -= 14;
+    if (invoice.clientCompany) {
+      page.drawText(invoice.clientCompany, {
+        x: 50, y: leftY, size: 10, font: helvetica, color: DARK_GREY,
+      });
+      leftY -= 12;
+    }
     if (invoice.clientEmail) {
       page.drawText(invoice.clientEmail, {
-        x: 50, y: leftY, size: 10, font: helvetica, color: DARK_GREY,
+        x: 50, y: leftY, size: 10, font: helvetica, color: MED_GREY,
       });
     }
 
@@ -187,7 +193,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       page.drawText(value, {
         x: rightColX - valueW, y: rightY - 14, size: 11, font: helveticaBold, color: BLACK,
       });
-      rightY -= 38;
+      rightY -= 34;
     };
 
     drawMetaRow('D A T E  I S S U E D', formatDate(invoice.sentAt || new Date()));
@@ -195,7 +201,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     drawMetaRow('P A Y M E N T  T E R M S', invoice.paymentTermsLabel || 'Net 30');
     drawMetaRow('I N V O I C E  N U M B E R', invoice.invoiceNumber || '—');
 
-    y = Math.min(leftY, rightY) - 25;
+    y = Math.min(leftY, rightY) - 20;
 
     // ─── PROJECT ───
     if (invoice.projectTitle) {
@@ -217,7 +223,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       page.drawText(itemText, {
         x: 130 + titleW + 8, y, size: 10, font: helvetica, color: MED_GREY,
       });
-      y -= 25;
+      y -= 22;
     }
 
     // ─── Divider ───
@@ -225,7 +231,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       start: { x: 50, y }, end: { x: width - 50, y },
       thickness: 0.5, color: LIGHT_GREY,
     });
-    y -= 22;
+    y -= 20;
 
     // ─── LINE ITEMS TABLE ───
     const lineItemsRaw = invoice.lineItems || '[]';
@@ -299,12 +305,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const subLabelW = helvetica.widthOfTextAtSize('Subtotal:', 10);
     const subValueW = helveticaBold.widthOfTextAtSize(subStr, 10);
     page.drawText('Subtotal:', {
-      x: totalsRightX - subLabelW - subValueW - 15, y, size: 10, font: helvetica, color: MED_GREY,
+      x: totalsRightX - subLabelW - subValueW - 20, y, size: 10, font: helvetica, color: MED_GREY,
     });
     page.drawText(subStr, {
       x: totalsRightX - subValueW, y, size: 10, font: helveticaBold, color: BLACK,
     });
-    y -= 22;
+    y -= 20;
 
     // Discount
     if (discountEnabled && discountAmount > 0) {
@@ -313,12 +319,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
       const discLabelW = helvetica.widthOfTextAtSize(discLabel, 10);
       const discValueW = helveticaBold.widthOfTextAtSize(discStr, 10);
       page.drawText(discLabel, {
-        x: totalsRightX - discLabelW - discValueW - 15, y, size: 10, font: helvetica, color: MED_GREY,
+        x: totalsRightX - discLabelW - discValueW - 20, y, size: 10, font: helvetica, color: MED_GREY,
       });
       page.drawText(discStr, {
         x: totalsRightX - discValueW, y, size: 10, font: helveticaBold, color: BLACK,
       });
-      y -= 22;
+      y -= 20;
     }
 
     // VAT
@@ -330,7 +336,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       const vatLabelW = helvetica.widthOfTextAtSize(vatLabel, 10);
       const vatValueW = helveticaBold.widthOfTextAtSize(vatStr, 10);
       page.drawText(vatLabel, {
-        x: totalsRightX - vatLabelW - vatValueW - 15, y, size: 10, font: helvetica, color: MED_GREY,
+        x: totalsRightX - vatLabelW - vatValueW - 20, y, size: 10, font: helvetica, color: MED_GREY,
       });
       page.drawText(vatStr, {
         x: totalsRightX - vatValueW, y, size: 10, font: helveticaBold, color: BLACK,
@@ -339,7 +345,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       const vatLabelW = helvetica.widthOfTextAtSize('VAT:', 10);
       const naW = helvetica.widthOfTextAtSize('N/A', 10);
       page.drawText('VAT:', {
-        x: totalsRightX - vatLabelW - naW - 15, y, size: 10, font: helvetica, color: MED_GREY,
+        x: totalsRightX - vatLabelW - naW - 20, y, size: 10, font: helvetica, color: MED_GREY,
       });
       page.drawText('N/A', {
         x: totalsRightX - naW, y, size: 10, font: helvetica, color: MED_GREY,
@@ -349,22 +355,22 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     // Separator line above Total
     page.drawLine({
-      start: { x: 320, y: y + 6 }, end: { x: width - 50, y: y + 6 },
-      thickness: 1.2, color: BLACK,
+      start: { x: 320, y: y + 8 }, end: { x: width - 50, y: y + 8 },
+      thickness: 1.5, color: BLACK,
     });
-    y -= 10;
+    y -= 12;
 
     // Total
     const totalStr = formatCurrency(total);
     const totalLabelW = helveticaBold.widthOfTextAtSize('Total:', 14);
     const totalValueW = helveticaBold.widthOfTextAtSize(totalStr, 14);
     page.drawText('Total:', {
-      x: totalsRightX - totalLabelW - totalValueW - 15, y, size: 14, font: helveticaBold, color: BLACK,
+      x: totalsRightX - totalLabelW - totalValueW - 20, y, size: 14, font: helveticaBold, color: BLACK,
     });
     page.drawText(totalStr, {
       x: totalsRightX - totalValueW, y, size: 14, font: helveticaBold, color: BLACK,
     });
-    y -= 40;
+    y -= 45;
 
     // ─── PAYMENT SCHEDULE ───
     const scheduleRaw = invoice.paymentSchedule || [];
@@ -409,19 +415,19 @@ export async function GET(request: Request, { params }: { params: { id: string }
           x: 50, y, size: 10, font: helvetica, color: BLACK,
         });
         page.drawText(`${item.percent || 0}%`, {
-          x: 250, y, size: 10, font: helvetica, color: BLACK,
+          x: 230, y, size: 10, font: helvetica, color: BLACK,
         });
         page.drawText(String(item.due || '—'), {
-          x: 300, y, size: 10, font: helvetica, color: BLACK,
+          x: 290, y, size: 10, font: helvetica, color: BLACK,
         });
         const schedAmtStr = formatCurrency((total * (item.percent || 0)) / 100);
         const schedW = helveticaBold.widthOfTextAtSize(schedAmtStr, 10);
         page.drawText(schedAmtStr, {
           x: width - 50 - schedW, y, size: 10, font: helveticaBold, color: BLACK,
         });
-        y -= 22;
+        y -= 24;
       });
-      y -= 18;
+      y -= 20;
     }
 
     // ─── BANK DETAILS ───
@@ -444,7 +450,16 @@ export async function GET(request: Request, { params }: { params: { id: string }
     if (swiftCode) bankRows.push({ label: 'SWIFT:', value: swiftCode, label2: '', value2: '' });
     if (iban) bankRows.push({ label: 'IBAN:', value: iban, label2: '', value2: '' });
 
-    const bankBlockH = bankRows.length * 18 + 16;
+    // Calculate block height including notes
+    let notesLines = 0;
+    if (invoice.notes) {
+      const notesText = String(invoice.notes);
+      const notesMaxWidth = width - 130;
+      const lines = wrapText(notesText, helvetica, 9, notesMaxWidth);
+      notesLines = Math.min(lines.length, 4);
+    }
+    const bankBlockH = bankRows.length * 18 + 16 + (notesLines > 0 ? 20 + notesLines * 13 : 0);
+
     page.drawRectangle({
       x: 50, y: y - bankBlockH, width: width - 100, height: bankBlockH,
       color: LIGHT_GREY,
@@ -452,9 +467,9 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     let by = y - 14;
     const labelX = 65;
-    const valueX = 175;
-    const col2LabelX = 310;
-    const col2ValueX = 400;
+    const valueX = 170;
+    const col2LabelX = 300;
+    const col2ValueX = 390;
 
     bankRows.forEach((row) => {
       page.drawText(row.label, { x: labelX, y: by, size: 9, font: helvetica, color: DARK_GREY });
@@ -465,21 +480,20 @@ export async function GET(request: Request, { params }: { params: { id: string }
       }
       by -= 18;
     });
-    y -= bankBlockH + 12;
 
-    // ─── NOTES & TERMS (inside the bank block area style) ───
+    // Notes inside bank block
     if (invoice.notes) {
+      by -= 4;
       page.drawText('N O T E S  &  T E R M S', {
-        x: 65, y, size: 8, font: helveticaBold, color: MED_GREY,
+        x: labelX, y: by, size: 8, font: helveticaBold, color: MED_GREY,
       });
-      y -= 14;
-
+      by -= 14;
       const notesText = String(invoice.notes);
       const notesMaxWidth = width - 130;
       const lines = wrapText(notesText, helvetica, 9, notesMaxWidth);
-      lines.slice(0, 6).forEach((l) => {
-        page.drawText(l, { x: 65, y, size: 9, font: helvetica, color: DARK_GREY });
-        y -= 13;
+      lines.slice(0, 4).forEach((l) => {
+        page.drawText(l, { x: labelX, y: by, size: 9, font: helvetica, color: DARK_GREY });
+        by -= 13;
       });
     }
 
