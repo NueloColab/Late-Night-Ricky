@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { Play, Pause, Download, Trash2, ChevronDown, ChevronUp, Music, Mail, User, Calendar, FileAudio,  } from 'lucide-react'
+import { Play, Pause, Download, Trash2, ChevronDown, ChevronUp, Music, Mail, User, Calendar, FileAudio, Gauge } from 'lucide-react'
 
 interface Submission {
   id: number
@@ -294,8 +294,8 @@ export default function SubmissionsPage() {
                     <div className="flex items-center gap-3 mt-0.5 text-xs text-[#6B8FAB]">
                       <span className="flex items-center gap-1"><User size={11} /> {s.artistName || 'Unknown'}</span>
                       {s.instagramHandle && <span className="flex items-center gap-1"><svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg> {s.instagramHandle}</span>}
-                      {s.genre && <span className="flex items-center gap-1">🎵 {s.genre}</span>}
-                      {s.bpm && <span className="flex items-center gap-1">⏱️ {s.bpm} BPM</span>}
+                      {s.genre && <span className="flex items-center gap-1"><Music size={11} /> {s.genre}</span>}
+                      {s.bpm && <span className="flex items-center gap-1"><Gauge size={11} /> {s.bpm} BPM</span>}
                       <span className="flex items-center gap-1"><Calendar size={11} /> {formatDate(s.createdAt)}</span>
                     </div>
                   </div>
