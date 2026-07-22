@@ -86,6 +86,7 @@ function InvoicePreview({
   clientCompany,
   clientEmail,
   projectTitle,
+  performanceDate,
   lineItems,
   subtotal,
   discount,
@@ -102,6 +103,7 @@ function InvoicePreview({
   clientCompany: string
   clientEmail: string
   projectTitle: string
+  performanceDate: string
   lineItems: LineItem[]
   subtotal: number
   discount: Discount
@@ -125,14 +127,14 @@ function InvoicePreview({
       .catch(() => {})
   }, [])
 
-  const companyName = settings.companyName || 'Fricktion Music Ltd'
+  const companyName = settings.companyName || 'Late Night Ricky'
   const companyAddress = settings.companyAddress || ''
   const companyNumber = settings.companyNumber || ''
   const vatNumber = settings.vatNumber || ''
   const bankName = settings.bankName || 'Tide'
   const bankAccountName = settings.bankAccountName || 'Late Night Ricky'
-  const bankSortCode = settings.bankSortCode || '04-06-05'
-  const bankAccountNumber = settings.bankAccountNumber || '23690693'
+  const bankSortCode = settings.bankSortCode || '—'
+  const bankAccountNumber = settings.bankAccountNumber || '—'
   const swiftCode = settings.swiftCode || ''
   const iban = settings.iban || ''
 
@@ -168,7 +170,10 @@ function InvoicePreview({
 
         {/* Project + Meta */}
         <div className="flex flex-col md:flex-row justify-between gap-4 text-xs text-[#5a3a1a]">
-          {projectTitle && <p><span className="font-semibold">Project:</span> {projectTitle}</p>}
+          <div>
+            {projectTitle && <p><span className="font-semibold">Project:</span> {projectTitle}</p>}
+            {performanceDate && <p><span className="font-semibold">Performance:</span> {new Date(performanceDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}</p>}
+          </div>
           <div className="flex gap-4">
             <p><span className="font-semibold">Terms:</span> {paymentTermsLabel}</p>
             {dueDate && <p><span className="font-semibold">Due:</span> {dueDate}</p>}
@@ -612,12 +617,26 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
             <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
               Performance Date
             </label>
-            <input
-              type="date"
-              value={performanceDate}
-              onChange={(e) => setPerformanceDate(e.target.value)}
-              className={inputClass}
-            />
+            <div className="relative">
+              <input
+                type="date"
+                value={performanceDate}
+                onChange={(e) => setPerformanceDate(e.target.value)}
+                className={`${inputClass} pr-10`}
+              />
+              {performanceDate && (
+                <button
+                  type="button"
+                  onClick={() => setPerformanceDate('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B8FAB] hover:text-[#1B3A4C] transition-colors"
+                  title="Clear date"
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" strokeWidth="1.5" />
+                  </svg>
+                </button>
+              )}
+            </div>
           </div>
         </div>
         {projects.length > 0 && (
@@ -815,6 +834,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
         clientCompany={clientCompany}
         clientEmail={clientEmail}
         projectTitle={projectTitle}
+        performanceDate={performanceDate}
         lineItems={items}
         subtotal={subtotal}
         discount={discount}

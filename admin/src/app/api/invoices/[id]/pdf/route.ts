@@ -730,12 +730,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // Settings
     const settings = await getSettings()
     const bankName = s(settings.bankName) || 'Tide'
-    const bankAccountName = s(settings.bankAccountName) || 'Fricktion Music Ltd'
-    const bankSortCode = s(settings.bankSortCode) || '40-19-28'
-    const bankAccountNumber = s(settings.bankAccountNumber) || '22135833'
+    const bankAccountName = s(settings.bankAccountName) || 'Late Night Ricky'
+    const bankSortCode = s(settings.bankSortCode) || '—'
+    const bankAccountNumber = s(settings.bankAccountNumber) || '—'
     const swiftCode = s(settings.swiftCode) || ''
     const iban = s(settings.iban) || ''
-    const companyName = s(settings.companyName) || 'Fricktion Music Ltd'
+    const companyName = s(settings.companyName) || 'Late Night Ricky'
 
     const bankDetails = {
       bankName,
