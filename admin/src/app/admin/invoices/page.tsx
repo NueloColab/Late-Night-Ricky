@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Plus, Search, Filter, Receipt, Send, CheckCircle, Clock, Trash2, Eye, Download, RotateCcw, DollarSign, Loader2, Pencil } from 'lucide-react'
+import { Plus, Search, Filter, Receipt, Send, CheckCircle, Clock, Trash2, Eye, Download, RotateCcw, Loader2, Pencil } from 'lucide-react'
 import Modal from '@/components/Modal'
 import InvoiceForm from '@/components/InvoiceForm'
 
@@ -113,6 +113,9 @@ export default function InvoicesPage() {
     totalValue: invoices.reduce((sum, i) => sum + (i.total || 0), 0),
     outstanding: invoices
       .filter((i) => ['draft', 'sent', 'overdue'].includes(i.status))
+      .reduce((sum, i) => sum + (i.total || 0), 0),
+    totalReceived: invoices
+      .filter((i) => i.status === 'paid')
       .reduce((sum, i) => sum + (i.total || 0), 0),
   }
 
@@ -232,7 +235,7 @@ export default function InvoicesPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
         <div className="bg-white border border-[#6B8FAB]/30 p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="p-2 bg-[#1B3A4C] text-white rounded-lg"><Receipt size={16} /></div>
@@ -256,7 +259,7 @@ export default function InvoicesPage() {
         </div>
         <div className="bg-white border border-[#6B8FAB]/30 p-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 bg-[#6B8FAB] text-white rounded-lg"><DollarSign size={16} /></div>
+            <div className="p-2 bg-[#6B8FAB] text-white rounded-lg flex items-center justify-center w-[34px] h-[34px] text-sm font-bold">£</div>
           </div>
           <p className="text-[clamp(28px,4vw,42px)] font-black text-[#6B8FAB] leading-none tracking-[-1px]">
             {loading
@@ -266,6 +269,19 @@ export default function InvoicesPage() {
                 )}
           </p>
           <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Outstanding</p>
+        </div>
+        <div className="bg-white border border-[#6B8FAB]/30 p-5">
+          <div className="flex items-center justify-between mb-3">
+            <div className="p-2 bg-[#2d6a2d] text-white rounded-lg flex items-center justify-center w-[34px] h-[34px] text-sm font-bold">£</div>
+          </div>
+          <p className="text-[clamp(28px,4vw,42px)] font-black text-[#2d6a2d] leading-none tracking-[-1px]">
+            {loading
+              ? '–'
+              : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
+                  stats.totalReceived
+                )}
+          </p>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-[#6B8FAB] font-medium mt-2">Total Received</p>
         </div>
       </div>
 

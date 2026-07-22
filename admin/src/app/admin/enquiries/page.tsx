@@ -19,7 +19,6 @@ import {
   Building2,
   Calendar,
   MapPin,
-  DollarSign,
 } from 'lucide-react'
 import { showToast } from '@/components/Toast'
 
@@ -453,7 +452,7 @@ export default function EnquiriesPage() {
                     <div>
                       <p className="text-xs uppercase tracking-widest text-[#6B8FAB] mb-1">Fee</p>
                       <div className="flex items-center gap-2">
-                        <DollarSign className="w-4 h-4 text-[#6B8FAB]" />
+                        <span className="text-[#6B8FAB] text-sm font-bold">£</span>
                         <p className="text-sm text-[#111]">{selectedEnquiry.fee}</p>
                       </div>
                     </div>

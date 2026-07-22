@@ -57,7 +57,7 @@ async function getSettings() {
   return {}
 }
 
-async function sendEmailWithFallback(
+export async function sendEmailWithFallback(
   mailOptions: nodemailer.SendMailOptions & { cc?: string | string[] }
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
   if (useResend && resendClient) {

@@ -19,7 +19,6 @@ import {
   Mail,
   Paperclip,
   ChevronDown,
-  DollarSign,
   CheckSquare,
 } from "lucide-react";
 import MoodBoardSection from "@/components/MoodBoardSection";
@@ -752,7 +751,7 @@ export default function ProjectDetailPage() {
           <div className="bg-white border border-[#6B8FAB]/20 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <DollarSign size={18} className="text-[#6B8FAB]" />
+                <span className="text-[#6B8FAB] text-lg font-bold">£</span>
                 <h3 className="font-black text-lg text-[#111] tracking-[-0.5px] uppercase">Referrals & Commissions</h3>
               </div>
               <button

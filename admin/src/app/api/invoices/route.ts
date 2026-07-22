@@ -54,7 +54,36 @@ export async function PUT(request: Request) {
     const body = await request.json();
     const { id, ...updateData } = body;
     if (!id) return NextResponse.json({ error: 'Missing id' }, { status: 400 });
-    
+
+    // Recalculate totals server-side if lineItems are provided
+    if (updateData.lineItems && Array.isArray(updateData.lineItems)) {
+      const items = updateData.lineItems.map((item: any) => ({
+        ...item,
+        amount: (Number(item.price) || 0) * (Number(item.quantity) || 1),
+      }));
+      updateData.lineItems = items;
+
+      const subtotal = items.reduce((sum: number, item: any) => sum + (item.amount || 0), 0);
+
+      const discountRaw = updateData.discount || {};
+      const discount = typeof discountRaw === 'string' ? JSON.parse(discountRaw) : discountRaw;
+      const discountEnabled = discount?.enabled || false;
+      const discountPercent = discount?.percent || 0;
+      const discountAmount = discountEnabled ? (subtotal * discountPercent) / 100 : 0;
+
+      const taxable = subtotal - discountAmount;
+      const taxRate = Number(updateData.taxRate || 0);
+      const vatEnabled = updateData.vatEnabled !== false;
+      const tax = vatEnabled && taxRate > 0 ? taxable * (taxRate / 100) : 0;
+      const total = taxable + tax;
+
+      updateData.subtotal = Number(subtotal.toFixed(2));
+      updateData.total = Number(total.toFixed(2));
+      if (discountEnabled) {
+        updateData.discount = { ...discount, amount: Number(discountAmount.toFixed(2)) };
+      }
+    }
+
     // Set sentAt when status changes to sent
     if (updateData.status === 'sent' && !updateData.sentAt) {
       updateData.sentAt = new Date();
@@ -67,7 +96,7 @@ export async function PUT(request: Request) {
     if (updateData.status && updateData.status !== 'paid') {
       updateData.paidAt = null;
     }
-    
+
     const cleaned = cleanBody(updateData);
     await db.update(invoices).set(cleaned).where(eq(invoices.id, id));
     const [row] = await db.select().from(invoices).where(eq(invoices.id, id));
