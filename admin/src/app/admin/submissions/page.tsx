@@ -164,6 +164,15 @@ export default function SubmissionsPage() {
       const res = await fetch(url)
       if (!res.ok) throw new Error('Download failed')
       const blob = await res.blob()
+
+      // iOS: use native Share sheet for premium UX
+      const file = new File([blob], filename, { type: blob.type || 'audio/mpeg' })
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: filename })
+        return
+      }
+
+      // Desktop: standard blob download
       const blobUrl = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = blobUrl
@@ -172,7 +181,9 @@ export default function SubmissionsPage() {
       a.click()
       document.body.removeChild(a)
       window.URL.revokeObjectURL(blobUrl)
-    } catch (err) {
+    } catch (err: any) {
+      // User cancelled share sheet — don't show error
+      if (err.name === 'AbortError') return
       console.error('Download failed', err)
       window.open(url, '_blank')
     }
@@ -303,8 +314,8 @@ export default function SubmissionsPage() {
                   {/* Actions */}
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {s.filePath && (
-                      <button onClick={(e) => { e.stopPropagation(); downloadFile(s.filePath!, s.fileName || `${s.trackTitle || 'track'}.mp3`) }} className="w-8 h-8 rounded-full flex items-center justify-center text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] transition" title="Download">
-                        <Download size={14} />
+                      <button onClick={(e) => { e.stopPropagation(); downloadFile(s.filePath!, s.fileName || `${s.trackTitle || 'track'}.mp3`) }} className="w-8 h-8 rounded-full flex items-center justify-center text-[#6B8FAB] hover:text-white hover:bg-[#1B3A4C] transition shadow-sm" title="Download">
+                        <Download size={14} strokeWidth={2} />
                       </button>
                     )}
                     <button onClick={(e) => { e.stopPropagation(); deleteSubmission(s.id) }} className="w-8 h-8 rounded-full flex items-center justify-center text-[#6B8FAB]/50 hover:text-red-500 hover:bg-red-50 transition" title="Delete">
@@ -343,8 +354,8 @@ export default function SubmissionsPage() {
                               </div>
                               <span className="text-xs text-[#C5E5F8]">{formatTime(audioDuration)}</span>
                             </div>
-                            <button onClick={() => downloadFile(s.filePath!, s.fileName || `${s.trackTitle || 'track'}.mp3`)} className="mt-3 flex items-center justify-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded text-xs text-white font-semibold uppercase tracking-wider transition w-full">
-                              <Download size={12} /> Download
+                            <button onClick={() => downloadFile(s.filePath!, s.fileName || `${s.trackTitle || 'track'}.mp3`)} className="mt-4 flex items-center justify-center gap-2.5 px-5 py-2.5 bg-white/90 hover:bg-white text-[#1B3A4C] rounded-full text-xs font-semibold uppercase tracking-wider transition w-full shadow-lg shadow-black/20">
+                              <Download size={14} strokeWidth={2.5} /> Download Track
                             </button>
                           </div>
                         ) : (
