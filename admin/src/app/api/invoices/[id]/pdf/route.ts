@@ -510,7 +510,7 @@ function InvoicePDF({ invoice, logoBase64, bankDetails, companyName }: {
           logoBase64 ? e(Image, { style: styles.logo, src: logoBase64 }) : null,
           e(View, { style: styles.brandBlock },
             e(Text, { style: styles.brandName }, 'LATE NIGHT RICKY'),
-            e(Text, { style: styles.tagline }, 'Brand Strategy, Communications \u0026 Digital Innovation')
+            e(Text, { style: styles.tagline }, 'GRAMMY WINNING PRODUCER | INTERNATIONAL DJ')
           )
         ),
         e(View, { style: styles.headerRight },
@@ -672,7 +672,7 @@ function InvoicePDF({ invoice, logoBase64, bankDetails, companyName }: {
       // FOOTER
       e(View, { style: styles.footer },
         e(Text, { style: styles.footerBrand }, companyName),
-        e(Text, { style: styles.footerText }, 'Brand Strategy, Communications \u0026 Digital Innovation'),
+        e(Text, { style: styles.footerText }, 'GRAMMY WINNING PRODUCER | INTERNATIONAL DJ'),
         e(Text, { style: styles.footerText }, 'This is an invoice for services rendered. Payment is due by the date specified above. Thank you for your business.')
       )
     )
