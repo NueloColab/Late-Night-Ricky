@@ -68,10 +68,10 @@ const DEFAULT_CLIENTS = [
 ];
 
 const DEFAULT_TRACKS = [
-  { title: 'Late Night Ricky — Midnight in London', time: '0:30' },
-  { title: 'Late Night Ricky — Vegas Lights', time: '0:30' },
-  { title: 'Late Night Ricky — Ibiza Sunrise', time: '0:30' },
-  { title: 'Late Night Ricky — South Side', time: '0:30' },
+  { title: 'Late Night Ricky — Midnight in London', time: '0:30', src: null, cover: undefined, spotifyUrl: undefined, appleMusicUrl: undefined, youtubeUrl: undefined },
+  { title: 'Late Night Ricky — Vegas Lights', time: '0:30', src: null, cover: undefined, spotifyUrl: undefined, appleMusicUrl: undefined, youtubeUrl: undefined },
+  { title: 'Late Night Ricky — Ibiza Sunrise', time: '0:30', src: null, cover: undefined, spotifyUrl: undefined, appleMusicUrl: undefined, youtubeUrl: undefined },
+  { title: 'Late Night Ricky — South Side', time: '0:30', src: null, cover: undefined, spotifyUrl: undefined, appleMusicUrl: undefined, youtubeUrl: undefined },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -367,7 +367,15 @@ export default async function HomePage() {
       }
     }
     if (dbTracks.length > 0) {
-      tracks = dbTracks.map((t: any) => ({ title: t.title, time: t.duration || '0:30', src: t.filePath, cover: t.coverPath || undefined })).slice(0, 5);
+      tracks = dbTracks.map((t: any) => ({
+        title: t.title,
+        time: t.duration || '0:30',
+        src: t.filePath,
+        cover: t.coverPath || undefined,
+        spotifyUrl: t.spotifyUrl || undefined,
+        appleMusicUrl: t.appleMusicUrl || undefined,
+        youtubeUrl: t.youtubeUrl || undefined,
+      }));
     }
     if (dbCards.length > 0) {
       shows = dbCards.map((c: any) => ({ href: c.href || '#', image: c.imagePath || '/assets/ricky-hero-new.jpg', venue: c.venue, location: c.location, season: c.season, title: c.title, description: c.description }));
