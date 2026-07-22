@@ -74,6 +74,7 @@ const c = {
   darkText:  '#333333',
   mutedText: '#666666',
   dimText:   '#999999',
+  slate:     '#5a3a1a',
   border:    '#e5e5e5',
   bg:        '#fafafa',
   white:     '#ffffff',
@@ -251,6 +252,11 @@ const styles = StyleSheet.create({
     color: c.gold,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
+  },
+  serviceDateText: {
+    fontSize: 8.3,
+    color: c.slate,
+    marginTop: 1,
   },
   servicePriceText: {
     fontFamily: 'Helvetica-Bold',
@@ -438,6 +444,7 @@ interface LineItem {
   amount?: number
   quantity?: number
   rate?: number
+  date?: string
 }
 
 interface PaymentScheduleItem {
@@ -453,7 +460,6 @@ interface InvoiceData {
   clientEmail: string
   clientCompany: string | null
   projectTitle: string
-  performanceDate: string | null
   invoiceNumber: string
   sentAt: string | Date | null
   dueDate: string | Date | null
@@ -527,7 +533,6 @@ function InvoicePDF({ invoice, logoBase64, bankDetails, companyName }: {
         e(View, { style: styles.infoBox },
           e(Text, { style: styles.infoBoxTitle }, 'Project'),
           e(Text, { style: styles.infoNameText }, invoice.projectTitle),
-          invoice.performanceDate ? e(Text, { style: styles.infoBodyText }, `Performance: ${formatDate(invoice.performanceDate)}`) : null,
           e(Text, { style: styles.infoBodyText },
             `${invoice.lineItems?.length || 0} item${invoice.lineItems?.length !== 1 ? 's' : ''}`
           )
@@ -567,7 +572,8 @@ function InvoicePDF({ invoice, logoBase64, bankDetails, companyName }: {
           },
             e(View, { style: styles.colDesc },
               e(Text, { style: styles.serviceNameText }, service.serviceName || service.description || ''),
-              e(Text, { style: styles.serviceCatText }, service.serviceCategory || '')
+              e(Text, { style: styles.serviceCatText }, service.serviceCategory || ''),
+              service.date ? e(Text, { style: styles.serviceDateText }, formatDate(service.date)) : null
             ),
             e(View, { style: styles.colAmt },
               e(Text, { style: styles.servicePriceText }, formatCurrency(service.price || service.amount || 0))
@@ -711,7 +717,6 @@ export async function GET(request: Request, { params }: { params: { id: string }
       clientEmail: s(invoiceRow.clientEmail) || '',
       clientCompany: s(invoiceRow.clientCompany),
       projectTitle: s(invoiceRow.projectTitle) || '',
-      performanceDate: s(invoiceRow.performanceDate),
       invoiceNumber: s(invoiceRow.invoiceNumber) || '',
       sentAt: invoiceRow.sentAt,
       dueDate: s(invoiceRow.dueDate),

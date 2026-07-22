@@ -13,7 +13,6 @@ interface Invoice {
   clientEmail: string | null
   clientCompany: string | null
   projectTitle: string | null
-  performanceDate: string | null
   lineItems: {
     serviceName?: string
     serviceCategory?: string

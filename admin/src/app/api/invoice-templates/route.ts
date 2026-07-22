@@ -30,7 +30,6 @@ export async function POST(request: Request) {
       clientEmail: body.clientEmail || null,
       clientCompany: body.clientCompany || null,
       projectTitle: body.projectTitle || null,
-      performanceDate: body.performanceDate || null,
       lineItems: body.lineItems || [],
       notes: body.notes || null,
       taxRate: body.taxRate ?? 20,
