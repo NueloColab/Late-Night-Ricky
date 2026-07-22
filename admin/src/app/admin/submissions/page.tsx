@@ -41,6 +41,8 @@ export default function SubmissionsPage() {
   const [audioDuration, setAudioDuration] = useState(0)
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editForm, setEditForm] = useState<Partial<Submission>>({})
+  const [pendingNotes, setPendingNotes] = useState<Record<number, string>>({})
+  const notesTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const progressInterval = useRef<ReturnType<typeof setInterval> | null>(null)
 
@@ -97,11 +99,23 @@ export default function SubmissionsPage() {
     } catch (err) { console.error('Update failed', err) }
   }
 
-  const updateNotes = async (id: number, notes: string) => {
-    try {
-      await fetch('/api/submissions', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, notes }) })
-      setSubmissions(prev => prev.map(s => s.id === id ? { ...s, notes } : s))
-    } catch (err) { console.error('Notes update failed', err) }
+  const debouncedSaveNotes = (id: number, notes: string) => {
+    setPendingNotes(prev => ({ ...prev, [id]: notes }))
+    if (notesTimeoutRef.current) clearTimeout(notesTimeoutRef.current)
+    notesTimeoutRef.current = setTimeout(async () => {
+      try {
+        await fetch('/api/submissions', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, notes }),
+        })
+        setSubmissions(prev => prev.map(s => s.id === id ? { ...s, notes } : s))
+        setPendingNotes(prev => { const next = { ...prev }; delete next[id]; return next })
+      } catch (err) {
+        console.error('Notes update failed', err)
+        alert('Failed to save notes')
+      }
+    }, 600)
   }
 
   const startEdit = (s: Submission) => {
@@ -142,6 +156,25 @@ export default function SubmissionsPage() {
     } catch (err) {
       console.error('Edit save failed', err)
       alert('Failed to save changes')
+    }
+  }
+
+  const downloadFile = async (url: string, filename: string) => {
+    try {
+      const res = await fetch(url)
+      if (!res.ok) throw new Error('Download failed')
+      const blob = await res.blob()
+      const blobUrl = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = blobUrl
+      a.download = filename
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(blobUrl)
+    } catch (err) {
+      console.error('Download failed', err)
+      window.open(url, '_blank')
     }
   }
 
@@ -270,9 +303,9 @@ export default function SubmissionsPage() {
                   {/* Actions */}
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {s.filePath && (
-                      <a href={s.filePath} download onClick={(e) => e.stopPropagation()} className="w-8 h-8 rounded-full flex items-center justify-center text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] transition" title="Download">
+                      <button onClick={(e) => { e.stopPropagation(); downloadFile(s.filePath!, s.fileName || `${s.trackTitle || 'track'}.mp3`) }} className="w-8 h-8 rounded-full flex items-center justify-center text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] transition" title="Download">
                         <Download size={14} />
-                      </a>
+                      </button>
                     )}
                     <button onClick={(e) => { e.stopPropagation(); deleteSubmission(s.id) }} className="w-8 h-8 rounded-full flex items-center justify-center text-[#6B8FAB]/50 hover:text-red-500 hover:bg-red-50 transition" title="Delete">
                       <Trash2 size={14} />
@@ -310,9 +343,9 @@ export default function SubmissionsPage() {
                               </div>
                               <span className="text-xs text-[#C5E5F8]">{formatTime(audioDuration)}</span>
                             </div>
-                            <a href={s.filePath} download className="mt-3 flex items-center justify-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded text-xs text-white font-semibold uppercase tracking-wider transition">
+                            <button onClick={() => downloadFile(s.filePath!, s.fileName || `${s.trackTitle || 'track'}.mp3`)} className="mt-3 flex items-center justify-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded text-xs text-white font-semibold uppercase tracking-wider transition w-full">
                               <Download size={12} /> Download
-                            </a>
+                            </button>
                           </div>
                         ) : (
                           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center">
@@ -354,7 +387,14 @@ export default function SubmissionsPage() {
                         {/* Notes */}
                         <div>
                           <p className="text-[10px] text-[#6B8FAB] uppercase tracking-[2px] font-semibold mb-2">Notes</p>
-                          <textarea value={s.notes || ''} onChange={(e) => updateNotes(s.id, e.target.value)} placeholder="Add review notes..." rows={2} className="w-full px-3 py-2 bg-white border border-[#E3E8ED] rounded text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-none" />
+                          <textarea
+                            value={pendingNotes[s.id] !== undefined ? pendingNotes[s.id] : (s.notes || '')}
+                            onChange={(e) => debouncedSaveNotes(s.id, e.target.value)}
+                            placeholder="Add review notes..."
+                            rows={2}
+                            className="w-full px-3 py-2 bg-white border border-[#E3E8ED] rounded text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-none"
+                          />
+                          {pendingNotes[s.id] !== undefined && <span className="text-[10px] text-[#6B8FAB]">Saving...</span>}
                         </div>
 
                         {/* Details */}
