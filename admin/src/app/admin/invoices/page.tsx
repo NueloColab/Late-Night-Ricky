@@ -338,7 +338,7 @@ export default function InvoicesPage() {
             <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-[#6B8FAB]/30">
-                  {['Invoice #', 'Client', 'Project', 'Status', 'Due Date', 'Total', 'Actions'].map((h) => (
+                  {['Invoice #', 'Client', 'Project', 'Status', 'Performance Date', 'Due Date', 'Total', 'Actions'].map((h) => (
                     <th
                       key={h}
                       className="px-4 py-3 font-semibold uppercase tracking-wider text-xs text-[#6B8FAB]"
@@ -377,6 +377,7 @@ export default function InvoicesPage() {
                           {STATUS_LABELS[inv.status] || inv.status}
                         </span>
                       </td>
+                      <td className="px-4 py-3 text-[#a0a0a0]">{inv.performanceDate || '—'}</td>
                       <td className="px-4 py-3 text-[#a0a0a0]">{inv.dueDate || '—'}</td>
                       <td className="px-4 py-3 text-[#1B3A4C] font-semibold">£{inv.total.toLocaleString()}</td>
                       <td className="px-4 py-3">
