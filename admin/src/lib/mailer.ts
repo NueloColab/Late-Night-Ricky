@@ -240,7 +240,7 @@ export async function sendQuoteEmail(
           </tr>
         </table>` : ''}
         <p style="margin:0 0 25px 0;color:#666;font-size:14px;line-height:1.8;" class="mobile-text">Should you have any questions or wish to discuss the quote further, please do not hesitate to get in touch. We look forward to working with you.</p>
-        <p style="margin:0;color:#666;font-size:15px;line-height:1.7;" class="mobile-text">Kind regards,<br/><strong style="color:#000;">The Late Night Ricky Team</strong></p>
+        <p style="margin:0;color:#666;font-size:15px;line-height:1.7;" class="mobile-text">Kind regards,<br/><strong style="color:#000;">Late Night Ricky</strong></p>
       </div>`
 
     const attachments: any[] = []
@@ -378,13 +378,18 @@ export async function sendInvoiceEmail(
         </table>` : ''}
         <p style="margin:0 0 25px 0;color:#666;font-size:14px;line-height:1.8;text-align:center;background-color:#f9f9f9;padding:18px;border:1px solid #e5e5e5;" class="mobile-text">The full invoice with payment details is attached as a PDF.</p>
         <p style="margin:0 0 25px 0;color:#666;font-size:14px;line-height:1.8;" class="mobile-text">If you have any questions regarding this invoice, please reply to this email or contact us.</p>
-        <p style="margin:0;color:#666;font-size:15px;line-height:1.7;" class="mobile-text">Kind regards,<br/><strong style="color:#000;">The ${companyName} Team</strong></p>
+        <p style="margin:0;color:#666;font-size:15px;line-height:1.7;" class="mobile-text">Kind regards,<br/><strong style="color:#000;">Late Night Ricky</strong></p>
       </div>`
+
+    // Get primary service name for subject and filename
+    const firstItem = (invoice.lineItems || [])[0]
+    const serviceName = firstItem?.serviceName || firstItem?.description || invoice.projectTitle || 'Services'
+    const safeServiceName = String(serviceName).replace(/[^a-zA-Z0-9\s-]/g, '').trim()
 
     const attachments: any[] = []
     if (pdfBuffer) {
       attachments.push({
-        filename: `LNR-Invoice-${invoice.invoiceNumber}.pdf`,
+        filename: `LNR-Invoice-${safeServiceName}-${invoice.invoiceNumber}.pdf`,
         content: pdfBuffer,
         contentType: 'application/pdf',
       })
@@ -402,7 +407,7 @@ export async function sendInvoiceEmail(
       to: recipientEmail,
       replyTo: REPLY_TO_ADDRESS,
       ...(cc && cc.length > 0 ? { cc } : {}),
-      subject: `Invoice from ${companyName} - ${invoice.invoiceNumber}`,
+      subject: `Invoice — ${safeServiceName} — ${invoice.invoiceNumber}`,
       html: getEmailTemplate(content),
       attachments,
     })
@@ -436,7 +441,7 @@ export async function sendEnquiryReplyEmail(
           <p style="margin:0 0 8px 0;color:#999;font-size:12px;" class="mobile-text"><strong>Original Message:</strong></p>
           <p style="margin:0;color:#999;font-size:12px;line-height:1.6;" class="mobile-text">${(enquiry.message || '').substring(0, 200)}${(enquiry.message || '').length > 200 ? '...' : ''}</p>
         </div>
-        <p style="margin:30px 0 0 0;color:#666;font-size:15px;line-height:1.7;" class="mobile-text">Kind regards,<br/><strong style="color:#000;">The Late Night Ricky Team</strong></p>
+        <p style="margin:30px 0 0 0;color:#666;font-size:15px;line-height:1.7;" class="mobile-text">Kind regards,<br/><strong style="color:#000;">Late Night Ricky</strong></p>
         <p style="margin:15px 0 0 0;color:#999;font-size:12px;" class="mobile-text">Questions? Contact <a href="mailto:latenightricky@gmail.com" style="color:#2a1a0a;">latenightricky@gmail.com</a></p>
       </div>`
 
