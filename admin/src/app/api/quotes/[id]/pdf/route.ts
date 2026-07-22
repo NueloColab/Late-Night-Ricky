@@ -6,17 +6,14 @@ import { quotes } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
-// LNR brand colours - matching invoice PDF
-const BRAND_BROWN = rgb(0.165, 0.102, 0.039);    // #2a1a0a - deep brown
-const BRAND_CREAM = rgb(0.910, 0.831, 0.722);     // #e8d4b8 - warm cream
-const BRAND_GOLD = rgb(0.788, 0.663, 0.431);      // #c9a96e - gold accent
+// LNR Brand Palette
+const BRAND_BROWN = rgb(0.165, 0.102, 0.039);    // #2a1a0a — header/footer bands, primary text
+const BRAND_CREAM = rgb(0.910, 0.831, 0.722);     // #e8d4b8 — block backgrounds, footer text
+const BRAND_GOLD = rgb(0.788, 0.663, 0.431);      // #c9a96e — section labels, dividers, accents
 const BLACK = rgb(0.04, 0.04, 0.04);
-const DARK_GREY = rgb(0.25, 0.25, 0.25);
-const MED_GREY = rgb(0.45, 0.45, 0.45);
-const LIGHT_GREY = rgb(0.7, 0.7, 0.7);
-const VERY_LIGHT_GREY = rgb(0.96, 0.93, 0.90);   // warm light
+const DARK_GREY = rgb(0.30, 0.30, 0.30);
+const MED_GREY = rgb(0.55, 0.55, 0.55);
 const WHITE = rgb(1, 1, 1);
-const WARM_GREY = rgb(0.45, 0.42, 0.39);
 
 async function getSettings() {
   try {
@@ -122,7 +119,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       try {
         logoImage = await pdfDoc.embedPng(logoBytes);
         const logoAspect = logoImage.width / logoImage.height;
-        const logoMaxW = 180;
+        const logoMaxW = 140;
         const logoMaxH = 32;
         if (logoAspect > logoMaxW / logoMaxH) {
           logoW = logoMaxW;
@@ -142,38 +139,32 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // ─── TOP HEADER BAND (brown) ───
     const headerH = 80;
     page.drawRectangle({
-      x: 0, y: pageH - headerH, width, height: headerH,
+      x: 0, y: pageH - headerH, width: 595, height: headerH,
       color: BRAND_BROWN,
     });
 
-    // Logo (left side of header) or text fallback
+    page.drawText('LATE NIGHT RICKY', {
+      x: 50, y: pageH - 35, size: 8, font: helveticaBold, color: BRAND_CREAM,
+    });
+
     if (logoImage) {
       page.drawImage(logoImage, {
-        x: 40, y: pageH - 55 - (logoH / 2),
+        x: width - 50 - logoW, y: pageH - 48 - (logoH / 2),
         width: logoW, height: logoH,
-      });
-    } else {
-      page.drawText('LATE NIGHT RICKY', {
-        x: 45, y: pageH - 48, size: 16, font: helveticaBold, color: BRAND_CREAM,
-      });
-      page.drawText('International DJ & Grammy Winning Producer', {
-        x: 45, y: pageH - 62, size: 7, font: helvetica, color: BRAND_GOLD,
       });
     }
 
-    // QUOTE label (right)
+    // Tagline below header band
+    page.drawText('Brand Strategy, Communications & Digital Innovation', {
+      x: 50, y: pageH - 92, size: 8, font: helvetica, color: BRAND_GOLD,
+    });
+
+    // QUOTE title
     page.drawText('QUOTE', {
-      x: width - 120, y: pageH - 52, size: 24, font: helveticaBold, color: BRAND_CREAM,
+      x: 50, y: pageH - 118, size: 32, font: helveticaBold, color: BRAND_BROWN,
     });
 
-    // Gold line at bottom of header
-    page.drawLine({
-      start: { x: 40, y: pageH - headerH + 2 },
-      end: { x: width - 40, y: pageH - headerH + 2 },
-      thickness: 1.5, color: BRAND_GOLD,
-    });
-
-    y = pageH - headerH - 35;
+    y = pageH - 155;
 
     // ─── TWO-COLUMN: Quote To (left) + Project (right) with bordered boxes ───
     const boxH = 80;
@@ -183,14 +174,14 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // Left box: QUOTE TO
     page.drawRectangle({
       x: 50, y: y - boxH, width: boxW, height: boxH,
-      color: VERY_LIGHT_GREY,
+      color: BRAND_CREAM,
     });
     page.drawRectangle({
-      x: 50, y: y - boxH, width: boxW, height: boxH,
-      borderColor: LIGHT_GREY, borderWidth: 0.5,
+      x: 50, y: y - boxH, width: 4, height: boxH,
+      color: BRAND_GOLD,
     });
     page.drawText('QUOTE TO', {
-      x: 65, y: y - 18, size: 7, font: helveticaBold, color: MED_GREY,
+      x: 65, y: y - 18, size: 7, font: helveticaBold, color: BRAND_GOLD,
     });
     page.drawText(quote.clientName || 'Client', {
       x: 65, y: y - 34, size: 11, font: helveticaBold, color: BLACK,
@@ -210,14 +201,14 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const rightBoxX = 50 + boxW + boxGap;
     page.drawRectangle({
       x: rightBoxX, y: y - boxH, width: boxW, height: boxH,
-      color: VERY_LIGHT_GREY,
+      color: BRAND_CREAM,
     });
     page.drawRectangle({
-      x: rightBoxX, y: y - boxH, width: boxW, height: boxH,
-      borderColor: LIGHT_GREY, borderWidth: 0.5,
+      x: rightBoxX, y: y - boxH, width: 4, height: boxH,
+      color: BRAND_GOLD,
     });
     page.drawText('PROJECT', {
-      x: rightBoxX + 15, y: y - 18, size: 7, font: helveticaBold, color: MED_GREY,
+      x: rightBoxX + 15, y: y - 18, size: 7, font: helveticaBold, color: BRAND_GOLD,
     });
     page.drawText(quote.projectTitle || '—', {
       x: rightBoxX + 15, y: y - 34, size: 11, font: helveticaBold, color: BLACK,
@@ -233,11 +224,11 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const metaH = 48;
     page.drawRectangle({
       x: 50, y: y - metaH, width: width - 100, height: metaH,
-      color: VERY_LIGHT_GREY,
+      color: BRAND_CREAM,
     });
     page.drawRectangle({
-      x: 50, y: y - metaH, width: width - 100, height: metaH,
-      borderColor: LIGHT_GREY, borderWidth: 0.5,
+      x: 50, y: y - metaH, width: 4, height: metaH,
+      color: BRAND_GOLD,
     });
 
     const metaItems = [
@@ -253,7 +244,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       const labelW = helveticaBold.widthOfTextAtSize(item.label, 7);
       const valueW = helveticaBold.widthOfTextAtSize(item.value, 9);
       page.drawText(item.label, {
-        x: cx - (labelW / 2), y: y - 15, size: 7, font: helveticaBold, color: MED_GREY,
+        x: cx - (labelW / 2), y: y - 15, size: 7, font: helveticaBold, color: BRAND_GOLD,
       });
       page.drawText(item.value, {
         x: cx - (valueW / 2), y: y - 32, size: 9, font: helveticaBold, color: BLACK,
@@ -269,7 +260,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       : JSON.parse(typeof lineItemsRaw === 'string' ? lineItemsRaw : '[]');
 
     if (lineItems.length > 0) {
-      // Table header - dark brown bar with cream text (2 columns: Description + Amount)
+      // Table header - dark brown bar with cream text
       page.drawRectangle({
         x: 50, y: y - 26, width: width - 100, height: 32,
         color: BRAND_BROWN,
@@ -297,7 +288,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         if (idx % 2 === 1) {
           page.drawRectangle({
             x: 50, y: y - 18, width: width - 100, height: 34,
-            color: VERY_LIGHT_GREY,
+            color: BRAND_CREAM,
           });
         }
 
@@ -305,7 +296,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         page.drawLine({
           start: { x: 50, y: y - 20 },
           end: { x: width - 50, y: y - 20 },
-          thickness: 0.5, color: LIGHT_GREY,
+          thickness: 0.5, color: BRAND_GOLD,
         });
 
         page.drawText(desc, {
@@ -346,24 +337,28 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const totalsBoxH = totalsLines * 22 + 20;
     page.drawRectangle({
       x: totalsX, y: y - totalsBoxH + 10, width: totalsW, height: totalsBoxH,
-      color: VERY_LIGHT_GREY,
+      color: BRAND_CREAM,
+    });
+    page.drawRectangle({
+      x: totalsX, y: y - totalsBoxH + 10, width: 4, height: totalsBoxH,
+      color: BRAND_GOLD,
     });
 
     // Subtotal
     page.drawText('Subtotal', {
-      x: totalsX + 12, y, size: 9, font: helvetica, color: WARM_GREY,
+      x: totalsX + 12, y, size: 9, font: helvetica, color: DARK_GREY,
     });
     const subtotalStr = formatCurrency(subtotal);
     const subtotalW = helvetica.widthOfTextAtSize(subtotalStr, 9);
     page.drawText(subtotalStr, {
-      x: rightAlign - subtotalW, y, size: 9, font: helvetica, color: BRAND_BROWN,
+      x: rightAlign - subtotalW, y, size: 9, font: helvetica, color: BLACK,
     });
     y -= 22;
 
     if (discountEnabled && discountAmount > 0) {
       const discountLabel = `${discountPercent}% Discount`;
       page.drawText(discountLabel, {
-        x: totalsX + 12, y, size: 9, font: helvetica, color: WARM_GREY,
+        x: totalsX + 12, y, size: 9, font: helvetica, color: DARK_GREY,
       });
       const discountStr = `-${formatCurrency(discountAmount)}`;
       const discountW = helvetica.widthOfTextAtSize(discountStr, 9);
@@ -377,19 +372,19 @@ export async function GET(request: Request, { params }: { params: { id: string }
       const tax = Number(quote.taxRate || 0);
       const taxAmount = (subtotal - discountAmount) * (tax / 100);
       page.drawText(`VAT (${tax}%)`, {
-        x: totalsX + 12, y, size: 9, font: helvetica, color: WARM_GREY,
+        x: totalsX + 12, y, size: 9, font: helvetica, color: DARK_GREY,
       });
       const vatStr = formatCurrency(taxAmount);
       const vatW = helvetica.widthOfTextAtSize(vatStr, 9);
       page.drawText(vatStr, {
-        x: rightAlign - vatW, y, size: 9, font: helvetica, color: BRAND_BROWN,
+        x: rightAlign - vatW, y, size: 9, font: helvetica, color: BLACK,
       });
     } else {
       page.drawText('VAT', {
-        x: totalsX + 12, y, size: 9, font: helvetica, color: WARM_GREY,
+        x: totalsX + 12, y, size: 9, font: helvetica, color: DARK_GREY,
       });
       page.drawText('N/A', {
-        x: rightAlign - helvetica.widthOfTextAtSize('N/A', 9), y, size: 9, font: helvetica, color: WARM_GREY,
+        x: rightAlign - helvetica.widthOfTextAtSize('N/A', 9), y, size: 9, font: helvetica, color: DARK_GREY,
       });
     }
     y -= 22;
@@ -398,7 +393,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     page.drawLine({
       start: { x: totalsX + 12, y: y + 6 },
       end: { x: width - 50, y: y + 6 },
-      thickness: 1, color: BRAND_BROWN,
+      thickness: 1, color: BRAND_GOLD,
     });
 
     // TOTAL
@@ -425,14 +420,14 @@ export async function GET(request: Request, { params }: { params: { id: string }
         y = 842 - 80;
       }
 
-      // Warm brown background box for payment schedule
+      // Cream background box for payment schedule
       page.drawRectangle({
         x: 50, y: y - 160, width: width - 100, height: 160,
-        color: VERY_LIGHT_GREY,
+        color: BRAND_CREAM,
       });
       page.drawRectangle({
-        x: 50, y: y - 160, width: width - 100, height: 160,
-        borderColor: BRAND_GOLD, borderWidth: 0.5,
+        x: 50, y: y - 160, width: 4, height: 160,
+        color: BRAND_GOLD,
       });
 
       page.drawText('PAYMENT SCHEDULE', {
@@ -447,16 +442,16 @@ export async function GET(request: Request, { params }: { params: { id: string }
         thickness: 0.5, color: BRAND_GOLD,
       });
       page.drawText('INSTALLMENT', {
-        x: 65, y: y - 4, size: 7, font: helveticaBold, color: WARM_GREY,
+        x: 65, y: y - 4, size: 7, font: helveticaBold, color: BRAND_GOLD,
       });
       page.drawText('%', {
-        x: 260, y: y - 4, size: 7, font: helveticaBold, color: WARM_GREY,
+        x: 260, y: y - 4, size: 7, font: helveticaBold, color: BRAND_GOLD,
       });
       page.drawText('DUE', {
-        x: 320, y: y - 4, size: 7, font: helveticaBold, color: WARM_GREY,
+        x: 320, y: y - 4, size: 7, font: helveticaBold, color: BRAND_GOLD,
       });
       page.drawText('AMOUNT', {
-        x: width - 110, y: y - 4, size: 7, font: helveticaBold, color: WARM_GREY,
+        x: width - 110, y: y - 4, size: 7, font: helveticaBold, color: BRAND_GOLD,
       });
       y -= 22;
 
@@ -464,7 +459,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         page.drawLine({
           start: { x: 65, y: y + 8 },
           end: { x: width - 65, y: y + 8 },
-          thickness: 0.3, color: LIGHT_GREY,
+          thickness: 0.3, color: BRAND_GOLD,
         });
         page.drawText(String(item.label || 'Payment'), {
           x: 65, y: y - 4, size: 9, font: helveticaBold, color: BLACK,
@@ -493,26 +488,26 @@ export async function GET(request: Request, { params }: { params: { id: string }
         y = 842 - 80;
       }
 
-      // Notes box with border
+      // Notes box with cream background and gold border
       const notesLines = wrapText(String(quote.notes), helvetica, 9, width - 140);
       const notesBoxH = notesLines.length * 14 + 35;
 
       page.drawRectangle({
         x: 50, y: y - notesBoxH, width: width - 100, height: notesBoxH,
-        color: VERY_LIGHT_GREY,
+        color: BRAND_CREAM,
       });
       page.drawRectangle({
-        x: 50, y: y - notesBoxH, width: width - 100, height: notesBoxH,
-        borderColor: LIGHT_GREY, borderWidth: 0.5,
+        x: 50, y: y - notesBoxH, width: 4, height: notesBoxH,
+        color: BRAND_GOLD,
       });
 
       page.drawText('NOTES & TERMS', {
-        x: 65, y: y - 16, size: 7.5, font: helveticaBold, color: BLACK,
+        x: 65, y: y - 16, size: 7.5, font: helveticaBold, color: BRAND_GOLD,
       });
       y -= 30;
 
       notesLines.slice(0, 8).forEach((l) => {
-        page.drawText(l, { x: 65, y, size: 9, font: helvetica, color: WARM_GREY });
+        page.drawText(l, { x: 65, y, size: 9, font: helvetica, color: DARK_GREY });
         y -= 14;
       });
       y -= 20;
@@ -524,20 +519,17 @@ export async function GET(request: Request, { params }: { params: { id: string }
       page.drawRectangle({ x: 0, y: 0, width, height: 842, color: WHITE });
     }
 
-    // Simple footer with line
-    page.drawLine({
-      start: { x: 50, y: 55 },
-      end: { x: width - 50, y: 55 },
-      thickness: 0.5, color: LIGHT_GREY,
+    // Full-width dark brown footer band
+    page.drawRectangle({
+      x: 0, y: 0, width: 595, height: 50,
+      color: BRAND_BROWN,
     });
+
     page.drawText(companyName, {
-      x: width / 2 - helveticaBold.widthOfTextAtSize(companyName, 7.5) / 2, y: 40, size: 7.5, font: helveticaBold, color: BRAND_BROWN,
-    });
-    page.drawText('International DJ & Grammy Winning Producer', {
-      x: width / 2 - helvetica.widthOfTextAtSize('International DJ & Grammy Winning Producer', 7) / 2, y: 28, size: 7, font: helvetica, color: MED_GREY,
+      x: 50, y: 20, size: 8, font: helveticaBold, color: BRAND_CREAM,
     });
     page.drawText('This is a quotation for services. Terms and conditions apply.', {
-      x: width / 2 - helvetica.widthOfTextAtSize('This is a quotation for services. Terms and conditions apply.', 7) / 2, y: 16, size: 7, font: helvetica, color: MED_GREY,
+      x: 200, y: 20, size: 8, font: helvetica, color: BRAND_CREAM,
     });
 
     const pdfBytes = await pdfDoc.save();
