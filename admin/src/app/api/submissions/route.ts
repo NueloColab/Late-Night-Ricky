@@ -143,6 +143,12 @@ export async function PATCH(request: Request) {
     const updates: any = {};
     if (status) updates.status = status;
     if (notes !== undefined) updates.notes = notes;
+    if (body.artistName !== undefined) updates.artistName = body.artistName || null;
+    if (body.trackTitle !== undefined) updates.trackTitle = body.trackTitle || null;
+    if (body.genre !== undefined) updates.genre = body.genre || null;
+    if (body.bpm !== undefined) updates.bpm = body.bpm ? parseInt(body.bpm, 10) : null;
+    if (body.instagramHandle !== undefined) updates.instagramHandle = body.instagramHandle || null;
+    if (body.email !== undefined) updates.email = body.email || null;
 
     await db.update(submissions).set(updates).where(eq(submissions.id, id));
     return NextResponse.json({ success: true }, { headers: corsHeaders() });

@@ -39,6 +39,8 @@ export default function SubmissionsPage() {
   const [playingId, setPlayingId] = useState<number | null>(null)
   const [audioProgress, setAudioProgress] = useState(0)
   const [audioDuration, setAudioDuration] = useState(0)
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editForm, setEditForm] = useState<Partial<Submission>>({})
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const progressInterval = useRef<ReturnType<typeof setInterval> | null>(null)
 
@@ -100,6 +102,47 @@ export default function SubmissionsPage() {
       await fetch('/api/submissions', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, notes }) })
       setSubmissions(prev => prev.map(s => s.id === id ? { ...s, notes } : s))
     } catch (err) { console.error('Notes update failed', err) }
+  }
+
+  const startEdit = (s: Submission) => {
+    setEditingId(s.id)
+    setEditForm({
+      artistName: s.artistName || '',
+      trackTitle: s.trackTitle || '',
+      genre: s.genre || '',
+      bpm: s.bpm || null,
+      instagramHandle: s.instagramHandle || '',
+      email: s.email || '',
+    })
+  }
+
+  const cancelEdit = () => {
+    setEditingId(null)
+    setEditForm({})
+  }
+
+  const saveEdit = async (id: number) => {
+    try {
+      const payload: any = { id }
+      if (editForm.artistName !== undefined) payload.artistName = editForm.artistName
+      if (editForm.trackTitle !== undefined) payload.trackTitle = editForm.trackTitle
+      if (editForm.genre !== undefined) payload.genre = editForm.genre
+      if (editForm.bpm !== undefined) payload.bpm = editForm.bpm
+      if (editForm.instagramHandle !== undefined) payload.instagramHandle = editForm.instagramHandle
+      if (editForm.email !== undefined) payload.email = editForm.email
+
+      await fetch('/api/submissions', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      setSubmissions(prev => prev.map(s => s.id === id ? { ...s, ...editForm } : s))
+      setEditingId(null)
+      setEditForm({})
+    } catch (err) {
+      console.error('Edit save failed', err)
+      alert('Failed to save changes')
+    }
   }
 
   const deleteSubmission = async (id: number) => {
@@ -165,6 +208,7 @@ export default function SubmissionsPage() {
           {submissions.map((s) => {
             const isExpanded = expandedId === s.id
             const isPlaying = playingId === s.id
+            const isEditing = editingId === s.id
             const config = statusConfig[s.status] || statusConfig.new
 
             return (
@@ -256,6 +300,18 @@ export default function SubmissionsPage() {
 
                       {/* Right: Status & Details */}
                       <div className="space-y-4">
+                        {/* Edit / Save buttons */}
+                        <div className="flex items-center gap-2">
+                          {isEditing ? (
+                            <>
+                              <button onClick={() => saveEdit(s.id)} className="px-3 py-1.5 bg-[#1B3A4C] text-white rounded text-xs font-semibold uppercase tracking-wider hover:bg-[#2a5068] transition">Save</button>
+                              <button onClick={cancelEdit} className="px-3 py-1.5 bg-white border border-gray-200 text-[#6B8FAB] rounded text-xs font-semibold uppercase tracking-wider hover:border-[#6B8FAB] hover:text-[#1B3A4C] transition">Cancel</button>
+                            </>
+                          ) : (
+                            <button onClick={() => startEdit(s)} className="px-3 py-1.5 bg-white border border-gray-200 text-[#6B8FAB] rounded text-xs font-semibold uppercase tracking-wider hover:border-[#6B8FAB] hover:text-[#1B3A4C] transition">✎ Edit</button>
+                          )}
+                        </div>
+
                         {/* Status */}
                         <div>
                           <p className="text-[10px] text-[#6B8FAB] uppercase tracking-[2px] font-semibold mb-2">Status</p>
@@ -277,16 +333,35 @@ export default function SubmissionsPage() {
                         {/* Details */}
                         <div className="bg-white border border-[#E3E8ED] rounded p-3 space-y-2">
                           <p className="text-[10px] text-[#6B8FAB] uppercase tracking-[2px] font-semibold">Details</p>
-                          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
-                            <span className="text-[#6B8FAB]">Email</span><span className="text-[#111] text-right truncate">{s.email}</span>
-                            <span className="text-[#6B8FAB]">Artist</span><span className="text-[#111] text-right">{s.artistName || '-'}</span>
-                            {s.instagramHandle && <><span className="text-[#6B8FAB]">Instagram</span><span className="text-[#111] text-right">{s.instagramHandle}</span></>}
-                            <span className="text-[#6B8FAB]">Track</span><span className="text-[#111] text-right">{s.trackTitle || '-'}</span>
-                            <span className="text-[#6B8FAB]">Genre</span><span className="text-[#111] text-right">{s.genre || '-'}</span>
-                            <span className="text-[#6B8FAB]">BPM</span><span className="text-[#111] text-right">{s.bpm || '-'}</span>
-                            <span className="text-[#6B8FAB]">Date</span><span className="text-[#111] text-right">{formatDate(s.createdAt)}</span>
-                            <span className="text-[#6B8FAB]">Size</span><span className="text-[#111] text-right">{formatSize(s.fileSize)}</span>
-                          </div>
+                          {isEditing ? (
+                            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                              <span className="text-[#6B8FAB] self-center">Email</span>
+                              <input type="email" value={editForm.email || ''} onChange={(e) => setEditForm(prev => ({ ...prev, email: e.target.value }))} className="px-2 py-1 border border-[#E3E8ED] rounded text-[#111] text-right text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                              <span className="text-[#6B8FAB] self-center">Artist</span>
+                              <input type="text" value={editForm.artistName || ''} onChange={(e) => setEditForm(prev => ({ ...prev, artistName: e.target.value }))} className="px-2 py-1 border border-[#E3E8ED] rounded text-[#111] text-right text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                              <span className="text-[#6B8FAB] self-center">Instagram</span>
+                              <input type="text" value={editForm.instagramHandle || ''} onChange={(e) => setEditForm(prev => ({ ...prev, instagramHandle: e.target.value }))} className="px-2 py-1 border border-[#E3E8ED] rounded text-[#111] text-right text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                              <span className="text-[#6B8FAB] self-center">Track</span>
+                              <input type="text" value={editForm.trackTitle || ''} onChange={(e) => setEditForm(prev => ({ ...prev, trackTitle: e.target.value }))} className="px-2 py-1 border border-[#E3E8ED] rounded text-[#111] text-right text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                              <span className="text-[#6B8FAB] self-center">Genre</span>
+                              <input type="text" value={editForm.genre || ''} onChange={(e) => setEditForm(prev => ({ ...prev, genre: e.target.value }))} className="px-2 py-1 border border-[#E3E8ED] rounded text-[#111] text-right text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                              <span className="text-[#6B8FAB] self-center">BPM</span>
+                              <input type="number" value={editForm.bpm || ''} onChange={(e) => setEditForm(prev => ({ ...prev, bpm: e.target.value ? parseInt(e.target.value, 10) : null }))} className="px-2 py-1 border border-[#E3E8ED] rounded text-[#111] text-right text-sm focus:outline-none focus:border-[#1B3A4C]" />
+                              <span className="text-[#6B8FAB] self-center">Date</span><span className="text-[#111] text-right">{formatDate(s.createdAt)}</span>
+                              <span className="text-[#6B8FAB] self-center">Size</span><span className="text-[#111] text-right">{formatSize(s.fileSize)}</span>
+                            </div>
+                          ) : (
+                            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
+                              <span className="text-[#6B8FAB]">Email</span><span className="text-[#111] text-right truncate">{s.email}</span>
+                              <span className="text-[#6B8FAB]">Artist</span><span className="text-[#111] text-right">{s.artistName || '-'}</span>
+                              {s.instagramHandle && <><span className="text-[#6B8FAB]">Instagram</span><span className="text-[#111] text-right">{s.instagramHandle}</span></>}
+                              <span className="text-[#6B8FAB]">Track</span><span className="text-[#111] text-right">{s.trackTitle || '-'}</span>
+                              <span className="text-[#6B8FAB]">Genre</span><span className="text-[#111] text-right">{s.genre || '-'}</span>
+                              <span className="text-[#6B8FAB]">BPM</span><span className="text-[#111] text-right">{s.bpm || '-'}</span>
+                              <span className="text-[#6B8FAB]">Date</span><span className="text-[#111] text-right">{formatDate(s.createdAt)}</span>
+                              <span className="text-[#6B8FAB]">Size</span><span className="text-[#111] text-right">{formatSize(s.fileSize)}</span>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
