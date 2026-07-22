@@ -165,24 +165,25 @@ export default function SubmissionsPage() {
       if (!res.ok) throw new Error('Download failed')
       const blob = await res.blob()
 
-      // iOS: use native Share sheet for premium UX
-      const file = new File([blob], filename, { type: blob.type || 'audio/mpeg' })
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: filename })
+      // Detect mobile/iOS — only use Share sheet on mobile
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+      if (isMobile && navigator.canShare && navigator.canShare({ files: [new File([blob], filename, { type: blob.type || 'audio/mpeg' })] })) {
+        await navigator.share({ files: [new File([blob], filename, { type: blob.type || 'audio/mpeg' })], title: filename })
         return
       }
 
-      // Desktop: standard blob download
+      // Desktop/laptop: instant download to Downloads folder
       const blobUrl = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = blobUrl
       a.download = filename
+      a.style.display = 'none'
       document.body.appendChild(a)
       a.click()
       document.body.removeChild(a)
       window.URL.revokeObjectURL(blobUrl)
     } catch (err: any) {
-      // User cancelled share sheet — don't show error
       if (err.name === 'AbortError') return
       console.error('Download failed', err)
       window.open(url, '_blank')
