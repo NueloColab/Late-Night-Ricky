@@ -143,16 +143,18 @@ export default function ShareMusicPage() {
                 />
                 <input
                   type="text"
-                  value={artistName}
-                  onChange={(e) => setArtistName(e.target.value)}
-                  placeholder="Artist name"
+                  value={trackTitle}
+                  onChange={(e) => setTrackTitle(e.target.value)}
+                  placeholder="Track title *"
+                  required
                   className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#152a47]"
                 />
                 <input
                   type="text"
-                  value={trackTitle}
-                  onChange={(e) => setTrackTitle(e.target.value)}
-                  placeholder="Track title"
+                  value={artistName}
+                  onChange={(e) => setArtistName(e.target.value)}
+                  placeholder="Artist name *"
+                  required
                   className="w-full px-5 py-3 border-2 border-[#111] text-[#111] placeholder-[#A8D5F0] text-sm uppercase tracking-[1px] focus:outline-none focus:border-[#152a47]"
                 />
                 <input

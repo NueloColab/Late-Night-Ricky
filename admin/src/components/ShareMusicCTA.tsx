@@ -16,7 +16,7 @@ export default function ShareMusicCTA({ headline, description, ctaText, ctaLink 
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const canSubmit = !!email && !!file && !submitting;
+  const canSubmit = !!email && !!artistName && !!trackTitle && !!file && !submitting;
 
   const uploadToCloudinary = async (file: File): Promise<string> => {
     const signRes = await fetch('/api/cloudinary/sign', {
@@ -91,7 +91,7 @@ export default function ShareMusicCTA({ headline, description, ctaText, ctaLink 
               <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#2a1a0a]" style={{ fontFamily: "'Oswald', sans-serif" }}>TRACK SENT</h2>
               <p className="text-[13px] md:text-[14px] text-[#5a3a1a]/70 mt-3">Thanks for sharing. Your music has been uploaded successfully.</p>
               <button
-                onClick={() => { setStatus('idle'); setFile(null); setEmail(''); setArtistName(''); setInstagram(''); setTrackTitle(''); setExpanded(false); }}
+                onClick={() => { setStatus('idle'); setFile(null); setEmail(''); setArtistName(''); setInstagram(''); setTrackTitle(''); setGenre(''); setBpm(''); setExpanded(false); }}
                 className="garrix-btn garrix-btn-outline mt-6"
                 style={{ borderColor: '#5a3a1a', color: '#2a1a0a' }}
               >
@@ -156,7 +156,17 @@ export default function ShareMusicCTA({ headline, description, ctaText, ctaLink 
                     type="text"
                     value={trackTitle}
                     onChange={(e) => setTrackTitle(e.target.value)}
-                    placeholder="Track name"
+                    placeholder="Track name *"
+                    required
+                    className="garrix-cta-input"
+                    style={{ background: 'rgba(90,58,26,0.05)', borderColor: 'rgba(90,58,26,0.15)', color: '#2a1a0a' }}
+                  />
+                  <input
+                    type="text"
+                    value={artistName}
+                    onChange={(e) => setArtistName(e.target.value)}
+                    placeholder="Artist name *"
+                    required
                     className="garrix-cta-input"
                     style={{ background: 'rgba(90,58,26,0.05)', borderColor: 'rgba(90,58,26,0.15)', color: '#2a1a0a' }}
                   />
@@ -164,7 +174,7 @@ export default function ShareMusicCTA({ headline, description, ctaText, ctaLink 
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email"
+                    placeholder="Your email *"
                     required
                     className="garrix-cta-input"
                     style={{ background: 'rgba(90,58,26,0.05)', borderColor: 'rgba(90,58,26,0.15)', color: '#2a1a0a' }}
