@@ -6,13 +6,11 @@ import { invoices } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
-// LNR Brand Palette
-const BRAND_BROWN = rgb(0.165, 0.102, 0.039);    // #2a1a0a — header/footer bands, primary text
-const BRAND_CREAM = rgb(0.910, 0.831, 0.722);     // #e8d4b8 — bank details block background, footer text
-const BRAND_GOLD = rgb(0.788, 0.663, 0.431);      // #c9a96e — section labels, dividers, accents
+// Minimal Nuelo palette
 const BLACK = rgb(0.06, 0.06, 0.06);
 const DARK_GREY = rgb(0.30, 0.30, 0.30);
 const MED_GREY = rgb(0.55, 0.55, 0.55);
+const LIGHT_GREY = rgb(0.90, 0.90, 0.90);
 const WHITE = rgb(1, 1, 1);
 
 async function getSettings() {
@@ -134,16 +132,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     page.drawRectangle({ x: 0, y: 0, width, height: pageH, color: WHITE });
 
-    // ─── TOP HEADER BAND (brown) ───
-    page.drawRectangle({
-      x: 0, y: pageH - 80, width: 595, height: 80,
-      color: BRAND_BROWN,
-    });
-
+    // ─── TOP LEFT: Brand name ───
     page.drawText('LATE NIGHT RICKY', {
-      x: 50, y: pageH - 35, size: 8, font: helveticaBold, color: BRAND_CREAM,
+      x: 50, y: pageH - 45, size: 8, font: helveticaBold, color: MED_GREY,
     });
 
+    // ─── TOP RIGHT: Logo ───
     if (logoImage) {
       page.drawImage(logoImage, {
         x: width - 50 - logoW, y: pageH - 48 - (logoH / 2),
@@ -151,28 +145,23 @@ export async function GET(request: Request, { params }: { params: { id: string }
       });
     }
 
-    // Tagline below header band
-    page.drawText('Brand Strategy, Communications & Digital Innovation', {
-      x: 50, y: pageH - 92, size: 8, font: helvetica, color: BRAND_GOLD,
-    });
-
     // ─── INVOICE title ───
     page.drawText('INVOICE', {
-      x: 50, y: pageH - 118, size: 32, font: helveticaBold, color: BRAND_BROWN,
+      x: 50, y: pageH - 95, size: 32, font: helveticaBold, color: BLACK,
     });
 
     // Invoice number
     page.drawText(invoice.invoiceNumber || '—', {
-      x: 50, y: pageH - 148, size: 14, font: helveticaBold, color: BLACK,
+      x: 50, y: pageH - 125, size: 14, font: helveticaBold, color: BLACK,
     });
 
     // ─── TWO-COLUMN INFO ───
-    const infoY = pageH - 188;
+    const infoY = pageH - 165;
 
     // LEFT: BILL TO
     let leftY = infoY;
     page.drawText('B I L L  T O', {
-      x: 50, y: leftY, size: 8, font: helveticaBold, color: BRAND_GOLD,
+      x: 50, y: leftY, size: 8, font: helveticaBold, color: MED_GREY,
     });
     leftY -= 16;
     page.drawText(invoice.clientName || 'Client', {
@@ -199,7 +188,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       const labelW = helveticaBold.widthOfTextAtSize(label, 8);
       const valueW = helveticaBold.widthOfTextAtSize(value, 11);
       page.drawText(label, {
-        x: rightColX - labelW, y: rightY, size: 8, font: helveticaBold, color: BRAND_GOLD,
+        x: rightColX - labelW, y: rightY, size: 8, font: helveticaBold, color: MED_GREY,
       });
       page.drawText(value, {
         x: rightColX - valueW, y: rightY - 14, size: 11, font: helveticaBold, color: BLACK,
@@ -217,7 +206,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // ─── PROJECT ───
     if (invoice.projectTitle) {
       page.drawText('P R O J E C T', {
-        x: 50, y, size: 8, font: helveticaBold, color: BRAND_GOLD,
+        x: 50, y, size: 8, font: helveticaBold, color: MED_GREY,
       });
       page.drawText(invoice.projectTitle, {
         x: 130, y, size: 11, font: helveticaBold, color: BLACK,
@@ -240,7 +229,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // ─── Divider ───
     page.drawLine({
       start: { x: 50, y }, end: { x: width - 50, y },
-      thickness: 0.5, color: BRAND_GOLD,
+      thickness: 0.5, color: LIGHT_GREY,
     });
     y -= 20;
 
@@ -253,15 +242,15 @@ export async function GET(request: Request, { params }: { params: { id: string }
     if (lineItems.length > 0) {
       // Table headers
       page.drawText('S E R V I C E  D E S C R I P T I O N', {
-        x: 50, y: y - 2, size: 8, font: helveticaBold, color: BRAND_GOLD,
+        x: 50, y: y - 2, size: 8, font: helveticaBold, color: MED_GREY,
       });
       page.drawText('A M O U N T', {
-        x: width - 50, y: y - 2, size: 8, font: helveticaBold, color: BRAND_GOLD,
+        x: width - 50, y: y - 2, size: 8, font: helveticaBold, color: MED_GREY,
       });
       y -= 6;
       page.drawLine({
         start: { x: 50, y }, end: { x: width - 50, y },
-        thickness: 1.5, color: BRAND_GOLD,
+        thickness: 1.5, color: BLACK,
       });
       y -= 18;
 
@@ -367,7 +356,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // Separator line above Total
     page.drawLine({
       start: { x: 320, y: y + 8 }, end: { x: width - 50, y: y + 8 },
-      thickness: 1.5, color: BRAND_GOLD,
+      thickness: 1.5, color: BLACK,
     });
     y -= 12;
 
@@ -397,27 +386,27 @@ export async function GET(request: Request, { params }: { params: { id: string }
       }
 
       page.drawText('P A Y M E N T  S C H E D U L E', {
-        x: 50, y, size: 8, font: helveticaBold, color: BRAND_GOLD,
+        x: 50, y, size: 8, font: helveticaBold, color: MED_GREY,
       });
       y -= 18;
 
       // Headers
       page.drawText('I N S T A L L M E N T', {
-        x: 50, y: y - 2, size: 8, font: helveticaBold, color: BRAND_GOLD,
+        x: 50, y: y - 2, size: 8, font: helveticaBold, color: MED_GREY,
       });
       page.drawText('%', {
-        x: 250, y: y - 2, size: 8, font: helveticaBold, color: BRAND_GOLD,
+        x: 250, y: y - 2, size: 8, font: helveticaBold, color: MED_GREY,
       });
       page.drawText('D U E', {
-        x: 300, y: y - 2, size: 8, font: helveticaBold, color: BRAND_GOLD,
+        x: 300, y: y - 2, size: 8, font: helveticaBold, color: MED_GREY,
       });
       page.drawText('A M O U N T', {
-        x: width - 50, y: y - 2, size: 8, font: helveticaBold, color: BRAND_GOLD,
+        x: width - 50, y: y - 2, size: 8, font: helveticaBold, color: MED_GREY,
       });
       y -= 6;
       page.drawLine({
         start: { x: 50, y }, end: { x: width - 50, y },
-        thickness: 0.5, color: BRAND_GOLD,
+        thickness: 0.5, color: LIGHT_GREY,
       });
       y -= 16;
 
@@ -449,10 +438,11 @@ export async function GET(request: Request, { params }: { params: { id: string }
     }
 
     page.drawText('B A N K  D E T A I L S  F O R  P A Y M E N T', {
-      x: 50, y, size: 8, font: helveticaBold, color: BRAND_GOLD,
+      x: 50, y, size: 8, font: helveticaBold, color: MED_GREY,
     });
     y -= 16;
 
+    // Light grey block
     const bankRows = [
       { label: 'Bank:', value: bankName, label2: 'Sort Code:', value2: bankSortCode },
       { label: 'Account Name:', value: bankAccountName, label2: 'Account No:', value2: bankAccountNumber },
@@ -470,16 +460,9 @@ export async function GET(request: Request, { params }: { params: { id: string }
     }
     const bankBlockH = bankRows.length * 18 + 16 + (notesLines > 0 ? 20 + notesLines * 13 : 0);
 
-    // Cream background block
     page.drawRectangle({
       x: 50, y: y - bankBlockH, width: width - 100, height: bankBlockH,
-      color: BRAND_CREAM,
-    });
-
-    // Thick gold left border
-    page.drawRectangle({
-      x: 50, y: y - bankBlockH, width: 4, height: bankBlockH,
-      color: BRAND_GOLD,
+      color: LIGHT_GREY,
     });
 
     let by = y - 14;
@@ -502,7 +485,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     if (invoice.notes) {
       by -= 4;
       page.drawText('N O T E S  &  T E R M S', {
-        x: labelX, y: by, size: 8, font: helveticaBold, color: BRAND_GOLD,
+        x: labelX, y: by, size: 8, font: helveticaBold, color: MED_GREY,
       });
       by -= 14;
       const notesText = String(invoice.notes);
@@ -521,17 +504,17 @@ export async function GET(request: Request, { params }: { params: { id: string }
       y = 50;
     }
 
-    // Full-width dark brown footer band
-    page.drawRectangle({
-      x: 0, y: 0, width: 595, height: 50,
-      color: BRAND_BROWN,
+    // Top border
+    page.drawLine({
+      start: { x: 50, y: 60 }, end: { x: width - 50, y: 60 },
+      thickness: 0.5, color: LIGHT_GREY,
     });
 
     page.drawText(companyName, {
-      x: 50, y: 20, size: 8, font: helveticaBold, color: BRAND_CREAM,
+      x: 50, y: 45, size: 8, font: helveticaBold, color: BLACK,
     });
     page.drawText('This is an invoice for services rendered. Payment is due by the date specified above. Thank you for your business.', {
-      x: 200, y: 20, size: 8, font: helvetica, color: BRAND_CREAM,
+      x: 50, y: 32, size: 8, font: helvetica, color: MED_GREY,
     });
 
     const pdfBytes = await pdfDoc.save();
