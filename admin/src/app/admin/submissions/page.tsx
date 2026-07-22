@@ -145,6 +145,30 @@ export default function SubmissionsPage() {
     }
   }
 
+  const createTrackFromSubmission = async (s: Submission) => {
+    try {
+      const title = s.trackTitle && s.artistName
+        ? `${s.artistName} — ${s.trackTitle}`
+        : s.trackTitle || s.artistName || 'Untitled Track'
+
+      const res = await fetch('/api/tracks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title,
+          filePath: s.filePath || '/assets/snippet-1.mp3',
+          duration: '0:30',
+          order: 999,
+        }),
+      })
+      if (!res.ok) throw new Error('Failed to create track')
+      alert('Track created! Go to Tracks page to manage it.')
+    } catch (err: any) {
+      console.error('Create track failed', err)
+      alert(err.message || 'Failed to create track')
+    }
+  }
+
   const deleteSubmission = async (id: number) => {
     if (!confirm('Delete this submission?')) return
     try {
@@ -300,7 +324,7 @@ export default function SubmissionsPage() {
 
                       {/* Right: Status & Details */}
                       <div className="space-y-4">
-                        {/* Edit / Save buttons */}
+                        {/* Edit / Save / Create Track buttons */}
                         <div className="flex items-center gap-2">
                           {isEditing ? (
                             <>
@@ -308,7 +332,10 @@ export default function SubmissionsPage() {
                               <button onClick={cancelEdit} className="px-3 py-1.5 bg-white border border-gray-200 text-[#6B8FAB] rounded text-xs font-semibold uppercase tracking-wider hover:border-[#6B8FAB] hover:text-[#1B3A4C] transition">Cancel</button>
                             </>
                           ) : (
-                            <button onClick={() => startEdit(s)} className="px-3 py-1.5 bg-white border border-gray-200 text-[#6B8FAB] rounded text-xs font-semibold uppercase tracking-wider hover:border-[#6B8FAB] hover:text-[#1B3A4C] transition">✎ Edit</button>
+                            <>
+                              <button onClick={() => startEdit(s)} className="px-3 py-1.5 bg-white border border-gray-200 text-[#6B8FAB] rounded text-xs font-semibold uppercase tracking-wider hover:border-[#6B8FAB] hover:text-[#1B3A4C] transition">✎ Edit</button>
+                              {s.filePath && <button onClick={() => createTrackFromSubmission(s)} className="px-3 py-1.5 bg-[#1B3A4C] text-white rounded text-xs font-semibold uppercase tracking-wider hover:bg-[#2a5068] transition">+ Create Track</button>}
+                            </>
                           )}
                         </div>
 
