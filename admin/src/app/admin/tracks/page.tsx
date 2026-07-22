@@ -104,19 +104,45 @@ export default function TracksPage() {
     } catch { console.error('Reorder failed') }
   }
 
+  async function uploadToCloudinary(file: File, folder: string): Promise<string> {
+    const signRes = await fetch('/api/cloudinary/sign', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ folder }),
+    })
+    if (!signRes.ok) throw new Error('Failed to get upload signature')
+    const { signature, timestamp, folder: signedFolder, apiKey, cloudName } = await signRes.json()
+
+    const uploadData = new FormData()
+    uploadData.append('file', file)
+    uploadData.append('api_key', apiKey)
+    uploadData.append('timestamp', String(timestamp))
+    uploadData.append('signature', signature)
+    uploadData.append('folder', signedFolder)
+
+    const cloudRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
+      method: 'POST',
+      body: uploadData,
+    })
+    if (!cloudRes.ok) {
+      const err = await cloudRes.json()
+      throw new Error(err.error?.message || 'Cloudinary upload failed')
+    }
+    const cloudData = await cloudRes.json()
+    return cloudData.secure_url
+  }
+
   async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
     setUploading(true)
     try {
-      const formData = new FormData()
-      formData.append('file', file)
-      const res = await fetch('/api/upload', { method: 'POST', body: formData })
-      const data = await res.json()
-      if (data.url) {
-        setForm(f => ({ ...f, filePath: data.url }))
-      }
-    } catch { console.error('Upload failed') }
+      const url = await uploadToCloudinary(file, 'nuelo/late-night-ricky/tracks')
+      setForm(f => ({ ...f, filePath: url }))
+    } catch (err: any) {
+      console.error('Upload failed', err)
+      alert(err.message || 'Upload failed')
+    }
     setUploading(false)
   }
 
@@ -125,14 +151,12 @@ export default function TracksPage() {
     if (!file) return
     setUploadingCover(true)
     try {
-      const formData = new FormData()
-      formData.append('file', file)
-      const res = await fetch('/api/upload', { method: 'POST', body: formData })
-      const data = await res.json()
-      if (data.url) {
-        setForm(f => ({ ...f, coverPath: data.url }))
-      }
-    } catch { console.error('Cover upload failed') }
+      const url = await uploadToCloudinary(file, 'nuelo/late-night-ricky/covers')
+      setForm(f => ({ ...f, coverPath: url }))
+    } catch (err: any) {
+      console.error('Cover upload failed', err)
+      alert(err.message || 'Cover upload failed')
+    }
     setUploadingCover(false)
   }
 
