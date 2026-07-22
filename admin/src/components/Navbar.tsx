@@ -6,8 +6,8 @@ import Link from 'next/link';
 const navLinks = [
   { href: '/#about', label: 'About Ricky' },
   { href: '/#moments', label: 'Late Night Moments' },
-  { href: '/#venues', label: 'Performances' },
   { href: '/#radio', label: 'Music' },
+  { href: '/#venues', label: 'Performances' },
   { href: '/#brands', label: 'Brands' },
   { href: '/#contact-form', label: 'Contact' },
 ];
