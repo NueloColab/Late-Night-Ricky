@@ -37,19 +37,19 @@ function generateWaveformBars(seed: number, count = 60): number[] {
 }
 
 const SpotifyIcon = () => (
-  <svg viewBox="0 0 168 168" width="16" height="16" className="opacity-70 hover:opacity-100 transition-opacity">
+  <svg viewBox="0 0 168 168" width="22" height="22" className="opacity-70 hover:opacity-100 transition-opacity">
     <path fill="currentColor" d="M84 0C37.6 0 0 37.6 0 84s37.6 84 84 84 84-37.6 84-84S130.4 0 84 0zm38.5 121.2c-1.5 2.5-4.7 3.2-7.1 1.7-19.5-11.9-44-14.6-72.9-8-2.8.6-5.6-1.1-6.2-3.9-.6-2.8 1.1-5.6 3.9-6.2 31.8-7.3 59.3-4.2 81.4 9.4 2.4 1.5 3.2 4.7 1.7 7.1zm10.3-22.9c-1.9 3-5.9 4-8.9 2.1-22.3-13.7-56.3-17.7-82.7-9.7-3.5 1.1-7.1-.9-8.1-4.3-1.1-3.5.9-7.1 4.3-8.1 30.2-9.2 67.7-4.8 93.1 11.1 3 1.8 4 5.9 2.1 8.9zm.9-23.8c-26.8-15.9-71-17.4-96.5-9.6-4.2 1.3-8.6-1.1-9.9-5.3-1.3-4.2 1.1-8.6 5.3-9.9 29.3-8.9 78.1-7.2 109.8 11.5 3.8 2.2 5 7.1 2.8 10.9-2.2 3.8-7.1 5.1-10.9 2.8-1.4-.8-2.8-1.7-4.1-2.6-.5-.3-.9-.5-1.4-.8z"/>
   </svg>
 );
 
 const AppleIcon = () => (
-  <svg viewBox="0 0 24 24" width="14" height="16" className="opacity-70 hover:opacity-100 transition-opacity">
+  <svg viewBox="0 0 24 24" width="20" height="22" className="opacity-70 hover:opacity-100 transition-opacity">
     <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
   </svg>
 );
 
 const YoutubeIcon = () => (
-  <svg viewBox="0 0 24 24" width="16" height="16" className="opacity-70 hover:opacity-100 transition-opacity">
+  <svg viewBox="0 0 24 24" width="22" height="22" className="opacity-70 hover:opacity-100 transition-opacity">
     <path fill="currentColor" d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 00.5 6.19 31.5 31.5 0 000 12a31.5 31.5 0 00.5 5.81 3.02 3.02 0 002.12 2.14c1.88.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 002.12-2.14A31.5 31.5 0 0024 12a31.5 31.5 0 00-.5-5.81z"/>
     <path fill="#f0e6d8" d="M9.55 15.5V8.5l6.27 3.5-6.27 3.5z"/>
   </svg>
@@ -178,14 +178,14 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
               </span>
 
               {/* Platform links row */}
-              <div className="flex items-center gap-3 mt-1 mb-1">
+              <div className="flex items-center gap-4 mt-1.5 mb-1">
                 {track.spotifyUrl && (
                   <a
                     href={track.spotifyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="text-[#5a3a1a] hover:text-[#2a1a0a] transition"
+                    className="text-[#5a3a1a] hover:text-[#2a1a0a] transition p-1.5 rounded-full hover:bg-[#5a3a1a]/10"
                     title="Spotify"
                   >
                     <SpotifyIcon />
@@ -197,7 +197,7 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="text-[#5a3a1a] hover:text-[#2a1a0a] transition"
+                    className="text-[#5a3a1a] hover:text-[#2a1a0a] transition p-1.5 rounded-full hover:bg-[#5a3a1a]/10"
                     title="Apple Music"
                   >
                     <AppleIcon />
@@ -209,7 +209,7 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="text-[#5a3a1a] hover:text-[#2a1a0a] transition"
+                    className="text-[#5a3a1a] hover:text-[#2a1a0a] transition p-1.5 rounded-full hover:bg-[#5a3a1a]/10"
                     title="YouTube"
                   >
                     <YoutubeIcon />
