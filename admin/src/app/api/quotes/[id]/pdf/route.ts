@@ -58,16 +58,10 @@ async function getSettings() {
   return {}
 }
 
+import { LNR_LOGO_BASE64 } from '@/lib/logoBase64'
+
 async function getLogoBase64(): Promise<string | null> {
-  try {
-    const response = await fetch('https://late-night-ricky.vercel.app/assets/ricky-logo.png')
-    if (response.ok) {
-      const arrayBuffer = await response.arrayBuffer()
-      const base64 = Buffer.from(arrayBuffer).toString('base64')
-      return `data:image/png;base64,${base64}`
-    }
-  } catch {}
-  return null
+  return LNR_LOGO_BASE64 || null
 }
 
 // ─── Styles ─────────────────────────────────────────────────────────────────
