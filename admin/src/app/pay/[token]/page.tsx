@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
+import { CheckCircle, FileText, Mail, ArrowLeft, Upload, Loader2 } from 'lucide-react'
 
 const formatCurrency = (amount: number) =>
   new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount || 0)
@@ -11,9 +12,23 @@ const formatDate = (date: string | null) => {
   return new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })
 }
 
+interface Settings {
+  companyName?: string
+  companyAddress?: string
+  companyNumber?: string
+  vatNumber?: string
+  bankName?: string
+  bankAccountName?: string
+  bankSortCode?: string
+  bankAccountNumber?: string
+  swiftCode?: string
+  iban?: string
+}
+
 export default function PaymentPage() {
   const { token } = useParams()
   const [invoice, setInvoice] = useState<any>(null)
+  const [settings, setSettings] = useState<Settings>({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showForm, setShowForm] = useState(false)
@@ -27,7 +42,7 @@ export default function PaymentPage() {
 
   useEffect(() => {
     if (!token) return
-    async function fetchInvoice() {
+    async function fetchData() {
       try {
         const res = await fetch(`/api/invoices/pay/${token}`)
         if (!res.ok) {
@@ -38,13 +53,16 @@ export default function PaymentPage() {
         const data = await res.json()
         setInvoice(data)
         setAmountPaid(data.total?.toString() || '')
+        if (data.settings) {
+          setSettings(data.settings)
+        }
       } catch {
         setError('Failed to load invoice details')
       } finally {
         setLoading(false)
       }
     }
-    fetchInvoice()
+    fetchData()
   }, [token])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,7 +113,6 @@ export default function PaymentPage() {
         return
       }
       if (data.alreadyPaid) {
-        // Refresh the invoice to show the already-paid state
         setInvoice((prev: any) => ({ ...prev, status: 'paid', paymentConfirmedByClient: true }))
         return
       }
@@ -106,12 +123,24 @@ export default function PaymentPage() {
     }
   }
 
+  const bankDetails = {
+    bankName: settings.bankName || 'Tide',
+    accountName: settings.bankAccountName || 'Late Night Ricky',
+    sortCode: settings.bankSortCode || '—',
+    accountNumber: settings.bankAccountNumber || '—',
+    swift: settings.swiftCode || '',
+    iban: settings.iban || '',
+  }
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0d1f3d] flex items-center justify-center">
+      <div className="min-h-screen bg-[#f0e6d8] flex items-center justify-center">
         <div className="text-center">
-          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-4" style={{ maxWidth: '180px' }} />
-          <p className="text-sm text-[#C5E5F8]">Loading invoice...</p>
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-6" style={{ maxWidth: '200px' }} />
+          <div className="flex items-center justify-center gap-2 text-[#5a3a1a]">
+            <Loader2 size={18} className="animate-spin" />
+            <span className="text-sm font-medium uppercase tracking-wider">Loading invoice...</span>
+          </div>
         </div>
       </div>
     )
@@ -119,18 +148,18 @@ export default function PaymentPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#0d1f3d] flex items-center justify-center px-4">
-        <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center">
-          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-6" style={{ maxWidth: '160px', filter: 'invert(1)' }} />
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <span className="text-red-500 text-2xl font-bold">!</span>
+      <div className="min-h-screen bg-[#f0e6d8] flex items-center justify-center px-4">
+        <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center border border-[#d0c4a8]">
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-6" style={{ maxWidth: '160px' }} />
+          <div className="w-16 h-16 bg-[#2a1a0a]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span className="text-[#2a1a0a] text-2xl font-bold">!</span>
           </div>
-          <h1 className="text-xl font-light text-gray-900 mb-3">Unable to Load Invoice</h1>
-          <p className="text-gray-500 mb-6">{error}</p>
-          <p className="text-sm text-gray-400">
+          <h1 className="text-xl font-light text-[#2a1a0a] mb-3">Unable to Load Invoice</h1>
+          <p className="text-[#5a3a1a] mb-6">{error}</p>
+          <p className="text-sm text-[#5a3a1a]/70">
             Contact us at{' '}
-            <a href="mailto:samir@wearemediahive.com" className="text-[#0d1f3d] hover:underline font-medium">
-              samir@wearemediahive.com
+            <a href="mailto:latenightricky@gmail.com" className="text-[#2a1a0a] hover:underline font-medium">
+              latenightricky@gmail.com
             </a>
           </p>
         </div>
@@ -140,37 +169,38 @@ export default function PaymentPage() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#0d1f3d] flex items-center justify-center px-4">
-        <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center">
-          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-8" style={{ maxWidth: '160px', filter: 'invert(1)' }} />
-          <div className="w-20 h-20 bg-[#0d1f3d] rounded-full flex items-center justify-center mx-auto mb-8">
-            <span className="text-white text-4xl">✓</span>
+      <div className="min-h-screen bg-[#f0e6d8] flex items-center justify-center px-4">
+        <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center border border-[#d0c4a8]">
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-6" style={{ maxWidth: '160px' }} />
+          <div className="w-16 h-16 bg-[#2a1a0a] rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle size={28} className="text-[#e8d4b8]" />
           </div>
-          <h1 className="text-2xl font-light text-[#0d1f3d] mb-4">Thank You for Your Payment</h1>
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6 text-left">
-            <p className="text-xs uppercase tracking-widest text-gray-500 mb-3">Payment Summary</p>
+          <h1 className="text-2xl font-light text-[#2a1a0a] mb-4">Thank You for Your Payment</h1>
+          <div className="bg-[#f8f1e8] border border-[#d0c4a8] rounded-lg p-6 mb-6 text-left">
+            <p className="text-xs uppercase tracking-widest text-[#5a3a1a] mb-3 font-semibold">Payment Summary</p>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-500">Invoice</span>
-                <span className="font-medium text-gray-900">{invoice.invoiceNumber}</span>
+                <span className="text-[#5a3a1a]">Invoice</span>
+                <span className="font-medium text-[#2a1a0a]">{invoice.invoiceNumber}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Amount</span>
-                <span className="font-semibold text-[#0d1f3d]">{formatCurrency(parseFloat(amountPaid))}</span>
+                <span className="text-[#5a3a1a]">Amount</span>
+                <span className="font-semibold text-[#2a1a0a]">{formatCurrency(parseFloat(amountPaid))}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Method</span>
-                <span className="text-gray-900">{paymentMethod}</span>
+                <span className="text-[#5a3a1a]">Method</span>
+                <span className="text-[#2a1a0a]">{paymentMethod}</span>
               </div>
             </div>
           </div>
-          <p className="text-gray-500 text-sm mb-6">We&apos;ll review and confirm your payment shortly. You&apos;ll receive a confirmation email once processed.</p>
-          <p className="text-xs text-gray-400">
+          <p className="text-[#5a3a1a] text-sm mb-6">We&apos;ll review and confirm your payment shortly. You&apos;ll receive a confirmation email once processed.</p>
+          <p className="text-xs text-[#5a3a1a]/60">
             Questions? Contact{' '}
-            <a href="mailto:samir@wearemediahive.com" className="text-[#0d1f3d] hover:underline font-medium">
-              samir@wearemediahive.com
+            <a href="mailto:latenightricky@gmail.com" className="text-[#2a1a0a] hover:underline font-medium">
+              latenightricky@gmail.com
             </a>
           </p>
+          <p className="text-xs text-[#5a3a1a]/40 mt-4">Late Night Ricky</p>
         </div>
       </div>
     )
@@ -178,47 +208,48 @@ export default function PaymentPage() {
 
   if (invoice.status === 'paid' || invoice.paymentConfirmedByClient) {
     return (
-      <div className="min-h-screen bg-[#0d1f3d] flex items-center justify-center px-4">
-        <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center">
-          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-8" style={{ maxWidth: '160px', filter: 'invert(1)' }} />
-          <div className="w-20 h-20 bg-[#0d1f3d] rounded-full flex items-center justify-center mx-auto mb-8">
-            <span className="text-white text-4xl">✓</span>
+      <div className="min-h-screen bg-[#f0e6d8] flex items-center justify-center px-4">
+        <div className="bg-white rounded-lg shadow-sm max-w-lg w-full p-10 text-center border border-[#d0c4a8]">
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-6" style={{ maxWidth: '160px' }} />
+          <div className="w-16 h-16 bg-[#2a1a0a] rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle size={28} className="text-[#e8d4b8]" />
           </div>
-          <h1 className="text-2xl font-light text-[#0d1f3d] mb-4">Payment Already Confirmed</h1>
-          <p className="text-gray-500 text-sm mb-6">
+          <h1 className="text-2xl font-light text-[#2a1a0a] mb-4">Payment Already Confirmed</h1>
+          <p className="text-[#5a3a1a] text-sm mb-6">
             Thank you. Payment for invoice {invoice.invoiceNumber} has already been confirmed. If you have any questions, please contact us.
           </p>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-[#5a3a1a]/60">
             Contact{' '}
-            <a href="mailto:samir@wearemediahive.com" className="text-[#0d1f3d] hover:underline font-medium">
-              samir@wearemediahive.com
+            <a href="mailto:latenightricky@gmail.com" className="text-[#2a1a0a] hover:underline font-medium">
+              latenightricky@gmail.com
             </a>
           </p>
+          <p className="text-xs text-[#5a3a1a]/40 mt-4">Late Night Ricky</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-[#0d1f3d] py-8 px-4">
+    <div className="min-h-screen bg-[#f0e6d8] py-8 px-4">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-2" style={{ maxWidth: '180px' }} />
-          <p className="text-[10px] uppercase tracking-[3px] text-[#C5E5F8]">International DJ &amp; Grammy Winning Producer</p>
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-3" style={{ maxWidth: '200px' }} />
+          <p className="text-[10px] uppercase tracking-[3px] text-[#5a3a1a] font-medium">International DJ &amp; Grammy Winning Producer</p>
         </div>
 
         {/* Invoice Card */}
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
-          <div className="border-b-2 border-[#0d1f3d] p-6 sm:p-8">
+        <div className="bg-white rounded-lg shadow-sm overflow-hidden mb-6 border border-[#d0c4a8]">
+          <div className="border-b-2 border-[#2a1a0a] p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
               <div>
-                <p className="text-xs uppercase tracking-widest text-gray-500 mb-1">Invoice</p>
-                <p className="text-xl font-semibold text-gray-900">{invoice.invoiceNumber}</p>
+                <p className="text-xs uppercase tracking-widest text-[#5a3a1a] mb-1 font-semibold">Invoice</p>
+                <p className="text-xl font-semibold text-[#2a1a0a]">{invoice.invoiceNumber}</p>
               </div>
               <div className="text-left sm:text-right">
-                <p className="text-xs uppercase tracking-widest text-gray-500 mb-1">Amount Due</p>
-                <p className="text-3xl font-light text-[#0d1f3d]">{formatCurrency(invoice.total)}</p>
+                <p className="text-xs uppercase tracking-widest text-[#5a3a1a] mb-1 font-semibold">Amount Due</p>
+                <p className="text-3xl font-light text-[#2a1a0a]">{formatCurrency(invoice.total)}</p>
               </div>
             </div>
           </div>
@@ -226,48 +257,65 @@ export default function PaymentPage() {
           <div className="p-6 sm:p-8 space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <p className="text-xs uppercase tracking-widest text-gray-500 mb-2">Bill To</p>
-                <p className="font-medium text-gray-900">{invoice.clientName}</p>
-                {invoice.clientCompany && <p className="text-sm text-gray-600">{invoice.clientCompany}</p>}
+                <p className="text-xs uppercase tracking-widest text-[#5a3a1a] mb-2 font-semibold">Bill To</p>
+                <p className="font-medium text-[#2a1a0a]">{invoice.clientName}</p>
+                {invoice.clientCompany && <p className="text-sm text-[#5a3a1a]">{invoice.clientCompany}</p>}
+                {invoice.clientEmail && <p className="text-sm text-[#5a3a1a]/70">{invoice.clientEmail}</p>}
               </div>
               <div>
-                <p className="text-xs uppercase tracking-widest text-gray-500 mb-2">Project</p>
-                <p className="font-medium text-gray-900">{invoice.projectTitle}</p>
+                <p className="text-xs uppercase tracking-widest text-[#5a3a1a] mb-2 font-semibold">Project</p>
+                <p className="font-medium text-[#2a1a0a]">{invoice.projectTitle || '—'}</p>
                 {invoice.dueDate && (
-                  <p className="text-sm text-gray-600 mt-1">Due: {formatDate(invoice.dueDate)}</p>
+                  <p className="text-sm text-[#5a3a1a] mt-1">Due: {formatDate(invoice.dueDate)}</p>
                 )}
               </div>
             </div>
 
             {invoice.lineItems?.length > 0 && (
               <div>
-                <p className="text-xs uppercase tracking-widest text-gray-500 mb-3">Services</p>
-                <div className="border border-gray-200 rounded-lg overflow-hidden">
+                <p className="text-xs uppercase tracking-widest text-[#5a3a1a] mb-3 font-semibold">Services</p>
+                <div className="border border-[#d0c4a8] rounded-lg overflow-hidden">
                   {invoice.lineItems.map((s: any, i: number) => (
-                    <div key={i} className={`flex justify-between items-center px-4 py-3 text-sm ${i % 2 === 1 ? 'bg-gray-50' : ''} ${i < invoice.lineItems.length - 1 ? 'border-b border-gray-100' : ''}`}>
+                    <div key={i} className={`flex justify-between items-center px-4 py-3 text-sm ${i % 2 === 1 ? 'bg-[#f8f1e8]' : ''} ${i < invoice.lineItems.length - 1 ? 'border-b border-[#d0c4a8]/50' : ''}`}>
                       <div>
-                        <span className="font-medium text-gray-900">{s.serviceName || s.description || 'Service'}</span>
-                        {s.serviceCategory && <span className="ml-2 text-xs uppercase text-[#C5E5F8]">{s.serviceCategory}</span>}
+                        <span className="font-medium text-[#2a1a0a]">{s.serviceName || s.description || 'Service'}</span>
+                        {s.serviceCategory && <span className="ml-2 text-xs uppercase text-[#5a3a1a]/60">{s.serviceCategory}</span>}
                       </div>
-                      <span className="font-semibold text-gray-900">{formatCurrency(s.price || s.amount || 0)}</span>
+                      <span className="font-semibold text-[#2a1a0a]">{formatCurrency(s.price || s.amount || 0)}</span>
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-between items-center mt-3 pt-3 border-t-2 border-[#0d1f3d]">
-                  <span className="text-sm font-medium text-[#0d1f3d]">Total</span>
-                  <span className="text-lg font-bold text-[#0d1f3d]">{formatCurrency(invoice.total)}</span>
+                <div className="flex justify-between items-center mt-3 pt-3 border-t-2 border-[#2a1a0a]">
+                  <span className="text-sm font-medium text-[#2a1a0a]">Total</span>
+                  <span className="text-lg font-bold text-[#2a1a0a]">{formatCurrency(invoice.total)}</span>
                 </div>
               </div>
             )}
 
-            {/* Bank Details */}
-            <div className="bg-[#f0f4f8] border border-[#d0dce6] rounded-lg p-5">
-              <p className="text-xs uppercase tracking-widest text-[#0d1f3d] font-semibold mb-3">Bank Details for Payment</p>
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <span className="text-gray-500">Bank:</span><span className="font-medium text-gray-900">Tide</span>
-                <span className="text-gray-500">Account Name:</span><span className="font-medium text-gray-900">Late Night Ricky Ltd</span>
-                <span className="text-gray-500">Sort Code:</span><span className="font-medium text-gray-900">04-06-05</span>
-                <span className="text-gray-500">Account Number:</span><span className="font-medium text-gray-900">23690693</span>
+            {/* Bank Details from Settings */}
+            <div className="bg-[#f8f1e8] border border-[#d0c4a8] rounded-lg p-5">
+              <p className="text-xs uppercase tracking-widest text-[#2a1a0a] font-semibold mb-3">Bank Details for Payment</p>
+              <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-sm">
+                <span className="text-[#5a3a1a]">Bank:</span>
+                <span className="font-medium text-[#2a1a0a]">{bankDetails.bankName}</span>
+                <span className="text-[#5a3a1a]">Account Name:</span>
+                <span className="font-medium text-[#2a1a0a]">{bankDetails.accountName}</span>
+                <span className="text-[#5a3a1a]">Sort Code:</span>
+                <span className="font-medium text-[#2a1a0a]">{bankDetails.sortCode}</span>
+                <span className="text-[#5a3a1a]">Account Number:</span>
+                <span className="font-medium text-[#2a1a0a]">{bankDetails.accountNumber}</span>
+                {bankDetails.swift && (
+                  <>
+                    <span className="text-[#5a3a1a]">SWIFT:</span>
+                    <span className="font-medium text-[#2a1a0a]">{bankDetails.swift}</span>
+                  </>
+                )}
+                {bankDetails.iban && (
+                  <>
+                    <span className="text-[#5a3a1a]">IBAN:</span>
+                    <span className="font-medium text-[#2a1a0a]">{bankDetails.iban}</span>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -278,22 +326,30 @@ export default function PaymentPage() {
           <div className="text-center">
             <button
               onClick={() => setShowForm(true)}
-              className="inline-block bg-[#0d1f3d] text-white px-10 py-4 text-sm font-semibold uppercase tracking-widest rounded hover:bg-[#152a47] transition-colors"
+              className="inline-block bg-[#2a1a0a] text-[#e8d4b8] px-10 py-4 text-sm font-semibold uppercase tracking-widest rounded hover:bg-[#3a2a1a] transition-colors"
             >
               Confirm Payment
             </button>
-            <p className="text-xs text-[#C5E5F8] mt-3">Click above after you&apos;ve made your payment</p>
+            <p className="text-xs text-[#5a3a1a]/70 mt-3">Click above after you&apos;ve made your payment</p>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-sm p-6 sm:p-8">
-            <h2 className="text-lg font-light text-[#0d1f3d] mb-6">Confirm Your Payment</h2>
+          <div className="bg-white rounded-lg shadow-sm p-6 sm:p-8 border border-[#d0c4a8]">
+            <div className="flex items-center gap-2 mb-6">
+              <button
+                onClick={() => setShowForm(false)}
+                className="text-[#5a3a1a] hover:text-[#2a1a0a] transition-colors"
+              >
+                <ArrowLeft size={18} />
+              </button>
+              <h2 className="text-lg font-light text-[#2a1a0a]">Confirm Your Payment</h2>
+            </div>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-xs uppercase tracking-widest font-medium text-gray-700 mb-2">Payment Method</label>
+                <label className="block text-xs uppercase tracking-widest font-semibold text-[#5a3a1a] mb-2">Payment Method</label>
                 <select
                   value={paymentMethod}
                   onChange={(e) => setPaymentMethod(e.target.value)}
-                  className="w-full border border-gray-200 rounded px-4 py-3 text-sm focus:outline-none focus:border-[#0d1f3d] transition-colors bg-white"
+                  className="w-full border border-[#d0c4a8] rounded px-4 py-3 text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a] transition-colors bg-white"
                 >
                   <option>Bank Transfer</option>
                   <option>Cash</option>
@@ -303,40 +359,40 @@ export default function PaymentPage() {
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-widest font-medium text-gray-700 mb-2">Amount Paid (£)</label>
+                <label className="block text-xs uppercase tracking-widest font-semibold text-[#5a3a1a] mb-2">Amount Paid (&pound;)</label>
                 <input
                   type="number"
                   step="0.01"
                   value={amountPaid}
                   onChange={(e) => setAmountPaid(e.target.value)}
                   required
-                  className="w-full border border-gray-200 rounded px-4 py-3 text-sm focus:outline-none focus:border-[#0d1f3d] transition-colors"
+                  className="w-full border border-[#d0c4a8] rounded px-4 py-3 text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a] transition-colors bg-white"
                 />
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-widest font-medium text-gray-700 mb-2">
-                  Receipt / Screenshot <span className="text-gray-400 normal-case tracking-normal">(optional)</span>
+                <label className="block text-xs uppercase tracking-widest font-semibold text-[#5a3a1a] mb-2">
+                  Receipt / Screenshot <span className="text-[#5a3a1a]/50 normal-case tracking-normal">(optional)</span>
                 </label>
                 <input
                   type="file"
                   accept="image/*,.pdf"
                   onChange={handleFileChange}
-                  className="w-full border border-gray-200 rounded px-4 py-3 text-sm file:mr-4 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-gray-100 file:text-[#0d1f3d] hover:file:bg-gray-200"
+                  className="w-full border border-[#d0c4a8] rounded px-4 py-3 text-sm text-[#2a1a0a] file:mr-4 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-[#f0e6d8] file:text-[#2a1a0a] hover:file:bg-[#e8d4b8]"
                 />
-                {receiptFile && <p className="text-xs text-gray-500 mt-1">Selected: {receiptFile.name}</p>}
+                {receiptFile && <p className="text-xs text-[#5a3a1a] mt-1">Selected: {receiptFile.name}</p>}
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-widest font-medium text-gray-700 mb-2">
-                  Reference / Notes <span className="text-gray-400 normal-case tracking-normal">(optional)</span>
+                <label className="block text-xs uppercase tracking-widest font-semibold text-[#5a3a1a] mb-2">
+                  Reference / Notes <span className="text-[#5a3a1a]/50 normal-case tracking-normal">(optional)</span>
                 </label>
                 <textarea
                   value={reference}
                   onChange={(e) => setReference(e.target.value)}
                   rows={3}
                   placeholder="Bank transfer reference, any additional notes..."
-                  className="w-full border border-gray-200 rounded px-4 py-3 text-sm focus:outline-none focus:border-[#0d1f3d] transition-colors resize-none"
+                  className="w-full border border-[#d0c4a8] rounded px-4 py-3 text-sm text-[#2a1a0a] focus:outline-none focus:border-[#2a1a0a] transition-colors resize-none bg-white"
                 />
               </div>
 
@@ -344,14 +400,21 @@ export default function PaymentPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 bg-[#0d1f3d] text-white px-6 py-3 text-sm font-semibold uppercase tracking-widest rounded hover:bg-[#152a47] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 bg-[#2a1a0a] text-[#e8d4b8] px-6 py-3 text-sm font-semibold uppercase tracking-widest rounded hover:bg-[#3a2a1a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {submitting ? 'Submitting...' : 'Submit Payment Confirmation'}
+                  {submitting ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <Loader2 size={14} className="animate-spin" />
+                      Submitting...
+                    </span>
+                  ) : (
+                    'Submit Payment Confirmation'
+                  )}
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowForm(false)}
-                  className="px-6 py-3 text-sm border border-gray-200 rounded text-gray-600 hover:bg-gray-50 transition-colors"
+                  className="px-6 py-3 text-sm border border-[#d0c4a8] rounded text-[#5a3a1a] hover:bg-[#f8f1e8] transition-colors"
                 >
                   Cancel
                 </button>
@@ -361,9 +424,10 @@ export default function PaymentPage() {
         )}
 
         {/* Footer */}
-        <div className="text-center mt-8 pt-6 border-t border-white/10">
-          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-1" style={{ maxWidth: '100px', opacity: 0.5 }} />
-          <p className="text-xs text-[#C5E5F8]/70">International DJ &amp; Grammy Winning Producer</p>
+        <div className="text-center mt-10 pt-6 border-t border-[#d0c4a8]">
+          <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="mx-auto mb-2" style={{ maxWidth: '100px', opacity: 0.4 }} />
+          <p className="text-[10px] uppercase tracking-[2px] text-[#5a3a1a]/50">International DJ &amp; Grammy Winning Producer</p>
+          <p className="text-xs text-[#5a3a1a]/40 mt-2">Late Night Ricky</p>
         </div>
       </div>
     </div>

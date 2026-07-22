@@ -1,9 +1,19 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import { invoices } from '@/lib/db/schema'
-import { eq } from 'drizzle-orm'
+import { invoices, siteSections } from '@/lib/db/schema'
+import { eq, and } from 'drizzle-orm'
 
 export const dynamic = 'force-dynamic'
+
+async function getSettings() {
+  try {
+    const { eq, and } = await import('drizzle-orm')
+    const rows = await db.select().from(siteSections).where(and(eq(siteSections.page, 'global'), eq(siteSections.section, 'settings'))).limit(1)
+    return rows[0]?.content || {}
+  } catch {
+    return {}
+  }
+}
 
 export async function GET(request: Request, { params }: { params: { token: string } }) {
   try {
@@ -19,6 +29,8 @@ export async function GET(request: Request, { params }: { params: { token: strin
       return NextResponse.json({ error: 'Invoice not found or link has expired' }, { status: 404 })
     }
 
+    const settings = await getSettings()
+
     return NextResponse.json({
       id: invoice.id,
       invoiceNumber: invoice.invoiceNumber,
@@ -26,6 +38,7 @@ export async function GET(request: Request, { params }: { params: { token: strin
       clientCompany: invoice.clientCompany,
       clientEmail: invoice.clientEmail,
       projectTitle: invoice.projectTitle,
+      performanceDate: invoice.performanceDate,
       lineItems: invoice.lineItems,
       subtotal: invoice.subtotal,
       taxRate: invoice.taxRate,
@@ -36,6 +49,8 @@ export async function GET(request: Request, { params }: { params: { token: strin
       paymentTermsLabel: invoice.paymentTermsLabel,
       status: invoice.status,
       paymentSchedule: invoice.paymentSchedule,
+      paymentConfirmedByClient: invoice.paymentConfirmedByClient,
+      settings,
     })
   } catch (error) {
     console.error('Error fetching invoice by token:', error)
