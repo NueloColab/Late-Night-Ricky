@@ -6,10 +6,12 @@ export const LNR_SERVICE_CATEGORIES = [
   'Production & Technical',
   'Brand & Partnership',
   'Creative & Consulting',
+  'Expenses',
 ]
 
 export const LNR_SERVICES = [
   // Entertainment & Performance
+  { name: 'DJ Set', category: 'Entertainment & Performance' },
   { name: 'DJ Set — Wedding', category: 'Entertainment & Performance' },
   { name: 'DJ Set — Corporate Event', category: 'Entertainment & Performance' },
   { name: 'DJ Set — Club Night', category: 'Entertainment & Performance' },
@@ -38,6 +40,13 @@ export const LNR_SERVICES = [
   { name: 'Event Strategy', category: 'Creative & Consulting' },
   { name: 'Playlist Curation', category: 'Creative & Consulting' },
   { name: 'Remix / Edit', category: 'Creative & Consulting' },
+
+  // Expenses
+  { name: 'Travel Expense', category: 'Expenses' },
+  { name: 'Accommodation', category: 'Expenses' },
+  { name: 'Catering / Rider', category: 'Expenses' },
+  { name: 'Equipment Hire', category: 'Expenses' },
+  { name: 'Other Expense', category: 'Expenses' },
 ]
 
 export function getServicesByCategory(category: string) {

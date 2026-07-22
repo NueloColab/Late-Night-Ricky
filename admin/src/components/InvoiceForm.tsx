@@ -42,6 +42,7 @@ interface InvoiceFormProps {
     clientEmail?: string | null
     clientCompany?: string | null
     projectTitle?: string | null
+    performanceDate?: string | null
     lineItems?: LineItem[]
     notes?: string | null
     taxRate?: number
@@ -67,6 +68,7 @@ interface Template {
   clientEmail?: string | null
   clientCompany?: string | null
   projectTitle?: string | null
+  performanceDate?: string | null
   lineItems?: LineItem[]
   notes?: string | null
   taxRate?: number
@@ -269,6 +271,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
   const [clientEmail, setClientEmail] = useState(invoice?.clientEmail || '')
   const [clientCompany, setClientCompany] = useState(invoice?.clientCompany || '')
   const [projectTitle, setProjectTitle] = useState(invoice?.projectTitle || '')
+  const [performanceDate, setPerformanceDate] = useState(invoice?.performanceDate || '')
   const [ccEmails, setCcEmails] = useState(invoice?.ccEmails || '')
   const [projectId, setProjectId] = useState<number | null>(invoice?.projectId ?? null)
   const [notes, setNotes] = useState(invoice?.notes || 'Thank you for doing business with Fricktion Music Ltd')
@@ -307,6 +310,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
     setClientEmail(t.clientEmail || '')
     setClientCompany(t.clientCompany || '')
     setProjectTitle(t.projectTitle || '')
+    setPerformanceDate(t.performanceDate || '')
     setCcEmails(t.ccEmails || '')
     setNotes(t.notes || 'Thank you for doing business with Fricktion Music Ltd')
     setItems(t.lineItems?.length ? t.lineItems : [{ serviceName: '', serviceCategory: '', price: 0, quantity: 1 }])
@@ -335,6 +339,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
           clientEmail,
           clientCompany,
           projectTitle,
+          performanceDate,
           lineItems: items,
           notes,
           taxRate,
@@ -445,6 +450,7 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
       clientEmail,
       clientCompany,
       projectTitle,
+      performanceDate: performanceDate || undefined,
       projectId: projectId || undefined,
       notes,
       lineItems: items.map((item) => ({
@@ -553,14 +559,14 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
           </div>
           <div>
             <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
-              Company
+              Company Address
             </label>
             <input
               type="text"
               value={clientCompany}
               onChange={(e) => setClientCompany(e.target.value)}
               className={inputClass}
-              placeholder="Company name (optional)"
+              placeholder="Company name / address (optional)"
             />
           </div>
           <div>
@@ -600,6 +606,17 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
               className={inputClass}
               placeholder="Enter project title"
               required
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
+              Performance Date
+            </label>
+            <input
+              type="date"
+              value={performanceDate}
+              onChange={(e) => setPerformanceDate(e.target.value)}
+              className={inputClass}
             />
           </div>
         </div>

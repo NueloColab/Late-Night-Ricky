@@ -13,6 +13,7 @@ interface Invoice {
   clientEmail: string | null
   clientCompany: string | null
   projectTitle: string | null
+  performanceDate: string | null
   lineItems: {
     serviceName?: string
     serviceCategory?: string
@@ -149,8 +150,8 @@ export default function InvoicesPage() {
     }
   }
 
-  async function sendInvoice(id: number) {
-    if (!confirm('Send this invoice via email to the client?')) return
+  async function sendInvoice(id: number, isResend = false) {
+    if (!confirm(isResend ? 'Resend this invoice via email to the client?' : 'Send this invoice via email to the client?')) return
     setSendingId(id)
     try {
       const res = await fetch(`/api/invoices/${id}/send`, { method: 'POST' })
@@ -158,7 +159,7 @@ export default function InvoicesPage() {
       if (!res.ok || !data.success) {
         alert(data.error || 'Failed to send invoice')
       } else {
-        alert('Invoice sent successfully')
+        alert(isResend ? 'Invoice resent successfully' : 'Invoice sent successfully')
       }
       fetchInvoices()
       if (selectedInvoice && selectedInvoice.id === id) {
@@ -380,11 +381,12 @@ export default function InvoicesPage() {
                           >
                             <Pencil size={16} />
                           </button>
-                          {inv.status === 'draft' && (
+                          {(inv.status === 'draft' || inv.status === 'sent') && (
                             <button
-                              onClick={() => sendInvoice(inv.id)}
+                              onClick={() => sendInvoice(inv.id, inv.status === 'sent')}
                               disabled={sendingId === inv.id}
                               className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C] disabled:opacity-50"
+                              title={inv.status === 'sent' ? 'Resend Invoice' : 'Send Invoice'}
                             >
                               {sendingId === inv.id ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                             </button>
@@ -557,14 +559,14 @@ export default function InvoicesPage() {
                   <Pencil size={14} />
                   Edit Invoice
                 </button>
-                {selectedInvoice.status === 'draft' && (
+                {(selectedInvoice.status === 'draft' || selectedInvoice.status === 'sent') && (
                   <button
-                    onClick={() => sendInvoice(selectedInvoice.id)}
+                    onClick={() => sendInvoice(selectedInvoice.id, selectedInvoice.status === 'sent')}
                     disabled={sendingId === selectedInvoice.id}
                     className="inline-flex items-center gap-2 px-4 py-2 border-2 border-[#1B3A4C] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:bg-[#1B3A4C] hover:text-white transition disabled:opacity-50"
                   >
                     {sendingId === selectedInvoice.id ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
-                    Send Invoice
+                    {selectedInvoice.status === 'sent' ? 'Resend Invoice' : 'Send Invoice'}
                   </button>
                 )}
                 {selectedInvoice.status === 'sent' && (
