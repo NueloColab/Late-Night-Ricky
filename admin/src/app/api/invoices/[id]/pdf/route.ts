@@ -1,531 +1,767 @@
-import { NextResponse } from 'next/server';
+import React from 'react'
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  renderToBuffer,
+} from '@react-pdf/renderer'
+import { NextResponse } from 'next/server'
 
-export const dynamic = 'force-dynamic';
-import { db } from '@/lib/db';
-import { invoices } from '@/lib/db/schema';
-import { eq, and } from 'drizzle-orm';
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+export const dynamic = 'force-dynamic'
+import { db } from '@/lib/db'
+import { invoices } from '@/lib/db/schema'
+import { eq, and } from 'drizzle-orm'
 
-// Minimal Nuelo palette
-const BLACK = rgb(0.06, 0.06, 0.06);
-const DARK_GREY = rgb(0.30, 0.30, 0.30);
-const MED_GREY = rgb(0.55, 0.55, 0.55);
-const LIGHT_GREY = rgb(0.90, 0.90, 0.90);
-const WHITE = rgb(1, 1, 1);
-
-async function getSettings() {
-  try {
-    const { siteSections } = await import('@/lib/db/schema');
-    const rows = await db
-      .select()
-      .from(siteSections)
-      .where(and(eq(siteSections.page, 'global'), eq(siteSections.section, 'settings')))
-      .limit(1);
-    if (rows.length > 0 && rows[0].content) {
-      const parsed = typeof rows[0].content === 'string' ? JSON.parse(rows[0].content) : rows[0].content;
-      return parsed;
-    }
-  } catch {}
-  return {};
-}
+// ─── Helpers ───────────────────────────────────────────────────────────────
 
 function formatCurrency(amount: number | null | undefined) {
-  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount || 0);
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+  }).format(amount || 0)
 }
 
 function formatDate(dateStr: string | Date | null | undefined) {
-  if (!dateStr) return '—';
+  if (!dateStr) return '—'
   try {
-    return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    return new Date(dateStr).toLocaleDateString('en-GB', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
   } catch {
-    return String(dateStr);
+    return String(dateStr)
   }
 }
 
 function sanitizePdfText(text: string | null | undefined): string {
-  if (!text) return '';
-  return String(text).replace(/[\r\n\t]/g, ' ').replace(/[^\x20-\xFF]/g, '');
+  if (!text) return ''
+  return String(text).replace(/[\r\n\t]/g, ' ').replace(/[^\x20-\xFF]/g, '')
 }
 
-function wrapText(text: string, font: any, size: number, maxWidth: number): string[] {
-  const words = text.split(' ');
-  const lines: string[] = [];
-  let line = '';
-  for (const word of words) {
-    const test = line + (line ? ' ' : '') + word;
-    if (font.widthOfTextAtSize(test, size) > maxWidth && line) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = test;
-    }
-  }
-  if (line) lines.push(line);
-  return lines;
-}
-
-async function getLogoBytes(): Promise<Buffer | null> {
+async function getSettings() {
   try {
-    const response = await fetch('https://late-night-ricky.vercel.app/assets/ricky-logo.png');
-    if (response.ok) {
-      const arrayBuffer = await response.arrayBuffer();
-      return Buffer.from(arrayBuffer);
+    const { siteSections } = await import('@/lib/db/schema')
+    const rows = await db
+      .select()
+      .from(siteSections)
+      .where(and(eq(siteSections.page, 'global'), eq(siteSections.section, 'settings')))
+      .limit(1)
+    if (rows.length > 0 && rows[0].content) {
+      const parsed = typeof rows[0].content === 'string' ? JSON.parse(rows[0].content) : rows[0].content
+      return parsed
     }
   } catch {}
-  return null;
+  return {}
 }
+
+async function getLogoBase64(): Promise<string | null> {
+  try {
+    const response = await fetch('https://late-night-ricky.vercel.app/assets/ricky-logo.png')
+    if (response.ok) {
+      const arrayBuffer = await response.arrayBuffer()
+      const base64 = Buffer.from(arrayBuffer).toString('base64')
+      return `data:image/png;base64,${base64}`
+    }
+  } catch {}
+  return null
+}
+
+// ─── Styles ─────────────────────────────────────────────────────────────────
+
+const c = {
+  brown:     '#2a1a0a',
+  gold:      '#c9a96e',
+  black:     '#000000',
+  darkText:  '#333333',
+  mutedText: '#666666',
+  dimText:   '#999999',
+  border:    '#e5e5e5',
+  bg:        '#e8d4b8',
+  white:     '#ffffff',
+}
+
+const styles = StyleSheet.create({
+  page: {
+    fontFamily: 'Helvetica',
+    fontSize: 10,
+    color: c.darkText,
+    backgroundColor: c.white,
+    paddingTop: 40,
+    paddingBottom: 40,
+    paddingHorizontal: 42,
+  },
+
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    borderBottomWidth: 2,
+    borderBottomColor: c.brown,
+    paddingBottom: 16,
+    marginBottom: 26,
+  },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 18,
+  },
+  logo: {
+    width: 64,
+    height: 64,
+    objectFit: 'contain',
+  },
+  brandBlock: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  brandName: {
+    fontFamily: 'Helvetica',
+    fontSize: 24,
+    letterSpacing: 5,
+    color: c.black,
+    textTransform: 'uppercase',
+  },
+  tagline: {
+    fontSize: 7.5,
+    color: c.gold,
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginTop: 3,
+  },
+  headerRight: {
+    alignItems: 'flex-end',
+  },
+  docLabel: {
+    fontFamily: 'Helvetica',
+    fontSize: 21,
+    color: c.brown,
+    letterSpacing: 2,
+    textTransform: 'uppercase',
+  },
+  docNumber: {
+    fontSize: 9,
+    color: c.mutedText,
+    marginTop: 3,
+  },
+
+  infoGrid: {
+    flexDirection: 'row',
+    gap: 18,
+    marginBottom: 22,
+  },
+  infoBox: {
+    flex: 1,
+    backgroundColor: c.bg,
+    borderWidth: 1,
+    borderColor: c.border,
+    padding: 15,
+  },
+  infoBoxTitle: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 6.8,
+    color: c.dimText,
+    textTransform: 'uppercase',
+    letterSpacing: 1.2,
+    marginBottom: 7,
+  },
+  infoNameText: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 10.5,
+    color: c.black,
+    marginBottom: 2,
+  },
+  infoBodyText: {
+    fontFamily: 'Helvetica',
+    fontSize: 9.8,
+    color: c.darkText,
+    lineHeight: 1.65,
+  },
+
+  metaRow: {
+    flexDirection: 'row',
+    backgroundColor: c.bg,
+    borderWidth: 1,
+    borderColor: c.border,
+    paddingVertical: 11,
+    paddingHorizontal: 15,
+    marginBottom: 22,
+  },
+  metaItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  metaLabel: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 6.8,
+    color: c.dimText,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 4,
+  },
+  metaValue: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 9.8,
+    color: c.black,
+  },
+
+  tableBorder: {
+    borderWidth: 1,
+    borderColor: c.border,
+    marginBottom: 18,
+  },
+  tableHead: {
+    flexDirection: 'row',
+    backgroundColor: c.black,
+    paddingVertical: 9,
+    paddingHorizontal: 14,
+  },
+  tableHeadText: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 7.5,
+    color: c.white,
+    textTransform: 'uppercase',
+    letterSpacing: 1.2,
+  },
+  tableRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: c.border,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+  },
+  tableRowAlt: {
+    backgroundColor: c.bg,
+  },
+  colDesc: {
+    flex: 1,
+  },
+  colAmt: {
+    width: 80,
+    alignItems: 'flex-end',
+  },
+  serviceNameText: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 10.5,
+    color: c.black,
+    marginBottom: 2,
+  },
+  serviceCatText: {
+    fontSize: 8.3,
+    color: c.gold,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  servicePriceText: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 11.3,
+    color: c.black,
+  },
+
+  totalsWrap: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginBottom: 22,
+  },
+  totalsBox: {
+    width: 210,
+  },
+  totalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 7.5,
+    borderBottomWidth: 1,
+    borderBottomColor: c.border,
+  },
+  totalRowLabel: {
+    fontFamily: 'Helvetica',
+    fontSize: 9.8,
+    color: c.mutedText,
+  },
+  totalRowValue: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 9.8,
+    color: c.black,
+  },
+  grandTotalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 11,
+    marginTop: 6,
+    borderTopWidth: 2.25,
+    borderTopColor: c.brown,
+  },
+  grandTotalLabel: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 12,
+    color: c.brown,
+  },
+  grandTotalValue: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 15,
+    color: c.brown,
+  },
+
+  notesBox: {
+    backgroundColor: c.bg,
+    borderWidth: 1,
+    borderColor: c.border,
+    padding: 15,
+    marginBottom: 22,
+  },
+  notesTitle: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 7.5,
+    color: c.black,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 6,
+  },
+  notesText: {
+    fontFamily: 'Helvetica',
+    fontSize: 9,
+    color: c.mutedText,
+    lineHeight: 1.7,
+  },
+
+  scheduleBox: {
+    backgroundColor: '#f5efe9',
+    borderWidth: 1,
+    borderColor: '#d4c4b0',
+    padding: 15,
+    marginBottom: 22,
+  },
+  scheduleTitle: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 7.5,
+    color: c.brown,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 10,
+  },
+  scheduleHeaderRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#d4c4b0',
+    paddingBottom: 6,
+    marginBottom: 6,
+  },
+  scheduleHeaderText: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 7,
+    color: c.brown,
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+  },
+  scheduleRow: {
+    flexDirection: 'row',
+    paddingVertical: 5,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#e5ddd3',
+  },
+  scheduleColLabel: { flex: 3 },
+  scheduleColPercent: { flex: 1, alignItems: 'center' },
+  scheduleColDue: { flex: 3 },
+  scheduleColAmount: { flex: 2, alignItems: 'flex-end' },
+  scheduleCellText: {
+    fontFamily: 'Helvetica',
+    fontSize: 9,
+    color: '#333333',
+  },
+  scheduleCellBold: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 9,
+    color: '#000000',
+  },
+
+  bankBox: {
+    backgroundColor: c.bg,
+    borderWidth: 1,
+    borderColor: c.gold,
+    padding: 15,
+    marginBottom: 22,
+  },
+  bankTitle: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 7.5,
+    color: c.gold,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 8,
+  },
+  bankRow: {
+    flexDirection: 'row',
+    marginBottom: 3,
+  },
+  bankLabel: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 9,
+    color: '#666666',
+    width: 100,
+  },
+  bankValue: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 9,
+    color: '#000000',
+  },
+
+  footer: {
+    borderTopWidth: 1,
+    borderTopColor: c.border,
+    paddingTop: 12,
+    marginTop: 'auto',
+    alignItems: 'center',
+  },
+  footerBrand: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 7.5,
+    color: c.brown,
+    letterSpacing: 1,
+    marginBottom: 3,
+  },
+  footerText: {
+    fontFamily: 'Helvetica',
+    fontSize: 7.5,
+    color: c.dimText,
+    lineHeight: 1.5,
+    textAlign: 'center',
+  },
+})
+
+// ─── Invoice PDF Document ───────────────────────────────────────────────────
+
+interface LineItem {
+  serviceName?: string
+  description?: string
+  serviceCategory?: string
+  price?: number
+  amount?: number
+  quantity?: number
+  rate?: number
+}
+
+interface PaymentScheduleItem {
+  label?: string
+  percent?: number
+  due?: string
+  dueLabel?: string
+  amount?: number
+}
+
+interface InvoiceData {
+  clientName: string
+  clientEmail: string
+  clientCompany: string | null
+  projectTitle: string
+  invoiceNumber: string
+  createdAt: string | Date
+  sentAt: string | Date | null
+  dueDate: string | Date | null
+  paymentTermsLabel: string | null
+  lineItems: LineItem[]
+  subtotal: number
+  taxRate: number
+  vatEnabled: boolean
+  discount: { enabled?: boolean; percent?: number; amount?: number } | null
+  total: number
+  paymentSchedule: PaymentScheduleItem[]
+  notes: string | null
+  paymentMethod: string | null
+}
+
+function InvoicePDF({ invoice, logoBase64, bankDetails, companyName }: {
+  invoice: InvoiceData
+  logoBase64: string | null
+  bankDetails: {
+    bankName: string
+    bankAccountName: string
+    bankSortCode: string
+    bankAccountNumber: string
+    swiftCode: string
+    iban: string
+  }
+  companyName: string
+}) {
+  const taxRate = invoice.taxRate || 20
+  const vatEnabled = invoice.vatEnabled !== false
+  const discount = invoice.discount || { enabled: false, percent: 0, amount: 0 }
+  const e = React.createElement
+
+  const dueDateStr = invoice.dueDate ? formatDate(invoice.dueDate) : 'Upon receipt'
+  const termsLabel = invoice.paymentTermsLabel || '-'
+  const hasSchedule = invoice.paymentSchedule && invoice.paymentSchedule.length > 1
+
+  const subtotal = Number(invoice.subtotal || 0)
+  const discountEnabled = discount.enabled || false
+  const discountPercent = discount.percent || 0
+  const discountAmount = discountEnabled ? (subtotal * discountPercent) / 100 : 0
+  const taxableAmount = subtotal - discountAmount
+  const taxAmount = vatEnabled ? taxableAmount * (taxRate / 100) : 0
+  const total = Number(invoice.total || 0)
+
+  return e(Document, { title: `Invoice ${invoice.invoiceNumber} - Late Night Ricky` },
+    e(Page, { size: 'A4', style: styles.page },
+
+      // HEADER
+      e(View, { style: styles.header },
+        e(View, { style: styles.headerLeft },
+          logoBase64 ? e(Image, { style: styles.logo, src: logoBase64 }) : null,
+          e(View, { style: styles.brandBlock },
+            e(Text, { style: styles.brandName }, 'LATE NIGHT RICKY'),
+            e(Text, { style: styles.tagline }, 'Brand Strategy, Communications \u0026 Digital Innovation')
+          )
+        ),
+        e(View, { style: styles.headerRight },
+          e(Text, { style: styles.docLabel }, 'Invoice'),
+          e(Text, { style: styles.docNumber }, invoice.invoiceNumber)
+        )
+      ),
+
+      // INFO GRID
+      e(View, { style: styles.infoGrid },
+        e(View, { style: styles.infoBox },
+          e(Text, { style: styles.infoBoxTitle }, 'Bill To'),
+          e(Text, { style: styles.infoNameText }, invoice.clientName),
+          invoice.clientCompany ? e(Text, { style: styles.infoBodyText }, invoice.clientCompany) : null,
+          e(Text, { style: styles.infoBodyText }, invoice.clientEmail)
+        ),
+        e(View, { style: styles.infoBox },
+          e(Text, { style: styles.infoBoxTitle }, 'Project'),
+          e(Text, { style: styles.infoNameText }, invoice.projectTitle),
+          e(Text, { style: styles.infoBodyText },
+            `${invoice.lineItems?.length || 0} item${invoice.lineItems?.length !== 1 ? 's' : ''}`
+          )
+        )
+      ),
+
+      // META ROW
+      e(View, { style: styles.metaRow },
+        e(View, { style: styles.metaItem },
+          e(Text, { style: styles.metaLabel }, 'Date Issued'),
+          e(Text, { style: styles.metaValue }, formatDate(invoice.sentAt || invoice.createdAt))
+        ),
+        e(View, { style: styles.metaItem },
+          e(Text, { style: styles.metaLabel }, 'Due Date'),
+          e(Text, { style: styles.metaValue }, dueDateStr)
+        ),
+        e(View, { style: styles.metaItem },
+          e(Text, { style: styles.metaLabel }, 'Payment Terms'),
+          e(Text, { style: styles.metaValue }, termsLabel)
+        ),
+        e(View, { style: styles.metaItem },
+          e(Text, { style: styles.metaLabel }, 'Invoice Number'),
+          e(Text, { style: styles.metaValue }, invoice.invoiceNumber)
+        )
+      ),
+
+      // SERVICES TABLE
+      e(View, { style: styles.tableBorder },
+        e(View, { style: styles.tableHead },
+          e(View, { style: styles.colDesc }, e(Text, { style: styles.tableHeadText }, 'Service Description')),
+          e(View, { style: styles.colAmt }, e(Text, { style: styles.tableHeadText }, 'Amount'))
+        ),
+        ...(invoice.lineItems || []).map((service, i) =>
+          e(View, {
+            key: String(i),
+            style: [styles.tableRow, i % 2 === 1 ? styles.tableRowAlt : {}],
+          },
+            e(View, { style: styles.colDesc },
+              e(Text, { style: styles.serviceNameText }, service.serviceName || service.description || ''),
+              e(Text, { style: styles.serviceCatText }, service.serviceCategory || '')
+            ),
+            e(View, { style: styles.colAmt },
+              e(Text, { style: styles.servicePriceText }, formatCurrency(service.price || service.amount || 0))
+            )
+          )
+        )
+      ),
+
+      // TOTALS
+      e(View, { style: styles.totalsWrap },
+        e(View, { style: styles.totalsBox },
+          e(View, { style: styles.totalRow },
+            e(Text, { style: styles.totalRowLabel }, 'Subtotal:'),
+            e(Text, { style: styles.totalRowValue }, formatCurrency(subtotal))
+          ),
+          discountEnabled
+            ? e(View, { style: styles.totalRow },
+                e(Text, { style: [styles.totalRowLabel, { color: c.brown }] }, `Friends \u0026 Family Discount (${discountPercent}%):`),
+                e(Text, { style: [styles.totalRowValue, { color: c.brown }] }, `-${formatCurrency(discountAmount)}`)
+              )
+            : null,
+          vatEnabled
+            ? e(View, { style: styles.totalRow },
+                e(Text, { style: styles.totalRowLabel }, `VAT (${taxRate}%):`),
+                e(Text, { style: styles.totalRowValue }, formatCurrency(taxAmount))
+              )
+            : e(View, { style: styles.totalRow },
+                e(Text, { style: styles.totalRowLabel }, 'VAT:'),
+                e(Text, { style: [styles.totalRowValue, { color: c.dimText }] }, 'N/A')
+              ),
+          e(View, { style: styles.grandTotalRow },
+            e(Text, { style: styles.grandTotalLabel }, 'Total:'),
+            e(Text, { style: styles.grandTotalValue }, formatCurrency(total))
+          )
+        )
+      ),
+
+      // PAYMENT SCHEDULE (only for split payments)
+      hasSchedule
+        ? e(View, { style: styles.scheduleBox },
+            e(Text, { style: styles.scheduleTitle }, 'Payment Schedule'),
+            e(View, { style: styles.scheduleHeaderRow },
+              e(View, { style: styles.scheduleColLabel }, e(Text, { style: styles.scheduleHeaderText }, 'Installment')),
+              e(View, { style: styles.scheduleColPercent }, e(Text, { style: styles.scheduleHeaderText }, '%')),
+              e(View, { style: styles.scheduleColDue }, e(Text, { style: styles.scheduleHeaderText }, 'Due')),
+              e(View, { style: styles.scheduleColAmount }, e(Text, { style: styles.scheduleHeaderText }, 'Amount'))
+            ),
+            ...invoice.paymentSchedule.map((item, i) =>
+              e(View, { key: String(i), style: styles.scheduleRow },
+                e(View, { style: styles.scheduleColLabel }, e(Text, { style: styles.scheduleCellBold }, item.label || '')),
+                e(View, { style: styles.scheduleColPercent }, e(Text, { style: styles.scheduleCellText }, `${item.percent}%`)),
+                e(View, { style: styles.scheduleColDue }, e(Text, { style: styles.scheduleCellText }, item.due || item.dueLabel || '')),
+                e(View, { style: styles.scheduleColAmount }, e(Text, { style: styles.scheduleCellBold }, formatCurrency(item.amount || (total * (item.percent || 0)) / 100)))
+              )
+            )
+          )
+        : null,
+
+      // BANK DETAILS
+      e(View, { style: styles.bankBox },
+        e(Text, { style: styles.bankTitle }, 'Bank Details for Payment'),
+        e(View, { style: styles.bankRow },
+          e(Text, { style: styles.bankLabel }, 'Bank:'),
+          e(Text, { style: styles.bankValue }, bankDetails.bankName)
+        ),
+        e(View, { style: styles.bankRow },
+          e(Text, { style: styles.bankLabel }, 'Account Name:'),
+          e(Text, { style: styles.bankValue }, bankDetails.bankAccountName)
+        ),
+        e(View, { style: styles.bankRow },
+          e(Text, { style: styles.bankLabel }, 'Sort Code:'),
+          e(Text, { style: styles.bankValue }, bankDetails.bankSortCode)
+        ),
+        e(View, { style: styles.bankRow },
+          e(Text, { style: styles.bankLabel }, 'Account No:'),
+          e(Text, { style: styles.bankValue }, bankDetails.bankAccountNumber)
+        ),
+        bankDetails.swiftCode
+          ? e(View, { style: styles.bankRow },
+              e(Text, { style: styles.bankLabel }, 'SWIFT:'),
+              e(Text, { style: styles.bankValue }, bankDetails.swiftCode)
+            )
+          : null,
+        bankDetails.iban
+          ? e(View, { style: styles.bankRow },
+              e(Text, { style: styles.bankLabel }, 'IBAN:'),
+              e(Text, { style: styles.bankValue }, bankDetails.iban)
+            )
+          : null
+      ),
+
+      // NOTES
+      invoice.notes
+        ? e(View, { style: styles.notesBox },
+            e(Text, { style: styles.notesTitle }, 'Notes \u0026 Terms'),
+            e(Text, { style: styles.notesText }, invoice.notes)
+          )
+        : null,
+
+      // FOOTER
+      e(View, { style: styles.footer },
+        e(Text, { style: styles.footerBrand }, companyName),
+        e(Text, { style: styles.footerText }, 'Brand Strategy, Communications \u0026 Digital Innovation'),
+        e(Text, { style: styles.footerText }, 'This is an invoice for services rendered. Payment is due by the date specified above. Thank you for your business.')
+      )
+    )
+  )
+}
+
+// ─── API Route ──────────────────────────────────────────────────────────────
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
-    const [invoice] = await db.select().from(invoices).where(eq(invoices.id, Number(params.id)));
-    if (!invoice) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-
-    const s = sanitizePdfText;
-    invoice.clientName = s(invoice.clientName);
-    invoice.clientEmail = s(invoice.clientEmail);
-    invoice.clientCompany = s(invoice.clientCompany);
-    invoice.projectTitle = s(invoice.projectTitle);
-    invoice.invoiceNumber = s(invoice.invoiceNumber);
-    invoice.notes = s(invoice.notes);
-    invoice.paymentTermsLabel = s(invoice.paymentTermsLabel);
-    invoice.dueDate = s(invoice.dueDate);
-
-    const settings = await getSettings();
-    const bankName = s(settings.bankName) || 'HSBC';
-    const bankAccountName = s(settings.bankAccountName) || 'Fricktion Music Ltd';
-    const bankSortCode = s(settings.bankSortCode) || '40-19-28';
-    const bankAccountNumber = s(settings.bankAccountNumber) || '22135833';
-    const companyName = s(settings.companyName) || 'Fricktion Music Ltd';
-    const swiftCode = s(settings.swiftCode) || '';
-    const iban = s(settings.iban) || '';
-
-    const pdfDoc = await PDFDocument.create();
-    let page = pdfDoc.addPage([595, 842]);
-    const { width } = page.getSize();
-    const pageH = 842;
-    let y = pageH;
-
-    const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-
-    const logoBytes = await getLogoBytes();
-    let logoImage: any = null;
-    let logoW = 0;
-    let logoH = 0;
-    if (logoBytes) {
-      try {
-        logoImage = await pdfDoc.embedPng(logoBytes);
-        const logoAspect = logoImage.width / logoImage.height;
-        const logoMaxW = 140;
-        const logoMaxH = 32;
-        if (logoAspect > logoMaxW / logoMaxH) {
-          logoW = logoMaxW;
-          logoH = logoMaxW / logoAspect;
-        } else {
-          logoH = logoMaxH;
-          logoW = logoMaxH * logoAspect;
-        }
-      } catch {
-        logoImage = null;
-      }
+    const [invoiceRow] = await db.select().from(invoices).where(eq(invoices.id, Number(params.id)))
+    if (!invoiceRow) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 })
     }
 
-    page.drawRectangle({ x: 0, y: 0, width, height: pageH, color: WHITE });
+    const s = sanitizePdfText
 
-    // ─── TOP LEFT: Brand name ───
-    page.drawText('LATE NIGHT RICKY', {
-      x: 50, y: pageH - 45, size: 8, font: helveticaBold, color: MED_GREY,
-    });
-
-    // ─── TOP RIGHT: Logo ───
-    if (logoImage) {
-      page.drawImage(logoImage, {
-        x: width - 50 - logoW, y: pageH - 48 - (logoH / 2),
-        width: logoW, height: logoH,
-      });
-    }
-
-    // ─── INVOICE title ───
-    page.drawText('INVOICE', {
-      x: 50, y: pageH - 95, size: 32, font: helveticaBold, color: BLACK,
-    });
-
-    // Invoice number
-    page.drawText(invoice.invoiceNumber || '—', {
-      x: 50, y: pageH - 125, size: 14, font: helveticaBold, color: BLACK,
-    });
-
-    // ─── TWO-COLUMN INFO ───
-    const infoY = pageH - 165;
-
-    // LEFT: BILL TO
-    let leftY = infoY;
-    page.drawText('B I L L  T O', {
-      x: 50, y: leftY, size: 8, font: helveticaBold, color: MED_GREY,
-    });
-    leftY -= 16;
-    page.drawText(invoice.clientName || 'Client', {
-      x: 50, y: leftY, size: 13, font: helveticaBold, color: BLACK,
-    });
-    leftY -= 14;
-    if (invoice.clientCompany) {
-      page.drawText(invoice.clientCompany, {
-        x: 50, y: leftY, size: 10, font: helvetica, color: DARK_GREY,
-      });
-      leftY -= 12;
-    }
-    if (invoice.clientEmail) {
-      page.drawText(invoice.clientEmail, {
-        x: 50, y: leftY, size: 10, font: helvetica, color: MED_GREY,
-      });
-    }
-
-    // RIGHT: Meta (all right-aligned)
-    const rightColX = width - 50;
-    let rightY = infoY;
-
-    const drawMetaRow = (label: string, value: string) => {
-      const labelW = helveticaBold.widthOfTextAtSize(label, 8);
-      const valueW = helveticaBold.widthOfTextAtSize(value, 11);
-      page.drawText(label, {
-        x: rightColX - labelW, y: rightY, size: 8, font: helveticaBold, color: MED_GREY,
-      });
-      page.drawText(value, {
-        x: rightColX - valueW, y: rightY - 14, size: 11, font: helveticaBold, color: BLACK,
-      });
-      rightY -= 34;
-    };
-
-    drawMetaRow('D A T E  I S S U E D', formatDate(invoice.sentAt || new Date()));
-    drawMetaRow('D U E  D A T E', invoice.dueDate ? formatDate(invoice.dueDate) : 'Upon receipt');
-    drawMetaRow('P A Y M E N T  T E R M S', invoice.paymentTermsLabel || 'Net 30');
-    drawMetaRow('I N V O I C E  N U M B E R', invoice.invoiceNumber || '—');
-
-    y = Math.min(leftY, rightY) - 20;
-
-    // ─── PROJECT ───
-    if (invoice.projectTitle) {
-      page.drawText('P R O J E C T', {
-        x: 50, y, size: 8, font: helveticaBold, color: MED_GREY,
-      });
-      page.drawText(invoice.projectTitle, {
-        x: 130, y, size: 11, font: helveticaBold, color: BLACK,
-      });
-
-      let count = 0;
-      if (Array.isArray(invoice.lineItems)) {
-        count = invoice.lineItems.length;
-      } else {
-        try { count = JSON.parse(String(invoice.lineItems || '[]')).length; } catch { count = 0; }
-      }
-      const itemText = count === 1 ? '1 item' : `${count} items`;
-      const titleW = helveticaBold.widthOfTextAtSize(invoice.projectTitle, 11);
-      page.drawText(itemText, {
-        x: 130 + titleW + 8, y, size: 10, font: helvetica, color: MED_GREY,
-      });
-      y -= 22;
-    }
-
-    // ─── Divider ───
-    page.drawLine({
-      start: { x: 50, y }, end: { x: width - 50, y },
-      thickness: 0.5, color: LIGHT_GREY,
-    });
-    y -= 20;
-
-    // ─── LINE ITEMS TABLE ───
-    const lineItemsRaw = invoice.lineItems || '[]';
-    const lineItems = Array.isArray(lineItemsRaw)
+    // Parse line items
+    const lineItemsRaw = invoiceRow.lineItems || '[]'
+    const lineItems: LineItem[] = Array.isArray(lineItemsRaw)
       ? lineItemsRaw
-      : JSON.parse(typeof lineItemsRaw === 'string' ? lineItemsRaw : '[]');
+      : JSON.parse(typeof lineItemsRaw === 'string' ? lineItemsRaw : '[]')
 
-    if (lineItems.length > 0) {
-      // Table headers
-      page.drawText('S E R V I C E  D E S C R I P T I O N', {
-        x: 50, y: y - 2, size: 8, font: helveticaBold, color: MED_GREY,
-      });
-      page.drawText('A M O U N T', {
-        x: width - 50, y: y - 2, size: 8, font: helveticaBold, color: MED_GREY,
-      });
-      y -= 6;
-      page.drawLine({
-        start: { x: 50, y }, end: { x: width - 50, y },
-        thickness: 1.5, color: BLACK,
-      });
-      y -= 18;
+    // Parse discount
+    const discountRaw = invoiceRow.discount || { enabled: false, percent: 0, amount: 0 }
+    const discount = typeof discountRaw === 'string' ? JSON.parse(discountRaw) : discountRaw
 
-      lineItems.forEach((item: any, idx: number) => {
-        if (y < 150) {
-          page = pdfDoc.addPage([595, 842]);
-          page.drawRectangle({ x: 0, y: 0, width, height: 842, color: WHITE });
-          y = 842 - 60;
-        }
-
-        const desc = String(item.serviceName || item.description || '').substring(0, 50);
-        const category = item.serviceCategory;
-        const qty = Number(item.quantity || 1);
-        const rate = Number(item.price || item.rate || 0);
-        const amount = Number(item.amount || qty * rate);
-
-        page.drawText(desc, {
-          x: 50, y, size: 11, font: helveticaBold, color: BLACK,
-        });
-        if (category) {
-          page.drawText(String(category).substring(0, 35), {
-            x: 50, y: y - 13, size: 9, font: helvetica, color: MED_GREY,
-          });
-        }
-
-        const amtStr = formatCurrency(amount);
-        const amtW = helveticaBold.widthOfTextAtSize(amtStr, 11);
-        page.drawText(amtStr, {
-          x: width - 50 - amtW, y, size: 11, font: helveticaBold, color: BLACK,
-        });
-
-        y -= category ? 32 : 24;
-      });
-
-      y -= 10;
-    }
-
-    // ─── TOTALS ───
-    const subtotal = Number(invoice.subtotal || 0);
-    const total = Number(invoice.total || 0);
-
-    const discountRaw = invoice.discount || {};
-    const discount = typeof discountRaw === 'string' ? JSON.parse(discountRaw) : discountRaw;
-    const discountEnabled = discount?.enabled || false;
-    const discountPercent = discount?.percent || 0;
-    const discountAmount = discountEnabled ? (subtotal * discountPercent) / 100 : 0;
-
-    const totalsRightX = width - 50;
-
-    // Subtotal
-    const subStr = formatCurrency(subtotal);
-    const subLabelW = helvetica.widthOfTextAtSize('Subtotal:', 10);
-    const subValueW = helveticaBold.widthOfTextAtSize(subStr, 10);
-    page.drawText('Subtotal:', {
-      x: totalsRightX - subLabelW - subValueW - 20, y, size: 10, font: helvetica, color: MED_GREY,
-    });
-    page.drawText(subStr, {
-      x: totalsRightX - subValueW, y, size: 10, font: helveticaBold, color: BLACK,
-    });
-    y -= 20;
-
-    // Discount
-    if (discountEnabled && discountAmount > 0) {
-      const discLabel = `${discountPercent}% Discount`;
-      const discStr = `-${formatCurrency(discountAmount)}`;
-      const discLabelW = helvetica.widthOfTextAtSize(discLabel, 10);
-      const discValueW = helveticaBold.widthOfTextAtSize(discStr, 10);
-      page.drawText(discLabel, {
-        x: totalsRightX - discLabelW - discValueW - 20, y, size: 10, font: helvetica, color: MED_GREY,
-      });
-      page.drawText(discStr, {
-        x: totalsRightX - discValueW, y, size: 10, font: helveticaBold, color: BLACK,
-      });
-      y -= 20;
-    }
-
-    // VAT
-    if (invoice.vatEnabled && (invoice.taxRate || 0) > 0) {
-      const tax = Number(invoice.taxRate || 0);
-      const taxAmount = (subtotal - discountAmount) * (tax / 100);
-      const vatLabel = `VAT (${tax}%)`;
-      const vatStr = formatCurrency(taxAmount);
-      const vatLabelW = helvetica.widthOfTextAtSize(vatLabel, 10);
-      const vatValueW = helveticaBold.widthOfTextAtSize(vatStr, 10);
-      page.drawText(vatLabel, {
-        x: totalsRightX - vatLabelW - vatValueW - 20, y, size: 10, font: helvetica, color: MED_GREY,
-      });
-      page.drawText(vatStr, {
-        x: totalsRightX - vatValueW, y, size: 10, font: helveticaBold, color: BLACK,
-      });
-    } else {
-      const vatLabelW = helvetica.widthOfTextAtSize('VAT:', 10);
-      const naW = helvetica.widthOfTextAtSize('N/A', 10);
-      page.drawText('VAT:', {
-        x: totalsRightX - vatLabelW - naW - 20, y, size: 10, font: helvetica, color: MED_GREY,
-      });
-      page.drawText('N/A', {
-        x: totalsRightX - naW, y, size: 10, font: helvetica, color: MED_GREY,
-      });
-    }
-    y -= 26;
-
-    // Separator line above Total
-    page.drawLine({
-      start: { x: 320, y: y + 8 }, end: { x: width - 50, y: y + 8 },
-      thickness: 1.5, color: BLACK,
-    });
-    y -= 12;
-
-    // Total
-    const totalStr = formatCurrency(total);
-    const totalLabelW = helveticaBold.widthOfTextAtSize('Total:', 14);
-    const totalValueW = helveticaBold.widthOfTextAtSize(totalStr, 14);
-    page.drawText('Total:', {
-      x: totalsRightX - totalLabelW - totalValueW - 20, y, size: 14, font: helveticaBold, color: BLACK,
-    });
-    page.drawText(totalStr, {
-      x: totalsRightX - totalValueW, y, size: 14, font: helveticaBold, color: BLACK,
-    });
-    y -= 45;
-
-    // ─── PAYMENT SCHEDULE ───
-    const scheduleRaw = invoice.paymentSchedule || [];
-    const schedule = Array.isArray(scheduleRaw)
+    // Parse payment schedule
+    const scheduleRaw = invoiceRow.paymentSchedule || '[]'
+    const paymentSchedule: PaymentScheduleItem[] = Array.isArray(scheduleRaw)
       ? scheduleRaw
-      : JSON.parse(typeof scheduleRaw === 'string' ? scheduleRaw : '[]');
+      : JSON.parse(typeof scheduleRaw === 'string' ? scheduleRaw : '[]')
 
-    if (schedule.length > 0) {
-      if (y < 220) {
-        page = pdfDoc.addPage([595, 842]);
-        page.drawRectangle({ x: 0, y: 0, width, height: 842, color: WHITE });
-        y = 842 - 60;
-      }
-
-      page.drawText('P A Y M E N T  S C H E D U L E', {
-        x: 50, y, size: 8, font: helveticaBold, color: MED_GREY,
-      });
-      y -= 18;
-
-      // Headers
-      page.drawText('I N S T A L L M E N T', {
-        x: 50, y: y - 2, size: 8, font: helveticaBold, color: MED_GREY,
-      });
-      page.drawText('%', {
-        x: 250, y: y - 2, size: 8, font: helveticaBold, color: MED_GREY,
-      });
-      page.drawText('D U E', {
-        x: 300, y: y - 2, size: 8, font: helveticaBold, color: MED_GREY,
-      });
-      page.drawText('A M O U N T', {
-        x: width - 50, y: y - 2, size: 8, font: helveticaBold, color: MED_GREY,
-      });
-      y -= 6;
-      page.drawLine({
-        start: { x: 50, y }, end: { x: width - 50, y },
-        thickness: 0.5, color: LIGHT_GREY,
-      });
-      y -= 16;
-
-      schedule.forEach((item: any) => {
-        page.drawText(String(item.label || 'Payment'), {
-          x: 50, y, size: 10, font: helvetica, color: BLACK,
-        });
-        page.drawText(`${item.percent || 0}%`, {
-          x: 230, y, size: 10, font: helvetica, color: BLACK,
-        });
-        page.drawText(String(item.due || '—'), {
-          x: 290, y, size: 10, font: helvetica, color: BLACK,
-        });
-        const schedAmtStr = formatCurrency((total * (item.percent || 0)) / 100);
-        const schedW = helveticaBold.widthOfTextAtSize(schedAmtStr, 10);
-        page.drawText(schedAmtStr, {
-          x: width - 50 - schedW, y, size: 10, font: helveticaBold, color: BLACK,
-        });
-        y -= 24;
-      });
-      y -= 20;
+    const invoiceData: InvoiceData = {
+      clientName: s(invoiceRow.clientName) || '',
+      clientEmail: s(invoiceRow.clientEmail) || '',
+      clientCompany: s(invoiceRow.clientCompany),
+      projectTitle: s(invoiceRow.projectTitle) || '',
+      invoiceNumber: s(invoiceRow.invoiceNumber) || '',
+      createdAt: invoiceRow.createdAt,
+      sentAt: invoiceRow.sentAt,
+      dueDate: s(invoiceRow.dueDate),
+      paymentTermsLabel: s(invoiceRow.paymentTermsLabel),
+      lineItems,
+      subtotal: Number(invoiceRow.subtotal || 0),
+      taxRate: Number(invoiceRow.taxRate || 0),
+      vatEnabled: invoiceRow.vatEnabled !== false,
+      discount,
+      total: Number(invoiceRow.total || 0),
+      paymentSchedule,
+      notes: s(invoiceRow.notes),
+      paymentMethod: s(invoiceRow.paymentMethod),
     }
 
-    // ─── BANK DETAILS ───
-    if (y < 220) {
-      page = pdfDoc.addPage([595, 842]);
-      page.drawRectangle({ x: 0, y: 0, width, height: 842, color: WHITE });
-      y = 842 - 60;
+    // Settings
+    const settings = await getSettings()
+    const bankName = s(settings.bankName) || 'Tide'
+    const bankAccountName = s(settings.bankAccountName) || 'Fricktion Music Ltd'
+    const bankSortCode = s(settings.bankSortCode) || '40-19-28'
+    const bankAccountNumber = s(settings.bankAccountNumber) || '22135833'
+    const swiftCode = s(settings.swiftCode) || ''
+    const iban = s(settings.iban) || ''
+    const companyName = s(settings.companyName) || 'Fricktion Music Ltd'
+
+    const bankDetails = {
+      bankName,
+      bankAccountName,
+      bankSortCode,
+      bankAccountNumber,
+      swiftCode,
+      iban,
     }
 
-    page.drawText('B A N K  D E T A I L S  F O R  P A Y M E N T', {
-      x: 50, y, size: 8, font: helveticaBold, color: MED_GREY,
-    });
-    y -= 16;
+    // Logo
+    const logoBase64 = await getLogoBase64()
 
-    // Light grey block
-    const bankRows = [
-      { label: 'Bank:', value: bankName, label2: 'Sort Code:', value2: bankSortCode },
-      { label: 'Account Name:', value: bankAccountName, label2: 'Account No:', value2: bankAccountNumber },
-    ];
-    if (swiftCode) bankRows.push({ label: 'SWIFT:', value: swiftCode, label2: '', value2: '' });
-    if (iban) bankRows.push({ label: 'IBAN:', value: iban, label2: '', value2: '' });
+    // Generate PDF
+    const doc = React.createElement(InvoicePDF, { invoice: invoiceData, logoBase64, bankDetails, companyName })
+    const pdfBuffer = await renderToBuffer(doc)
 
-    // Calculate block height including notes
-    let notesLines = 0;
-    if (invoice.notes) {
-      const notesText = String(invoice.notes);
-      const notesMaxWidth = width - 130;
-      const lines = wrapText(notesText, helvetica, 9, notesMaxWidth);
-      notesLines = Math.min(lines.length, 4);
-    }
-    const bankBlockH = bankRows.length * 18 + 16 + (notesLines > 0 ? 20 + notesLines * 13 : 0);
-
-    page.drawRectangle({
-      x: 50, y: y - bankBlockH, width: width - 100, height: bankBlockH,
-      color: LIGHT_GREY,
-    });
-
-    let by = y - 14;
-    const labelX = 65;
-    const valueX = 170;
-    const col2LabelX = 300;
-    const col2ValueX = 390;
-
-    bankRows.forEach((row) => {
-      page.drawText(row.label, { x: labelX, y: by, size: 9, font: helvetica, color: DARK_GREY });
-      page.drawText(row.value, { x: valueX, y: by, size: 9, font: helveticaBold, color: BLACK });
-      if (row.label2) {
-        page.drawText(row.label2, { x: col2LabelX, y: by, size: 9, font: helvetica, color: DARK_GREY });
-        page.drawText(row.value2, { x: col2ValueX, y: by, size: 9, font: helveticaBold, color: BLACK });
-      }
-      by -= 18;
-    });
-
-    // Notes inside bank block
-    if (invoice.notes) {
-      by -= 4;
-      page.drawText('N O T E S  &  T E R M S', {
-        x: labelX, y: by, size: 8, font: helveticaBold, color: MED_GREY,
-      });
-      by -= 14;
-      const notesText = String(invoice.notes);
-      const notesMaxWidth = width - 130;
-      const lines = wrapText(notesText, helvetica, 9, notesMaxWidth);
-      lines.slice(0, 4).forEach((l) => {
-        page.drawText(l, { x: labelX, y: by, size: 9, font: helvetica, color: DARK_GREY });
-        by -= 13;
-      });
-    }
-
-    // ─── FOOTER ───
-    if (y < 60) {
-      page = pdfDoc.addPage([595, 842]);
-      page.drawRectangle({ x: 0, y: 0, width, height: 842, color: WHITE });
-      y = 50;
-    }
-
-    // Top border
-    page.drawLine({
-      start: { x: 50, y: 60 }, end: { x: width - 50, y: 60 },
-      thickness: 0.5, color: LIGHT_GREY,
-    });
-
-    page.drawText(companyName, {
-      x: 50, y: 45, size: 8, font: helveticaBold, color: BLACK,
-    });
-    page.drawText('This is an invoice for services rendered. Payment is due by the date specified above. Thank you for your business.', {
-      x: 50, y: 32, size: 8, font: helvetica, color: MED_GREY,
-    });
-
-    const pdfBytes = await pdfDoc.save();
-    return new NextResponse(new Uint8Array(pdfBytes), {
+    return new NextResponse(pdfBuffer, {
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="LNR-Invoice-${invoice.invoiceNumber}.pdf"`,
+        'Content-Disposition': `attachment; filename="LNR-Invoice-${invoiceData.invoiceNumber}.pdf"`,
       },
-    });
+    })
   } catch (err) {
-    console.error('Invoice PDF error:', err);
-    return NextResponse.json({ error: 'PDF generation failed' }, { status: 500 });
+    console.error('Invoice PDF error:', err)
+    return NextResponse.json({ error: 'PDF generation failed' }, { status: 500 })
   }
 }

@@ -1,555 +1,597 @@
-import { NextResponse } from 'next/server';
+import React from 'react'
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  renderToBuffer,
+} from '@react-pdf/renderer'
+import { NextResponse } from 'next/server'
 
-export const dynamic = 'force-dynamic';
-import { db } from '@/lib/db';
-import { quotes } from '@/lib/db/schema';
-import { eq, and } from 'drizzle-orm';
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+export const dynamic = 'force-dynamic'
+import { db } from '@/lib/db'
+import { quotes } from '@/lib/db/schema'
+import { eq, and } from 'drizzle-orm'
 
-// LNR brand colours - matching invoice PDF
-const BRAND_BROWN = rgb(0.165, 0.102, 0.039);    // #2a1a0a - deep brown
-const BRAND_CREAM = rgb(0.910, 0.831, 0.722);     // #e8d4b8 - warm cream
-const BRAND_GOLD = rgb(0.788, 0.663, 0.431);      // #c9a96e - gold accent
-const BLACK = rgb(0.04, 0.04, 0.04);
-const DARK_GREY = rgb(0.25, 0.25, 0.25);
-const MED_GREY = rgb(0.45, 0.45, 0.45);
-const LIGHT_GREY = rgb(0.7, 0.7, 0.7);
-const VERY_LIGHT_GREY = rgb(0.96, 0.93, 0.90);   // warm light
-const WHITE = rgb(1, 1, 1);
-const WARM_GREY = rgb(0.45, 0.42, 0.39);
-
-async function getSettings() {
-  try {
-    const { siteSections } = await import('@/lib/db/schema');
-    const rows = await db
-      .select()
-      .from(siteSections)
-      .where(and(eq(siteSections.page, 'global'), eq(siteSections.section, 'settings')))
-      .limit(1);
-    if (rows.length > 0 && rows[0].content) {
-      const parsed = typeof rows[0].content === 'string' ? JSON.parse(rows[0].content) : rows[0].content;
-      return parsed;
-    }
-  } catch {
-    // ignore
-  }
-  return {};
-}
+// ─── Helpers ───────────────────────────────────────────────────────────────
 
 function formatCurrency(amount: number | null | undefined) {
-  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount || 0);
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+  }).format(amount || 0)
 }
 
 function formatDate(dateStr: string | Date | null | undefined) {
-  if (!dateStr) return '—';
+  if (!dateStr) return '—'
   try {
-    return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    return new Date(dateStr).toLocaleDateString('en-GB', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
   } catch {
-    return String(dateStr);
+    return String(dateStr)
   }
 }
 
 function sanitizePdfText(text: string | null | undefined): string {
-  if (!text) return '';
-  return String(text).replace(/[\r\n\t]/g, ' ').replace(/[^\x20-\xFF]/g, '');
+  if (!text) return ''
+  return String(text).replace(/[\r\n\t]/g, ' ').replace(/[^\x20-\xFF]/g, '')
 }
 
-function wrapText(text: string, font: any, size: number, maxWidth: number): string[] {
-  const words = text.split(' ');
-  const lines: string[] = [];
-  let line = '';
-  for (const word of words) {
-    const test = line + (line ? ' ' : '') + word;
-    if (font.widthOfTextAtSize(test, size) > maxWidth && line) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = test;
-    }
-  }
-  if (line) lines.push(line);
-  return lines;
-}
-
-async function getLogoBytes(): Promise<Buffer | null> {
+async function getSettings() {
   try {
-    const response = await fetch('https://late-night-ricky.vercel.app/assets/ricky-logo.png');
-    if (response.ok) {
-      const arrayBuffer = await response.arrayBuffer();
-      return Buffer.from(arrayBuffer);
+    const { siteSections } = await import('@/lib/db/schema')
+    const rows = await db
+      .select()
+      .from(siteSections)
+      .where(and(eq(siteSections.page, 'global'), eq(siteSections.section, 'settings')))
+      .limit(1)
+    if (rows.length > 0 && rows[0].content) {
+      const parsed = typeof rows[0].content === 'string' ? JSON.parse(rows[0].content) : rows[0].content
+      return parsed
     }
-  } catch {
-    // ignore
-  }
-  return null;
+  } catch {}
+  return {}
 }
+
+async function getLogoBase64(): Promise<string | null> {
+  try {
+    const response = await fetch('https://late-night-ricky.vercel.app/assets/ricky-logo.png')
+    if (response.ok) {
+      const arrayBuffer = await response.arrayBuffer()
+      const base64 = Buffer.from(arrayBuffer).toString('base64')
+      return `data:image/png;base64,${base64}`
+    }
+  } catch {}
+  return null
+}
+
+// ─── Styles ─────────────────────────────────────────────────────────────────
+
+const c = {
+  brown:     '#2a1a0a',
+  gold:      '#c9a96e',
+  black:     '#000000',
+  darkText:  '#333333',
+  mutedText: '#666666',
+  dimText:   '#999999',
+  border:    '#e5e5e5',
+  bg:        '#e8d4b8',
+  white:     '#ffffff',
+}
+
+const styles = StyleSheet.create({
+  page: {
+    fontFamily: 'Helvetica',
+    fontSize: 10,
+    color: c.darkText,
+    backgroundColor: c.white,
+    paddingTop: 40,
+    paddingBottom: 40,
+    paddingHorizontal: 42,
+  },
+
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    borderBottomWidth: 2,
+    borderBottomColor: c.brown,
+    paddingBottom: 16,
+    marginBottom: 26,
+  },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 18,
+  },
+  logo: {
+    width: 64,
+    height: 64,
+    objectFit: 'contain',
+  },
+  brandBlock: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  brandName: {
+    fontFamily: 'Helvetica',
+    fontSize: 24,
+    letterSpacing: 5,
+    color: c.black,
+    textTransform: 'uppercase',
+  },
+  tagline: {
+    fontSize: 7.5,
+    color: c.gold,
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginTop: 3,
+  },
+  headerRight: {
+    alignItems: 'flex-end',
+  },
+  docLabel: {
+    fontFamily: 'Helvetica',
+    fontSize: 21,
+    color: c.brown,
+    letterSpacing: 2,
+    textTransform: 'uppercase',
+  },
+  docNumber: {
+    fontSize: 9,
+    color: c.mutedText,
+    marginTop: 3,
+  },
+
+  infoGrid: {
+    flexDirection: 'row',
+    gap: 18,
+    marginBottom: 22,
+  },
+  infoBox: {
+    flex: 1,
+    backgroundColor: c.bg,
+    borderWidth: 1,
+    borderColor: c.border,
+    padding: 15,
+  },
+  infoBoxTitle: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 6.8,
+    color: c.dimText,
+    textTransform: 'uppercase',
+    letterSpacing: 1.2,
+    marginBottom: 7,
+  },
+  infoNameText: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 10.5,
+    color: c.black,
+    marginBottom: 2,
+  },
+  infoBodyText: {
+    fontFamily: 'Helvetica',
+    fontSize: 9.8,
+    color: c.darkText,
+    lineHeight: 1.65,
+  },
+
+  metaRow: {
+    flexDirection: 'row',
+    backgroundColor: c.bg,
+    borderWidth: 1,
+    borderColor: c.border,
+    paddingVertical: 11,
+    paddingHorizontal: 15,
+    marginBottom: 22,
+  },
+  metaItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  metaLabel: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 6.8,
+    color: c.dimText,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 4,
+  },
+  metaValue: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 9.8,
+    color: c.black,
+  },
+
+  tableBorder: {
+    borderWidth: 1,
+    borderColor: c.border,
+    marginBottom: 18,
+  },
+  tableHead: {
+    flexDirection: 'row',
+    backgroundColor: c.black,
+    paddingVertical: 9,
+    paddingHorizontal: 14,
+  },
+  tableHeadText: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 7.5,
+    color: c.white,
+    textTransform: 'uppercase',
+    letterSpacing: 1.2,
+  },
+  tableRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: c.border,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+  },
+  tableRowAlt: {
+    backgroundColor: c.bg,
+  },
+  colDesc: {
+    flex: 1,
+  },
+  colAmt: {
+    width: 80,
+    alignItems: 'flex-end',
+  },
+  serviceNameText: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 10.5,
+    color: c.black,
+    marginBottom: 2,
+  },
+  serviceCatText: {
+    fontSize: 8.3,
+    color: c.gold,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  servicePriceText: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 11.3,
+    color: c.black,
+  },
+
+  totalsWrap: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginBottom: 22,
+  },
+  totalsBox: {
+    width: 210,
+  },
+  totalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 7.5,
+    borderBottomWidth: 1,
+    borderBottomColor: c.border,
+  },
+  totalRowLabel: {
+    fontFamily: 'Helvetica',
+    fontSize: 9.8,
+    color: c.mutedText,
+  },
+  totalRowValue: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 9.8,
+    color: c.black,
+  },
+  grandTotalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 11,
+    marginTop: 6,
+    borderTopWidth: 2.25,
+    borderTopColor: c.brown,
+  },
+  grandTotalLabel: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 12,
+    color: c.brown,
+  },
+  grandTotalValue: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 15,
+    color: c.brown,
+  },
+
+  notesBox: {
+    backgroundColor: c.bg,
+    borderWidth: 1,
+    borderColor: c.border,
+    padding: 15,
+    marginBottom: 22,
+  },
+  notesTitle: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 7.5,
+    color: c.black,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 6,
+  },
+  notesText: {
+    fontFamily: 'Helvetica',
+    fontSize: 9,
+    color: c.mutedText,
+    lineHeight: 1.7,
+  },
+
+  footer: {
+    borderTopWidth: 1,
+    borderTopColor: c.border,
+    paddingTop: 12,
+    marginTop: 'auto',
+    alignItems: 'center',
+  },
+  footerBrand: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 7.5,
+    color: c.brown,
+    letterSpacing: 1,
+    marginBottom: 3,
+  },
+  footerText: {
+    fontFamily: 'Helvetica',
+    fontSize: 7.5,
+    color: c.dimText,
+    lineHeight: 1.5,
+    textAlign: 'center',
+  },
+})
+
+// ─── Quote PDF Document ───────────────────────────────────────────────────
+
+interface LineItem {
+  serviceName?: string
+  description?: string
+  serviceCategory?: string
+  price?: number
+  amount?: number
+  quantity?: number
+  rate?: number
+}
+
+interface QuoteData {
+  clientName: string
+  clientEmail: string
+  clientCompany: string | null
+  projectTitle: string
+  quoteNumber: string
+  createdAt: string | Date
+  sentAt: string | Date | null
+  status: string | null
+  paymentMethod: string | null
+  lineItems: LineItem[]
+  subtotal: number
+  taxRate: number
+  vatEnabled: boolean
+  discount: { enabled?: boolean; percent?: number; amount?: number } | null
+  total: number
+  notes: string | null
+}
+
+function QuotePDF({ quote, logoBase64, companyName }: {
+  quote: QuoteData
+  logoBase64: string | null
+  companyName: string
+}) {
+  const taxRate = quote.taxRate || 20
+  const vatEnabled = quote.vatEnabled !== false
+  const discount = quote.discount || { enabled: false, percent: 0, amount: 0 }
+  const e = React.createElement
+
+  const paymentMethodStr = quote.paymentMethod
+    ? quote.paymentMethod.replace(/-/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase())
+    : 'Bank Transfer'
+
+  const subtotal = Number(quote.subtotal || 0)
+  const discountEnabled = discount.enabled || false
+  const discountPercent = discount.percent || 0
+  const discountAmount = discountEnabled ? (subtotal * discountPercent) / 100 : 0
+  const taxableAmount = subtotal - discountAmount
+  const taxAmount = vatEnabled ? taxableAmount * (taxRate / 100) : 0
+  const total = Number(quote.total || 0)
+
+  return e(Document, { title: `Quote ${quote.quoteNumber} - Late Night Ricky` },
+    e(Page, { size: 'A4', style: styles.page },
+
+      // HEADER
+      e(View, { style: styles.header },
+        e(View, { style: styles.headerLeft },
+          logoBase64 ? e(Image, { style: styles.logo, src: logoBase64 }) : null,
+          e(View, { style: styles.brandBlock },
+            e(Text, { style: styles.brandName }, 'LATE NIGHT RICKY'),
+            e(Text, { style: styles.tagline }, 'Brand Strategy, Communications \u0026 Digital Innovation')
+          )
+        ),
+        e(View, { style: styles.headerRight },
+          e(Text, { style: styles.docLabel }, 'Quote'),
+          e(Text, { style: styles.docNumber }, quote.quoteNumber)
+        )
+      ),
+
+      // INFO GRID
+      e(View, { style: styles.infoGrid },
+        e(View, { style: styles.infoBox },
+          e(Text, { style: styles.infoBoxTitle }, 'Bill To'),
+          e(Text, { style: styles.infoNameText }, quote.clientName),
+          quote.clientCompany ? e(Text, { style: styles.infoBodyText }, quote.clientCompany) : null,
+          e(Text, { style: styles.infoBodyText }, quote.clientEmail)
+        ),
+        e(View, { style: styles.infoBox },
+          e(Text, { style: styles.infoBoxTitle }, 'Project'),
+          e(Text, { style: styles.infoNameText }, quote.projectTitle),
+          e(Text, { style: styles.infoBodyText },
+            `${quote.lineItems?.length || 0} service${quote.lineItems?.length !== 1 ? 's' : ''} included`
+          )
+        )
+      ),
+
+      // META ROW
+      e(View, { style: styles.metaRow },
+        e(View, { style: styles.metaItem },
+          e(Text, { style: styles.metaLabel }, 'Date Issued'),
+          e(Text, { style: styles.metaValue }, formatDate(quote.sentAt || quote.createdAt))
+        ),
+        e(View, { style: styles.metaItem },
+          e(Text, { style: styles.metaLabel }, 'Quote Number'),
+          e(Text, { style: styles.metaValue }, quote.quoteNumber)
+        ),
+        e(View, { style: styles.metaItem },
+          e(Text, { style: styles.metaLabel }, 'Status'),
+          e(Text, { style: styles.metaValue },
+            quote.status
+              ? quote.status.charAt(0).toUpperCase() + quote.status.slice(1)
+              : 'Draft'
+          )
+        ),
+        e(View, { style: styles.metaItem },
+          e(Text, { style: styles.metaLabel }, 'Payment Method'),
+          e(Text, { style: styles.metaValue }, paymentMethodStr)
+        )
+      ),
+
+      // SERVICES TABLE
+      e(View, { style: styles.tableBorder },
+        e(View, { style: styles.tableHead },
+          e(View, { style: styles.colDesc }, e(Text, { style: styles.tableHeadText }, 'Service Description')),
+          e(View, { style: styles.colAmt }, e(Text, { style: styles.tableHeadText }, 'Amount'))
+        ),
+        ...(quote.lineItems || []).map((service, i) =>
+          e(View, {
+            key: String(i),
+            style: [styles.tableRow, i % 2 === 1 ? styles.tableRowAlt : {}],
+          },
+            e(View, { style: styles.colDesc },
+              e(Text, { style: styles.serviceNameText }, service.serviceName || service.description || ''),
+              e(Text, { style: styles.serviceCatText }, service.serviceCategory || '')
+            ),
+            e(View, { style: styles.colAmt },
+              e(Text, { style: styles.servicePriceText }, formatCurrency(service.price || service.amount || 0))
+            )
+          )
+        )
+      ),
+
+      // TOTALS
+      e(View, { style: styles.totalsWrap },
+        e(View, { style: styles.totalsBox },
+          e(View, { style: styles.totalRow },
+            e(Text, { style: styles.totalRowLabel }, 'Subtotal:'),
+            e(Text, { style: styles.totalRowValue }, formatCurrency(subtotal))
+          ),
+          discountEnabled
+            ? e(View, { style: styles.totalRow },
+                e(Text, { style: [styles.totalRowLabel, { color: c.brown }] }, `Friends \u0026 Family Discount (${discountPercent}%):`),
+                e(Text, { style: [styles.totalRowValue, { color: c.brown }] }, `-${formatCurrency(discountAmount)}`)
+              )
+            : null,
+          vatEnabled
+            ? e(View, { style: styles.totalRow },
+                e(Text, { style: styles.totalRowLabel }, `VAT (${taxRate}%):`),
+                e(Text, { style: styles.totalRowValue }, formatCurrency(taxAmount))
+              )
+            : e(View, { style: styles.totalRow },
+                e(Text, { style: styles.totalRowLabel }, 'VAT:'),
+                e(Text, { style: [styles.totalRowValue, { color: c.dimText }] }, 'N/A')
+              ),
+          e(View, { style: styles.grandTotalRow },
+            e(Text, { style: styles.grandTotalLabel }, 'Total:'),
+            e(Text, { style: styles.grandTotalValue }, formatCurrency(total))
+          )
+        )
+      ),
+
+      // NOTES
+      quote.notes
+        ? e(View, { style: styles.notesBox },
+            e(Text, { style: styles.notesTitle }, 'Notes \u0026 Terms'),
+            e(Text, { style: styles.notesText }, quote.notes)
+          )
+        : null,
+
+      // FOOTER
+      e(View, { style: styles.footer },
+        e(Text, { style: styles.footerBrand }, companyName),
+        e(Text, { style: styles.footerText }, 'Brand Strategy, Communications \u0026 Digital Innovation'),
+        e(Text, { style: styles.footerText }, 'This is a quotation for services. Terms and conditions apply.'),
+        e(Text, { style: styles.footerText }, 'Payment is due upon agreement of terms.')
+      )
+    )
+  )
+}
+
+// ─── API Route ──────────────────────────────────────────────────────────────
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
-    const [quote] = await db.select().from(quotes).where(eq(quotes.id, Number(params.id)));
-    if (!quote) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-
-    const s = sanitizePdfText;
-    quote.clientName = s(quote.clientName);
-    quote.clientEmail = s(quote.clientEmail);
-    quote.clientCompany = s(quote.clientCompany);
-    quote.projectTitle = s(quote.projectTitle);
-    quote.notes = s(quote.notes);
-    quote.paymentTermsLabel = s(quote.paymentTermsLabel);
-    quote.expiryDate = s(quote.expiryDate);
-
-    const settings = await getSettings();
-    const companyName = s(settings.companyName) || 'Fricktion Music Ltd';
-    const companyAddress = s(settings.companyAddress) || '';
-    const companyNumber = s(settings.companyNumber) || '';
-    const vatNumber = s(settings.vatNumber) || '';
-
-    const pdfDoc = await PDFDocument.create();
-    let page = pdfDoc.addPage([595, 842]);
-    const { width } = page.getSize();
-    const pageH = 842;
-    let y = pageH;
-
-    const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-
-    // Embed logo
-    const logoBytes = await getLogoBytes();
-    let logoImage: any = null;
-    let logoW = 0;
-    let logoH = 0;
-    if (logoBytes) {
-      try {
-        logoImage = await pdfDoc.embedPng(logoBytes);
-        const logoAspect = logoImage.width / logoImage.height;
-        const logoMaxW = 180;
-        const logoMaxH = 32;
-        if (logoAspect > logoMaxW / logoMaxH) {
-          logoW = logoMaxW;
-          logoH = logoMaxW / logoAspect;
-        } else {
-          logoH = logoMaxH;
-          logoW = logoMaxH * logoAspect;
-        }
-      } catch {
-        logoImage = null;
-      }
+    const [quoteRow] = await db.select().from(quotes).where(eq(quotes.id, Number(params.id)))
+    if (!quoteRow) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 })
     }
 
-    // ─── WHITE BACKGROUND ───
-    page.drawRectangle({ x: 0, y: 0, width, height: pageH, color: WHITE });
+    const s = sanitizePdfText
 
-    // ─── TOP HEADER BAND (brown) ───
-    const headerH = 80;
-    page.drawRectangle({
-      x: 0, y: pageH - headerH, width, height: headerH,
-      color: BRAND_BROWN,
-    });
-
-    // Logo (left side of header) or text fallback
-    if (logoImage) {
-      page.drawImage(logoImage, {
-        x: 40, y: pageH - 55 - (logoH / 2),
-        width: logoW, height: logoH,
-      });
-    } else {
-      page.drawText('LATE NIGHT RICKY', {
-        x: 45, y: pageH - 48, size: 16, font: helveticaBold, color: BRAND_CREAM,
-      });
-      page.drawText('International DJ & Grammy Winning Producer', {
-        x: 45, y: pageH - 62, size: 7, font: helvetica, color: BRAND_GOLD,
-      });
-    }
-
-    // QUOTE label (right)
-    page.drawText('QUOTE', {
-      x: width - 120, y: pageH - 52, size: 24, font: helveticaBold, color: BRAND_CREAM,
-    });
-
-    // Gold line at bottom of header
-    page.drawLine({
-      start: { x: 40, y: pageH - headerH + 2 },
-      end: { x: width - 40, y: pageH - headerH + 2 },
-      thickness: 1.5, color: BRAND_GOLD,
-    });
-
-    y = pageH - headerH - 35;
-
-    // ─── TWO-COLUMN: Quote To (left) + Project (right) with bordered boxes ───
-    const boxH = 80;
-    const boxGap = 20;
-    const boxW = (width - 50 - 50 - boxGap) / 2;
-
-    // Left box: QUOTE TO
-    page.drawRectangle({
-      x: 50, y: y - boxH, width: boxW, height: boxH,
-      color: VERY_LIGHT_GREY,
-    });
-    page.drawRectangle({
-      x: 50, y: y - boxH, width: boxW, height: boxH,
-      borderColor: LIGHT_GREY, borderWidth: 0.5,
-    });
-    page.drawText('QUOTE TO', {
-      x: 65, y: y - 18, size: 7, font: helveticaBold, color: MED_GREY,
-    });
-    page.drawText(quote.clientName || 'Client', {
-      x: 65, y: y - 34, size: 11, font: helveticaBold, color: BLACK,
-    });
-    if (quote.clientCompany) {
-      page.drawText(quote.clientCompany, {
-        x: 65, y: y - 48, size: 9, font: helvetica, color: DARK_GREY,
-      });
-    }
-    if (quote.clientEmail) {
-      page.drawText(quote.clientEmail, {
-        x: 65, y: y - 62, size: 8, font: helvetica, color: MED_GREY,
-      });
-    }
-
-    // Right box: PROJECT
-    const rightBoxX = 50 + boxW + boxGap;
-    page.drawRectangle({
-      x: rightBoxX, y: y - boxH, width: boxW, height: boxH,
-      color: VERY_LIGHT_GREY,
-    });
-    page.drawRectangle({
-      x: rightBoxX, y: y - boxH, width: boxW, height: boxH,
-      borderColor: LIGHT_GREY, borderWidth: 0.5,
-    });
-    page.drawText('PROJECT', {
-      x: rightBoxX + 15, y: y - 18, size: 7, font: helveticaBold, color: MED_GREY,
-    });
-    page.drawText(quote.projectTitle || '—', {
-      x: rightBoxX + 15, y: y - 34, size: 11, font: helveticaBold, color: BLACK,
-    });
-    const itemCount = Array.isArray(quote.lineItems) ? quote.lineItems.length : 0;
-    page.drawText(`${itemCount} service${itemCount !== 1 ? 's' : ''} included`, {
-      x: rightBoxX + 15, y: y - 48, size: 9, font: helvetica, color: DARK_GREY,
-    });
-
-    y -= (boxH + 28);
-
-    // ─── META ROW ───
-    const metaH = 48;
-    page.drawRectangle({
-      x: 50, y: y - metaH, width: width - 100, height: metaH,
-      color: VERY_LIGHT_GREY,
-    });
-    page.drawRectangle({
-      x: 50, y: y - metaH, width: width - 100, height: metaH,
-      borderColor: LIGHT_GREY, borderWidth: 0.5,
-    });
-
-    const metaItems = [
-      { label: 'DATE ISSUED', value: formatDate(quote.sentAt || new Date()) },
-      { label: 'QUOTE NUMBER', value: quote.quoteNumber || `QT-${String(quote.id).padStart(4, '0')}` },
-      { label: 'STATUS', value: quote.status ? quote.status.charAt(0).toUpperCase() + quote.status.slice(1) : 'Draft' },
-      { label: 'VALID UNTIL', value: quote.expiryDate ? formatDate(quote.expiryDate) : '30 days' },
-    ];
-
-    const metaColW = (width - 100) / 4;
-    metaItems.forEach((item, i) => {
-      const cx = 50 + (metaColW * i) + (metaColW / 2);
-      const labelW = helveticaBold.widthOfTextAtSize(item.label, 7);
-      const valueW = helveticaBold.widthOfTextAtSize(item.value, 9);
-      page.drawText(item.label, {
-        x: cx - (labelW / 2), y: y - 15, size: 7, font: helveticaBold, color: MED_GREY,
-      });
-      page.drawText(item.value, {
-        x: cx - (valueW / 2), y: y - 32, size: 9, font: helveticaBold, color: BLACK,
-      });
-    });
-
-    y -= (metaH + 24);
-
-    // ─── LINE ITEMS TABLE ───
-    const lineItemsRaw = quote.lineItems || '[]';
-    const lineItems = Array.isArray(lineItemsRaw)
+    // Parse line items
+    const lineItemsRaw = quoteRow.lineItems || '[]'
+    const lineItems: LineItem[] = Array.isArray(lineItemsRaw)
       ? lineItemsRaw
-      : JSON.parse(typeof lineItemsRaw === 'string' ? lineItemsRaw : '[]');
+      : JSON.parse(typeof lineItemsRaw === 'string' ? lineItemsRaw : '[]')
 
-    if (lineItems.length > 0) {
-      // Table header - dark brown bar with cream text (2 columns: Description + Amount)
-      page.drawRectangle({
-        x: 50, y: y - 26, width: width - 100, height: 32,
-        color: BRAND_BROWN,
-      });
-      page.drawText('SERVICE DESCRIPTION', {
-        x: 65, y: y - 16, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
-      });
-      page.drawText('AMOUNT', {
-        x: width - 110, y: y - 16, size: 7.5, font: helveticaBold, color: BRAND_CREAM,
-      });
-      y -= 40;
+    // Parse discount
+    const discountRaw = quoteRow.discount || { enabled: false, percent: 0, amount: 0 }
+    const discount = typeof discountRaw === 'string' ? JSON.parse(discountRaw) : discountRaw
 
-      lineItems.forEach((item: any, idx: number) => {
-        if (y < 120) {
-          page = pdfDoc.addPage([595, 842]);
-          page.drawRectangle({ x: 0, y: 0, width, height: 842, color: WHITE });
-          y = 842 - 80;
-        }
-
-        const desc = String(item.serviceName || item.description || '').substring(0, 45);
-        const category = item.serviceCategory;
-        const amount = Number(item.amount || Number(item.quantity || 1) * Number(item.price || item.rate || 0));
-
-        // Alternating warm cream row
-        if (idx % 2 === 1) {
-          page.drawRectangle({
-            x: 50, y: y - 18, width: width - 100, height: 34,
-            color: VERY_LIGHT_GREY,
-          });
-        }
-
-        // Bottom border for each row
-        page.drawLine({
-          start: { x: 50, y: y - 20 },
-          end: { x: width - 50, y: y - 20 },
-          thickness: 0.5, color: LIGHT_GREY,
-        });
-
-        page.drawText(desc, {
-          x: 65, y: y, size: 10.5, font: helveticaBold, color: BLACK,
-        });
-        if (category) {
-          page.drawText(String(category).substring(0, 30), {
-            x: 65, y: y - 13, size: 8, font: helvetica, color: BRAND_GOLD,
-          });
-        }
-
-        const amtStr = formatCurrency(amount);
-        const amtW = helveticaBold.widthOfTextAtSize(amtStr, 11);
-        page.drawText(amtStr, {
-          x: width - 60 - amtW, y: y, size: 11, font: helveticaBold, color: BLACK,
-        });
-        y -= category ? 38 : 28;
-      });
-
-      y -= 16;
+    const quoteData: QuoteData = {
+      clientName: s(quoteRow.clientName) || '',
+      clientEmail: s(quoteRow.clientEmail) || '',
+      clientCompany: s(quoteRow.clientCompany),
+      projectTitle: s(quoteRow.projectTitle) || '',
+      quoteNumber: s(quoteRow.quoteNumber) || `QT-${String(quoteRow.id).padStart(4, '0')}`,
+      createdAt: quoteRow.createdAt,
+      sentAt: quoteRow.sentAt,
+      status: s(quoteRow.status),
+      paymentMethod: s(quoteRow.paymentMethod),
+      lineItems,
+      subtotal: Number(quoteRow.subtotal || 0),
+      taxRate: Number(quoteRow.taxRate || 0),
+      vatEnabled: quoteRow.vatEnabled !== false,
+      discount,
+      total: Number(quoteRow.total || 0),
+      notes: s(quoteRow.notes),
     }
 
-    // ─── TOTALS ───
-    const subtotal = Number(quote.subtotal || 0);
-    const total = Number(quote.total || 0);
+    // Settings
+    const settings = await getSettings()
+    const companyName = s(settings.companyName) || 'Fricktion Music Ltd'
 
-    const discountRaw = quote.discount || {};
-    const discount = typeof discountRaw === 'string' ? JSON.parse(discountRaw) : discountRaw;
-    const discountEnabled = discount?.enabled || false;
-    const discountPercent = discount?.percent || 0;
-    const discountAmount = discountEnabled ? (subtotal * discountPercent) / 100 : 0;
+    // Logo
+    const logoBase64 = await getLogoBase64()
 
-    const rightAlign = width - 60;
-    const totalsX = 280;
-    const totalsW = width - 50 - totalsX;
+    // Generate PDF
+    const doc = React.createElement(QuotePDF, { quote: quoteData, logoBase64, companyName })
+    const pdfBuffer = await renderToBuffer(doc)
 
-    const totalsLines = 1 + (discountEnabled && discountAmount > 0 ? 1 : 0) + 1 + 1;
-    const totalsBoxH = totalsLines * 22 + 20;
-    page.drawRectangle({
-      x: totalsX, y: y - totalsBoxH + 10, width: totalsW, height: totalsBoxH,
-      color: VERY_LIGHT_GREY,
-    });
-
-    // Subtotal
-    page.drawText('Subtotal', {
-      x: totalsX + 12, y, size: 9, font: helvetica, color: WARM_GREY,
-    });
-    const subtotalStr = formatCurrency(subtotal);
-    const subtotalW = helvetica.widthOfTextAtSize(subtotalStr, 9);
-    page.drawText(subtotalStr, {
-      x: rightAlign - subtotalW, y, size: 9, font: helvetica, color: BRAND_BROWN,
-    });
-    y -= 22;
-
-    if (discountEnabled && discountAmount > 0) {
-      const discountLabel = `${discountPercent}% Discount`;
-      page.drawText(discountLabel, {
-        x: totalsX + 12, y, size: 9, font: helvetica, color: WARM_GREY,
-      });
-      const discountStr = `-${formatCurrency(discountAmount)}`;
-      const discountW = helvetica.widthOfTextAtSize(discountStr, 9);
-      page.drawText(discountStr, {
-        x: rightAlign - discountW, y, size: 9, font: helvetica, color: rgb(0.6, 0.2, 0.2),
-      });
-      y -= 22;
-    }
-
-    if (quote.vatEnabled && (quote.taxRate || 0) > 0) {
-      const tax = Number(quote.taxRate || 0);
-      const taxAmount = (subtotal - discountAmount) * (tax / 100);
-      page.drawText(`VAT (${tax}%)`, {
-        x: totalsX + 12, y, size: 9, font: helvetica, color: WARM_GREY,
-      });
-      const vatStr = formatCurrency(taxAmount);
-      const vatW = helvetica.widthOfTextAtSize(vatStr, 9);
-      page.drawText(vatStr, {
-        x: rightAlign - vatW, y, size: 9, font: helvetica, color: BRAND_BROWN,
-      });
-    } else {
-      page.drawText('VAT', {
-        x: totalsX + 12, y, size: 9, font: helvetica, color: WARM_GREY,
-      });
-      page.drawText('N/A', {
-        x: rightAlign - helvetica.widthOfTextAtSize('N/A', 9), y, size: 9, font: helvetica, color: WARM_GREY,
-      });
-    }
-    y -= 22;
-
-    // Separator
-    page.drawLine({
-      start: { x: totalsX + 12, y: y + 6 },
-      end: { x: width - 50, y: y + 6 },
-      thickness: 1, color: BRAND_BROWN,
-    });
-
-    // TOTAL
-    page.drawText('TOTAL', {
-      x: totalsX + 12, y: y - 8, size: 13, font: helveticaBold, color: BRAND_BROWN,
-    });
-    const totalStr = formatCurrency(total);
-    const totalW = helveticaBold.widthOfTextAtSize(totalStr, 15);
-    page.drawText(totalStr, {
-      x: rightAlign - totalW, y: y - 10, size: 15, font: helveticaBold, color: BRAND_BROWN,
-    });
-    y -= 50;
-
-    // ─── PAYMENT SCHEDULE ───
-    const scheduleRaw = quote.paymentSchedule || [];
-    const schedule = Array.isArray(scheduleRaw)
-      ? scheduleRaw
-      : JSON.parse(typeof scheduleRaw === 'string' ? scheduleRaw : '[]');
-
-    if (schedule.length > 1) {
-      if (y < 180) {
-        page = pdfDoc.addPage([595, 842]);
-        page.drawRectangle({ x: 0, y: 0, width, height: 842, color: WHITE });
-        y = 842 - 80;
-      }
-
-      // Warm brown background box for payment schedule
-      page.drawRectangle({
-        x: 50, y: y - 160, width: width - 100, height: 160,
-        color: VERY_LIGHT_GREY,
-      });
-      page.drawRectangle({
-        x: 50, y: y - 160, width: width - 100, height: 160,
-        borderColor: BRAND_GOLD, borderWidth: 0.5,
-      });
-
-      page.drawText('PAYMENT SCHEDULE', {
-        x: 65, y: y - 18, size: 7.5, font: helveticaBold, color: BRAND_GOLD,
-      });
-      y -= 35;
-
-      // Table header
-      page.drawLine({
-        start: { x: 50, y: y + 6 },
-        end: { x: width - 50, y: y + 6 },
-        thickness: 0.5, color: BRAND_GOLD,
-      });
-      page.drawText('INSTALLMENT', {
-        x: 65, y: y - 4, size: 7, font: helveticaBold, color: WARM_GREY,
-      });
-      page.drawText('%', {
-        x: 260, y: y - 4, size: 7, font: helveticaBold, color: WARM_GREY,
-      });
-      page.drawText('DUE', {
-        x: 320, y: y - 4, size: 7, font: helveticaBold, color: WARM_GREY,
-      });
-      page.drawText('AMOUNT', {
-        x: width - 110, y: y - 4, size: 7, font: helveticaBold, color: WARM_GREY,
-      });
-      y -= 22;
-
-      schedule.forEach((item: any, idx: number) => {
-        page.drawLine({
-          start: { x: 65, y: y + 8 },
-          end: { x: width - 65, y: y + 8 },
-          thickness: 0.3, color: LIGHT_GREY,
-        });
-        page.drawText(String(item.label || 'Payment'), {
-          x: 65, y: y - 4, size: 9, font: helveticaBold, color: BLACK,
-        });
-        page.drawText(`${item.percent || 0}%`, {
-          x: 260, y: y - 4, size: 9, font: helvetica, color: DARK_GREY,
-        });
-        page.drawText(String(item.due || '—'), {
-          x: 320, y: y - 4, size: 9, font: helvetica, color: DARK_GREY,
-        });
-        const schedAmtStr = formatCurrency((total * (item.percent || 0)) / 100);
-        const schedAmtW = helveticaBold.widthOfTextAtSize(schedAmtStr, 9);
-        page.drawText(schedAmtStr, {
-          x: width - 60 - schedAmtW, y: y - 4, size: 9, font: helveticaBold, color: BLACK,
-        });
-        y -= 20;
-      });
-      y -= 20;
-    }
-
-    // ─── NOTES & TERMS ───
-    if (quote.notes) {
-      if (y < 160) {
-        page = pdfDoc.addPage([595, 842]);
-        page.drawRectangle({ x: 0, y: 0, width, height: 842, color: WHITE });
-        y = 842 - 80;
-      }
-
-      // Notes box with border
-      const notesLines = wrapText(String(quote.notes), helvetica, 9, width - 140);
-      const notesBoxH = notesLines.length * 14 + 35;
-
-      page.drawRectangle({
-        x: 50, y: y - notesBoxH, width: width - 100, height: notesBoxH,
-        color: VERY_LIGHT_GREY,
-      });
-      page.drawRectangle({
-        x: 50, y: y - notesBoxH, width: width - 100, height: notesBoxH,
-        borderColor: LIGHT_GREY, borderWidth: 0.5,
-      });
-
-      page.drawText('NOTES & TERMS', {
-        x: 65, y: y - 16, size: 7.5, font: helveticaBold, color: BLACK,
-      });
-      y -= 30;
-
-      notesLines.slice(0, 8).forEach((l) => {
-        page.drawText(l, { x: 65, y, size: 9, font: helvetica, color: WARM_GREY });
-        y -= 14;
-      });
-      y -= 20;
-    }
-
-    // ─── FOOTER ───
-    if (y < 80) {
-      page = pdfDoc.addPage([595, 842]);
-      page.drawRectangle({ x: 0, y: 0, width, height: 842, color: WHITE });
-    }
-
-    // Simple footer with line
-    page.drawLine({
-      start: { x: 50, y: 55 },
-      end: { x: width - 50, y: 55 },
-      thickness: 0.5, color: LIGHT_GREY,
-    });
-    page.drawText(companyName, {
-      x: width / 2 - helveticaBold.widthOfTextAtSize(companyName, 7.5) / 2, y: 40, size: 7.5, font: helveticaBold, color: BRAND_BROWN,
-    });
-    page.drawText('International DJ & Grammy Winning Producer', {
-      x: width / 2 - helvetica.widthOfTextAtSize('International DJ & Grammy Winning Producer', 7) / 2, y: 28, size: 7, font: helvetica, color: MED_GREY,
-    });
-    page.drawText('This is a quotation for services. Terms and conditions apply.', {
-      x: width / 2 - helvetica.widthOfTextAtSize('This is a quotation for services. Terms and conditions apply.', 7) / 2, y: 16, size: 7, font: helvetica, color: MED_GREY,
-    });
-
-    const pdfBytes = await pdfDoc.save();
-    const quoteNumber = quote.quoteNumber || `QT-${String(quote.id).padStart(4, '0')}`;
-    return new NextResponse(new Uint8Array(pdfBytes), {
+    const quoteNumber = quoteData.quoteNumber
+    return new NextResponse(pdfBuffer, {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="LNR-Quote-${quoteNumber}.pdf"`,
       },
-    });
+    })
   } catch (err) {
-    console.error('Quote PDF error:', err);
-    return NextResponse.json({ error: 'PDF generation failed' }, { status: 500 });
+    console.error('Quote PDF error:', err)
+    return NextResponse.json({ error: 'PDF generation failed' }, { status: 500 })
   }
 }
