@@ -81,8 +81,10 @@ interface ShowCard {
   href?: string;
 }
 
-export default function LateNightMoments({ items, shows }: { items?: MomentData[]; shows?: ShowCard[] }) {
+export default function LateNightMoments({ items, shows, heading, subtext }: { items?: MomentData[]; shows?: ShowCard[]; heading?: string; subtext?: string }) {
   const momentsData = items || DEFAULT_MOMENTS;
+  const headingText = heading || 'Late Night Moments';
+  const subtextText = subtext || "An insight to Ricky's world";
   const [openModal, setOpenModal] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const galleryRef = useRef<HTMLDivElement>(null);
@@ -150,11 +152,10 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
           <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(36px,5.5vw,64px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#5a3a1a] text-center mb-2 whitespace-nowrap" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 2px 8px rgba(90,58,26,0.15)' }}>
-            <span className="reveal-left" data-delay="100">Late Night</span>
-            <span className="reveal-right" data-delay="300">Moments</span>
+            <span className="reveal-left" data-delay="100">{headingText}</span>
           </h2>
           <p className="text-[12px] md:text-[14px] tracking-[0.25em] uppercase text-[#5a3a1a]/60 font-semibold text-center mb-14 md:mb-20 reveal-fade">
-            An insight to Ricky&apos;s world
+            {subtextText}
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-6 reveal-stagger">

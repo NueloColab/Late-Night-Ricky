@@ -137,6 +137,8 @@ export default async function HomePage() {
     { id: 'backtoback', title: 'Back to Back', subtitle: 'Private Events, London', description: 'Intimate back-to-back sets with some of the biggest names in the industry.', images: ['/assets/highlight-club.jpg', '/assets/highlight-misfits.jpg', '/assets/press-bg2.jpg'] },
     { id: 'ibizarocks', title: 'Ibiza Rocks', subtitle: 'Ibiza Rocks, Ibiza', description: 'High-energy daytime pool parties at Ibiza Rocks.', images: ['/assets/highlight-misfits.jpg', '/assets/moment-ibiza.jpg', '/assets/highlight-arena.jpg'] },
   ];
+  let momentsHeading = 'Late Night Moments';
+  let momentsSubtext = "An insight to Ricky's world";
   const performersData = {
     heading: 'Has Performed With...',
     subtext: 'And many more...',
@@ -274,6 +276,8 @@ export default async function HomePage() {
       const momentsSection = dbSections.find((s: any) => s.section === 'moments');
       if (momentsSection?.content) {
         const c = typeof momentsSection.content === 'string' ? JSON.parse(momentsSection.content) : momentsSection.content;
+        if (c.heading) momentsHeading = c.heading;
+        if (c.subtext) momentsSubtext = c.subtext;
         if (c.items && Array.isArray(c.items)) {
           momentsItems = c.items.map((item: any) => ({
             id: item.id || String(Math.random()),
@@ -507,7 +511,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <LateNightMoments items={momentsItems} shows={shows} />
+      <LateNightMoments items={momentsItems} shows={shows} heading={momentsHeading} subtext={momentsSubtext} />
 
       {/* ═══ ACTS ARTISTS & VENUES — brown background, carousel, locations PRIVATE CLIENTS ═══ */}
       {performersVisible && (
