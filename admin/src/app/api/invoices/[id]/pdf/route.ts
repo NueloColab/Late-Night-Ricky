@@ -457,7 +457,6 @@ interface InvoiceData {
   clientCompany: string | null
   projectTitle: string
   invoiceNumber: string
-  createdAt: string | Date
   sentAt: string | Date | null
   dueDate: string | Date | null
   paymentTermsLabel: string | null
@@ -541,7 +540,7 @@ function InvoicePDF({ invoice, logoBase64, bankDetails, companyName }: {
       e(View, { style: styles.metaRow },
         e(View, { style: styles.metaItem },
           e(Text, { style: styles.metaLabel }, 'Date Issued'),
-          e(Text, { style: styles.metaValue }, formatDate(invoice.sentAt || invoice.createdAt))
+          e(Text, { style: styles.metaValue }, formatDate(invoice.sentAt || new Date()))
         ),
         e(View, { style: styles.metaItem },
           e(Text, { style: styles.metaLabel }, 'Due Date'),
@@ -713,7 +712,6 @@ export async function GET(request: Request, { params }: { params: { id: string }
       clientCompany: s(invoiceRow.clientCompany),
       projectTitle: s(invoiceRow.projectTitle) || '',
       invoiceNumber: s(invoiceRow.invoiceNumber) || '',
-      createdAt: invoiceRow.createdAt,
       sentAt: invoiceRow.sentAt,
       dueDate: s(invoiceRow.dueDate),
       paymentTermsLabel: s(invoiceRow.paymentTermsLabel),
@@ -752,9 +750,9 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     // Generate PDF
     const doc = React.createElement(InvoicePDF, { invoice: invoiceData, logoBase64, bankDetails, companyName })
-    const pdfBuffer = await renderToBuffer(doc)
+    const pdfBuffer = await renderToBuffer(doc as any)
 
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(new Uint8Array(pdfBuffer), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="LNR-Invoice-${invoiceData.invoiceNumber}.pdf"`,

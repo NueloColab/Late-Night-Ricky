@@ -368,7 +368,6 @@ interface QuoteData {
   clientCompany: string | null
   projectTitle: string
   quoteNumber: string
-  createdAt: string | Date
   sentAt: string | Date | null
   status: string | null
   paymentMethod: string | null
@@ -442,7 +441,7 @@ function QuotePDF({ quote, logoBase64, companyName }: {
       e(View, { style: styles.metaRow },
         e(View, { style: styles.metaItem },
           e(Text, { style: styles.metaLabel }, 'Date Issued'),
-          e(Text, { style: styles.metaValue }, formatDate(quote.sentAt || quote.createdAt))
+          e(Text, { style: styles.metaValue }, formatDate(quote.sentAt || new Date()))
         ),
         e(View, { style: styles.metaItem },
           e(Text, { style: styles.metaLabel }, 'Quote Number'),
@@ -559,7 +558,6 @@ export async function GET(request: Request, { params }: { params: { id: string }
       clientCompany: s(quoteRow.clientCompany),
       projectTitle: s(quoteRow.projectTitle) || '',
       quoteNumber: s(quoteRow.quoteNumber) || `QT-${String(quoteRow.id).padStart(4, '0')}`,
-      createdAt: quoteRow.createdAt,
       sentAt: quoteRow.sentAt,
       status: s(quoteRow.status),
       paymentMethod: s(quoteRow.paymentMethod),
@@ -581,10 +579,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     // Generate PDF
     const doc = React.createElement(QuotePDF, { quote: quoteData, logoBase64, companyName })
-    const pdfBuffer = await renderToBuffer(doc)
+    const pdfBuffer = await renderToBuffer(doc as any)
 
     const quoteNumber = quoteData.quoteNumber
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(new Uint8Array(pdfBuffer), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="LNR-Quote-${quoteNumber}.pdf"`,
