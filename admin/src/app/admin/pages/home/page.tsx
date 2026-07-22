@@ -792,6 +792,14 @@ function MomentsEditor({ section, onUpdate, onSave, saving, onToggleVisibility, 
   }
   function addItem() { onUpdate('items', [...items, { id: String(Date.now()), title: 'New Moment', subtitle: 'Venue, City', description: 'Description...', images: [] }]); }
   function removeItem(index: number) { onUpdate('items', items.filter((_: any, i: number) => i !== index)); }
+  function moveItem(index: number, direction: 'up' | 'down') {
+    if (direction === 'up' && index === 0) return;
+    if (direction === 'down' && index === items.length - 1) return;
+    const newItems = [...items];
+    const swapIdx = direction === 'up' ? index - 1 : index + 1;
+    [newItems[index], newItems[swapIdx]] = [newItems[swapIdx], newItems[index]];
+    onUpdate('items', newItems);
+  }
   function addImage(index: number, imageUrl: string) { const newItems = [...items]; newItems[index] = { ...newItems[index], images: [...(newItems[index].images || []), imageUrl] }; onUpdate('items', newItems); }
   function removeImage(itemIndex: number, imageIndex: number) { const newItems = [...items]; newItems[itemIndex] = { ...newItems[itemIndex], images: newItems[itemIndex].images.filter((_: any, i: number) => i !== imageIndex) }; onUpdate('items', newItems); }
 
@@ -819,7 +827,11 @@ function MomentsEditor({ section, onUpdate, onSave, saving, onToggleVisibility, 
             <div key={i} className="border border-[#6B8FAB]/30 p-4 space-y-3 bg-white">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px]">Moment #{i + 1}</span>
-                <button onClick={() => removeItem(i)} className="p-1.5 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><Trash2 size={16} /></button>
+                <div className="flex items-center gap-0.5">
+                  <button onClick={() => moveItem(i, 'up')} disabled={i === 0} className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"><ChevronUp size={16} /></button>
+                  <button onClick={() => moveItem(i, 'down')} disabled={i === items.length - 1} className="p-1.5 text-[#6B8FAB] hover:text-[#1B3A4C] hover:bg-[#E3E8ED] rounded-lg transition-colors disabled:opacity-30"><ChevronDown size={16} /></button>
+                  <button onClick={() => removeItem(i)} className="p-1.5 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><Trash2 size={16} /></button>
+                </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div><label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Title</label><input type="text" value={item.title || ''} onChange={(e) => updateItem(i, 'title', e.target.value)} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]" /></div>
