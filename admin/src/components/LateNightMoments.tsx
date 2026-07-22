@@ -11,6 +11,20 @@ interface MomentData {
   video?: string;
 }
 
+function getYouTubeEmbedUrl(url: string): string | null {
+  if (!url) return null;
+  const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  if (match && match[2].length === 11) {
+    return `https://www.youtube.com/embed/${match[2]}`;
+  }
+  return null;
+}
+
+function isYouTubeUrl(url: string): boolean {
+  return !!getYouTubeEmbedUrl(url);
+}
+
 const DEFAULT_MOMENTS: MomentData[] = [
   {
     id: 'misfits',
@@ -298,13 +312,30 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
                 </p>
                 <div className="aspect-video overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)] bg-[#2a1a0a]/20 flex items-center justify-center cursor-pointer">
                   {activeMoment.video ? (
-                    <video
-                      src={activeMoment.video}
-                      className="w-full h-full object-cover"
-                      controls
-                      playsInline
-                      onClick={(e) => { e.stopPropagation(); openVideo(); }}
-                    />
+                    isYouTubeUrl(activeMoment.video) ? (
+                      <div className="w-full h-full relative" onClick={(e) => { e.stopPropagation(); openVideo(); }}>
+                        <img
+                          src={`https://img.youtube.com/vi/${getYouTubeEmbedUrl(activeMoment.video)?.split('/').pop()}/hqdefault.jpg`}
+                          alt="YouTube thumbnail"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                          <div className="w-14 h-10 bg-red-600 rounded-lg flex items-center justify-center">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                              <polygon points="8 5 19 12 8 19" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <video
+                        src={activeMoment.video}
+                        className="w-full h-full object-cover"
+                        controls
+                        playsInline
+                        onClick={(e) => { e.stopPropagation(); openVideo(); }}
+                      />
+                    )
                   ) : (
                     <p className="text-[13px] text-[#d4c4a8]/60 font-medium">
                       Video coming soon
@@ -328,13 +359,22 @@ export default function LateNightMoments({ items, shows }: { items?: MomentData[
                 className={`relative z-10 w-full max-w-[900px] aspect-video transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${videoOverlayVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.92] translate-y-6'}`}
                 onClick={(e) => e.stopPropagation()}
               >
-                <video
-                  src={activeMoment.video}
-                  className="w-full h-full object-cover rounded-lg shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]"
-                  controls
-                  autoPlay
-                  playsInline
-                />
+                {isYouTubeUrl(activeMoment.video) ? (
+                  <iframe
+                    src={getYouTubeEmbedUrl(activeMoment.video) || ''}
+                    className="w-full h-full rounded-lg shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <video
+                    src={activeMoment.video}
+                    className="w-full h-full object-cover rounded-lg shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]"
+                    controls
+                    autoPlay
+                    playsInline
+                  />
+                )}
                 <button
                   onClick={closeVideo}
                   className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"

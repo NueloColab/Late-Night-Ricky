@@ -859,15 +859,30 @@ function MomentsEditor({ section, onUpdate, onSave, saving, onToggleVisibility, 
                 {item.video ? (
                   <div>
                     <div className="w-full max-w-md aspect-video bg-[#E3E8ED] rounded-xl overflow-hidden mb-2 border border-[#6B8FAB]/30">
-                      <video src={item.video} className="object-contain w-full h-full" controls muted />
+                      {item.video.includes('youtube.com') || item.video.includes('youtu.be') ? (
+                        <div className="w-full h-full flex items-center justify-center bg-[#1B3A4C] text-white text-xs">YouTube Video: {item.video}</div>
+                      ) : (
+                        <video src={item.video} className="object-contain w-full h-full" controls muted />
+                      )}
                     </div>
                     <div className="flex items-center gap-2">
-                      <button onClick={() => { setMediaTarget({ type: 'moments-video', id: i }); setMediaOpen(true); }} className="px-3 py-1.5 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">Replace Video</button>
+                      <button onClick={() => { setMediaTarget({ type: 'moments-video', id: i }); setMediaOpen(true); }} className="px-3 py-1.5 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#1B3A4C] hover:text-white transition">Replace File</button>
                       <button onClick={() => updateItem(i, 'video', '')} className="px-3 py-1.5 border border-red-300 text-red-600 rounded-full text-[11px] font-semibold uppercase tracking-[1px] hover:bg-red-50 transition">Remove</button>
                     </div>
                   </div>
                 ) : (
-                  <button onClick={() => { setMediaTarget({ type: 'moments-video', id: i }); setMediaOpen(true); }} className="px-4 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">Upload Video</button>
+                  <div className="flex flex-col gap-2">
+                    <button onClick={() => { setMediaTarget({ type: 'moments-video', id: i }); setMediaOpen(true); }} className="px-4 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity w-fit">Upload Video File</button>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-[#6B8FAB]">or</span>
+                      <input
+                        type="url"
+                        placeholder="Paste YouTube / video URL"
+                        onChange={(e) => { if (e.target.value) updateItem(i, 'video', e.target.value); }}
+                        className="flex-1 px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
+                      />
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
