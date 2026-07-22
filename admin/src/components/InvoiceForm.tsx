@@ -646,27 +646,27 @@ export default function InvoiceForm({ invoice, projects = [], onClose, onSuccess
               key={index}
               className="p-4 bg-[#F8FAFB] rounded-lg border border-[#0d1f3d]"
             >
-              {/* Date + Service */}
-              <div className="flex flex-col md:flex-row gap-3 mb-3">
-                <div className="w-full md:w-40 shrink-0">
-                  <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
-                    Performance Date
-                  </label>
-                  <input
-                    type="date"
-                    value={service.date || ''}
-                    onChange={(e) => handleServiceChange(index, 'date', e.target.value)}
-                    className={inputClass}
-                  />
-                </div>
-                <div className="flex-1">
-                  <ServiceSelector
-                    service={service}
-                    onChange={(field, value) => handleServiceChange(index, field, value)}
-                    onBatchChange={(updates) => handleServiceBatchChange(index, updates)}
-                    inputClassName={inputClass}
-                  />
-                </div>
+              {/* Date */}
+              <div className="mb-3 max-w-[200px]">
+                <label className="block text-xs font-semibold text-[#A8D5F0] uppercase tracking-[3px] mb-2">
+                  Performance Date
+                </label>
+                <input
+                  type="date"
+                  value={service.date || ''}
+                  onChange={(e) => handleServiceChange(index, 'date', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+
+              {/* Service */}
+              <div className="mb-3">
+                <ServiceSelector
+                  service={service}
+                  onChange={(field, value) => handleServiceChange(index, field, value)}
+                  onBatchChange={(updates) => handleServiceBatchChange(index, updates)}
+                  inputClassName={inputClass}
+                />
               </div>
 
               {/* Price + Delete */}
