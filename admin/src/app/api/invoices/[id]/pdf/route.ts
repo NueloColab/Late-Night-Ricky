@@ -85,24 +85,26 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: c.darkText,
     backgroundColor: c.white,
-    paddingTop: 40,
+    paddingTop: 0,
     paddingBottom: 40,
-    paddingHorizontal: 42,
+    paddingHorizontal: 0,
   },
 
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    borderBottomWidth: 2,
-    borderBottomColor: c.brown,
-    paddingBottom: 16,
+    alignItems: 'center',
+    backgroundColor: c.brown,
+    paddingVertical: 18,
+    paddingHorizontal: 42,
     marginBottom: 26,
+  },
+  bodyContent: {
+    paddingHorizontal: 42,
   },
   headerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 18,
   },
   logo: {
     width: 160,
@@ -133,13 +135,13 @@ const styles = StyleSheet.create({
   docLabel: {
     fontFamily: 'Helvetica',
     fontSize: 21,
-    color: c.brown,
+    color: c.white,
     letterSpacing: 2,
     textTransform: 'uppercase',
   },
   docNumber: {
     fontSize: 9,
-    color: c.mutedText,
+    color: c.gold,
     marginTop: 3,
   },
 
@@ -510,6 +512,9 @@ function InvoicePDF({ invoice, logoBase64, bankDetails, companyName }: {
         )
       ),
 
+      // BODY (padded content below header)
+      e(View, { style: styles.bodyContent },
+
       // INFO GRID
       e(View, { style: styles.infoGrid },
         e(View, { style: styles.infoBox },
@@ -666,6 +671,8 @@ function InvoicePDF({ invoice, logoBase64, bankDetails, companyName }: {
         e(Text, { style: styles.footerText }, 'GRAMMY WINNING PRODUCER | INTERNATIONAL DJ'),
         e(Text, { style: styles.footerText }, 'This is an invoice for services rendered. Payment is due by the date specified above. Thank you for your business.')
       )
+
+      ) // close bodyContent
     )
   )
 }
