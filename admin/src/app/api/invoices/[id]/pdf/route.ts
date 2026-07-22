@@ -75,7 +75,7 @@ const c = {
   mutedText: '#666666',
   dimText:   '#999999',
   border:    '#e5e5e5',
-  bg:        '#e8d4b8',
+  bg:        '#fafafa',
   white:     '#ffffff',
 }
 
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
     gap: 18,
   },
   logo: {
-    width: 64,
-    height: 64,
+    width: 160,
+    height: 30,
     objectFit: 'contain',
   },
   brandBlock: {
@@ -502,11 +502,7 @@ function InvoicePDF({ invoice, logoBase64, bankDetails, companyName }: {
       // HEADER
       e(View, { style: styles.header },
         e(View, { style: styles.headerLeft },
-          logoBase64 ? e(Image, { style: styles.logo, src: logoBase64 }) : null,
-          e(View, { style: styles.brandBlock },
-            e(Text, { style: styles.brandName }, 'LATE NIGHT RICKY'),
-            e(Text, { style: styles.tagline }, 'GRAMMY WINNING PRODUCER | INTERNATIONAL DJ')
-          )
+          logoBase64 ? e(Image, { style: styles.logo, src: logoBase64 }) : e(Text, { style: styles.brandName }, 'LATE NIGHT RICKY')
         ),
         e(View, { style: styles.headerRight },
           e(Text, { style: styles.docLabel }, 'Invoice'),
