@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Plus, Search, Trash2, Eye, Phone, Mail, Globe } from 'lucide-react'
+import { Plus, Search, Trash2, Eye, Phone, Mail, Globe, Pencil } from 'lucide-react'
 import Modal from '@/components/Modal'
 
 interface Client {
@@ -22,6 +22,7 @@ export default function ClientsPage() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [showForm, setShowForm] = useState(false)
+  const [editingId, setEditingId] = useState<number | null>(null)
   const [form, setForm] = useState({ name: '', email: '', phone: '', instagram: '', notes: '' })
 
   useEffect(() => {
@@ -45,12 +46,21 @@ export default function ClientsPage() {
   async function saveClient(e: React.FormEvent) {
     e.preventDefault()
     try {
-      await fetch('/api/clients', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
+      if (editingId) {
+        await fetch(`/api/clients/${editingId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(form),
+        })
+      } else {
+        await fetch('/api/clients', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(form),
+        })
+      }
       setForm({ name: '', email: '', phone: '', instagram: '', notes: '' })
+      setEditingId(null)
       setShowForm(false)
       fetchClients()
     } catch (err) {
@@ -62,6 +72,18 @@ export default function ClientsPage() {
     if (!confirm('Delete this client?')) return
     await fetch(`/api/clients/${id}`, { method: 'DELETE' })
     fetchClients()
+  }
+
+  function openEdit(client: Client) {
+    setForm({
+      name: client.name,
+      email: client.email || '',
+      phone: client.phone || '',
+      instagram: client.instagram || '',
+      notes: '',
+    })
+    setEditingId(client.id)
+    setShowForm(true)
   }
 
   const filteredClients = clients.filter((c) => {
@@ -87,6 +109,7 @@ export default function ClientsPage() {
           <button
             onClick={() => {
               setForm({ name: '', email: '', phone: '', instagram: '', notes: '' })
+              setEditingId(null)
               setShowForm(true)
             }}
             className="inline-flex items-center gap-2 px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
@@ -174,8 +197,19 @@ export default function ClientsPage() {
                             router.push(`/admin/clients/${client.id}`)
                           }}
                           className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C]"
+                          title="View"
                         >
                           <Eye size={16} />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            openEdit(client)
+                          }}
+                          className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-[#1B3A4C]"
+                          title="Edit"
+                        >
+                          <Pencil size={16} />
                         </button>
                         <button
                           onClick={(e) => {
@@ -183,6 +217,7 @@ export default function ClientsPage() {
                             deleteClient(client.id)
                           }}
                           className="p-1.5 hover:bg-[#E3E8ED] rounded-lg transition-colors text-[#6B8FAB] hover:text-red-500"
+                          title="Delete"
                         >
                           <Trash2 size={16} />
                         </button>
@@ -197,7 +232,7 @@ export default function ClientsPage() {
       )}
 
       {/* Add Client Modal */}
-      <Modal isOpen={showForm} onClose={() => setShowForm(false)} title="Add Client" maxWidth="max-w-lg">
+      <Modal isOpen={showForm} onClose={() => { setShowForm(false); setEditingId(null); }} title={editingId ? 'Edit Client' : 'Add Client'} maxWidth="max-w-lg">
         <form onSubmit={saveClient} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px] mb-2">Name *</label>
@@ -226,9 +261,11 @@ export default function ClientsPage() {
             <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={3}
               className="w-full px-4 py-2.5 bg-white border border-[#6B8FAB]/30 rounded-lg text-[#1B3A4C] text-sm focus:outline-none focus:border-[#1B3A4C] resize-none" />
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-3">
+            <button type="button" onClick={() => { setShowForm(false); setEditingId(null); }}
+              className="px-5 py-2.5 border border-[#6B8FAB]/50 rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#1B3A4C] hover:border-[#111] hover:text-[#111] transition">Cancel</button>
             <button type="submit"
-              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition">Save Client</button>
+              className="px-7 py-3 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition">{editingId ? 'Save Changes' : 'Save Client'}</button>
           </div>
         </form>
       </Modal>
