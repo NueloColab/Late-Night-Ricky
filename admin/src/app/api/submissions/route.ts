@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 import { db } from '@/lib/db';
 import { submissions } from '@/lib/db/schema';
-import { desc, eq, and, inArray } from 'drizzle-orm';
+import { desc, eq, and, inArray, sql } from 'drizzle-orm';
 import { storeFile } from '@/lib/storage';
 import path from 'path';
 import { cookies } from 'next/headers';
@@ -48,7 +48,7 @@ export async function GET(request: Request) {
     }
 
     // Count total
-    const countQuery = db.select({ count: db.fn.count() }).from(submissions);
+    const countQuery = db.select({ count: sql<number>`count(*)` }).from(submissions);
     const countResult = conditions.length > 0
       ? await countQuery.where(and(...conditions))
       : await countQuery;

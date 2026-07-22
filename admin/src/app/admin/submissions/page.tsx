@@ -130,7 +130,7 @@ export default function SubmissionsPage() {
       {/* Filters */}
       <div className="flex flex-wrap gap-2 mb-6">
         {(['all', 'new', 'reviewed', 'shortlisted', 'accepted', 'rejected'] as const).map((status) => {
-          const count = status === 'all' ? total : null
+          const count = status === 'all' ? total : 0
           const config = status !== 'all' ? statusConfig[status] : null
           return (
             <button
