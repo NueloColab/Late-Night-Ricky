@@ -38,18 +38,35 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
+    const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
+    const limit = Math.min(50, Math.max(1, parseInt(searchParams.get('limit') || '20', 10)));
+    const offset = (page - 1) * limit;
 
-    const query = db.select().from(submissions);
     const conditions: any[] = [];
-
     if (status && status !== 'all') {
       conditions.push(eq(submissions.status, status as any));
     }
 
+    // Count total
+    const countQuery = db.select({ count: db.fn.count() }).from(submissions);
+    const countResult = conditions.length > 0
+      ? await countQuery.where(and(...conditions))
+      : await countQuery;
+    const total = Number(countResult[0]?.count || 0);
+
+    // Paginated data
+    const dataQuery = db.select().from(submissions)
+      .orderBy(desc(submissions.createdAt))
+      .limit(limit)
+      .offset(offset);
     const all = conditions.length > 0
-      ? await query.where(and(...conditions)).orderBy(desc(submissions.createdAt))
-      : await query.orderBy(desc(submissions.createdAt));
-    return NextResponse.json({ submissions: all }, { headers: corsHeaders() });
+      ? await dataQuery.where(and(...conditions))
+      : await dataQuery;
+
+    return NextResponse.json({
+      submissions: all,
+      pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
+    }, { headers: corsHeaders() });
   } catch (err) {
     console.error('Submissions GET error:', err);
     return NextResponse.json({ submissions: [] }, { status: 500, headers: corsHeaders() });

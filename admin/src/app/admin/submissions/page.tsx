@@ -29,6 +29,10 @@ export default function SubmissionsPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<string>('all')
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [total, setTotal] = useState(0)
+  const perPage = 20
   const [expandedId, setExpandedId] = useState<number | null>(null)
   const [playingId, setPlayingId] = useState<number | null>(null)
   const [audioProgress, setAudioProgress] = useState(0)
@@ -39,18 +43,28 @@ export default function SubmissionsPage() {
   const fetchSubmissions = useCallback(async () => {
     setLoading(true)
     try {
-      const url = filter === 'all' ? '/api/submissions' : `/api/submissions?status=${filter}`
-      const res = await fetch(url)
+      const params = new URLSearchParams()
+      if (filter !== 'all') params.set('status', filter)
+      params.set('page', String(page))
+      params.set('limit', String(perPage))
+      const res = await fetch(`/api/submissions?${params.toString()}`)
       const data = await res.json()
       setSubmissions(data.submissions || [])
+      setTotalPages(data.pagination?.totalPages || 1)
+      setTotal(data.pagination?.total || 0)
     } catch (err) {
       console.error('Failed to load submissions', err)
     } finally {
       setLoading(false)
     }
-  }, [filter])
+  }, [filter, page])
 
   useEffect(() => { fetchSubmissions() }, [fetchSubmissions])
+
+  const handleFilterChange = (status: string) => {
+    setFilter(status)
+    setPage(1)
+  }
 
   const toggleExpand = (id: number) => setExpandedId(prev => prev === id ? null : id)
 
@@ -116,12 +130,12 @@ export default function SubmissionsPage() {
       {/* Filters */}
       <div className="flex flex-wrap gap-2 mb-6">
         {(['all', 'new', 'reviewed', 'shortlisted', 'accepted', 'rejected'] as const).map((status) => {
-          const count = status === 'all' ? submissions.length : submissions.filter(s => s.status === status).length
+          const count = status === 'all' ? total : null
           const config = status !== 'all' ? statusConfig[status] : null
           return (
             <button
               key={status}
-              onClick={() => setFilter(status)}
+              onClick={() => handleFilterChange(status)}
               className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[1px] transition-all ${
                 filter === status
                   ? 'bg-[#1B3A4C] text-white shadow-sm'
@@ -275,6 +289,55 @@ export default function SubmissionsPage() {
               </div>
             )
           })}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between mt-6 pt-4 border-t border-[#E3E8ED]">
+              <div className="text-xs text-[#6B8FAB]">
+                Showing {(page - 1) * perPage + 1}–{Math.min(page * perPage, total)} of {total} submissions
+              </div>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                  disabled={page <= 1}
+                  className="px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-[1px] transition disabled:opacity-30 disabled:cursor-not-allowed bg-white text-[#1B3A4C] border border-[#6B8FAB]/30 hover:border-[#1B3A4C]"
+                >
+                  Prev
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                  .filter(p => p === 1 || p === totalPages || Math.abs(p - page) <= 2)
+                  .reduce((acc: (number | string)[], p, i, arr) => {
+                    if (i > 0 && typeof arr[i - 1] === 'number' && p - (arr[i - 1] as number) > 1) acc.push('...')
+                    acc.push(p)
+                    return acc
+                  }, [])
+                  .map((p, i) =>
+                    typeof p === 'string' ? (
+                      <span key={`gap-${i}`} className="text-xs text-[#6B8FAB] px-1">{p}</span>
+                    ) : (
+                      <button
+                        key={p}
+                        onClick={() => setPage(p)}
+                        className={`w-8 h-8 rounded text-xs font-semibold transition ${
+                          page === p
+                            ? 'bg-[#1B3A4C] text-white'
+                            : 'bg-white text-[#1B3A4C] border border-[#6B8FAB]/30 hover:border-[#1B3A4C]'
+                        }`}
+                      >
+                        {p}
+                      </button>
+                    )
+                  )}
+                <button
+                  onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                  disabled={page >= totalPages}
+                  className="px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-[1px] transition disabled:opacity-30 disabled:cursor-not-allowed bg-white text-[#1B3A4C] border border-[#6B8FAB]/30 hover:border-[#1B3A4C]"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
