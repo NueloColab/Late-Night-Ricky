@@ -162,7 +162,7 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-6 reveal-stagger">
             {(shows && shows.length > 0 ? shows : momentsData).map((item: MomentData | ShowCard, i: number) => {
-              // Match show card to moment using momentId (primary) or fallback to index
+              // Match show card to moment: momentId first, then title similarity, then index fallback
               const isShowCard = 'venue' in item;
               let matchedMomentId: string | null = null;
               
@@ -170,6 +170,17 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
                 // Use the explicit momentId link
                 const found = momentsData.find((m: MomentData) => m.id === (item as ShowCard).momentId);
                 if (found) matchedMomentId = found.id;
+              } else if (isShowCard) {
+                // Fallback: match by title similarity or index position
+                const foundByTitle = momentsData.find((m: MomentData) =>
+                  m.title?.toLowerCase() === item.title?.toLowerCase() ||
+                  m.id?.toLowerCase() === item.title?.toLowerCase().replace(/\s+/g, '')
+                );
+                if (foundByTitle) {
+                  matchedMomentId = foundByTitle.id;
+                } else if (i < momentsData.length) {
+                  matchedMomentId = momentsData[i].id;
+                }
               } else if (!isShowCard) {
                 // It's a moment item directly, use its own id
                 matchedMomentId = (item as MomentData).id;
@@ -178,8 +189,8 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
               const title = item.title || '';
               const subtitle = isShowCard ? `${(item as ShowCard).venue || ''}${(item as ShowCard).location ? ', ' + (item as ShowCard).location : ''}` : ((item as MomentData).subtitle || '');
               const image = isShowCard ? (item as ShowCard).image || '/assets/ricky-hero-new.jpg' : (item as MomentData).images?.[0] || '/assets/ricky-hero-new.jpg';
-              // Open modal for all cards - linked ones show content, unlinked ones show "coming soon"
-              const modalId = matchedMomentId || (isShowCard ? `card-${i}` : null);
+              // Only show "coming soon" if there's genuinely no moment content
+              const modalId = matchedMomentId || (isShowCard ? null : null);
               
               return (
                 <button
@@ -193,11 +204,13 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
                       alt={title}
                       className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute bottom-2 right-2 md:bottom-3 md:right-3 w-7 h-7 md:w-9 md:h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
-                      <svg width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80 md:w-[14px] md:h-[14px]">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
-                    </div>
+                    {modalId && (
+                      <div className="absolute bottom-2 right-2 md:bottom-3 md:right-3 w-7 h-7 md:w-9 md:h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                        <svg width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80 md:w-[14px] md:h-[14px]">
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    )}
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent p-2 md:p-3">
                       <h3 className="font-['Playfair_Display',serif] text-[13px] md:text-[clamp(16px,2vw,22px)] font-bold text-white leading-[1.1] md:leading-[1.2]">
                         {title}
@@ -328,11 +341,7 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
               /* Content coming soon state */
               <div className="relative z-10 p-5 md:p-8 flex flex-col items-center justify-center min-h-[200px]">
                 <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase tracking-[-1px] leading-[1] text-[#e8d4b8] mb-3 pr-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                  {(() => {
-                    const card = shows?.find((_, idx) => `card-${idx}` === openModal);
-                    if (card) return card.title;
-                    return activeMoment?.title || '';
-                  })()}
+                  {activeShowCard?.title || activeMoment?.title || ''}
                 </h2>
                 <p className="text-[13px] md:text-[14px] tracking-[0.2em] uppercase text-[#d4c4a8]/60 font-medium mb-6">
                   Content coming soon
