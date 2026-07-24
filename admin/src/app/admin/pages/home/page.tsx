@@ -238,6 +238,45 @@ export default function HomeEditor() {
     }
   }
 
+  async function reorderMomentsToMatchCards(orderedCards: ShowCard[]) {
+    // Find the moments section and reorder its items to match the new card order
+    const momentsSection = sections.find((s: any) => s.section === 'moments');
+    if (!momentsSection?.content?.items) return;
+    const items = [...momentsSection.content.items];
+    
+    // Reorder: for each card with a momentId, place that moment at the card's position
+    const reordered: any[] = [];
+    const used = new Set<string>();
+    
+    // First pass: place moments linked to cards in card order
+    for (const card of orderedCards) {
+      if (card.momentId) {
+        const moment = items.find((m: any) => m.id === card.momentId);
+        if (moment && !used.has(moment.id)) {
+          reordered.push(moment);
+          used.add(moment.id);
+        }
+      }
+    }
+    
+    // Second pass: append any remaining moments not linked to cards
+    for (const item of items) {
+      if (!used.has(item.id)) {
+        reordered.push(item);
+        used.add(item.id);
+      }
+    }
+    
+    // Save the updated moments section
+    await fetch(`/api/sections/${momentsSection.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: { ...momentsSection.content, items: reordered } }),
+    });
+    // Refresh sections
+    fetchSections();
+  }
+
   // ─── Render ───
 
   return (
@@ -313,7 +352,7 @@ export default function HomeEditor() {
           {loading ? (
             <p className="text-[#6B8FAB] text-sm">Loading...</p>
           ) : selectedSection === 'showcards' ? (
-            <ShowCardsEditor cards={showCards} setCards={setShowCards} onOpenMedia={(id) => openMedia('showcard', id)} momentsItems={momentsItems} />
+            <ShowCardsEditor cards={showCards} setCards={setShowCards} onOpenMedia={(id) => openMedia('showcard', id)} momentsItems={momentsItems} onReorderMoments={reorderMomentsToMatchCards} />
           ) : selectedSection === 'tracks' ? (
             <TracksEditor tracks={tracks} setTracks={setTracks} playingTrack={playingTrack} setPlayingTrack={setPlayingTrack} audioRef={audioRef} onOpenMedia={(id) => openMedia('track-cover', id)} />
           ) : selectedSection === 'hero' ? (
@@ -542,11 +581,12 @@ function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onTog
 
 // ─── Show Cards Editor ───
 
-function ShowCardsEditor({ cards, setCards, onOpenMedia, momentsItems }: {
+function ShowCardsEditor({ cards, setCards, onOpenMedia, momentsItems, onReorderMoments }: {
   cards: ShowCard[];
   setCards: React.Dispatch<React.SetStateAction<ShowCard[]>>;
   onOpenMedia: (id: number) => void;
   momentsItems: { id: string; title: string }[];
+  onReorderMoments: (orderedCards: ShowCard[]) => Promise<void>;
 }) {
   const [savingCard, setSavingCard] = useState<number | null>(null);
 
@@ -588,44 +628,7 @@ function ShowCardsEditor({ cards, setCards, onOpenMedia, momentsItems }: {
     setCards(updated);
     await Promise.all(updated.map(c => fetch(`/api/show-cards/${c.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ order: c.order }) })));
     // Also reorder the moments section items to match the new card order
-    await reorderMomentsToMatchCards(updated);
-  }
-
-  async function reorderMomentsToMatchCards(orderedCards: ShowCard[]) {
-    // Find the moments section in the current sections state
-    const momentsSection = sections.find((s: any) => s.section === 'moments');
-    if (!momentsSection?.content?.items) return;
-    const items = [...momentsSection.content.items];
-    
-    // Reorder items: for each card with a momentId, put that moment at the card's position
-    const reordered: any[] = [];
-    const used = new Set<string>();
-    
-    // First pass: place moments linked to cards in card order
-    for (const card of orderedCards) {
-      if (card.momentId) {
-        const moment = items.find((m: any) => m.id === card.momentId);
-        if (moment && !used.has(moment.id)) {
-          reordered.push(moment);
-          used.add(moment.id);
-        }
-      }
-    }
-    
-    // Second pass: append any remaining moments that aren't linked to cards
-    for (const item of items) {
-      if (!used.has(item.id)) {
-        reordered.push(item);
-        used.add(item.id);
-      }
-    }
-    
-    // Update the moments section
-    await fetch(`/api/sections/${momentsSection.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: { ...momentsSection.content, items: reordered } }),
-    });
+    await onReorderMoments(updated);
   }
 
   return (
