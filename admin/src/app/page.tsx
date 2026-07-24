@@ -382,7 +382,7 @@ export default async function HomePage() {
       }));
     }
     if (dbCards.length > 0) {
-      shows = dbCards.map((c: any) => ({ href: c.href || '#', image: c.imagePath || '/assets/ricky-hero-new.jpg', venue: c.venue, location: c.location, season: c.season, title: c.title, description: c.description }));
+      shows = dbCards.map((c: any) => ({ href: c.href || '#', image: c.imagePath || '/assets/ricky-hero-new.jpg', venue: c.venue, location: c.location, season: c.season, title: c.title, description: c.description, momentId: c.momentId || null }));
     }
     if (dbNames.length > 0) { clients = dbNames.map((n: any) => n.name); }
   } catch { /* DB unreachable — use hardcoded defaults */ }

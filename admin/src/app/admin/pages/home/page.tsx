@@ -30,6 +30,7 @@ interface ShowCard {
   title: string;
   description: string;
   href: string;
+  momentId: string | null;
   isActive: boolean;
 }
 
@@ -98,6 +99,14 @@ export default function HomeEditor() {
   const [mediaOpen, setMediaOpen] = useState(false);
   const [mediaTarget, setMediaTarget] = useState<{ type: string; id?: number; field?: string } | null>(null);
   const [playingTrack, setPlayingTrack] = useState<number | null>(null);
+
+  // Derive moments items from sections for linking show cards to moments
+  const momentsItems = (() => {
+    const section = sections.find(s => s.section === 'moments');
+    if (!section?.content) return [];
+    const c = typeof section.content === 'string' ? JSON.parse(section.content) : section.content;
+    return (c.items || []).map((item: any) => ({ id: item.id || '', title: item.title || '' }));
+  })();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   function flash(msg: string) {
@@ -304,7 +313,7 @@ export default function HomeEditor() {
           {loading ? (
             <p className="text-[#6B8FAB] text-sm">Loading...</p>
           ) : selectedSection === 'showcards' ? (
-            <ShowCardsEditor cards={showCards} setCards={setShowCards} onOpenMedia={(id) => openMedia('showcard', id)} />
+            <ShowCardsEditor cards={showCards} setCards={setShowCards} onOpenMedia={(id) => openMedia('showcard', id)} momentsItems={momentsItems} />
           ) : selectedSection === 'tracks' ? (
             <TracksEditor tracks={tracks} setTracks={setTracks} playingTrack={playingTrack} setPlayingTrack={setPlayingTrack} audioRef={audioRef} onOpenMedia={(id) => openMedia('track-cover', id)} />
           ) : selectedSection === 'hero' ? (
@@ -533,10 +542,11 @@ function SectionEditor({ section, label, fields, onUpdate, onSave, saving, onTog
 
 // ─── Show Cards Editor ───
 
-function ShowCardsEditor({ cards, setCards, onOpenMedia }: {
+function ShowCardsEditor({ cards, setCards, onOpenMedia, momentsItems }: {
   cards: ShowCard[];
   setCards: React.Dispatch<React.SetStateAction<ShowCard[]>>;
   onOpenMedia: (id: number) => void;
+  momentsItems: { id: string; title: string }[];
 }) {
   const [savingCard, setSavingCard] = useState<number | null>(null);
 
@@ -545,7 +555,7 @@ function ShowCardsEditor({ cards, setCards, onOpenMedia }: {
     await fetch(`/api/show-cards/${card.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imagePath: card.imagePath, venue: card.venue, location: card.location, season: card.season, title: card.title, description: card.description, href: card.href }),
+      body: JSON.stringify({ imagePath: card.imagePath, venue: card.venue, location: card.location, season: card.season, title: card.title, description: card.description, href: card.href, momentId: card.momentId }),
     });
     setSavingCard(null);
   }
@@ -623,6 +633,16 @@ function ShowCardsEditor({ cards, setCards, onOpenMedia }: {
             <div>
               <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Description</label>
               <textarea value={card.description} onChange={(e) => setCards(prev => prev.map(c => c.id === card.id ? { ...c, description: e.target.value } : c))} rows={2} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C] resize-y" />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-[#6B8FAB] uppercase tracking-[2px] mb-1">Linked Late Moment</label>
+              <select value={card.momentId || ''} onChange={(e) => setCards(prev => prev.map(c => c.id === card.id ? { ...c, momentId: e.target.value || null } : c))} className="w-full px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]">
+                <option value="">None</option>
+                {momentsItems.map((m) => (
+                  <option key={m.id} value={m.id}>{m.title}</option>
+                ))}
+              </select>
+              <p className="text-[10px] text-[#6B8FAB]/60 mt-1">Links this show card to a Late Moment for gallery & video content</p>
             </div>
             <div className="flex items-center gap-3">
               {card.imagePath && <div className="w-20 h-20 bg-[#E3E8ED] rounded-lg overflow-hidden border border-[#6B8FAB]/30"><img src={card.imagePath} alt="" className="w-full h-full object-cover" /></div>}

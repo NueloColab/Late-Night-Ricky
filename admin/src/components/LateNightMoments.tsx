@@ -79,6 +79,7 @@ interface ShowCard {
   description?: string;
   image?: string;
   href?: string;
+  momentId?: string | null;
 }
 
 export default function LateNightMoments({ items, shows, heading, subtext }: { items?: MomentData[]; shows?: ShowCard[]; heading?: string; subtext?: string }) {
@@ -97,7 +98,8 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [lightboxVisible, setLightboxVisible] = useState(false);
 
-  const activeMoment = momentsData.find((m) => m.id === openModal);
+  const activeMoment = openModal ? momentsData.find((m) => m.id === openModal) : null;
+  const activeShowCard = openModal ? shows?.find((s) => s.momentId === openModal) : null;
 
   const open = (id: string) => {
     setOpenModal(id);
@@ -160,22 +162,29 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-6 reveal-stagger">
             {(shows && shows.length > 0 ? shows : momentsData).map((item: MomentData | ShowCard, i: number) => {
-              // Match show card to moment by title similarity
-              const matchingMoment = momentsData.find((m: MomentData) =>
-                m.title?.toLowerCase() === item.title?.toLowerCase() || 
-                m.id?.toLowerCase() === item.title?.toLowerCase().replace(/\s+/g, '')
-              );
-              const momentId = matchingMoment?.id || momentsData[i]?.id || `moment-${i}`;
-              const title = item.title || '';
+              // Match show card to moment using momentId (primary) or fallback to index
               const isShowCard = 'venue' in item;
+              let matchedMomentId: string | null = null;
+              
+              if (isShowCard && (item as ShowCard).momentId) {
+                // Use the explicit momentId link
+                const found = momentsData.find((m: MomentData) => m.id === (item as ShowCard).momentId);
+                if (found) matchedMomentId = found.id;
+              } else if (!isShowCard) {
+                // It's a moment item directly, use its own id
+                matchedMomentId = (item as MomentData).id;
+              }
+              
+              const title = item.title || '';
               const subtitle = isShowCard ? `${(item as ShowCard).venue || ''}${(item as ShowCard).location ? ', ' + (item as ShowCard).location : ''}` : ((item as MomentData).subtitle || '');
               const image = isShowCard ? (item as ShowCard).image || '/assets/ricky-hero-new.jpg' : (item as MomentData).images?.[0] || '/assets/ricky-hero-new.jpg';
-              const hasGallery = !!(matchingMoment || momentsData[i]);
+              // Open modal for all cards - linked ones show content, unlinked ones show "coming soon"
+              const modalId = matchedMomentId || (isShowCard ? `card-${i}` : null);
               
               return (
                 <button
                   key={i}
-                  onClick={() => hasGallery && open(momentId)}
+                  onClick={() => modalId && open(modalId)}
                   className="group block text-left w-full"
                 >
                   <div className="relative aspect-square overflow-hidden">
@@ -184,13 +193,11 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
                       alt={title}
                       className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
                     />
-                    {hasGallery && (
-                      <div className="absolute bottom-2 right-2 md:bottom-3 md:right-3 w-7 h-7 md:w-9 md:h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
-                        <svg width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80 md:w-[14px] md:h-[14px]">
-                          <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                      </div>
-                    )}
+                    <div className="absolute bottom-2 right-2 md:bottom-3 md:right-3 w-7 h-7 md:w-9 md:h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                      <svg width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80 md:w-[14px] md:h-[14px]">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </div>
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent p-2 md:p-3">
                       <h3 className="font-['Playfair_Display',serif] text-[13px] md:text-[clamp(16px,2vw,22px)] font-bold text-white leading-[1.1] md:leading-[1.2]">
                         {title}
@@ -218,7 +225,7 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
       </section>
 
       {/* ═══ MODAL ═══ */}
-      {activeMoment && (
+      {openModal && (
         <div
           className={`fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100' : 'opacity-0'}`}
           onClick={close}
@@ -226,131 +233,120 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
           {/* Backdrop */}
           <div className={`absolute inset-0 bg-[#2a1a0a]/90 backdrop-blur-[8px] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100' : 'opacity-0'}`} />
 
-          {/* Modal box — leather background */}
+          {/* Modal box */}
           <div
             className={`modal-scroll-hide relative z-10 w-full max-w-[1100px] max-h-[75vh] overflow-y-auto rounded-xl border border-[#e8d4b8]/15 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(42,26,10,0.05)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${modalVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.92] translate-y-8'}`}
             onClick={(e) => e.stopPropagation()}
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {/* Wrapper that grows with content */}
-            <div className="relative min-h-full">
-              {/* Leather background image — covers full content */}
-              <div className="absolute inset-0 z-0 rounded-xl overflow-hidden">
-                <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-[#2a1a0a]/70" />
-                <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/40 via-transparent to-[#2a1a0a]/70" />
-              </div>
+            {/* Background */}
+            <div className="absolute inset-0 z-0 rounded-xl overflow-hidden">
+              <img src="/assets/venues-bg.jpg" alt="" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-[#2a1a0a]/70" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/40 via-transparent to-[#2a1a0a]/70" />
+            </div>
 
-              {/* Close button */}
-              <button
-                onClick={close}
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-[#e8d4b8]/10 hover:bg-[#e8d4b8]/20 flex items-center justify-center transition-colors"
-              >
+            {/* Close button */}
+            <button
+              onClick={close}
+              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-[#e8d4b8]/10 hover:bg-[#e8d4b8]/20 flex items-center justify-center transition-colors"
+            >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#e8d4b8]">
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             </button>
 
-            <div className="relative z-10 p-5 md:p-8">
-              {/* Title */}
-              <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase tracking-[-1px] leading-[1] text-[#e8d4b8] mb-2 pr-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                {activeMoment.title}
-              </h2>
-              <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#d4c4a8]/80 font-medium mb-4">
-                {activeMoment.subtitle}
-              </p>
-
-              {/* Description */}
-              <p className="text-[13px] md:text-[14px] leading-[1.7] text-[#d4c4a8]/90 mb-5">
-                {activeMoment.description}
-              </p>
-
-              {/* Gallery */}
-              <div className="mb-5">
-                <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#d4c4a8]/60 font-medium mb-3">
-                  Gallery
+            {activeMoment && (activeMoment.images?.length > 0 || activeMoment.video) ? (
+              /* Full content state — moment has gallery/video */
+              <div className="relative z-10 p-5 md:p-8">
+                <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase tracking-[-1px] leading-[1] text-[#e8d4b8] mb-2 pr-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                  {activeMoment.title}
+                </h2>
+                <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#d4c4a8]/80 font-medium mb-4">
+                  {activeMoment.subtitle}
                 </p>
-                <div
-                  ref={galleryRef}
-                  className="flex gap-3 overflow-x-auto pb-3 cursor-grab active:cursor-grabbing select-none"
-                  style={{ scrollbarWidth: 'none', scrollSnapType: 'x mandatory' }}
-                  onMouseDown={handleMouseDown}
-                  onMouseMove={handleMouseMove}
-                  onMouseUp={handleMouseUp}
-                  onMouseLeave={handleMouseUp}
-                >
-                  {activeMoment.images.map((img, i) => (
+                <p className="text-[13px] md:text-[14px] leading-[1.7] text-[#d4c4a8]/90 mb-5">
+                  {activeMoment.description}
+                </p>
+
+                {/* Gallery */}
+                {activeMoment.images?.length > 0 && (
+                  <div className="mb-5">
+                    <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#d4c4a8]/60 font-medium mb-3">Gallery</p>
                     <div
-                      key={i}
-                      className="flex-shrink-0 w-[280px] md:flex-1 md:min-w-0 aspect-square overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)] cursor-pointer hover:ring-2 hover:ring-[#e8d4b8]/40 transition-all duration-300"
-                      style={{ scrollSnapAlign: 'start' }}
-                      onClick={(e) => { e.stopPropagation(); openLightbox(img); }}
+                      ref={galleryRef}
+                      className="flex gap-3 overflow-x-auto pb-3 cursor-grab active:cursor-grabbing select-none"
+                      style={{ scrollbarWidth: 'none', scrollSnapType: 'x mandatory' }}
+                      onMouseDown={handleMouseDown}
+                      onMouseMove={handleMouseMove}
+                      onMouseUp={handleMouseUp}
+                      onMouseLeave={handleMouseUp}
                     >
-                      <img
-                        src={img}
-                        alt={`${activeMoment.title} ${i + 1}`}
-                        className="w-full h-full object-cover"
-                        draggable={false}
-                      />
+                      {activeMoment.images.map((img, i) => (
+                        <div
+                          key={i}
+                          className="flex-shrink-0 w-[280px] md:flex-1 md:min-w-0 aspect-square overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)] cursor-pointer hover:ring-2 hover:ring-[#e8d4b8]/40 transition-all duration-300"
+                          style={{ scrollSnapAlign: 'start' }}
+                          onClick={(e) => { e.stopPropagation(); openLightbox(img); }}
+                        >
+                          <img src={img} alt={`${activeMoment.title} ${i + 1}`} className="w-full h-full object-cover" draggable={false} />
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-                {/* Gallery dots */}
-                <div className="flex gap-2 justify-center mt-3">
-                  {activeMoment.images.map((_, i) => (
-                    <div
-                      key={i}
-                      className={`w-2 h-2 rounded-full transition-colors ${i === 0 ? 'bg-[#e8d4b8]' : 'bg-[#e8d4b8]/30'}`}
-                    />
-                  ))}
-                </div>
-              </div>
+                    <div className="flex gap-2 justify-center mt-3">
+                      {activeMoment.images.map((_, i) => (
+                        <div key={i} className={`w-2 h-2 rounded-full transition-colors ${i === 0 ? 'bg-[#e8d4b8]' : 'bg-[#e8d4b8]/30'}`} />
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-              {/* Video */}
-              <div className="mb-2">
-                <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#d4c4a8]/60 font-medium mb-3">
-                  Video
-                </p>
-                <div className="aspect-video overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)] bg-[#2a1a0a]/20 flex items-center justify-center cursor-pointer">
-                  {activeMoment.video ? (
-                    isYouTubeUrl(activeMoment.video) ? (
-                      <div className="w-full h-full relative" onClick={(e) => { e.stopPropagation(); openVideo(); }}>
-                        <img
-                          src={`https://img.youtube.com/vi/${getYouTubeEmbedUrl(activeMoment.video)?.split('/').pop()}/hqdefault.jpg`}
-                          alt="YouTube thumbnail"
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                          <div className="w-14 h-10 bg-red-600 rounded-lg flex items-center justify-center">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                              <polygon points="8 5 19 12 8 19" />
-                            </svg>
+                {/* Video */}
+                <div className="mb-2">
+                  <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#d4c4a8]/60 font-medium mb-3">Video</p>
+                  <div className="aspect-video overflow-hidden rounded-lg shadow-[0_8px_30px_-8px_rgba(0,0,0,0.5)] bg-[#2a1a0a]/20 flex items-center justify-center cursor-pointer">
+                    {activeMoment.video ? (
+                      isYouTubeUrl(activeMoment.video) ? (
+                        <div className="w-full h-full relative" onClick={(e) => { e.stopPropagation(); openVideo(); }}>
+                          <img src={`https://img.youtube.com/vi/${getYouTubeEmbedUrl(activeMoment.video)?.split('/').pop()}/hqdefault.jpg`} alt="YouTube thumbnail" className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                            <div className="w-14 h-10 bg-red-600 rounded-lg flex items-center justify-center">
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="8 5 19 12 8 19" /></svg>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      ) : (
+                        <video src={activeMoment.video} className="w-full h-full object-cover" controls playsInline onClick={(e) => { e.stopPropagation(); openVideo(); }} />
+                      )
                     ) : (
-                      <video
-                        src={activeMoment.video}
-                        className="w-full h-full object-cover"
-                        controls
-                        playsInline
-                        onClick={(e) => { e.stopPropagation(); openVideo(); }}
-                      />
-                    )
-                  ) : (
-                    <p className="text-[13px] text-[#d4c4a8]/60 font-medium">
-                      Video coming soon
-                    </p>
-                  )}
+                      <p className="text-[13px] text-[#d4c4a8]/60 font-medium">Video coming soon</p>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              /* Content coming soon state */
+              <div className="relative z-10 p-5 md:p-8 flex flex-col items-center justify-center min-h-[200px]">
+                <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase tracking-[-1px] leading-[1] text-[#e8d4b8] mb-3 pr-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                  {(() => {
+                    const card = shows?.find((_, idx) => `card-${idx}` === openModal);
+                    if (card) return card.title;
+                    return activeMoment?.title || '';
+                  })()}
+                </h2>
+                <p className="text-[13px] md:text-[14px] tracking-[0.2em] uppercase text-[#d4c4a8]/60 font-medium mb-6">
+                  Content coming soon
+                </p>
+                <div className="w-12 h-px bg-[#e8d4b8]/30 mb-6" />
+                <p className="text-[13px] md:text-[14px] leading-[1.7] text-[#d4c4a8]/50 text-center max-w-sm">
+                  We&apos;re putting together something special for this moment. Check back soon for gallery and video content.
+                </p>
+              </div>
+            )}
           </div>
 
-          </div>
-
-          {/* Video overlay — smooth elegant transition */}
-          {videoOverlay && activeMoment.video && (
+          {/* Video overlay */}
+          {videoOverlay && activeMoment?.video && (
             <div
               className={`fixed inset-0 z-[60] flex items-center justify-center p-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${videoOverlayVisible ? 'opacity-100' : 'opacity-0'}`}
               onClick={closeVideo}
@@ -361,28 +357,12 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
                 onClick={(e) => e.stopPropagation()}
               >
                 {isYouTubeUrl(activeMoment.video) ? (
-                  <iframe
-                    src={getYouTubeEmbedUrl(activeMoment.video) || ''}
-                    className="w-full h-full rounded-lg shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+                  <iframe src={getYouTubeEmbedUrl(activeMoment.video) || ''} className="w-full h-full rounded-lg shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
                 ) : (
-                  <video
-                    src={activeMoment.video}
-                    className="w-full h-full object-cover rounded-lg shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]"
-                    controls
-                    autoPlay
-                    playsInline
-                  />
+                  <video src={activeMoment.video} className="w-full h-full object-cover rounded-lg shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]" controls autoPlay playsInline />
                 )}
-                <button
-                  onClick={closeVideo}
-                  className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white">
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
+                <button onClick={closeVideo} className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white"><path d="M18 6L6 18M6 6l12 12" /></svg>
                 </button>
               </div>
             </div>
@@ -401,18 +381,9 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
             className={`relative z-10 max-w-[95vw] max-h-[90vh] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${lightboxVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.92] translate-y-6'}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <img
-              src={lightboxImage}
-              alt="Gallery"
-              className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]"
-            />
-            <button
-              onClick={closeLightbox}
-              className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white">
-                <path d="M18 6L6 18M6 6l12 12" />
-              </svg>
+            <img src={lightboxImage} alt="Gallery" className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]" />
+            <button onClick={closeLightbox} className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white"><path d="M18 6L6 18M6 6l12 12" /></svg>
             </button>
           </div>
         </div>

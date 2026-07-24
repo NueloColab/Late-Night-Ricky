@@ -18,6 +18,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     if (body.title !== undefined) updateData.title = body.title;
     if (body.description !== undefined) updateData.description = body.description;
     if (body.href !== undefined) updateData.href = body.href;
+    if (body.momentId !== undefined) updateData.momentId = body.momentId;
     if (body.order !== undefined) updateData.order = body.order;
     if (body.isActive !== undefined) updateData.isActive = body.isActive;
 

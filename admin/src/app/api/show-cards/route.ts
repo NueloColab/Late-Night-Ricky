@@ -34,6 +34,7 @@ export async function POST(request: Request) {
         description: description || '',
         href: href || '#',
         imagePath: imagePath || null,
+        momentId: body.momentId || null,
         order: order || 0,
         isActive: isActive !== undefined ? isActive : true,
       })

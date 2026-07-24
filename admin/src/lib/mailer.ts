@@ -36,7 +36,7 @@ if (useResend) {
 
 // LNR business email
 const FROM_ADDRESS = process.env.SMTP_FROM || 'Late Night Ricky <latenightricky@gmail.com>'
-const REPLY_TO_ADDRESS = 'latenightricky@gmail.com'
+const REPLY_TO_ADDRESS = process.env.REPLY_TO_EMAIL || 'latenightricky@gmail.com'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://late-night-ricky.vercel.app'
 
 function formatCurrency(amount: number | null | undefined) {

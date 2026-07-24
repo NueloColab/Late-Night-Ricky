@@ -39,6 +39,7 @@ export const showCards = pgTable("show_cards", {
   title: text("title").notNull(),
   description: text("description").notNull(),
   href: text("href").default("#"),
+  momentId: text("moment_id"),
   isActive: boolean("is_active").default(true),
 });
 
