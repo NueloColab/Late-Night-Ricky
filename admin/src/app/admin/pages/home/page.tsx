@@ -587,6 +587,45 @@ function ShowCardsEditor({ cards, setCards, onOpenMedia, momentsItems }: {
     const updated = newCards.map((c, i) => ({ ...c, order: i + 1 }));
     setCards(updated);
     await Promise.all(updated.map(c => fetch(`/api/show-cards/${c.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ order: c.order }) })));
+    // Also reorder the moments section items to match the new card order
+    await reorderMomentsToMatchCards(updated);
+  }
+
+  async function reorderMomentsToMatchCards(orderedCards: ShowCard[]) {
+    // Find the moments section in the current sections state
+    const momentsSection = sections.find((s: any) => s.section === 'moments');
+    if (!momentsSection?.content?.items) return;
+    const items = [...momentsSection.content.items];
+    
+    // Reorder items: for each card with a momentId, put that moment at the card's position
+    const reordered: any[] = [];
+    const used = new Set<string>();
+    
+    // First pass: place moments linked to cards in card order
+    for (const card of orderedCards) {
+      if (card.momentId) {
+        const moment = items.find((m: any) => m.id === card.momentId);
+        if (moment && !used.has(moment.id)) {
+          reordered.push(moment);
+          used.add(moment.id);
+        }
+      }
+    }
+    
+    // Second pass: append any remaining moments that aren't linked to cards
+    for (const item of items) {
+      if (!used.has(item.id)) {
+        reordered.push(item);
+        used.add(item.id);
+      }
+    }
+    
+    // Update the moments section
+    await fetch(`/api/sections/${momentsSection.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: { ...momentsSection.content, items: reordered } }),
+    });
   }
 
   return (
