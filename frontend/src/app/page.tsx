@@ -2,8 +2,37 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import RadioPlayer from '../components/RadioPlayer';
 import { getSections, getShowCards, getPartnerLogos, getClientNames, getVenueTicker } from '../lib/api';
+import type { Metadata } from 'next';
 
 export const revalidate = 60;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const sections = await getSections('global');
+  const seoSection = sections.find((s: any) => s.section === 'seo');
+  const metaList = Array.isArray(seoSection?.content) ? seoSection.content : [];
+  const homeMeta = metaList.find((m: any) => m.page === 'home');
+  const faviconUrl = seoSection?.images?.[0];
+  const ogImage = faviconUrl && !faviconUrl.includes('Late_Night_Ricky5.png') ? faviconUrl : undefined;
+
+  return {
+    title: homeMeta?.title || 'Late Night Ricky — International DJ & Grammy Winning Producer',
+    description: homeMeta?.description || 'From London to the world. Late Night Ricky — International DJ & Grammy Winning Producer.',
+    openGraph: {
+      title: homeMeta?.title || 'Late Night Ricky — International DJ & Grammy Winning Producer',
+      description: homeMeta?.description || 'From London to the world. International DJ & Grammy Winning Producer.',
+      url: 'https://late-night-ricky.vercel.app',
+      siteName: 'Late Night Ricky',
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: 'Late Night Ricky' }] : [],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: homeMeta?.title || 'Late Night Ricky — International DJ & Grammy Winning Producer',
+      description: homeMeta?.description || 'From London to the world. International DJ & Grammy Winning Producer.',
+      images: ogImage ? [ogImage] : [],
+    },
+  };
+}
 
 function assetPath(p?: string | null) {
   if (!p) return '';
