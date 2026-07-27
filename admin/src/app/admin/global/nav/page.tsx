@@ -61,15 +61,44 @@ export default function NavEditor() {
   }
 
   async function saveNav(update: { content?: any; images?: any }) {
-    if (!navSection) return;
     setSaving(true);
-    await fetch(`/api/sections/${navSection.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(update),
-    });
-    await fetchSections();
-    setSaving(false);
+    try {
+      let sectionId = navSection?.id;
+
+      // If no nav section exists yet, create one first
+      if (!sectionId) {
+        const res = await fetch('/api/sections', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            page: 'global',
+            section: 'nav',
+            content: update.content || links,
+            images: update.images || null,
+            order: 1,
+            isActive: true,
+          }),
+        });
+        if (!res.ok) {
+          console.error('Failed to create nav section:', await res.text());
+          return;
+        }
+        const data = await res.json();
+        sectionId = data.section?.id;
+      } else {
+        // Update existing section
+        await fetch(`/api/sections/${sectionId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(update),
+        });
+      }
+      await fetchSections();
+    } catch (err) {
+      console.error('Save nav error:', err);
+    } finally {
+      setSaving(false);
+    }
   }
 
   function moveLink(index: number, dir: 'up' | 'down') {
@@ -199,11 +228,27 @@ export default function NavEditor() {
             <button
               onClick={() => {
                 const newLinks = [...links, { label: 'New Link', href: '/', visible: true }];
-                setSections((prev) =>
-                  prev.map((s) =>
-                    s.section === 'nav' ? { ...s, content: newLinks } : s
-                  )
-                );
+                // Update local state - add nav section if it doesn't exist
+                setSections((prev) => {
+                  const hasNav = prev.some((s) => s.section === 'nav');
+                  if (hasNav) {
+                    return prev.map((s) =>
+                      s.section === 'nav' ? { ...s, content: newLinks } : s
+                    );
+                  } else {
+                    return [...prev, {
+                      id: 0, // temp, will get real ID on save
+                      page: 'global',
+                      section: 'nav',
+                      content: newLinks,
+                      images: null,
+                      videos: null,
+                      links: null,
+                      order: 1,
+                      isActive: true,
+                    } as SectionData];
+                  }
+                });
               }}
               className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#111] rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition"
             >
@@ -212,7 +257,7 @@ export default function NavEditor() {
             <button
               onClick={() => saveNav({ content: links })}
               disabled={saving}
-              className="inline-flex items-center gap-2 px-7 py-3 bg-[#E3E8ED] text-white rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#1B3A4C] transition disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-7 py-3 bg-[#1B3A4C] text-white rounded-full text-[13px] font-semibold uppercase tracking-[1.5px] hover:bg-[#2a5a7a] transition disabled:opacity-50"
             >
               {saving ? 'Saving...' : 'Save Links'}
             </button>
