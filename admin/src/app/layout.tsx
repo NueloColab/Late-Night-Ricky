@@ -12,10 +12,34 @@ export async function generateMetadata(): Promise<Metadata> {
   const meta = await getSeoMeta('home');
   const favicon = await getFavicon();
 
+  const title = meta?.title || "Late Night Ricky — Grammy Winning Producer & International DJ";
+  const description = meta?.description || "From London to New York / LA to Las Vegas / Miami to Ibiza and beyond. 150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.";
+  const ogImage = '/assets/og-image.png';
+
   return {
-    title: meta?.title || "Late Night Ricky — International DJ & Grammy Winning Producer",
-    description: meta?.description || "From London to New York / LA to Las Vegas / Miami to Ibiza and beyond. 150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.",
+    title,
+    description,
     icons: favicon ? { icon: favicon, shortcut: favicon } : { icon: '/assets/icon.png', shortcut: '/assets/icon.png' },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: 'https://latenightricky.com',
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: 'Late Night Ricky — Grammy Winning Producer & International DJ',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
   };
 }
 
