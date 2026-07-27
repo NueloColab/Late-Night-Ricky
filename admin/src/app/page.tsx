@@ -188,8 +188,11 @@ export default async function HomePage() {
     ],
   };
 
-  // Performers visibility
+  // Section visibility flags (CMS toggle)
   let performersVisible = true;
+  let momentsVisible = true;
+  let venuesVisible = true;
+  let brandsVisible = true;
 
   // Showreel
   let showreelVisible = false;
@@ -274,6 +277,9 @@ export default async function HomePage() {
 
       // New CMS-driven sections
       const momentsSection = dbSections.find((s: any) => s.section === 'moments');
+      if (momentsSection) {
+        momentsVisible = momentsSection.isVisible !== false;
+      }
       if (momentsSection?.content) {
         const c = typeof momentsSection.content === 'string' ? JSON.parse(momentsSection.content) : momentsSection.content;
         if (c.heading) momentsHeading = c.heading;
@@ -308,6 +314,9 @@ export default async function HomePage() {
       }
 
       const venuesSection = dbSections.find((s: any) => s.section === 'venues');
+      if (venuesSection) {
+        venuesVisible = venuesSection.isVisible !== false;
+      }
       if (venuesSection?.content) {
         const c = typeof venuesSection.content === 'string' ? JSON.parse(venuesSection.content) : venuesSection.content;
         if (c.heading) venuesData.heading = c.heading;
@@ -316,6 +325,9 @@ export default async function HomePage() {
       }
 
       const brandsSection = dbSections.find((s: any) => s.section === 'brands');
+      if (brandsSection) {
+        brandsVisible = brandsSection.isVisible !== false;
+      }
       if (brandsSection?.content) {
         const c = typeof brandsSection.content === 'string' ? JSON.parse(brandsSection.content) : brandsSection.content;
         if (c.heading) brandsData.heading = c.heading;
@@ -511,7 +523,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <LateNightMoments items={momentsItems} shows={shows} heading={momentsHeading} subtext={momentsSubtext} />
+      {momentsVisible && (
+        <LateNightMoments items={momentsItems} shows={shows} heading={momentsHeading} subtext={momentsSubtext} />
+      )}
 
       {/* ═══ ACTS ARTISTS & VENUES — brown background, carousel, locations PRIVATE CLIENTS ═══ */}
       {performersVisible && (
@@ -592,7 +606,7 @@ export default async function HomePage() {
       )}
 
       
-      {/* ═══ WORLDWIDE PERFORMANCES ═══ */}
+      {venuesVisible && (
       <section id="venues" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
         <div className="relative z-10 max-w-[1400px] mx-auto">
           <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-16 md:pb-10 rounded-xl overflow-hidden">
@@ -620,6 +634,7 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* ═══ MUSIC & MIXES ═══ */}
       <section id="radio" className="garrix-section garrix-radio-section">
@@ -669,7 +684,7 @@ export default async function HomePage() {
         <ShareMusicCTA headline={shareMusicHeadline} description={shareMusicDescription} />
       </section>
 
-      {/* ═══ TRUSTED BY GLOBAL BRANDS — hero-style with photo background ═══ */}
+      {brandsVisible && (
       <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden">
         {/* Full background image — warm golden studio shot */}
         <div
@@ -709,6 +724,7 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* ═══ CONTACT ═══ */}
       <HomeContactSection />
