@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const favicon = await getFavicon();
 
   const title = meta?.title || "Late Night Ricky — Grammy Winning Producer & International DJ";
-  const description = meta?.description || "From London to New York / LA to Las Vegas / Miami to Ibiza and beyond. 150+ shows worldwide. Grammy recognition for work with Chris Brown. Platinum-certified. Previously DJ Fricktion.";
+  const description = meta?.description || "Grammy Award Winning Producer & International DJ. Credits with Chris Brown, Kendrick Lamar, NAV & DIVINE. Three decades behind the decks from London to Ibiza.";
   const ogImage = '/assets/og-image.png';
 
   return {
