@@ -178,11 +178,28 @@ export default function HomeEditor() {
     fetchSections();
   }
 
-  function toggleVisibility(name: string) {
+  async function toggleVisibility(name: string) {
+    // Find the section first to know the new value
+    const section = getSection(name);
+    if (!section) return;
+    const newVisible = section.isVisible === false ? true : false;
+    // Update local state immediately
     setSections(prev => prev.map(s => {
       const match = s.section === name || (name === 'about' && s.section === 'intro');
-      return match ? { ...s, isVisible: !s.isVisible } : s;
+      return match ? { ...s, isVisible: newVisible } : s;
     }));
+    // Persist to DB
+    try {
+      await fetch(`/api/sections/${section.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isVisible: newVisible }),
+      });
+    } catch (err) {
+      console.error('Failed to toggle visibility:', err);
+      // Revert on error
+      fetchSections();
+    }
   }
 
   function openMedia(type: string, id?: number, field?: string) {
