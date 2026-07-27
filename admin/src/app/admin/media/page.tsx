@@ -99,6 +99,21 @@ export default function MediaPage() {
     fetchAssets();
   }, [fetchAssets]);
 
+  async function handleDelete(id: number, name: string) {
+    if (!confirm(`Delete "${name}"? This removes it from the media library but won't delete it from Cloudinary.`)) return;
+    try {
+      const res = await fetch(`/api/media/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setAssets((prev) => prev.filter((a) => a.id !== id));
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Delete failed');
+      }
+    } catch (err) {
+      alert('Network error');
+    }
+  }
+
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
     if (!files?.length) return;
@@ -211,10 +226,16 @@ export default function MediaPage() {
                     href={asset.path}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-1.5 bg-white text-white rounded-lg text-xs font-semibold"
+                    className="px-3 py-1.5 bg-white text-[#1B3A4C] rounded-lg text-xs font-semibold hover:bg-gray-100 transition-colors"
                   >
                     View
                   </a>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleDelete(asset.id, asset.originalName); }}
+                    className="px-3 py-1.5 bg-red-600 text-white rounded-lg text-xs font-semibold hover:bg-red-700 transition-colors"
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
               <div className="p-3">
