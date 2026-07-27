@@ -3,20 +3,43 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
-const navLinks = [
-  { href: '/#about', label: 'About Ricky' },
-  { href: '/#moments', label: 'Late Night Moments' },
-  { href: '/#radio', label: 'Music' },
-  { href: '/#venues', label: 'Performances' },
-  { href: '/#brands', label: 'Brands' },
-  { href: '/#contact-form', label: 'Contact' },
+const ALL_NAV_LINKS = [
+  { href: '/#about', label: 'About Ricky', section: 'about' },
+  { href: '/#moments', label: 'Late Night Moments', section: 'moments' },
+  { href: '/#radio', label: 'Music', section: 'radio' },
+  { href: '/#venues', label: 'Performances', section: 'venues' },
+  { href: '/#brands', label: 'Brands', section: 'brands' },
+  { href: '/#contact-form', label: 'Contact', section: 'contact' },
 ];
 
 export default function Navbar() {
   const [visible, setVisible] = useState(true);
   const [manualToggle, setManualToggle] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [navLinks, setNavLinks] = useState(ALL_NAV_LINKS);
   const lastScrollY = useRef(0);
+
+  // Fetch CMS section visibility on mount
+  useEffect(() => {
+    fetch('/api/public/sections?page=home')
+      .then((r) => r.json())
+      .then((data) => {
+        const sections = data.sections || [];
+        const visibleMap: Record<string, boolean> = {};
+        sections.forEach((s: any) => {
+          visibleMap[s.section] = s.isVisible !== false;
+        });
+        const filtered = ALL_NAV_LINKS.filter((link) => {
+          if (link.section === 'about' || link.section === 'contact') return true;
+          return visibleMap[link.section] !== false;
+        });
+        setNavLinks(filtered);
+      })
+      .catch(() => {
+        // Fallback: show all
+        setNavLinks(ALL_NAV_LINKS);
+      });
+  }, []);
 
   // Scroll-driven collapse/expand
   useEffect(() => {
