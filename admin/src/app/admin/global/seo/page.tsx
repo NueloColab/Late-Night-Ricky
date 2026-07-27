@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
+import MediaPicker from '@/components/media-picker';
 
 interface SectionData {
   id: number;
@@ -26,6 +28,7 @@ export default function SeoEditor() {
   const [sections, setSections] = useState<SectionData[]>([]);
   const [saving, setSaving] = useState(false);
   const [savedMsg, setSavedMsg] = useState('');
+  const [mediaOpen, setMediaOpen] = useState(false);
 
   const fetchSections = useCallback(async () => {
     const res = await fetch('/api/sections?page=global');
@@ -59,28 +62,71 @@ export default function SeoEditor() {
   });
 
   async function saveSeo(update: { content?: any; images?: any }) {
-    if (!seoSection) return;
     setSaving(true);
-    const res = await fetch(`/api/sections/${seoSection.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(update),
-    });
-    if (res.ok) {
+    try {
+      let sectionId = seoSection?.id;
+
+      // If no seo section exists yet, create one first
+      if (!sectionId) {
+        const res = await fetch('/api/sections', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            page: 'global',
+            section: 'seo',
+            content: update.content || merged,
+            images: update.images || null,
+            order: 2,
+            isActive: true,
+          }),
+        });
+        if (!res.ok) {
+          console.error('Failed to create seo section:', await res.text());
+          return;
+        }
+        const data = await res.json();
+        sectionId = data.section?.id;
+      } else {
+        // Update existing section
+        await fetch(`/api/sections/${sectionId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(update),
+        });
+      }
+
       setSavedMsg('Saved');
       setTimeout(() => setSavedMsg(''), 3000);
+      await fetchSections();
+    } catch (err) {
+      console.error('Save seo error:', err);
+    } finally {
+      setSaving(false);
     }
-    await fetchSections();
-    setSaving(false);
   }
 
   function updateMeta(page: string, field: string, value: string) {
     const updated = merged.map((m) => (m.page === page ? { ...m, [field]: value } : m));
-    setSections((prev) =>
-      prev.map((s) =>
-        s.section === 'seo' ? { ...s, content: updated } : s
-      )
-    );
+    setSections((prev) => {
+      const hasSeo = prev.some((s) => s.section === 'seo');
+      if (hasSeo) {
+        return prev.map((s) =>
+          s.section === 'seo' ? { ...s, content: updated } : s
+        );
+      } else {
+        return [...prev, {
+          id: 0,
+          page: 'global',
+          section: 'seo',
+          content: updated,
+          images: null,
+          videos: null,
+          links: null,
+          order: 2,
+          isActive: true,
+        } as SectionData];
+      }
+    });
   }
 
   return (
@@ -99,43 +145,31 @@ export default function SeoEditor() {
 
       <div className="max-w-3xl space-y-6">
         {/* Favicon */}
-        <div className="bg-white border border-[#6B8FAB]/30 p-6">
-          <p className="text-xs text-[#6B8FAB] tracking-[3px] uppercase font-semibold mb-1">Branding</p>
-          <p className="text-sm text-[#a0a0a0] mb-4 font-semibold uppercase tracking-[0.5px]">The icon shown in browser tabs</p>
+        <div className="bg-white border border-[#6B8FAB]/30 rounded-xl p-6 md:p-8">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E3E8ED]">
+            <div className="w-10 h-px bg-[#1B3A4C]"></div>
+            <p className="text-xs font-semibold text-[#6B8FAB] uppercase tracking-[3px]">Favicon</p>
+          </div>
+          <p className="text-xs text-[#6B8FAB] mb-4">The icon shown in browser tabs</p>
 
-          <div className="relative w-16 h-16 bg-[#E3E8ED] rounded-xl overflow-hidden mb-4 border border-[#6B8FAB]/30">
-            {faviconPath ? (
-              <img src={faviconPath} alt="Favicon" className="object-contain p-1 w-full h-full" />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center">
+          <div className="flex items-center gap-6">
+            <div className="relative w-20 h-20 bg-[#F8FAFB] rounded-lg border border-[#E3E8ED] overflow-hidden flex items-center justify-center">
+              {faviconPath ? (
+                <Image src={faviconPath} alt="Favicon" fill className="object-contain p-2" sizes="80px" />
+              ) : (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6B8FAB" strokeWidth="2">
                   <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" />
                 </svg>
-              </div>
-            )}
-          </div>
-          <div className="flex items-center gap-3">
-            <input
-              type="text"
-              value={faviconPath || ''}
-              onChange={(e) => {
-                setSections((prev) =>
-                  prev.map((s) =>
-                    s.section === 'seo' ? { ...s, images: [e.target.value] } : s
-                  )
-                );
-              }}
-              placeholder="/assets/favicon.png"
-              className="flex-1 px-3 py-2 bg-white border border-[#6B8FAB]/30 rounded-lg text-sm text-[#1B3A4C] focus:outline-none focus:border-[#1B3A4C]"
-            />
+              )}
+            </div>
             <button
-              onClick={() => faviconPath && saveSeo({ images: [faviconPath] })}
-              disabled={saving || !faviconPath}
-              className="px-5 py-2 border-2 border-[#111] rounded-full text-[11px] font-semibold uppercase tracking-[1px] text-[#111] hover:bg-[#E3E8ED] hover:text-white transition disabled:opacity-50"
+              onClick={() => setMediaOpen(true)}
+              className="px-5 py-2.5 bg-[#1B3A4C] text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
             >
-              {saving ? 'Saving...' : 'Save Favicon'}
+              {faviconPath ? 'Replace Favicon' : 'Upload Favicon'}
             </button>
           </div>
+          {faviconPath && <p className="text-xs text-[#6B8FAB] mt-3">{faviconPath}</p>}
         </div>
 
         {/* Page Meta */}
@@ -184,6 +218,15 @@ export default function SeoEditor() {
           </div>
         </div>
       </div>
+
+      <MediaPicker
+        open={mediaOpen}
+        onClose={() => setMediaOpen(false)}
+        onSelect={(path) => {
+          saveSeo({ images: [path] });
+        }}
+        filterType="image"
+      />
     </div>
   );
 }
