@@ -19,6 +19,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
+    metadataBase: new URL('https://www.latenightricky.com'),
+    alternates: {
+      canonical: '/',
+    },
     icons: favicon ? {
       icon: [
         { url: '/favicon.ico?v=2', type: 'image/x-icon', sizes: 'any' },
@@ -39,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       type: 'website',
-      url: 'https://latenightricky.com',
+      url: 'https://www.latenightricky.com',
       images: [
         {
           url: ogImage,

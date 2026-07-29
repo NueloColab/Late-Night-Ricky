@@ -17,6 +17,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: meta?.title || 'Late Night Ricky — Grammy Winning Producer & International DJ',
     description: meta?.description || 'Grammy Award Winning Producer & International DJ. Credits with Chris Brown, Kendrick Lamar, NAV & DIVINE.',
+    alternates: {
+      canonical: '/',
+    },
   };
 }
 
