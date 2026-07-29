@@ -20,14 +20,17 @@ export async function generateMetadata(): Promise<Metadata> {
     title,
     description,
     icons: favicon ? {
-      icon: `${favicon}?v=2`,
+      icon: [
+        { url: `${favicon}?v=2`, sizes: 'any' },
+      ],
       shortcut: `${favicon}?v=2`,
       apple: '/apple-touch-icon.png?v=2',
     } : {
       icon: [
+        { url: '/favicon.ico?v=2', type: 'image/x-icon', sizes: 'any' },
         { url: '/assets/icon.png?v=2', type: 'image/png', sizes: '512x512' },
       ],
-      shortcut: '/favicon.ico',
+      shortcut: '/favicon.ico?v=2',
       apple: '/apple-touch-icon.png?v=2',
     },
     manifest: '/site.webmanifest',
