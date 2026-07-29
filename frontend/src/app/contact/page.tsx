@@ -13,6 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: contactMeta?.title || 'Contact — Late Night Ricky',
     description: contactMeta?.description || 'Get in touch with Late Night Ricky for bookings, press enquiries, and collaborations.',
+    alternates: { canonical: 'https://www.latenightricky.com/contact' },
   };
 }
 

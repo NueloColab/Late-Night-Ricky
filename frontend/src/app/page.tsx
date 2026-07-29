@@ -17,10 +17,11 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: homeMeta?.title || 'Late Night Ricky — International DJ & Grammy Winning Producer',
     description: homeMeta?.description || 'From London to the world. Late Night Ricky — International DJ & Grammy Winning Producer.',
+    alternates: { canonical: 'https://www.latenightricky.com' },
     openGraph: {
       title: homeMeta?.title || 'Late Night Ricky — International DJ & Grammy Winning Producer',
       description: homeMeta?.description || 'From London to the world. International DJ & Grammy Winning Producer.',
-      url: 'https://late-night-ricky.vercel.app',
+      url: 'https://www.latenightricky.com',
       siteName: 'Late Night Ricky',
       images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: 'Late Night Ricky' }] : [],
       type: 'website',

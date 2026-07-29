@@ -13,6 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: aboutMeta?.title || 'About — Late Night Ricky',
     description: aboutMeta?.description || 'Learn about Late Night Ricky — Grammy Award Winning Producer and International DJ.',
+    alternates: { canonical: 'https://www.latenightricky.com/about' },
   };
 }
 

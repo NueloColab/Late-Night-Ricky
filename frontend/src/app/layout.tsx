@@ -60,7 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: 'https://late-night-ricky.vercel.app',
+      url: 'https://www.latenightricky.com',
       siteName: 'Late Night Ricky',
       images: faviconUrl ? [{ url: faviconUrl, width: 1200, height: 630, alt: 'Late Night Ricky' }] : [],
       type: 'website',
@@ -71,7 +71,10 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       images: faviconUrl ? [faviconUrl] : [],
     },
-    metadataBase: new URL('https://late-night-ricky.vercel.app'),
+    metadataBase: new URL('https://www.latenightricky.com'),
+    alternates: {
+      canonical: 'https://www.latenightricky.com',
+    },
   };
 }
 

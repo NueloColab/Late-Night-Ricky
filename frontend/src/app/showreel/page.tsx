@@ -13,6 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: showreelMeta?.title || 'Showreel — Late Night Ricky',
     description: showreelMeta?.description || 'Watch Late Night Ricky in action — live sets, studio sessions, and behind the scenes.',
+    alternates: { canonical: 'https://www.latenightricky.com/showreel' },
   };
 }
 
