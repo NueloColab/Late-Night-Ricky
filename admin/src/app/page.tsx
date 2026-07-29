@@ -540,16 +540,16 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(200,170,130,0.25)_0%,transparent_60%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          {/* Title — animated from both sides */}
-          <h2 className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[clamp(18px,3vw,36px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-6 md:mb-8" style={{ fontFamily: "'Oswald', sans-serif" }}>
-            <div className="reveal-left" data-delay="100">
+          {/* Title — simple fade-up (no horizontal slide to avoid desktop glitch) */}
+          <h2 className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[clamp(18px,3vw,36px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-6 md:mb-8 reveal" style={{ fontFamily: "'Oswald', sans-serif" }}>
+            <div>
               <img
                 src={performersData.headingImage}
                 alt="Ricky"
                 className="h-[clamp(52px,10vw,72px)] md:h-[clamp(28px,6vw,72px)] w-auto object-contain"
               />
             </div>
-            <span className="reveal-right" data-delay="300">
+            <span>
               {performersData.heading}
             </span>
           </h2>
@@ -571,6 +571,7 @@ export default async function HomePage() {
               style={{
                 animation: `marquee-left ${Math.max(18, performersData.row1Images.length * 3)}s linear infinite`,
                 width: 'max-content',
+                willChange: 'transform',
               }}
             >
               {/* Triple the images so the track is always wider than the viewport */}
@@ -589,6 +590,7 @@ export default async function HomePage() {
               style={{
                 animation: `marquee-right ${Math.max(18, performersData.row2Images.length * 3)}s linear infinite`,
                 width: 'max-content',
+                willChange: 'transform',
               }}
             >
               {[...performersData.row2Images, ...performersData.row2Images, ...performersData.row2Images].map((img: string, i: number) => (
