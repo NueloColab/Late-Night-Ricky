@@ -21,9 +21,10 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     icons: favicon ? {
       icon: [
-        { url: `${favicon}?v=2`, sizes: 'any' },
+        { url: '/favicon.ico?v=2', type: 'image/x-icon', sizes: 'any' },
+        { url: `${favicon}?v=2`, type: 'image/png', sizes: '512x512' },
       ],
-      shortcut: `${favicon}?v=2`,
+      shortcut: '/favicon.ico?v=2',
       apple: '/apple-touch-icon.png?v=2',
     } : {
       icon: [
