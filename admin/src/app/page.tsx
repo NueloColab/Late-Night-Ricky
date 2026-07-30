@@ -578,7 +578,7 @@ export default async function HomePage() {
               {/* Triple the images so the track is always wider than the viewport */}
               {[...performersData.row1Images, ...performersData.row1Images, ...performersData.row1Images].map((img: string, i: number) => (
                 <div key={i} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
-                  <img src={img} alt={`Artist ${(i % performersData.row1Images.length) + 1}`} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                  <img src={img} alt={`Artist ${(i % performersData.row1Images.length) + 1}`} className="w-full h-full object-cover" loading="eager" />
                 </div>
               ))}
             </div>
@@ -597,7 +597,7 @@ export default async function HomePage() {
             >
               {[...performersData.row2Images, ...performersData.row2Images, ...performersData.row2Images].map((img: string, i: number) => (
                 <div key={i} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
-                  <img src={img} alt={`Artist ${(i % performersData.row2Images.length) + 1}`} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                  <img src={img} alt={`Artist ${(i % performersData.row2Images.length) + 1}`} className="w-full h-full object-cover" loading="eager" />
                 </div>
               ))}
             </div>
