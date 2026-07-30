@@ -113,6 +113,28 @@ export default function ScrollReveal() {
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll(); // Initial position
 
+    // ── Chrome scroll jank fix: pause CSS animations during scrollbar drag ──
+    // Chrome's compositor thread stalls when CSS keyframe animations run
+    // simultaneously with scroll events from scrollbar drag. Safari handles
+    // this fine. We pause all marquee animations during scroll and resume
+    // shortly after scroll stops.
+    let pauseTimeout: ReturnType<typeof setTimeout> | null = null;
+    const animatedEls = document.querySelectorAll<HTMLElement>('[style*="animation: marquee"]');
+
+    const pauseAnimations = () => {
+      animatedEls.forEach((el) => {
+        el.style.animationPlayState = 'paused';
+      });
+      if (pauseTimeout) clearTimeout(pauseTimeout);
+      pauseTimeout = setTimeout(() => {
+        animatedEls.forEach((el) => {
+          el.style.animationPlayState = 'running';
+        });
+      }, 120);
+    };
+
+    window.addEventListener('scroll', pauseAnimations, { passive: true });
+
     // ── Video play button ──
     const playBtn = document.getElementById('collage-play-btn');
     const closeBtn = document.getElementById('collage-video-close');
@@ -156,7 +178,9 @@ export default function ScrollReveal() {
 
     return () => {
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scroll', pauseAnimations);
       if (rafId) cancelAnimationFrame(rafId);
+      if (pauseTimeout) clearTimeout(pauseTimeout);
       clearInterval(highlightInterval);
       visibilityObserver.disconnect();
     };
