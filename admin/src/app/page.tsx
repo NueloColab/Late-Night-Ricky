@@ -532,7 +532,7 @@ export default async function HomePage() {
 
       {/* ═══ ACTS ARTISTS & VENUES — brown background, carousel, locations PRIVATE CLIENTS ═══ */}
       {performersVisible && (
-      <section id="artists" className="relative py-10 md:py-28 px-6 md:px-14 overflow-hidden">
+      <section id="artists" className="relative py-10 md:py-28 px-6 md:px-14 overflow-hidden" style={{ contain: 'paint', transform: 'translate3d(0,0,0)' }}>
         {/* Dark leather background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#7a5c3a] via-[#5c4328] to-[#4a3520]" />
         <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: "url('/assets/noise-256.png')", backgroundSize: '256px 256px' }} />
@@ -690,7 +690,7 @@ export default async function HomePage() {
       </section>
 
       {brandsVisible && (
-      <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden">
+      <section id="brands" className="relative min-h-[80dvh] md:min-h-[100dvh] overflow-hidden" style={{ contain: 'paint', transform: 'translate3d(0,0,0)' }}>
         {/* Full background image — warm golden studio shot */}
         <div
           className="absolute inset-0 bg-cover bg-no-repeat lnr-brands-bg"
