@@ -147,14 +147,14 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
   return (
     <>
       {/* ═══ LATE NIGHT MOMENTS — 3x2 grid, title above image, square B&W ═══ */}
-      <section id="moments" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
+      <section id="moments" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 500px' }}>
         {/* Slightly creamier warm background */}
         <div className="absolute inset-0 bg-[#f0e6d8]" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/20 via-transparent to-[#d4c4a8]/15" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(36px,5.5vw,64px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#5a3a1a] text-center mb-2 whitespace-nowrap" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 2px 8px rgba(90,58,26,0.15)' }}>
-            <span className="reveal-left" data-delay="100">{headingText}</span>
+          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(36px,5.5vw,64px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#5a3a1a] text-center mb-2 whitespace-nowrap reveal" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 2px 8px rgba(90,58,26,0.15)' }}>
+            {headingText}
           </h2>
           <p className="text-[12px] md:text-[14px] tracking-[0.25em] uppercase text-[#5a3a1a]/60 font-semibold text-center mb-14 md:mb-20 reveal-fade">
             {subtextText}
@@ -225,8 +225,8 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
             })}
           </div>
 
-          {/* Animated V arrow scroll prompt */}
-          <div className="flex flex-col items-center mt-12 md:mt-16 animate-bounce-slow">
+          {/* Scroll prompt */}
+          <div className="flex flex-col items-center mt-12 md:mt-16">
             <span className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#5a3a1a]/40 font-medium mb-3">
               Scroll
             </span>

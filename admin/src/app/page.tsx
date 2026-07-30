@@ -470,7 +470,7 @@ export default async function HomePage() {
 
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-14 py-20 min-h-[100dvh] flex flex-col justify-center">
           {/* Ronaldo Quote — top center */}
-          <div className="mb-10 md:mb-14 reveal-left text-center">
+          <div className="mb-10 md:mb-14 reveal text-center">
             <p className="text-[24px] md:text-[clamp(32px,5vw,56px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#e8d4b8] max-w-[1000px] mx-auto" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 2px 20px rgba(0,0,0,0.4)' }}>
               {aboutQuote}
             </p>
@@ -481,9 +481,9 @@ export default async function HomePage() {
 
           {/* Left-aligned content — text only, no photo column */}
           <div className="grid md:grid-cols-2 gap-10 md:gap-16">
-            <div className="reveal-left" data-delay="100">
+            <div className="reveal" data-delay="100">
               <div className="flex items-center gap-0 mb-8">
-                <div className="reveal-left" data-delay="100">
+                <div>
                   <img
                     src={aboutHeadingImage}
                     alt="About"
@@ -491,7 +491,7 @@ export default async function HomePage() {
                     style={{ filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.3))' }}
                   />
                 </div>
-                <div className="reveal-right" data-delay="300">
+                <div>
                   <img
                     src={rickyTextImage}
                     alt="Ricky"
@@ -532,7 +532,7 @@ export default async function HomePage() {
 
       {/* ═══ ACTS ARTISTS & VENUES — brown background, carousel, locations PRIVATE CLIENTS ═══ */}
       {performersVisible && (
-      <section id="artists" className="relative py-10 md:py-28 px-6 md:px-14 overflow-hidden" style={{ contain: 'paint', transform: 'translate3d(0,0,0)' }}>
+      <section id="artists" className="relative py-10 md:py-28 px-6 md:px-14 overflow-hidden" style={{ contain: 'paint', transform: 'translate3d(0,0,0)', contentVisibility: 'auto', containIntrinsicSize: '0 500px' }}>
         {/* Dark leather background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#7a5c3a] via-[#5c4328] to-[#4a3520]" />
         <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: "url('/assets/noise-256.png')", backgroundSize: '256px 256px' }} />
