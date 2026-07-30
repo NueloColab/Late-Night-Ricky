@@ -147,7 +147,7 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
   return (
     <>
       {/* ═══ LATE NIGHT MOMENTS — 3x2 grid, title above image, square B&W ═══ */}
-      <section id="moments" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 500px' }}>
+      <section id="moments" className="relative py-20 md:py-28 px-6 md:px-14 overflow-hidden">
         {/* Slightly creamier warm background */}
         <div className="absolute inset-0 bg-[#f0e6d8]" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/20 via-transparent to-[#d4c4a8]/15" />
@@ -203,6 +203,8 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
                       src={image}
                       alt={title}
                       className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
                     />
                     {modalId && (
                       <div className="absolute bottom-2 right-2 md:bottom-3 md:right-3 w-7 h-7 md:w-9 md:h-9 rounded-full border border-white/40 bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">

@@ -532,7 +532,7 @@ export default async function HomePage() {
 
       {/* ═══ ACTS ARTISTS & VENUES — brown background, carousel, locations PRIVATE CLIENTS ═══ */}
       {performersVisible && (
-      <section id="artists" className="relative py-10 md:py-28 px-6 md:px-14 overflow-hidden" style={{ contain: 'paint', transform: 'translate3d(0,0,0)', contentVisibility: 'auto', containIntrinsicSize: '0 500px' }}>
+      <section id="artists" className="relative py-10 md:py-28 px-6 md:px-14 overflow-hidden">
         {/* Dark leather background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#7a5c3a] via-[#5c4328] to-[#4a3520]" />
         <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: "url('/assets/noise-256.png')", backgroundSize: '256px 256px' }} />
@@ -578,7 +578,7 @@ export default async function HomePage() {
               {/* Triple the images so the track is always wider than the viewport */}
               {[...performersData.row1Images, ...performersData.row1Images, ...performersData.row1Images].map((img: string, i: number) => (
                 <div key={i} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
-                  <img src={img} alt={`Artist ${(i % performersData.row1Images.length) + 1}`} className="w-full h-full object-cover" />
+                  <img src={img} alt={`Artist ${(i % performersData.row1Images.length) + 1}`} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                 </div>
               ))}
             </div>
@@ -597,7 +597,7 @@ export default async function HomePage() {
             >
               {[...performersData.row2Images, ...performersData.row2Images, ...performersData.row2Images].map((img: string, i: number) => (
                 <div key={i} className="flex-shrink-0 w-[260px] md:w-[340px] aspect-square overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
-                  <img src={img} alt={`Artist ${(i % performersData.row2Images.length) + 1}`} className="w-full h-full object-cover" />
+                  <img src={img} alt={`Artist ${(i % performersData.row2Images.length) + 1}`} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                 </div>
               ))}
             </div>
