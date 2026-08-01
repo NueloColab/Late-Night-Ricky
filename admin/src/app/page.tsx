@@ -454,17 +454,15 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ═══ ABOUT RICKY — dark leather texture, image blends into page ═══ */}
+      {/* ═══ ABOUT RICKY — warm textured background with window light ═══ */}
       <section id="about" className="relative min-h-[100dvh] overflow-hidden">
-        {/* Full-width orange studio background image, shifted to leather brown tone */}
+        {/* Warm textured background image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/assets/about-ricky-v2.jpg')" }}
+          style={{ backgroundImage: "url('/assets/about-ricky-bg.png')" }}
         />
-        {/* Faint warm overlay to soften the photo and blend into background */}
-        <div className="absolute inset-0 bg-[#2a1a0a]/20" />
-        {/* Dark gradient overlay on left for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-[#2a1a0a]/50" />
         {/* Bottom fade for smooth transition to next section */}
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#2a1a0a] to-transparent" />
 
