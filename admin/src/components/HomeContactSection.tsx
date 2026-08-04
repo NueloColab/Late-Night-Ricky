@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import PinProtectedDownload from './PinProtectedDownload';
 
 export default function HomeContactSection() {
   const [contactInfo, setContactInfo] = useState({
@@ -282,12 +283,7 @@ export default function HomeContactSection() {
 
                   {/* Bottom buttons */}
                   <div className="mt-6 pt-6 border-t border-[#e8d4b8]/20 flex flex-col sm:flex-row gap-3">
-                    <a
-                      href="/press-pack"
-                      className="flex-1 py-3 border-2 border-[#e8d4b8] text-[#e8d4b8] text-xs font-semibold uppercase tracking-[1.5px] text-center hover:bg-[#e8d4b8] hover:text-[#2a1a0a] transition"
-                    >
-                      Press Pack
-                    </a>
+                    <PinProtectedDownload buttonClassName="w-full py-3 border-2 border-[#e8d4b8] text-[#e8d4b8] text-xs font-semibold uppercase tracking-[1.5px] text-center hover:bg-[#e8d4b8] hover:text-[#2a1a0a] transition" />
                     <a
                       href="/share-music"
                       className="flex-1 py-3 border-2 border-[#e8d4b8] text-[#e8d4b8] text-xs font-semibold uppercase tracking-[1.5px] text-center hover:bg-[#e8d4b8] hover:text-[#2a1a0a] transition"
