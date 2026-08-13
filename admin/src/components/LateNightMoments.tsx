@@ -153,7 +153,7 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
         <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/20 via-transparent to-[#d4c4a8]/15" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(28px,4vw,52px)] font-black uppercase tracking-[0.02em] leading-[1.1] text-[#5a3a1a] text-center mb-2 whitespace-nowrap reveal" style={{ fontFamily: "var(--font-righteous), 'Righteous', var(--font-montserrat), 'Montserrat', sans-serif", textShadow: '0 2px 8px rgba(90,58,26,0.15)', WebkitTextStroke: '1.5px #5a3a1a', paintOrder: 'stroke fill' }}>
+          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(28px,4vw,52px)] font-black tracking-[0.02em] leading-[1.1] text-[#5a3a1a] text-center mb-2 whitespace-nowrap reveal" style={{ fontFamily: "var(--font-righteous), 'Righteous', var(--font-montserrat), 'Montserrat', sans-serif", textShadow: '0 2px 8px rgba(90,58,26,0.15)', WebkitTextStroke: '1.5px #5a3a1a', paintOrder: 'stroke fill' }}>
             {headingText}
           </h2>
           <p className="text-[12px] md:text-[14px] tracking-[0.25em] uppercase text-[#5a3a1a]/60 font-semibold text-center mb-14 md:mb-20 reveal-fade">
