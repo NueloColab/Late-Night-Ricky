@@ -157,7 +157,7 @@ export default function HomeContactSection() {
           {!expanded ? (
             <div className="text-center md:text-left">
               <span className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#d4c4a8]/80 font-medium block mb-4">{contactInfo.heading || 'Get in Touch'}</span>
-              <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-6" style={{ fontFamily: "'Oswald', sans-serif" }}>CONTACT</h2>
+              <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[0.02em] leading-[0.95] text-[#e8d4b8] mb-6" style={{ fontFamily: "var(--font-righteous), 'Righteous', var(--font-montserrat), 'Montserrat', sans-serif" }}>CONTACT</h2>
               <div className="flex justify-center md:justify-start">
                 <button
                   onClick={() => setExpanded(true)}

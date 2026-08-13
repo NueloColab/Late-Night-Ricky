@@ -153,7 +153,7 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
         <div className="absolute inset-0 bg-gradient-to-b from-[#e8d4b8]/20 via-transparent to-[#d4c4a8]/15" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(36px,5.5vw,64px)] font-black uppercase tracking-[0.02em] leading-[1.1] text-[#5a3a1a] text-center mb-2 whitespace-nowrap reveal" style={{ fontFamily: "var(--font-francois), 'Francois One', var(--font-montserrat), 'Montserrat', sans-serif", textShadow: '0 2px 8px rgba(90,58,26,0.15)' }}>
+          <h2 className="flex items-center justify-center gap-2 md:gap-3 text-[clamp(36px,5.5vw,64px)] font-black uppercase tracking-[0.02em] leading-[1.1] text-[#5a3a1a] text-center mb-2 whitespace-nowrap reveal" style={{ fontFamily: "var(--font-righteous), 'Righteous', var(--font-montserrat), 'Montserrat', sans-serif", textShadow: '0 2px 8px rgba(90,58,26,0.15)' }}>
             {headingText}
           </h2>
           <p className="text-[12px] md:text-[14px] tracking-[0.25em] uppercase text-[#5a3a1a]/60 font-semibold text-center mb-14 md:mb-20 reveal-fade">
@@ -274,7 +274,7 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
             {activeMoment && (activeMoment.images?.length > 0 || activeMoment.video) ? (
               /* Full content state — moment has gallery/video */
               <div className="relative z-10 p-5 md:p-8">
-                <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase tracking-[-1px] leading-[1] text-[#e8d4b8] mb-2 pr-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase tracking-[0.02em] leading-[1] text-[#e8d4b8] mb-2 pr-12" style={{ fontFamily: "var(--font-righteous), 'Righteous', var(--font-montserrat), 'Montserrat', sans-serif" }}>
                   {activeMoment.title}
                 </h2>
                 <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#d4c4a8]/80 font-medium mb-4">
@@ -342,7 +342,7 @@ export default function LateNightMoments({ items, shows, heading, subtext }: { i
             ) : (
               /* Content coming soon state */
               <div className="relative z-10 p-5 md:p-8 flex flex-col items-center justify-center min-h-[200px]">
-                <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase tracking-[-1px] leading-[1] text-[#e8d4b8] mb-3 pr-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                <h2 className="text-[clamp(24px,3.5vw,40px)] font-black uppercase tracking-[0.02em] leading-[1] text-[#e8d4b8] mb-3 pr-12" style={{ fontFamily: "var(--font-righteous), 'Righteous', var(--font-montserrat), 'Montserrat', sans-serif" }}>
                   {activeShowCard?.title || activeMoment?.title || ''}
                 </h2>
                 <p className="text-[13px] md:text-[14px] tracking-[0.2em] uppercase text-[#d4c4a8]/60 font-medium mb-6">

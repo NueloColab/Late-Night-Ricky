@@ -95,7 +95,7 @@ export default function PinProtectedDownload({ buttonClassName }: { buttonClassN
 
             <h3
               className="text-[#e8d4b8] text-[18px] font-bold tracking-[0.02em] mb-1"
-              style={{ fontFamily: "'Oswald', sans-serif" }}
+              style={{ fontFamily: "var(--font-righteous), 'Righteous', var(--font-montserrat), 'Montserrat', sans-serif" }}
             >
               Enter PIN
             </h3>
