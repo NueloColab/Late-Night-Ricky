@@ -88,7 +88,7 @@ export default function ShareMusicCTA({ headline, description, ctaText, ctaLink 
         <div className="max-w-[1400px] mx-auto">
           <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 rounded-xl overflow-hidden bg-[#f0e6d8]">
             <div className="relative z-10 max-w-[800px] mx-auto">
-              <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[0.02em] leading-[0.95] text-[#2a1a0a]" style={{ fontFamily: "var(--font-righteous), 'Righteous', var(--font-montserrat), 'Montserrat', sans-serif" }}>TRACK SENT</h2>
+              <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[0.02em] leading-[0.95] text-[#2a1a0a]" style={{ fontFamily: "'Cocogoose', var(--font-montserrat), 'Montserrat', sans-serif" }}>TRACK SENT</h2>
               <p className="text-[13px] md:text-[14px] text-[#5a3a1a]/70 mt-3">Thanks for sharing. Your music has been uploaded successfully.</p>
               <button
                 onClick={() => { setStatus('idle'); setFile(null); setEmail(''); setArtistName(''); setInstagram(''); setTrackTitle(''); setGenre(''); setBpm(''); setExpanded(false); }}
@@ -110,7 +110,7 @@ export default function ShareMusicCTA({ headline, description, ctaText, ctaLink 
         <div className="relative text-center reveal-fade border-t border-[#c4b498]/20 pt-12 pb-10 px-4 md:px-10 rounded-xl overflow-hidden bg-[#f0e6d8]">
           <div className="relative z-10 max-w-[800px] mx-auto">
             <span className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-[#8a6a4a] font-medium block mb-4">Listen &amp; Download</span>
-            <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[0.02em] leading-[0.95] text-[#2a1a0a] mb-4" style={{ fontFamily: "var(--font-righteous), 'Righteous', var(--font-montserrat), 'Montserrat', sans-serif" }}>{headline || 'SHARE YOUR MUSIC'}</h2>
+            <h2 className="text-[clamp(32px,4vw,56px)] font-black uppercase tracking-[0.02em] leading-[0.95] text-[#2a1a0a] mb-4" style={{ fontFamily: "'Cocogoose', var(--font-montserrat), 'Montserrat', sans-serif" }}>{headline || 'SHARE YOUR MUSIC'}</h2>
             <p className="text-[13px] md:text-[14px] text-[#5a3a1a]/80 max-w-[500px] mx-auto mb-8">
               {description || "I'm always on the lookout for new music to play, so send me your tracks"}
             </p>
