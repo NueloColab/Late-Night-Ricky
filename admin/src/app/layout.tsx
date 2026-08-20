@@ -70,6 +70,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <meta name="version" content="v231" />
+        <style>{`
+          @font-face {
+            font-family: 'Cocogoose';
+            src: url('/fonts/cocogoose/Cocogoose-Narrow-Regular-trial.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+          }
+          @font-face {
+            font-family: 'Cocogoose';
+            src: url('/fonts/cocogoose/Cocogoose-Narrow-Light-trial.ttf') format('truetype');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+          }
+        `}</style>
       </head>
       <body className="font-sans">
         <PageViewTracker />
