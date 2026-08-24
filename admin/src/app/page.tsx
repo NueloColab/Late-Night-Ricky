@@ -469,7 +469,7 @@ export default async function HomePage() {
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-14 py-20 min-h-[100dvh] flex flex-col justify-center">
           {/* Ronaldo Quote — top center */}
           <div className="mb-10 md:mb-14 reveal text-center">
-            <p className="text-[24px] md:text-[clamp(32px,5vw,56px)] font-black uppercase tracking-[0.02em] leading-[1.1] text-[#e8d4b8] max-w-[1000px] mx-auto" style={{ fontFamily: "'Cocogoose', var(--font-montserrat), 'Montserrat', sans-serif", textShadow: '0 2px 20px rgba(0,0,0,0.4)' }}>
+            <p className="text-[24px] md:text-[clamp(32px,5vw,56px)] font-black uppercase tracking-[-1px] leading-[1.1] text-[#e8d4b8] max-w-[1000px] mx-auto" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 2px 20px rgba(0,0,0,0.4)' }}>
               {aboutQuote}
             </p>
             <p className="mt-4 text-[14px] md:text-[18px] font-semibold tracking-[0.3em] uppercase text-[#c4b498]/80" style={{ textShadow: '0 1px 10px rgba(0,0,0,0.3)' }}>
@@ -499,16 +499,16 @@ export default async function HomePage() {
                 </div>
               </div>
               <div className="space-y-5">
-                <p className="text-[13px] md:text-[15px] leading-[1.7] tracking-[0.02em] text-[#e8d4b8]/95" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
+                <p className="text-[13px] md:text-[15px] leading-[1.7] tracking-[-1px] text-[#e8d4b8]/95" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
                   {aboutBio1}
                 </p>
-                <p className="text-[13px] md:text-[15px] leading-[1.7] tracking-[0.02em] text-[#e8d4b8]/95" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
+                <p className="text-[13px] md:text-[15px] leading-[1.7] tracking-[-1px] text-[#e8d4b8]/95" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
                   {aboutBio2}
                 </p>
-                <p className="text-[13px] md:text-[15px] leading-[1.7] tracking-[0.02em] text-[#e8d4b8]/95" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
+                <p className="text-[13px] md:text-[15px] leading-[1.7] tracking-[-1px] text-[#e8d4b8]/95" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
                   {aboutBio3}
                 </p>
-                <p className="text-[13px] md:text-[15px] leading-[1.7] tracking-[0.02em] text-[#e8d4b8]/95" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
+                <p className="text-[13px] md:text-[15px] leading-[1.7] tracking-[-1px] text-[#e8d4b8]/95" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
                   {aboutBio4}
                 </p>
               </div>
@@ -539,7 +539,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(40,25,10,0.3)_0%,transparent_70%)]" />
         <div className="relative z-10 max-w-[1400px] mx-auto">
           {/* Title — simple fade-up (no horizontal slide to avoid desktop glitch) */}
-          <h2 className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[clamp(18px,3vw,36px)] font-black uppercase tracking-[0.02em] leading-[0.95] text-[#e8d4b8] text-center mb-6 md:mb-8 reveal" style={{ fontFamily: "'Cocogoose', var(--font-montserrat), 'Montserrat', sans-serif" }}>
+          <h2 className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[clamp(18px,3vw,36px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-6 md:mb-8 reveal" style={{ fontFamily: "'Oswald', sans-serif" }}>
             <div>
               <img
                 src={performersData.headingImage}
@@ -621,7 +621,7 @@ export default async function HomePage() {
               <div className="absolute inset-0 bg-[#2a1a0a]/70" />
               <div className="absolute inset-0 bg-gradient-to-b from-[#5c4328]/40 via-transparent to-[#2a1a0a]/70" />
             </div>
-            <h2 className="relative z-10 text-[clamp(28px,3.5vw,48px)] font-black uppercase tracking-[0.02em] leading-[0.95] text-[#e8d4b8] text-center mb-12" style={{ fontFamily: "'Cocogoose', var(--font-montserrat), 'Montserrat', sans-serif" }}>
+            <h2 className="relative z-10 text-[clamp(28px,3.5vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] text-center mb-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
               {venuesData.heading}
             </h2>
             <div className="relative z-10 grid grid-cols-2 md:grid-cols-2 gap-x-2 md:gap-x-6 gap-y-0.5 md:gap-y-1 max-w-[800px] mx-auto px-4 md:px-8 justify-items-center">
@@ -707,7 +707,7 @@ export default async function HomePage() {
 
         <div className="relative z-10 flex flex-col justify-center min-h-[80dvh] md:min-h-[100dvh] px-6 md:px-14 py-20 md:py-20">
           {/* Title — cream like About section */}
-          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[0.02em] leading-[0.95] text-[#e8d4b8] mb-10 md:mb-14 reveal-fade pl-4 md:pl-12" style={{ fontFamily: "'Cocogoose', var(--font-montserrat), 'Montserrat', sans-serif" }}>
+          <h2 className="text-[clamp(28px,4vw,48px)] font-black uppercase tracking-[-1px] leading-[0.95] text-[#e8d4b8] mb-10 md:mb-14 reveal-fade pl-4 md:pl-12" style={{ fontFamily: "'Oswald', sans-serif" }}>
             {brandsData.heading}
           </h2>
 

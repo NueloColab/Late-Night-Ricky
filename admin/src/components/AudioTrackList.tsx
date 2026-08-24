@@ -173,7 +173,7 @@ export default function AudioTrackList({ tracks }: { tracks: Track[] }) {
             {/* Right column: title + links + wave/timer */}
             <div className="flex flex-col min-w-0">
               {/* Title */}
-              <span className="text-[17px] md:text-[20px] font-bold text-[#2a1a0a] leading-tight pt-1 tracking-tight" style={{ fontFamily: "'Cocogoose', var(--font-montserrat), 'Montserrat', sans-serif" }}>
+              <span className="text-[17px] md:text-[20px] font-bold text-[#2a1a0a] leading-tight pt-1 tracking-tight" style={{ fontFamily: "'Oswald', sans-serif" }}>
                 {track.title}
               </span>
 
