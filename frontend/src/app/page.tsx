@@ -2,8 +2,38 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import RadioPlayer from '../components/RadioPlayer';
 import { getSections, getShowCards, getPartnerLogos, getClientNames, getVenueTicker } from '../lib/api';
+import type { Metadata } from 'next';
 
 export const revalidate = 60;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const sections = await getSections('global');
+  const seoSection = sections.find((s: any) => s.section === 'seo');
+  const metaList = Array.isArray(seoSection?.content) ? seoSection.content : [];
+  const homeMeta = metaList.find((m: any) => m.page === 'home');
+  const faviconUrl = seoSection?.images?.[0];
+  const ogImage = faviconUrl && !faviconUrl.includes('Late_Night_Ricky5.png') ? faviconUrl : undefined;
+
+  return {
+    title: homeMeta?.title || 'Late Night Ricky — International DJ & Grammy Winning Producer',
+    description: homeMeta?.description || 'From London to the world. Late Night Ricky — International DJ & Grammy Winning Producer.',
+    alternates: { canonical: 'https://www.latenightricky.com' },
+    openGraph: {
+      title: homeMeta?.title || 'Late Night Ricky — International DJ & Grammy Winning Producer',
+      description: homeMeta?.description || 'From London to the world. International DJ & Grammy Winning Producer.',
+      url: 'https://www.latenightricky.com',
+      siteName: 'Late Night Ricky',
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: 'Late Night Ricky' }] : [],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: homeMeta?.title || 'Late Night Ricky — International DJ & Grammy Winning Producer',
+      description: homeMeta?.description || 'From London to the world. International DJ & Grammy Winning Producer.',
+      images: ogImage ? [ogImage] : [],
+    },
+  };
+}
 
 function assetPath(p?: string | null) {
   if (!p) return '';
@@ -20,73 +50,6 @@ export default async function HomePage() {
     getClientNames(),
     getVenueTicker(),
   ]);
-
-  // CMS section overrides — fall back to defaults only if CMS data is empty
-  let heroImage = '/assets/ricky-hero-v2.jpg';
-  let heroLogo = '/assets/ricky-logo.png';
-  let heroGrayscale = true;
-  let heroBackgroundSize = 'cover';
-  let heroBackgroundPosition = '70% center';
-  let videoPoster = '/assets/video-poster-desktop.jpg';
-  let videoSrc = '/assets/video-desktop.mp4';
-  let radioImage = '/assets/ricky-radio-new.jpg';
-  let radioHeadline = 'As Heard On';
-  let radioLabel = 'Music & Radio';
-  let radioDescription = 'Preview snippets of the latest releases. Click play to hear 30-second previews, then stream or download the full tracks on Spotify, Apple Music and YouTube.';
-  let spotifyUrl = 'https://open.spotify.com/artist/3lOtUgicoyDn2qKe5zc3dl?si=M3MjTUy7TOmOhc676Dsgvw';
-  let appleMusicUrl = 'https://music.apple.com/gb/artist/late-night-ricky/1759491226';
-  let youtubeUrl = 'https://www.youtube.com/@LateNightRicky';
-  let partnersQuote = "The best DJ I've heard.";
-  let partnersAttribution = 'Cristiano Ronaldo';
-  let partnersDescription = 'Trusted by A-list artists, global brands, and sold-out crowds worldwide.';
-  let pressPack = '/assets/press-pack.pdf';
-  let clientsTitle = 'Trusted By The Best';
-
-  try {
-    if (sections.length > 0) {
-      const heroSection = sections.find((s: any) => s.section === 'hero');
-      if (heroSection?.content) {
-        const c = typeof heroSection.content === 'string' ? JSON.parse(heroSection.content) : heroSection.content;
-        if (c.image) heroImage = c.image;
-        if (c.logo) heroLogo = c.logo;
-        if (c.grayscale !== undefined) heroGrayscale = c.grayscale;
-        if (c.backgroundSize) heroBackgroundSize = c.backgroundSize;
-        if (c.backgroundPosition) heroBackgroundPosition = c.backgroundPosition;
-      }
-      const videoSection = sections.find((s: any) => s.section === 'video');
-      if (videoSection?.content) {
-        const c = typeof videoSection.content === 'string' ? JSON.parse(videoSection.content) : videoSection.content;
-        if (c.poster) videoPoster = c.poster;
-        if (c.src) videoSrc = c.src;
-      }
-      const radioSectionData = sections.find((s: any) => s.section === 'radio');
-      if (radioSectionData?.content) {
-        const c = typeof radioSectionData.content === 'string' ? JSON.parse(radioSectionData.content) : radioSectionData.content;
-        if (c.headline) radioHeadline = c.headline;
-        if (c.description) radioDescription = c.description;
-        if (c.image) radioImage = c.image;
-        if (c.label) radioLabel = c.label;
-        if (c.spotifyUrl) spotifyUrl = c.spotifyUrl;
-        if (c.appleMusicUrl) appleMusicUrl = c.appleMusicUrl;
-        if (c.youtubeUrl) youtubeUrl = c.youtubeUrl;
-      }
-      const partnersSection = sections.find((s: any) => s.section === 'partners');
-      if (partnersSection?.content) {
-        const c = typeof partnersSection.content === 'string' ? JSON.parse(partnersSection.content) : partnersSection.content;
-        if (c.quote) partnersQuote = c.quote;
-        if (c.attribution) partnersAttribution = c.attribution;
-        if (c.description) partnersDescription = c.description;
-        if (c.pressPack) pressPack = c.pressPack;
-      }
-      const clientsSection = sections.find((s: any) => s.section === 'clients');
-      if (clientsSection?.content) {
-        const c = typeof clientsSection.content === 'string' ? JSON.parse(clientsSection.content) : clientsSection.content;
-        if (c.title) clientsTitle = c.title;
-      }
-    }
-  } catch (e) {
-    console.error('CMS section parse error:', e);
-  }
 
   const radioSection = sections.find((s: any) => s.section === 'radio');
   const radioTracks = Array.isArray(radioSection?.content) ? radioSection.content : [];
@@ -107,10 +70,10 @@ export default async function HomePage() {
         <div className="fixed inset-0 -z-10" style={{ backgroundColor: '#1e3a5c' }}>
           <div
             className="absolute inset-0 bg-cover bg-no-repeat bg-[70%_center]"
-            style={{ backgroundImage: `url('${assetPath(heroImage)}')`, filter: heroGrayscale ? 'grayscale(100%) brightness(1.2)' : 'none', mixBlendMode: 'multiply' }}
+            style={{ backgroundImage: "url('/assets/ricky-hero-v2.jpg')", filter: 'grayscale(100%) brightness(1.2)', mixBlendMode: 'multiply' }}
           />
         </div>
-        <img src={assetPath(heroLogo)} alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] ml-[4%] mb-14 drop-shadow-[0_6px_30px_rgba(0,0,0,0.3)]" style={{ mixBlendMode: 'screen' }} />
+        <img src="/assets/ricky-logo.png" alt="Late Night Ricky" className="relative z-10 w-[52%] max-w-[700px] min-w-[280px] ml-[4%] mb-14 drop-shadow-[0_6px_30px_rgba(0,0,0,0.3)]" style={{ mixBlendMode: 'screen' }} />
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white opacity-70">
           <span className="text-[11px] tracking-[2.5px] uppercase font-medium">Scroll</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
