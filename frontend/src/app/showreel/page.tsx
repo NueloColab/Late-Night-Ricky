@@ -1,21 +1,8 @@
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { getSections } from '../../lib/api';
-import type { Metadata } from 'next';
 
 export const revalidate = 60;
-
-export async function generateMetadata(): Promise<Metadata> {
-  const sections = await getSections('global');
-  const seoSection = sections.find((s: any) => s.section === 'seo');
-  const metaList = Array.isArray(seoSection?.content) ? seoSection.content : [];
-  const showreelMeta = metaList.find((m: any) => m.page === 'showreel');
-  return {
-    title: showreelMeta?.title || 'Showreel — Late Night Ricky',
-    description: showreelMeta?.description || 'Watch Late Night Ricky in action — live sets, studio sessions, and behind the scenes.',
-    alternates: { canonical: 'https://www.latenightricky.com/showreel' },
-  };
-}
 
 export default async function ShowreelPage() {
   const sections = await getSections('showreel');

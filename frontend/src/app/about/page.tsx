@@ -1,21 +1,8 @@
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { getSections } from '../../lib/api';
-import type { Metadata } from 'next';
 
 export const revalidate = 60;
-
-export async function generateMetadata(): Promise<Metadata> {
-  const sections = await getSections('global');
-  const seoSection = sections.find((s: any) => s.section === 'seo');
-  const metaList = Array.isArray(seoSection?.content) ? seoSection.content : [];
-  const aboutMeta = metaList.find((m: any) => m.page === 'about');
-  return {
-    title: aboutMeta?.title || 'About — Late Night Ricky',
-    description: aboutMeta?.description || 'Learn about Late Night Ricky — Grammy Award Winning Producer and International DJ.',
-    alternates: { canonical: 'https://www.latenightricky.com/about' },
-  };
-}
 
 export default async function AboutPage() {
   const sections = await getSections('about');

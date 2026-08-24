@@ -1,21 +1,8 @@
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { getSections } from '../../lib/api';
-import type { Metadata } from 'next';
 
 export const revalidate = 60;
-
-export async function generateMetadata(): Promise<Metadata> {
-  const sections = await getSections('global');
-  const seoSection = sections.find((s: any) => s.section === 'seo');
-  const metaList = Array.isArray(seoSection?.content) ? seoSection.content : [];
-  const contactMeta = metaList.find((m: any) => m.page === 'contact');
-  return {
-    title: contactMeta?.title || 'Contact — Late Night Ricky',
-    description: contactMeta?.description || 'Get in touch with Late Night Ricky for bookings, press enquiries, and collaborations.',
-    alternates: { canonical: 'https://www.latenightricky.com/contact' },
-  };
-}
 
 export default async function ContactPage() {
   const sections = await getSections('contact');
